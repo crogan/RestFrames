@@ -1,0 +1,13 @@
+Library.RestFrame:					libRestFrames.so
+Library.RFrame:						libRestFrames.so
+Library.RDecayFrame:			   		libRestFrames.so
+Library.RInvisibleFrame:			   	libRestFrames.so
+Library.RVisibleFrame:					libRestFrames.so
+Library.InvisibleMassJigsaw.cc: 			libRestFrames.so
+Library.InvisibleRapidityJigsaw.cc: 			libRestFrames.so
+Library.ContraBoostInvariantJigsaw.cc: 			libRestFrames.so
+Library.MinimizeMassesCombinatoricJigsaw.cc: 		libRestFrames.so
+Library.InvisibleGroup.cc: 				libRestFrames.so
+Library.CombinatoricGroup.cc: 				libRestFrames.so
+Library.FramePlot.cc: 					libRestFrames.so
+
