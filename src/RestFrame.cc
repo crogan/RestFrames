@@ -412,19 +412,33 @@ namespace RestFrames {
     return m_P.M();
   }
 
-  double RestFrame::GetCosDecayAngle() const {
+  double RestFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
     if(m_ChildLinks.size() <= 0) return 0.;
     if(!m_ParentLinkPtr) return 0.;
     TVector3 V1 = m_ParentLinkPtr->GetBoostVector().Unit();
-    TVector3 V2 = m_ChildLinks[0]->GetChildFrame()->GetFourVector(this).Vect().Unit();
+    TVector3 V2;
+    if(framePtr){
+      V2 = framePtr->GetFourVector(this).Vect().Unit();
+    } else {
+      V2 = m_ChildLinks[0]->GetChildFrame()->GetFourVector(this).Vect().Unit();
+    }
     return V1.Dot(V2);
   }
- 
-  double RestFrame::GetDeltaPhiDecayAngle(TVector3 axis) const {
-    if(m_ChildLinks.size() <= 0) return 0.;
-    if(!m_ParentLinkPtr) return 0.;
-    TLorentzVector Pthis = GetFourVector(GetProductionFrame());
-    TLorentzVector Pchild = m_ChildLinks[0]->GetChildFrame()->GetFourVector(GetProductionFrame());
+  
+  // Get decay angle in plane perpendicular to 3-vector 'axis', where axis is defined
+  // in the production frame of 'this'. Decay angle is relative to frame 'framePtr'
+  // unless framePtr == nullptr (default), in which case is it first child of 'this'
+  double RestFrame::GetDeltaPhiDecayAngle(const TVector3& axis, const RestFrame* framePtr) const {
+    const RestFrame* prod_framePtr = GetProductionFrame();
+    if(!prod_framePtr) return 0.;
+    TLorentzVector Pthis = GetFourVector(prod_framePtr);
+    TLorentzVector Pchild;
+    if(framePtr){
+      Pchild = framePtr->GetFourVector(prod_framePtr);
+    } else {
+      if(m_ChildLinks.size() <= 0) return 0.;
+      Pchild = m_ChildLinks[0]->GetChildFrame()->GetFourVector(prod_framePtr);
+    }
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -437,10 +451,35 @@ namespace RestFrames {
     V = V - V.Dot(axis.Unit())*axis.Unit();
     return V.Angle(boost_perp);
   }
+
+  // Get angle between 'this' boost and visible children in plane 
+  // perpendicular to 3-vector 'axis', where axis is defined
+  // in 'framePtr' (default gives lab frame). 
+  double RestFrame::GetDeltaPhiBoostVisible(const TVector3& axis, const RestFrame* framePtr) const {
+    if(!framePtr) framePtr = GetLabFrame();
+    TLorentzVector Pvis = GetVisibleFourVector(framePtr);
+    TLorentzVector Pthis = GetFourVector(framePtr);
+
+    TVector3 boost_par = Pthis.BoostVector();
+    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    Pthis.Boost(-boost_par);
+    Pvis.Boost(-boost_par);
+    TVector3 boost_perp = Pthis.BoostVector();
+    Pvis.Boost(-boost_perp);
+
+    TVector3 V = Pvis.Vect();
+    V = V - V.Dot(axis.Unit())*axis.Unit();
+   
+    return V.Angle(boost_perp);
+  }
  
-  double RestFrame::GetDeltaPhiVisible(TVector3 axis, const RestFrame* framePtr) const {
+  // Get angle between the visible portions of children 1 and 2
+  // in the plane perpendicular to 3-vector 'axis', where
+  // axis is defined in 'framePtr' (default gives lab frame). 
+  double RestFrame::GetDeltaPhiVisible(const TVector3& axis, const RestFrame* framePtr) const {
     if(GetNChildren() != 2) return 0.;
     if(!framePtr) framePtr = GetLabFrame();
+    if(!framePtr) return 0.;
     TLorentzVector Pthis = GetFourVector(framePtr);
     TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(framePtr);
     TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(framePtr);
@@ -462,24 +501,6 @@ namespace RestFrames {
     return V1.Angle(V2);
   }
 
-double RestFrame::GetDeltaPhiBoostVisible(TVector3 axis, const RestFrame* framePtr) const {
-    if(!framePtr) framePtr = GetLabFrame();
-    TLorentzVector Pvis = GetVisibleFourVector(framePtr);
-    TLorentzVector Pthis = GetFourVector(framePtr);
-
-    TVector3 boost_par = Pthis.BoostVector();
-    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
-    Pthis.Boost(-boost_par);
-    Pvis.Boost(-boost_par);
-    TVector3 boost_perp = Pthis.BoostVector();
-    Pvis.Boost(-boost_perp);
-
-    TVector3 V = Pvis.Vect();
-    V = V - V.Dot(axis.Unit())*axis.Unit();
-   
-    return V.Angle(boost_perp);
-  }
-
   double RestFrame::GetVisibleShape() const {
     if(GetNChildren() != 2) return 0.;
     TVector3 P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(this).Vect();
@@ -488,9 +509,10 @@ double RestFrame::GetDeltaPhiBoostVisible(TVector3 axis, const RestFrame* frameP
     else return 0.;
   }
  
-  double RestFrame::GetTransverseVisibleShape(TVector3 axis, const RestFrame* framePtr) const {
+  double RestFrame::GetTransverseVisibleShape(const TVector3& axis, const RestFrame* framePtr) const {
     if(GetNChildren() != 2) return 0.;
     if(!framePtr) framePtr = GetLabFrame();
+    if(!framePtr) return 0.;
     TLorentzVector Pthis = GetFourVector(framePtr);
     TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(framePtr);
     TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(framePtr);
@@ -509,8 +531,40 @@ double RestFrame::GetDeltaPhiBoostVisible(TVector3 axis, const RestFrame* frameP
     V1 = V1 - V1.Dot(axis.Unit())*axis.Unit();
     V2 = V2 - V2.Dot(axis.Unit())*axis.Unit();
 
-    if(V1.Mag()+V2.Mag() > 0.) return sqrt(pow(V1.Mag()+V2.Mag(),2.)-(V1-V2).Mag2())/(P1.P()+P2.P());
+    if(V1.Mag()+V2.Mag() > 0.) return sqrt(pow(V1.Mag()+V2.Mag(),2.)-(V1-V2).Mag2())/(V1.Mag()+V2.Mag());
     else return 0.;
+  }
+
+  double RestFrame::GetScalarVisibleMomentum() const {
+    if(GetNChildren() != 2) return 0.;
+    TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(this);
+    TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(this);
+    return P1.P() + P2.P();
+  }
+  double RestFrame::GetTransverseScalarVisibleMomentum(const TVector3& axis, 
+						       const RestFrame* framePtr) const {
+    if(GetNChildren() != 2) return 0.;
+    if(!framePtr) framePtr = GetLabFrame();
+    if(!framePtr) return 0.;
+    TLorentzVector Pthis = GetFourVector(framePtr);
+    TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(framePtr);
+    TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(framePtr);
+
+    TVector3 boost_par = Pthis.BoostVector();
+    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    Pthis.Boost(-boost_par);
+    P1.Boost(-boost_par);
+    P2.Boost(-boost_par);
+    TVector3 boost_perp = Pthis.BoostVector();
+    P1.Boost(-boost_perp);
+    P2.Boost(-boost_perp);
+
+    TVector3 V1 = P1.Vect();
+    TVector3 V2 = P2.Vect();
+    V1 = V1 - V1.Dot(axis.Unit())*axis.Unit();
+    V2 = V2 - V2.Dot(axis.Unit())*axis.Unit();
+
+    return V1.Mag()+V2.Mag();
   }
 
   TLorentzVector RestFrame::GetFourVector(const RestFrame& frame) const {
@@ -579,37 +633,6 @@ double RestFrame::GetDeltaPhiBoostVisible(TVector3 axis, const RestFrame* frameP
     return GetFourVector(framePtr).P();
   }
 
-  double RestFrame::GetScalarVisibleMomentum() const {
-    if(GetNChildren() != 2) return 0.;
-    TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(this);
-    TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(this);
-    return P1.P() + P2.P();
-  }
-  double RestFrame::GetTransverseScalarVisibleMomentum(TVector3 axis, 
-						       const RestFrame* framePtr) const {
-    if(GetNChildren() != 2) return 0.;
-    if(!framePtr) framePtr = GetLabFrame();
-    TLorentzVector Pthis = GetFourVector(framePtr);
-    TLorentzVector P1 = m_ChildLinks[0]->GetChildFrame()->GetVisibleFourVector(framePtr);
-    TLorentzVector P2 = m_ChildLinks[1]->GetChildFrame()->GetVisibleFourVector(framePtr);
-
-    TVector3 boost_par = Pthis.BoostVector();
-    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
-    Pthis.Boost(-boost_par);
-    P1.Boost(-boost_par);
-    P2.Boost(-boost_par);
-    TVector3 boost_perp = Pthis.BoostVector();
-    P1.Boost(-boost_perp);
-    P2.Boost(-boost_perp);
-
-    TVector3 V1 = P1.Vect();
-    TVector3 V2 = P2.Vect();
-    V1 = V1 - V1.Dot(axis.Unit())*axis.Unit();
-    V2 = V2 - V2.Dot(axis.Unit())*axis.Unit();
-
-    return V1.Mag()+V2.Mag();
-  }
-
   int RestFrame::GetFrameDepth(const RestFrame& frame) const {
     return GetFrameDepth(&frame);
   }
@@ -668,6 +691,16 @@ double RestFrame::GetDeltaPhiBoostVisible(TVector3 axis, const RestFrame* frameP
 
   const RestFrame* RestFrame::GetProductionFrame() const {
     return m_ProdFramePtr;
+  }
+
+  const RestFrame* RestFrame::GetSiblingFrame() const {
+    if(IsLabFrame()) return nullptr;
+    int Nsib = m_ProdFramePtr->GetNChildren();
+    for(int s = 0; s < Nsib; s++){
+      if(IsSame(m_ProdFramePtr->GetChildFrame(s))) continue;
+      return m_ProdFramePtr->GetChildFrame(s);
+    }
+    return nullptr; 
   }
 
   TVector3 RestFrame::GetBoostInParentFrame() const{

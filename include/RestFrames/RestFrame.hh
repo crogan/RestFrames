@@ -70,15 +70,19 @@ namespace RestFrames {
 
     // Analysis functions
     virtual double GetMass() const;
-    virtual double GetCosDecayAngle() const;
-    virtual double GetDeltaPhiDecayAngle(TVector3 axis = TVector3(0.,0.,1.)) const;
-    virtual double GetVisibleShape() const;
-    virtual double GetTransverseVisibleShape(TVector3 axis = TVector3(0.,0.,1.), 
-					     const RestFrame* framePtr = nullptr) const;
-    virtual double GetDeltaPhiBoostVisible(TVector3 axis = TVector3(0.,0.,1.), 
+    virtual double GetCosDecayAngle(const RestFrame* framePtr = nullptr) const;
+    virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
+					 const RestFrame* framePtr = nullptr) const;
+    virtual double GetDeltaPhiBoostVisible(const TVector3& axis = TVector3(0.,0.,1.), 
 					   const RestFrame* framePtr = nullptr) const;
-    virtual double GetDeltaPhiVisible(TVector3 axis = TVector3(0.,0.,1.), 
+    virtual double GetDeltaPhiVisible(const TVector3& axis = TVector3(0.,0.,1.), 
 				      const RestFrame* framePtr = nullptr) const;
+    virtual double GetVisibleShape() const;
+    virtual double GetTransverseVisibleShape(const TVector3& axis = TVector3(0.,0.,1.), 
+					     const RestFrame* framePtr = nullptr) const;
+    virtual double GetScalarVisibleMomentum() const;
+    virtual double GetTransverseScalarVisibleMomentum(const TVector3& axis = TVector3(0.,0.,1.), 
+						      const RestFrame* framePtr = nullptr) const;
     virtual TLorentzVector GetFourVector(const RestFrame& frame) const;
     virtual TLorentzVector GetFourVector(const RestFrame* framePtr) const;
     virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
@@ -89,14 +93,12 @@ namespace RestFrames {
     virtual double GetEnergy(const RestFrame* framePtr) const;
     virtual double GetMomentum(const RestFrame& frame) const;
     virtual double GetMomentum(const RestFrame* framePtr) const;
-    virtual double GetScalarVisibleMomentum() const;
-    virtual double GetTransverseScalarVisibleMomentum(TVector3 axis = TVector3(0.,0.,1.), 
-						      const RestFrame* framePtr = nullptr) const;
     virtual int GetFrameDepth(const RestFrame& frame) const;
     virtual int GetFrameDepth(const RestFrame* framePtr) const;
     virtual const RestFrame* GetFrameAtDepth(int depth, const RestFrame& frame) const;
     virtual const RestFrame* GetFrameAtDepth(int depth, const RestFrame* framePtr) const;
     virtual const RestFrame* GetProductionFrame() const;
+    virtual const RestFrame* GetSiblingFrame() const;
     virtual TVector3 GetBoostInParentFrame() const;
     virtual double GetGammaInParentFrame() const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
