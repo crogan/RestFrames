@@ -1,7 +1,7 @@
 # shared libraries
-lib/
+lib/*
 # object files
-obj/
+obj/*
 # local ROOT macro compile stuff
 *.so
 *.d
