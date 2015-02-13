@@ -1,5 +1,5 @@
-#ifndef RFrame_HH
-#define RFrame_HH
+#ifndef GFrame_HH
+#define GFrame_HH
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,30 +24,30 @@ namespace RestFrames {
   class GroupList;
 
   ///////////////////////////////////////////////
-  // RFrame class
+  // GFrame class
   ///////////////////////////////////////////////
-  class RFrame : public virtual RestFrame {
+  class GFrame : public virtual RestFrame {
   public:
-    RFrame(const string& sname, const string& stitle, int key);
-    RFrame(const string& sname, const string& stitle);
-    virtual ~RFrame();
+    GFrame(const string& sname, const string& stitle, int key);
+    GFrame(const string& sname, const string& stitle);
+    virtual ~GFrame();
 
-    virtual void ClearRFrame();
+    virtual void ClearGFrame();
 
     virtual void SetGroup(Group* groupPtr);
     Group* GetGroup() const { return m_GroupPtr; }
 
     GroupList* GetListGroups() const;
-
+	
     virtual bool InitializeAnalysis(const StateList* statesPtr, const GroupList* groupsPtr);
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
+    virtual bool InitializeAnalysisRecursive(const StateList* statesPtr, const GroupList* groupsPtr);
 
   protected:
     vector<StateList*> m_ChildStates;
     Group* m_GroupPtr;
 
-    virtual bool InitializeAnalysisRecursive(const StateList* statesPtr, const GroupList* groupsPtr);
     virtual bool InitializeStates(const StateList* statesPtr);
     virtual bool InitializeGroupStates(const GroupList* groupsPtr);
 

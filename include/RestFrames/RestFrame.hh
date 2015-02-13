@@ -68,7 +68,9 @@ namespace RestFrames {
     virtual void ClearEventRecursive() = 0;
     virtual bool AnalyzeEventRecursive() = 0;
 
+    //////////////////////////
     // Analysis functions
+    //////////////////////////
     virtual double GetMass() const;
     virtual double GetCosDecayAngle(const RestFrame* framePtr = nullptr) const;
     virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
