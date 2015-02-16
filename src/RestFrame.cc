@@ -247,17 +247,25 @@ namespace RestFrames {
     return nullptr;
   } 
 
-  void RestFrame::SetChildBoost(int i, TVector3 boost) const {
+  void RestFrame::SetChildBoostVector(int i, TVector3 boost) const {
     m_ChildLinks[i]->SetBoostVector(boost);
+  }
+
+  TVector3 RestFrame::GetChildBoostVector(int i) const {
+    return m_ChildLinks[i]->GetBoostVector();
+  }
+
+  TVector3 RestFrame::GetParentBoostVector() const {
+    return m_ParentLinkPtr->GetBoostVector();
   }
 
   RestFrameList* RestFrame::GetListFrames(){
     RestFrameList* framesPtr = new RestFrameList();
     framesPtr->Add(this);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
+    for(int i = 0; i < Nchild; i++)
       GetChildFrame(i)->FillListFramesRecursive(framesPtr);
-    }
+    
     return framesPtr;
   }
 
@@ -265,32 +273,18 @@ namespace RestFrames {
     RestFrameList* framesPtr = new RestFrameList();
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) framePtr->FillListFramesTypeRecursive(type, framesPtr);
-      }
-    }
+    for(int i = 0; i < Nchild; i++)
+      GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
+   
     return framesPtr;
   }
 
   RestFrameList* RestFrame::GetListFramesType(const vector<FrameType>& types){
     RestFrameList* framesPtr = new RestFrameList();
-    int Nchild = GetNChildren();
-    int Ntype = int(types.size());
-    for(int i = 0; i < Ntype; i++){
-      if(m_Type == types[i]) framesPtr->Add(this);
-    }
-    for(int j = 0; j < Nchild; j++){
-      if(m_ChildLinks[j]){
-	RestFrame* framePtr = m_ChildLinks[j]->GetChildFrame();
-	if(framePtr){
-	  for(int i = 0; i < Ntype; i++){
-	    framePtr->FillListFramesTypeRecursive(types[i], framesPtr);
-	  }
-	}
-      }
-    }
+    int Ntype = types.size();
+    for(int i = 0; i < Ntype; i++)
+      FillListFramesTypeRecursive(types[i], framesPtr);
+
     return framesPtr;
   }
 
@@ -305,28 +299,20 @@ namespace RestFrames {
   void RestFrame::FillListFramesRecursive(RestFrameList* framesPtr){
     framesPtr->Add(this);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) framePtr->FillListFramesRecursive(framesPtr);
-      }
-    }
+    for(int i = 0; i < Nchild; i++)
+      GetChildFrame(i)->FillListFramesRecursive(framesPtr);
   }
   
   void RestFrame::FillListFramesTypeRecursive(FrameType type, RestFrameList* framesPtr){
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) framePtr->FillListFramesTypeRecursive(type, framesPtr);
-      }
-    }
+    for(int i = 0; i < Nchild; i++)
+      GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
   }
 
-  //
+  ///////////////////////////////////////////////
   // Recursive checks of tree integrity
-  //
+  ///////////////////////////////////////////////
   bool RestFrame::IsCircularTree(vector<int>* KEYS) const {
     int Nkey = KEYS->size();
   
@@ -339,24 +325,18 @@ namespace RestFrames {
     }
     KEYS->push_back(m_Key);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) if(framePtr->IsCircularTree(KEYS)) return true;
-      }
-    }
+    for(int i = 0; i < Nchild; i++)
+      if(GetChildFrame(i)->IsCircularTree(KEYS)) return true;
+     
     return false;
   }
 
   bool RestFrame::IsConsistentAnaTree(AnaType ana) const {
     if(ana != m_Ana) return false;
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) if(!framePtr->IsConsistentAnaTree(ana)) return false;
-      }
-    }
+    for(int i = 0; i < Nchild; i++)
+      if(!GetChildFrame(i)->IsConsistentAnaTree(ana)) return false;
+    
     return true;
   }
 
@@ -389,13 +369,14 @@ namespace RestFrames {
     return false;
   }
 
-  //////////////////////////////
-  // Analysis functions
-  //////////////////////////////
   void RestFrame::SetFourVector(const TLorentzVector& V, const RestFrame* framePtr){
     m_P.SetVectM(V.Vect(),V.M());
     m_ProdFramePtr = framePtr;  
   }
+
+  //////////////////////////////
+  // User Analysis functions
+  //////////////////////////////
 
   double RestFrame::GetMass() const {
     return m_P.M();
@@ -404,12 +385,12 @@ namespace RestFrames {
   double RestFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
     if(m_ChildLinks.size() <= 0) return 0.;
     if(!m_ParentLinkPtr) return 0.;
-    TVector3 V1 = m_ParentLinkPtr->GetBoostVector().Unit();
+    TVector3 V1 = GetParentBoostVector().Unit();
     TVector3 V2;
     if(framePtr){
       V2 = framePtr->GetFourVector(this).Vect().Unit();
     } else {
-      V2 = m_ChildLinks[0]->GetChildFrame()->GetFourVector(this).Vect().Unit();
+      V2 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
     }
     return V1.Dot(V2);
   }

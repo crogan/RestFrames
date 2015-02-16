@@ -131,7 +131,9 @@ namespace RestFrames {
     FrameLink* m_ParentLinkPtr;
     vector<FrameLink*> m_ChildLinks;
 
-    void SetChildBoost(int i, TVector3 boost) const;
+    void SetChildBoostVector(int i, TVector3 boost) const;
+    TVector3 GetChildBoostVector(int i) const;
+    TVector3 GetParentBoostVector() const;
 
     // 4-vector of this state in the frame it's initialized
     TLorentzVector m_P;
