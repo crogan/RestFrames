@@ -5,12 +5,9 @@
 #include <vector>
 #include <TLorentzVector.h>
 #include <TVector3.h>
+#include <TRandom.h>
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/FrameLink.hh"
-#include "RestFrames/State.hh"
-#include "RestFrames/StateList.hh"
-#include "RestFrames/Group.hh"
-#include "RestFrames/GroupList.hh"
 
 using namespace std;
 
@@ -18,10 +15,6 @@ namespace RestFrames {
 
   class RestFrame;
   class FrameLink;
-  class State;
-  class StateList;
-  class Group;
-  class GroupList;
 
   ///////////////////////////////////////////////
   // GFrame class
@@ -34,28 +27,21 @@ namespace RestFrames {
 
     virtual void ClearGFrame();
 
-    virtual void SetGroup(Group* groupPtr);
-    Group* GetGroup() const { return m_GroupPtr; }
-
-    GroupList* GetListGroups() const;
-	
-    virtual bool InitializeAnalysis(const StateList* statesPtr, const GroupList* groupsPtr);
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
-    virtual bool InitializeAnalysisRecursive(const StateList* statesPtr, const GroupList* groupsPtr);
 
   protected:
-    vector<StateList*> m_ChildStates;
-    Group* m_GroupPtr;
+    virtual void ResetFrame() = 0;
+    virtual bool GenerateFrame() = 0;
 
-    virtual bool InitializeStates(const StateList* statesPtr);
-    virtual bool InitializeGroupStates(const GroupList* groupsPtr);
+    void SetChildren(const vector<TLorentzVector>& P_children);
 
-    void FillListGroupsRecursive(GroupList* groupsPtr) const;
+    double GetRandom();
 
   private:
     void Init();
-    void ClearStates();
+    TRandom *m_Random;
+   
   };
 
 }

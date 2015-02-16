@@ -28,10 +28,13 @@ namespace RestFrames {
     void SetChildFrame(RestFrame* framePtr);
   
     virtual bool InitializeTree() const;
-    virtual bool InitializeAnalysis(){ return false; }
 
     // Analysis functions
+    TVector3 GetInvisibleMomentum() const;
+    TLorentzVector GetInvisibleFourVector() const;
+    
     virtual double GetCosDecayAngle() const;
+    virtual TVector3 GetDecayPlaneNormalVector() const;
 
   protected:
     virtual bool IsSoundBody() const;

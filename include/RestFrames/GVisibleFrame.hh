@@ -25,6 +25,14 @@ namespace RestFrames {
     GVisibleFrame(const string& sname, const string& stitle);
     virtual ~GVisibleFrame();
 
+    virtual void SetMass(double val);
+
+  protected:
+    double m_Mass;
+
+    virtual void ResetFrame();
+    virtual bool GenerateFrame();
+
   private:
     void Init();
 

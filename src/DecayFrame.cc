@@ -29,7 +29,7 @@ namespace RestFrames {
   bool DecayFrame::IsSoundBody() const {
     RestFrame::IsSoundBody();
     int Nchild = GetNChildren();
-    if(Nchild <= 0 || !m_ParentLinkPtr) m_Body = false;
+    if(Nchild < 1 || !m_ParentLinkPtr) m_Body = false;
     return m_Body;
   }
 

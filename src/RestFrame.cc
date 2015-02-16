@@ -164,14 +164,7 @@ namespace RestFrames {
     m_Body = false;
     m_Mind = false;
     m_Spirit = false;
-    int index = GetChildIndex(framePtr);
-    RemoveChildIndex(index);
-    if(index < 0) return;
-    if(m_ChildLinks[index]){
-      delete m_ChildLinks[index];
-      m_ChildLinks[index] = nullptr;
-    }
-    m_ChildLinks.erase(m_ChildLinks.begin()+index);
+    RemoveChildIndex(GetChildIndex(framePtr));
   }
 
   void RestFrame::RemoveChildIndex(int i){
@@ -208,10 +201,10 @@ namespace RestFrames {
   }
   
   void RestFrame::AddChildFrame(RestFrame* framePtr){
+    if(!framePtr) return;
     m_Body = false;
     m_Mind = false;
     m_Spirit = false;
-    if(!framePtr) return;
     if(framePtr->IsLabFrame()) return;
     if(GetChildIndex(framePtr) >= 0) return;
   
@@ -230,14 +223,7 @@ namespace RestFrames {
     if(!framePtr) return -1;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* childPtr = m_ChildLinks[i]->GetChildFrame();
-	if(childPtr){
-	  if(childPtr->IsSame(framePtr)){
-	    return i;
-	  }
-	}
-      }
+      if(GetChildFrame(i)->IsSame(framePtr)) return i;
     }
     return -1;
   }
@@ -245,29 +231,32 @@ namespace RestFrames {
   RestFrame* RestFrame::GetChildFrame(int i) const {
     int Nchild = GetNChildren();
     if(i >= Nchild || i < 0) return nullptr;
-    if(m_ChildLinks[i]){
-      return m_ChildLinks[i]->GetChildFrame();
-    }
-    return nullptr;
+    return m_ChildLinks[i]->GetChildFrame();
   }
 
-  const RestFrame* RestFrame::GetLabFrame() const{
+  const RestFrame* RestFrame::GetParentFrame() const {
+    if(!m_ParentLinkPtr) return nullptr;
+    return m_ParentLinkPtr->GetParentFrame();
+  }
+
+  const RestFrame* RestFrame::GetLabFrame() const {
     if(m_Type == FLab) return this;
     if(!m_ParentLinkPtr) return nullptr;
-    RestFrame* parentPtr = m_ParentLinkPtr->GetParentFrame();
+    const RestFrame* parentPtr = GetParentFrame();
     if(parentPtr) return parentPtr->GetLabFrame();
     return nullptr;
   } 
+
+  void RestFrame::SetChildBoost(int i, TVector3 boost) const {
+    m_ChildLinks[i]->SetBoostVector(boost);
+  }
 
   RestFrameList* RestFrame::GetListFrames(){
     RestFrameList* framesPtr = new RestFrameList();
     framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
-	if(framePtr) framePtr->FillListFramesRecursive(framesPtr);
-      }
+      GetChildFrame(i)->FillListFramesRecursive(framesPtr);
     }
     return framesPtr;
   }
@@ -572,7 +561,7 @@ namespace RestFrames {
   }
   TLorentzVector RestFrame::GetFourVector(const RestFrame* framePtr) const {
     TLorentzVector V(0.,0.,0.,0.);
-    if(!framePtr) return V;
+    if(!framePtr) framePtr = GetLabFrame();
  
     V.SetVectM(m_P.Vect(),m_P.M());
     if(framePtr->IsSame(m_ProdFramePtr)) return V;
@@ -641,7 +630,7 @@ namespace RestFrames {
     if(IsSame(framePtr)) return 0.;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      int depth = m_ChildLinks[i]->GetChildFrame()->GetFrameDepth(framePtr);
+      int depth = GetChildFrame(i)->GetFrameDepth(framePtr);
       if(depth >= 0) return depth+1;
     }
     return -1;
@@ -671,21 +660,23 @@ namespace RestFrames {
   }
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const {
     if(!framePtr) return 0.;
-    if(!m_ParentLinkPtr) return 0.;
+    if(m_ChildLinks.size() < 1) return 0.;
+   
     TVector3 vNorm_frame = framePtr->GetDecayPlaneNormalVector();
     TVector3 vNorm_this = GetDecayPlaneNormalVector();
     double dphi = vNorm_this.Angle(vNorm_frame);
-    if(m_ParentLinkPtr->GetBoostVector().Dot(vNorm_frame) < 0. && dphi > 0.){
+
+    if(framePtr->GetFourVector(this).Vect().Cross(vNorm_frame).Dot(vNorm_this) < 0.){
       dphi = TMath::Pi()*2. - dphi;
     }
     return dphi;
   }
+  
   TVector3 RestFrame::GetDecayPlaneNormalVector() const {
     TVector3 V(0.,0.,0.);
-    if(m_ChildLinks.size() < 1) return V;
-    if(!m_ParentLinkPtr) return V;
-    TVector3 V1 = m_ParentLinkPtr->GetBoostVector().Unit();
-    TVector3 V2 = m_ChildLinks[0]->GetChildFrame()->GetFourVector(this).Vect().Unit();
+    if(GetNChildren() < 2) return V;
+    TVector3 V1 = GetChildFrame(0)->GetFourVector(GetParentFrame()).Vect();
+    TVector3 V2 = GetChildFrame(1)->GetFourVector(GetParentFrame()).Vect();
     return V1.Cross(V2).Unit();
   }
 

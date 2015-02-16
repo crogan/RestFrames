@@ -58,13 +58,14 @@ namespace RestFrames {
     int GetNChildren() const;
     RestFrame* GetChildFrame(int i) const;
     int GetChildIndex(const RestFrame* framePtr) const;
+    const RestFrame* GetParentFrame() const;
     const RestFrame* GetLabFrame() const;
     RestFrameList* GetListFrames();
     RestFrameList* GetListFramesType(FrameType type);
     RestFrameList* GetListFramesType(const vector<FrameType>& types);
     RestFrameList* GetListVisibleFrames();
     RestFrameList* GetListInvisibleFrames();
-
+    
     virtual void ClearEventRecursive() = 0;
     virtual bool AnalyzeEventRecursive() = 0;
 
@@ -86,7 +87,7 @@ namespace RestFrames {
     virtual double GetTransverseScalarVisibleMomentum(const TVector3& axis = TVector3(0.,0.,1.), 
 						      const RestFrame* framePtr = nullptr) const;
     virtual TLorentzVector GetFourVector(const RestFrame& frame) const;
-    virtual TLorentzVector GetFourVector(const RestFrame* framePtr) const;
+    virtual TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
     virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
     virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
     virtual TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
@@ -105,6 +106,7 @@ namespace RestFrames {
     virtual double GetGammaInParentFrame() const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const;
+    virtual TVector3 GetDecayPlaneNormalVector() const;
     
 
   protected:
@@ -129,20 +131,24 @@ namespace RestFrames {
     FrameLink* m_ParentLinkPtr;
     vector<FrameLink*> m_ChildLinks;
 
+    void SetChildBoost(int i, TVector3 boost) const;
+
     // 4-vector of this state in the frame it's initialized
     TLorentzVector m_P;
     // the reference frame where this four-vector is defined
     const RestFrame* m_ProdFramePtr;
 
-    // Tree construction checks
-    bool IsCircularTree(vector<int>* KEYS) const;
-    bool IsConsistentAnaTree(AnaType ana) const;
-    void FillListFramesRecursive(RestFrameList* framesPtr);
-    void FillListFramesTypeRecursive(FrameType type, RestFrameList* framesPtr);
     virtual void SetFourVector(const TLorentzVector& V, const RestFrame* framePtr);
     bool FindPathToFrame(const RestFrame* framePtr, vector<FrameLink*>* linksPtr, 
 			 vector<int>* linkSignsPtr, const RestFrame* prevPtr) const;
-    TVector3 GetDecayPlaneNormalVector() const;
+
+    // Tree construction checks
+    bool IsCircularTree(vector<int>* KEYS) const;
+    bool IsConsistentAnaTree(AnaType ana) const;
+
+    // Recursively get lists of frames
+    void FillListFramesRecursive(RestFrameList* framesPtr);
+    void FillListFramesTypeRecursive(FrameType type, RestFrameList* framesPtr);
 
   private:
     void Init(const string& sname, const string& stitle);

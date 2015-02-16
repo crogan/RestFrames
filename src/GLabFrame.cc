@@ -24,177 +24,76 @@ namespace RestFrames {
   }
 
   GLabFrame::~GLabFrame(){
-    ClearStates();
+    
   }
 
   void GLabFrame::Init(){
+    m_PT = 0.;
+    m_PL = 0.;
+    m_Phi = -1.;
+    m_Theta = -1.;
+  }
+
+  void GLabFrame::SetThreeVector(const TVector3& P){
+    m_PT = P.Pt();
+    m_PL = P.Z();
+    SetPhi(P.Phi());
+  }
+
+  void GLabFrame::SetTransverseMomenta(double val){
+    if(val >= 0.) m_PT = val;
+  }
+
+  void GLabFrame::SetLongitudinalMomenta(double val){
+    m_PL = val;
+  }
+
+  void GLabFrame::SetPhi(double val){
+    while(val > acos(-1.)*2.) val -= acos(-1.)*2.;
+    while(val < 0.) val += acos(-1.)*2.;
+    m_Phi = val;
+  }
+
+  void GLabFrame::ResetProductionAngles(){
+     m_Phi = -1.;
+     m_Theta = -1.;
+  }
+
+  void GLabFrame::ResetFrame(){
+    m_Spirit = false;
+    ResetProductionAngles();
+  }
   
-  }
+  bool GLabFrame::GenerateFrame(){
+    if(!m_Body) return false;
 
-  void GLabFrame::ClearStates(){
-    int Ns = m_LabStates.GetN();
-    for(int i = 0; i < Ns; i++){
-      delete m_LabStates.Get(i);
-    }
-    m_LabStates.Clear();
-  }
-  
-  bool GLabFrame::InitializeLabGroups(){
-    m_LabGroups.Clear();
-    GroupList *groupsPtr = GetListGroups();
-    m_LabGroups.Add(groupsPtr);
-    delete groupsPtr;
-    int Ngroup = m_LabGroups.GetN();
-    for(int i = 0; i < Ngroup; i++){
-      if(!m_LabGroups.Get(i)->InitializeAnalysis()) return false;
-    }
-    return true;
-  }
+    TLorentzVector P;
+    double M = GetChildFrame(0)->GetMass();
+    if(m_Phi < 0.) m_Phi = 2.*acos(-1.)*GetRandom();
 
-  bool GLabFrame::InitializeLabStates(){
-    ClearStates();
-    RestFrameList* framesPtr = GetListFramesType(FVisible);
-    int Nf = framesPtr->GetN();
-    int Ng = m_LabGroups.GetN();
-    for(int f = 0; f < Nf; f++){
-      bool has_group = false;
-      for(int g = 0; g < Ng; g++){
-	if(m_LabGroups.Get(g)->ContainsFrame(framesPtr->Get(f))){
-	  has_group = true;
-	  break;
-	}
-      }
-      if(!has_group) {
-	State* statePtr = new State();
-	statePtr->AddFrame(framesPtr->Get(f));
-	m_LabStates.Add(statePtr);
-      }
-    }
-    delete framesPtr;
+    P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));
 
-    framesPtr = GetListFramesType(FInvisible);
-    Nf = framesPtr->GetN();
-    for(int i = 0; i < Nf; i++){
-      bool has_group = false;
-      for(int g = 0; g < Ng; g++){
-	if(m_LabGroups.Get(g)->ContainsFrame(framesPtr->Get(i))){
-	  has_group = true;
-	  break;
-	}
-      }
-      if(!has_group){
-	return false;
-      }
-    }
-    return true;
-  }
-
-  bool GLabFrame::InitializeLabJigsaws(){
-     m_LabJigsaws.Clear();
-    int Ng = m_LabGroups.GetN();
-    // Initialize Dependancy States in jigsaws
-    for(int g = 0; g < Ng; g++){
-      Group* groupPtr = m_LabGroups.Get(g);
-      JigsawList* jigsawsPtr = groupPtr->GetJigsaws();
-      int Nj = jigsawsPtr->GetN();
-      for(int j = 0; j < Nj; j++){
-	Jigsaw* jigsawPtr = jigsawsPtr->Get(j);
-	if(!jigsawPtr->InitializeDependancyStates(&m_LabStates,&m_LabGroups)){
-	  delete jigsawsPtr;
-	  return false;
-	}
-      }
-      delete jigsawsPtr;
-    }
-    // Initialize Dependancy Jigsaw lists in jigsaws
-    for(int g = 0; g < Ng; g++){
-      Group* groupPtr = m_LabGroups.Get(g);
-      JigsawList* jigsawsPtr = groupPtr->GetJigsaws();
-      int Nj = jigsawsPtr->GetN();
-      for(int j = 0; j < Nj; j++){
-	Jigsaw* jigsawPtr = jigsawsPtr->Get(j);
-	if(!jigsawPtr->InitializeDependancyJigsaws()){
-	  delete jigsawsPtr;
-	  return false;
-	}
-	m_LabJigsaws.Add(jigsawPtr);
-      }
-      delete jigsawsPtr;
-    }
-    // Initialize Jigsaw execution list
-    JigsawList* chain_jigsawsPtr = new JigsawList();
-    int Nj = m_LabJigsaws.GetN();
-    for(int i = 0; i < Nj; i++){
-      Jigsaw* jigsawPtr = m_LabJigsaws.Get(i);
-      if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawsPtr)){
-	m_LabJigsaws.Clear();
-	delete chain_jigsawsPtr;
-	return false;
-      }
-    }  
+    vector<TLorentzVector> ChildVector;
+    ChildVector.push_back(P);
+    SetChildren(ChildVector);
+    ResetProductionAngles();
     
-    m_LabJigsaws.Clear();
-    m_LabJigsaws.Add(chain_jigsawsPtr);
-    delete chain_jigsawsPtr;
-
     return true;
-  }
-
-  bool GLabFrame::InitializeAnalysis(){
-    m_Mind = false;
-   
-    for(;;){
-      if(!InitializeLabGroups())  break;
-      if(!InitializeLabStates())  break;
-      if(!InitializeLabJigsaws()) break;
-      if(!InitializeAnalysisRecursive(&m_LabStates,&m_LabGroups)) break;
-      m_Mind = true;
-      break;
-    }
-    if(!m_Mind){
-      cout << endl << "Initialize Analysis Failure: ";
-      cout << "UnSound frame in tree" << endl;
-    }
-    return m_Mind;
   }
 
   void GLabFrame::ClearEvent(){
     m_Spirit = false;
-    if(!m_Body || !m_Mind) return;
-    
-    int Ng = m_LabGroups.GetN();
-    for(int i = 0; i < Ng; i++)
-      m_LabGroups.Get(i)->ClearEvent();
+    if(!m_Body) return;
     
     ClearEventRecursive();
   }
 
   bool GLabFrame::AnalyzeEvent(){
     m_Spirit = false;
-    if(!m_Mind) return false;
-
-    int Ns = m_LabStates.GetN();
-    for(int i = 0; i < Ns; i++){
-      State* statePtr = m_LabStates.Get(i);
-      RestFrameList* framesPtr = statePtr->GetFrames();
-      VisibleFrame* vframePtr = dynamic_cast<VisibleFrame*>(framesPtr->Get(0));
-      if(vframePtr) statePtr->SetFourVector(vframePtr->GetLabFrameFourVector());
-      delete framesPtr;
-    }
-
-    int Ng = m_LabGroups.GetN();
-    for(int i = 0; i < Ng; i++){
-      if(!m_LabGroups.Get(i)->AnalyzeEvent()) return false;
-    }
-
-    int Nj = m_LabJigsaws.GetN();
-    for(int i = 0; i < Nj; i++){
-      if(!m_LabJigsaws.Get(i)->AnalyzeEvent()) return false;
-    }
 
     if(!AnalyzeEventRecursive()) return false;
     m_Spirit = true;
-    return true;
+    return m_Spirit;
   }
 
 }

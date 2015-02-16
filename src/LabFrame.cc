@@ -66,11 +66,37 @@ namespace RestFrames {
     return true;
   }
 
+  TVector3 LabFrame::GetInvisibleMomentum() const {
+    return GetInvisibleFourVector().Vect();
+  }
+
+  TLorentzVector LabFrame::GetInvisibleFourVector() const {
+    TLorentzVector V(0.,0.,0.,0.);
+    if(!m_Spirit) return V;
+    int Nc = GetNChildren();
+    for(int c = 0; c < Nc; c++){
+      RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
+      int Nf = framesPtr->GetN();
+      for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(this);
+      delete framesPtr;
+    }
+    return V;
+  }
+
   double LabFrame::GetCosDecayAngle() const {
     if(m_ChildLinks.size() < 1) return 0.;
     TVector3 V1(0.,0.,1.);
-    TVector3 V2 = m_ChildLinks[0]->GetChildFrame()->GetFourVector(this).Vect().Unit();
+    TVector3 V2 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
     return V1.Dot(V2);
+  }
+
+  TVector3 LabFrame::GetDecayPlaneNormalVector() const {
+    TVector3 V(0.,0.,0.);
+    if(m_ChildLinks.size() < 1) return V;
+   
+    TVector3 V1 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
+    TVector3 V2(0.,0.,1.);
+    return V1.Cross(V2).Unit();
   }
 
 }

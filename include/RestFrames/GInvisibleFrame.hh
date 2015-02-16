@@ -26,6 +26,14 @@ namespace RestFrames {
     GInvisibleFrame(const string& sname, const string& stitle);
     virtual ~GInvisibleFrame();
 
+    virtual void SetMass(double val);
+
+  protected:
+    double m_Mass;
+
+    virtual void ResetFrame();
+    virtual bool GenerateFrame();
+
   private:
     void Init();
    

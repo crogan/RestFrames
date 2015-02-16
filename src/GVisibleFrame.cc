@@ -23,12 +23,20 @@ namespace RestFrames {
     Init();
   }
 
-  GVisibleFrame::~GVisibleFrame(){
-   
-  }
+  GVisibleFrame::~GVisibleFrame(){ }
 
   void GVisibleFrame::Init(){
-  
+    m_Mass = 0.;
+  }
+
+  void GVisibleFrame::SetMass(double val){
+    if(val >= 0.) m_Mass = val;
+  }
+
+  void GVisibleFrame::ResetFrame(){ }
+
+  bool GVisibleFrame::GenerateFrame(){ 
+    return true;
   }
 
 }
