@@ -675,6 +675,16 @@ namespace RestFrames {
     return nullptr; 
   }
 
+  int RestFrame::GetNDescendants() const {
+    int Nchild = GetNChildren();
+    if(Nchild == 0) return 1;
+    int Nd = 0;
+    for(int i = 0; i < Nchild; i++){
+      Nd += GetChildFrame(i)->GetNDescendants();
+    }
+    return Nd;
+  }
+
   TVector3 RestFrame::GetBoostInParentFrame() const{
     TVector3 V(0.,0.,0.);
     if(!m_ParentLinkPtr) return V;

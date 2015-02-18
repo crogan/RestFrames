@@ -102,6 +102,7 @@ namespace RestFrames {
     virtual const RestFrame* GetFrameAtDepth(int depth, const RestFrame* framePtr) const;
     virtual const RestFrame* GetProductionFrame() const;
     virtual const RestFrame* GetSiblingFrame() const;
+    virtual int GetNDescendants() const;
     virtual TVector3 GetBoostInParentFrame() const;
     virtual double GetGammaInParentFrame() const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
