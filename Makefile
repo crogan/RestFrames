@@ -2,7 +2,8 @@ ROOTCFLAGS    = $(shell $(ROOTSYS)/bin/root-config --cflags)
 ROOTGLIBS     = $(shell $(ROOTSYS)/bin/root-config --glibs)
 
 CXX            = g++
-CXXFLAGS       = $(filter-out -stdlib=libc++ -pthread , $(ROOTCFLAGS)) -fPIC
+CXXFLAGS       = -c -fPIC -Wall -O3 -g
+CXXFLAGS       += $(filter-out -stdlib=libc++ -pthread , $(ROOTCFLAGS))
 GLIBS          = $(filter-out -stdlib=libc++ -pthread , $(ROOTGLIBS))
 #GLIBS        += -lMinuit -lRooFit -lRooFitCore
 SOFLAGS       = -shared
@@ -23,10 +24,10 @@ OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.cc=.o)))
 all: $(OUTLIB)libRestFrames.so
 
 $(OUTLIB)libRestFrames.so: $(OBJ_FILES) $(HH_FILES)
-	$(CXX) $(SOFLAGS) $(CXXFLAGS) -o $@ $(GLIBS) $(OBJ_FILES)
+	$(CXX) $(SOFLAGS) -o $@ $(GLIBS) $(OBJ_FILES)
 
 $(OUTOBJ)%.o: src/%.cc include/RestFrames/%.hh
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:
 	rm -f $(OUTOBJ)*.o 

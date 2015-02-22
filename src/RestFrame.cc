@@ -4,6 +4,16 @@ using namespace std;
 
 namespace RestFrames {
 
+  // Initializer.
+  __attribute__((constructor))
+  static void initializer(void){
+    printf("\n" "\x1b[36m");
+    printf("RestFrames v1.00 -- Developed by Christopher Rogan");
+    printf("\x1b[0m" "\n");
+    printf("                    ");
+    printf("Copyright (C) 2015\n\n");
+  }
+
   ///////////////////////////////////////////////
   // RestFrame class methods
   ///////////////////////////////////////////////

@@ -1,4 +1,5 @@
 Library.RestFrame:					libRestFrames.so
+Library.RestFrameList:					libRestFrames.so
 Library.RFrame:						libRestFrames.so
 Library.RDecayFrame:			   		libRestFrames.so
 Library.RInvisibleFrame:			   	libRestFrames.so
