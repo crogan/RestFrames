@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<h1>Categories</h1>
+<p>
+  All categories with at least two posts.
+</p>
+<ul class="categories">
+{% for category in page.sorted_categories %}
+  {% if site.categories[category].size > 1 %}
+  <li>
+    <a href="/category/{{ category | escape }}/">{{ category | escape }}</a>
+    <ul class="posts">
+      {% for post in site.categories[category] %}
+        <li>
+          {{ post.date | date: "%b %d, %Y"  }} &mdash; <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>

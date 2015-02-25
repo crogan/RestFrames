@@ -1,0 +1,345 @@
+---
+layout: null
+title: Mux — visually compare websites
+---
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Mux</title>
+		<script src="jquery-1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css" media="screen">
+			* { margin:0; padding:0; }
+			body {
+				background: #DDD url('checker.png') repeat scroll top left;
+			}
+			header {
+				display:block;
+				position:fixed;
+				left:0; top:0; right:0;
+				height:56px;
+				overflow:hidden;
+				background:transparent url('header-bg.png') repeat-x scroll top left;
+				color:#888;
+				z-index:9999;
+			}
+			header h1 {
+				margin:4px;
+				font-family:lucida grande,tahoma;
+				font-size: 13px;
+				font-weight:normal;
+				text-align:center;
+				color:#333;
+				text-shadow:#ddd 0 1px 0;
+			}
+			iframe {
+				width:100%;
+				height:5000px;
+				border:none;
+				background:transparent;
+				position:absolute;
+				left:0;
+			}
+			empty {
+				display:block;
+				margin:200px auto 0 auto;
+				width:400px;
+				background:rgb(70,70,70);
+				background:rgba(30,30,30,0.8);
+				border-radius:16px; -webkit-border-radius:16px; -moz-border-radius:16px;
+				padding:20px;
+				color:#bbb;
+				text-shadow:#000 0 1px 0;
+				text-align:center;
+				font-family:helvetica,arial;
+				font-size:14px;
+			}
+				empty h2 {
+					font-size:22px;
+					color:#eee;
+					margin-bottom:10px;
+				}
+			toolbar item {
+				display:block;
+				float:left;
+				overflow:hidden;
+				border-left:2px ridge #ccc;
+				height:28px;
+				padding:0 5px 0 10px;
+			}
+				toolbar item:first-child {
+					border-left:none;
+				}
+				toolbar item label {
+					display:block;
+					clear:left;
+				}
+				toolbar item input.url {
+					width:400px;
+					font-size:12px;
+					height:16px;
+					padding:2px;
+					border:1px solid #999;
+					border-bottom:1px solid #ccc;
+					background:white url('text-field-bg.png') repeat-x scroll bottom left;
+					padding-left:20px;
+				}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			var mux = {};
+			mux.IFRAME_YPOS = 52; // auto. calculated if undefined
+			mux.Frame = function(url) {
+				this.url = url;
+			}
+			mux.frames = [];
+			mux.defaultOpacity = 0.5;
+			mux.opacitySlider = mux.opacitySliderTarget = undefined;
+			mux.normalizeURL = function(url) {
+				if (url.indexOf('://') === -1)
+					url = 'http://' + url;
+				if (url.match(/^[^:]+:\/\/[^\/]+$/))
+					url += '/';
+				return url;
+			}
+			mux.find = function(url, onlyFrameq) {
+				for (var i=0;i<mux.frames.length;i++) {
+					var frame = mux.frames[i];
+					if (frame && frame.url === url)
+						return onlyFrameq ? frame.q : frame;
+				}
+			}
+			mux.add = function(url) {
+				var inurl = url;
+				url = mux.normalizeURL(url);
+				if (inurl !== url)
+					mux.addressField.each(function(){ this.value = url; });
+				
+				var frame = mux.find(url);
+				if (frame) {
+					mux.bringToFront(frame);
+					return frame;
+				}
+				frame = new mux.Frame(url);
+				frame.q = $(document.createElement('iframe'));
+				frame.q.attr({
+					src: url,
+					frameborder: url
+				});
+				frame.q.css({
+					opacity: mux.defaultOpacity
+				});
+				mux.frames.push(frame);
+				mux.bodyq.append(frame.q);
+				frame.q.hide().fadeIn(200);
+				mux.layout();
+				mux.onFrameReorder('add');
+				frame.q.get(0).focus();
+				return frame;
+			}
+			mux.remove = function(frameOrUrl, dontLayout) {
+				var z = mux.indexOfFrame(frameOrUrl || mux.frontmostFrame());
+				if (z !== -1) {
+					var frame = mux.frames[z];
+					mux.frames.splice(z,1);
+					frame.q.fadeOut(200, function(){
+						frame.q.remove(); // remove iframe from DOM
+						if (!dontLayout)
+							mux.layout();
+					});
+					mux.onFrameReorder();
+					return frame;
+				}
+			}
+			mux.frontmostFrame = function() {
+				return mux.frames[mux.frames.length-1];
+			}
+			mux.bottomFrame = function() {
+				return mux.frames[0];
+			}
+			mux.indexOfFrame = function(frameOrUrl) {
+				var frame = frameOrUrl || mux.frontmostFrame();
+				if (typeof frame === 'string') {
+					frame = mux.find(frame);
+					if (!frame) return;
+				}
+				for (var z in mux.frames)
+					if (mux.frames[z] === frame)
+						return z;
+				return -1;
+			}
+			mux.bringToFront = function(frameOrUrl, dontLayout) {
+				var frame = frameOrUrl;
+				if (typeof frame === 'string') {
+					frame = mux.find(frame);
+					if (!frame) return;
+				}
+				var zindex = mux.indexOfFrame(frame);
+				if (zindex !== -1 && zindex !== mux.frames.length-1) {
+					mux.frames.splice(zindex,1);
+					mux.frames.push(frame);
+					if (!dontLayout)
+						mux.layout();
+					mux.onFrameReorder();
+				}
+			}
+			// unused
+			/*mux.sendForward = function(urlOrFrameq) {
+				var q = urlOrFrameq;
+				if (typeof urlOrFrameq === 'string') {
+					q = mux.frames[urlOrFrameq];
+					if (!q) return;
+				}
+				q.css('z-index', function(i,zIndex) {
+					zIndex = Number(zIndex);
+					return zIndex+1;
+				})
+			}
+			mux.highestZIndexAndFrame = function() {
+				var frameq,z,hiz = 0,hiframeq;
+				for (var url in mux.frames) {
+					frameq = mux.frames[url];
+					z = Number(frameq.css('z-index'));
+					if (z > hiz) {
+						hiz = z;
+						hiframeq = frameq;
+					}
+				}
+				return [hiz, frameq];
+			}*/
+			// todo: mux.sendBackward = function(urlOrFrameq) {}
+			mux.frameYOffset = function() {
+				if (mux.IFRAME_YPOS || mux.IFRAME_YPOS === 0)
+					return mux.IFRAME_YPOS;
+				var headerq = $('header');
+				return headerq.offset()+headerq.height();
+			}
+			mux.setCtrlEnabled = function(q, enabled) {
+				if (this.disabled === !enabled)
+					return;
+				q.each(function(){this.disabled = !enabled;});
+				q.css('opacity', enabled ? null : 0.5);
+			}
+			mux.onFrameReorder = function(senderInfo) {
+				var frame = mux.frontmostFrame();
+				var hasOpacitySlider = mux.opacitySlider && mux.opacitySlider.css('display') !== 'none';
+				var opacity = mux.defaultOpacity;
+				if (senderInfo != 'add')
+					opacity = Number(frame.q.css('opacity'));
+				opacity = parseInt(256.0 * opacity);
+				mux.opacitySlider.each(function(){
+					this.value = opacity;
+				});
+			}
+			mux.layout = function() {
+				var winWidth = $(window).width();
+				var yStart = mux.frameYOffset();
+				var titles = [];
+				if (mux.frames.length) {
+					$('empty').fadeOut(200);
+					for (var zindex in mux.frames) {
+						var frame = mux.frames[zindex];
+						titles.push(frame.url);
+						frame.q.css({
+							top: yStart+'px',
+							width: winWidth+'px',
+							'z-index': zindex
+						})
+					}
+					mux.setCtrlEnabled(mux.opacitySlider, true);
+					mux.setCtrlEnabled(mux.removeButton, true);
+				}
+				else {
+					$('empty').fadeIn(200);
+					mux.setCtrlEnabled(mux.opacitySlider, false);
+					mux.setCtrlEnabled(mux.removeButton, false);
+				}
+				document.title = 'mux: '+titles.join(' + ');
+			}
+			mux.fitFramesToWindow = function(onlyAdjustFrameWidths) {
+				var winWidth = $(window).width();
+				for (var zindex in mux.frames) {
+					var frame = mux.frames[zindex];
+					frame.q.css('width', winWidth+'px');
+				}
+			}
+			
+			mux.init = function() {
+				mux.bodyq = $('body');
+				$('empty').hide();
+				mux.addButton = $('input.add');
+				mux.removeButton = $('input.remove');
+				mux.addressField = $('input[type=url]');
+				
+				// address field
+				mux.addressField.keydown(function(ev){
+					if (ev.which === 13 || ev.which === 10)
+						mux.addButton.click();
+				});
+				
+				// + and - buttons
+				mux.addButton.click(function() {
+					var url = mux.addressField.get(0).value;
+					mux.add(url);
+				});
+				mux.removeButton.click(function() {
+					mux.remove(); // top frame
+				});
+				
+				// opacity slider (only for webkit browsers)
+				mux.opacitySlider = $('input[type=range]');
+				if (navigator.userAgent.indexOf('WebKit') !== -1) {
+					mux.opacitySlider.mousedown(function() {
+						if (mux.frames.length)
+							mux.opacitySliderTarget = mux.frames[mux.frames.length-1].q.get(0);
+					});
+					mux.opacitySlider.bind('input', function(){
+						if (mux.opacitySliderTarget)
+							mux.opacitySliderTarget.style.opacity = parseFloat(this.value) / 256.0;
+					});
+					mux.opacitySlider.mouseup(function() {
+						mux.opacitySliderTarget = null;
+					});
+				}
+				else {
+					// parent is the actual toolbar item, which is what we'll hide.
+					mux.opacitySlider.parent().hide();
+				}
+				
+				//mux.add('http://hunch.se/');
+				//mux.add('http://www.spotify.com/en/');
+				
+				$(window).resize(function(){
+					mux.fitFramesToWindow();
+				})
+				
+				mux.layout();
+			}
+			
+			$(function(){ mux.init(); });
+		</script>
+	</head>
+	<body>
+		<header>
+			<h1>Mux</h1>
+			<toolbar>
+				<item>
+					<input type="url" accesskey="L" class="url" name="url1" value="http://www.bbc.co.uk/">
+					<input type="button" class="add" value="Add">
+				</item>
+				<item>
+					<input type="button" class="remove" value="Remove topmost">
+				</item>
+				<item>
+					<input type="range" class="opacitySlider" min="0" value="128" max="256">
+				</item>
+			</toolbar>
+		</header>
+		<empty>
+			<h2>No sites added</h2>
+			<p>
+				Add a site by typing in its URL in the address field and pressing
+				the "Add" button
+			</p>
+		</empty>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Christopher Rogan</title>
+  <link href="http://RestFrames.com/atom.xml" rel="self"/>
+  <link href="http://RestFrames.com/"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>http://rsms.me/</id>
+  <author>
+    <name>Christopher Rogan</name>
+    <email>christophersrogan@gmail.com</email>
+  </author>
+  {% for post in site.posts limit:10 %}
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="http://RestFrames.com{{ post.url }}"/>
+    <updated>{{ post.date | date_to_xmlschema }}</updated>
+    <id>http://rsms.me{{ post.id }}</id>
+    <content type="html">{{ post.content | xml_escape }}</content>
+    <author>
+      <name>Christopher Rogan</name>
+      <uri>http://RestFrames.com/</uri>
+    </author>
+  </entry>
+  {% endfor %}
+</feed>

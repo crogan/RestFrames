@@ -1,0 +1,31 @@
+port: 3000
+highlighter: null
+lsi: false
+permalink: /:year/:month/:day/:title.html
+# paginate: 50
+markdown: rdiscount
+# enables SmartyPants (nice curly quotation marks, em/en dashes, elipses, etc):
+rdiscount:
+  extensions: [smart]
+# Since GH pages override this to "true", we test this value to see if we are running locally
+safe: false
+
+defaults:
+  -
+    scope:
+      path: "examples"
+      type: "posts"
+    values:
+      layout: post
+      author: "Christopher Rogan"
+      category: "examples"
+  -
+    scope:
+      path: "news"
+      type: "posts"
+    values:
+      layout: post
+      author: "Christopher Rogan"
+      category: "news"
+
+# include: [".well-known"]

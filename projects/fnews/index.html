@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en" style="background:black">
+  <head>
+    <meta charset="utf-8">
+    <title>Fnews</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=1024,initial-scale=1.0">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="screen.css" type="text/css" media="all">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script src="http://movelang.org/move.js"></script>
+    <script type="text/javascript">
+var addToHomeConfig = {
+	animationIn: 'bubble',
+	animationOut: 'drop',
+	lifespan: 99999999999,
+	startDelay: 500,
+};
+    </script>
+    <script src="add2home.js"></script>
+    <script type="text/move" src="main.mv"></script>
+    <script type="text/move">import main</script>
+  </head>
+  <body style="background:black">
+    <div id="fb-root"></div>
+
+    <item class="generic">
+      <div class="__created_time">23:48</div>
+      <div class="object">
+        <img src="">
+        <h2 class="__name"></h2>
+      </div>
+      <breaker>
+      <content>
+        <img class="image" src="">
+        <p class="__description"></p>
+      </content>
+      <footer>
+        <user class="from">
+          <picture></picture>
+          <p class="name">Michelle Kadir</p>
+        </user>
+        <a class="like" href="#like"></a>
+      </footer>
+    </item>
+
+    <a class="settings-tab logged-in" href="#settings"></a>
+    <settings>
+      <h2>Configuration</h2>
+      <ul>
+        <li class="logged-in"><a class="logout" href="#logout">Log out <span class="fb-user-name"></span></a></li>
+        <li class="logged-in"><a class="love" href="http://rsms.me/" target="_blank">With ♥ from Rasmus</a></li>
+        <li class="logged-out"><a class="login" href="#login">Log in to Facebook...</a></li>
+        <li class="logged-out"><p>
+          No user details are saved — everything is done locally, right here in your iPad.
+        </p></li>
+      </ul>
+    </settings>
+
+    <div id="please-rotate">
+    </div>
+    
+    <spinner>
+    </spinner>
+  </body>
+</html>

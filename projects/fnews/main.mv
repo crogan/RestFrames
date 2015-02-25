@@ -1,0 +1,498 @@
+if (!(debug = document.location.hostname == 'localhost'))
+  debug = debug = document.location.hostname == 'rsmsmbp15.local'
+
+state = {
+  newsFeedItems: [],  # fifo queue (oldest first, newest last)
+  lastFeedItemTimestamp: null,
+  activeView: null,
+}
+
+# Settings, backed by localStorage
+settings = ^(key, value) {
+  defaults = {
+    itemTypes: ['link', 'status', 'photo', 'checkin'],
+  }
+  if (value == undefined) {
+    if (key in localStorage && (value = localStorage[key]))
+      return JSON.parse value
+    else
+      return defaults[key]
+  } else {
+    localStorage[key] = JSON value
+  }
+}
+
+# Shrink font size until a view is at least *high*
+shrink = ^(view, height, callback){
+  if (view.height() <= height) {
+    view.addClass 'shrunken'
+    return setTimeout ^{ callback && callback() }, 1
+  }
+  fontsize = parseInt view.css 'font-size'
+  view.css('font-size', (fontsize - 2) + 'px')
+  #setTimeout ^{ shrink(view, height, callback) }, 1
+  shrink view, height, callback
+}
+
+mapImageStyleParam = ^(style){
+  # feature:all%7Celement:all%7Clightness:0%7Cgamma:0.3%7Csaturation:-60
+  e = encodeURIComponent
+  style = Object.keys(style).map ^(k) { e(k) + "%3A" + e(style[k]) }
+  style.join '%7C'
+}
+
+
+
+mapImageURL = ^(lat, lon) {
+  "http://maps.google.com/maps/api/staticmap?"+
+      "markers=color:0xff3d13%7C"+lat+","+lon+
+      "&style="+mapImageStyleParam({
+        feature: "all",
+        element: "all",
+        lightness: 0,
+        gamma: 0.2,
+        saturation: -60
+      })+
+      "&style="+mapImageStyleParam({
+        feature: "road.highway",
+        lightness: 10,
+        saturation: 60,
+        hue: '0x33ccff'
+      })+
+      "&style="+mapImageStyleParam({
+        element: "labels", visibility: 'on', lightness: -20,
+      })+
+      "&style="+mapImageStyleParam({
+        feature: "road.local", visibility: 'simplified', lightness: -60,
+        saturation: 10, hue: '0xf6ff00'
+      })+
+      "&style="+mapImageStyleParam({
+        feature: "road.arterial", visibility: 'simplified', lightness: 15,
+        saturation: -50, hue: '0x00ff33'
+      })+
+      "&style="+mapImageStyleParam({
+        feature: "feature:transit", hue: '0x00ff00', saturation: 60, gamma: 0.7,
+      })+
+      "&zoom=15"+
+      "&size=480x480"+
+      "&maptype=road"+
+      "&sensor=false"
+}
+
+smallMapImageURL = ^(lat, lon) {
+  "http://maps.google.com/maps/api/staticmap?"+
+      "markers=color:0xFF3D13|size:small|"+lat+","+lon+
+      "&style="+mapImageStyleParam({
+        feature: "all",
+        element: "all",
+        lightness: 0,
+        gamma: 0.1,
+        saturation: -60
+      })+
+      "&zoom=1"+
+      "&size=90x90"+
+      "&maptype=terrain"+
+      "&sensor=false"
+}
+
+fbUserImageURL = ^(user_id) {
+  "https://graph.facebook.com/"+user_id+"/picture?type=large&access_token="+
+      encodeURIComponent(state.session.access_token)
+}
+
+fbSmallUserImageURL = ^(user_id) {
+  "https://graph.facebook.com/"+user_id+"/picture?type=square&access_token="+
+      encodeURIComponent(state.session.access_token)
+}
+
+fbPhotoImageURL = ^(object_id) {
+  "https://graph.facebook.com/"+object_id+"/picture?type=normal&access_token="+
+      encodeURIComponent(state.session.access_token)
+}
+
+viewControllers = {
+  'item.generic': ^(view, item){
+    created = new Date(item.created_time)
+    item.created_time = created.toTimeString().split(':')[:2].join(':')
+    
+    #
+    # There are two fields which are required:
+    # - name (shown top-left)
+    # - description (shown large in the center)
+    #
+    # Conversions and priority:
+    # - If there's a "message" parameter, it will be added to the end of a
+    #   "description" field, separated by a emdash
+    #
+    
+    # Status item
+    if (item.type == 'status' && !item.name) {
+      # Use the sender's name and picture as the item name and picture
+      item.name = item.from.name
+      item.picture = fbUserImageURL item.from.id
+    }
+    
+    # Photo item
+    if (item.type == 'photo') {
+      # Get a large image from the graph API if the photo is in the graph
+      if (item.object_id)
+        item.large_picture = fbPhotoImageURL item.object_id
+      else
+        item.large_picture = item.picture
+      item.picture = null
+
+      # Make sure "name" and "description" parameters are defined
+      if (!item.name) item.name = 'Photo'
+      if (!item.message && !item.description) item.description = ''
+    }
+    
+    # Link item
+    if (item.type == 'link') {
+    
+      # Instagram
+      if (item.application && item.application.id == '124024574287414') {
+        item.large_picture = item.link + 'media'
+      }
+    
+      # Foursquare
+      if (item.application && item.application.id == '86734274142') {
+        if (m = /mapproxy%2F([0-9\.]+)%2F([0-9\.]+)%2Fmap/.exec item.picture) {
+          item.large_picture = mapImageURL m[1], m[2]
+          item.picture = smallMapImageURL m[1], m[2]
+        }
+      }
+    }
+    
+    # Check-in
+    if (item.type == 'checkin') {
+      lat = item.place.location.latitude
+      lon = item.place.location.longitude
+      item.large_picture = mapImageURL lat, lon
+      item.picture = smallMapImageURL lat, lon
+
+      # Facebook-style formatting for check-ins with a message
+      if (item.message) {
+        name = item.name
+        item.name = item.caption || item.description
+        item.description = item.message
+        item.message = "at " + name
+      }
+    }
+    
+    # If there's a name but no description, assign name to description
+    hasDescription = item.description && Text(item.description).trim() != ''
+    if (!hasDescription && item.type != 'photo') {
+      if (item.caption) {
+        item.description = item.caption
+        hasDescription = true
+      } else if (item.name) {
+        item.description = item.name
+      } else if (item.type == 'link') {
+        item.description = item.link
+      }
+    }
+
+    # Make text nodes of all properties in the view
+    for (k in item) {
+      view.find('.__'+k).text item[k]
+    }
+    
+    # If there's a message, it's appended to or replaces description
+    if (item.message && Text(item.message).trim() != '') {
+      if (hasDescription && item.description != item.message) {
+        e = document.createElement 'em'
+        e.appendChild document.createTextNode ' — '+item.message
+        view.find('.__description').append e
+      } else {
+        view.find('.__description').text item.message
+      }
+    }
+    
+    # Show a large picture (next to the description) if there's one
+    if (item.large_picture) {
+      view.find('content img').show().attr('src', item.large_picture)
+      view.find('content .__description').css('max-width', '480px')
+    } else {
+      view.find('content img').hide()
+      view.find('content .__description').css('max-width', '100%')
+    }
+    
+    # Show a small picture (top-left corner) if there's one
+    if (item.picture)
+      view.find('.object img').show().attr('src', item.picture)
+    else
+      view.find('.object img').hide()
+    
+    # Render sender's picture and name
+    user = item.from
+    view.find('user picture').css('background-image',
+        "url('"+fbSmallUserImageURL(user.id)+"')")
+    view.find('user .name').text(user.name)
+    
+    # Shrink name and description until they fit in the view
+    shrink view.find('.object .__name'), 90, ^{
+      shrink view.find('.__description'), 480
+    }
+    
+    # Does the current user already like this?
+    if (item.likes && item.likes.data &&
+        item.likes.data.some ^(item) { item.id == state.session.uid } ) {
+      view.find('a.like').addClass 'likes'
+    }
+    
+    # "Like" button
+    likeRequestInTransit = false
+    view.find('a.like').click ^{
+      # Do nothing if we are currently processing a click
+      if (likeRequestInTransit)
+        return
+      
+      if ($(this).hasClass 'likes') {
+        # User already likes -- action is "unlike"
+        FB.api '/'+item.id+'/likes', 'delete', {}, ^(response) {
+          likeRequestInTransit = false
+          if (response.error)
+            return alert '"Unlike" failed: '+response.error.message
+          view.find('a.like').removeClass 'likes'
+        }
+      } else {
+        # User does not like -- action is "like"
+        FB.api '/'+item.id+'/likes', 'post', {}, ^(response) {
+          likeRequestInTransit = false
+          if (response.error)
+            return alert '"Like" failed: '+response.error.message
+          view.find('a.like').addClass 'likes'
+        }
+      }
+      likeRequestInTransit = true
+      false
+    }
+    
+    # Trigger the "move in" CSS animation
+    view.addClass 'moveIn'
+  }
+}
+
+onNewFeedItems = ^{
+  item = state.newsFeedItems.pop()
+  print 'onNewFeedItems', item
+  
+  # Pick a view and controller for the item
+  view = $ 'item.'+item.type
+  controller = viewControllers['item.'+item.type]
+  if (!controller || view.length == 0) {
+    # No custom view for this type -- let's use the generic view
+    view = $ 'item.generic'
+    controller = viewControllers['item.generic']
+  }
+  
+  # Hide any previously active view
+  if (state.activeView) {
+    state.activeView.addClass 'moveOut'
+    setTimeout ^{ $('item.moveOut').remove() }, 1000
+  }
+
+  # Make a copy of the view
+  view2 = view.clone()
+  view.parent().append(view2)
+  view = view2
+
+  # Run the controller and mark the view as being active
+  controller view, item
+  state.activeView = view
+}
+
+updateNewsFeed = ^{
+  # Clear our timer and setup request parameters
+  clearTimeout state.updateNewsFeedTimer
+  params = {
+    limit: 25,
+    date_format: 'r',
+  }
+
+  # Add "since" if applicable
+  if (state.lastFeedItemTimestamp)
+    params.since = state.lastFeedItemTimestamp
+
+  FB.api '/me/home', params, ^(response) {
+    $('spinner').addClass 'hidden'
+    items = response.data
+    
+    # Keep track of last timestamp
+    if (items.length) {
+      print '/me/home -> ('+items.length+')', items
+      state.lastFeedItemTimestamp = items[0].created_time
+    } else if (!$('item.moveIn').length) {
+      # Nothing to display
+      print 'TODO: "Waiting for your friends to post something..."'
+    }
+
+    # Filter out anything other than links
+    itemTypes = settings 'itemTypes'
+    items = items.filter ^(item) { itemTypes.indexOf(item.type) != -1 }
+
+    # Update items state if any new items have appeared
+    if (items.length) {
+      state.newsFeedItems = state.newsFeedItems.concat items.reverse()
+
+      # Trigger "new item" event
+      onNewFeedItems()
+    }
+    
+    # Schedule next query to trigger in 30 seconds
+    state.updateNewsFeedTimer = setTimeout updateNewsFeed, 30000
+  }
+}
+
+onUserDidChange = ^{
+  updateUserInfo()
+  if (state.session) onUserDidLogin(); else onUserDidLogout()
+}
+
+onUserDidLogout = ^{
+  clearTimeout state.updateNewsFeedTimer
+
+  # Reset state
+  state.lastFeedItemTimestamp = null
+  if (state.activeView) {
+    state.activeView.remove()
+    state.activeView = null
+  }
+  state.newsFeedItems = []
+}
+
+onUserDidLogin = ^{
+  hideSettings()
+  updateNewsFeed()
+}
+
+hideSettings = ^{
+  $('settings').removeClass('visible').removeClass('hq')
+}
+
+showSettings = ^{
+  $('settings').addClass 'visible'
+  setTimeout ^{ $('settings').addClass 'hq' }, 250
+}
+
+updateUserInfo = ^{
+  state.user = null
+  fields = ["bio", "first_name", "id", "last_name", "link", "name", "timezone"]
+  if (state.session) {
+    # Fetch the current user's details
+    FB.api '/me', ^(user) {
+      state.user = user
+      print '/me ->', user
+      fields.forEach ^(key) { $('.fb-user-'+key).text(user[key]) }
+    }
+  } else {
+    # Clear any user data from the UI
+    fields.forEach ^(key) { $('.fb-user-'+key).text("") }
+  }
+}
+
+updateLoginStatus = ^(session) {
+  print 'updateLoginStatus:', session
+  if (state.session == session) return  # noop
+  old_uid = state.session ? state.session.uid : null
+  state.session = session
+
+  if (session) {
+    $('.logged-in').show()
+    $('.logged-out').hide()
+  } else {
+    $('.logged-in').hide()
+    $('.logged-out').show()
+    showSettings()
+  }
+
+  if (!state.user || !session || session.uid != old_uid)
+    onUserDidChange()
+}
+
+FB.init {
+  appId: debug ? '175094159205629' : '146624058735944',
+  status: true, cookie: true, xfbml: true
+}
+FB.getLoginStatus ^(response) {
+  print 'FB.getLoginStatus ->', response
+  updateLoginStatus response.session
+}
+FB.Event.subscribe 'auth.sessionChange', ^(response) {
+  print 'event: auth.sessionChange ->', response
+  updateLoginStatus response.session
+}
+
+L = document.location
+baseURL = L.protocol + '//' + L.host + L.pathname + L.search
+
+# Login button
+window.ok2login = true
+$('settings a.login').click ^{
+  if (window.ok2login) {
+    window.ok2login = false
+    setTimeout ^{ window.ok2login = true }, 1000
+    permissions = 'read_stream,publish_stream,user_photos,friends_photos,'+
+                  'user_checkins,friends_checkins'
+    
+    if (window.navigator.standalone) {
+      # redirect for iOS in full-screen mode
+      document.location.href = 'https://www.facebook.com/dialog/oauth/?'+
+          'scope='+permissions+
+          '&client_id='+FB._apiKey+
+          '&redirect_uri='+encodeURIComponent(baseURL)+
+          '&response_type=token'
+    } else {
+      # Pop-up for everything else. Note: FB auth can not run in iframes
+      FB.login(^(response) {
+        print 'FB.login ->', response
+        if (response.session) print 'auth success'; else print 'auth fail'
+        updateLoginStatus response.session
+      }, {perms:permissions})
+    }
+    
+  }
+  false
+}
+
+
+# Logout button
+$('a.logout').click ^{
+  FB.logout ^(response) { print 'FB.logout ->', response }
+  false
+}
+
+# Settings
+settingsIsVisible = false
+$('a.settings-tab').click ^{
+  if (!settingsIsVisible) {
+    settingsIsVisible = true
+    showSettings()
+    $(this).addClass 'active'
+  } else {
+    settingsIsVisible = false
+    hideSettings()
+    $(this).removeClass 'active'
+  }
+  false
+}
+
+# Set orientation class on <html>
+window.onorientationchange = ^{
+  $('html').attr('class', 'orientation'+window.orientation)
+}
+window.onorientationchange()
+
+
+/*keys = []
+for (k in window) keys.push ""+k
+keys.sort()
+for (k=0; k<keys.length; k++) {
+  $('#window').append '<li><b>'+keys[k]+'</b>: '+window[keys[k]]+'</li>'
+}
+keys = []
+for (k in document) keys.push ""+k
+keys.sort()
+for (k=0; k<keys.length; k++) {
+  $('#document').append '<li><b>'+keys[k]+'</b>: '+document[keys[k]]+'</li>'
+}*/

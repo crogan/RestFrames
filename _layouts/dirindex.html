@@ -1,0 +1,39 @@
+---
+layout: page
+hide_subdirindex: true
+---
+<div class="dirindex">
+  <h2>
+    {% if page.title %}
+      {{ page.title }}
+    {% else %}
+      {{ page.url | remove_first:'/index.html' | remove_first:'/' | replace:'/',' &mdash; ' | capitalize }}
+    {% endif %}
+  </h2>
+
+  {% if content != '' %}
+  <p class="preamble">
+    {{ content }}
+  </p>
+  {% endif %}
+
+  {% capture url_prefix %}{{ page.url | remove_first:'index.html' }}{% endcapture %}
+  {% capture key_prefix %}:{{url_prefix}}{% endcapture %}
+  <ul class="pages">
+  {% for subpage in site.pages %}
+    {% capture subpage_key %}:{{ subpage.url }}{% endcapture %}
+    {% if subpage_key contains key_prefix and subpage.url != page.url %}
+      {% if page.hide_subdirindex != true or subpage.title %}
+      <li>
+        <a href="{{ subpage.url | remove_first:'index.html' }}">
+        {% if subpage.title %}
+          {{ subpage.title }}
+        {% else %}
+          {{ subpage.url | remove_first:url_prefix | remove_first:'index.html' }}
+        {% endif %}</a>
+      </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  </ul>
+</div>

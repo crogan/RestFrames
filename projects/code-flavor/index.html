@@ -1,0 +1,551 @@
+---
+layout: null
+title: Flavors of code
+---
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Flavors of code</title>
+    <meta property="fb:admins" content="728642302">
+    <meta property="fb:app_id" content="38027689216">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+
+if (typeof console === 'undefined') var console={log:function(){}};
+
+function crc24(str) {
+  var i, c, L, x, crc = 0xb704ce;
+  for (i=0,L=str.length; i<L && (c = str.charCodeAt(i)); ++i) {
+    x = 8;
+    crc ^= c << 16;
+    while (x-- > 0) {
+      crc <<= 1;
+      if ((crc & 0x1000000) > 0)
+        crc ^= 0x1864cfb;
+    }
+  }
+  return crc;
+}
+
+var atoc = {
+  // Canvas element
+  canvas: null,
+  
+  // Repositories
+  repos: {},
+  
+  // Style to fill "loading" parts with
+  unknownFillStyle: '#ccc',
+  
+  // Saves the current user's state in local storage
+  saveUserState: function() {
+    if (!window.localStorage) return;
+    window.localStorage['ghtoc.2.'+this.username] = JSON.stringify({
+      repos: this.repos,
+      mtime: (new Date).getTime()
+    });
+  },
+  
+  loadUserState: function(maxAge) {
+    if (!window.localStorage) return false;
+    var userState = window.localStorage['ghtoc.2.'+this.username];
+    if (!userState) return false;
+    try { userState = JSON.parse(userState); } catch(e) { return false; }
+    if (typeof userState !== 'object' || !userState.repos) return false;
+    var now = (new Date).getTime(), age = now-userState.mtime;
+    if (isNaN(age) || age > maxAge)
+      return false;
+    for (var k in userState.repos) {
+      this.repos = userState.repos;
+      return true;
+    }
+    return false;
+  },
+  
+  repoCount: function() {
+    var count = 0;
+    for (var k in this.repos) count++;
+    return count;
+  },
+  
+  // Fetches info for |username|
+  loadUser: function(username, useCache, callback) {
+    this.username = username;
+    this.repos = {};
+    var $progress = $('#progress').hide();
+    if (useCache && this.loadUserState(1000*60*15)) {
+      //console.log('loaded saved state', this.repos)
+      this.drawPie();
+      if (callback) callback();
+      return;
+    }
+    $progress.find('.loaded').text('0');
+    $progress.find('.total').text('?');
+    $progress.fadeIn(500);
+    
+    var self = this, repoLanguagesQueue = [];
+    var x = false, refcount = 0, fin = function(err) {
+      if (err) {
+        $progress.fadeOut(200);
+        if (callback) callback(err);
+      } else {
+        self.loadQueuedRepoLanguages(repoLanguagesQueue, function(err) {
+          $progress.fadeOut(200);
+          if (!err) self.saveUserState();
+          if (callback) callback(err);
+        });
+      } 
+    };
+    var page = 1;
+    var fetchNextPage = function() {
+      console.log('Fetching page '+page+' of repo listings');
+      ++refcount;
+      $.ajax({
+  		  url: 'http://github.com/api/v2/json/repos/show/'+
+  		       encodeURIComponent(username)+'?page='+page+'&callback=?',
+  		  dataType: 'json',
+  		  error: function (xhr, textStatus, err) {
+  		    refcount = 0;
+  		    fin(err || new Error(textStatus));
+  		  },
+  		  success: function (data, textStatus, xhr) {
+  		    var i=0, repo;
+  		    while ((repo = data.repositories[i++])) {
+  		      self.repos[repo.name] = repo;
+  		      repoLanguagesQueue.push(repo.name);
+  		    }
+          $progress.find('.total').text(String(self.repoCount()));
+          if (data.repositories.length === 30) {
+            setTimeout(function(){
+    		      page++;
+    		      fetchNextPage();
+    		      if (--refcount === 0) fin();
+    		      self.drawPie();
+            },1000);
+          } else {
+  		      if (--refcount === 0) fin();
+  		      self.drawPie();
+          }
+  		  }
+  		});
+  	}
+  	fetchNextPage();
+  },
+  
+  loadQueuedRepoLanguages: function (queue, callback) {
+    var self = this;
+    var $progress = $('#progress');
+    var loadNext = function() {
+      var repoName = queue.shift();
+      if (!repoName) {
+        if (callback) callback();
+        return;
+      }
+      var timeStarted = new Date;
+      self.loadRepoLanguages(repoName, function(err) {
+        $progress.find('.loaded').text(String(self.repoCount()-queue.length));
+        if (err) return callback && callback(err);
+        var timeSpent = (new Date)-timeStarted;
+        if (timeSpent < 1500) {
+          setTimeout(loadNext, 1500-timeSpent);
+        } else {
+          loadNext();
+        }
+      });
+    };
+    loadNext();
+  },
+  
+  // Fetch language list for |repoName|
+  loadRepoLanguages: function(repoName, callback) {
+    console.log('Fetching languages info for repo '+
+                this.username+'/'+repoName);
+    var self = this;
+    $.ajax({
+		  url: 'http://github.com/api/v2/json/repos/show/'+
+		       encodeURIComponent(this.username)+'/'+
+		       encodeURIComponent(repoName)+'/languages?callback=?',
+		  dataType: 'json',
+		  error: function (xhr, textStatus, err) {
+		    if (callback) callback(err || new Error(textStatus));
+		  },
+		  success: function (data, textStatus, xhr) {
+		    var repo = self.repos[repoName];
+		    if (repo) {
+		      repo.languages = data.languages;
+		      self.drawPie();
+	      }
+	      if (callback) callback();
+		  }
+		})
+  },
+  
+  // Load pattern image
+  loadPatternImage: function () {
+    // Create "unknown" pattern
+    var self = this, im = new Image();
+    im.onload = function(){
+      var g = self.canvas.getContext('2d');
+      self.unknownFillStyle = g.createPattern(im, 'repeat');
+      self.drawPie();
+    };
+    im.src = 'loading.png';
+  },
+
+  // Draws the pie using the current data
+  drawPie: function() {
+    // Acquire canvas context
+    var g = this.canvas.getContext('2d');
+    g.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    var labelExtrude = 10,
+        labelMargin = 5,
+        pieMargin = 20 + ((labelExtrude+labelMargin)*2),
+        w = this.canvas.width - pieMargin,
+        h = this.canvas.height - pieMargin,
+        radius = Math.floor(Math.min(w, h) / 2),
+        centerX = Math.floor((w+(pieMargin/2))/2),
+        centerY = Math.floor(((h+(pieMargin/2))/2)+(pieMargin/2)),
+        progress = 0;
+
+    // Create language mapping
+    var countSum = 0, repoName, repo, max = 0,
+        i, index = {},
+        langs = [], lang, bytes;
+    for (repoName in this.repos) {
+      repo = this.repos[repoName];
+      if (!repo.languages)
+        continue;
+      for (lang in repo.languages) {
+        bytes = repo.languages[lang];
+        i = index[lang];
+        if (i === undefined) {
+          i = langs.length;
+          index[lang] = i;
+          langs.push({name:lang, size:bytes, repoNames:[repoName]});
+        } else {
+          langs[i].size += bytes;
+          langs[i].repoNames.push(repoName);
+        }
+        if (langs[i].size > max)
+          max = langs[i].size;
+        countSum += bytes;
+      }
+    }
+
+    // Order slices large, small, large, small...
+    langs.sort(function(a, b) { return a.size < b.size });
+    //langs.sort(function(a, b) { return a.name > b.name });
+    var langs2 = new Array(langs.length);
+    i = 0;
+    while (langs.length) {
+      lang = i % 2 ? langs.pop() : langs.shift();
+      langs2[i++] = lang;
+    }
+    langs = langs2;
+    /*console.log('----')
+    // 10 9 8 7 6 5 4 3 2 1 --> 10 5 9 4 8 3 7 2 6 1
+    var langs2 = new Array(langs.length);
+    for (i = 0, x = 0; i < langs.length; i += 2, x++) {
+      langs2[i] = langs[x];
+      langs2[i+1] = langs[Math.floor(langs.length/2) + x];
+      console.log('i', i, 'x', x)
+    }
+    console.log('----', JSON.stringify(langs2))
+    langs = langs2;*/
+
+    // Draw each language piece of the pie
+    var viewOffset = this.$view.offset();
+    var value, c24, color, x,
+        labelExtrude2 = labelExtrude + labelMargin,
+        labelLineFromX, labelLineFromY, labelLineToX, labelLineToY,
+        labelElem, labelContainer, labelX, labelY, labelAlign,
+        sliceStart, sliceEnd, angle, normalisedAngle,
+        dividers = [];
+    labelContainer = this.$view.find('.labels').empty();
+    //labelContainer.css({ width: this.canvas.width+'px',
+    //                     height: this.canvas.height+'px' });
+    i = 0;
+    while ((lang = langs[i++])) {
+      value = lang.size / countSum;
+      
+      // Slice color
+      //color = crc24(lang.name);
+      //color = 'rgba('+(color >> 16)+','+
+      //               +((color >> 8) & 0xff)+','+
+      //               +(color & 0xff)+','+
+      //               '0.6)';
+      color = this.sliceColor(i, langs.length);
+
+      // Draw pie slice
+      g.beginPath();
+      g.moveTo(centerX, centerY); // center of the pie
+      g.arc(centerX, centerY, radius,
+            Math.PI * (- 0.5 + 2 * progress), // -0.5 sets the start to be top
+            Math.PI * (- 0.5 + 2 * (progress + value)),
+            false);
+      g.lineTo(centerX, centerY); // Line back to the center
+      g.closePath();
+      g.fillStyle = color;//this.randomColor();
+      g.fill();
+
+      // Slice start and end coordinates
+      sliceStart = Math.PI * (2 * progress);
+      sliceEnd = Math.PI * (2 * (progress + value));
+      angle = (sliceStart + sliceEnd)/2;
+      normalisedAngle = angle;
+      if (normalisedAngle > Math.PI * 2) {
+        normalisedAngle = normalisedAngle - Math.PI * 2;
+      } else if (normalisedAngle < 0) {
+        normalisedAngle = normalisedAngle + Math.PI * 2;
+      }
+      
+      // Save divider degrees
+      dividers.push([centerX + Math.sin(sliceEnd) * radius,
+                     centerY - Math.cos(sliceEnd) * radius]);
+      
+      // Create label element
+      labelElem = $(document.createElement('span'));
+      labelElem.attr('title', 'Projects: '+lang.repoNames.join(', '));
+      labelElem.addClass('label');
+      labelElem.html(lang.name + ' <span class="value">'+(value * 100).toFixed(2)+'%</span>');
+      x = 1;
+      //console.log(lang.name, Math.ceil((lang.size / max) * 10));
+      switch (Math.floor((lang.size / max) * 10)) {
+        case 0:
+        case 1: x = 1; break;
+        case 2:
+        case 3:
+        case 4:
+        case 5: x = 2; break;
+        default: x = 3; break;
+      }
+      labelElem.addClass('x'+x);
+      labelContainer.append(labelElem);
+      labelWidth = labelElem.width();
+      labelHeight = labelElem.height();
+      
+      // Position label
+      labelX = centerX + Math.sin(normalisedAngle) * (radius + labelExtrude2);
+      labelY = centerY - Math.cos(normalisedAngle) * (radius + labelExtrude2);
+      labelAlign = 'left';
+      if (normalisedAngle <= Math.PI * 0.5) {
+        // Top Right
+      } else if ((normalisedAngle > Math.PI * 0.5) && (normalisedAngle <= Math.PI)) {
+        // Bottom Right
+      } else if ((normalisedAngle > Math.PI) && (normalisedAngle <= Math.PI*1.5)) {
+        // Bottom Left
+        labelX -= labelWidth;
+        labelAlign = 'right';
+      } else {
+        // Top Left
+        labelX -= labelWidth;
+        labelAlign = 'right';
+      }
+      labelX += viewOffset.left;
+      labelY += viewOffset.top - (labelHeight/2);
+      labelElem.css({ left: labelX+'px',
+                      top: labelY+'px',
+                      'text-align': labelAlign });
+
+      // Draw label line
+      //if (value > 0.02) {
+      labelLineFromX = centerX + Math.sin(normalisedAngle) * (radius * 0.9);
+      labelLineFromY = centerY - Math.cos(normalisedAngle) * (radius * 0.9);
+      labelLineToX = centerX + Math.sin(normalisedAngle) * (radius + labelExtrude);
+      labelLineToY = centerY - Math.cos(normalisedAngle) * (radius + labelExtrude);
+      g.beginPath();
+      g.moveTo(labelLineFromX, labelLineFromY);
+      g.lineTo(labelLineToX, labelLineToY);
+      g.lineWidth = 0.5;
+      g.strokeStyle = 'rgba(0,0,0,0.3)';
+      g.stroke();
+      //}
+
+      // Increment progress tracker
+      progress += value;
+    }
+    
+    // Draw dividers
+    for (i=0; i<dividers.length; ++i) {
+      //i = dividers.length-1;
+      labelLineToX = Math.round(dividers[i][0])+0.5;
+      labelLineToY = Math.ceil(dividers[i][1]);
+      g.beginPath();
+      g.moveTo(centerX+0.5, centerY);
+      g.lineTo(labelLineToX, labelLineToY);
+      g.lineWidth = 1;
+      g.strokeStyle = '#fff';
+      g.stroke();
+    }
+    
+    // Draw a center white circle
+    g.beginPath();
+    var innerRadius = Math.floor(radius * 0.5) + 0.5;
+    g.arc(centerX, centerY, innerRadius, 0, Math.PI*2, true); 
+    g.closePath();
+    g.fillStyle = 'rgba(255,255,255,1)';
+    g.fill();
+    
+    // Update and center username
+    var usernameElem = this.$view.find('.username');
+    usernameElem.text(this.username);
+    usernameElem.css({
+      left: (centerX + viewOffset.left - (usernameElem.width()/2)) +'px',
+      top: (centerY + viewOffset.top - (usernameElem.height()/2)) +'px' })
+  },
+  
+  // Pics a color from a spectrum
+	sliceColor: function(i, totalSteps){
+		var colori = i * 100 / totalSteps;
+		var frequency = Math.PI*2 / totalSteps;
+		var center = 190;
+		var intensity = 60;
+    var rgb = [];
+		rgb[0]   = Math.round(Math.sin(frequency * i + 0) * intensity + center);
+		rgb[1] = Math.round(Math.sin(frequency * i + 2) * intensity + center);
+		rgb[2]  = Math.round(Math.sin(frequency * i + 4) * intensity + center);
+		return 'rgb(' + rgb.join(',') + ')';
+	},
+
+  // Generates random color
+  randomColor: function() {
+    return 'rgb('+Math.round(155 * Math.random() + 100)+','+
+                  Math.round(155 * Math.random() + 100)+','+
+                  Math.round(155 * Math.random() + 100)+')';
+  },
+
+  layout: function() {
+    //atoc.canvas.height = 1000;
+    atoc.$view.css({ 'margin-top':
+      Math.floor((window.innerHeight - atoc.$view.height()) * 0.3)+'px' });
+  }
+}
+
+
+function displayUsage() {
+  atoc.$view.fadeOut(300);
+  var $view = $('#usage').fadeIn(300);
+  var $usernameField = $view.find('input[type=text]');
+  $usernameField.bind('keydown', function(ev) {
+    if (ev.which == 13 || ev.which == 10) {
+      document.location.hash = '#!/'+$.trim($usernameField[0].value);
+      document.location.reload();
+    }
+  });
+}
+
+function displayUserFlavors(username) {
+  $('#usage').hide();
+  atoc.$view.fadeIn(300);
+  //atoc.loadPatternImage();
+	atoc.loadUser(username, true, function(err) {
+	  if (err) alert(err);
+	});
+	atoc.layout();
+	atoc.drawPie();
+}
+
+function evaluateURL() {
+  var m = document.location.hash.match(/^#\!\/(.+)$/);
+  if (!m) {
+    displayUsage();
+  } else {
+    displayUserFlavors(m[1]);
+  }
+}
+
+
+$(function(){
+  atoc.$view = $('#pie1');
+  atoc.canvas = atoc.$view.find('canvas')[0];
+	$(window).bind('resize', function(){
+	  atoc.layout();
+	  atoc.drawPie();
+	});
+  evaluateURL();
+  var prevHash = document.location.hash;
+  setInterval(function(){
+    if (prevHash != document.location.hash) {
+      evaluateURL(prevHash);
+      prevHash = document.location.hash;
+    }
+  }, 100);
+});
+		</script>
+		<style type="text/css" media="screen">
+		  body, html { margin:0; padding:0; }
+		  body {
+		    width: 800px;
+		    margin: 0 auto 30px auto;
+		    font-family:'Helvetica neue', 'Helvetica', sans-serif;
+		  }
+		  .pie { margin-top: 10px; display:none; }
+		  .pie .labels {
+		    display:block;
+		    height:0;
+		  }
+		  .pie .username {
+		    display:block;
+		    float:left;
+		    position:absolute;
+		    z-index:101;
+		    font-size:32px;
+		    font-weight:bold;
+		  }
+		  .pie .label {
+        position: absolute;
+        font: 11px 'Lucida Grande', 'Tahoma', sans-serif;
+        z-index: 100;
+        display: block;
+        background: #fff;
+        background: rgba(255,255,255,0.5);
+		  }
+		    .pie .label.x1 { font-size:11px }
+		    .pie .label.x2 { font-size:13px }
+		    .pie .label.x3 { font-size:15px }
+		    .label .value {
+		      color: #aaa;
+		      color: rgba(0,0,0,0.4);
+		    }
+		  #usage {
+		    display:none;
+		    border-bottom:1px solid #ddd;
+		  }
+		  #progress {
+		    display:none;
+		    position: absolute;
+		    top: 15px;
+		    left: 15px;
+		    background: #ddd;
+		    width: 100px;
+		    text-align: center;
+		    padding:0.5em 0.5em 1em 0.5em;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        z-index:900;
+		  }
+		  #progress .n { font-size:2em; }
+		</style>
+	</head>
+	<body>
+	  <div id="progress">
+	    <span class="loaded n">12</span> of <span class="total n">60</span> repos loaded
+	  </div>
+	  <div id="usage">
+	    <h1>Flavors of code</h1>
+	    <p>
+	      Enter a <a href="http://github.com/">GitHub</a> username to see his or
+	      her flavors of code: <input type="text">
+	    </p>
+	  </div>
+		<div class="pie" id="pie1">
+		  <div class="username"></div>
+		  <div class="labels"></div>
+		  <canvas width="800" height="600"></canvas>
+		</div>
+    <h2 style="margin-top:2em">Comments</h2>
+    <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=38027689216&amp;xfbml=1"></script><fb:comments href="http://rsms.me/projects/code-flavor/" num_posts="3" width="800"></fb:comments>
+	</body>
+</html>

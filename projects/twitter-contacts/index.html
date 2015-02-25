@@ -1,0 +1,434 @@
+---
+layout: null
+title: Twitter contacts — quickly search and find people you follow on Twitter
+---
+<!DOCTYPE HTML>
+<html lang="en">
+  <!--
+    This app is meant as means of demonstration and is thus
+    kind of messy at first sight.
+    
+    You can simply replace this whole file with something own if you like.
+  -->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Twitter Contacts</title>
+    <style type="text/css" media="screen">
+      #response {
+        font-family:monospace;
+        font-size:10px;
+        white-space:pre;
+        border:1px solid #888;
+        overflow:auto;
+        background:white;
+        padding:2px;
+        position:absolute;
+        bottom:20px;
+        left:20px;
+        top:150px;
+        right:20px;
+      }
+      #url {
+        width:200px;
+      }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var db;
+      
+      function HUDatabase () {
+        this.db;
+        this.migrations = [];
+      }
+      HUDatabase.prototype.defineMigration = function(version, handler) {
+        this.migrations[version] = handler;
+      }
+      
+      HUDatabase.prototype.migrate = function(callback) {
+        // migrate?
+        var self = this;
+        if (self.migrations.length === 0) {
+          return callback();
+        }
+        var nextVersion = parseInt(self.db.version);
+        if (!nextVersion || isNaN(nextVersion)) nextVersion = 0;
+        nextVersion++;
+        // migrate
+        var next = function(){
+          if (self.migrations[nextVersion] === undefined) {
+            // up to date
+            return callback();
+          }
+          self.db.changeVersion(self.db.version, String(nextVersion), function(t){
+            console.log('migrating '+self+
+              ' from version '+(nextVersion-1)+' --> '+nextVersion);
+            self.migrations[nextVersion].call(self, t);
+          }, function(err){
+            callback(err);
+          }, function(){
+            nextVersion++;
+            next();
+          });
+        }
+        next();
+      }
+      
+      HUDatabase.prototype.toString = function() {
+        return String(this.name || "")+(this.db ? "@"+this.db.version : "");
+      }
+      
+      HUDatabase.prototype.open = function(name, callback) {
+        // todo: accept displayName and estimatedSize arguments
+        this.db = openDatabase(name, "", "", 1*1024*1024);
+        this.name = name;
+        this.migrate(callback);
+      }
+      
+      HUDatabase.prototype.exec = function(sql, values, tx, callback) {
+        var self = this;
+        if (typeof tx === 'function') {
+          callback = tx;
+          tx = undefined;
+        } else if (typeof values === 'function') {
+          callback = values;
+          values = [];
+        }
+        var execInTx = function(t) {
+          t.executeSql(sql, values || [], function(t, result) {
+            if (callback) callback(null, result, t);
+          }, function(tx, err) {
+            if (callback) callback(err);
+          });
+        }
+        if (String(tx) !== '[object SQLTransaction]') {
+          if (String(tx).substr(0,1).toLowerCase() === 'r') {
+            self.db.readTransaction(execInTx);
+          } else {
+            self.db.transaction(execInTx);
+          }
+        } else {
+          execInTx(tx);
+        }
+      }
+      
+      HUDatabase.prototype.transaction = function() {
+        return this.db.transaction.apply(this.db, Array.prototype.slice.call(arguments));
+      }
+      
+      // ---------------------------------------------------------
+      
+      function TwitterSynchronizer(userId) {
+        this.userId = userId;
+      }
+      TwitterSynchronizer.prototype.sync = function(callback) {
+        var cursor = "-1";
+        var baseURL = 'http://api.twitter.com/1/statuses/friends.json?callback=?&id='+
+          this.userId+'&cursor=';
+        var counter = 0;
+        var fetchNextPage = function() {
+          console.log('sending request')
+          $.getJSON(baseURL+cursor, function(data) {
+            console.log('recv response')
+            //console.log(data);
+            // parse data.users
+            var sets = [];
+            if (!data || typeof data !== 'object' || !data.users) {
+              console.error('twitter returned a bad JSON object:', data);
+              return callback(new Error('twitter returned a bad JSON object'));
+            }
+            data.users.forEach(function(user){
+              //console.log(user);
+              sets.push([user.id, user.screen_name, user.name, user.description,
+                 user.location, user.time_zone, user.utc_offset, user.url,
+                 user.verified ? 1 : 0]);
+            });
+            db.transaction(function(tx) {
+              function next() {
+                console.log('next')
+                var values = sets.pop();
+                db.exec('INSERT INTO twitter_contacts '+
+                  '(id, screen_name, name, description, location, time_zone, '+
+                  'utc_offset, url, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                  values, tx, function(t)
+                {
+                  //console.log('added '+values[1]);
+                  counter++;
+                  if (sets.length) {
+                    next();
+                  } else {
+                    // more pages or are we done?
+                    if (data.next_cursor_str && data.next_cursor_str !== "0") {
+                      cursor = data.next_cursor_str;
+                      fetchNextPage();
+                    } else {
+                      callback(null, counter);
+                    }
+                  }
+                }, function(t, err){
+                  console.log('failed to add '+values[1], err);
+                  callback(err);
+                });
+              }
+              next();
+            });
+          });
+        }
+        fetchNextPage();
+      }
+      
+      // -----------------------------------------------------------------------
+      
+      var $status, $twitter_screen_name;
+      var twitter_screen_name;
+      
+      function status(text, timeout) {
+        if (timeout !== false && typeof timeout !== 'number') {
+          timeout = 4000;
+        }
+        $status.text(text).fadeIn(100);
+        clearInterval($status.hideTimer);
+        if (timeout) {
+          $status.hideTimer = setTimeout(function(){
+            $status.fadeOut(400);
+          }, timeout)
+        }
+      }
+      
+      function synchronizeTwitter(callback) {
+        if (synchronizeTwitter.running) return;
+        synchronizeTwitter.running = true;
+        var ts = new TwitterSynchronizer(twitter_screen_name);
+        status('Synchronizing Twitter contacts for '+twitter_screen_name+'...', false);
+        ts.sync(function(err, count){
+          synchronizeTwitter.running = false;
+          if (err) {
+            status('Failed to sync Twitter contacts for '+twitter_screen_name);
+            console.error('Failed to sync twitter contacts', err);
+          } else {
+            status('Synchronized '+count+' Twitter contacts for '+twitter_screen_name);
+            console.log('Successfully synced '+count+' twitter contacts');
+          }
+          if (callback) callback(err, count);
+        });
+      }
+      
+      function resetAll(callback) {
+        localStorage.removeItem('twitter_screen_name');
+        $twitter_screen_name.text('').removeAttr('href');
+        db.exec('DROP TABLE IF EXISTS twitter_contacts', callback);
+      }
+      
+      function readTwitterScreenName(callback) {
+        twitter_screen_name = localStorage.getItem('twitter_screen_name');
+        if (!twitter_screen_name) {
+          while (1) {
+            twitter_screen_name = prompt('Please enter your Twitter screen name:');
+            if (!twitter_screen_name) continue;
+            twitter_screen_name = twitter_screen_name
+              .replace(/^[\t\r\n ]+|[\t\r\n ]+$/, '');
+            if (twitter_screen_name.length === 0) continue;
+            localStorage.setItem('twitter_screen_name', twitter_screen_name);
+            break;
+          }
+          synchronizeTwitter(twitter_screen_name, function(err){
+            updateFilter();
+            if (callback) callback(err);
+          });
+        }
+        $twitter_screen_name
+          .text(twitter_screen_name)
+          .attr('href', 'http://twitter.com/'+twitter_screen_name);
+      }
+      
+      $(function(){
+        db = new HUDatabase();
+        // migrations
+        db.defineMigration(1, function(t){
+          this.exec('DROP TABLE IF EXISTS twitter_contacts', [], t);
+          this.exec('CREATE TABLE twitter_contacts '+
+            '(id INTEGER PRIMARY KEY'+
+            ',screen_name TEXT UNIQUE'+
+            ',name TEXT'+
+            ',description TEXT'+
+            ',location TEXT'+
+            ',time_zone TEXT'+
+            ',utc_offset INTEGER'+
+            ',url TEXT'+
+            ',verified INTEGER'+
+            ')', [], t);
+        });
+        
+        // open
+        db.open('contacts', function(err){
+          console.log('opened db', err);
+          
+          // setup UI
+          var $contactItemTemplate = $('#result > li').clone();
+          var $filterInput = $('input[type=search]');
+          var filterInput = $filterInput.get(0);
+          $status = $('#status').hide();
+          $twitter_screen_name = $('.twitter_screen_name');
+          $('#result').empty();
+          
+          // mos
+          $('header a.sync_twitter').click(function(){
+            var self = this;
+            if (this._inProgress) return;
+            this._inProgress = true;
+            synchronizeTwitter(function(){
+              self._inProgress = false;
+            });
+            return false;
+          });
+          
+          function updateFilter(){
+            var value = filterInput.value
+              .replace(/\*+/g, '%')
+              .replace(/(^[\r\n\t ]+|[\r\n\t ]+$)/g, '')
+              .replace(/(^%+$)/g, '');
+            if (value === filterInput.lastValue) return;
+            filterInput.lastValue = value;
+            var values = [];
+            // todo: parse value to find "location:" kind of advanced search tags
+            // default: search on screen_name and name prefix
+            var sql = 'SELECT * FROM twitter_contacts';
+            if (value.length) {
+              values.push(value+'%');
+              values.push(value+'%');
+              sql += ' WHERE screen_name LIKE ? OR name LIKE ?';
+            }
+            sql += ' ORDER BY screen_name ASC';
+            db.exec(sql, values, function(err, result) {
+              //console.log('result', result);
+              if (!result) return;
+              var $result = $('#result');
+              $result.empty();
+              for (var i = 0; i < result.rows.length; ++i) {
+                var row = result.rows.item(i);
+                var $item = $contactItemTemplate.clone();
+                if (row.verified) {
+                  $item.addClass('verified');
+                }
+                for (var k in row) {
+                  $item.find('.var-'+k).text(row[k]);
+                }
+                $item.find('a.var-screen_name')
+                  .attr('href', 'http://twitter.com/'+row.screen_name);
+                $result.append($item);
+              }
+            });
+          }
+          
+          // bind updateFilter
+          $('input[type=search]').keyup(updateFilter);
+          var _periodicCheckFilterValue = filterInput.value;
+          setInterval(function(){
+            if (filterInput.value !== _periodicCheckFilterValue) {
+              _periodicCheckFilterValue = filterInput.value;
+              updateFilter();
+            }
+          }, 60);
+          updateFilter();
+          
+          // Get/ask to set Twitter screen name
+          readTwitterScreenName();
+          
+        });
+        
+      });
+    </script>
+    <style type="text/css" media="screen">
+      * { margin:0; padding:0; }
+      body {
+        font:11px 'helvetica neue', helvetica, sans-serif;
+        color:#020202;
+        background:white;
+      }
+      #result {
+        list-style: none;
+        margin-top:3em; /* height of header */
+      }
+        #result li {
+          border-bottom:1px solid #ddd;
+          padding: 1em;
+        }
+          #result li a {
+            text-decoration:none;
+            color:inherit;
+          }
+          #result li a:link:hover, #result li a:active:hover {
+            color:#006be4;
+            background-color:#e2f4ff;
+          }
+          #result li a:visited:hover {
+            color:#af00cf;
+            background-color:#f4e6ff;
+          }
+          #result li.verified a {
+            background: url('verified.png') no-repeat scroll top right;
+            padding-right:30px;
+          }
+      status-bar {
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        display:block;
+        height:15px;
+        border-top:1px solid #515151;
+        background: -webkit-gradient(linear, left top, left bottom,
+          from(#d0d0d0), to(#d0d0d0), color-stop(0.06, #b0b0b0), color-stop(0.999, #a7a7a7));
+        font:11px 'ludica grande',sans-serif;
+        text-shadow:#ccc 0 1px 0;
+        line-height:15px;
+        padding-left:10px;
+      }
+      #status {
+        background:rgba(255, 255, 0, 0.8);
+        border-top-right-radius:7px;
+        border-top:1px solid rgba(0, 0, 0, 0.1);
+        border-right:1px solid rgba(0, 0, 0, 0.1);
+        padding:0.5em 1em;
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:40%;
+        min-width:170px;
+        z-index:9;
+      }
+      header {
+        display:block;
+        position:fixed;
+        top:0; left:0; right:0;
+        padding:1em;
+        background: -webkit-gradient(linear, left top, left bottom,
+          from(#d0d0d0), to(#d0d0d0));
+      }
+        header div.details {
+          float:right;
+          font-size:13px;
+        }
+          header div.details a { margin-left:1em; }
+    </style>
+  </head>
+  <body>
+    <div id="status">
+      Synchronizing Twitter contacts...
+    </div>
+    <header>
+      <input type="search" autofocus="autofocus" placeholder="Filter">
+      <div class="details">
+        <a class="twitter_screen_name"></a>
+        <a href="#sync" class="sync_twitter">Sync</a>
+      </div>
+    </header>
+    <ul id="result">
+      <li>
+        <h2><a class="var-screen_name" href="http://twitter.com/screen_name"></a></h2>
+        <h3 class="var-name"></h3>
+        <p class="var-location"></p>
+      </li>
+    </ul>
+  </body>
+</html>
