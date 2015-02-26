@@ -15,7 +15,6 @@
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/SelfAssemblingFrame.hh"
 #include "RestFrames/InvisibleMassJigsaw.hh"
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"

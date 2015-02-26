@@ -5,7 +5,7 @@
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/SelfAssemblingFrame.hh"
+#include "RestFrames/RSelfAssemblingFrame.hh"
 #include "RestFrames/InvisibleMassJigsaw.hh"
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
@@ -31,8 +31,8 @@ void TestGqb(){
   std::cout << " Initialize lists of visible, invisible particles and intermediate states " << endl;
   RLabFrame LAB("LAB","lab");
   RDecayFrame SS("SS","#tilde{g} #tilde{g}");
-  SelfAssemblingFrame S1("S1","#tilde{g}_{a}");
-  SelfAssemblingFrame S2("S2","#tilde{g}_{b}");
+  RSelfAssemblingFrame S1("S1","#tilde{g}_{a}");
+  RSelfAssemblingFrame S2("S2","#tilde{g}_{b}");
   RDecayFrame SB1("sB1","#tilde{b}_{a}");
   RDecayFrame SB2("sB2","#tilde{b}_{b}");
   RVisibleFrame V1("V1","V_{a}");

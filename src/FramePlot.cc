@@ -88,14 +88,6 @@ namespace RestFrames {
     return canvasPtr;
   }
 
-  void FramePlot::InitTreeGrid(){
-    int NcolMAX = 0;
-    for(int irow = 0; irow < m_Nrow; irow++){
-      if(m_Ncol[irow] > NcolMAX) NcolMAX = m_Ncol[irow];
-    }
-    m_Node_R = min(min(0.85/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
-  }
-
   void FramePlot::DrawFramePlot(){
     if(m_Type == PNone) return;
     SetCanvas();
@@ -191,11 +183,21 @@ namespace RestFrames {
     ConvertNodeCoordinates(&m_TreeNodes);
   }
 
+  void FramePlot::InitTreeGrid(){
+    int NcolMAX = 0;
+    for(int irow = 0; irow < m_Nrow; irow++){
+      if(m_Ncol[irow] > NcolMAX) NcolMAX = m_Ncol[irow];
+    }
+    m_Node_R = min(min(0.85/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
+    if(m_Type == PGroup) m_Node_R = min(min(0.65/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
+  }
+
   void FramePlot::ConvertNodeCoordinates(vector<FramePlotNode*>* nodesPtr){
     double xmin = 0.;
     double xmax = 1.;
     double ymin = 0.;
-    double ymax = 0.85;
+    double ymax = 1.;
+    if(m_Type == PFrame) ymax = 0.8;
     int Nnode = nodesPtr->size();
     for(int i = 0; i < Nnode; i++){
       double new_x = nodesPtr->at(i)->GetX();

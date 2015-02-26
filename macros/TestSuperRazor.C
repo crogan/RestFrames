@@ -9,7 +9,7 @@
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/SelfAssemblingFrame.hh"
+#include "RestFrames/RSelfAssemblingFrame.hh"
 #include "RestFrames/InvisibleMassJigsaw.hh"
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
@@ -35,8 +35,8 @@ void TestSuperRazor(){
   std::cout << " Initialize lists of visible, invisible particles and intermediate states " << endl;
   RLabFrame LAB("LAB","lab");
   RDecayFrame SS("SS","SS");
-  SelfAssemblingFrame S1("S1","#tilde{S}_{a}");
-  SelfAssemblingFrame S2("S2","#tilde{S}_{b}");
+  RSelfAssemblingFrame S1("S1","#tilde{S}_{a}");
+  RSelfAssemblingFrame S2("S2","#tilde{S}_{b}");
   RVisibleFrame V1("V1","V_{a}");
   RVisibleFrame V2("V2","V_{b}");
   RInvisibleFrame I1("I1","I_{a}");
