@@ -1,26 +1,26 @@
-#include "RestFrames/SelfAssemblingFrame.hh"
+#include "RestFrames/RSelfAssemblingFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // SelfAssemblingFrame class
+  // RSelfAssemblingFrame class
   ///////////////////////////////////////////////
-  SelfAssemblingFrame::SelfAssemblingFrame(const string& sname, const string& stitle, int key) : 
+  RSelfAssemblingFrame::RSelfAssemblingFrame(const string& sname, const string& stitle, int key) : 
     RestFrame(sname,stitle,key),
     RDecayFrame(sname,stitle,key)
   {
     Init();
   }
-  SelfAssemblingFrame::SelfAssemblingFrame(const string& sname, const string& stitle) : 
+  RSelfAssemblingFrame::RSelfAssemblingFrame(const string& sname, const string& stitle) : 
     RestFrame(sname,stitle),
     RDecayFrame(sname,stitle)
   {
     Init();
   }
   
-  SelfAssemblingFrame::~SelfAssemblingFrame(){
+  RSelfAssemblingFrame::~RSelfAssemblingFrame(){
     Disassemble();
     int Nv = m_VisibleFrames.GetN();
     for(int i = 0; i < Nv; i++) delete m_VisibleFrames.Get(i);
@@ -30,7 +30,7 @@ namespace RestFrames {
     m_DecayFrames.Clear();
   }
 
-  void SelfAssemblingFrame::Init(){
+  void RSelfAssemblingFrame::Init(){
     m_RType = RDSelfAssembling;
     m_IsAssembled = false;
     m_IsBackedUp = false;
@@ -40,7 +40,7 @@ namespace RestFrames {
     m_Ndecay = 0;
   }
 
-  void SelfAssemblingFrame::ClearEventRecursive(){
+  void RSelfAssemblingFrame::ClearEventRecursive(){
     m_Spirit = false;
    
     if(!m_Body || !m_Mind) return;
@@ -49,7 +49,7 @@ namespace RestFrames {
     RFrame::ClearEventRecursive();
   }
 
-  void SelfAssemblingFrame::Disassemble(){
+  void RSelfAssemblingFrame::Disassemble(){
     if(!m_IsAssembled) return;
 
     m_Nvisible = 0;
@@ -77,7 +77,7 @@ namespace RestFrames {
     m_Spirit = false;
   }
 
-  void SelfAssemblingFrame::Assemble(){
+  void RSelfAssemblingFrame::Assemble(){
     if(m_IsAssembled) Disassemble();
     if(!m_Body || !m_Mind) return;
 
@@ -150,7 +150,7 @@ namespace RestFrames {
     m_IsAssembled = true;
   }
 
-  void SelfAssemblingFrame::AssembleRecursive(RestFrame* framePtr, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
+  void RSelfAssemblingFrame::AssembleRecursive(RestFrame* framePtr, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
     int Ninput = frames.size();
     if(Ninput <= 1){
       for(int i = 0; i < Ninput; i++) framePtr->AddChildFrame(frames[i]);
@@ -238,14 +238,14 @@ namespace RestFrames {
     }
   }
 
-  bool SelfAssemblingFrame::AnalyzeEventRecursive(){
+  bool RSelfAssemblingFrame::AnalyzeEventRecursive(){
     if(m_Spirit || m_IsAssembled) Disassemble();
     if(!RFrame::AnalyzeEventRecursive()) return false;
     Assemble();
     return RFrame::AnalyzeEventRecursive();
   }
 
-  RestFrame* SelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
+  RestFrame* RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
       m_DecayFrames.Get(m_Ndecay)->ClearFrame();
       dynamic_cast<RFrame*>(m_DecayFrames.Get(m_Ndecay))->ClearRFrame();
@@ -264,7 +264,7 @@ namespace RestFrames {
     return framePtr;
   }
 
-  RestFrame* SelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
+  RestFrame* RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
       m_VisibleFrames.Get(m_Nvisible)->ClearFrame();
       dynamic_cast<RFrame*>(m_VisibleFrames.Get(m_Nvisible))->ClearRFrame();
@@ -283,10 +283,10 @@ namespace RestFrames {
     return framePtr;
   }
 
-  const RestFrame* SelfAssemblingFrame::GetFrame(GroupElementID obj) const {
+  const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
     return GetFrame(&obj);
   }
-  const RestFrame* SelfAssemblingFrame::GetFrame(const State* statePtr) const {
+  const RestFrame* RSelfAssemblingFrame::GetFrame(const State* statePtr) const {
     if(!m_IsAssembled) return nullptr;
 
     for(int i = 0; i < m_ChildStates.size(); i++){

@@ -1,5 +1,5 @@
-#ifndef SelfAssemblingFrame_HH
-#define SelfAssemblingFrame_HH
+#ifndef RSelfAssemblingFrame_HH
+#define RSelfAssemblingFrame_HH
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,13 +15,13 @@ using namespace std;
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // SelfAssemblingFrame class
+  // RSelfAssemblingFrame class
   ///////////////////////////////////////////////
-  class SelfAssemblingFrame : public RDecayFrame {
+  class RSelfAssemblingFrame : public RDecayFrame {
   public:
-    SelfAssemblingFrame(const string& sname, const string& stitle, int key);
-    SelfAssemblingFrame(const string& sname, const string& stitle);
-    virtual ~SelfAssemblingFrame();
+    RSelfAssemblingFrame(const string& sname, const string& stitle, int key);
+    RSelfAssemblingFrame(const string& sname, const string& stitle);
+    virtual ~RSelfAssemblingFrame();
 
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();

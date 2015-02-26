@@ -10,7 +10,7 @@
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/SelfAssemblingFrame.hh"
+#include "RestFrames/RSelfAssemblingFrame.hh"
 #include "RestFrames/InvisibleMassJigsaw.hh"
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
@@ -29,7 +29,7 @@ void TestSelfAssembling(){
   //////////////////////////////////////////////////////////////
   std::cout << " Initialize lists of visible, invisible particles and intermediate states " << endl;
   RestFrames::RLabFrame LAB("LAB","lab");
-  SelfAssemblingFrame S1("S1","CM");
+  RSelfAssemblingFrame S1("S1","CM");
   RVisibleFrame V1("V1","#vec{p}");
   RInvisibleFrame I1("I1","#vec{E}_{T}^{miss}");
 
