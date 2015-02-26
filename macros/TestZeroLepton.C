@@ -126,7 +126,7 @@ void TestZeroLepton(){
   VISPlot->DrawFramePlot();
   
   //////////////////////////////////////////////////////////////
-  // Now, we make a 'background'-like tree
+  // Now, we make a 'background'-like, transverse momentum only, tree
   //////////////////////////////////////////////////////////////
   RLabFrame LAB_alt("LAB","lab");
   SelfAssemblingFrame S_alt("CM","CM");
@@ -146,8 +146,11 @@ void TestZeroLepton(){
 
   LAB_alt.InitializeTree(); 
 
+  // Will just set invisible mass to zero
   InvisibleMassJigsaw MinMass_alt("MINMASS_JIGSAW_ALT", "Invisible system mass Jigsaw");
   INV_alt.AddJigsaw(MinMass_alt);
+
+  // will set rapidity to zero
   InvisibleRapidityJigsaw Rapidity_alt("RAPIDITY_JIGSAW_ALT", "Invisible system rapidity Jigsaw");
   INV_alt.AddJigsaw(Rapidity_alt);
   Rapidity_alt.AddVisibleFrame((LAB_alt.GetListVisibleFrames()));
@@ -189,10 +192,14 @@ void TestZeroLepton(){
     INV.SetLabFrameThreeVector(MET);
     LAB.AnalyzeEvent();
 
-    // Do the same for 'background' tree
+    // Do the same for 'background' tree - set 
+    // jets' z-momenta to zero before loading into tree
     LAB_alt.ClearEvent();
-    for(int i = 0; i < int(JETS.size()); i++) 
-      VIS_alt.AddLabFrameFourVector(JETS[i]);
+    for(int i = 0; i < int(JETS.size()); i++){
+      TLorentzVector jet = JETS[i];
+      jet.SetPtEtaPhiM(jet.Pt(), 0., jet.Phi(), jet.M());
+      VIS_alt.AddLabFrameFourVector(jet);
+    }
     INV_alt.SetLabFrameThreeVector(MET);
     LAB_alt.AnalyzeEvent();
 
@@ -200,31 +207,46 @@ void TestZeroLepton(){
     // Calculation of ZeroLepton variables
     /////////////////////////////////////
 
+    // primary observables
     double shatR = SS.GetMass();
     double gaminvRp1 = SS.GetVisibleShape();
+    
+    // some other 'angle'-like things from the CM frame
     double costhetaSS = SS.GetCosDecayAngle();
-    double dphiR = SS.GetDeltaPhiBoostVisible();
-
-    TVector3 vPT = SS.GetFourVector(LAB).Vect();
-    vPT.SetZ(0.);
-    double cosPT = vPT.Mag() / (vPT.Mag2() + shatR*shatR/16);
-
     double gaminvRp1_T = SS.GetTransverseVisibleShape();
     double dphi12 = SS.GetDeltaPhiVisible();
     double scalarMomTransverseRatio = SS.GetTransverseScalarVisibleMomentum()/SS.GetScalarVisibleMomentum();
 
-    // things using the 'background tree'
-    double DepthBKG = S_alt.GetFrameDepth(I_alt);
+    // dphiR and Rptshat (formerly cosPT)
+    // for QCD rejection
+    double dphiR = SS.GetDeltaPhiBoostVisible();
+    double PTCM = SS.GetFourVector(LAB).Pt();
+    double Rptshat = PTCM / (PTCM + shatR/4.);
 
-    // MET 'sibling' in background tree
+    // QCD rejection using the 'background tree'
+    // MET 'sibling' in background tree auxillary calculations
     TLorentzVector Psib = I_alt.GetSiblingFrame()->GetFourVector(LAB_alt);
-    double Psib_dot_MET = max(0., Psib.Vect().Dot(MET.Unit()));
-    
-    double costhetaMsib = MET.Mag() / sqrt(MET.Mag2() + Psib_dot_MET*Psib_dot_MET);
-    double dphiMsib = fabs(MET.DeltaPhi(Psib.Vect()));
+    TLorentzVector Pmet = I_alt.GetFourVector(LAB_alt);
+    double Psib_dot_METhat = max(0., Psib.Vect().Dot(MET.Unit()));
+    double Mpar2 = Psib.E()*Psib.E()-Psib.Vect().Dot(MET.Unit())*Psib.Vect().Dot(MET.Unit());
+    double Msib2 = Psib.M2();
+    double MB2 = 2.*(Pmet.E()*Psib.E()-MET.Dot(Psib.Vect()));
+    TVector3 boostPsibM = (Pmet+Psib).BoostVector();
 
-    // Hemisphere variables:
-  
+    // QCD rejection variables from 'background tree'
+    double DepthBKG = S_alt.GetFrameDepth(I_alt);
+    int Nsib = I_alt.GetSiblingFrame()->GetNDescendants();
+    double cosBKG = I_alt.GetParentFrame()->GetCosDecayAngle();
+    double dphiMsib = fabs(MET.DeltaPhi(Psib.Vect()));
+    double RpsibM = Psib_dot_METhat / (Psib_dot_METhat + MET.Mag());
+    double RmsibM = 1. / ( MB2/(Mpar2-Msib2) + 1.);
+    Psib.Boost(-boostPsibM);
+    double cosPsibM = -1.*Psib.Vect().Unit().Dot(boostPsibM.Unit());
+    cosPsibM = (1.-cosPsibM)/2.;
+    double DeltaQCD1 = (cosPsibM-RpsibM)/(cosPsibM-RpsibM);
+    double DeltaQCD2 = (cosPsibM-RmsibM)/(cosPsibM-RmsibM);
+
+    // Hemisphere variables - still studying to improve this part
     int NJ[2];
     double ND[2];
     double cosD[2][3];  // cos-decay angle at some depth
@@ -252,7 +274,6 @@ void TestZeroLepton(){
 	  
 	RATIO[h][d] = 2./sqrt(3.)*frame->GetMomentum(prod_frame)/prod_frame->GetMomentum(prod_prod_frame);
 	cosD[h][d] = prod_frame->GetCosDecayAngle(frame);
-	  
       }
     }
   }
