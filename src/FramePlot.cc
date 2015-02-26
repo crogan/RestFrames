@@ -192,12 +192,16 @@ namespace RestFrames {
   }
 
   void FramePlot::ConvertNodeCoordinates(vector<FramePlotNode*>* nodesPtr){
+    double xmin = 0.;
+    double xmax = 1.;
+    double ymin = 0.;
+    double ymax = 0.85;
     int Nnode = nodesPtr->size();
     for(int i = 0; i < Nnode; i++){
       double new_x = nodesPtr->at(i)->GetX();
       double new_y = nodesPtr->at(i)->GetY();
-      new_x = (new_x+0.5) / double(m_Ncol[int(new_y)]);
-      new_y = 1. - (new_y+0.5) / double(m_Nrow);
+      new_x = xmin + (xmax-xmin)*(new_x+0.5)/double(m_Ncol[int(new_y)]);
+      new_y = ymin + (ymax-ymin)*(1.-(new_y+0.5)/double(m_Nrow));
       nodesPtr->at(i)->SetX(new_x);
       nodesPtr->at(i)->SetY(new_y);
     }
