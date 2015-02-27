@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 namespace RestFrames {
 
   class FrameLink;
@@ -19,32 +20,75 @@ namespace RestFrames {
   enum FrameType { FVisible, FInvisible, FDecay, FLab};
   enum AnaType { FReco, FGen };
 
-  ///////////////////////////////////////////////
-  // RestFrame class
-  ///////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+  /// \brief Base class for all _reference_ _frame_ objects
+  ///
+  /// Abstract base class from which all _reference_ _frame_ objects
+  /// inherit
+  ////////////////////////////////////////////////////////////////////
   class RestFrame {
   public:
-    RestFrame(const string& sname, const string& stitle, int key);
+    
+    ////////////////////////////////////////////////////////////////////
+    /// \brief Standard constructor
+    /// 
+    /// \param sname    class instance name used for print statements
+    /// \param stitle   class instance title used in figures
+    ////////////////////////////////////////////////////////////////////
     RestFrame(const string& sname, const string& stitle);
+
+    ////////////////////////////////////////////////////////////////////
+    /// \brief Constructor with user-provided key
+    ///
+    /// \param sname    class instance name used for print statements
+    /// \param stitle   class instance title used in figures
+    /// \param key      class instance identification key
+    ///
+    /// Standard constructor auto-assigns identification key, ensuring
+    /// it is not replicated in another class instance. Care should be 
+    /// taken to prevent replication when using this non-standard 
+    /// constructor.
+    ////////////////////////////////////////////////////////////////////
+    RestFrame(const string& sname, const string& stitle, int key);
+    
     virtual ~RestFrame();
   
     virtual void ClearFrame();
 
-    // Frame identity functions
+    ////////////////////////////////////////////////////////////////////
+    /// \name RestFrame Identity/Comparison methods
+    /// \brief RestFrame identity query member functions
+    /// 
+    /// Member functions for identifying/comparing class instance
+    ////////////////////////////////////////////////////////////////////
+    ///@{
+    /// \brief Returns RestFrame identification key
     int GetKey() const;
+    /// \brief Returns RestFrame name 
     string GetName() const;
+    /// \brief Returns RestFrame title 
     string GetTitle() const;
+    /// \brief Tests whether _frame_ is the same as this RestFrame
     bool IsSame(const RestFrame& frame) const;
+    /// \brief Tests whether _framePtr_ points to this RestFrame
     bool IsSame(const RestFrame* framePtr) const;
+    ///@}
 
-    // Frame type queries
+    ////////////////////////////////////////////////////////////////////
+    /// \name RestFrame type methods
+    /// \brief RestFrame type query member functions
+    ////////////////////////////////////////////////////////////////////
+    ///@{
+     /** \brief Returns RestFrame (_FrameType_) type */
     FrameType GetType() const;
+     /** Is this a visible frame?. maybe */
     bool IsVisibleFrame() const;
     bool IsInvisibleFrame() const;
     bool IsDecayFrame() const;
     bool IsLabFrame() const;
     bool IsRFrame() const;
     bool IsGFrame() const;
+    ///@}
 
     // Tree construction functions
     void AddChildFrame(RestFrame& frame);
@@ -111,10 +155,10 @@ namespace RestFrames {
     
 
   protected:
-    static int m_class_key;
-    mutable bool m_Body;
-    mutable bool m_Mind;
-    mutable bool m_Spirit;
+    static int m_class_key;     ///< Brief description after the member
+    mutable bool m_Body;        ///< Brief description after the member
+    mutable bool m_Mind;        ///< Brief description after the member
+    mutable bool m_Spirit;      ///< Brief description after the member
 
     virtual bool IsSoundBody() const;
     bool IsSoundBodyRecursive() const;
