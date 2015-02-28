@@ -18,9 +18,9 @@ $extrastylesheet
 </head>
 <body>
 
-<header>
+<myheader>
       <h1 class="logo" onclick="document.location.href='/';"><a
-        href="/"><img src="/res/RestFrames_logo.jpg" width="320"
+        href="/"><img src="RestFrames_logo.jpg" width="320"
         height="65" align="left" alt="LOGO"></a></h1>
     
       <ul class="navigation">
@@ -29,7 +29,7 @@ $extrastylesheet
 	<li><a href="/examples/"{% if page.url contains "/examples/" %}class="active"{% endif %} title="RestFrames examples">Examples</a></li>
 	<li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
       </ul>
-</header>
+</myheader>
 
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 
@@ -37,30 +37,14 @@ $extrastylesheet
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <!--BEGIN PROJECT_LOGO-->
-  <td id="projectlogo"><img alt="Logo" src="$relpath^$projectlogo"/></td>
-  <!--END PROJECT_LOGO-->
-  <!--BEGIN PROJECT_NAME-->
-  <td style="padding-left: 0.5em;">
-   <div id="projectname">$projectname
+    <div id="projectname">$projectname
    <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber">$projectnumber</span><!--END PROJECT_NUMBER-->
    </div>
-   <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
-  </td>
-  <!--END PROJECT_NAME-->
-  <!--BEGIN !PROJECT_NAME-->
-   <!--BEGIN PROJECT_BRIEF-->
-    <td style="padding-left: 0.5em;">
-    <div id="projectbrief">$projectbrief</div>
-    </td>
-   <!--END PROJECT_BRIEF-->
-  <!--END !PROJECT_NAME-->
-  <!--BEGIN DISABLE_INDEX-->
+   
    <!--BEGIN SEARCHENGINE-->
    <td>$searchbox</td>
    <!--END SEARCHENGINE-->
-  <!--END DISABLE_INDEX-->
+  
  </tr>
  </tbody>
 </table>
