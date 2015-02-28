@@ -1,3 +1,4 @@
+#include <sstream>
 #include "RestFrames/RSelfAssemblingFrame.hh"
 
 using namespace std;

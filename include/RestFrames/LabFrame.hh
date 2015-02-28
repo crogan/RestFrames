@@ -1,19 +1,15 @@
 #ifndef LabFrame_HH
 #define LabFrame_HH
-#include <iostream>
 #include <string>
-#include <vector>
 #include <TLorentzVector.h>
 #include <TVector3.h>
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/VisibleFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class RestFrame;
-  class VisibleFrame;
 
   ///////////////////////////////////////////////
   // LabFrame class

@@ -1,6 +1,8 @@
-RestFrames: Particle Physics Event Analysis Library
-----------------------------------------
+---
+RestFrames: Particle Physics Event Analysis Library {#mainpage}
+=================================
 Developed by Christopher Rogan (crogan@cern.ch)
+
 Copyright (c) 2014-2015, Christopher Rogan
 
 Installation 

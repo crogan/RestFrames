@@ -1,4 +1,7 @@
+#include <iostream>
 #include "RestFrames/LabFrame.hh"
+#include "RestFrames/VisibleFrame.hh"
+#include "RestFrames/RestFrameList.hh"
 
 using namespace std;
 

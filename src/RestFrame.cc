@@ -1,4 +1,7 @@
+#include <iostream>
 #include "RestFrames/RestFrame.hh"
+#include "RestFrames/FrameLink.hh"
+#include "RestFrames/RestFrameList.hh"
 
 using namespace std;
 
@@ -8,10 +11,10 @@ namespace RestFrames {
   __attribute__((constructor))
   static void initializer(void){
     printf("\n" "\x1b[36m");
-    printf("RestFrames v1.00 -- Developed by Christopher Rogan");
+    printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)");
     printf("\x1b[0m" "\n");
     printf("                    ");
-    printf("Copyright (C) 2015\n\n");
+    printf("Copyright (c) 2014-2015, Christopher Rogan\n\n");
   }
 
   ///////////////////////////////////////////////

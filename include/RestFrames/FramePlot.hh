@@ -1,6 +1,6 @@
 #ifndef FramePlot_HH
 #define FramePlot_HH
-#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -198,6 +198,17 @@ namespace RestFrames {
     Jigsaw* m_JigsawPtr;
     void Init();
   };
+
+  ///////////////////////////////////////////////
+  // Utility functions
+  ///////////////////////////////////////////////
+  template <typename T>
+  string NumToString ( T Num )
+  {
+    ostringstream ss;
+    ss << Num;
+    return ss.str();
+  }
 
 }
 
