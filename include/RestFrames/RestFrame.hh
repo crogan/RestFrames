@@ -179,10 +179,10 @@ namespace RestFrames {
     
 
   protected:
-    static int m_class_key;     ///< Brief description after the member
-    mutable bool m_Body;        ///< Brief description after the member
-    mutable bool m_Mind;        ///< Brief description after the member
-    mutable bool m_Spirit;      ///< Brief description after the member
+    static int m_class_key;     
+    mutable bool m_Body;       
+    mutable bool m_Mind;       
+    mutable bool m_Spirit;     
 
     virtual bool IsSoundBody() const;
     bool IsSoundBodyRecursive() const;
