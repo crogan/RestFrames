@@ -72,18 +72,9 @@
     */</script>
     <div id="fb-root"></div><script></script-->
     <iframe id="sidebar"></iframe>
-    <header>
-      <h1 class="logo" onclick="document.location.href='/';"><a
-        href="/"><img src="/res/RestFrames_logo.jpg" width="320"
-        height="65" align="left" alt="LOGO"></a></h1>
-    
-      <ul class="navigation">
-        <li><a href="/about/"{% if page.url contains "/about/" %}class="active"{% endif %}>About</a></li>
-        <li><a href="/download/"{% if page.url contains "/download/" %}class="active"{% endif %} title="Download">Download</a></li>
-	<li><a href="/examples/"{% if page.url contains "/examples/" %}class="active"{% endif %} title="RestFrames examples">Examples</a></li>
-	<li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
-      </ul>
-    </header>
+
+    {% include header.html %}
+
     <!--div class="wrapper content"-->
       {{ content }}
     <!--/div-->
