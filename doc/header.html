@@ -18,6 +18,8 @@ $extrastylesheet
 </head>
 <body>
 
+<myheader_background>
+
 <myheader>
       <h1 class="logo" onclick="document.location.href='/';"><a
         href="/"><img src="RestFrames_logo.jpg" width="320"
@@ -30,6 +32,7 @@ $extrastylesheet
 	<li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
       </ul>
 </myheader>
+</myheader_background>
 
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 
