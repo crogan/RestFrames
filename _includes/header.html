@@ -1,12 +1,13 @@
 <header>
       <h1 class="logo" onclick="document.location.href='/';"><a
-        href="/"><img src="/res/RestFrames_logo.jpg" width="320"
-        height="65" align="left" alt="LOGO"></a></h1>
+        href="/"><img src="/res/RestFrames_logo.jpg" width="380"
+        height="80" align="left" alt="LOGO"></a></h1>
     
       <ul class="navigation">
         <li><a href="/about/"{% if page.url contains "/about/" %}class="active"{% endif %}>About</a></li>
         <li><a href="/download/"{% if page.url contains "/download/" %}class="active"{% endif %} title="Download">Download</a></li>
-	<li><a href="/examples/"{% if page.url contains "/examples/" %}class="active"{% endif %} title="RestFrames examples">Examples</a></li>
-	<li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
+	<li><a href="/RestFramesv1.0/"{% if page.url contains "/RestFramesv1.0/" %}class="active"{% endif %} title="Code">Code</a></li>
+	<br><li><a href="/examples/"{% if page.url contains "/examples/" %}class="active"{% endif %} title="RestFrames examples">Examples</a></li>
+	<li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %}>Archive</a></li>
       </ul>
 </header>
