@@ -12,7 +12,7 @@ myheader_background {
 myheader {
   display: block;
   height: 120px;
-  margin: 0 40px 0 40px;
+  margin: 0 20px 0 20px;
   color: #ccc;
   background: white
 }
