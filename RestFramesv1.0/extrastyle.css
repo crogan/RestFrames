@@ -1,0 +1,90 @@
+
+
+myheader_background {
+  color:#6E6E6E;
+  background: /*#E2EDE2*/ white;
+  display: block;
+  margin:0;
+  text-align: center;
+}
+
+/* header */
+myheader {
+  display: block;
+  height: 120px;
+  margin: 0 20px 0 20px;
+  color: #ccc;
+  background: white
+}
+  myheader h1 {
+    display: block;
+    height: 30px;
+    margin:30px 0 0 0;
+    float: left;
+  }
+    myheader h1 a {
+      display:inline-block;
+      -webkit-transform: translate3d(0,0,0);
+      -webkit-transition: 160ms -webkit-transform ease-out;
+    }
+    myheader h1 a:hover {
+      -webkit-transform: translate3d(0,2px,0);
+  /*    -webkit-filter: blur(1px);
+      -moz-filter: blur(1px);*/
+      cursor:pointer;
+    }
+    myheader h1 img { display:block; float:right; margin-left: 10px;}
+
+  myheader ul.navigation {
+    display:block;
+    text-align: center;
+    float: left;
+    line-height: 32px;
+    margin-top: 50px;
+    margin-left: 8px;
+    font-family: helvetica, sans-serif;
+    border:2px solid #5B61B5;
+    border-left:none; border-right:none;
+    font-size: 24px;
+  }
+  myheader ul.navigation li {
+    display: inline-block;
+    list-style: none;
+    margin-left: 1.5em;
+  }
+  myheader ul.navigation li:first-child { margin-left: 0; }
+  myheader ul.navigation li a {
+    color: #5B61B5;
+    text-decoration: none;
+    font-size: 22px;
+  }
+  myheader ul.navigation li a:hover { color: #333A8B; text-decoration: none; }
+  myheader ul.navigation li a.active { font-weight:bold; color:#333A8B; }
+
+
+footer {
+  color:#6E6E6E;
+   background: /*#D8D8D8*/ #E2EDE2;
+  display: block;
+  margin:0;
+  padding:1em 0 1em 0;
+  text-align: center;
+}
+  footer img.cc {
+    display: inline-block;
+    vertical-align: -0.2em;
+    border: none;
+    width:1em;
+    height:1em;
+    opacity:0.4;
+  }
+  footer a.cc:hover {
+    text-decoration: none;
+  }
+  footer a.cc:hover img.cc {
+    opacity:1;
+  }
+  footer a:link {
+    color:#5B61B5;
+  }
+
