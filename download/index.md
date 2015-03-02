@@ -10,4 +10,4 @@ Download the RestFrames source code from a link below:
 [[.tar.gz]](https://github.com/crogan/RestFrames/archive/v-1.1.tar.gz)
 [[.zip]](https://github.com/crogan/RestFrames/archive/v-1.1.zip)
 
-{{md  '/res/../README.md '}} 
+{% include INSTALL.md %}
