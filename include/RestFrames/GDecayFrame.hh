@@ -41,7 +41,7 @@ namespace RestFrames {
     double m_CosDecayAngle;
     double m_DeltaPhiDecayPlane;
 
-    virtual bool IsSoundBody();
+    virtual bool IsSoundBody() const;
 
     virtual void ResetFrame();
     virtual bool GenerateFrame();

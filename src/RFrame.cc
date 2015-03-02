@@ -62,7 +62,7 @@ namespace RestFrames {
     }
   }
 
-  bool RFrame::InitializeStates(const StateList* statesPtr){
+  bool RFrame::InitializeNoGroupStates(const StateList* statesPtr){
     int Nchild = GetNChildren();
   
     for(int i = 0; i < Nchild; i++){
@@ -120,7 +120,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeAnalysis(const StateList* statesPtr, const GroupList* groupsPtr){
+  bool RFrame::InitializeStates(const StateList* statesPtr, const GroupList* groupsPtr){
     ClearStates();
     m_Mind = false;
     if(!m_Body){
@@ -128,22 +128,22 @@ namespace RestFrames {
       cout << "UnSound frame " << m_Name.c_str() << " in tree" << endl;
       return false;
     }
-    if(!InitializeStates(statesPtr)) return false;
+    if(!InitializeNoGroupStates(statesPtr)) return false;
     if(!InitializeGroupStates(groupsPtr)) return false;
     
     m_Mind = true;
     return true;
   }
   
-  bool RFrame::InitializeAnalysisRecursive(const StateList* statesPtr, const GroupList* groupsPtr){
-    if(!InitializeAnalysis(statesPtr,groupsPtr)) return false;
+  bool RFrame::InitializeStatesRecursive(const StateList* statesPtr, const GroupList* groupsPtr){
+    if(!InitializeStates(statesPtr,groupsPtr)) return false;
 
     int Nchild = GetNChildren();
     bool child_mind = true;
     for(int i = 0; i < Nchild; i++){
       RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
       if(!childPtr) return false;
-      if(!childPtr->InitializeAnalysisRecursive(statesPtr,groupsPtr)) child_mind = false;;
+      if(!childPtr->InitializeStatesRecursive(statesPtr,groupsPtr)) child_mind = false;;
     }
     m_Mind = child_mind;
     return m_Mind;

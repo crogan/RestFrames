@@ -138,15 +138,15 @@ namespace RestFrames {
     AssembleRecursive(this, frames, Ps); 
 
     m_Body = IsSoundBodyRecursive();
-    m_Mind = InitializeAnalysis(&states, &groups);
+    m_Mind = InitializeStates(&states, &groups);
 
     for(int i = 0; i < m_Ndecay; i++){
       RFrame* framePtr = dynamic_cast<RFrame*>(m_DecayFrames.Get(i));
-      m_Mind = m_Mind && framePtr->InitializeAnalysis(&states, &groups);
+      m_Mind = m_Mind && framePtr->InitializeStates(&states, &groups);
     }
     for(int i = 0; i < m_Nvisible; i++){
       RFrame* framePtr = dynamic_cast<RFrame*>(m_VisibleFrames.Get(i));
-      m_Mind = m_Mind && framePtr->InitializeAnalysis(&states, &groups);
+      m_Mind = m_Mind && framePtr->InitializeStates(&states, &groups);
     }
     m_IsAssembled = true;
   }

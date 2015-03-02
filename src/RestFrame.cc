@@ -11,10 +11,10 @@ namespace RestFrames {
   __attribute__((constructor))
   static void initializer(void){
     printf("\n" "\x1b[36m");
-    printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)");
-    printf("\x1b[0m" "\n");
+    printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)\n");
     printf("                    ");
-    printf("Copyright (c) 2014-2015, Christopher Rogan\n\n");
+    printf("Copyright (c) 2014-2015, Christopher Rogan\n");
+     printf("\x1b[0m" "\n");
   }
 
   ///////////////////////////////////////////////
@@ -596,7 +596,7 @@ namespace RestFrames {
     if(!framePtr || !m_Spirit) return V;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RestFrameList* framesPtr = m_ChildLinks[c]->GetChildFrame()->GetListInvisibleFrames();
+      RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
       int Nf = framesPtr->GetN();
       for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
       delete framesPtr;

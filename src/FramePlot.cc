@@ -188,7 +188,7 @@ namespace RestFrames {
     for(int irow = 0; irow < m_Nrow; irow++){
       if(m_Ncol[irow] > NcolMAX) NcolMAX = m_Ncol[irow];
     }
-    m_Node_R = min(min(0.85/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
+    m_Node_R = min(min(0.85/double(2*NcolMAX+1),0.85*0.85/double(2*m_Nrow+1)),0.12);
     if(m_Type == PGroup) m_Node_R = min(min(0.65/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
   }
 
@@ -253,7 +253,6 @@ namespace RestFrames {
     FramePlotNode* frame_nodePtr = m_TreeNodes[m_TreeNodes.size()-1];
 
     int Nchild = framePtr->GetNChildren();
- 
     for(int i = 0; i < Nchild; i++){
       RestFrame* childPtr = framePtr->GetChildFrame(i);
       if(!childPtr) continue;

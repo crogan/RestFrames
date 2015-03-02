@@ -147,7 +147,7 @@ namespace RestFrames {
       if(!InitializeLabGroups())  break;
       if(!InitializeLabStates())  break;
       if(!InitializeLabJigsaws()) break;
-      if(!InitializeAnalysisRecursive(&m_LabStates,&m_LabGroups)) break;
+      if(!InitializeStatesRecursive(&m_LabStates,&m_LabGroups)) break;
       m_Mind = true;
       break;
     }

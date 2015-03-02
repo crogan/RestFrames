@@ -39,7 +39,7 @@ namespace RestFrames {
 
     GroupList* GetListGroups() const;
 
-    virtual bool InitializeAnalysis(const StateList* statesPtr, const GroupList* groupsPtr);
+    virtual bool InitializeStates(const StateList* statesPtr, const GroupList* groupsPtr);
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
@@ -47,8 +47,8 @@ namespace RestFrames {
     vector<StateList*> m_ChildStates;
     Group* m_GroupPtr;
 
-    virtual bool InitializeAnalysisRecursive(const StateList* statesPtr, const GroupList* groupsPtr);
-    virtual bool InitializeStates(const StateList* statesPtr);
+    virtual bool InitializeStatesRecursive(const StateList* statesPtr, const GroupList* groupsPtr);
+    virtual bool InitializeNoGroupStates(const StateList* statesPtr);
     virtual bool InitializeGroupStates(const GroupList* groupsPtr);
 
     void FillListGroupsRecursive(GroupList* groupsPtr) const;

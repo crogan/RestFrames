@@ -33,7 +33,7 @@ namespace RestFrames {
     m_DeltaPhiDecayPlane = -2.;
   }
 
-  bool GDecayFrame::IsSoundBody(){
+  bool GDecayFrame::IsSoundBody() const{
     RestFrame::IsSoundBody();
     int Nchild = GetNChildren();
     if(Nchild < 2 || !m_ParentLinkPtr) m_Body = false;
