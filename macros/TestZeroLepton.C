@@ -243,8 +243,8 @@ void TestZeroLepton(){
     Psib.Boost(-boostPsibM);
     double cosPsibM = -1.*Psib.Vect().Unit().Dot(boostPsibM.Unit());
     cosPsibM = (1.-cosPsibM)/2.;
-    double DeltaQCD1 = (cosPsibM-RpsibM)/(cosPsibM-RpsibM);
-    double DeltaQCD2 = (cosPsibM-RmsibM)/(cosPsibM-RmsibM);
+    double DeltaQCD1 = (cosPsibM-RpsibM)/(cosPsibM+RpsibM);
+    double DeltaQCD2 = (cosPsibM-RmsibM)/(cosPsibM+RmsibM);
 
     // Hemisphere variables - still studying to improve this part
     int NJ[2];
