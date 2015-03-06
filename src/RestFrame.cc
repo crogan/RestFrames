@@ -1,4 +1,5 @@
 #include <iostream>
+#include "RestFrames/RestFrames_config.h"
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/FrameLink.hh"
 #include "RestFrames/RestFrameList.hh"
@@ -11,10 +12,18 @@ namespace RestFrames {
   __attribute__((constructor))
   static void initializer(void){
     printf("\n" "\x1b[36m");
-    printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)\n");
-    printf("                    ");
+    printf(PACKAGE_NAME);
+    printf(" v");
+    printf(PACKAGE_VERSION);
+    printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
+    printf("                     ");
     printf("Copyright (c) 2014-2015, Christopher Rogan\n");
-     printf("\x1b[0m" "\n");
+    printf("\x1b[0m" "\n");
+
+    // printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)\n");
+    // printf("                    ");
+    // printf("Copyright (c) 2014-2015, Christopher Rogan\n");
+    //  printf("\x1b[0m" "\n");
   }
 
   ///////////////////////////////////////////////

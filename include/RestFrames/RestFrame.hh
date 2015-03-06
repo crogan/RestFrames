@@ -130,7 +130,7 @@ namespace RestFrames {
     const RestFrame* GetLabFrame() const;
     RestFrameList* GetListFrames();
     RestFrameList* GetListFramesType(FrameType type);
-    RestFrameList* GetListFramesType(const vector<FrameType>& types);
+    RestFrameList* GetListFramesType(const vector<RestFrames::FrameType>& types);
     RestFrameList* GetListVisibleFrames();
     RestFrameList* GetListInvisibleFrames();
     

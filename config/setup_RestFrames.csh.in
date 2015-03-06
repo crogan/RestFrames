@@ -1,0 +1,107 @@
+# Source this script to set the environmental variables for this RestFrames installation
+# 
+# Users can automatically call this script at their shell login by adding to their
+# .cshrc file:
+#    . $(restframes-config --prefix)/libexec/setup_RestFrames.csh
+# assuming restframes-config is in their PATH, or
+#    . PATH_OF_RESTFRAMES/libexec/setup_RestFrames.sh
+#
+# This script if for csh-like shells, see setup_RestFrames.sh for bash-like shells.
+
+if ($?RESTFRAMESSYS) then
+   set restframessys="$RESTFRAMESSYS"
+endif
+
+setenv RESTFRAMESSYS @prefix@
+
+if ($?restframessys) then
+   setenv PATH `echo $PATH | sed -e "s;:$restframessys/bin:;:;g" \
+                                 -e "s;:$restframessys/bin;;g"   \
+                                 -e "s;$restframessys/bin:;;g"   \
+                                 -e "s;$restframessys/bin;;g"`
+   if ($?LD_LIBRARY_PATH) then
+      setenv LD_LIBRARY_PATH `echo $LD_LIBRARY_PATH | \
+                             sed -e "s;:$restframessys/lib:;:;g" \
+                                 -e "s;:$restframessys/lib;;g"   \
+                                 -e "s;$restframessys/lib:;;g"   \
+                                 -e "s;$restframessys/lib;;g"`
+   endif
+   if ($?DYLD_LIBRARY_PATH) then
+      setenv DYLD_LIBRARY_PATH `echo $DYLD_LIBRARY_PATH | \
+                             sed -e "s;:$restframessys/lib:;:;g" \
+                                 -e "s;:$restframessys/lib;;g"   \
+                                 -e "s;$restframessys/lib:;;g"   \
+                                 -e "s;$restframessys/lib;;g"`
+   endif
+   if ($?SHLIB_PATH) then
+      setenv SHLIB_PATH `echo $SHLIB_PATH | \
+                             sed -e "s;:$restframessys/lib:;:;g" \
+                                 -e "s;:$restframessys/lib;;g"   \
+                                 -e "s;$restframessys/lib:;;g"   \
+                                 -e "s;$restframessys/lib;;g"`
+   endif
+   if ($?LIBPATH) then
+      setenv LIBPATH `echo $LIBPATH | \
+                             sed -e "s;:$restframessys/lib:;:;g" \
+                                 -e "s;:$restframessys/lib;;g"   \
+                                 -e "s;$restframessys/lib:;;g"   \
+                                 -e "s;$restframessys/lib;;g"`
+   endif
+   if ($?PYTHONPATH) then
+      setenv PYTHONPATH `echo $PYTHONPATH | \
+                             sed -e "s;:$restframessys/lib:;:;g" \
+                                 -e "s;:$restframessys/lib;;g"   \
+                                 -e "s;$restframessys/lib:;;g"   \
+                                 -e "s;$restframessys/lib;;g"`
+   endif
+   if ($?CPLUS_INCLUDE_PATH) then
+      setenv CPLUS_INCLUDE_PATH `echo CPLUS_INCLUDE_PATH | \
+                             sed -e "s;:$restframessys/include:;:;g" \
+                                 -e "s;:$restframessys/include;;g"   \
+                                 -e "s;$restframessys/include:;;g"   \
+                                 -e "s;$restframessys/include;;g"`
+   endif
+endif
+
+set path = (@bindir@ $path)
+
+if ($?LD_LIBRARY_PATH) then
+   setenv LD_LIBRARY_PATH @libdir@:$LD_LIBRARY_PATH      # Linux, ELF HP-UX
+else
+   setenv LD_LIBRARY_PATH @libdir@
+endif
+
+if ($?DYLD_LIBRARY_PATH) then
+   setenv DYLD_LIBRARY_PATH @libdir@:$DYLD_LIBRARY_PATH  # Mac OS X
+else
+   setenv DYLD_LIBRARY_PATH @libdir@
+endif
+
+if ($?SHLIB_PATH) then
+   setenv SHLIB_PATH @libdir@:$SHLIB_PATH                # legacy HP-UX
+else
+   setenv SHLIB_PATH @libdir@
+endif
+
+if ($?LIBPATH) then
+   setenv LIBPATH @libdir@:$LIBPATH                      # AIX
+else
+   setenv LIBPATH @libdir@
+endif
+
+if ($?PYTHONPATH) then
+   setenv PYTHONPATH @libdir@:$PYTHONPATH
+else
+   setenv PYTHONPATH @libdir@
+endif
+
+if ($?CPLUS_INCLUDE_PATH) then
+   setenv CPLUS_INCLUDE_PATH @includedir@:$CPLUS_INCLUDE_PATH
+else
+   setenv CPLUS_INCLUDE_PATH @includedir@
+endif
+
+endif # if ("$setup_RestFrames" != "")
+
+set restframessys=
+
