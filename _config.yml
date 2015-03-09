@@ -1,5 +1,5 @@
 port: 3000
-highlighter: null
+highlighter: pygments
 lsi: false
 permalink: /:year/:month/:day/:title.html
 # paginate: 50
