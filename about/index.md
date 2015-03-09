@@ -3,8 +3,9 @@ layout: page
 title: About RestFrames
 ---
 
-RestFrames is a software library
-
-![RestFrames](/res/multiprint.pdf)
+The *RestFrames* website/documentation/software package is still under
+contruction but will be up-and-running soon. In the meantime, feel
+free to grab the development branch version from
+[Downloads](/download), follow the build intructions and start playing.
 
 
