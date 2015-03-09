@@ -276,7 +276,7 @@ a.post-excerpt {
       -webkit-box-pack: end; -moz-box-pack: end; box-pack: end;
     }*/
     a.post-excerpt.photo div.title {
-      padding:10px 40px;
+      padding:120px 50px;
       font-size: 300%;
       font-weight: 100;
       color: #26612C;
@@ -325,7 +325,7 @@ a.post-excerpt {
       /*-webkit-transform: translate3d(0,0,0);*/
     }
     a.post-excerpt.photo {
-      height:340px;
+      height:350px;
     }
       a.post-excerpt.photo div.padded-content {
         padding:0;
@@ -367,7 +367,7 @@ a.post-excerpt {
   }
 
   a.post-excerpt.photo:hover div.title {
-      padding:10px 40px;
+      padding:120px 50px;
       font-size: 300%;
       font-weight: 100;
       color: #E2EDE2;
