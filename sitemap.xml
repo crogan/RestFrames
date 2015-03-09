@@ -4,38 +4,38 @@ layout: null
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://christopher-rogan.com/</loc>
+    <loc>http://RestFrames.com/</loc>
     <lastmod>{{ site.time | date_to_xmlschema}}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://christopher-rogan.com/about/</loc>
+    <loc>http://RestFrames.com/about/</loc>
     <lastmod>{{ site.time | date_to_xmlschema}}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://christopher-rogan.com/projects/</loc>
+    <loc>http://RestFrames.com/download/</loc>
     <lastmod>{{ site.time | date_to_xmlschema}}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://christopher-rogan.com/archive/</loc>
+    <loc>http://RestFrames.com/examples/</loc>
     <lastmod>{{ site.time | date_to_xmlschema}}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://christopher-rogan.com/stuff/</loc>
+    <loc>http://RestFrames.com/archive/</loc>
     <lastmod>{{ site.time | date_to_xmlschema}}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   {% for post in site.posts %}
   <url>
-    <loc>http://christopher-rogan.com{{ post.url }}</loc>
+    <loc>http://RestFrames.com{{ post.url }}</loc>
     <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
