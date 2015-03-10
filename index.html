@@ -7,11 +7,11 @@ layout: default
 <div class="posts">
   <div class="content full-bleed" id="recent-posts">
   {% for post in site.categories.news limit:25 %}<a
-    href="{{ post.url }}" class="post-excerpt{% if post.photo_url %} photo{% endif %}">
+    href="{{site.baseurl}}{{ post.url }}" class="post-excerpt{% if post.photo_url %} photo{% endif %}">
       <div class="padded-content">
         <div class="title">{{ post.title }}</div>
       {% if post.photo_url %}
-        <div class="image" style="background-image:url('{{ post.photo_url }}')"></div>
+        <div class="image" style="background-image:url('{{site.baseurl}}{{ post.photo_url }}')"></div>
       {% else %}
         <!-- <div class="title">{{ post.title }}</div> -->
         <info datetime="{{ page.date | date: "%Y-%m-%d" }}">
@@ -27,7 +27,7 @@ layout: default
     </a>{% endfor %}
     <div class="breaker"></div>
     <div class="end">
-      <a href="/archive/">More...</a>
+      <a href="{{site.baseurl}}/archive/">More...</a>
     </div>
   </div>
 </div>

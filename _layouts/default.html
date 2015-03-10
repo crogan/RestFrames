@@ -8,11 +8,12 @@
     {% if page.title != "Archive (sidebar)" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endif %}
+    <base href="{{site.baseurl}}"/>
     <link href='http://fonts.googleapis.com/css?family=Poly:400,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" media="screen, projection" href="/res/screen.css" type="text/css">
-    <link rel="stylesheet" media="print" href="/res/print.css" type="text/css">
-    <link rel="alternate" type="application/atom+xml" title="RestFrames" href="/atom.xml">
+    <link rel="stylesheet" media="screen, projection" href="{{site.baseurl}}/res/screen.css" type="text/css">
+    <link rel="stylesheet" media="print" href="{{site.baseurl}}/res/print.css" type="text/css">
+    <link rel="alternate" type="application/atom+xml" title="RestFrames" href="{{site.baseurl}}/atom.xml">
 
    {% include favicon.html %}
 
@@ -84,10 +85,10 @@
     {% if paginator.page %}
     <div id="paginator" class="content">
       {% if paginator.next_page %}
-      <a href="/page{{ paginator.next_page }}/">Older entries</a>
+      <a href="{{site.baseurl}}/page{{ paginator.next_page }}/">Older entries</a>
       {% endif %}
       {% if paginator.previous_page %}
-      <a href="/page{{ paginator.previous_page }}/">Newer entries</a>
+      <a href="{{site.baseurl}}/page{{ paginator.previous_page }}/">Newer entries</a>
       {% endif %}
     </div>
     {% endif %}

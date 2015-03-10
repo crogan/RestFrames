@@ -1,4 +1,5 @@
 port: 3000
+baseurl: /RestFrames
 lsi: false
 permalink: /:year/:month/:day/:title.html
 # paginate: 50
@@ -8,8 +9,6 @@ rdiscount:
   extensions: [smart]
 # Since GH pages override this to "true", we test this value to see if we are running locally
 safe: false
-
-baseurl: RestFrames
 
 defaults:
   -
