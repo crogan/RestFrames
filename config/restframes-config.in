@@ -154,7 +154,7 @@ case $found_query in
 	write_error "you must at least specify one argument to restframes-config"
 	;;
     version)
-	echo @PACKAGE_VERSION@
+	echo @VERSION@
 	;;
     prefix)
 	echo @prefix@
@@ -172,12 +172,11 @@ case $found_query in
 	fi
 	;;
     config)
-	echo "This is @ version @PACKAGE_VERSION@"
+	echo "This is @PACKAGE_NAME@ version @VERSION@"
 	echo ""
 	echo "Configuration invocation was"
 	echo ""
 	echo "  @CONFIGURE_INVOCATION@"
 	echo ""
-	printf "@CONFIG_SUMMARY@"
 	;;
 esac

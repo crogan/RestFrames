@@ -1,11 +1,11 @@
 # make RestFrames shared library
 AUTOMAKE_OPTIONS            = gnu
 
-includestuff              = $(top_srcdir)/include
+includestuff              = $(top_srcdir)/inc
 RestFrameslibdir          = $(libdir)
 RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap
 RestFrameslib_LTLIBRARIES = libRestFrames.la
-libRestFrames_la_CXXFLAGS = -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS)
+libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS)
 libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES  = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc\
 	MinimizeMassesCombinatoricJigsaw.cc CombinatoricJigsaw.cc InvisibleFrame.cc\

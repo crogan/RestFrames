@@ -96,8 +96,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER =  \
-	$(top_builddir)/include/RestFrames/RestFrames_config.h
+CONFIG_HEADER = $(top_builddir)/inc/RestFrames/RestFrames_config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
@@ -181,7 +180,7 @@ AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
-DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/include/RestFrames
+DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/inc/RestFrames
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
@@ -378,11 +377,11 @@ top_srcdir = @top_srcdir@
 
 # make RestFrames shared library
 AUTOMAKE_OPTIONS = gnu
-includestuff = $(top_srcdir)/include
+includestuff = $(top_srcdir)/inc
 RestFrameslibdir = $(libdir)
 RestFrameslib_DATA = $(top_srcdir)/config/libRestFrames.rootmap
 RestFrameslib_LTLIBRARIES = libRestFrames.la
-libRestFrames_la_CXXFLAGS = -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS)
+libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc\
 	MinimizeMassesCombinatoricJigsaw.cc CombinatoricJigsaw.cc InvisibleFrame.cc\

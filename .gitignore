@@ -5,6 +5,8 @@
 *.a
 *.dylib
 *.d
+*.log
+*.info
 *~
 aclocal.m4
 autom4te.cache/
@@ -21,3 +23,6 @@ restframes-config
 *.libs/
 *Dict.cxx
 *Dict.h
+bin/
+include/
+libexec/

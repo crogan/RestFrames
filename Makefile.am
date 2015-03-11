@@ -1,5 +1,5 @@
 # redirect to subdirectories
-SUBDIRS = src include
+SUBDIRS = src inc
 
 # install the restframes-config script
 bin_SCRIPTS = restframes-config
@@ -16,6 +16,10 @@ do_subst = $(SED) \
 	-e 's|[@]prefix@|$(prefix)|g' \
 	-e 's|[@]CONFIG_CXXFLAGS@|$(CONFIG_CXXFLAGS)|g' \
 	-e 's|[@]CONFIG_LIBS@|$(CONFIG_LIBS)|g' \
+	-e 's|[@]CONFIGURE_INVOCATION@|$(CONFIGURE_INVOCATION)|g' \
+	-e 's|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g' \
+	-e 's|[@]VERSION@|$(VERSION)|g' \
+	-e 's|\n|\\n|g' \
 	< "$<" > "$@"
 
 restframes-config: $(top_srcdir)/config/restframes-config.in Makefile

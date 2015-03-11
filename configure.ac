@@ -6,10 +6,11 @@ AM_INIT_AUTOMAKE(tar-ustar)
 dnl if test "$prefix" = "$PWD"; then
 dnl   AC_MSG_ERROR([Cannot install in the build directory: must use a different --prefix argument])
 dnl fi
-pwd=`echo $PWD`
-AC_PREFIX_DEFAULT([pwd])
+dnl pwd=`echo $PWD`
+default_prefix=`pwd`
+AC_PREFIX_DEFAULT(`pwd`)
 
-AC_CONFIG_HEADERS(include/RestFrames/RestFrames_config.h:config/config.h.in)
+AC_CONFIG_HEADERS(inc/RestFrames/RestFrames_config.h:config/config.h.in)
 
 AC_PROG_CXX
 
@@ -90,13 +91,13 @@ dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 AC_SUBST(SOVERSION)
 
-AC_CONFIG_FILES( Makefile src/Makefile include/Makefile include/RestFrames/Makefile )
+AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile )
 
 CONFIG_SUMMARY=""
 CONFIG_SUMMARY+="Configuration summary:\n"
 CONFIG_SUMMARY+="---------------------------------------------------------------\n"
 if [[ "x${prefix}" == "xNONE" ]] ; then
-CONFIG_SUMMARY+="  Installation directory     /usr/local\n"
+CONFIG_SUMMARY+="  Installation directory     "${default_prefix}"\n"
 else
 CONFIG_SUMMARY+="  Installation directory     "${prefix}"\n"
 fi
@@ -110,24 +111,30 @@ dnl finish with a nice message
 dnl-------------------------------------------------------------------
 AC_OUTPUT
 printf "$CONFIG_SUMMARY"
-echo "---------------------------------------------------------------"
-echo "              INFORMATION FOR RestFrames USERS                 "
-echo "                                                               "
-echo " ---                                                           "
-echo " When using the RestFrames library, you can retrieve           "
-echo " compilation and link flags using restframes-config.           "
-echo " Type 'restframes-config --help' for more information          "
-echo " ---                                                           "
-echo " The script setup_RestFrames.sh(csh) is provided to            "
-echo " automatically set environemtal variables like PATH,           "
-echo " LD_LIBRARY_PATH, etc. in order to find this RestFrames        "
-echo " installation. Users can source this script automatically at   "
-echo " their terminal login by adding to their                       "
-echo " .bashrc/.profile/.zlogin(.cshrc) file the line:               "
-echo "   . $(restframes-config --prefix)/libexec/setup_RestFrames.sh "
-echo " for bash-type shells, or                                      "
-echo "   . $(restframes-config --prefix)/libexec/setup_RestFrames.csh"
-echo " for csh-type (and assuming restframes-config is installed in  "
-echo " your default PATH).                                           "
-echo "---------------------------------------------------------------"
-
+cat 1>&2 << 'EOF'
+---------------------------------------------------------------
+              INFORMATION FOR RestFrames USERS                 
+                                                               
+ ---           
+                                                
+ When using the RestFrames library, you can retrieve           
+ compilation and link flags using restframes-config.           
+ Type 'restframes-config --help' for more information          
+ 
+ ---                                                           
+ 
+ The script setup_RestFrames.sh(csh) is provided to            
+ automatically set environemtal variables like PATH,           
+ LD_LIBRARY_PATH, etc. in order to find this RestFrames        
+ installation. Sourcing this script (from any directory) will
+ set the environmental variables to the values matching the
+ RestFrames build that created the script. Users can source this 
+ script automatically at their terminal login by adding to their                       "
+ .bashrc/.profile/.zlogin(.cshrc) file the line:               
+    . $(restframes-config --prefix)/libexec/setup_RestFrames.sh 
+ for bash-type shells, or                                      
+    . $(restframes-config --prefix)/libexec/setup_RestFrames.csh
+ for csh-type (and assuming the restframes-config executable is in 
+ their default PATH)                                            
+---------------------------------------------------------------
+EOF

@@ -98,8 +98,7 @@ DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER =  \
-	$(top_builddir)/include/RestFrames/RestFrames_config.h
+CONFIG_HEADER = $(top_builddir)/inc/RestFrames/RestFrames_config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
@@ -376,7 +375,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 # redirect to subdirectories
-SUBDIRS = src include
+SUBDIRS = src inc
 
 # install the restframes-config script
 bin_SCRIPTS = restframes-config
@@ -391,6 +390,10 @@ do_subst = $(SED) \
 	-e 's|[@]prefix@|$(prefix)|g' \
 	-e 's|[@]CONFIG_CXXFLAGS@|$(CONFIG_CXXFLAGS)|g' \
 	-e 's|[@]CONFIG_LIBS@|$(CONFIG_LIBS)|g' \
+	-e 's|[@]CONFIGURE_INVOCATION@|$(CONFIGURE_INVOCATION)|g' \
+	-e 's|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g' \
+	-e 's|[@]VERSION@|$(VERSION)|g' \
+	-e 's|\n|\\n|g' \
 	< "$<" > "$@"
 
 all: all-recursive
