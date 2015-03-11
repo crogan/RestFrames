@@ -593,7 +593,6 @@ PACKAGE_BUGREPORT=''
 PACKAGE_URL=''
 
 ac_unique_file="src/RestFrame.cc"
-ac_default_prefix=`pwd`
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -3008,8 +3007,6 @@ END
   fi
 fi
 
-
-default_prefix=`pwd`
 
 
 ac_config_headers="$ac_config_headers inc/RestFrames/RestFrames_config.h:config/config.h.in"
