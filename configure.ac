@@ -7,8 +7,8 @@ dnl if test "$prefix" = "$PWD"; then
 dnl   AC_MSG_ERROR([Cannot install in the build directory: must use a different --prefix argument])
 dnl fi
 dnl pwd=`echo $PWD`
-default_prefix=`pwd`
-AC_PREFIX_DEFAULT(`pwd`)
+dnl default_prefix=`pwd`
+dnl AC_PREFIX_DEFAULT(`pwd`)
 
 AC_CONFIG_HEADERS(inc/RestFrames/RestFrames_config.h:config/config.h.in)
 
