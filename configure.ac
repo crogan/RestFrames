@@ -3,6 +3,8 @@ AC_PREREQ(2.59)
 AC_CONFIG_SRCDIR(src/RestFrame.cc)
 AM_INIT_AUTOMAKE(tar-ustar)
 
+AM_MAINTAINER_MODE([disable])
+
 dnl if test "$prefix" = "$PWD"; then
 dnl   AC_MSG_ERROR([Cannot install in the build directory: must use a different --prefix argument])
 dnl fi
