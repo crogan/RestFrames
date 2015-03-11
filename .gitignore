@@ -12,9 +12,7 @@ aclocal.m4
 autom4te.cache/
 config.log
 config.status
-compile
 libtool
-missing
 restframes-config
 *Makefile
 *RestFrames_config.h
@@ -24,5 +22,6 @@ restframes-config
 *Dict.cxx
 *Dict.h
 bin/
+lib/
 include/
 libexec/
