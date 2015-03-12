@@ -59,8 +59,6 @@ namespace RestFrames {
 
     bool CanSplit(const State* statePtr);
     bool CanSplit(const RestFrameList* framesPtr);
-    bool CanCreate(const State *statePtr);
-    bool CanCreate(const RestFrameList* framesPtr);
   
     virtual StateList* InitializeOutputStates(State* statePtr);
     virtual bool InitializeDependancyStates(const StateList* statesPtr, const GroupList* groupsPtr);
