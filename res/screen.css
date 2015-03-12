@@ -117,10 +117,10 @@ header {
   header ul.navigation {
     display:block;
     text-align: center;
-    float: left;
-    line-height: 32px;
+    float: right;
+    line-height: 29px;
     margin-top: 34px;
-    margin-left: 8px;
+    margin-right: 15px;
     font-family: helvetica, sans-serif;
     border:2px solid #5B61B5;
     border-left:none; border-right:none;
@@ -1383,6 +1383,7 @@ footer {
     margin:0 1em 0 0.8em;
   }
     header h1 { float:none; }
+    header h1 img { float:center; }
     header ul.navigation {
       float:none;
       padding-left:0.1em;
@@ -1415,28 +1416,28 @@ footer {
 @media only screen and (min-device-width: 480px) and (max-device-width: 1024px) {
   body { zoom: 1; width:100%; font-family: 'Poly', georgia; }
 }
+/*
+ header h1 img { display:block; float:right; margin-left: 10px;}
 
-/* devices like laptops and regular computers (including ipad but not
-   iphone) Note that iOS with retina display device calculates with a 1/2
-   resolution due to the concept of "scale", thus an iPhone 4 triggers for
-   480x240px rather than the actual 960x480 pixels. This is a good thing.
-*/
-/*@media only screen and (min-device-width: 480px) {*/
-/*}*/
-
-/* medium-res devices, landscape orientation (e.g. ipad but not iphone) */
-/*@media only screen and (min-device-width: 480px) and (max-device-width: 1024px)
-                     and (orientation:landscape) {
-  header { display:none; }
-  html.ipad #sidebar {
+  header ul.navigation {
     display:block;
-    width:240px;
-    height:100%;
-    border:none;
-    background-color:black;
-    position:absolute;
-    right:0;
-    top:0;
+    text-align: center;
+    float: right;
+    line-height: 29px;
+    margin-top: 34px;
+    margin-right: 15px;
+    font-family: helvetica, sans-serif;
+    border:2px solid #5B61B5;
+    border-left:none; border-right:none;
   }
-  html.ipad { zoom:70%; }
-}*/
+  header ul.navigation li {
+    display: inline-block;
+    list-style: none;
+    margin-left: 1.5em;
+  }
+  header ul.navigation li:first-child { margin-left: 0; }
+  header ul.navigation li a {
+    color: #5B61B5;
+    text-decoration: none;
+    font-size: 22px;
+  }*/
