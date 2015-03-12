@@ -159,7 +159,7 @@ namespace RestFrames {
     virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
     virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
     virtual TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr) const; 
+    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const; 
     virtual double GetEnergy(const RestFrame& frame) const;
     virtual double GetEnergy(const RestFrame* framePtr) const;
     virtual double GetMomentum(const RestFrame& frame) const;

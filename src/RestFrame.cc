@@ -18,12 +18,9 @@ namespace RestFrames {
     printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
     printf("                     ");
     printf("Copyright (c) 2014-2015, Christopher Rogan\n");
+    printf("                     ");
+    printf("http://RestFrames.com\n");
     printf("\x1b[0m" "\n");
-
-    // printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)\n");
-    // printf("                    ");
-    // printf("Copyright (c) 2014-2015, Christopher Rogan\n");
-    //  printf("\x1b[0m" "\n");
   }
 
   ///////////////////////////////////////////////
@@ -602,7 +599,8 @@ namespace RestFrames {
   }
   TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame* framePtr) const {
     TLorentzVector V(0.,0.,0.,0.);
-    if(!framePtr || !m_Spirit) return V;
+    if(!m_Spirit) return V;
+    if(!framePtr) framePtr = this;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
       RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();

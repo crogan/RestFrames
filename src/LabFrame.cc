@@ -73,20 +73,6 @@ namespace RestFrames {
     return GetInvisibleFourVector().Vect();
   }
 
-  TLorentzVector LabFrame::GetInvisibleFourVector(const RestFrame* framePtr) const {
-    TLorentzVector V(0.,0.,0.,0.);
-    if(!m_Spirit) return V;
-    if(!framePtr) framePtr = this;
-    int Nc = GetNChildren();
-    for(int c = 0; c < Nc; c++){
-      RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
-      int Nf = framesPtr->GetN();
-      for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
-      delete framesPtr;
-    }
-    return V;
-  }
-
   double LabFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
     if(m_ChildLinks.size() < 1) return 0.;
     TVector3 V1(0.,0.,1.);
