@@ -5,13 +5,6 @@ AM_INIT_AUTOMAKE(tar-ustar)
 
 AM_MAINTAINER_MODE([disable])
 
-dnl if test "$prefix" = "$PWD"; then
-dnl   AC_MSG_ERROR([Cannot install in the build directory: must use a different --prefix argument])
-dnl fi
-dnl pwd=`echo $PWD`
-dnl default_prefix=`pwd`
-dnl AC_PREFIX_DEFAULT(`pwd`)
-
 AC_CONFIG_HEADERS(inc/RestFrames/RestFrames_config.h:config/config.h.in)
 
 AC_PROG_CXX
@@ -83,17 +76,11 @@ ROOT_PATH(,[
         ],AC_MSG_RESULT([RestFrames will be not compiled]))
 AM_CONDITIONAL(EXISTROOT,test x$no_root = "x")
 
-dnl add restframes-config executable
-dnl AC_CONFIG_FILES([restframes-config:config/restframes-config.in], [chmod u+x restframes-config])
-
-dnl add setup_RestFrames.(sh|csh) scripts
-dnl AC_CONFIG_FILES([setup_RestFrames.sh:config/setup_RestFrames.sh.in], [chmod u+x setup_RestFrames.sh])
-
 dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 AC_SUBST(SOVERSION)
 
-AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile )
+AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile )
 
 CONFIG_SUMMARY=""
 CONFIG_SUMMARY+="Configuration summary:\n"

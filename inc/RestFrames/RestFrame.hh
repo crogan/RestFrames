@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////
-//   RestFrames: Particle Physics Event Analysis Library
+//   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////

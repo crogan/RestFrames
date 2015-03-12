@@ -3039,7 +3039,6 @@ fi
 
 
 
-
 ac_config_headers="$ac_config_headers inc/RestFrames/RestFrames_config.h:config/config.h.in"
 
 
@@ -16555,12 +16554,10 @@ else
 fi
 
 
-
-
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile"
 
 
 CONFIG_SUMMARY=""
@@ -17703,6 +17700,7 @@ do
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "inc/Makefile") CONFIG_FILES="$CONFIG_FILES inc/Makefile" ;;
     "inc/RestFrames/Makefile") CONFIG_FILES="$CONFIG_FILES inc/RestFrames/Makefile" ;;
+    "examples/Makefile") CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

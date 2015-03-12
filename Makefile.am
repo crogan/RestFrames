@@ -1,5 +1,5 @@
 # redirect to subdirectories
-SUBDIRS = src inc
+SUBDIRS = src inc examples
 
 # install the restframes-config script
 bin_SCRIPTS = restframes-config
