@@ -1,0 +1,8 @@
+<map id="RestFrames::RFrame" name="RestFrames::RFrame">
+<area shape="rect" id="node3" href="$a00028.html" title="RestFrames::RDecayFrame" alt="" coords="423,12,611,37"/>
+<area shape="rect" id="node5" href="$a00032.html" title="RestFrames::RInvisibleFrame" alt="" coords="418,61,616,87"/>
+<area shape="rect" id="node6" href="$a00033.html" title="RestFrames::RLabFrame" alt="" coords="431,111,603,136"/>
+<area shape="rect" id="node7" href="$a00035.html" title="RestFrames::RVisibleFrame" alt="" coords="423,160,611,185"/>
+<area shape="rect" id="node2" href="$a00029.html" title="Base class for all reference frame objects. " alt="" coords="5,87,173,112"/>
+<area shape="rect" id="node4" href="$a00034.html" title="RestFrames::RSelfAssembling\lFrame" alt="" coords="664,5,867,44"/>
+</map>

@@ -1,7 +1,0 @@
-<map id="RestFrames::GFrame" name="RestFrames::GFrame">
-<area shape="rect" id="node3" href="$class_rest_frames_1_1_g_decay_frame.html" title="RestFrames::GDecayFrame" alt="" coords="424,5,612,31"/>
-<area shape="rect" id="node4" href="$class_rest_frames_1_1_g_invisible_frame.html" title="RestFrames::GInvisibleFrame" alt="" coords="419,55,617,80"/>
-<area shape="rect" id="node5" href="$class_rest_frames_1_1_g_lab_frame.html" title="RestFrames::GLabFrame" alt="" coords="432,104,604,129"/>
-<area shape="rect" id="node6" href="$class_rest_frames_1_1_g_visible_frame.html" title="RestFrames::GVisibleFrame" alt="" coords="423,153,613,179"/>
-<area shape="rect" id="node2" href="$class_rest_frames_1_1_rest_frame.html" title="Base class for all reference frame objects. " alt="" coords="5,80,173,105"/>
-</map>

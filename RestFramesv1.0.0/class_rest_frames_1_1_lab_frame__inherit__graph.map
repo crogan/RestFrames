@@ -1,5 +1,0 @@
-<map id="RestFrames::LabFrame" name="RestFrames::LabFrame">
-<area shape="rect" id="node3" href="$class_rest_frames_1_1_g_lab_frame.html" title="RestFrames::GLabFrame" alt="" coords="5,152,178,177"/>
-<area shape="rect" id="node4" href="$class_rest_frames_1_1_r_lab_frame.html" title="RestFrames::RLabFrame" alt="" coords="202,152,373,177"/>
-<area shape="rect" id="node2" href="$class_rest_frames_1_1_rest_frame.html" title="Base class for all reference frame objects. " alt="" coords="105,5,273,31"/>
-</map>

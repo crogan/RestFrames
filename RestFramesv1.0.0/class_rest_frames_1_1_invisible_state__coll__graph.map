@@ -1,8 +1,0 @@
-<map id="RestFrames::InvisibleState" name="RestFrames::InvisibleState">
-<area shape="rect" id="node2" href="$class_rest_frames_1_1_state.html" title="RestFrames::State" alt="" coords="315,92,447,117"/>
-<area shape="rect" id="node4" href="$class_rest_frames_1_1_jigsaw.html" title="RestFrames::Jigsaw" alt="" coords="525,280,667,305"/>
-<area shape="rect" id="node5" href="$class_rest_frames_1_1_group.html" title="RestFrames::Group" alt="" coords="526,193,665,218"/>
-<area shape="rect" id="node3" href="$class_rest_frames_1_1_rest_frame_list.html" title="RestFrames::RestFrameList" alt="" coords="394,5,582,31"/>
-<area shape="rect" id="node6" href="$class_rest_frames_1_1_jigsaw_list.html" title="RestFrames::JigsawList" alt="" coords="650,92,813,117"/>
-<area shape="rect" id="node7" href="$class_rest_frames_1_1_state_list.html" title="RestFrames::StateList" alt="" coords="854,92,1007,117"/>
-</map>

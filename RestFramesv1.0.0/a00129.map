@@ -1,0 +1,6 @@
+<map id="RestFrames::DecayFrame" name="RestFrames::DecayFrame">
+<area shape="rect" id="node3" href="$a00010.html" title="RestFrames::GDecayFrame" alt="" coords="5,152,193,177"/>
+<area shape="rect" id="node4" href="$a00028.html" title="RestFrames::RDecayFrame" alt="" coords="218,152,405,177"/>
+<area shape="rect" id="node2" href="$a00029.html" title="Base class for all reference frame objects. " alt="" coords="121,5,288,31"/>
+<area shape="rect" id="node5" href="$a00034.html" title="RestFrames::RSelfAssembling\lFrame" alt="" coords="210,225,413,264"/>
+</map>

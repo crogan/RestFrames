@@ -1,6 +1,0 @@
-<map id="RestFrames::GInvisibleFrame" name="RestFrames::GInvisibleFrame">
-<area shape="rect" id="node2" href="$class_rest_frames_1_1_invisible_frame.html" title="RestFrames::InvisibleFrame" alt="" coords="5,105,193,131"/>
-<area shape="rect" id="node3" href="$class_rest_frames_1_1_rest_frame.html" title="Base class for all reference frame objects. " alt="" coords="156,5,323,31"/>
-<area shape="rect" id="node4" href="$class_rest_frames_1_1_frame_link.html" title="RestFrames::FrameLink" alt="" coords="217,105,382,131"/>
-<area shape="rect" id="node5" href="$class_rest_frames_1_1_g_frame.html" title="RestFrames::GFrame" alt="" coords="406,105,556,131"/>
-</map>
