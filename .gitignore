@@ -9,6 +9,8 @@
 *.info
 *.sh
 *.csh
+*.x
+*.DS_Store
 *~
 config.log
 config.status
@@ -25,3 +27,4 @@ bin/
 lib/
 include/
 libexec/
+latex/
