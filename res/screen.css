@@ -1371,8 +1371,8 @@ footer {
   body { color:black; }
   html.ios pre { overflow:scroll; }
   html.ios pre, html.ios code, html.ios tt { font-size:0.95em; }
-  header { margin:0 60px 0 45px; }
-  header ul.navigation li a { font:inherit; font-size:14px; }
+  /*header { margin:0 60px 0 45px; }*/
+  header ul.navigation li a { font:inherit; font-size:22px; }
   div.content { font-size:1.2em; }
 }
 
