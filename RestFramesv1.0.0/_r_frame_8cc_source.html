@@ -73,6 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -187,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">int</span> Nchild = GetNChildren();</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++){</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      RestFrame *childPtr = GetChildFrame(i);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a> *childPtr = GetChildFrame(i);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">if</span>(!childPtr) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      m_ChildStates.push_back(<span class="keyword">new</span> StateList());</div>
@@ -218,12 +219,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    terminal_types.push_back(FInvisible);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> c = 0; c &lt; Nchild; c++){</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      RestFrame* childPtr = GetChildFrame(c);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a>* childPtr = GetChildFrame(c);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">if</span>(!childPtr) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      RestFrameList* child_framesPtr = childPtr-&gt;GetListFramesType(terminal_types);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <span class="keywordtype">int</span> Nframe = child_framesPtr-&gt;GetN();</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; Nframe; f++){</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    RestFrame* framePtr = child_framesPtr-&gt;Get(f);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a>* framePtr = child_framesPtr-&gt;Get(f);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">if</span>(!framePtr) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> g = 0; g &lt; Ngroup; g++){</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      Group* groupPtr = groupsPtr-&gt;Get(g);</div>
@@ -313,13 +314,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  }</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;}</div>
-<div class="ttc" id="namespace_rest_frames_html"><div class="ttname"><a href="namespace_rest_frames.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="_combinatoric_group_8cc_source.html#l00005">CombinatoricGroup.cc:5</a></div></div>
+<div class="ttc" id="namespace_rest_frames_html"><div class="ttname"><a href="namespace_rest_frames.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="_combinatoric_group_8hh_source.html#l00013">CombinatoricGroup.hh:13</a></div></div>
 <div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="class_rest_frames_1_1_rest_frame_html_a0ef2ec9095ee863fda0398a73f48287f"><div class="ttname"><a href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrames::RestFrame::RestFrame</a></div><div class="ttdeci">RestFrame(const string &amp;sname, const string &amp;stitle)</div><div class="ttdoc">Standard constructor. </div><div class="ttdef"><b>Definition:</b> <a href="_rest_frame_8cc_source.html#l00036">RestFrame.cc:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 12 2015 20:48:10 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 12 2015 21:29:27 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

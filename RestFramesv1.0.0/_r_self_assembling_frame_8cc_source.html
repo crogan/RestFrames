@@ -73,6 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,7 +217,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="comment">//m_ChildStates_UnAssembled.clear();</span></div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">int</span> N = GetNChildren();</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++){</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      RestFrame* framePtr = m_ChildLinks[i]-&gt;GetChildFrame();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a>* framePtr = m_ChildLinks[i]-&gt;GetChildFrame();</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">if</span>(!m_IsBackedUp){</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    m_ChildFrames_UnAssembled.Add(framePtr);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    m_ChildStates_UnAssembled.push_back(m_ChildStates[i]-&gt;Copy());</div>
@@ -229,7 +230,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordtype">int</span> Nelement = elementsPtr-&gt;GetN();</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> e = 0; e &lt; Nelement; e++){</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        State* elementPtr = elementsPtr-&gt;Get(e);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        RestFrame* new_framePtr = GetNewVisibleFrame(framePtr-&gt;GetName(),framePtr-&gt;GetTitle());</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a>* new_framePtr = GetNewVisibleFrame(framePtr-&gt;GetName(),framePtr-&gt;GetTitle());</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        elementPtr-&gt;ClearFrames();</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        elementPtr-&gt;AddFrame(new_framePtr);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        frames.push_back(new_framePtr);</div>
@@ -353,7 +354,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordflow">if</span>(child_frames[j].size() == 1){</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    framePtr-&gt;AddChildFrame(child_frames[j][0]);</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    RestFrame* new_framePtr = GetNewDecayFrame(GetName(),GetTitle());</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrame</a>* new_framePtr = GetNewDecayFrame(<a class="code" href="class_rest_frames_1_1_rest_frame.html#aadf4cc4fbfb6564d5f399018f0aea02c">GetName</a>(),<a class="code" href="class_rest_frames_1_1_rest_frame.html#ac8619b4991e8023196fff86932fa247f">GetTitle</a>());</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    framePtr-&gt;AddChildFrame(new_framePtr);</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    AssembleRecursive(new_framePtr, child_frames[j], child_Ps[j]);</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      }</div>
@@ -419,13 +420,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  }</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;}</div>
-<div class="ttc" id="namespace_rest_frames_html"><div class="ttname"><a href="namespace_rest_frames.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="_combinatoric_group_8cc_source.html#l00005">CombinatoricGroup.cc:5</a></div></div>
+<div class="ttc" id="class_rest_frames_1_1_rest_frame_html_aadf4cc4fbfb6564d5f399018f0aea02c"><div class="ttname"><a href="class_rest_frames_1_1_rest_frame.html#aadf4cc4fbfb6564d5f399018f0aea02c">RestFrames::RestFrame::GetName</a></div><div class="ttdeci">string GetName() const </div><div class="ttdoc">Returns RestFrame name. </div><div class="ttdef"><b>Definition:</b> <a href="_rest_frame_8cc_source.html#l00146">RestFrame.cc:146</a></div></div>
+<div class="ttc" id="namespace_rest_frames_html"><div class="ttname"><a href="namespace_rest_frames.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="_combinatoric_group_8hh_source.html#l00013">CombinatoricGroup.hh:13</a></div></div>
 <div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="class_rest_frames_1_1_rest_frame_html_a0ef2ec9095ee863fda0398a73f48287f"><div class="ttname"><a href="class_rest_frames_1_1_rest_frame.html#a0ef2ec9095ee863fda0398a73f48287f">RestFrames::RestFrame::RestFrame</a></div><div class="ttdeci">RestFrame(const string &amp;sname, const string &amp;stitle)</div><div class="ttdoc">Standard constructor. </div><div class="ttdef"><b>Definition:</b> <a href="_rest_frame_8cc_source.html#l00036">RestFrame.cc:36</a></div></div>
+<div class="ttc" id="class_rest_frames_1_1_rest_frame_html_ac8619b4991e8023196fff86932fa247f"><div class="ttname"><a href="class_rest_frames_1_1_rest_frame.html#ac8619b4991e8023196fff86932fa247f">RestFrames::RestFrame::GetTitle</a></div><div class="ttdeci">string GetTitle() const </div><div class="ttdoc">Returns RestFrame title. </div><div class="ttdef"><b>Definition:</b> <a href="_rest_frame_8cc_source.html#l00150">RestFrame.cc:150</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 12 2015 20:48:10 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 12 2015 21:29:27 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
