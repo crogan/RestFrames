@@ -9,11 +9,11 @@ layout: default
 {% for category in page.sorted_categories %}
   {% if site.categories[category].size > 1 %}
   <li>
-    <a href="/category/{{ category | escape }}/">{{ category | escape }}</a>
+    <a href="{{site.baseurl}}/category/{{ category | escape }}/">{{ category | escape }}</a>
     <ul class="posts">
       {% for post in site.categories[category] %}
         <li>
-          {{ post.date | date: "%b %d, %Y"  }} &mdash; <a href="{{ post.url }}">{{ post.title }}</a>
+          {{ post.date | date: "%b %d, %Y"  }} &mdash; <a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a>
         </li>
       {% endfor %}
     </ul>

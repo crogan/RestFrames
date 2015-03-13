@@ -9,7 +9,7 @@
         // landscape
         var sidebar = document.getElementById('sidebar');
         if (!sidebar.src || sidebar.src === '') {
-          sidebar.src = '/archive/sidebar.html';
+          sidebar.src = '{{site.baseurl}}/archive/sidebar.html';
         }
         sidebarAdjustTimer = setInterval(function() {
           var height = Math.round(document.height * 1.6);
