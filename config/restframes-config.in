@@ -1,0 +1,181 @@
+#!/bin/bash
+#
+# @configure_input@
+#
+# This is the base script for retrieving all information
+# regarding compiling and linking programs using RestFrames.
+# Run ./restframes-config without arguments for usage details
+#########################################################
+
+# print a usage message and exit
+# exit code passed as argument:
+#   0 if it is a normal call
+#   1 if it is due to a misusage.
+usage()
+{
+  cat 1>&2 <<EOF
+
+This is @PACKAGE_NAME@ v@VERSION@ configuration tool.
+Usage:
+  restframes-config [--help] [--version] [--prefix] [--config] [--cxxflags] [--libs]
+
+The arguments are:
+
+  --help       prints this message and exits
+  --version    prints @PACKAGE_NAME@ version and exits
+  --prefix     prints the @PACKAGE_NAME@ installation directory
+  --config     prints a summary of how @PACKAGE_NAME@ was configured
+  --cxxflags   returns the compilation flags to be used with C++ programs
+  --libs       returns the flags to pass to the linker
+
+EOF
+}
+# first deal with the case where no argument is passed
+[ $# -gt 0 ] || usage 1
+
+# tools to parse options
+########################
+
+# option_name _string
+# Returns NAME if _string is of the form: --NAME[=...]
+option_name()
+{
+    echo "$1" | sed 's/^--//;s/=.*//' | tr '-' '_'
+}
+
+# option_value _string
+# Returns FOO if _string is of the form: --option=FOO
+option_value()
+{
+    echo "$1" | sed 's/^[^=]*=//'
+}
+
+# is_in_list _arg _arg_list
+# return true if the argument _arg is in the list _arg_list
+# and false otherwise
+is_in_list()
+{
+    arg_match="$1"
+    shift
+    for arg_match_i do
+        [ "x$arg_match_i" != "x$arg_match" ] || return 0
+    done
+    false
+}
+
+
+# useful utilities
+##################
+
+# wite error messages and exit
+write_error()
+{
+    echo "Error: $1"
+    echo "Use restframes-config --help for more information"
+    exit 1
+}
+
+
+# browse the argument list
+# This is done the following way:
+#  - at first pass, we check if the --help argument is set. If yes, 
+#    print usage and exit.
+#    we also and make sure that there is no interference between the
+#    arguments (e.g. --cxxflags --libs is wrong)
+#  - we then check for extra arguments and return the requested info
+#####################################################################
+# useful lists of arguments
+arg_query_list="version prefix help config" 
+
+# no query found initially
+found_query="no"
+found_cxxflags="no"
+found_libs="no"
+
+# browse arguments
+for arg do
+    case "$arg" in
+	--help|-h)
+	    usage 0
+	    ;;
+	--cxxflags)
+	    # we've found a query, make sure we don't already have one
+	    # except if it is --libs
+	    if [[ "x$found_query" != "xno" && "x$found_query" != "xlibs" ]]; then
+		write_error "--cxxflags cannot be used with --$found_query"
+	    fi
+
+	    # update found_query 
+	    # note: don't overwrite if libs are already asked for
+	    found_cxxflags="yes"
+	    if [ "x$found_query" != "xlibs" ]; then
+		found_query="cxxflags"
+	    fi	    
+	    ;;
+	--libs)
+	    # we've found a query, make sure we don't already have one
+	    # except if it is --cxxflags
+	    if [[ "x$found_query" != "xno" && "x$found_query" != "xcxxflags" ]]; then
+		write_error "--libs cannot be used with --$found_query"
+	    fi
+
+	    # update found_query 
+	    found_libs="yes"
+	    found_query="libs"
+	    ;;
+	--*)
+	    arg_name=`option_name $arg`
+	    if is_in_list $arg_name $arg_query_list ; then
+		# we've found a query, make sure we don't already have one
+		if [ "x$found_cxxflags" != "xno" ] ; then
+		    write_error "--$arg_name cannot be used with --cxxflags"
+		fi
+		if [ "x$found_libs" != "xno" ] ; then
+		    write_error "--$arg_name cannot be used with --libs"
+		fi
+		if [ "x$found_query" != "xno" ] ; then
+		    write_error "Too many arguements to restframes-config"
+		fi
+		found_query="$arg_name"
+	    else
+		write_error "$arg: unrecognised argument"
+	    fi
+	    ;;
+	*)
+	    write_error "$arg is not a valid argument"
+	    ;;
+    esac
+done
+
+
+# now deal with the output
+case $found_query in
+    no)
+	write_error "you must at least specify one argument to restframes-config"
+	;;
+    version)
+	echo @VERSION@
+	;;
+    prefix)
+	echo @prefix@
+	;;
+    cxxflags)
+	echo -I@includedir@ @CONFIG_CXXFLAGS@
+	;;
+    libs)
+	libs_string=" @CONFIG_LIBS@ -L@libdir@ -lRestFrames"
+	if [ "x$found_cxxflags" = "xyes" ] ; then
+	    echo -I@includedir@ @CONFIG_CXXFLAGS@ $libs_string
+	else
+	    echo $libs_string
+	fi
+	;;
+    config)
+	echo "This is @PACKAGE_NAME@ version @VERSION@"
+	echo ""
+	echo "Configuration invocation was"
+	echo ""
+	echo "  @CONFIGURE_INVOCATION@"
+	echo ""
+	;;
+esac

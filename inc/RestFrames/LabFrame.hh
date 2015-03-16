@@ -27,8 +27,7 @@ namespace RestFrames {
 
     // Analysis functions
     TVector3 GetInvisibleMomentum() const;
-    TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const;
-    
+  
     virtual double GetCosDecayAngle(const RestFrame* framePtr) const;
     virtual TVector3 GetDecayPlaneNormalVector() const;
 

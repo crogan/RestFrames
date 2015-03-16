@@ -1,0 +1,21 @@
+RestFrames: particle physics event analysis library
+----------------------------------------
+www.RestFrames.com
+
+Developed by Christopher Rogan (crogan@cern.ch)
+Copyright (c) 2014-2015, Christopher Rogan
+
+
+
+------------
+Installation 
+------------
+
+Installation instructions can be found in the INSTALL file provided with the 
+RestFrames distribution.
+
+-------------------
+Directory structure
+-------------------
+
+we'll see soon....

@@ -149,10 +149,8 @@ namespace RestFrames {
     double GetY() const;
     string GetLabel() const;
     const RestFrame* GetFrame() const;
-    int GetJigsawIndex() const;
     int GetNJigsaws() const;
     JigsawList* GetJigsawList() const;
-    Jigsaw* GetJigsaw() const;
     State* GetState() const;
     bool DoLabel() const;
     bool DoSquare() const;

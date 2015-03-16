@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////
-//   RestFrames: Particle Physics Event Analysis Library
+//   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
@@ -29,8 +29,8 @@
 
 #ifndef RestFrame_HH
 #define RestFrame_HH
+#include <TVector3.h>
 #include <string>
-#include <vector>
 #include <TLorentzVector.h>
 #include <TVector3.h>
 
@@ -41,14 +41,17 @@ namespace RestFrames {
   class FrameLink;
   class RestFrameList;
 
+  /// Type of RestFrame, with respect to its decays
   enum FrameType { FVisible, FInvisible, FDecay, FLab};
+
+  /// Type of RestFrame, with respect to its analysis capabilities
   enum AnaType { FReco, FGen };
 
   ////////////////////////////////////////////////////////////////////
-  /// \brief Base class for all _reference_ _frame_ objects
+  /// \brief Base class for all *reference* *frame* objects
   ///
-  /// Abstract base class from which all _reference_ _frame_ objects
-  /// inherit
+  /// Abstract base class from which all *reference* *frame* objects
+  /// inherit. 
   ////////////////////////////////////////////////////////////////////
   class RestFrame {
   public:
@@ -80,49 +83,127 @@ namespace RestFrames {
     virtual void ClearFrame();
 
     ////////////////////////////////////////////////////////////////////
-    /// \name RestFrame Identity/Comparison methods
+    /// \name RestFrame identity/comparison methods
     /// \brief RestFrame identity query member functions
     /// 
-    /// Member functions for identifying/comparing class instance
+    /// Member functions for identifying/comparing class instances
     ////////////////////////////////////////////////////////////////////
     ///@{
+    
     /// \brief Returns RestFrame identification key
     int GetKey() const;
+    
     /// \brief Returns RestFrame name 
     string GetName() const;
+    
     /// \brief Returns RestFrame title 
     string GetTitle() const;
-    /// \brief Tests whether _frame_ is the same as this RestFrame
+    
+    /// \brief Tests whether *frame* is the same as this RestFrame
     bool IsSame(const RestFrame& frame) const;
-    /// \brief Tests whether _framePtr_ points to this RestFrame
+    
+    /// \brief Tests whether *framePtr* points to this RestFrame
     bool IsSame(const RestFrame* framePtr) const;
-    ///@}
+    
+    ///@} // end identity/comparison methods
 
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame type methods
     /// \brief RestFrame type query member functions
+    ///
+    /// Member functions for identifying *FrameType* and *AnaType* of
+    /// reference frame
     ////////////////////////////////////////////////////////////////////
     ///@{
-     /** \brief Returns RestFrame (_FrameType_) type */
+    
+    /// \brief Returns RestFrame (*FrameType*) type 
     FrameType GetType() const;
-     /** Is this a visible frame?. maybe */
+    
+    /// \brief Is this an FVisible type frame? (yes/no)
     bool IsVisibleFrame() const;
+    
+    /// \brief Is this an FInvisible type frame? (yes/no)
     bool IsInvisibleFrame() const;
+    
+    /// \brief Is this an FDecay type frame? (yes/no)
     bool IsDecayFrame() const;
+    
+    /// \brief Is this an FLab type frame? (yes/no)
     bool IsLabFrame() const;
+    
+    /// \brief Is this an RFrame (for event reconstruction) (yes/no)
     bool IsRFrame() const;
+    
+    /// \brief Is this a GFrame (for event generation) (yes/no)
     bool IsGFrame() const;
+    
     ///@}
 
-    // Tree construction functions
+    ////////////////////////////////////////////////////////////////////
+    /// \name RestFrame tree construction methods
+    /// \brief RestFrame tree assembly member functions
+    /// 
+    /// Member functions for assembling trees of connected RestFrames
+    ////////////////////////////////////////////////////////////////////
+    ///@{
+    
+    /// \brief Add a child RestFrame to this frame
+    ///
+    /// \param frame    RestFrame to be added as child
+    ///
+    /// Method for adding a RestFrame *frame* as a child 
+    /// of this frame. *frame* will not be added as a child
+    /// if it is already listed as a child.
     void AddChildFrame(RestFrame& frame);
+
+    /// \brief Add a child RestFrame to this frame
+    ///
+    /// \param framePtr    pointer to RestFrame to be added as child
+    ///
+    /// Method for adding a RestFrame pointed to but *framePtr* as a 
+    /// child of this frame. &(*framePtr*) will not be added as a child
+    /// if it is already listed as a child.
     void AddChildFrame(RestFrame* framePtr);
+
+    /// \brief Set the parent link for this frame
+    ///
+    /// \param linkPtr     pointer to FrameLink of parent frame
+    ///
+    /// Method for connecting a child frame to its parent frame, 
+    /// via a pointer to a FrameLink *linkPtr*.
     void SetParentLink(FrameLink* linkPtr);
+
+    /// \brief Remove a child of this frame by pointer
+    ///
+    /// \param framePtr     pointer to child frame to be removed
+    ///
+    /// Method for removing a child, pointed to by *framePtr*, from the
+    /// list of children of this frame (if it is in that list).
     void RemoveChild(const RestFrame* framePtr);
-    void RemoveChildIndex(int i);
+
+    /// \brief Remove a child of this frame by index
+    ///
+    /// \param index     index of child to be removed
+    ///
+    /// Method for removing the *index* th child of the frame.
+    /// If *index* does not correspond to a valid child then 
+    /// no children are removed.
+    void RemoveChildIndex(int index);
+
+    /// \brief Remove all the children of this frame
+    ///
+    /// Method for removing all the children of this frame. 
+    /// No child is left behind.
     virtual void RemoveChildren();
   
-    //Frame retrieval
+    ////////////////////////////////////////////////////////////////////
+    /// \name RestFrame frame retrieval methods
+    /// \brief RestFrame member functions for accessing connected frames
+    /// 
+    /// Member functions which can be used to access RestFrames 
+    /// connected to this frame through parent(s) or children.
+    ////////////////////////////////////////////////////////////////////
+    ///@{
     int GetNChildren() const;
     RestFrame* GetChildFrame(int i) const;
     int GetChildIndex(const RestFrame* framePtr) const;
@@ -130,10 +211,12 @@ namespace RestFrames {
     const RestFrame* GetLabFrame() const;
     RestFrameList* GetListFrames();
     RestFrameList* GetListFramesType(FrameType type);
-    RestFrameList* GetListFramesType(const vector<FrameType>& types);
+    RestFrameList* GetListFramesType(const vector<RestFrames::FrameType>& types);
     RestFrameList* GetListVisibleFrames();
     RestFrameList* GetListInvisibleFrames();
     
+    ///@}
+
     virtual void ClearEventRecursive() = 0;
     virtual bool AnalyzeEventRecursive() = 0;
 
@@ -159,7 +242,7 @@ namespace RestFrames {
     virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
     virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
     virtual TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr) const; 
+    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const; 
     virtual double GetEnergy(const RestFrame& frame) const;
     virtual double GetEnergy(const RestFrame* framePtr) const;
     virtual double GetMomentum(const RestFrame& frame) const;

@@ -1,0 +1,61 @@
+----------------------------------------
+Installation instructions for RestFrames
+----------------------------------------
+
+'Executive Summary'
+===================
+
+RestFrames can be configured, built and installed using the standard sequence
+
+    %> ./configure [options]
+    %> make
+    %> make install
+
+'The Knitty-Gritty'
+===================
+
+There are myriad configuration options, a list of which can
+be obtained by typing 
+
+    %> ./configure --help
+
+Install location
+----------------
+
+In particular: the default installation location for the package 
+(when typing 'make install') is '/usr/local' -- if a user does not 
+have permission to write there the 'make install' step will fail. In order to 
+specify an install location, users should add the '--prefix' option to the 
+'./configure' step:
+
+    %> ./configure --prefix=MY_INSTALL_PATH
+
+The install location path must be absolute. There are several different 
+things installed at this location:
+
+    MY_INSTALL_PATH/lib : compiled RestFrames libraries and rootmap file
+    MY_INSTALL_PATH/include/RestFrames : library headers
+    MY_INSTALL_PATH/libexec : scripts for setting environmental variables
+    MY_INSTALL_PATH/bin : restframes-config executable   
+
+Compiling against RestFrames library
+------------------------------------
+
+The 'restframes-config' executable can return compiler flags for linking 
+against the RestFrames library. For example, if MY_INSTALL_PATH/bin is in a 
+user's path then programs depending on the RestFrames library can be 
+compiled by typing:
+
+    %> g++ myprogram.C `restframes-config --cxxflags --libs` -o myprogram
+
+Compiler options
+----------------
+
+Users can sepcify which C++ compiler to use when building the RestFrames 
+library at the './configure' step:
+
+    %> ./configure CXX=myCPPcompiler
+
+Users can specify particular C++ compiler flags at the './configure' step:
+
+    %> ./configure CXXFLAGS=flags

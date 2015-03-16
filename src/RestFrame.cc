@@ -1,4 +1,5 @@
 #include <iostream>
+#include "RestFrames/RestFrames_config.h"
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/FrameLink.hh"
 #include "RestFrames/RestFrameList.hh"
@@ -11,10 +12,15 @@ namespace RestFrames {
   __attribute__((constructor))
   static void initializer(void){
     printf("\n" "\x1b[36m");
-    printf("RestFrames v1.0 -- Developed by Christopher Rogan (crogan@cern.ch)\n");
-    printf("                    ");
+    printf(PACKAGE_NAME);
+    printf(" v");
+    printf(PACKAGE_VERSION);
+    printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
+    printf("                     ");
     printf("Copyright (c) 2014-2015, Christopher Rogan\n");
-     printf("\x1b[0m" "\n");
+    printf("                     ");
+    printf("http://RestFrames.com\n");
+    printf("\x1b[0m" "\n");
   }
 
   ///////////////////////////////////////////////
@@ -593,7 +599,8 @@ namespace RestFrames {
   }
   TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame* framePtr) const {
     TLorentzVector V(0.,0.,0.,0.);
-    if(!framePtr || !m_Spirit) return V;
+    if(!m_Spirit) return V;
+    if(!framePtr) framePtr = this;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
       RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
