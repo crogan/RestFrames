@@ -84,6 +84,7 @@ namespace RestFrames {
 
   TCanvas* FramePlot::GetCanvas() const {
     TCanvas* canvasPtr = (TCanvas*) m_CanvasPtr->DrawClone();
+    canvasPtr->SetName((m_Name+"_copy").c_str());
     canvasPtr->SetTitle(m_Title.c_str());
     return canvasPtr;
   }

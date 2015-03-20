@@ -11,6 +11,7 @@
 *.csh
 *.x
 *.DS_Store
+*.root
 *~
 config.log
 config.status
