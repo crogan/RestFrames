@@ -25,5 +25,10 @@ CLEANFILES = *Dict.cxx *Dict.h *~
 
 include $(top_srcdir)/config/rootconfig.mk
 
+if EXISTROOTCLING
+RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+else
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
+endif

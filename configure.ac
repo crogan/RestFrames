@@ -80,6 +80,7 @@ AC_PATH_PROG(ROOTCLING, rootcling, no)
 if test ! x"$ROOTCLING" = "xno"; then
    ROOTCINT=$ROOTCLING
 fi
+AM_CONDITIONAL(EXISTROOTCLING,test ! x"$ROOTCLING" = "xno")
 
 dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`

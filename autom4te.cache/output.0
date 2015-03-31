@@ -636,6 +636,8 @@ LIB@&t@OBJS
 CONFIGURE_INVOCATION
 CONFIG_SUMMARY
 SOVERSION
+EXISTROOTCLING_FALSE
+EXISTROOTCLING_TRUE
 ROOTCLING
 EXISTROOT_FALSE
 EXISTROOT_TRUE
@@ -15990,6 +15992,14 @@ fi
 if test ! x"$ROOTCLING" = "xno"; then
    ROOTCINT=$ROOTCLING
 fi
+ if test ! x"$ROOTCLING" = "xno"; then
+  EXISTROOTCLING_TRUE=
+  EXISTROOTCLING_FALSE='#'
+else
+  EXISTROOTCLING_TRUE='#'
+  EXISTROOTCLING_FALSE=
+fi
+
 
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 
@@ -16153,6 +16163,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${EXISTROOT_TRUE}" && test -z "${EXISTROOT_FALSE}"; then
   as_fn_error $? "conditional \"EXISTROOT\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${EXISTROOTCLING_TRUE}" && test -z "${EXISTROOTCLING_FALSE}"; then
+  as_fn_error $? "conditional \"EXISTROOTCLING\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
