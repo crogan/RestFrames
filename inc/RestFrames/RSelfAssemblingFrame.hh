@@ -50,7 +50,7 @@ namespace RestFrames {
     void Assemble();
     void AssembleRecursive(RestFrame* framePtr, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
 
-    const RestFrame* GetFrame(const State* statePtr) const;
+    //const RestFrame* GetFrame(const State* statePtr) const;
   };
 
 }

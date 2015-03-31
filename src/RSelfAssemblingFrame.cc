@@ -284,11 +284,13 @@ namespace RestFrames {
     return framePtr;
   }
 
+  // const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
+  //   return GetFrame(obj);
+  // }
   const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
-    return GetFrame(&obj);
-  }
-  const RestFrame* RSelfAssemblingFrame::GetFrame(const State* statePtr) const {
     if(!m_IsAssembled) return nullptr;
+
+    const State* statePtr = obj;
 
     for(int i = 0; i < m_ChildStates.size(); i++){
       int index = m_ChildStates[i]->GetIndex(statePtr);

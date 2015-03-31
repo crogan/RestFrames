@@ -37,13 +37,13 @@ namespace RestFrames {
 
     // Event analysis functions
     void ClearFourVectors();
-    GroupElementID& AddLabFrameFourVector(const TLorentzVector& V);
+    GroupElementID AddLabFrameFourVector(const TLorentzVector& V);
     int GetNFourVectors() const;
 
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();
 
-    const RestFrame* GetFrame(const GroupElementID& elementID);
+    const RestFrame* GetFrame(const GroupElementID elementID);
     int GetNElementsInFrame(const RestFrame& frame);
     int GetNElementsInFrame(const RestFrame* framePtr);
 	

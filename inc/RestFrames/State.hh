@@ -76,7 +76,7 @@ namespace RestFrames {
     int GenKey();
   };
 
-  typedef const State GroupElementID;
+  typedef const State* GroupElementID;
 
 }
 

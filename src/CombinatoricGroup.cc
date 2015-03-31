@@ -134,7 +134,7 @@ namespace RestFrames {
     ClearElements();
    }
 
-  GroupElementID& CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
+  GroupElementID CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
     State* statePtr;
     int Nelements = GetNElements();
     int Nkeys = m_StateKeys.size();
@@ -149,16 +149,16 @@ namespace RestFrames {
     statePtr->SetFourVector(P);
     AddElement(statePtr);
    
-    return *statePtr;
+    return statePtr;
   }
 
   int CombinatoricGroup::GetNFourVectors() const{
     return GetNElements();
   }
 
-  const RestFrame* CombinatoricGroup::GetFrame(const GroupElementID& elementID){
+  const RestFrame* CombinatoricGroup::GetFrame(const GroupElementID elementID){
     //State* elementPtr = (State*)elementID;
-    const State* elementPtr = &elementID;
+    const State* elementPtr = elementID;
     int N = m_StatesPtr->GetN();
     for(int i = N-1; i >= 0; i--){
       CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_StatesPtr->Get(i));
