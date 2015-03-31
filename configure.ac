@@ -72,9 +72,14 @@ AC_PROG_LIBTOOL
 dnl add ROOT info 
 ROOT_PATH(,[
         AC_DEFINE([HAVE_ROOT],,[Root library])
-        AC_CHECK_LIB([dl],[dlopen],[],AC_MSG_ERROR([Root libraries not linking properly]))
+        AC_CHECK_LIB([dl],[dlopen],[],AC_MSG_ERROR([Cannot find complete ROOT installation]))
         ],AC_MSG_RESULT([RestFrames will be not compiled]))
 AM_CONDITIONAL(EXISTROOT,test x$no_root = "x")
+dnl check for rootcling (ROOT v > 6)
+AC_PATH_PROG(ROOTCLING, rootcling, no)
+if test ! x"$ROOTCLING" = "xno"; then
+   ROOTCINT=$ROOTCLING
+fi
 
 dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`

@@ -2722,7 +2722,7 @@ m4trace:configure.ac:70: -1- _LT_COMPILER_OPTION([if $compiler PIC flag $_LT_TAG
 m4trace:configure.ac:70: -1- _LT_LINKER_OPTION([if $compiler static flag $lt_tmp_static_flag works], [lt_cv_prog_compiler_static_works_CXX], [$lt_tmp_static_flag], [], [_LT_TAGVAR(lt_prog_compiler_static, CXX)=])
 m4trace:configure.ac:76: -1- ROOT_PATH([], [
         AC_DEFINE([HAVE_ROOT],,[Root library])
-        AC_CHECK_LIB([dl],[dlopen],[],AC_MSG_ERROR([Root libraries not linking properly]))
+        AC_CHECK_LIB([dl],[dlopen],[],AC_MSG_ERROR([Cannot find complete ROOT installation]))
         ], [{ $as_echo "$as_me:${as_lineno-$LINENO}: result: RestFrames will be not compiled" >&5
 $as_echo "RestFrames will be not compiled" >&6; }])
 m4trace:configure.ac:76: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
@@ -2751,16 +2751,17 @@ m4trace:configure.ac:77: -1- m4_pattern_allow([^EXISTROOT_TRUE$])
 m4trace:configure.ac:77: -1- m4_pattern_allow([^EXISTROOT_FALSE$])
 m4trace:configure.ac:77: -1- _AM_SUBST_NOTMAKE([EXISTROOT_TRUE])
 m4trace:configure.ac:77: -1- _AM_SUBST_NOTMAKE([EXISTROOT_FALSE])
-m4trace:configure.ac:81: -1- m4_pattern_allow([^SOVERSION$])
-m4trace:configure.ac:93: -1- m4_pattern_allow([^CONFIG_SUMMARY$])
-m4trace:configure.ac:96: -1- m4_pattern_allow([^CONFIGURE_INVOCATION$])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^LIB@&t@OBJS$])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^LTLIBOBJS$])
-m4trace:configure.ac:101: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
-m4trace:configure.ac:101: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
-m4trace:configure.ac:101: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
-m4trace:configure.ac:101: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
-m4trace:configure.ac:101: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
-m4trace:configure.ac:101: -1- _LT_PROG_LTMAIN
+m4trace:configure.ac:79: -1- m4_pattern_allow([^ROOTCLING$])
+m4trace:configure.ac:86: -1- m4_pattern_allow([^SOVERSION$])
+m4trace:configure.ac:98: -1- m4_pattern_allow([^CONFIG_SUMMARY$])
+m4trace:configure.ac:101: -1- m4_pattern_allow([^CONFIGURE_INVOCATION$])
+m4trace:configure.ac:106: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:106: -1- m4_pattern_allow([^LTLIBOBJS$])
+m4trace:configure.ac:106: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
+m4trace:configure.ac:106: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
+m4trace:configure.ac:106: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
+m4trace:configure.ac:106: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
+m4trace:configure.ac:106: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
+m4trace:configure.ac:106: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
+m4trace:configure.ac:106: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.ac:106: -1- _LT_PROG_LTMAIN
