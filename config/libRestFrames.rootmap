@@ -35,4 +35,3 @@ Library.GVisibleFrame: 					libRestFrames
 Library.StateList: 					libRestFrames
 Library.Group: 						libRestFrames
 Library.VisibleFrame: 					libRestFrames
-Library.RestFrames::RestFrame: 				libRestFrames

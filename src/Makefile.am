@@ -3,7 +3,7 @@ AUTOMAKE_OPTIONS            = gnu
 
 includestuff              = $(top_srcdir)/inc
 RestFrameslibdir          = $(libdir)
-RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap
+RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
@@ -26,6 +26,11 @@ CLEANFILES = *Dict.cxx *Dict.h *~
 include $(top_srcdir)/config/rootconfig.mk
 
 if EXISTROOTCLING
+RestFrameslib_DATA += RestFrames_Dict_rdict.pcm
+CLEANFILES += RestFrames_Dict_rdict.pcm
+RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
+	echo "Invoking rootcling"
+
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 else

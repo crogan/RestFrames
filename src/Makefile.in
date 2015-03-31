@@ -81,6 +81,8 @@ build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/config/rootconfig.mk $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/depcomp
+@EXISTROOTCLING_TRUE@am__append_1 = RestFrames_Dict_rdict.pcm
+@EXISTROOTCLING_TRUE@am__append_2 = RestFrames_Dict_rdict.pcm
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -369,7 +371,8 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = gnu
 includestuff = $(top_srcdir)/inc
 RestFrameslibdir = $(libdir)
-RestFrameslib_DATA = $(top_srcdir)/config/libRestFrames.rootmap
+RestFrameslib_DATA = $(top_srcdir)/config/libRestFrames.rootmap \
+	$(am__append_1)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
@@ -387,7 +390,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc
 	GVisibleFrame.cc StateList.cc Group.cc\
 	VisibleFrame.cc
 
-CLEANFILES = *Dict.cxx *Dict.h *~
+CLEANFILES = *Dict.cxx *Dict.h *~ $(am__append_2)
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
@@ -1049,6 +1052,8 @@ uninstall-am: uninstall-RestFrameslibDATA \
 	uninstall-RestFrameslibDATA uninstall-RestFrameslibLTLIBRARIES \
 	uninstall-am
 
+@EXISTROOTCLING_TRUE@RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
+@EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 
 @EXISTROOTCLING_TRUE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
