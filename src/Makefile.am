@@ -26,4 +26,4 @@ CLEANFILES = *Dict.cxx *Dict.h *~
 include $(top_srcdir)/config/rootconfig.mk
 
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
+	$(ROOTCINT) -f $@ -c -I$(includestuff) $^

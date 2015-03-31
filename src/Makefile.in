@@ -388,7 +388,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc
 
 CLEANFILES = *Dict.cxx *Dict.h *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
-ROOTCXXFLAGS = -I@ROOTINCDIR@ @ROOTCFLAGS@
+ROOTCXXFLAGS = @ROOTCFLAGS@ @ROOTAUXCFLAGS@
 all: all-am
 
 .SUFFIXES:
@@ -1049,7 +1049,7 @@ uninstall-am: uninstall-RestFrameslibDATA \
 
 
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
+	$(ROOTCINT) -f $@ -c -I$(includestuff) $^
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
