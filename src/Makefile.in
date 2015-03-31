@@ -388,7 +388,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc
 
 CLEANFILES = *Dict.cxx *Dict.h *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
-ROOTCXXFLAGS = -I@ROOTINCDIR@
+ROOTCXXFLAGS = -I@ROOTINCDIR@ @ROOTCFLAGS@
 all: all-am
 
 .SUFFIXES:

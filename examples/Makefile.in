@@ -355,7 +355,7 @@ example_01_x_SHORTNAME = 01
 example_01_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS)
 example_01_x_LDADD = $(top_srcdir)/src/libRestFrames.la
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
-ROOTCXXFLAGS = -I@ROOTINCDIR@
+ROOTCXXFLAGS = -I@ROOTINCDIR@ @ROOTCFLAGS@
 all: all-recursive
 
 .SUFFIXES:
