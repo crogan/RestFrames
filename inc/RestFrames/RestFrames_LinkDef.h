@@ -1,6 +1,5 @@
 #ifdef __ROOTCLING__
-
-namespace RestFrames {};
+#include "RestFrames/RestFrame.hh"
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
 
