@@ -717,4 +717,27 @@ namespace RestFrames {
     return 1./sqrt(1.-beta*beta);
   }
 
+  double RestFrame::GetProdPoM(int& NDecay) const{
+    if(IsVisibleFrame() || IsInvisibleFrame()) return 1.;
+    NDecay++;
+    int Nc = GetNChildren();
+    double prod = 2.*GetChildFrame(0)->GetMomentum(this) / GetMass();
+    for(int i = 0; i < Nc; i++){
+      prod *= GetChildFrame(i)->GetProdPoM(NDecay);
+    }
+    return prod;
+  }
+
+  double RestFrame::GetProdSinDecayAngle(int& NDecay) const{
+    if(IsVisibleFrame() || IsInvisibleFrame()) return 1.;
+    NDecay++;
+    int Nc = GetNChildren();
+    double c = GetCosDecayAngle();
+    double prod = sqrt(1.-c*c);
+    for(int i = 0; i < Nc; i++){
+      prod *= GetChildFrame(i)->GetProdSinDecayAngle(NDecay);
+    }
+    return prod;
+  }
+
 }

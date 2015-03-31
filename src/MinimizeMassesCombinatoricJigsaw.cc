@@ -161,18 +161,24 @@ namespace RestFrames {
 	// Execute depedancy Jigsaws
 	ExecuteDependancyJigsaws();
 	// Evaluate metric for this cominatoric
-	for(int i = 0; i < Ndeps;  i++) hem[i] += m_DependancyStates[i]->GetFourVector();
+	for(int i = 0; i < Ndeps;  i++){
+	  hem[i] += m_DependancyStates[i]->GetFourVector();
+	  // Nhem[i] += m_DependancyStates[i]->GetN();
+	}
 	TVector3 boost = (hem[0]+hem[1]).BoostVector();
 	hem[0].Boost(-boost);
 	hem[1].Boost(-boost);
 	double val = hem[0].P()+hem[1].P();
-	if(val > val_max){
+	if(Nhem[0] == 0 || Nhem[1] == 0){
+	  val = 0.; // cout << "zero in Nhem " << val << endl;
+	}
+	if(val >= val_max){
 	  val_max = val;
 	  c_max = c;
 	}
       }
       if(c_max < 0) return false;
-
+     
       // Set outputs to best combinatoric
       for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
       int key = c_max;

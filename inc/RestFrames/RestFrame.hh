@@ -259,7 +259,8 @@ namespace RestFrames {
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const;
     virtual TVector3 GetDecayPlaneNormalVector() const;
-    
+    virtual double GetProdPoM(int& NDecay) const;
+    virtual double GetProdSinDecayAngle(int& NDecay) const;
 
   protected:
     static int m_class_key;     
