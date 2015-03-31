@@ -1,8 +1,5 @@
 #ifdef __ROOTCLING__
 
-#pragma link C++ namespace RestFrames;
-using namespace RestFrames;
-
 #pragma link C++ class RestFrames::RestFrame;
 #pragma link C++ class RestFrames::RestFrameList;
 #pragma link C++ class RestFrames::LabFrame;
@@ -48,6 +45,7 @@ using namespace RestFrames;
 #pragma link C++ class RestFrames::StateList;
 #pragma link C++ class RestFrames::InvisibleState;
 #pragma link C++ class RestFrames::CombinatoricState;
+#pragma link C++ class std::vector<const RestFrames::State>;
 
 #pragma link C++ class RestFrames::FramePlot;
 #pragma link C++ class RestFrames::FramePlotNode;
