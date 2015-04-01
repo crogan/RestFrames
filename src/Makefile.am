@@ -21,7 +21,7 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h CombinatoricGr
 	GVisibleFrame.cc StateList.cc Group.cc\
 	VisibleFrame.cc
 
-install-exec-hook:
+install-data-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
