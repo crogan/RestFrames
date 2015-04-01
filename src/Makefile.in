@@ -81,8 +81,6 @@ build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/config/rootconfig.mk $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/depcomp
-@EXISTROOTCLING_TRUE@am__append_1 = RestFrames_Dict_rdict.pcm
-@EXISTROOTCLING_TRUE@am__append_2 = RestFrames_Dict_rdict.pcm
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -195,6 +193,24 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
 SOURCES = $(libRestFrames_la_SOURCES)
 DIST_SOURCES = $(libRestFrames_la_SOURCES)
 am__can_run_installinfo = \
@@ -371,12 +387,11 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = gnu
 includestuff = $(top_srcdir)/inc
 RestFrameslibdir = $(libdir)
-RestFrameslib_DATA = $(top_srcdir)/config/libRestFrames.rootmap \
-	$(am__append_1)
+# RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc\
+libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h CombinatoricGroup.cc GroupList.cc\
 	MinimizeMassesCombinatoricJigsaw.cc CombinatoricJigsaw.cc InvisibleFrame.cc\
 	NVisibleMInvisibleJigsaw.cc CombinatoricState.cc InvisibleGroup.cc\
 	RDecayFrame.cc ContraBoostInvariantJigsaw.cc InvisibleJigsaw.cc\
@@ -390,10 +405,11 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx CombinatoricGroup.cc GroupList.cc
 	GVisibleFrame.cc StateList.cc Group.cc\
 	VisibleFrame.cc
 
-CLEANFILES = *Dict.cxx *Dict.h *~ $(am__append_2)
+CLEANFILES = *Dict.cxx *Dict.h *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
+@EXISTROOTCLING_TRUE@RestFrameslib_DATA = RestFrames_Dict_rdict.pcm
 all: all-am
 
 .SUFFIXES:
@@ -991,7 +1007,8 @@ install-dvi: install-dvi-am
 install-dvi-am:
 
 install-exec-am:
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 install-html: install-html-am
 
 install-html-am:
@@ -1032,8 +1049,9 @@ ps-am:
 
 uninstall-am: uninstall-RestFrameslibDATA \
 	uninstall-RestFrameslibLTLIBRARIES
-
-.MAKE: install-am install-strip
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: install-am install-exec-am install-strip uninstall-am
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
 	clean-RestFrameslibLTLIBRARIES clean-generic clean-libtool \
@@ -1042,16 +1060,25 @@ uninstall-am: uninstall-RestFrameslibDATA \
 	dvi-am html html-am info info-am install \
 	install-RestFrameslibDATA install-RestFrameslibLTLIBRARIES \
 	install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall \
+	install-dvi-am install-exec install-exec-am install-exec-hook \
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-RestFrameslibDATA uninstall-RestFrameslibLTLIBRARIES \
-	uninstall-am
+	uninstall-am uninstall-hook
 
+
+install-exec-hook:
+	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+
+uninstall-hook:
+	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rm -f $(DESTDIR)$(libdir)/RestFrames_Dict_rdict.pcm
 @EXISTROOTCLING_TRUE@RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
 @EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 

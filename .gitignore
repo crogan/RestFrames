@@ -5,6 +5,7 @@
 *.a
 *.dylib
 *.d
+*.rootmap
 *.log
 *.info
 *.sh
