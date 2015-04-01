@@ -78,7 +78,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = example_01.x$(EXEEXT)
+noinst_PROGRAMS = example_01.x$(EXEEXT) example_02.x$(EXEEXT) \
+	example_03.x$(EXEEXT)
 DIST_COMMON = $(top_srcdir)/config/rootconfig.mk $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/depcomp
 subdir = examples
@@ -93,13 +94,30 @@ CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_example_01_x_OBJECTS = 01-example_01_basics_Ztoll.$(OBJEXT)
 example_01_x_OBJECTS = $(am_example_01_x_OBJECTS)
-example_01_x_DEPENDENCIES = $(top_srcdir)/src/libRestFrames.la
+example_01_x_LDADD = $(LDADD)
+example_01_x_DEPENDENCIES = ../src/libRestFrames.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 example_01_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_01_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_02_x_OBJECTS =  \
+	02-example_02_InvisibleJigsaws_Wtolnu.$(OBJEXT)
+example_02_x_OBJECTS = $(am_example_02_x_OBJECTS)
+example_02_x_LDADD = $(LDADD)
+example_02_x_DEPENDENCIES = ../src/libRestFrames.la
+example_02_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_02_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_03_x_OBJECTS =  \
+	03-example_03_MultipleDecays_Toptoblnu.$(OBJEXT)
+example_03_x_OBJECTS = $(am_example_03_x_OBJECTS)
+example_03_x_LDADD = $(LDADD)
+example_03_x_DEPENDENCIES = ../src/libRestFrames.la
+example_03_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_03_x_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -135,8 +153,10 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(example_01_x_SOURCES)
-DIST_SOURCES = $(example_01_x_SOURCES)
+SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
+	$(example_03_x_SOURCES)
+DIST_SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
+	$(example_03_x_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -351,10 +371,16 @@ top_srcdir = @top_srcdir@
 # make RestFrames examples
 SUBDIRS = .
 includestuff = $(top_srcdir)/inc
+LDADD = ../src/libRestFrames.la
 example_01_x_SOURCES = example_01_basics_Ztoll.C
 example_01_x_SHORTNAME = 01
 example_01_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
-example_01_x_LDADD = $(top_srcdir)/src/libRestFrames.la
+example_02_x_SOURCES = example_02_InvisibleJigsaws_Wtolnu.C
+example_02_x_SHORTNAME = 02
+example_02_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_03_x_SOURCES = example_03_MultipleDecays_Toptoblnu.C
+example_03_x_SHORTNAME = 03
+example_03_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
@@ -407,6 +433,14 @@ example_01.x$(EXEEXT): $(example_01_x_OBJECTS) $(example_01_x_DEPENDENCIES) $(EX
 	@rm -f example_01.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_01_x_LINK) $(example_01_x_OBJECTS) $(example_01_x_LDADD) $(LIBS)
 
+example_02.x$(EXEEXT): $(example_02_x_OBJECTS) $(example_02_x_DEPENDENCIES) $(EXTRA_example_02_x_DEPENDENCIES) 
+	@rm -f example_02.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_02_x_LINK) $(example_02_x_OBJECTS) $(example_02_x_LDADD) $(LIBS)
+
+example_03.x$(EXEEXT): $(example_03_x_OBJECTS) $(example_03_x_DEPENDENCIES) $(EXTRA_example_03_x_DEPENDENCIES) 
+	@rm -f example_03.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_03_x_LINK) $(example_03_x_OBJECTS) $(example_03_x_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -414,6 +448,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/01-example_01_basics_Ztoll.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Po@am__quote@
 
 .C.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -449,6 +485,34 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_01_basics_Ztoll.C' object='01-example_01_basics_Ztoll.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_01_x_CXXFLAGS) $(CXXFLAGS) -c -o 01-example_01_basics_Ztoll.obj `if test -f 'example_01_basics_Ztoll.C'; then $(CYGPATH_W) 'example_01_basics_Ztoll.C'; else $(CYGPATH_W) '$(srcdir)/example_01_basics_Ztoll.C'; fi`
+
+02-example_02_InvisibleJigsaws_Wtolnu.o: example_02_InvisibleJigsaws_Wtolnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_02_x_CXXFLAGS) $(CXXFLAGS) -MT 02-example_02_InvisibleJigsaws_Wtolnu.o -MD -MP -MF $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Tpo -c -o 02-example_02_InvisibleJigsaws_Wtolnu.o `test -f 'example_02_InvisibleJigsaws_Wtolnu.C' || echo '$(srcdir)/'`example_02_InvisibleJigsaws_Wtolnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Tpo $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_02_InvisibleJigsaws_Wtolnu.C' object='02-example_02_InvisibleJigsaws_Wtolnu.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_02_x_CXXFLAGS) $(CXXFLAGS) -c -o 02-example_02_InvisibleJigsaws_Wtolnu.o `test -f 'example_02_InvisibleJigsaws_Wtolnu.C' || echo '$(srcdir)/'`example_02_InvisibleJigsaws_Wtolnu.C
+
+02-example_02_InvisibleJigsaws_Wtolnu.obj: example_02_InvisibleJigsaws_Wtolnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_02_x_CXXFLAGS) $(CXXFLAGS) -MT 02-example_02_InvisibleJigsaws_Wtolnu.obj -MD -MP -MF $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Tpo -c -o 02-example_02_InvisibleJigsaws_Wtolnu.obj `if test -f 'example_02_InvisibleJigsaws_Wtolnu.C'; then $(CYGPATH_W) 'example_02_InvisibleJigsaws_Wtolnu.C'; else $(CYGPATH_W) '$(srcdir)/example_02_InvisibleJigsaws_Wtolnu.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Tpo $(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_02_InvisibleJigsaws_Wtolnu.C' object='02-example_02_InvisibleJigsaws_Wtolnu.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_02_x_CXXFLAGS) $(CXXFLAGS) -c -o 02-example_02_InvisibleJigsaws_Wtolnu.obj `if test -f 'example_02_InvisibleJigsaws_Wtolnu.C'; then $(CYGPATH_W) 'example_02_InvisibleJigsaws_Wtolnu.C'; else $(CYGPATH_W) '$(srcdir)/example_02_InvisibleJigsaws_Wtolnu.C'; fi`
+
+03-example_03_MultipleDecays_Toptoblnu.o: example_03_MultipleDecays_Toptoblnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_03_x_CXXFLAGS) $(CXXFLAGS) -MT 03-example_03_MultipleDecays_Toptoblnu.o -MD -MP -MF $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Tpo -c -o 03-example_03_MultipleDecays_Toptoblnu.o `test -f 'example_03_MultipleDecays_Toptoblnu.C' || echo '$(srcdir)/'`example_03_MultipleDecays_Toptoblnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Tpo $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_03_MultipleDecays_Toptoblnu.C' object='03-example_03_MultipleDecays_Toptoblnu.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_03_x_CXXFLAGS) $(CXXFLAGS) -c -o 03-example_03_MultipleDecays_Toptoblnu.o `test -f 'example_03_MultipleDecays_Toptoblnu.C' || echo '$(srcdir)/'`example_03_MultipleDecays_Toptoblnu.C
+
+03-example_03_MultipleDecays_Toptoblnu.obj: example_03_MultipleDecays_Toptoblnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_03_x_CXXFLAGS) $(CXXFLAGS) -MT 03-example_03_MultipleDecays_Toptoblnu.obj -MD -MP -MF $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Tpo -c -o 03-example_03_MultipleDecays_Toptoblnu.obj `if test -f 'example_03_MultipleDecays_Toptoblnu.C'; then $(CYGPATH_W) 'example_03_MultipleDecays_Toptoblnu.C'; else $(CYGPATH_W) '$(srcdir)/example_03_MultipleDecays_Toptoblnu.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Tpo $(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_03_MultipleDecays_Toptoblnu.C' object='03-example_03_MultipleDecays_Toptoblnu.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_03_x_CXXFLAGS) $(CXXFLAGS) -c -o 03-example_03_MultipleDecays_Toptoblnu.obj `if test -f 'example_03_MultipleDecays_Toptoblnu.C'; then $(CYGPATH_W) 'example_03_MultipleDecays_Toptoblnu.C'; else $(CYGPATH_W) '$(srcdir)/example_03_MultipleDecays_Toptoblnu.C'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

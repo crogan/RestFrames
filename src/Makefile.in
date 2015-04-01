@@ -1075,6 +1075,7 @@ install-data-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rm temp.rootmap
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap

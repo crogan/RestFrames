@@ -1,5 +1,5 @@
 # redirect to subdirectories
-SUBDIRS = src inc examples
+SUBDIRS = src inc examples config
 
 # install the restframes-config script
 bin_SCRIPTS = restframes-config
@@ -22,6 +22,10 @@ do_subst = $(SED) \
 	-e 's|\n|\\n|g' \
 	< "$<" > "$@"
 
+EXTRA_DIST = $(top_srcdir)/config/restframes-config.in\
+	$(top_srcdir)/config/setup_RestFrames.sh.in\
+	$(top_srcdir)/config/setup_RestFrames.csh.in
+
 restframes-config: $(top_srcdir)/config/restframes-config.in Makefile
 	$(do_subst) < $(top_srcdir)/config/restframes-config.in > restframes-config
 	chmod u+x restframes-config
@@ -33,3 +37,6 @@ setup_RestFrames.sh: $(top_srcdir)/config/setup_RestFrames.sh.in Makefile
 setup_RestFrames.csh: $(top_srcdir)/config/setup_RestFrames.csh.in Makefile
 	$(do_subst) < $(top_srcdir)/config/setup_RestFrames.csh.in > setup_RestFrames.csh
 	chmod u+x setup_RestFrames.csh
+
+distclean-local: 
+	rm -f inc/RestFrames/RestFrames_config.h

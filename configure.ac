@@ -86,7 +86,7 @@ dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 AC_SUBST(SOVERSION)
 
-AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile )
+AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile config/Makefile)
 
 CONFIG_SUMMARY=""
 CONFIG_SUMMARY+="Configuration summary:\n"
