@@ -21,12 +21,6 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h CombinatoricGr
 	GVisibleFrame.cc StateList.cc Group.cc\
 	VisibleFrame.cc
 
-install-data-hook:
-	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm temp.rootmap
-
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rm -f $(DESTDIR)$(libdir)/RestFrames_Dict_rdict.pcm
@@ -41,8 +35,21 @@ RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
 	echo "Invoking rootcling"
 
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+	$(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+
+install-data-hook:
+	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rm temp.rootmap
+
 else
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
+
+install-data-hook:
+	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rm temp.rootmap
+
 endif

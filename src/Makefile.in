@@ -1084,12 +1084,6 @@ uninstall-am: uninstall-RestFrameslibDATA \
 .PRECIOUS: Makefile
 
 
-install-data-hook:
-	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm temp.rootmap
-
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rm -f $(DESTDIR)$(libdir)/RestFrames_Dict_rdict.pcm
@@ -1097,9 +1091,21 @@ uninstall-hook:
 @EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 
 @EXISTROOTCLING_TRUE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+
+@EXISTROOTCLING_TRUE@install-data-hook:
+@EXISTROOTCLING_TRUE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_TRUE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_TRUE@	rm temp.rootmap
+
 @EXISTROOTCLING_FALSE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
+
+@EXISTROOTCLING_FALSE@install-data-hook:
+@EXISTROOTCLING_FALSE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_FALSE@	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
+@EXISTROOTCLING_FALSE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_FALSE@	rm temp.rootmap
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
