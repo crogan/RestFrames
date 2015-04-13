@@ -39,7 +39,7 @@ RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/
 
 install-data-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rm temp.rootmap
 
 else
