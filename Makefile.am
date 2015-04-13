@@ -9,6 +9,19 @@ libexec_SCRIPTS = setup_RestFrames.sh setup_RestFrames.csh
 
 CLEANFILES = $(bin_SCRIPTS) $(libexec_SCRIPTS)
 
+# do_subst = $(SED) \
+# 	-e 's|[@]bindir@|$(bindir)|g' \
+# 	-e 's|[@]libdir@|$(libdir)|g' \
+# 	-e 's|[@]includedir@|$(includedir)|g' \
+# 	-e 's|[@]prefix@|$(prefix)|g' \
+# 	-e 's|[@]CONFIG_CXXFLAGS@|$(CONFIG_CXXFLAGS)|g' \
+# 	-e 's|[@]CONFIG_LIBS@|$(CONFIG_LIBS)|g' \
+# 	-e 's|[@]CONFIGURE_INVOCATION@|$(CONFIGURE_INVOCATION)|g' \
+# 	-e 's|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g' \
+# 	-e 's|[@]VERSION@|$(VERSION)|g' \
+# 	-e 's|\n|\\n|g' \
+# 	< "$<" > "$@"
+
 do_subst = $(SED) \
 	-e 's|[@]bindir@|$(bindir)|g' \
 	-e 's|[@]libdir@|$(libdir)|g' \
@@ -16,7 +29,6 @@ do_subst = $(SED) \
 	-e 's|[@]prefix@|$(prefix)|g' \
 	-e 's|[@]CONFIG_CXXFLAGS@|$(CONFIG_CXXFLAGS)|g' \
 	-e 's|[@]CONFIG_LIBS@|$(CONFIG_LIBS)|g' \
-	-e 's|[@]CONFIGURE_INVOCATION@|$(CONFIGURE_INVOCATION)|g' \
 	-e 's|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g' \
 	-e 's|[@]VERSION@|$(VERSION)|g' \
 	-e 's|\n|\\n|g' \

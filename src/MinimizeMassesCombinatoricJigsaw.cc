@@ -124,6 +124,7 @@ namespace RestFrames {
     if(!DO_HEM){
       if(m_NExclusive[0] && m_NExclusive[1])
 	if(Ninput != m_NForOutput[0]+m_NForOutput[1]) return false;
+      if(Ninput < m_NForOutput[0]+m_NForOutput[1]) return false;
       
       int N_comb = 1;
       for(int i = 0; i < Ninput; i++) N_comb *= 2;
