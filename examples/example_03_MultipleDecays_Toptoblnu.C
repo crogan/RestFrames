@@ -117,7 +117,7 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_02.root"){
   InvisibleRapidityJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
   RapidityJigsaw.AddVisibleFrame(L_R);
-  //RapidityJigsaw.AddVisibleFrame(B_R);
+  RapidityJigsaw.AddVisibleFrame(B_R);
 
   if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
 
