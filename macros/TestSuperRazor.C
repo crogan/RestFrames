@@ -158,7 +158,6 @@ void TestSuperRazor(){
     INV.SetLabFrameThreeVector(MET);
     LAB.AnalyzeEvent();
 
-
     // Can get our two visible hemispheres' four vectors in any
     // reference frame in our tree
     TLorentzVector HEM1_inLab = V1.GetFourVector(LAB);
@@ -188,7 +187,7 @@ void TestSuperRazor(){
     const RestFrame* I1_prodframe = I1.GetProductionFrame();
     cout << "P_{I1}^{prod} / M_{S1} = "; 
     cout << I1.GetMomentum(I1_prodframe)/S1.GetMass() << endl;
-
+    
   }
   TreePlot->AddFrameTree(SS);
   TreePlot->DrawFramePlot();
