@@ -350,6 +350,8 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     double dphiGC[2];
     //*** ratio of child and gluino masses (w/ WIMP masses subtracted)
     double RCG[2];
+    //*** 1st leading jet pT _associated with this hemisphere_
+    double jet1PT[2];
     //*** 2nd leading jet pT _associated with this hemisphere_
     double jet2PT[2];
       
@@ -359,25 +361,27 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
       cosG[i] = G[i]->GetCosDecayAngle();
 
-      if(NV[i] > 1){
-	cosC[i] = C[i]->GetCosDecayAngle();
-	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(C[i]);
-	RCG[i] = (C[i]->GetMass()-X[i]->GetMass())/(G[i]->GetMass()-X[i]->GetMass());
-	int N = jetID.size();
-	double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
-	for(int j = 0; j < N; j++){
-	  const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
-	  if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
-	    double pT = frame->GetFourVector(LAB_R).Pt();
+      int N = jetID.size();
+      double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
+      for(int j = 0; j < N; j++){
+	const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
+	if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
+	  double pT = frame->GetFourVector(LAB_R).Pt();
 	    if(pT > pTmax[0]){
 	      pTmax[1] = pTmax[0];
 	      pTmax[0] = pT;
 	    } else {
 	      if(pT > pTmax[1]) pTmax[1] = pT;
 	    }
-	  }
 	}
-	jet2PT[i] = pTmax[1];
+      }
+      jet1PT[i] = pTmax[0];
+      jet2PT[i] = pTmax[1];
+
+      if(NV[i] > 1){
+	cosC[i] = C[i]->GetCosDecayAngle();
+	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(C[i]);
+	RCG[i] = (C[i]->GetMass()-X[i]->GetMass())/(G[i]->GetMass()-X[i]->GetMass());
       } else {
 	cosC[i] = -2.;
 	dphiGC[i] = -1.;
