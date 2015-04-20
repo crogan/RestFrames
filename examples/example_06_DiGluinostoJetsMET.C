@@ -228,36 +228,21 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   VISPlot_R->DrawFramePlot();
   TCanvas* c_visRtree = VISPlot_R->GetCanvas();
 
-  /*
-  // Now we book some histograms of kinematic variables
-  TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,90.);
-  TH1D* h_cosW   = new TH1D("h_cosW","h_cosW",100,-1.,1.);
-  TH1D* h_dphiW  = new TH1D("h_dphiW","h_dphiW",100,0.,2.*TMath::Pi());
-  TH1D* h_DcosW  = new TH1D("h_DcosW","h_DcosW",100,-1.,1.);
-  TH1D* h_DdphiW = new TH1D("h_DdphiW","h_DdphiW",100,-1.,1.);
-  
-  TH2D* h_MW_v_cosW   = new TH2D("h_MW_v_cosW","h_MW_v_cosW",50,0.,90.,50,-1.,1.);
-  TH2D* h_MW_v_PT     = new TH2D("h_MW_v_PT","h_MW_v_PT",50,0.,90.,50,0.,1.);
-  TH2D* h_cosW_v_PT   = new TH2D("h_cosW_v_PT","h_cosW_v_PT",50,-1.,1.,50,0.,1.);
-  TH2D* h_dphiW_v_PT  = new TH2D("h_dphiW_v_PT","h_dphiW_v_PT",50,0.,2.*TMath::Pi(),50,0.,1.);
-  TH2D* h_DcosW_v_PT  = new TH2D("h_DcosW_v_PT","h_DcosW_v_PT",50,-1.,1.,50,0.,1.);
-  TH2D* h_DdphiW_v_PT = new TH2D("h_DdphiW_v_PT","h_DdphiW_v_PT",50,-1.,1.,50,0.,1.);
-  */
-
   // set gluino masses
   Ga_G.SetMass(mG);
   Gb_G.SetMass(mG);
   // set X masses
   Xa_G.SetMass(mX);
   Xb_G.SetMass(mX);
-  // function for randomly determining di-gluino mass
+  // function for randomly determining di-gluino mass 
+  // (relative to gluino mass via gamma)
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
-    double mGG = 2.*mG*f_gamma.GetRandom();        // get a random di-gluino mass
+    double mGG = 2.*mG*f_gamma.GetRandom();         // get a random di-gluino mass
     GG_G.SetMass(mGG);
     double PTGG = mGG*gRandom->Rndm();
     LAB_G.SetTransverseMomenta(PTGG);               // give the di-gluinos some Pt
@@ -314,66 +299,100 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     // Observable Calculations
     //////////////////////////////////////
 
-    // signal tree
+    //
+    // signal tree observables
+    //
+
+    //*** total CM mass
     double shat = GG_R.GetMass();
+    //*** 'mass-less' gluino gamma in CM frame
     double gaminv = GG_R.GetVisibleShape();
     
     TVector3 vPGG = GG_R.GetFourVector(LAB_R).Vect();
     
+    //*** ratio of CM pT to CM mass
     double RPT = vPGG.Pt() / (vPGG.Pt() + shat/4.);
+    //*** ratio of CM pz to CM mass
     double RPZ = vPGG.Pz() / (vPGG.Pz() + shat/4.);
-    
+    //*** cos decay angle of GG system
     double cosGG = GG_R.GetCosDecayAngle();
+    //*** delta phi between lab and GG decay planes
     double dphiLGG = LAB_R.GetDeltaPhiDecayPlanes(GG_R);
     
-    TLorentzVector vGG = GG_R.GetFourVector(LAB_R);
-    TLorentzVector vGa = G[0]->GetFourVector(LAB_R);
-    TLorentzVector vVa = VS[0]->GetFourVector(LAB_R);
-    TLorentzVector vVb = VS[1]->GetFourVector(LAB_R);
-    TVector3 vB_GG_z = vGG.BoostVector();
-    vB_GG_z.SetX(0.); vB_GG_z.SetY(0.); 
-    vGG.Boost(-vB_GG_z);
-    vGa.Boost(-vB_GG_z);
-    vVa.Boost(-vB_GG_z);
-    vVb.Boost(-vB_GG_z);
-    TVector3 vB_GG_T = vGG.BoostVector();
-    vGa.Boost(-vB_GG_T);
-    vVa.Boost(-vB_GG_T);
-    vVb.Boost(-vB_GG_T);
-    double betaG_z = fabs(vGa.Vect().Unit().Z());
+    TLorentzVector vV1 = G[0]->GetVisibleFourVector(G[0]);
+    TLorentzVector vV2 = G[1]->GetVisibleFourVector(G[1]);
+
+    //*** gluino mass
+    double MG = (vV1.M2()-vV2.M2())/(2.*(vV1.E()-vV2.E()));
     
-    TVector3 vP1 = (vVa+vVb).Vect();
-    vP1.SetZ(0.);
-    TVector3 vP2 = (vVa-vVb).Vect();
-    vP2.SetZ(0.);
-    TVector3 vB = vGa.Vect();
-    vB.SetZ(0.);
-    
-    TLorentzVector vVVa = VS[0]->GetFourVector(G[0])+VC[0]->GetFourVector(G[0]);
-    TLorentzVector vVVb = VS[1]->GetFourVector(G[1])+VC[1]->GetFourVector(G[1]);
-    
-    double MG = (vVVa.M2()-vVVb.M2())/(2.*(vVVa.E()-vVVb.E()));
     double PG = G[0]->GetMomentum(GG_R);
     double MGG = 2.*sqrt(PG*PG + MG*MG);
     double gaminvGG = 2.*MG/MGG;
-    
     double beta = sqrt(1.- gaminv*gaminv);
     double betaGG = sqrt(1.- gaminvGG*gaminvGG);
     
-    double dbetaGG = -(betaGG-beta)/(1.-betaGG*beta);
+    //*** velocity difference between 'massive' and 'mass-less'
+    double DeltaBetaGG = -(betaGG-beta)/(1.-betaGG*beta);
+    //*** delta phi between GG visible decay products and GG decay axis
+    double dphiVG = GG_R.GetDeltaPhiDecayVisible();
+    //*** delta phi between GG visible decay products and GG momentum
+    double dphiVGG = GG_R.GetDeltaPhiBoostVisible();
     
-    // cross-hemisphere ratios
-    double Aab = fabs(acos(vP1.Unit().Dot(vP2.Unit())));
-    double Aab2 = fabs(acos(vP1.Unit().Dot(vB.Unit())));
-    
-    // QCD clean-up
-    double dphiR = GG_R.GetDeltaPhiBoostVisible();
-    
-    // background tree    
-    // QCD clean-up
+    // 'hemisphere' (one for each 'gluino') observables
+
+    //*** number of visible objects (jets) in hemisphere
+    double NV[2];
+    //*** cosine gluino decay angle
+    double cosG[2];
+    //*** cosine intermediate child decay angle
+    double cosC[2];
+    //*** delta phi between gluino and child decay planes
+    double dphiGC[2];
+    //*** ratio of child and gluino masses (w/ WIMP masses subtracted)
+    double RCG[2];
+    //*** 2nd leading jet pT _associated with this hemisphere_
+    double jet2PT[2];
+      
+    for(int i = 0; i < 2; i++){
+      NV[i] =  VIS_R.GetNElementsInFrame(VS[i]);
+      NV[i] += VIS_R.GetNElementsInFrame(VC[i]);
+
+      cosG[i] = G[i]->GetCosDecayAngle();
+
+      if(NV[i] > 1){
+	cosC[i] = C[i]->GetCosDecayAngle();
+	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(C[i]);
+	RCG[i] = (C[i]->GetMass()-X[i]->GetMass())/(G[i]->GetMass()-X[i]->GetMass());
+	int N = jetID.size();
+	double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
+	for(int j = 0; j < N; j++){
+	  const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
+	  if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
+	    double pT = frame->GetFourVector(LAB_R).Pt();
+	    if(pT > pTmax[0]){
+	      pTmax[1] = pTmax[0];
+	      pTmax[0] = pT;
+	    } else {
+	      if(pT > pTmax[1]) pTmax[1] = pT;
+	    }
+	  }
+	}
+	jet2PT[i] = pTmax[1];
+      } else {
+	cosC[i] = -2.;
+	dphiGC[i] = -1.;
+	RCG[i] = -1.;
+	jet2PT[i] = -1.;
+      }
+    }
+
+    //
+    // background tree observables
+    //
     TLorentzVector Psib = I_B.GetSiblingFrame()->GetFourVector(LAB_B);
     TLorentzVector Pmet = I_B.GetFourVector(LAB_B);
       
+    //*** 
     double RMsib = max(0.,Psib.Vect().Dot(Pmet.Vect().Unit()));
     RMsib = RMsib / (Pmet.Pt() + RMsib);
     
@@ -381,59 +400,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     Psib.Boost(-boostQCD);
     double cosQCD = -1.*Psib.Vect().Unit().Dot(boostQCD.Unit());
     cosQCD = (1.-cosQCD)/2.;
-    double DELTA = (cosQCD-RMsib)/(cosQCD+RMsib);
 
-    /*
-    // calculate observables
-    double MW    = W_R.GetMass();
-    double MWgen = W_G.GetMass();
-    double cosW     = W_R.GetCosDecayAngle();
-    double cosWgen  = W_G.GetCosDecayAngle();
-    double dphiW    = LAB_R.GetDeltaPhiDecayPlanes(W_R);
-    double dphiWgen = LAB_G.GetDeltaPhiDecayPlanes(W_G);
-    
-    double DcosW = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
-    double DdphiW = asin(sin(dphiW-dphiWgen));
+    //*** 
+    double DeltaQCD = (cosQCD-RMsib)/(cosQCD+RMsib);
 
-    h_MW->Fill(MW);
-    h_cosW->Fill(cosW);
-    h_dphiW->Fill(dphiW);
-    h_DcosW->Fill(DcosW);
-    h_DdphiW->Fill(DdphiW);
-    h_MW_v_cosW->Fill(MW,cosW);
-  
-    PTW /= MWgen;
-    h_MW_v_PT->Fill(MW,PTW);
-    h_cosW_v_PT->Fill(cosW,PTW);
-    h_dphiW_v_PT->Fill(dphiW,PTW);
-    h_DcosW_v_PT->Fill(DcosW,PTW);
-    h_DdphiW_v_PT->Fill(DdphiW,PTW);
-    */
   }
-  // setstyle();
-  // string plot_title = "W #rightarrow #it{l} #nu";
-  // TCanvas *c_MW          = Plot_Me("c_MW", h_MW, "M_{W} [GeV]", plot_title);
-  // TCanvas *c_cosW        = Plot_Me("c_cosW", h_cosW, "cos #theta_{W}", plot_title);
-  // TCanvas *c_dphiW       = Plot_Me("c_dphiW", h_dphiW, "#Delta #phi (#hat{n}_{W}, (#hat{z} #times #hat{p}_{W}))", plot_title);
-  // TCanvas *c_DcosW       = Plot_Me("c_DcosW", h_DcosW, "#theta_{W} - #theta_{W}^{true}", plot_title);
-  // TCanvas *c_DdphiW      = Plot_Me("c_DdphiW", h_DdphiW, "#Delta #phi_{W} - #Delta #phi_{W}^{true}", plot_title);
-  // TCanvas *c_MW_v_cosW   = Plot_Me("c_MW_v_cosW", h_MW_v_cosW, "M_{W} [GeV]", 
-  // 				   "cos #theta_{W}", plot_title);
-  // TCanvas *c_MW_v_PT     = Plot_Me("c_MW_v_PT", h_MW_v_PT, "M_{W} [GeV]", 
-  // 				   "p_{T}^{W} / m_{W}^{true}", plot_title);
-  // TCanvas *c_cosW_v_PT   = Plot_Me("c_cosW_v_PT", h_cosW_v_PT, "cos #theta_{W}", 
-  // 				   "p_{T}^{W} / m_{W}^{true}", plot_title);
-  // TCanvas *c_dphiW_v_PT  = Plot_Me("c_dphiW_v_PT", h_dphiW_v_PT, 
-  // 				   "#Delta #phi (#hat{n}_{W}, (#hat{z} #times #hat{p}_{W}))", 
-  // 				  "p_{T}^{W} / m_{W}^{true}", plot_title);
-  // TCanvas *c_DcosW_v_PT  = Plot_Me("c_DcosW_v_PT", h_DcosW_v_PT, 
-  // 				   "#theta_{W} - #theta_{W}^{true}", 
-  // 				  "p_{T}^{W} / m_{W}^{true}", plot_title);
-  // TCanvas *c_DdphiW_v_PT = Plot_Me("c_DdphiW_v_PT", h_DdphiW_v_PT, 
-  // 				   "#Delta #phi_{W} - #Delta #phi_{W}^{true}", 
-  // 				   "p_{T}^{W} / m_{W}^{true}", plot_title);
   
-
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
   c_gentree->Write();
@@ -446,17 +418,6 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   delete c_bkgtree;
   delete c_invRtree;
   delete c_visRtree;
-  // c_MW->Write();
-  // c_cosW->Write(); 
-  // c_dphiW->Write(); 
-  // c_DcosW->Write(); 
-  // c_DdphiW->Write();
-  // c_MW_v_cosW->Write(); 
-  // c_MW_v_PT->Write();
-  // c_cosW_v_PT->Write();
-  // c_dphiW_v_PT->Write();
-  // c_DcosW_v_PT->Write(); 
-  // c_DdphiW_v_PT->Write();
   foutput->Close();
 }
 

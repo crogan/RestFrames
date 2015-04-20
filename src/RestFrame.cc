@@ -461,6 +461,34 @@ namespace RestFrames {
    
     return V.Angle(boost_perp);
   }
+
+  // Get angle between 'this' decay axis (defined by first child)
+  // and visible children in plane 
+  // perpendicular to 3-vector 'axis', where axis is defined
+  // in 'framePtr' (default gives lab frame). 
+  double RestFrame::GetDeltaPhiDecayVisible(const TVector3& axis, const RestFrame* framePtr) const {
+    if(GetNChildren() < 1) return 0.;
+    if(!framePtr) framePtr = GetLabFrame();
+    TLorentzVector Pvis   = GetVisibleFourVector(framePtr);
+    TLorentzVector Pchild = GetChildFrame(0)->GetFourVector(framePtr);
+    TLorentzVector Pthis  = GetFourVector(framePtr);
+
+    TVector3 boost_par = Pthis.BoostVector();
+    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    Pthis.Boost(-boost_par);
+    Pvis.Boost(-boost_par);
+    Pchild.Boost(-boost_par);
+    TVector3 boost_perp = Pthis.BoostVector();
+    Pvis.Boost(-boost_perp);
+    Pchild.Boost(-boost_perp);
+
+    TVector3 Vv = Pvis.Vect();
+    Vv = Vv - Vv.Dot(axis.Unit())*axis.Unit();
+    TVector3 Vc = Pchild.Vect();
+    Vc = Vc - Vc.Dot(axis.Unit())*axis.Unit();
+   
+    return Vv.Angle(Vc);
+  }
  
   // Get angle between the visible portions of children 1 and 2
   // in the plane perpendicular to 3-vector 'axis', where

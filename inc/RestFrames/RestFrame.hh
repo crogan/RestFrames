@@ -229,6 +229,8 @@ namespace RestFrames {
 					 const RestFrame* framePtr = nullptr) const;
     virtual double GetDeltaPhiBoostVisible(const TVector3& axis = TVector3(0.,0.,1.), 
 					   const RestFrame* framePtr = nullptr) const;
+    virtual double GetDeltaPhiDecayVisible(const TVector3& axis = TVector3(0.,0.,1.), 
+					   const RestFrame* framePtr = nullptr) const;
     virtual double GetDeltaPhiVisible(const TVector3& axis = TVector3(0.,0.,1.), 
 				      const RestFrame* framePtr = nullptr) const;
     virtual double GetVisibleShape() const;
