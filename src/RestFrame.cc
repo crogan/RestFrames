@@ -1,27 +1,14 @@
 #include <iostream>
 #include "RestFrames/RestFrames_config.h"
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/FrameLink.hh"
 #include "RestFrames/RestFrameList.hh"
+#include "RestFrames/FrameLink.hh"
+#include "RestFrames/FrameLog.hh"
+
 
 using namespace std;
 
 namespace RestFrames {
-
-  // Initializer.
-  __attribute__((constructor))
-  static void initializer(void){
-    printf("\n" "\x1b[36m");
-    printf(PACKAGE_NAME);
-    printf(" v");
-    printf(PACKAGE_VERSION);
-    printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
-    printf("                     ");
-    printf("Copyright (c) 2014-2015, Christopher Rogan\n");
-    printf("                     ");
-    printf("http://RestFrames.com\n");
-    printf("\x1b[0m" "\n");
-  }
 
   ///////////////////////////////////////////////
   // RestFrame class methods
@@ -36,6 +23,7 @@ namespace RestFrames {
   RestFrame::RestFrame(const string& sname, const string& stitle){
     Init(sname, stitle);
     m_Key = GenKey();
+    RestFramesException msg("TESTING", this);
   }
 
   RestFrame::~RestFrame(){
@@ -766,6 +754,21 @@ namespace RestFrames {
       prod *= GetChildFrame(i)->GetProdSinDecayAngle(NDecay);
     }
     return prod;
+  }
+
+  // Initializer.
+  __attribute__((constructor))
+  static void initializer(void){
+    printf("\n" "\x1b[36m");
+    printf(PACKAGE_NAME);
+    printf(" v");
+    printf(PACKAGE_VERSION);
+    printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
+    printf("                     ");
+    printf("Copyright (c) 2014-2015, Christopher Rogan\n");
+    printf("                     ");
+    printf("http://RestFrames.com\n");
+    printf("\x1b[0m" "\n");
   }
 
 }

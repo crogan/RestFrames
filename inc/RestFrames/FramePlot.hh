@@ -163,7 +163,6 @@ namespace RestFrames {
     bool m_DoSquare;
     const RestFrame* m_FramePtr;
     JigsawList* m_JigsawsPtr;
-    bool m_is_jigsawlist_copy;
     State* m_StatePtr;
     void Init();
   };
