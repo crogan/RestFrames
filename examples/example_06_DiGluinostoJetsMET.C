@@ -365,15 +365,14 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
       double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
       for(int j = 0; j < N; j++){
 	const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
-	double pT = frame->GetFourVector(LAB_R).Pt();
 	if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
 	  double pT = VIS_R.GetLabFrameFourVector(jetID[j]).Pt();
-	    if(pT > pTmax[0]){
-	      pTmax[1] = pTmax[0];
-	      pTmax[0] = pT;
-	    } else {
-	      if(pT > pTmax[1]) pTmax[1] = pT;
-	    }
+	  if(pT > pTmax[0]){
+	    pTmax[1] = pTmax[0];
+	    pTmax[0] = pT;
+	  } else {
+	    if(pT > pTmax[1]) pTmax[1] = pT;
+	  }
 	}
       }
       
