@@ -171,6 +171,21 @@ namespace RestFrames {
     return nullptr;
   }
 
+  TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const GroupElementID elementID){
+    const State* elementPtr = elementID;
+    TLorentzVector P(0.,0.,0.,0.);
+    int N = m_StatesPtr->GetN();
+    for(int i = N-1; i >= 0; i--){
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_StatesPtr->Get(i));
+      if(!statePtr) continue;
+      if(statePtr->ContainsElement(elementPtr)){
+	P = elementPtr->GetFourVector();
+	break;
+      }
+    }
+    return P;
+  }
+
   int CombinatoricGroup::GetNElementsInFrame(const RestFrame& frame){
     return GetNElementsInFrame(&frame);
   }

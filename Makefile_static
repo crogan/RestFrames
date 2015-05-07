@@ -1,0 +1,34 @@
+ROOTCFLAGS    = $(shell $(ROOTSYS)/bin/root-config --cflags)
+ROOTGLIBS     = $(shell $(ROOTSYS)/bin/root-config --glibs)
+
+CXX            = g++
+CXXFLAGS       = -fPIC -Wall -O3 -g
+CXXFLAGS       += $(filter-out -stdlib=libc++ -pthread , $(ROOTCFLAGS))
+GLIBS          = $(filter-out -stdlib=libc++ -pthread , $(ROOTGLIBS))
+#GLIBS        += -lMinuit -lRooFit -lRooFitCore
+SOFLAGS       = -shared
+
+#ARCH         := $(shell root-config --arch)
+#PLATFORM     := $(shell root-config --platform)
+
+INCLUDEDIR       = ./inc/
+SRCDIR           = ./src/
+CXX	         += -I$(INCLUDEDIR) -I.
+OUTLIB	         = ./lib/
+OUTOBJ	         = ./obj/
+
+CC_FILES := $(wildcard src/*.cc)
+HH_FILES := $(wildcard inc/RestFrames/*.hh)
+OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.cc=.o)))
+
+all: $(OUTLIB)libRestFrames.so
+
+$(OUTLIB)libRestFrames.so: $(OBJ_FILES) $(HH_FILES)
+	$(CXX) $(SOFLAGS) -o $@ $(GLIBS) $(OBJ_FILES)
+
+$(OUTOBJ)%.o: src/%.cc inc/RestFrames/%.hh
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OUTOBJ)*.o 
+	rm -f $(OUTLIB)*.so 

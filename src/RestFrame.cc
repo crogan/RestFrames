@@ -23,7 +23,6 @@ namespace RestFrames {
   RestFrame::RestFrame(const string& sname, const string& stitle){
     Init(sname, stitle);
     m_Key = GenKey();
-    RestFramesException msg("TESTING", this);
   }
 
   RestFrame::~RestFrame(){

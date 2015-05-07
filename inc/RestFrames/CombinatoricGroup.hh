@@ -44,6 +44,7 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     const RestFrame* GetFrame(const GroupElementID elementID);
+    TLorentzVector GetLabFrameFourVector(const GroupElementID elementID);
     int GetNElementsInFrame(const RestFrame& frame);
     int GetNElementsInFrame(const RestFrame* framePtr);
 	

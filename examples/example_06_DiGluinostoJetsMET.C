@@ -182,12 +182,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   VIS_R.AddJigsaw(CaHemiJigsaw_R);
   CaHemiJigsaw_R.AddFrame(V1a_R,0);
   CaHemiJigsaw_R.AddFrame(V2a_R,1);
-  CaHemiJigsaw_R.AddFrame(Xa_R,1);
+  //CaHemiJigsaw_R.AddFrame(Xa_R,1);
   MinimizeMassesCombinatoricJigsaw CbHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
   VIS_R.AddJigsaw(CbHemiJigsaw_R);
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);
-  CbHemiJigsaw_R.AddFrame(Xb_R,1);
+  //CbHemiJigsaw_R.AddFrame(Xb_R,1);
 
   // background tree jigsaws
   InvisibleMassJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");
@@ -365,8 +365,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
       double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
       for(int j = 0; j < N; j++){
 	const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
+	double pT = frame->GetFourVector(LAB_R).Pt();
 	if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
-	  double pT = frame->GetFourVector(LAB_R).Pt();
+	  double pT = VIS_R.GetLabFrameFourVector(jetID[j]).Pt();
 	    if(pT > pTmax[0]){
 	      pTmax[1] = pTmax[0];
 	      pTmax[0] = pT;
@@ -375,6 +376,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 	    }
 	}
       }
+      
       jet1PT[i] = pTmax[0];
       jet2PT[i] = pTmax[1];
 
@@ -397,8 +399,8 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     TLorentzVector Pmet = I_B.GetFourVector(LAB_B);
       
     //*** 
-    double RMsib = max(0.,Psib.Vect().Dot(Pmet.Vect().Unit()));
-    RMsib = RMsib / (Pmet.Pt() + RMsib);
+    double Rpsib = max(0.,Psib.Vect().Dot(Pmet.Vect().Unit()));
+    Rpsib = Rpsib / (Pmet.Pt() + Rpsib);
     
     TVector3 boostQCD = (Pmet+Psib).BoostVector();
     Psib.Boost(-boostQCD);
@@ -406,7 +408,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     cosQCD = (1.-cosQCD)/2.;
 
     //*** 
-    double DeltaQCD = (cosQCD-RMsib)/(cosQCD+RMsib);
+    double DeltaQCD = (cosQCD-Rpsib)/(cosQCD+Rpsib);
 
   }
   
