@@ -182,12 +182,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   VIS_R.AddJigsaw(CaHemiJigsaw_R);
   CaHemiJigsaw_R.AddFrame(V1a_R,0);
   CaHemiJigsaw_R.AddFrame(V2a_R,1);
-  //CaHemiJigsaw_R.AddFrame(Xa_R,1);
+  CaHemiJigsaw_R.AddFrame(Xa_R,1);
   MinimizeMassesCombinatoricJigsaw CbHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
   VIS_R.AddJigsaw(CbHemiJigsaw_R);
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);
-  //CbHemiJigsaw_R.AddFrame(Xb_R,1);
+  CbHemiJigsaw_R.AddFrame(Xb_R,1);
 
   // background tree jigsaws
   InvisibleMassJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");
