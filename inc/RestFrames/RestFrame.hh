@@ -29,11 +29,8 @@
 
 #ifndef RestFrame_HH
 #define RestFrame_HH
-#include <string>
-#include <TLorentzVector.h>
-#include <TVector3.h>
+
 #include "RestFrames/RFBase.hh"
-#include "RestFrames/RFList.hh"
 
 using namespace std;
 

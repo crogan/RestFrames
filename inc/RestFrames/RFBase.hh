@@ -29,6 +29,7 @@
 
 #ifndef RFBase_HH
 #define RFBase_HH
+#include <iostream>
 #include <string>
 #include <TVector3.h>
 #include <TLorentzVector.h>
