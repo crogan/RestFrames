@@ -1,9 +1,6 @@
 #include <iostream>
-#include "RestFrames/RestFrames_config.h"
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/RestFrameList.hh"
 #include "RestFrames/FrameLink.hh"
-#include "RestFrames/FrameLog.hh"
 
 
 using namespace std;
@@ -15,27 +12,20 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   int RestFrame::m_class_key = 0;
 
-  RestFrame::RestFrame(const string& sname, const string& stitle, int ikey){
-    Init(sname, stitle);
-    m_Key = ikey;
-  }
-
-  RestFrame::RestFrame(const string& sname, const string& stitle){
-    Init(sname, stitle);
-    m_Key = GenKey();
+  RestFrame::RestFrame(const string& sname, const string& stitle)
+    : RFBase(sname, stitle) 
+  {
+    Init();
   }
 
   RestFrame::~RestFrame(){
-    ClearFrame();
+    RemoveChildren();
   }
 
-  void RestFrame::Init(const string& sname, const string& stitle){
-    m_Name = sname;
-    m_Title = stitle;
-    m_Body   = false;
-    m_Mind   = false;
-    m_Spirit = false;
+  void RestFrame::Init(){
+    SetKey(GenKey());
     m_ParentLinkPtr = nullptr;
+    m_Log.SetSource("RestFrame "+GetName());
   }
 
   int RestFrame::GenKey(){
@@ -43,99 +33,33 @@ namespace RestFrames {
     m_class_key++;
     return newkey;
   }
-
-  void RestFrame::ClearFrame(){
-    m_Body = false;
-    m_Mind = false;
-    m_Spirit = false;
-    //m_ParentLinkPtr = nullptr;
-    int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(m_ChildLinks[i]){
-	delete m_ChildLinks[i];
-	m_ChildLinks[i] = nullptr;
-      }
-    }
-    m_ChildLinks.clear();
-  }
   
   bool RestFrame::IsSoundBody() const {
-    m_Body = true;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       if(!m_ChildLinks[i]){
-	m_Body = false;
-	break;
+	SetBody(false);
+	m_Log << LogWarning << "Broken child link" << m_End;
+	return false;
       }
       if(!m_ChildLinks[i]->GetChildFrame()){
-	m_Body = false;
+	SetBody(false);
+	m_Log << LogWarning << "NULL child pointer" << m_End;
 	break;
       }
     }
-    return m_Body;
+    SetBody(true);
+    return true;
   }
 
   bool RestFrame::IsSoundBodyRecursive() const {
-    bool child_body = true;
+    if(!IsSoundBody()) return false;
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(!m_ChildLinks[i]) continue;
-      if(!m_ChildLinks[i]->GetChildFrame()) continue;
-      child_body = m_ChildLinks[i]->GetChildFrame()->IsSoundBodyRecursive();
-    }
-    return IsSoundBody() && child_body;
-  }
-
-  bool RestFrame::IsSoundMind() const {
-    return m_Mind;
-  }
-
-  bool RestFrame::IsSoundMindRecursive() const {
-    bool child_mind = true;
-    int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(!m_ChildLinks[i]) continue;
-      if(!m_ChildLinks[i]->GetChildFrame()) continue;
-      child_mind = m_ChildLinks[i]->GetChildFrame()->IsSoundMindRecursive();
-    }
-    return IsSoundMind() && child_mind;
-  }
-
-  bool RestFrame::IsSoundSpirit() const {
-    return m_Spirit;
-  }
-
-  bool RestFrame::IsSoundSpiritRecursive() const {
-    bool child_spirit = true;
-    int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      if(!m_ChildLinks[i]) continue;
-      if(!m_ChildLinks[i]->GetChildFrame()) continue;
-      child_spirit = m_ChildLinks[i]->GetChildFrame()->IsSoundSpiritRecursive();
-    }
-    return IsSoundSpirit() && child_spirit;
-  }
-
-  bool RestFrame::IsSame(const RestFrame& frame) const {
-    return IsSame(&frame);
-  }
-     
-  bool RestFrame::IsSame(const RestFrame* framePtr) const {
-    if(!framePtr) return false;
-    if(m_Key == framePtr->GetKey()) return true;
-    return false;
-  }
-
-  int RestFrame::GetKey() const {
-    return m_Key;
-  }
-
-  string RestFrame::GetName() const {
-    return m_Name;
-  }
-
-  string RestFrame::GetTitle() const {
-    return m_Title;
+    for(int i = 0; i < Nchild; i++)
+      if(!m_ChildLinks[i]->GetChildFrame()->IsSoundBodyRecursive())
+	return false;
+      
+    return true;
   }
 
   FrameType RestFrame::GetType() const { 
@@ -190,13 +114,14 @@ namespace RestFrames {
     m_Mind = false;
     m_Spirit = false;
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++) RemoveChildIndex(i);
+    for(int i = 0; i < Nchild; i++){
+      if(m_ChildLinks[i]){
+	delete m_ChildLinks[i];
+	m_ChildLinks[i] = nullptr;
+      }
+    }
     m_ChildLinks.clear();
   }
-
-  //////////////////////////////
-  //Tree construction functions
-  //////////////////////////////
 
   void RestFrame::SetParentLink(FrameLink* linkPtr){
     if(m_Type != FLab) m_ParentLinkPtr = linkPtr;
@@ -207,13 +132,21 @@ namespace RestFrames {
   }
   
   void RestFrame::AddChildFrame(RestFrame* framePtr){
-    if(!framePtr) return;
     m_Body = false;
     m_Mind = false;
     m_Spirit = false;
-    if(framePtr->IsLabFrame()) return;
-    if(GetChildIndex(framePtr) >= 0) return;
-  
+   
+    if(!framePtr) return;
+    if(framePtr->IsLabFrame()){
+      m_Log << LogWarning << "Cannot add LabFrame frame as child: " << Log(framePtr) << m_End;
+      return;
+    }
+    if(GetChildIndex(framePtr) >= 0){
+      m_Log << LogWarning << "Frame is already among children: " << Log(framePtr) << m_End;
+      return;
+    }
+
+    m_Log << LogVerbose << "Adding child frame " << framePtr->GetName() << m_End;
     FrameLink* linkPtr = new FrameLink();
     linkPtr->SetParentFrame(this);
     linkPtr->SetChildFrame(framePtr);
@@ -227,17 +160,18 @@ namespace RestFrames {
 
   int RestFrame::GetChildIndex(const RestFrame* framePtr) const {
     if(!framePtr) return -1;
+
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
+    for(int i = 0; i < Nchild; i++)
       if(GetChildFrame(i)->IsSame(framePtr)) return i;
-    }
+    
     return -1;
   }
 
   RestFrame* RestFrame::GetChildFrame(int i) const {
     int Nchild = GetNChildren();
-    if(i >= Nchild || i < 0) return nullptr;
-    return m_ChildLinks[i]->GetChildFrame();
+    if(i >= Nchild || i < 0 || !m_ChildLinks[i]) return nullptr;
+    return GetChildLink(i)->GetChildFrame();
   }
 
   const RestFrame* RestFrame::GetParentFrame() const {
@@ -247,26 +181,39 @@ namespace RestFrames {
 
   const RestFrame* RestFrame::GetLabFrame() const {
     if(m_Type == FLab) return this;
-    if(!m_ParentLinkPtr) return nullptr;
     const RestFrame* parentPtr = GetParentFrame();
     if(parentPtr) return parentPtr->GetLabFrame();
     return nullptr;
   } 
 
-  void RestFrame::SetChildBoostVector(int i, TVector3 boost) const {
-    m_ChildLinks[i]->SetBoostVector(boost);
+  void RestFrame::SetChildBoostVector(int i, const TVector3& boost) const {
+    FrameLink* linkPtr = GetChildLink(i);
+    if(linkPtr) linkPtr->SetBoostVector(boost);
+  }
+
+  FrameLink* RestFrame::GetParentLink() const {
+    return m_ParentLinkPtr;
+  }
+  
+  FrameLink* RestFrame::GetChildLink(int i) const {
+    int Nchild =  m_ChildLinks.size();
+    if(i >= Nchild || i < 0 || !m_ChildLinks[i]) return nullptr;
+    return m_ChildLinks[i];
   }
 
   TVector3 RestFrame::GetChildBoostVector(int i) const {
-    return m_ChildLinks[i]->GetBoostVector();
+    FrameLink* linkPtr = GetChildLink(i);
+    if(linkPtr) return linkPtr->GetBoostVector();
+    return TVector3(0.,0.,0.);
   }
 
   TVector3 RestFrame::GetParentBoostVector() const {
-    return m_ParentLinkPtr->GetBoostVector();
+    return GetParentLink()->GetBoostVector();
   }
 
-  RestFrameList* RestFrame::GetListFrames(){
-    RestFrameList* framesPtr = new RestFrameList();
+  RFList<RestFrame>* RestFrame::GetListFrames(){
+    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
+
     framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
@@ -275,8 +222,9 @@ namespace RestFrames {
     return framesPtr;
   }
 
-  RestFrameList* RestFrame::GetListFramesType(FrameType type){
-    RestFrameList* framesPtr = new RestFrameList();
+  RFList<RestFrame>* RestFrame::GetListFramesType(FrameType type){
+    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
+    
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
@@ -285,8 +233,9 @@ namespace RestFrames {
     return framesPtr;
   }
 
-  RestFrameList* RestFrame::GetListFramesType(const vector<FrameType>& types){
-    RestFrameList* framesPtr = new RestFrameList();
+  RFList<RestFrame>* RestFrame::GetListFramesType(const vector<FrameType>& types){
+    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
+
     int Ntype = types.size();
     for(int i = 0; i < Ntype; i++)
       FillListFramesTypeRecursive(types[i], framesPtr);
@@ -294,51 +243,51 @@ namespace RestFrames {
     return framesPtr;
   }
 
-  RestFrameList* RestFrame::GetListVisibleFrames(){
+  RFList<RestFrame>* RestFrame::GetListVisibleFrames(){
     return GetListFramesType(FVisible);
   }
 
-  RestFrameList* RestFrame::GetListInvisibleFrames(){
+  RFList<RestFrame>* RestFrame::GetListInvisibleFrames(){
     return GetListFramesType(FInvisible);
   }
 
-  void RestFrame::FillListFramesRecursive(RestFrameList* framesPtr){
+  void RestFrame::FillListFramesRecursive(RFList<RestFrame>* framesPtr){
     framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       GetChildFrame(i)->FillListFramesRecursive(framesPtr);
   }
   
-  void RestFrame::FillListFramesTypeRecursive(FrameType type, RestFrameList* framesPtr){
+  void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>* framesPtr){
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
   }
 
-  ///////////////////////////////////////////////
-  // Recursive checks of tree integrity
-  ///////////////////////////////////////////////
   bool RestFrame::IsCircularTree(vector<int>* KEYS) const {
     int Nkey = KEYS->size();
   
     for(int i = 0; i < Nkey; i++){
       if((*KEYS)[i] == m_Key){
-	cout << endl << "Warning: reference frame ";
-	cout << m_Name.c_str() << " appears more than once in tree" << endl;
+	m_Log << LogWarning << "This RestFrame appears more than once in the tree" << m_End;
 	return true;
       }
     }
     KEYS->push_back(m_Key);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i)->IsCircularTree(KEYS)) return true;
+      if(GetChildFrame(i)->IsCircularTree(KEYS)){
+	m_Log << LogWarning << "Tree is circular" << m_End;
+	return true;
+      }
      
     return false;
   }
 
   bool RestFrame::IsConsistentAnaTree(AnaType ana) const {
     if(ana != m_Ana) return false;
+    
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(!GetChildFrame(i)->IsConsistentAnaTree(ana)) return false;
@@ -353,11 +302,11 @@ namespace RestFrames {
     vector<FrameLink*> try_links;
     vector<int> try_signs;
 
-    try_links.push_back(m_ParentLinkPtr);
+    try_links.push_back(GetParentLink());
     try_signs.push_back(1);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      try_links.push_back(m_ChildLinks[i]);
+      try_links.push_back(GetChildLink(i));
       try_signs.push_back(-1);
     }
     for(int i = 0; i < Nchild+1; i++){
@@ -389,14 +338,18 @@ namespace RestFrames {
   }
 
   double RestFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
-    if(m_ChildLinks.size() <= 0) return 0.;
-    if(!m_ParentLinkPtr) return 0.;
+    if(!m_Spirit){
+      //m_Log << LogInfo << "Can't call analysis function CosDecayAngle" << sendl;
+      return 0.;
+    }
+    if(!GetParentLink()) return 0.;
     TVector3 V1 = GetParentBoostVector().Unit();
-    TVector3 V2;
+    TVector3 V2(0.,0.,0.);
     if(framePtr){
       V2 = framePtr->GetFourVector(this).Vect().Unit();
     } else {
-      V2 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
+      RestFrame* childPtr = GetChildFrame(0);
+      if(childPtr) V2 = childPtr->GetFourVector(this).Vect().Unit();
     }
     return V1.Dot(V2);
   }
@@ -405,6 +358,7 @@ namespace RestFrames {
   // in the production frame of 'this'. Decay angle is relative to frame 'framePtr'
   // unless framePtr == nullptr (default), in which case is it first child of 'this'
   double RestFrame::GetDeltaPhiDecayAngle(const TVector3& axis, const RestFrame* framePtr) const {
+    if(!m_Spirit) return 0.;
     const RestFrame* prod_framePtr = GetProductionFrame();
     if(!prod_framePtr) return 0.;
     TLorentzVector Pthis = GetFourVector(prod_framePtr);
@@ -602,7 +556,7 @@ namespace RestFrames {
     if(!framePtr || !m_Spirit) return V;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RestFrameList* framesPtr = m_ChildLinks[c]->GetChildFrame()->GetListVisibleFrames();
+      RFList<RestFrame>* framesPtr = m_ChildLinks[c]->GetChildFrame()->GetListVisibleFrames();
       int Nf = framesPtr->GetN();
       for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
       delete framesPtr;
@@ -618,7 +572,7 @@ namespace RestFrames {
     if(!framePtr) framePtr = this;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RestFrameList* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
+      RFList<RestFrame>* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
       int Nf = framesPtr->GetN();
       for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
       delete framesPtr;
@@ -660,7 +614,7 @@ namespace RestFrames {
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       RestFrame* childPtr = GetChildFrame(i);
-      RestFrameList* framesPtr = childPtr->GetListFrames();
+      RFList<RestFrame>* framesPtr = childPtr->GetListFrames();
       if(framesPtr->Contains(framePtr)){
 	delete framesPtr;
 	if(depth == 1) return childPtr;
@@ -677,7 +631,7 @@ namespace RestFrames {
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const {
     if(!framePtr) return 0.;
     if(m_ChildLinks.size() < 1) return 0.;
-   
+
     TVector3 vNorm_frame = framePtr->GetDecayPlaneNormalVector();
     TVector3 vNorm_this = GetDecayPlaneNormalVector();
     double dphi = vNorm_this.Angle(vNorm_frame);
@@ -685,12 +639,14 @@ namespace RestFrames {
     if(framePtr->GetFourVector(this).Vect().Cross(vNorm_frame).Dot(vNorm_this) < 0.){
       dphi = TMath::Pi()*2. - dphi;
     }
+
     return dphi;
   }
   
   TVector3 RestFrame::GetDecayPlaneNormalVector() const {
     TVector3 V(0.,0.,0.);
     if(GetNChildren() < 2) return V;
+
     TVector3 V1 = GetChildFrame(0)->GetFourVector(GetParentFrame()).Vect();
     TVector3 V2 = GetChildFrame(1)->GetFourVector(GetParentFrame()).Vect();
     return V1.Cross(V2).Unit();
@@ -730,44 +686,6 @@ namespace RestFrames {
     TVector3 vbeta = GetBoostInParentFrame();
     double beta = min(1.,vbeta.Mag());
     return 1./sqrt(1.-beta*beta);
-  }
-
-  double RestFrame::GetProdPoM(int& NDecay) const{
-    if(IsVisibleFrame() || IsInvisibleFrame()) return 1.;
-    NDecay++;
-    int Nc = GetNChildren();
-    double prod = 2.*GetChildFrame(0)->GetMomentum(this) / GetMass();
-    for(int i = 0; i < Nc; i++){
-      prod *= GetChildFrame(i)->GetProdPoM(NDecay);
-    }
-    return prod;
-  }
-
-  double RestFrame::GetProdSinDecayAngle(int& NDecay) const{
-    if(IsVisibleFrame() || IsInvisibleFrame()) return 1.;
-    NDecay++;
-    int Nc = GetNChildren();
-    double c = GetCosDecayAngle();
-    double prod = sqrt(1.-c*c);
-    for(int i = 0; i < Nc; i++){
-      prod *= GetChildFrame(i)->GetProdSinDecayAngle(NDecay);
-    }
-    return prod;
-  }
-
-  // Initializer.
-  __attribute__((constructor))
-  static void initializer(void){
-    printf("\n" "\x1b[36m");
-    printf(PACKAGE_NAME);
-    printf(" v");
-    printf(PACKAGE_VERSION);
-    printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
-    printf("                     ");
-    printf("Copyright (c) 2014-2015, Christopher Rogan\n");
-    printf("                     ");
-    printf("http://RestFrames.com\n");
-    printf("\x1b[0m" "\n");
   }
 
 }

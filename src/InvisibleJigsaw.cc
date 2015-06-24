@@ -1,4 +1,7 @@
 #include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/RestFrame.hh"
+#include "RestFrames/Group.hh"
+#include "RestFrames/InvisibleState.hh"
 
 using namespace std;
 
@@ -7,12 +10,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleJigsaw class
   ///////////////////////////////////////////////
-
-  InvisibleJigsaw::InvisibleJigsaw(const string& sname, const string& stitle, int ikey) : 
-    Jigsaw(sname, stitle, ikey)
-  {
-    Init();
-  }
 
   InvisibleJigsaw::InvisibleJigsaw(const string& sname, const string& stitle) : 
     Jigsaw(sname, stitle)
@@ -34,12 +31,12 @@ namespace RestFrames {
 
   void InvisibleJigsaw::AddVisibleFrame(RestFrame* framePtr, int i){
     if(!framePtr) return;
-    RestFrameList* framesPtr = framePtr->GetListVisibleFrames();
+    RFList<RestFrame>* framesPtr = framePtr->GetListVisibleFrames();
     AddDependancyFrame(framesPtr, i);
     delete framesPtr;
   }
 
-  void InvisibleJigsaw::AddVisibleFrame(RestFrameList* framesPtr, int i){
+  void InvisibleJigsaw::AddVisibleFrame(RFList<RestFrame>* framesPtr, int i){
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++){
       AddVisibleFrame(framesPtr->Get(f), i);
@@ -53,7 +50,7 @@ namespace RestFrames {
   void InvisibleJigsaw::AddInvisibleFrame(RestFrame* framePtr, int i){
     if(!m_GroupPtr) return;
   
-    RestFrameList* framesPtr = framePtr->GetListInvisibleFrames();
+    RFList<RestFrame>* framesPtr = framePtr->GetListInvisibleFrames();
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++){
       if(m_GroupPtr->ContainsFrame(framesPtr->Get(f))) 
@@ -62,7 +59,7 @@ namespace RestFrames {
     delete framesPtr;
   }
 
-  void InvisibleJigsaw::AddInvisibleFrame(RestFrameList* framesPtr, int i){
+  void InvisibleJigsaw::AddInvisibleFrame(RFList<RestFrame>* framesPtr, int i){
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++){
       AddInvisibleFrame(framesPtr->Get(f), i);
@@ -74,7 +71,7 @@ namespace RestFrames {
   }
 
   double InvisibleJigsaw::GetMinimumMass(){
-    if(!m_Mind) return 0.;
+    if(!IsSoundMind()) return 0.;
     int N = GetNChildStates();
     double M = 0.;
     for(int i = 0; i < N; i++){
@@ -86,7 +83,7 @@ namespace RestFrames {
     return M;
   }
 
-  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(JigsawList* jigsawsPtr){ 
+  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){ 
     if(!jigsawsPtr) return;
    
     int Nchild = GetNChildStates();
@@ -100,7 +97,7 @@ namespace RestFrames {
     if(!m_Mind) return false;
     m_DependancyJigsawsPtr->Clear();
 
-    JigsawList* jigsawsPtr = new JigsawList();
+    RFList<Jigsaw>* jigsawsPtr = new RFList<Jigsaw>();
     FillStateJigsawDependancies(jigsawsPtr);
     jigsawsPtr->Remove(this);
     m_DependancyJigsawsPtr->Add(jigsawsPtr);
@@ -119,12 +116,12 @@ namespace RestFrames {
     return m_Mind;
   }
 
-  bool InvisibleJigsaw::InitializeJigsawExecutionList(JigsawList* chain_jigsawPtr){
+  bool InvisibleJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr){
     if(!m_Mind) return false;
     if(chain_jigsawPtr->Contains(this)) return true;
 
     // Add group dependancy jigsaws first
-    JigsawList* group_jigsawsPtr = new JigsawList();
+    RFList<Jigsaw>* group_jigsawsPtr = new RFList<Jigsaw>();
     FillGroupJigsawDependancies(group_jigsawsPtr);
     group_jigsawsPtr->Remove(this);
     int Ngroup = group_jigsawsPtr->GetN();

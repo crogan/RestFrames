@@ -6,12 +6,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // VisibleFrame class methods
   ///////////////////////////////////////////////
-  VisibleFrame::VisibleFrame(const string& sname, const string& stitle, int key) : 
-    RestFrame(sname, stitle, key)
-  {
-    Init();
-  }
-
   VisibleFrame::VisibleFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle)
   {
@@ -28,6 +22,7 @@ namespace RestFrames {
 
   bool VisibleFrame::IsSoundBody() const {
     RestFrame::IsSoundBody();
+   
     int Nchild = GetNChildren();
     if(Nchild > 0 || !m_ParentLinkPtr) m_Body = false;
     return m_Body;

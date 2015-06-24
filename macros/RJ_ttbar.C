@@ -11,44 +11,21 @@
 #include <string>
 #include <vector>
 
-#include "src/RestFrame.cc"
-#include "src/RestFrameList.cc"
-#include "src/VisibleFrame.cc"
-#include "src/InvisibleFrame.cc"
-#include "src/DecayFrame.cc"
-#include "src/LabFrame.cc"
+#include "RestFrames/RLabFrame.hh"
+#include "RestFrames/RDecayFrame.hh"
+#include "RestFrames/RVisibleFrame.hh"
+#include "RestFrames/RInvisibleFrame.hh"
 
-#include "src/FrameLink.cc"
+#include "RestFrames/InvisibleMassJigsaw.hh"
+#include "RestFrames/InvisibleRapidityJigsaw.hh"
+#include "RestFrames/ContraBoostInvariantJigsaw.hh"
+#include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
 
-#include "src/RFrame.cc"
-#include "src/RLabFrame.cc"
-#include "src/RDecayFrame.cc"
-#include "src/RVisibleFrame.cc"
-#include "src/RInvisibleFrame.cc"
+#include "RestFrames/InvisibleGroup.hh"
+#include "RestFrames/CombinatoricGroup.hh"
 
-#include "src/Jigsaw.cc"
-#include "src/JigsawList.cc"
-
-#include "src/InvisibleJigsaw.cc"
-#include "src/NVisibleMInvisibleJigsaw.cc"
-#include "src/InvisibleMassJigsaw.cc"
-#include "src/InvisibleRapidityJigsaw.cc"
-#include "src/ContraBoostInvariantJigsaw.cc"
-
-#include "src/CombinatoricJigsaw.cc"
-#include "src/MinimizeMassesCombinatoricJigsaw.cc"
-
-#include "src/Group.cc"
-#include "src/GroupList.cc"
-#include "src/InvisibleGroup.cc"
-#include "src/CombinatoricGroup.cc"
-
-#include "src/State.cc"
-#include "src/StateList.cc"
-#include "src/InvisibleState.cc"
-#include "src/CombinatoricState.cc"
-
-#include "src/FramePlot.cc"
+#include "RestFrames/FramePlot.hh"
+#include "RestFrames/FrameLog.hh"
 
 using namespace std; 
 using namespace RestFrames;

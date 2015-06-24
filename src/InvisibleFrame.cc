@@ -7,11 +7,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleFrame class
   ///////////////////////////////////////////////
-  InvisibleFrame::InvisibleFrame(const string& sname, const string& stitle, int ikey) : 
-    RestFrame(sname, stitle, ikey)
-  {
-    Init();
-  }
   InvisibleFrame::InvisibleFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle)
   {

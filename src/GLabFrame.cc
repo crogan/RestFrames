@@ -7,14 +7,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // GLabFrame class
   ///////////////////////////////////////////////
-  GLabFrame::GLabFrame(const string& sname, const string& stitle, int key) : 
-    RestFrame(sname, stitle, key),
-    LabFrame(sname, stitle, key), 
-    GFrame(sname, stitle, key)
-  {
-    Init();
-  }
-
   GLabFrame::GLabFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle), 
     LabFrame(sname, stitle), 

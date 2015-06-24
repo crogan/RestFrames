@@ -1,4 +1,6 @@
 #include "RestFrames/InvisibleState.hh"
+#include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/RInvisibleFrame.hh"
 
 using namespace std;
 
@@ -7,10 +9,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleState class
   ///////////////////////////////////////////////
-
-  InvisibleState::InvisibleState(int ikey) : State(ikey){
-    Init();
-  }
 
   InvisibleState::InvisibleState() : State(){
     Init();
@@ -34,7 +32,7 @@ namespace RestFrames {
     return 0.;
   }
 
-  void InvisibleState::FillInvisibleMassJigsawDependancies(JigsawList* jigsawsPtr){
+  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){
     InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
     if(jigsawPtr) jigsawPtr->FillInvisibleMassJigsawDependancies(jigsawsPtr);
   }

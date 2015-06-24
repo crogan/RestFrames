@@ -1,5 +1,9 @@
 #include <sstream>
 #include "RestFrames/RSelfAssemblingFrame.hh"
+#include "RestFrames/RVisibleFrame.hh"
+#include "RestFrames/StateList.hh"
+#include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -8,12 +12,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // RSelfAssemblingFrame class
   ///////////////////////////////////////////////
-  RSelfAssemblingFrame::RSelfAssemblingFrame(const string& sname, const string& stitle, int key) : 
-    RestFrame(sname,stitle,key),
-    RDecayFrame(sname,stitle,key)
-  {
-    Init();
-  }
   RSelfAssemblingFrame::RSelfAssemblingFrame(const string& sname, const string& stitle) : 
     RestFrame(sname,stitle),
     RDecayFrame(sname,stitle)
@@ -56,7 +54,8 @@ namespace RestFrames {
     m_Nvisible = 0;
     m_Ndecay = 0;
   
-    ClearFrame();
+    RemoveChildren();
+    ClearNewDecayFrames();
     int Ncf = m_ChildFrames_UnAssembled.GetN();
     for(int i = 0; i < Ncf; i++)
       AddChildFrame(m_ChildFrames_UnAssembled.Get(i));
@@ -86,8 +85,8 @@ namespace RestFrames {
     vector<TLorentzVector> Ps; 
     StateList states;
     
-    GroupList* groupsPtr = GetListGroups();
-    GroupList groups;
+    RFList<Group>* groupsPtr = GetListGroups();
+    RFList<Group> groups;
     groups.Add(groupsPtr);
     delete groupsPtr;
 
@@ -132,7 +131,7 @@ namespace RestFrames {
     m_Body_UnAssembled = m_Body;
     m_Mind_UnAssembled = m_Mind;
     m_IsBackedUp = true;
-    ClearFrame();
+    RemoveChildren();
     ClearRFrame();
    
     AssembleRecursive(this, frames, Ps); 
@@ -246,9 +245,14 @@ namespace RestFrames {
     return RFrame::AnalyzeEventRecursive();
   }
 
+  void RSelfAssemblingFrame::ClearNewDecayFrames(){
+    int N = m_DecayFrames.GetN();
+    for(int i = 0; i < N; i++) m_DecayFrames.Get(i)->RemoveChildren();
+  }
+
   RestFrame* RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
-      m_DecayFrames.Get(m_Ndecay)->ClearFrame();
+      //m_DecayFrames.Get(m_Ndecay)->RemoveChildren();
       dynamic_cast<RFrame*>(m_DecayFrames.Get(m_Ndecay))->ClearRFrame();
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
@@ -267,7 +271,7 @@ namespace RestFrames {
 
   RestFrame* RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
-      m_VisibleFrames.Get(m_Nvisible)->ClearFrame();
+      //m_VisibleFrames.Get(m_Nvisible)->RemoveChildren();
       dynamic_cast<RFrame*>(m_VisibleFrames.Get(m_Nvisible))->ClearRFrame();
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
@@ -284,9 +288,6 @@ namespace RestFrames {
     return framePtr;
   }
 
-  // const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
-  //   return GetFrame(obj);
-  // }
   const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
     if(!m_IsAssembled) return nullptr;
 

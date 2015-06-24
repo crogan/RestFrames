@@ -8,12 +8,6 @@ namespace RestFrames {
   // CombinatoricState class
   ///////////////////////////////////////////////
 
-  CombinatoricState::CombinatoricState(int ikey) : 
-    State(ikey)
-  {
-    Init();
-  }
-
   CombinatoricState::CombinatoricState() : 
     State()
   {

@@ -1,82 +1,157 @@
-#include <sstream>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <stdlib.h>
 #include "RestFrames/FrameLog.hh"
+#include "RestFrames/RFBase.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  bool FrameLog::m_print = true;
-  ostream* FrameLog::m_default_ostr = &cerr;
+  // default FrameLog parameters
+  map<LogType,bool> FrameLog::m_PrintMap = InitPrintMap();
+  ostream* FrameLog::m_Ostr = &cerr;
+  int FrameLog::m_NMAX = 100;
 
-  ///////////////////////////////////////////////
-  // FrameLog class methods
-  ///////////////////////////////////////////////
-  FrameLog::FrameLog(const string& message, bool error){
-    m_error = error;
-    ErrorMessage();
-    AddMessage(message);
-    PrintMessage();
-  }  
-
-  FrameLog::FrameLog(const string& message, RestFrame* frame_ptr, bool error){
-    m_error = error;
-    ErrorMessage();
-    FrameMessage(frame_ptr);
-    AddMessage(message);
-    PrintMessage();
-  }  
-
-  FrameLog::FrameLog(const string& message, Jigsaw* jigsaw_ptr, bool error){
-    m_error = error;
-    ErrorMessage();
-    JigsawMessage(jigsaw_ptr);
-    AddMessage(message);
-    PrintMessage();
-  }  
-
-  FrameLog::FrameLog(const string& message, Group* group_ptr, bool error){
-    m_error = error;
-    ErrorMessage();
-    GroupMessage(group_ptr);
-    AddMessage(message);
-    PrintMessage();
-  }  
-  
-  void FrameLog::ErrorMessage(){
-    if(m_error)
-      m_message = "\x1b[31m RestFrames::Error: \x1b[0m";
-    else
-      m_message = "\x1b[35m RestFrames::Warning: \x1b[0m";
+  FrameLog::FrameLog(const string& source, LogType def_type){
+    Init();
+    SetSource(source);
   }
 
-  void FrameLog::AddMessage(const string& message){
-    m_message += "\x1b[37m";
-    m_message += message; 
-    m_message += "\x1b[0m";
+  FrameLog::FrameLog(){
+    Init();
   }
 
-  void FrameLog::PrintMessage(){
-    if (m_print && m_default_ostr){
-      ostringstream oss;
-      oss << m_message << endl;
-      *m_default_ostr << oss.str();
-      m_default_ostr->flush();     
+  FrameLog g_Log("RestFrames Global");
+
+  FrameLog::~FrameLog() { }
+
+  void FrameLog::Init(){
+    m_Source = "Unknown"; 
+    m_CurType = LogInfo;
+    m_Message.str("");
+    m_TypeMap[LogVerbose]  = "VERBOSE";
+    m_TypeMap[LogDebug]    = "DEBUG";
+    m_TypeMap[LogInfo]     = "INFO";
+    m_TypeMap[LogWarning]  = "WARNING";
+    m_TypeMap[LogError]    = "ERROR";
+
+    m_ColorMap[LogVerbose]  = "\033[36m";
+    m_ColorMap[LogDebug]    = "\033[33m";
+    m_ColorMap[LogInfo]     = "\033[32m";
+    m_ColorMap[LogWarning]  = "\033[35m";
+    m_ColorMap[LogError]    = "\033[31m";
+  }
+
+  map<LogType,bool> InitPrintMap(){
+    map<LogType,bool> m;
+    m[LogVerbose]  = false;
+    m[LogDebug]    = false;
+    m[LogInfo]     = true;
+    m[LogWarning]  = true;
+    m[LogError]    = true;
+    return m;
+  }
+
+  string FrameLog::GetFormattedSource() const {
+    string source_name = m_Source;
+    if (source_name.size() > 22){
+      source_name = source_name.substr( 0, 22 - 3 );
+      source_name += "...";
     }
+    return source_name;
+  }
+  
+  string FrameLog::GetFormattedMessage(const string& message) {
+    string output = "";
+    int N = message.size();
+    double OFF = 18;
+    if(N-OFF > m_NMAX){
+      int Ncut = (N-OFF)/m_NMAX;
+      string::size_type previous_pos = 0;
+      for(int i = 0; i <= Ncut; i++){
+	int off = m_NMAX;
+	if(i == 0) off += OFF;
+	string line = message.substr(previous_pos, off);
+	if(i > 0) output += m_ColorMap[m_CurType]+"<...>\033[0m ...";
+	output += line;
+	previous_pos += off;
+	if(previous_pos != N && i != Ncut) output += "...\n";
+      }
+    } else {
+      output = message;
+    }
+    return output;
   }
 
-  void FrameLog::FrameMessage(RestFrame* frame_ptr){
-    if(frame_ptr) 
-	m_message += "From\x1b[36m RestFrame " + frame_ptr->GetName() + "\x1b[0m => ";
+  void FrameLog::Send(){
+    string source_name = GetFormattedSource();
+    string message = m_Message.str();
+    string::size_type previous_pos = 0, current_pos = 0;
+    if(m_PrintMap[m_CurType] && m_Ostr){
+      string prefix = m_ColorMap[m_CurType]+"<"+m_TypeMap[m_CurType]+">";
+      for(int i = 0; i < 8-m_TypeMap[m_CurType].size(); i++){
+	prefix += ' ';
+      }
+      prefix += source_name+": \033[0m";
+      while (true) {
+	current_pos = message.find( '\n', previous_pos );
+	string line = message.substr( previous_pos, current_pos - previous_pos );
+	if(line == "") break;
+	
+	ostringstream message_to_send;
+	message_to_send.setf(std::ios::adjustfield, std::ios::left); 
+	line = GetFormattedMessage(prefix+line);
+	message_to_send << line << endl;
+	
+	*m_Ostr << message_to_send.str();
+	m_Ostr->flush();
+	
+	if (current_pos == message.npos) break;
+	previous_pos = current_pos + 1;
+      }
+    }
+   
+    if (m_CurType == LogError)
+      throw RestFramesException(m_Message.str());
+    
+    m_Message.str("");
+    return;
   }
 
-  void FrameLog::JigsawMessage(Jigsaw* jigsaw_ptr){
-    if(jigsaw_ptr) 
-	m_message += "From\x1b[36m Jigsaw " + jigsaw_ptr->GetName() + "\x1b[0m => ";
+  FrameLog& FrameLog::EndMessage(FrameLog& log){
+    log.Send();
+    return log;
   }
 
-  void FrameLog::GroupMessage(Group* group_ptr){
-    if(group_ptr) 
-	m_message += "From\x1b[36m Group " + group_ptr->GetName() + "\x1b[0m => ";
+  void FrameLog::PrintObject(RFBase* objPtr){
+    m_Message << objPtr->PrintString();
   }
+
+  void SetLogPrint(LogType type, bool print){
+    FrameLog::m_PrintMap[type] = print;
+  }
+
+  void SetLogPrint(bool print){
+    for (map<LogType, bool>::iterator m = FrameLog::m_PrintMap.begin() ; m != FrameLog::m_PrintMap.end(); ++m)
+      m->second = (m->second && print);
+  }
+
+  void SetLogStream(ostream* ostr){
+    if(ostr) FrameLog::m_Ostr = ostr;
+  }
+
+  void SetLogMaxWidth(int NMAX){
+    if(NMAX > 0) FrameLog::m_NMAX = NMAX;
+  }
+
+  RFBase* Log(const RFBase& obj){ return (RFBase*)&obj; }
+  RFBase* Log(RFBase* ptr){ return (RFBase*)ptr; }
+
+  template <> FrameLog& FrameLog::operator<< (RFBase* arg){
+      PrintObject(arg);
+      return *this;
+    }
 
 }

@@ -21,7 +21,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GFrame : public virtual RestFrame {
   public:
-    GFrame(const string& sname, const string& stitle, int key);
     GFrame(const string& sname, const string& stitle);
     virtual ~GFrame();
 

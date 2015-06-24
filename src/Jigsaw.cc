@@ -1,4 +1,8 @@
 #include "RestFrames/Jigsaw.hh"
+#include "RestFrames/RestFrame.hh"
+#include "RestFrames/Group.hh"
+#include "RestFrames/State.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -9,14 +13,10 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   int Jigsaw::m_class_key = 0;
 
-  Jigsaw::Jigsaw(const string& sname, const string& stitle){
-    Init(sname, stitle);
-    m_Key = GenKey();
-  }
-
-  Jigsaw::Jigsaw(const string& sname, const string& stitle, int ikey){
-    Init(sname, stitle);
-    m_Key = ikey;
+  Jigsaw::Jigsaw(const string& sname, const string& stitle)
+    : RFBase(sname, stitle) 
+  {
+    Init();
   }
 
   Jigsaw::~Jigsaw(){
@@ -25,18 +25,14 @@ namespace RestFrames {
     delete m_OutputStatesPtr;
   }
 
-  void Jigsaw::Init(const string &sname, const string &stitle){
-    m_Name = sname;
-    m_Title = stitle;
-    m_Body = false;
-    m_Mind = false;
-    m_Spirit = false;
-
+  void Jigsaw::Init(){
+    SetKey(GenKey());
     m_Priority = 0.;
     m_GroupPtr = nullptr;
     m_InputStatePtr = nullptr;
-    m_DependancyJigsawsPtr = new JigsawList();
+    m_DependancyJigsawsPtr = new RFList<Jigsaw>();
     m_OutputStatesPtr = new StateList();
+    m_Log.SetSource("Jigsaw "+GetName());
   }
 
   void Jigsaw::Clear(){
@@ -79,23 +75,6 @@ namespace RestFrames {
     return newkey;
   }
 
-  int Jigsaw::GetKey() const {
-    return m_Key;
-  }
-
-  string Jigsaw::GetName() const {
-    return m_Name;
-  }
-
-  string Jigsaw::GetTitle() const {
-    return m_Title;
-  }
-
-  bool Jigsaw::IsSame(const Jigsaw* jigsawPtr) const {
-    if(!jigsawPtr) return false;
-    return (m_Key == jigsawPtr->GetKey());
-  }
-
   bool Jigsaw::IsInvisibleJigsaw() const {
     return m_Type == JInvisible;
   }
@@ -112,20 +91,33 @@ namespace RestFrames {
     return m_GroupPtr;
   }
 
-  bool Jigsaw::CanSplit(const RestFrameList* framesPtr){
+  bool Jigsaw::CanSplit(const RFList<RestFrame>* framesPtr){
     if(!framesPtr) return false;
 
+    m_Log << LogVerbose;
+    m_Log << "Testing whether this Jigsaw can act on RestFrames in list: " << endl;
+    int NiF = framesPtr->GetN();
+    m_Log << "   to split:";
+    for(int i = 0; i < NiF; i++)
+      m_Log << "   " << framesPtr->Get(i)->GetName();
+
     int NoF = m_OutputFrames.size();
-    RestFrameList frames;
+    RFList<RestFrame> frames;
+    m_Log << endl << "   with (" << NoF << " jigsaws): ";
     for(int i = 0; i < NoF; i++){
+      int Nf = m_OutputFrames[i]->GetN();
+      m_Log << "(" << Nf << " in jigsaw) ";
+      for(int j = 0; j < Nf; j++)
+	m_Log << " " << m_OutputFrames[i]->Get(j)->GetName() << "  ";
       frames.Add(m_OutputFrames[i]);
     }
+    m_Log << m_End;
     return frames.IsSame(framesPtr);
   }
 
   bool Jigsaw::CanSplit(const State* statePtr){
     if(!statePtr) return false;
-    RestFrameList* framesPtr = statePtr->GetFrames();
+    RFList<RestFrame>* framesPtr = statePtr->GetFrames();
     bool ret = CanSplit(framesPtr);
     delete framesPtr;
     return ret;
@@ -153,7 +145,7 @@ namespace RestFrames {
     return m_OutputStatesPtr->Copy();
   }
 
-  bool Jigsaw::InitializeDependancyStates(const StateList* statesPtr, const GroupList* groupsPtr){
+  bool Jigsaw::InitializeDependancyStates(const StateList* statesPtr, const RFList<Group>* groupsPtr){
     if(!statesPtr) return false;
     ClearDependancyStates();
     if(!m_Body){
@@ -171,9 +163,9 @@ namespace RestFrames {
     int Ndep = m_DependancyFrames.size();
     for(int d = 0; d < Ndep; d++){
       m_DependancyStates.push_back(new StateList());
-      vector<RestFrameList*>* group_framesPtr = new vector<RestFrameList*>;
-      for(int i = 0; i < Ngroup; i++) group_framesPtr->push_back(new RestFrameList());
-      RestFrameList* framesPtr = m_DependancyFrames[d];
+      vector<RFList<RestFrame>*>* group_framesPtr = new vector<RFList<RestFrame>*>;
+      for(int i = 0; i < Ngroup; i++) group_framesPtr->push_back(new RFList<RestFrame>());
+      RFList<RestFrame>* framesPtr = m_DependancyFrames[d];
       int Nf = framesPtr->GetN();
       for(int f = 0; f < Nf; f++){
 	RestFrame* framePtr = framesPtr->Get(f);
@@ -186,7 +178,7 @@ namespace RestFrames {
 	  }
 	}
 	if(no_group){
-	  int index = statesPtr->GetIndex(framePtr);
+	  int index = statesPtr->GetIndexFrame(framePtr);
 	  if(index < 0) m_Mind = false;
 	  m_DependancyStates[d]->Add(statesPtr->Get(index));
 	}
@@ -209,7 +201,7 @@ namespace RestFrames {
     if(!m_Mind) return false;
     m_DependancyJigsawsPtr->Clear();
 
-    JigsawList* jigsawsPtr = new JigsawList();
+    RFList<Jigsaw>* jigsawsPtr = new RFList<Jigsaw>();
     FillStateJigsawDependancies(jigsawsPtr);
     jigsawsPtr->Remove(this);
     m_DependancyJigsawsPtr->Add(jigsawsPtr);
@@ -228,14 +220,14 @@ namespace RestFrames {
     return m_DependancyJigsawsPtr->Contains(jigsawPtr);
   }
 
-  void Jigsaw::FillGroupJigsawDependancies(JigsawList* jigsawsPtr){
+  void Jigsaw::FillGroupJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){
     if(!jigsawsPtr) return;
     if(jigsawsPtr->Contains(this)) return;
     jigsawsPtr->Add(this);
     if(m_InputStatePtr) m_InputStatePtr->FillGroupJigsawDependancies(jigsawsPtr);
   }
 
-  void Jigsaw::FillStateJigsawDependancies(JigsawList* jigsawsPtr){
+  void Jigsaw::FillStateJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){
     if(!jigsawsPtr) return;
     if(jigsawsPtr->Contains(this)) return;
     jigsawsPtr->Add(this);
@@ -254,13 +246,16 @@ namespace RestFrames {
     if(!framePtr) return;
     if(!m_GroupPtr) return;
     if(!m_GroupPtr->ContainsFrame(framePtr)) return;
+    m_Log << LogVerbose << "Adding output frame ";
+    m_Log << framePtr->GetName();
+    m_Log << " to hemisphere " << i << m_End;
     while(i >= int(m_OutputFrames.size())){
-      m_OutputFrames.push_back(new RestFrameList());
+      m_OutputFrames.push_back(new RFList<RestFrame>());
     }
     m_OutputFrames[i]->Add(framePtr);
   }
 
-  void Jigsaw::AddOutputFrame(RestFrameList* framesPtr, int i){
+  void Jigsaw::AddOutputFrame(RFList<RestFrame>* framesPtr, int i){
     if(!framesPtr) return;
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++) AddOutputFrame(framesPtr->Get(f), i);
@@ -268,35 +263,36 @@ namespace RestFrames {
 
   void Jigsaw::AddDependancyFrame(RestFrame* framePtr, int i){
     if(!framePtr) return;
+    m_Log << LogVerbose << "Adding dependancy frame ";
+    m_Log << framePtr->GetName();
+    m_Log << " to hemisphere " << i << m_End;
     while(i >= int(m_DependancyFrames.size())){
-      m_DependancyFrames.push_back(new RestFrameList());
+      m_DependancyFrames.push_back(new RFList<RestFrame>());
     }
     m_DependancyFrames[i]->Add(framePtr);
   }
 
-  void Jigsaw::AddDependancyFrame(RestFrameList* framesPtr, int i){
+  void Jigsaw::AddDependancyFrame(RFList<RestFrame>* framesPtr, int i){
     if(!framesPtr) return;
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++) AddDependancyFrame(framesPtr->Get(f), i);
   }
 
   bool Jigsaw::IsSoundBody() const {
-    m_Body = true;
     int Nout = m_OutputFrames.size();
     for(int i = 0; i < Nout-1; i++)
       for(int j = i+1; j < Nout; j++)
-	if(m_OutputFrames[i]->SizeIntersection(m_OutputFrames[j]) > 0) m_Body = false;
+	if(m_OutputFrames[i]->SizeIntersection(m_OutputFrames[j]) > 0){
+	  SetBody(false);
+	  return false;
+	}
     for(int i = 0; i < Nout; i++)
-      if(m_OutputFrames[i]->GetN() == 0) m_Body = false;
-    return m_Body;
-  }
-
-  bool Jigsaw::IsSoundMind() const {
-    return m_Mind;
-  }
-
-  bool Jigsaw::IsSoundSpirit() const {
-    return m_Spirit;
+      if(m_OutputFrames[i]->GetN() == 0){
+	SetBody(false);
+	return false;
+      }
+    SetBody(true);
+    return true;
   }
 
 
@@ -308,18 +304,18 @@ namespace RestFrames {
     return m_OutputStatesPtr->Get(i);
   }
 
-  RestFrameList* Jigsaw::GetChildFrames(int i) const {
+  RFList<RestFrame>* Jigsaw::GetChildFrames(int i) const {
     if(i < 0 || i >= GetNChildStates()) return nullptr;
-    RestFrameList* framesPtr = m_OutputFrames[i]->Copy();
+    RFList<RestFrame>* framesPtr = m_OutputFrames[i]->Copy();
     if(i < int(m_DependancyFrames.size())) framesPtr->Add(m_DependancyFrames[i]);
     return framesPtr;
   }
   
-  RestFrameList* Jigsaw::GetChildFrames() const {
-    RestFrameList* child_framesPtr = new RestFrameList();
+  RFList<RestFrame>* Jigsaw::GetChildFrames() const {
+    RFList<RestFrame>* child_framesPtr = new RFList<RestFrame>();
     int N = GetNChildStates();
     for(int i = 0; i < N; i++){
-      RestFrameList* framesPtr = GetChildFrames(i);
+      RFList<RestFrame>* framesPtr = GetChildFrames(i);
       child_framesPtr->Add(framesPtr);
       delete framesPtr;
     }

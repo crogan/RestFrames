@@ -5,22 +5,13 @@
 #include <vector>
 #include <TLorentzVector.h>
 #include <TVector3.h>
-#include "RestFrames/Jigsaw.hh"
-#include "RestFrames/JigsawList.hh"
-#include "RestFrames/RestFrame.hh"
-#include "RestFrames/RestFrameList.hh"
-#include "RestFrames/StateList.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/RFBase.hh"
 
 using namespace std;
 
 namespace RestFrames {
-
+ 
   class Jigsaw;
-  class JigsawList;
-  class RestFrame;
-  class RestFrameList;
-  class RFrame;
   class State;
   class StateList;
 
@@ -29,39 +20,30 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // Group class
   ///////////////////////////////////////////////
-  class Group {
+  class Group : public RFBase {
   public:
     Group(const string& sname, const string& stitle);
-    Group(const string& sname, const string& stitle, int ikey);
     virtual ~Group();
 
     virtual void Clear();
 
-    virtual bool IsSoundBody() const;
-    virtual bool IsSoundMind() const;
-    virtual bool IsSoundSpirit() const;
-
-    bool IsSame(const Group* groupPtr) const;
     bool IsInvisibleGroup() const;
     bool IsCombinatoricGroup() const;
 
-    string GetName() const;
-    string GetTitle() const;
-    int GetKey() const;
     GroupType GetType() const { return m_Type; }
 
     virtual void AddFrame(RestFrame& frame) = 0;
     virtual void AddFrame(RestFrame* framePtr) = 0;
     void RemoveFrame(const RestFrame* framePtr);
     bool ContainsFrame(const RestFrame* framePtr) const;
-    RestFrameList* GetFrames() const;
+    RFList<RestFrame>* GetFrames() const;
 
     virtual bool AddJigsaw(Jigsaw& jigsaw) = 0;
     virtual bool AddJigsaw(Jigsaw* jigsawPtr) = 0;
-    JigsawList* GetJigsaws() const;
+    RFList<Jigsaw>* GetJigsaws() const;
 
     State* GetGroupState() const;
-    bool GetState(const RestFrameList* framesPtr, StateList*& statesPtr);
+    bool GetState(const RFList<RestFrame>* framesPtr, StateList*& statesPtr);
     State* GetState(const RestFrame* framePtr) const;
 
     virtual bool InitializeAnalysis();
@@ -80,13 +62,14 @@ namespace RestFrames {
     int m_Key;
 
     State* m_GroupStatePtr;
-    RestFrameList m_Frames;
+    RFList<RestFrame> m_Frames;
   
     StateList* m_StatesPtr;
     StateList* m_StatesToSplitPtr;
 
-    JigsawList* m_JigsawsPtr;
-    JigsawList* m_JigsawsToUsePtr;
+    //RFList<Jigsaw>* m_JigsawsPtr;
+    RFList<Jigsaw>* m_JigsawsPtr;
+    RFList<Jigsaw>* m_JigsawsToUsePtr;
 
     virtual State* InitializeGroupState();
     bool InitializeJigsaws();
@@ -94,7 +77,7 @@ namespace RestFrames {
     bool SplitState(const State* statePtr);
 
   private:
-    void Init(const string& sname, const string& stitle);
+    void Init();
     int GenKey();
   };
 

@@ -1,4 +1,6 @@
 #include "RestFrames/State.hh"
+#include "RestFrames/RestFrame.hh"
+#include "RestFrames/Jigsaw.hh"
 
 using namespace std;
 
@@ -10,14 +12,10 @@ namespace RestFrames {
   int State::m_class_key = 0;
 
   // constructor 
-  State::State(){
+  State::State()
+    : RFBase("State", "State") 
+  {
     Init();
-    m_Key = GenKey();
-  }
-
-  State::State(int ikey){
-    Init();
-    m_Key = ikey;
   }
 
   State::~State(){
@@ -25,8 +23,10 @@ namespace RestFrames {
   }
 
   void State::Init(){
+    SetKey(GenKey());
     m_ParentJigsawPtr = nullptr;
     m_ChildJigsawPtr = nullptr;
+    m_Log.SetSource("State");
   }
 
   void State::Clear(){
@@ -40,15 +40,15 @@ namespace RestFrames {
     m_Frames.Clear();
   }
 
-  State *State::Copy() const {
-    State* statePtr = new State(m_Key);
-    statePtr->SetParentJigsaw(m_ParentJigsawPtr);
-    statePtr->SetChildJigsaw(m_ChildJigsawPtr);
-    statePtr->SetFourVector(m_P);
-    int N = GetNFrames();
-    for(int i = 0; i < N; i++) statePtr->AddFrame(m_Frames.Get(i));
-    return statePtr;
-  }
+  // State *State::Copy() const {
+  //   State* statePtr = new State(m_Key);
+  //   statePtr->SetParentJigsaw(m_ParentJigsawPtr);
+  //   statePtr->SetChildJigsaw(m_ChildJigsawPtr);
+  //   statePtr->SetFourVector(m_P);
+  //   int N = GetNFrames();
+  //   for(int i = 0; i < N; i++) statePtr->AddFrame(m_Frames.Get(i));
+  //   return statePtr;
+  // }
 
   int State::GenKey(){
     int newkey = m_class_key;
@@ -66,7 +66,7 @@ namespace RestFrames {
     m_Frames.Add(framePtr);
   }
 
-  void State::AddFrame(RestFrameList* framesPtr){
+  void State::AddFrame(RFList<RestFrame>* framesPtr){
     if(!framesPtr) return;
     int N = framesPtr->GetN();
     for(int i = 0; i < N; i++) AddFrame(framesPtr->Get(i));
@@ -78,23 +78,12 @@ namespace RestFrames {
     return m_Frames.Get(0)->IsSame(framePtr);
   }
 
-  bool State::IsFrames(const RestFrameList* framesPtr) const {
+  bool State::IsFrames(const RFList<RestFrame>* framesPtr) const {
     if(!framesPtr) return false;
     return m_Frames.IsSame(framesPtr);
   }
 
-  bool State::IsSame(const State* statePtr) const {
-    if(!statePtr) return false;
-    /*
-    RestFrameList* framesPtr = statePtr->GetFrames();
-    bool ret = m_Frames.IsSame(framesPtr);
-    delete framesPtr;
-    return ret;
-    */
-    return statePtr->GetKey() == m_Key;
-  }
-
-  RestFrameList* State::GetFrames() const {
+  RFList<RestFrame>* State::GetFrames() const {
     return m_Frames.Copy();
   }
 
@@ -113,12 +102,12 @@ namespace RestFrames {
     return V;
   }
 
-  void State::FillGroupJigsawDependancies(JigsawList* jigsawsPtr) const {
+  void State::FillGroupJigsawDependancies(RFList<Jigsaw>* jigsawsPtr) const {
     if(!jigsawsPtr) return;
     if(m_ParentJigsawPtr) m_ParentJigsawPtr->FillGroupJigsawDependancies(jigsawsPtr);
   }
 
-  void State::FillStateJigsawDependancies(JigsawList* jigsawsPtr) const {
+  void State::FillStateJigsawDependancies(RFList<Jigsaw>* jigsawsPtr) const {
     if(!jigsawsPtr) return;
     if(m_ParentJigsawPtr) m_ParentJigsawPtr->FillStateJigsawDependancies(jigsawsPtr);
   }

@@ -1,4 +1,7 @@
 #include "RestFrames/RFrame.hh"
+#include "RestFrames/Group.hh"
+#include "RestFrames/StateList.hh"
+#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -7,12 +10,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // RFrame class methods
   ///////////////////////////////////////////////
-  RFrame::RFrame(const string& sname, const string& stitle, int ikey) : 
-    RestFrame(sname, stitle, ikey)
-  {
-    Init();
-  }
-
   RFrame::RFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle)
   {
@@ -47,13 +44,13 @@ namespace RestFrames {
     m_GroupPtr = groupPtr;
   }
 
-  GroupList* RFrame::GetListGroups() const {
-    GroupList* groupsPtr = new GroupList();
+  RFList<Group>* RFrame::GetListGroups() const {
+    RFList<Group>* groupsPtr = new RFList<Group>();
     FillListGroupsRecursive(groupsPtr);
     return groupsPtr;
   }
 
-  void RFrame::FillListGroupsRecursive(GroupList* groupsPtr) const{
+  void RFrame::FillListGroupsRecursive(RFList<Group>* groupsPtr) const{
     if(m_GroupPtr) groupsPtr->Add(m_GroupPtr);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
@@ -71,7 +68,7 @@ namespace RestFrames {
 
       m_ChildStates.push_back(new StateList());
     
-      RestFrameList *framesPtr = childPtr->GetListFramesType(FVisible);
+      RFList<RestFrame> *framesPtr = childPtr->GetListFramesType(FVisible);
       int Nframe = framesPtr->GetN();
       for(int f = 0; f < Nframe; f++){
 	RFrame* rframePtr = dynamic_cast<RFrame*>(framesPtr->Get(f));
@@ -79,7 +76,7 @@ namespace RestFrames {
 	if(rframePtr->GetGroup()){
 	  continue;
 	}
-	int index = statesPtr->GetIndex(framesPtr->Get(f));
+	int index = statesPtr->GetIndexFrame(framesPtr->Get(f));
 	if(index >= 0)  m_ChildStates[i]->Add(statesPtr->Get(index));
       }
       delete framesPtr;
@@ -87,7 +84,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeGroupStates(const GroupList* groupsPtr){
+  bool RFrame::InitializeGroupStates(const RFList<Group>* groupsPtr){
     if(!groupsPtr) return false;
     int Ngroup = groupsPtr->GetN();
     int Nchild = GetNChildren();
@@ -99,7 +96,7 @@ namespace RestFrames {
     for(int c = 0; c < Nchild; c++){
       RestFrame* childPtr = GetChildFrame(c);
       if(!childPtr) return false;
-      RestFrameList* child_framesPtr = childPtr->GetListFramesType(terminal_types);
+      RFList<RestFrame>* child_framesPtr = childPtr->GetListFramesType(terminal_types);
       int Nframe = child_framesPtr->GetN();
       for(int f = 0; f < Nframe; f++){
 	RestFrame* framePtr = child_framesPtr->Get(f);
@@ -120,11 +117,11 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeStates(const StateList* statesPtr, const GroupList* groupsPtr){
+  bool RFrame::InitializeStates(const StateList* statesPtr, const RFList<Group>* groupsPtr){
     ClearStates();
     m_Mind = false;
     if(!m_Body){
-      cout << endl << "Initialize Analysis Failure: ";
+      cout << endl << "Initialize Analysis Failure --: ";
       cout << "UnSound frame " << m_Name.c_str() << " in tree" << endl;
       return false;
     }
@@ -135,7 +132,7 @@ namespace RestFrames {
     return true;
   }
   
-  bool RFrame::InitializeStatesRecursive(const StateList* statesPtr, const GroupList* groupsPtr){
+  bool RFrame::InitializeStatesRecursive(const StateList* statesPtr, const RFList<Group>* groupsPtr){
     if(!InitializeStates(statesPtr,groupsPtr)) return false;
 
     int Nchild = GetNChildren();
@@ -150,8 +147,9 @@ namespace RestFrames {
   }
 
   void RFrame::ClearEventRecursive(){ 
-    m_Spirit = false;
-    if(!m_Body || !m_Mind) return;
+    SetSpirit(false);
+   
+    if(!IsSoundBody() || !IsSoundMind()) return;
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
@@ -159,15 +157,16 @@ namespace RestFrames {
   }
 
   bool RFrame::AnalyzeEventRecursive(){
-    m_Spirit = false;
-    if(!m_Mind){
-      cout << endl << "Analyze Event Failure: ";
-      cout << "UnSound frame " << m_Name.c_str() << " in tree" << endl;
+    if(!IsSoundMind()){
+      m_Log << LogWarning;
+      m_Log << "Unable to analyze event. ";
+      m_Log << "Requires successfull call to \"InitializeAnalysis()\"";
+      m_Log << "from LabFrame" << m_End;
+      SetSpirit(false);
       return false;
     }
     TLorentzVector Ptot(0,0,0,0);
     int Nchild = GetNChildren();
-    bool child_spirit = true;
     for(int i = 0; i < Nchild; i++){
       TLorentzVector P = m_ChildStates[i]->GetFourVector();
       TVector3 B_child = P.BoostVector();
@@ -180,15 +179,21 @@ namespace RestFrames {
 	B_child *= -1.;
 	m_ChildStates[i]->Boost(B_child);
       }
-      if(!childPtr->AnalyzeEventRecursive()) child_spirit = false;
+      if(!childPtr->AnalyzeEventRecursive()){
+	m_Log << LogWarning;
+	m_Log << "Event analysis failed for child frame: ";
+	m_Log << Log(childPtr) << m_End;
+	SetSpirit(false);
+	return false;
+      } 
       if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
 	B_child *= -1.;
 	m_ChildStates[i]->Boost(B_child);
       }
     }
     if(m_Type == FLab) SetFourVector(Ptot,this);
-    m_Spirit = child_spirit;
-    return m_Spirit;
+    SetSpirit(true);
+    return true;
   }
 
 }

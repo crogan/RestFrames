@@ -21,7 +21,6 @@ namespace RestFrames {
   class DecayFrame : public virtual RestFrame {
   public:
     //constructor and destructor
-    DecayFrame(const string& sname, const string& stitle, int key);
     DecayFrame(const string& sname, const string& stitle);
     virtual ~DecayFrame();
 

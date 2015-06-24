@@ -1,4 +1,7 @@
 #include "RestFrames/Group.hh"
+#include "RestFrames/Jigsaw.hh"
+#include "RestFrames/State.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -9,14 +12,10 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   int Group::m_class_key = 0;
 
-  Group::Group(const string& sname, const string& stitle){
-    Init(sname,stitle);
-    m_Key = GenKey();
-  }
-
-  Group::Group(const string& sname, const string& stitle, int ikey){
-    Init(sname,stitle);
-    m_Key = ikey;
+  Group::Group(const string& sname, const string& stitle)
+    : RFBase(sname, stitle)
+  {
+    Init();
   }
 
   Group::~Group(){
@@ -27,30 +26,14 @@ namespace RestFrames {
     delete m_StatesToSplitPtr;
   }
 
-  void Group::Init(const string& sname, const string& stitle){
-    m_Name = sname;
-    m_Title = stitle;
-    m_Body = false;
-    m_Mind = false;
-    m_Spirit = false;
-
+  void Group::Init(){
+    SetKey(GenKey());
     m_GroupStatePtr = nullptr;
-    m_JigsawsPtr = new JigsawList();
-    m_JigsawsToUsePtr = new JigsawList();
+    m_JigsawsPtr = new RFList<Jigsaw>();
+    m_JigsawsToUsePtr = new RFList<Jigsaw>();
     m_StatesPtr = new StateList();
     m_StatesToSplitPtr = new StateList();
-  }
-
-  bool Group::IsSoundBody() const {
-    return m_Body;
-  }
-
-  bool Group::IsSoundMind() const {
-    return m_Mind;
-  }
-
-  bool Group::IsSoundSpirit() const {
-    return m_Spirit;
+    m_Log.SetSource("Group "+GetName());
   }
 
   void Group::Clear(){
@@ -68,30 +51,12 @@ namespace RestFrames {
     return newkey;
   }
 
-  string Group::GetName() const {
-    return m_Name;
-  }
-
-  string Group::GetTitle() const {
-    return m_Title;
-  }
-
-  bool Group::IsSame(const Group* groupPtr) const{
-    if(!groupPtr) return false;
-    if(m_Key == groupPtr->GetKey()) return true;
-    return false;
-  }
-
   bool Group::IsInvisibleGroup() const{
     return m_Type == GInvisible;
   }
   
   bool Group::IsCombinatoricGroup() const{
     return m_Type == GCombinatoric;
-  }
-
-  int Group::GetKey() const {
-    return m_Key;
   }
 
   void Group::RemoveFrame(const RestFrame* framePtr){
@@ -103,11 +68,11 @@ namespace RestFrames {
     return m_Frames.Contains(framePtr);
   }
 
-  RestFrameList* Group::GetFrames() const {
+  RFList<RestFrame>* Group::GetFrames() const {
     return m_Frames.Copy();
   }
 
-  JigsawList* Group::GetJigsaws() const {
+  RFList<Jigsaw>* Group::GetJigsaws() const {
     return m_JigsawsPtr->Copy();
   }
 
@@ -125,12 +90,16 @@ namespace RestFrames {
     m_StatesPtr->Add(m_GroupStatePtr);
     m_StatesToSplitPtr->Add(m_GroupStatePtr);
  
-    m_Body = false;
-    m_Mind = false;
-    if(!InitializeJigsaws()) return false;
-    m_Body = true;
-    m_Mind = true;
- 
+    if(!InitializeJigsaws()){
+      SetBody(false);
+      SetMind(false);
+      return false;
+    }
+    m_Log << LogVerbose;
+    m_Log << "Successfully initialized Group for analysis";
+    m_Log << m_End;
+    SetBody(true);
+    SetMind(true);
     return true;
   }
 
@@ -142,7 +111,7 @@ namespace RestFrames {
     while(m_StatesToSplitPtr->GetN() > 0){
       State* statePtr = m_StatesToSplitPtr->Get(0);
       if(!SplitState(statePtr)){
-	if(statePtr->GetNFrames() != 1) return false;
+	if(statePtr->GetNFrames() != 1) return false; 
 	m_StatesToSplitPtr->Remove(statePtr);
       }
     }
@@ -151,9 +120,10 @@ namespace RestFrames {
 
   bool Group::SplitState(const State* statePtr){
     int N = m_JigsawsToUsePtr->GetN();
-    Jigsaw *jigsawForSplitPtr = nullptr;
+    
+    Jigsaw* jigsawForSplitPtr = nullptr;
     for(int i = 0; i < N; i++){
-      Jigsaw *jigsawPtr = m_JigsawsToUsePtr->Get(i);
+      Jigsaw* jigsawPtr = m_JigsawsToUsePtr->Get(i);
       if(jigsawPtr->CanSplit(statePtr)){
 	if(!jigsawForSplitPtr) jigsawForSplitPtr = jigsawPtr;
 	if(jigsawPtr->GetPriority() < jigsawForSplitPtr->GetPriority()) jigsawForSplitPtr = jigsawPtr;
@@ -192,7 +162,7 @@ namespace RestFrames {
     return nullptr;
   }
   
-  bool Group::GetState(const RestFrameList* framesPtr, StateList*& statesPtr){
+  bool Group::GetState(const RFList<RestFrame>* framesPtr, StateList*& statesPtr){
     if(statesPtr){
       delete statesPtr;
       statesPtr = nullptr;
@@ -203,13 +173,13 @@ namespace RestFrames {
     int Ns = m_StatesPtr->GetN();
     for(int i = 0; i < Ns; i++){
       State* istatePtr = m_StatesPtr->Get(i);
-      RestFrameList* iframesPtr = istatePtr->GetFrames();
+      RFList<RestFrame>* iframesPtr = istatePtr->GetFrames();
       if(framesPtr->Contains(iframesPtr)){
 	int Nsol = statesPtr->GetN();
 	bool isnew = true;
 	for(int j = 0; j < Nsol; j++){
 	  State* jstatePtr = statesPtr->Get(j);
-	  RestFrameList* jframesPtr = jstatePtr->GetFrames();
+	  RFList<RestFrame>* jframesPtr = jstatePtr->GetFrames();
 	  if(iframesPtr->Contains(jframesPtr)){
 	    statesPtr->Remove(jstatePtr);
 	    delete jframesPtr;
@@ -226,7 +196,7 @@ namespace RestFrames {
       }
       delete iframesPtr;
     }
-    RestFrameList* match_framesPtr = new RestFrameList();
+    RFList<RestFrame>* match_framesPtr = new RFList<RestFrame>();
     Ns = statesPtr->GetN();
     for(int i = 0; i < Ns; i++){
       match_framesPtr->Add(statesPtr->Get(i)->GetFrames());

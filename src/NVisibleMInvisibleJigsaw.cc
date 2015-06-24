@@ -1,4 +1,5 @@
 #include "RestFrames/NVisibleMInvisibleJigsaw.hh"
+#include "RestFrames/Group.hh"
 
 using namespace std;
 
@@ -13,12 +14,7 @@ namespace RestFrames {
   {
     Init(N, M);
   }
-  NVisibleMInvisibleJigsaw::NVisibleMInvisibleJigsaw(const string& sname, const string& stitle, 
-						     int ikey, int N, int M) : 
-    InvisibleJigsaw(sname, stitle, ikey)
-  {
-    Init(N, M);
-  }
+ 
   NVisibleMInvisibleJigsaw::~NVisibleMInvisibleJigsaw(){
   
   }

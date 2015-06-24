@@ -20,7 +20,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class CombinatoricGroup : public Group {
   public:
-    CombinatoricGroup(const string& sname, const string& stitle, int ikey);
     CombinatoricGroup(const string& sname, const string& stitle);
     virtual ~CombinatoricGroup();
 
@@ -52,8 +51,6 @@ namespace RestFrames {
     StateList m_StateElements;
     vector<int> m_NElementsForFrame;
     vector<bool> m_NExclusiveElementsForFrame; 
-    
-    vector<int> m_StateKeys;
 
     virtual State* InitializeGroupState();
     void ClearElements();
@@ -62,7 +59,8 @@ namespace RestFrames {
 
   private:
     void Init();
-
+    State* GetNewState();
+    StateList m_InitStates;
   };
 
 }

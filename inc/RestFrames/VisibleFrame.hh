@@ -18,7 +18,6 @@ namespace RestFrames {
   class VisibleFrame : public virtual RestFrame {
   public:
     //constructor and destructor
-    VisibleFrame(const string& sname, const string& stitle, int key);
     VisibleFrame(const string& sname, const string& stitle);
     virtual ~VisibleFrame();
 

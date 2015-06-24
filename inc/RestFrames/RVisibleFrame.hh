@@ -21,7 +21,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class RVisibleFrame : public VisibleFrame, public RFrame{
   public:
-    RVisibleFrame(const string& sname, const string& stitle, int key);
     RVisibleFrame(const string& sname, const string& stitle);
     virtual ~RVisibleFrame();
 

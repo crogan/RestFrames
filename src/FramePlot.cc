@@ -4,6 +4,11 @@
 #include "TLegend.h"
 #include "TLegendEntry.h"
 #include "RestFrames/FramePlot.hh"
+#include "RestFrames/Jigsaw.hh"
+#include "RestFrames/CombinatoricGroup.hh"
+#include "RestFrames/RDecayFrame.hh"
+#include "RestFrames/RVisibleFrame.hh"
+#include "RestFrames/RInvisibleFrame.hh"
 
 using namespace std;
 
@@ -135,10 +140,10 @@ namespace RestFrames {
     AddJigsaw(jigsawPtr);
   }
 
-  void FramePlot::AddFrameTree(const RFrame& frame, const JigsawList& jigsaws){
+  void FramePlot::AddFrameTree(const RFrame& frame, const RFList<Jigsaw>& jigsaws){
     AddFrameTree(&frame,&jigsaws);
   }
-  void FramePlot::AddFrameTree(const RFrame* framePtr, const JigsawList* jigsawsPtr){
+  void FramePlot::AddFrameTree(const RFrame* framePtr, const RFList<Jigsaw>* jigsawsPtr){
     if(!framePtr) return;
     if(!jigsawsPtr) return;
     AddFrameTree(framePtr);
@@ -153,7 +158,7 @@ namespace RestFrames {
   void FramePlot::AddJigsaw(Jigsaw* jigsawPtr){
     if(!jigsawPtr) return;
     
-    RestFrameList* framesPtr = jigsawPtr->GetChildFrames();
+    RFList<RestFrame>* framesPtr = jigsawPtr->GetChildFrames();
     if(m_Frames.Contains(framesPtr)){
       if(m_Jigsaws.Add(jigsawPtr)){
 	FillJigsawLink(jigsawPtr);
@@ -381,9 +386,9 @@ namespace RestFrames {
     if(!groupPtr) return;
     FramePlotNode* high_old = nullptr;
     FramePlotNode* high_new = nullptr;
-    vector<RestFrameList*> child_framesPtr;
+    vector<RFList<RestFrame>*> child_framesPtr;
     for(int s = 0; s < Nsplit; s++){
-      RestFrameList* framesPtr = jigsawPtr->GetChildFrames(s);
+      RFList<RestFrame>* framesPtr = jigsawPtr->GetChildFrames(s);
       int Nnode = m_TreeNodes.size();
       FramePlotNode* last_nodePtr = nullptr;
       double high = -1.;
@@ -555,7 +560,7 @@ namespace RestFrames {
     } 
 
     if(with_rings){
-      JigsawList* jigsawsPtr = nodePtr->GetJigsawList();
+      RFList<Jigsaw>* jigsawsPtr = nodePtr->GetJigsawList();
       int Njigsaw = jigsawsPtr->GetN();
       for(int i = 0; i < Njigsaw; i++){
 	double R = 1.03 + double(Njigsaw-i)*0.08;
@@ -618,7 +623,7 @@ namespace RestFrames {
   }
 
   string FramePlot::GetStateTitle(State* statePtr){
-    RestFrameList *framesPtr = statePtr->GetFrames();
+    RFList<RestFrame> *framesPtr = statePtr->GetFrames();
     int Nf = framesPtr->GetN();
     string title = "";
     if(Nf > 2) title.append("#splitline{");
@@ -769,7 +774,7 @@ namespace RestFrames {
     m_DoSquare = false;
     m_FramePtr = nullptr;
     m_StatePtr = nullptr;
-    m_JigsawsPtr = new JigsawList();
+    m_JigsawsPtr = new RFList<Jigsaw>();
   }
     
   void FramePlotNode::SetX(double x){ m_X = x; }
@@ -788,7 +793,7 @@ namespace RestFrames {
   bool FramePlotNode::DoLabel() const { return m_DoLabel; }
   bool FramePlotNode::DoSquare() const { return m_DoSquare; }
   int FramePlotNode::GetNJigsaws() const { return m_JigsawsPtr->GetN(); }
-  JigsawList* FramePlotNode::GetJigsawList() const { return m_JigsawsPtr; }
+  RFList<Jigsaw>* FramePlotNode::GetJigsawList() const { return m_JigsawsPtr; }
 
   ///////////////////////////////////////////////
   // FramePlotLink class methods

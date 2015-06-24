@@ -7,19 +7,15 @@ RestFrameslibdir          = $(libdir)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h CombinatoricGroup.cc GroupList.cc\
-	MinimizeMassesCombinatoricJigsaw.cc CombinatoricJigsaw.cc InvisibleFrame.cc\
-	NVisibleMInvisibleJigsaw.cc CombinatoricState.cc InvisibleGroup.cc\
-	RDecayFrame.cc ContraBoostInvariantJigsaw.cc InvisibleJigsaw.cc\
-	RFrame.cc DecayFrame.cc	InvisibleMassJigsaw.cc\
-	RInvisibleFrame.cc FrameLink.cc	InvisibleRapidityJigsaw.cc\
-	RLabFrame.cc FramePlot.cc InvisibleState.cc\
-	RSelfAssemblingFrame.cc GDecayFrame.cc Jigsaw.cc\
-	RVisibleFrame.cc GFrame.cc JigsawList.cc\
-	RestFrame.cc GInvisibleFrame.cc	LabFrame.cc\
-	RestFrameList.cc GLabFrame.cc State.cc\
-	GVisibleFrame.cc StateList.cc Group.cc\
-	VisibleFrame.cc
+libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFList.cc RestFrame.cc\
+	FrameLink.cc FrameLog.cc FramePlot.cc RFrame.cc GFrame.cc LabFrame.cc DecayFrame.cc\
+	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
+	RInvisibleFrame.cc GLabFrame.cc GDecayFrame.cc GVisibleFrame.cc GInvisibleFrame.cc\
+	State.cc StateList.cc InvisibleState.cc CombinatoricState.cc Group.cc\
+	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
+	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
+	NVisibleMInvisibleJigsaw.cc MinimizeMassesCombinatoricJigsaw.cc\
+	ContraBoostInvariantJigsaw.cc RSelfAssemblingFrame.cc 
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap

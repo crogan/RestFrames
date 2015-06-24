@@ -1,4 +1,7 @@
 #include "RestFrames/CombinatoricJigsaw.hh"
+#include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/CombinatoricGroup.hh"
+#include "RestFrames/RestFrame.hh"
 
 using namespace std;
 
@@ -8,14 +11,8 @@ namespace RestFrames {
   // CombinatoricJigsaw class
   ///////////////////////////////////////////////
 
-  CombinatoricJigsaw::CombinatoricJigsaw(const string& sname,const string& stitle,int ikey) : 
-    Jigsaw(sname, stitle, ikey)
-  {
-    Init();
-  }
-
-  CombinatoricJigsaw::CombinatoricJigsaw(const string& sname,const string& stitle) : 
-    Jigsaw(sname, stitle)
+  CombinatoricJigsaw::CombinatoricJigsaw(const string& sname,const string& stitle)
+    : Jigsaw(sname, stitle)
   {
     Init();
   }
@@ -39,10 +36,13 @@ namespace RestFrames {
   void CombinatoricJigsaw::AddFrame(RestFrame* framePtr, int i){
     if(!framePtr) return;
     if(!m_GroupPtr) return;
+    m_Log << LogVerbose;
+    m_Log << "Adding frame " << framePtr->GetName();
+    m_Log << " to hemisphere " << i << m_End;
     vector<FrameType> terminals;
     terminals.push_back(FVisible);
     terminals.push_back(FInvisible);
-    RestFrameList *framesPtr = framePtr->GetListFramesType(terminals);
+    RFList<RestFrame> *framesPtr = framePtr->GetListFramesType(terminals);
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++){
       if(m_GroupPtr->ContainsFrame(framesPtr->Get(f))){
@@ -55,7 +55,7 @@ namespace RestFrames {
   
   }
 
-  void CombinatoricJigsaw::AddFrame(RestFrameList* framesPtr, int i){
+  void CombinatoricJigsaw::AddFrame(RFList<RestFrame>* framesPtr, int i){
     if(!framesPtr) return;
     int N = framesPtr->GetN();
     for(int f = 0; f < N; f++){
@@ -67,13 +67,13 @@ namespace RestFrames {
     return new CombinatoricState();
   }
 
-  bool CombinatoricJigsaw::InitializeJigsawExecutionList(JigsawList* chain_jigsawPtr){
+  bool CombinatoricJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr){
     if(!m_Mind) return false;
     if(chain_jigsawPtr->Contains(this)) return true;
     m_ExecuteJigsaws.Clear();
 
     // Add group dependancy jigsaws first
-    JigsawList* group_jigsawsPtr = new JigsawList();
+    RFList<Jigsaw>* group_jigsawsPtr = new RFList<Jigsaw>();
     FillGroupJigsawDependancies(group_jigsawsPtr);
     group_jigsawsPtr->Remove(this);
     int Ngroup = group_jigsawsPtr->GetN();
@@ -104,7 +104,7 @@ namespace RestFrames {
 	m_DependancyJigsawsPtr->Remove(jigsawPtr);
 	continue;
       }
-      JigsawList* temp_chainPtr = chain_jigsawPtr->Copy();
+      RFList<Jigsaw>* temp_chainPtr = chain_jigsawPtr->Copy();
       temp_chainPtr->Add(&m_ExecuteJigsaws);
       temp_chainPtr->Add(this);
       if(!jigsawPtr->InitializeJigsawExecutionList(temp_chainPtr)){
@@ -143,9 +143,8 @@ namespace RestFrames {
     m_Inputs.clear();
     const StateList* elementsPtr = input_statePtr->GetElements();
     int Ninput = elementsPtr->GetN();
-    for(int i = 0; i < Ninput; i++){
+    for(int i = 0; i < Ninput; i++)
       m_Inputs.push_back(elementsPtr->Get(i));
-    }
 
     m_Outputs.clear();
     m_NForOutput.clear();
@@ -155,7 +154,7 @@ namespace RestFrames {
       CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_OutputStatesPtr->Get(i));
       if(!statePtr) return false;
       m_Outputs.push_back(statePtr);
-      RestFrameList* framesPtr = statePtr->GetFrames();
+      RFList<RestFrame>* framesPtr = statePtr->GetFrames();
       int Nf = framesPtr->GetN();
       int NTOT = 0;
       bool exclTOT = true;

@@ -18,7 +18,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GDecayFrame : public DecayFrame, public GFrame{
   public:
-    GDecayFrame(const string& sname, const string& stitle, int key);
     GDecayFrame(const string& sname, const string& stitle);
     virtual ~GDecayFrame();
 

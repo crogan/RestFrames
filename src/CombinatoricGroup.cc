@@ -1,4 +1,6 @@
 #include "RestFrames/CombinatoricGroup.hh"
+#include "RestFrames/RFrame.hh"
+#include "RestFrames/Jigsaw.hh"
 
 using namespace std;
 
@@ -8,12 +10,6 @@ namespace RestFrames {
   // CombinatoricGroup class
   // a combinatoric collection of particles
   ///////////////////////////////////////////////
-
-  CombinatoricGroup::CombinatoricGroup(const string& sname,const string& stitle,int ikey) : 
-    Group(sname, stitle, ikey)
-  {
-    Init();
-  }
 
   CombinatoricGroup::CombinatoricGroup(const string& sname,const string& stitle) : 
     Group(sname, stitle)
@@ -33,6 +29,10 @@ namespace RestFrames {
     ClearElements();
     m_NElementsForFrame.clear();
     m_NExclusiveElementsForFrame.clear(); 
+    int Ninit = m_InitStates.GetN();
+    for(int i = 0; i < Ninit; i++)
+      delete m_InitStates.Get(i);
+    m_InitStates.Clear();
   }
 
   void CombinatoricGroup::AddFrame(RestFrame& frame){
@@ -50,9 +50,6 @@ namespace RestFrames {
       m_NExclusiveElementsForFrame.push_back(false);
     }
   }
-
-  vector<int> m_NElementsForFrame;
-    vector<bool> m_NExclusiveElementsForFrame; 
 
   void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, int N, bool exclusive_N){
     SetNElementsForFrame(&frame,N,exclusive_N);
@@ -93,11 +90,6 @@ namespace RestFrames {
   }
 
   void CombinatoricGroup::ClearElements(){
-    int N = GetNElements();
-   
-    for(int i = 0; i < N; i++){
-      delete m_StateElements.Get(i);
-    }
     m_StateElements.Clear();
   }
 
@@ -115,19 +107,24 @@ namespace RestFrames {
   }
  
   bool CombinatoricGroup::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupStatePtr){
-      return m_Spirit;
+    if(!IsSoundMind() || !m_GroupStatePtr){
+      m_Log << LogWarning << "Unable to Analyze Event" << m_End;
+      SetSpirit(false);
+      return false;
     }
     
     CombinatoricState* group_statePtr = dynamic_cast<CombinatoricState*>(m_GroupStatePtr);
-    if(!group_statePtr) return m_Spirit;
+    if(!group_statePtr){
+      m_Log << LogWarning << "Unable to get Group CombinatoricState" << m_End;
+      SetSpirit(false);
+      return false;
+    }
     
     group_statePtr->ClearElements();
     group_statePtr->AddElement(&m_StateElements);    
 
-    m_Spirit = true;
-    return m_Spirit;
+    SetSpirit(true);
+    return true;
   }
 
   void CombinatoricGroup::ClearFourVectors(){
@@ -135,15 +132,8 @@ namespace RestFrames {
    }
 
   GroupElementID CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
-    State* statePtr;
-    int Nelements = GetNElements();
-    int Nkeys = m_StateKeys.size();
-    if(Nelements < Nkeys){
-      statePtr = new State(m_StateKeys[Nelements]);
-    } else {
-      statePtr = new State();
-      m_StateKeys.push_back(statePtr->GetKey());
-    }
+    State* statePtr = GetNewState();
+    
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
     statePtr->SetFourVector(P);
@@ -195,6 +185,15 @@ namespace RestFrames {
     CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(GetState(framePtr));
     if(!statePtr) return -1;
     return statePtr->GetNElements();
+  }
+
+  State* CombinatoricGroup::GetNewState(){
+    if(GetNElements() < m_InitStates.GetN())
+      return m_InitStates.Get(GetNElements());
+
+    State* statePtr = new State();
+    m_InitStates.Add(statePtr);
+    return statePtr;
   }
 
 }

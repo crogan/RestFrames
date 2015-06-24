@@ -12,7 +12,7 @@ namespace RestFrames {
     m_child_framePtr = nullptr;
   }
   FrameLink::~FrameLink(){
-  
+    Clear();
   }
 
   void FrameLink::Clear(){

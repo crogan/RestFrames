@@ -20,7 +20,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class RDecayFrame : public DecayFrame, public RFrame{
   public:
-    RDecayFrame(const string& sname, const string& stitle, int key);
     RDecayFrame(const string& sname, const string& stitle);
     virtual ~RDecayFrame();
 

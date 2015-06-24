@@ -22,7 +22,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GInvisibleFrame : public InvisibleFrame, public GFrame{
   public:
-    GInvisibleFrame(const string& sname, const string& stitle, int key);
     GInvisibleFrame(const string& sname, const string& stitle);
     virtual ~GInvisibleFrame();
 

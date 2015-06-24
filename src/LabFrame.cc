@@ -1,7 +1,4 @@
-#include <iostream>
 #include "RestFrames/LabFrame.hh"
-#include "RestFrames/VisibleFrame.hh"
-#include "RestFrames/RestFrameList.hh"
 
 using namespace std;
 
@@ -10,11 +7,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // LabFrame class
   ///////////////////////////////////////////////
-  LabFrame::LabFrame(const string& sname, const string& stitle, int key) : 
-    RestFrame(sname, stitle, key)
-  {
-    Init();
-  }
   LabFrame::LabFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle)
   {

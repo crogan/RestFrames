@@ -29,18 +29,18 @@
 
 #ifndef RestFrame_HH
 #define RestFrame_HH
-#include <TVector3.h>
 #include <string>
 #include <TLorentzVector.h>
 #include <TVector3.h>
+#include "RestFrames/RFBase.hh"
+#include "RestFrames/RFList.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class FrameLink;
-  class RestFrameList;
-
+  
   /// Type of RestFrame, with respect to its decays
   enum FrameType { FVisible, FInvisible, FDecay, FLab};
 
@@ -53,59 +53,18 @@ namespace RestFrames {
   /// Abstract base class from which all *reference* *frame* objects
   /// inherit. 
   ////////////////////////////////////////////////////////////////////
-  class RestFrame {
+  class RestFrame : public RFBase {
   public:
     
     ////////////////////////////////////////////////////////////////////
     /// \brief Standard constructor
     /// 
-    /// \param sname    class instance name used for print statements
+    /// \param sname    class instance name used for log statements
     /// \param stitle   class instance title used in figures
     ////////////////////////////////////////////////////////////////////
     RestFrame(const string& sname, const string& stitle);
-
-    ////////////////////////////////////////////////////////////////////
-    /// \brief Constructor with user-provided key
-    ///
-    /// \param sname    class instance name used for print statements
-    /// \param stitle   class instance title used in figures
-    /// \param key      class instance identification key
-    ///
-    /// Standard constructor auto-assigns identification key, ensuring
-    /// it is not replicated in another class instance. Care should be 
-    /// taken to prevent replication when using this non-standard 
-    /// constructor.
-    ////////////////////////////////////////////////////////////////////
-    RestFrame(const string& sname, const string& stitle, int key);
     
     virtual ~RestFrame();
-  
-    virtual void ClearFrame();
-
-    ////////////////////////////////////////////////////////////////////
-    /// \name RestFrame identity/comparison methods
-    /// \brief RestFrame identity query member functions
-    /// 
-    /// Member functions for identifying/comparing class instances
-    ////////////////////////////////////////////////////////////////////
-    ///@{
-    
-    /// \brief Returns RestFrame identification key
-    int GetKey() const;
-    
-    /// \brief Returns RestFrame name 
-    string GetName() const;
-    
-    /// \brief Returns RestFrame title 
-    string GetTitle() const;
-    
-    /// \brief Tests whether *frame* is the same as this RestFrame
-    bool IsSame(const RestFrame& frame) const;
-    
-    /// \brief Tests whether *framePtr* points to this RestFrame
-    bool IsSame(const RestFrame* framePtr) const;
-    
-    ///@} // end identity/comparison methods
 
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame type methods
@@ -160,7 +119,7 @@ namespace RestFrames {
     ///
     /// \param framePtr    pointer to RestFrame to be added as child
     ///
-    /// Method for adding a RestFrame pointed to but *framePtr* as a 
+    /// Method for adding a RestFrame pointed to by *framePtr* as a 
     /// child of this frame. &(*framePtr*) will not be added as a child
     /// if it is already listed as a child.
     void AddChildFrame(RestFrame* framePtr);
@@ -204,25 +163,74 @@ namespace RestFrames {
     /// connected to this frame through parent(s) or children.
     ////////////////////////////////////////////////////////////////////
     ///@{
+
+    /// \brief Get the number of child frames inheriting from this one
     int GetNChildren() const;
+
+    /// \brief Get the pointer to the frame of the *i* th child
     RestFrame* GetChildFrame(int i) const;
+
+    /// \brief Get the index of &(*framePtr*) 
+    ///
+    /// \param framePtr   pointer to child frame whose index is returned
+    ///
+    /// Return the index of child frame &(*framePtr*). Will return -1
+    /// if &(*framePtr*) is not among the children
     int GetChildIndex(const RestFrame* framePtr) const;
+
+    /// \brief Returns a pointer to the parent of this frame
     const RestFrame* GetParentFrame() const;
+
+    /// \brief Returns a pointer to the LabFrame that this frame inherits from
     const RestFrame* GetLabFrame() const;
-    RestFrameList* GetListFrames();
-    RestFrameList* GetListFramesType(FrameType type);
-    RestFrameList* GetListFramesType(const vector<RestFrames::FrameType>& types);
-    RestFrameList* GetListVisibleFrames();
-    RestFrameList* GetListInvisibleFrames();
+
+    /// \brief Returns a list of frames inheriting from this one
+    ///
+    /// Returns a pointer to a new list of frames that inherit from this one,
+    /// filled recursively and including children of children (and this frame)
+    RFList<RestFrame>* GetListFrames();
+
+    /// \brief Returns a list of frames inheriting from this one with FrameType *type*
+    ///
+    /// \param type    FrameType of frames to be included in list
+    ///
+    /// Returns a pointer to a new list of frames that inherit from this one,
+    /// filled recursively and including children of children (and this frame), 
+    /// which are of FrameType *type*
+    RFList<RestFrame>* GetListFramesType(FrameType type);
+
+    /// \brief Returns a list of frames inheriting from this one with FrameType *types*
+    ///
+    /// \param types    FrameType's of frames to be included in list
+    ///
+    /// Returns a pointer to a new list of frames that inherit from this one,
+    /// filled recursively and including children of children (and this frame), 
+    /// which have a FrameType included among *types*
+    RFList<RestFrame>* GetListFramesType(const vector<RestFrames::FrameType>& types);
+
+    /// \brief Returns a list of FVisible frames inheriting from this
+    RFList<RestFrame>* GetListVisibleFrames();
+
+    /// \brief Returns a list of FInvisible frames inheriting from this
+    RFList<RestFrame>* GetListInvisibleFrames();
     
     ///@}
 
+    /// \brief Recursively clear event information from this frame and its children
     virtual void ClearEventRecursive() = 0;
+
+    /// \brief Recursively analyze event in this frame and its children
     virtual bool AnalyzeEventRecursive() = 0;
 
-    //////////////////////////
-    // Analysis functions
-    //////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    /// \name RestFrame frame retrieval methods
+    /// \brief RestFrame member functions for accessing connected frames
+    /// 
+    /// Member functions which can be used to access RestFrames 
+    /// connected to this frame through parent(s) or children.
+    ////////////////////////////////////////////////////////////////////
+    ///@{
+
     virtual double GetMass() const;
     virtual double GetCosDecayAngle(const RestFrame* framePtr = nullptr) const;
     virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
@@ -261,32 +269,24 @@ namespace RestFrames {
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const;
     virtual TVector3 GetDecayPlaneNormalVector() const;
-    virtual double GetProdPoM(int& NDecay) const;
-    virtual double GetProdSinDecayAngle(int& NDecay) const;
+
+    ///@}
 
   protected:
     static int m_class_key;     
-    mutable bool m_Body;       
-    mutable bool m_Mind;       
-    mutable bool m_Spirit;     
 
     virtual bool IsSoundBody() const;
     bool IsSoundBodyRecursive() const;
-    virtual bool IsSoundMind() const;
-    bool IsSoundMindRecursive() const;
-    virtual bool IsSoundSpirit() const;
-    bool IsSoundSpiritRecursive() const;
 
-    string m_Name;
-    string m_Title;
-    int m_Key;
     FrameType m_Type;
     AnaType m_Ana;
 
     FrameLink* m_ParentLinkPtr;
     vector<FrameLink*> m_ChildLinks;
 
-    void SetChildBoostVector(int i, TVector3 boost) const;
+    FrameLink* GetChildLink(int i) const;
+    FrameLink* GetParentLink() const;
+    void SetChildBoostVector(int i, const TVector3& boost) const;
     TVector3 GetChildBoostVector(int i) const;
     TVector3 GetParentBoostVector() const;
 
@@ -304,11 +304,11 @@ namespace RestFrames {
     bool IsConsistentAnaTree(AnaType ana) const;
 
     // Recursively get lists of frames
-    void FillListFramesRecursive(RestFrameList* framesPtr);
-    void FillListFramesTypeRecursive(FrameType type, RestFrameList* framesPtr);
+    void FillListFramesRecursive(RFList<RestFrame>* framesPtr);
+    void FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>* framesPtr);
 
   private:
-    void Init(const string& sname, const string& stitle);
+    void Init();
     int GenKey();
   };
 

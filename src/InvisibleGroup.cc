@@ -1,4 +1,6 @@
 #include "RestFrames/InvisibleGroup.hh"
+#include "RestFrames/RFrame.hh"
+#include "RestFrames/Jigsaw.hh"
 
 using namespace std;
 
@@ -7,12 +9,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleGroup class
   ///////////////////////////////////////////////
-
-  InvisibleGroup::InvisibleGroup(const string& sname, const string& stitle, int ikey) : 
-    Group(sname, stitle, ikey)
-  {
-    Init();
-  }
 
   InvisibleGroup::InvisibleGroup(const string& sname, const string& stitle) : 
     Group(sname, stitle)
@@ -60,7 +56,7 @@ namespace RestFrames {
 
   // Event analysis functions
   void InvisibleGroup::ClearEvent(){
-    if(!m_Mind) return;
+    if(!IsSoundMind()) return;
     m_Lab_P.SetPxPyPzE(0.,0.,0.,0.);
   }
   
@@ -77,15 +73,19 @@ namespace RestFrames {
   }
 
   bool InvisibleGroup::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupStatePtr){
-      return m_Spirit;
+    if(!IsSoundMind() || !m_GroupStatePtr){
+      m_Log << LogWarning;
+      m_Log << "Unable to analyze event. ";
+      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
+      m_Log << "from LabFrame" << m_End;
+      SetSpirit(false);
+      return false;
     }
 
     m_GroupStatePtr->SetFourVector(m_Lab_P);
 
-    m_Spirit = true;
-    return m_Spirit;
+    SetSpirit(true);
+    return true;
   }
   
 }

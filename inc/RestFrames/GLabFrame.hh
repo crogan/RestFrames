@@ -17,7 +17,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GLabFrame : public LabFrame, public GFrame {
   public:
-    GLabFrame(const string& sname, const string& stitle, int key);
     GLabFrame(const string& sname, const string& stitle);
     virtual ~GLabFrame();
   

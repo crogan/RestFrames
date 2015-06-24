@@ -1,4 +1,6 @@
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
+#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -12,11 +14,7 @@ namespace RestFrames {
   {
     Init();
   }
-  ContraBoostInvariantJigsaw::ContraBoostInvariantJigsaw(const string& sname,const string& stitle,int ikey) : 
-    NVisibleMInvisibleJigsaw(sname, stitle, ikey, 2, 2)
-  {
-    Init();
-  }
+ 
   ContraBoostInvariantJigsaw::~ContraBoostInvariantJigsaw(){
   
   }
@@ -25,7 +23,7 @@ namespace RestFrames {
    
   }
 
-  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(JigsawList* jigsawsPtr){ 
+  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){ 
     if(!jigsawsPtr) return;
     
     int Nchild = GetNChildStates();

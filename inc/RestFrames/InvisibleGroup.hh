@@ -22,7 +22,6 @@ namespace RestFrames {
   class InvisibleGroup : public Group {
   public:
     InvisibleGroup(const string& sname, const string& stitle);
-    InvisibleGroup(const string& sname, const string& stitle, int ikey);
     virtual ~InvisibleGroup();
 	
     virtual void AddFrame(RestFrame& frame);

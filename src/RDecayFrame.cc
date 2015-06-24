@@ -9,13 +9,6 @@ namespace RestFrames {
   // Class for an intermediate state
   // inheriting from DecayFrame and RFrame
   ///////////////////////////////////////////////
-  RDecayFrame::RDecayFrame(const string& sname, const string& stitle, int key) : 
-    RestFrame(sname,stitle,key), 
-    DecayFrame(sname,stitle,key),
-    RFrame(sname, stitle, key)
-  {
-    Init();
-  }
   RDecayFrame::RDecayFrame(const string& sname, const string& stitle) : 
     RestFrame(sname,stitle), 
     DecayFrame(sname,stitle),

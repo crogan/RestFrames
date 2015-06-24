@@ -10,14 +10,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // GFrame class methods
   ///////////////////////////////////////////////
-  GFrame::GFrame(const string& sname, const string& stitle, int ikey) : 
-    RestFrame(sname, stitle, ikey)
-  {
-    Init();
-  }
-
-  GFrame::GFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle)
+  GFrame::GFrame(const string& sname, const string& stitle) 
+    : RestFrame(sname, stitle)
   {
     Init();
   }

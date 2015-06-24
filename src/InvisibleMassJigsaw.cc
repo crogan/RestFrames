@@ -1,4 +1,6 @@
 #include "RestFrames/InvisibleMassJigsaw.hh"
+#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -12,11 +14,7 @@ namespace RestFrames {
   {
     Init();
   }
-  InvisibleMassJigsaw::InvisibleMassJigsaw(const string& sname, const string& stitle, int ikey) : 
-    NVisibleMInvisibleJigsaw(sname, stitle, ikey, 0, 1)
-  {
-    Init();
-  }
+ 
   InvisibleMassJigsaw::~InvisibleMassJigsaw(){
   
   }
@@ -26,8 +24,14 @@ namespace RestFrames {
   }
 
   bool InvisibleMassJigsaw::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupPtr) return m_Spirit;
+    if(!IsSoundMind() || !m_GroupPtr){
+      m_Log << LogWarning;
+      m_Log << "Unable to analyze event. ";
+      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
+      m_Log << "from LabFrame" << m_End;
+      SetSpirit(false);
+      return false;
+    }
 
     TLorentzVector inv_P = m_InputStatePtr->GetFourVector();
     double M = dynamic_cast<InvisibleState*>(m_OutputStatesPtr->Get(0))->GetMinimumMass();
@@ -35,8 +39,8 @@ namespace RestFrames {
     inv_P.SetVectM(inv_P.Vect(),M);
     m_OutputStatesPtr->Get(0)->SetFourVector(inv_P);
 
-    m_Spirit = true;
-    return m_Spirit;
+    SetSpirit(true);
+    return true;
   }
 
 }

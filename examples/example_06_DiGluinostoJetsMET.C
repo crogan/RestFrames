@@ -203,6 +203,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   //////////////////////////////////////////////////////////////
   // draw some pictures of our trees
   //////////////////////////////////////////////////////////////
+
   FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
   treePlot_G->AddFrameTree(LAB_G);
   treePlot_G->DrawFramePlot();

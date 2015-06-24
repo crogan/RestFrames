@@ -21,7 +21,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GVisibleFrame : public VisibleFrame, public GFrame{
   public:
-    GVisibleFrame(const string& sname, const string& stitle, int key);
     GVisibleFrame(const string& sname, const string& stitle);
     virtual ~GVisibleFrame();
 

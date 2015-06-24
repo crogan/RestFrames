@@ -5,7 +5,7 @@
 #include <vector>
 #include <TLorentzVector.h>
 #include <TVector3.h>
-//#include "RestFrames/State.hh"
+#include "RestFrames/State.hh"
 #include "RestFrames/StateList.hh"
 
 using namespace std;
@@ -21,7 +21,6 @@ namespace RestFrames {
   class CombinatoricState : public State {
   public:
     CombinatoricState();
-    CombinatoricState(int ikey);
     virtual ~CombinatoricState();
 	
     virtual void Boost(const TVector3& B);

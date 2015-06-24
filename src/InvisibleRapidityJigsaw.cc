@@ -1,4 +1,6 @@
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
+#include "RestFrames/State.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -12,11 +14,7 @@ namespace RestFrames {
   {
     Init();
   }
-  InvisibleRapidityJigsaw::InvisibleRapidityJigsaw(const string& sname, const string& stitle, int ikey) : 
-    NVisibleMInvisibleJigsaw(sname, stitle, ikey, 1, 1)
-  {
-    Init();
-  }
+ 
   InvisibleRapidityJigsaw::~InvisibleRapidityJigsaw(){
   
   }

@@ -13,12 +13,6 @@ namespace RestFrames {
     Init();
   }
 
-  DecayFrame::DecayFrame(const string& sname,const string& stitle,int ikey) : 
-    RestFrame(sname, stitle, ikey)
-  {
-    Init();
-  }
-
   DecayFrame::~DecayFrame(){
   
   }

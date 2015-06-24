@@ -1,14 +1,8 @@
 #ifndef RSelfAssemblingFrame_HH
 #define RSelfAssemblingFrame_HH
-#include <iostream>
-#include <string>
-#include <vector>
-#include <TLorentzVector.h>
-#include <TVector3.h>
-#include "RestFrames/RestFrame.hh"
+
 #include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/State.hh"
 
 using namespace std;
 
@@ -19,7 +13,6 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class RSelfAssemblingFrame : public RDecayFrame {
   public:
-    RSelfAssemblingFrame(const string& sname, const string& stitle, int key);
     RSelfAssemblingFrame(const string& sname, const string& stitle);
     virtual ~RSelfAssemblingFrame();
 
@@ -33,16 +26,17 @@ namespace RestFrames {
     
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
-    RestFrameList m_ChildFrames_UnAssembled;
+    RFList<RestFrame> m_ChildFrames_UnAssembled;
     vector<StateList*> m_ChildStates_UnAssembled;
 
-    RestFrameList m_VisibleFrames;
-    RestFrameList m_DecayFrames;
+    RFList<RestFrame> m_VisibleFrames;
+    RFList<RestFrame> m_DecayFrames;
     int m_Nvisible;
     int m_Ndecay;
 
     RestFrame* GetNewDecayFrame(const string& sname, const string& stitle);
     RestFrame* GetNewVisibleFrame(const string& sname, const string& stitle);
+    void ClearNewDecayFrames();
 
     bool m_IsAssembled;
     bool m_IsBackedUp;

@@ -1,4 +1,5 @@
 #include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
+#include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
 
@@ -12,11 +13,7 @@ namespace RestFrames {
   {
     Init();
   }
-  MinimizeMassesCombinatoricJigsaw::MinimizeMassesCombinatoricJigsaw(const string& sname, const string& stitle, int ikey) : 
-    CombinatoricJigsaw(sname, stitle, ikey)
-  {
-    Init();
-  }
+  
   MinimizeMassesCombinatoricJigsaw::~MinimizeMassesCombinatoricJigsaw(){
   
   }
@@ -26,13 +23,30 @@ namespace RestFrames {
   }
 
   bool MinimizeMassesCombinatoricJigsaw::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupPtr) return m_Spirit;
+   
+    if(!IsSoundMind() || !m_GroupPtr){
+      m_Log << LogWarning;
+      m_Log << "Unable to analyze event. ";
+      m_Log << "Requires successfull call to \"InitializeAnalysis\" ";
+      m_Log << "from LabFrame" << m_End;
+      SetSpirit(false);
+      return false;
+    }
 
-    if(!InitializeEvent()) return m_Spirit;
+    if(!InitializeEvent()){
+      m_Log << LogWarning;
+      m_Log << "Problem initializing event info" << m_End;
+      SetSpirit(false);
+      return false;
+    }
 
     // have only implemented this case so far
-    if(int(m_Outputs.size()) != 2) return false;
+    if(int(m_Outputs.size()) != 2){
+      m_Log << LogWarning;
+      m_Log << "output size != 2 no implemented" << m_End;
+      SetSpirit(false);
+      return false;
+    }
 
     //
     // hard coding this for now...
@@ -41,15 +55,17 @@ namespace RestFrames {
 
     int Ninput = m_Inputs.size();
     int Ndeps = m_DependancyStates.size();
+    
     vector<TLorentzVector> inputs;
-    for(int i = 0; i < Ninput; i++) inputs.push_back(m_Inputs[i]->GetFourVector());
+    for(int i = 0; i < Ninput; i++)
+      inputs.push_back(m_Inputs[i]->GetFourVector());	
 
     bool DO_HEM = (m_NForOutput[0] == 1) && 
       (m_NForOutput[1] == 1) && 
       !m_NExclusive[0] && 
       !m_NExclusive[1] &&
       (int(m_DependancyStates.size()) <= 0);
-    
+
     //////////////////////////////////////
     // N^3 hemispheres
     //////////////////////////////////////
@@ -192,8 +208,8 @@ namespace RestFrames {
     // Execute depedancy Jigsaws
     ExecuteDependancyJigsaws();
 
-    m_Spirit = true;
-    return m_Spirit;
+    SetSpirit(true);
+    return true;
   }
 
 }
