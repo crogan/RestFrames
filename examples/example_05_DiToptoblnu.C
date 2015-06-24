@@ -57,7 +57,7 @@
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
 #include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
 #include "RestFrames/FramePlot.hh"
-#include "RestFrames/FrameLog.hh"
+#include "RestFrames/RFLog.hh"
 
 void setstyle();
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title = "", string label = "");

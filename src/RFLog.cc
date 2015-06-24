@@ -2,32 +2,32 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
-#include "RestFrames/FrameLog.hh"
+#include "RestFrames/RFLog.hh"
 #include "RestFrames/RFBase.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  // default FrameLog parameters
-  map<LogType,bool> FrameLog::m_PrintMap = InitPrintMap();
-  ostream* FrameLog::m_Ostr = &cerr;
-  int FrameLog::m_NMAX = 100;
+  // default RFLog parameters
+  map<LogType,bool> RFLog::m_PrintMap = InitPrintMap();
+  ostream* RFLog::m_Ostr = &cerr;
+  int RFLog::m_NMAX = 100;
 
-  FrameLog::FrameLog(const string& source, LogType def_type){
+  RFLog::RFLog(const string& source, LogType def_type){
     Init();
     SetSource(source);
   }
 
-  FrameLog::FrameLog(){
+  RFLog::RFLog(){
     Init();
   }
 
-  FrameLog g_Log("RestFrames Global");
+  RFLog g_Log("RestFrames Global");
 
-  FrameLog::~FrameLog() { }
+  RFLog::~RFLog() { }
 
-  void FrameLog::Init(){
+  void RFLog::Init(){
     m_Source = "Unknown"; 
     m_CurType = LogInfo;
     m_Message.str("");
@@ -54,7 +54,7 @@ namespace RestFrames {
     return m;
   }
 
-  string FrameLog::GetFormattedSource() const {
+  string RFLog::GetFormattedSource() const {
     string source_name = m_Source;
     if (source_name.size() > 22){
       source_name = source_name.substr( 0, 22 - 3 );
@@ -63,7 +63,7 @@ namespace RestFrames {
     return source_name;
   }
   
-  string FrameLog::GetFormattedMessage(const string& message) {
+  string RFLog::GetFormattedMessage(const string& message) {
     string output = "";
     int N = message.size();
     double OFF = 18;
@@ -85,7 +85,7 @@ namespace RestFrames {
     return output;
   }
 
-  void FrameLog::Send(){
+  void RFLog::Send(){
     string source_name = GetFormattedSource();
     string message = m_Message.str();
     string::size_type previous_pos = 0, current_pos = 0;
@@ -120,36 +120,36 @@ namespace RestFrames {
     return;
   }
 
-  FrameLog& FrameLog::EndMessage(FrameLog& log){
+  RFLog& RFLog::EndMessage(RFLog& log){
     log.Send();
     return log;
   }
 
-  void FrameLog::PrintObject(RFBase* objPtr){
+  void RFLog::PrintObject(RFBase* objPtr){
     m_Message << objPtr->PrintString();
   }
 
   void SetLogPrint(LogType type, bool print){
-    FrameLog::m_PrintMap[type] = print;
+    RFLog::m_PrintMap[type] = print;
   }
 
   void SetLogPrint(bool print){
-    for (map<LogType, bool>::iterator m = FrameLog::m_PrintMap.begin() ; m != FrameLog::m_PrintMap.end(); ++m)
+    for (map<LogType, bool>::iterator m = RFLog::m_PrintMap.begin() ; m != RFLog::m_PrintMap.end(); ++m)
       m->second = (m->second && print);
   }
 
   void SetLogStream(ostream* ostr){
-    if(ostr) FrameLog::m_Ostr = ostr;
+    if(ostr) RFLog::m_Ostr = ostr;
   }
 
   void SetLogMaxWidth(int NMAX){
-    if(NMAX > 0) FrameLog::m_NMAX = NMAX;
+    if(NMAX > 0) RFLog::m_NMAX = NMAX;
   }
 
   RFBase* Log(const RFBase& obj){ return (RFBase*)&obj; }
   RFBase* Log(RFBase* ptr){ return (RFBase*)ptr; }
 
-  template <> FrameLog& FrameLog::operator<< (RFBase* arg){
+  template <> RFLog& RFLog::operator<< (RFBase* arg){
       PrintObject(arg);
       return *this;
     }

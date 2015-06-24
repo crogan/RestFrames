@@ -1,5 +1,5 @@
-#ifndef FrameLog_HH
-#define FrameLog_HH
+#ifndef RFLog_HH
+#define RFLog_HH
 #include <string>
 #include <sstream>
 #include <map>
@@ -15,13 +15,13 @@ namespace RestFrames {
   enum LogType { LogError, LogWarning, LogInfo, LogDebug, LogVerbose };
 
   ///////////////////////////////////////////////
-  // FrameLog class
+  // RFLog class
   ///////////////////////////////////////////////
-  class FrameLog {
+  class RFLog {
   public:
-    FrameLog(const string& source, LogType def_type = LogInfo);
-    FrameLog();
-    ~FrameLog();
+    RFLog(const string& source, LogType def_type = LogInfo);
+    RFLog();
+    ~RFLog();
 
     void SetSource(const string& source_name){ m_Source = source_name; }
     friend void SetLogPrint(bool print);
@@ -29,18 +29,18 @@ namespace RestFrames {
     friend void SetLogStream(ostream* ostr);
     friend void SetLogMaxWidth(int NMAX);
 
-    static FrameLog& EndMessage(FrameLog& log);
+    static RFLog& EndMessage(RFLog& log);
       
-    FrameLog& operator<< (LogType type);
+    RFLog& operator<< (LogType type);
     
-    template <class T> FrameLog& operator<< (T arg){
+    template <class T> RFLog& operator<< (T arg){
       m_Message << arg;
       return *this;
     }
 
-    FrameLog& operator<< (FrameLog& (*_f)( FrameLog&));
-    FrameLog& operator<< (ostream& (*_f)(ostream&));
-    FrameLog& operator<< (ios& (*_f)(ios&));
+    RFLog& operator<< (RFLog& (*_f)( RFLog&));
+    RFLog& operator<< (ostream& (*_f)(ostream&));
+    RFLog& operator<< (ios& (*_f)(ios&));
 
   private:
     static ostream* m_Ostr;
@@ -62,34 +62,35 @@ namespace RestFrames {
 
   };
 
-  template <> FrameLog& FrameLog::operator<< (RFBase* arg);
+  template <> RFLog& RFLog::operator<< (RFBase* arg);
 
-  inline FrameLog& FrameLog::operator<< (FrameLog& (*_f)(FrameLog&)){
+  inline RFLog& RFLog::operator<< (RFLog& (*_f)(RFLog&)){
     return (_f)(*this);
   }
 
-  inline FrameLog& FrameLog::operator<< (ostream& (*_f)(ostream&)){
+  inline RFLog& RFLog::operator<< (ostream& (*_f)(ostream&)){
    (_f)(m_Message);
    return *this;
   }
 
-  inline FrameLog& FrameLog::operator<< (std::ios& (*_f)(ios&)){
+  inline RFLog& RFLog::operator<< (std::ios& (*_f)(ios&)){
     (_f)(m_Message);
     return *this;
   }
 
-  inline FrameLog& FrameLog::operator<< (LogType type){
+  inline RFLog& RFLog::operator<< (LogType type){
     m_CurType = type;
     return *this;
   }
 
-  extern FrameLog g_Log;
+  extern RFLog g_Log;
 
   RFBase* Log(const RFBase& obj);
   RFBase* Log(RFBase* ptr);
 
 #define m_Log (*m_LogPtr)
-#define m_End FrameLog::EndMessage  
+#define m_End RFLog::EndMessage  
+#define g_End RFLog::EndMessage
 
   class RestFramesException : public exception {
 

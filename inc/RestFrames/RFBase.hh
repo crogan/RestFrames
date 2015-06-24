@@ -32,14 +32,12 @@
 #include <string>
 #include <TVector3.h>
 #include <TLorentzVector.h>
-#include "RestFrames/FrameLog.hh"
+#include "RestFrames/RFLog.hh"
 #include "RestFrames/RFList.hh"
 
 using namespace std;
 
 namespace RestFrames {
-
-  class FrameLog;
 
   ////////////////////////////////////////////////////////////////////
   /// \brief Base class for all RestFrame package objects
@@ -99,7 +97,7 @@ namespace RestFrames {
     mutable bool m_Body;       
     mutable bool m_Mind;       
     mutable bool m_Spirit;   
-    mutable FrameLog* m_LogPtr;
+    mutable RFLog* m_LogPtr;
 
     void SetBody(bool body) const;
     void SetMind(bool mind) const;

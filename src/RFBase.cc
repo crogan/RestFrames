@@ -24,7 +24,7 @@ namespace RestFrames {
     m_Body   = false;
     m_Mind   = false;
     m_Spirit = false;
-    m_LogPtr = new FrameLog();
+    m_LogPtr = new RFLog();
   }
 
   bool RFBase::IsSame(const RFBase& obj) const {
