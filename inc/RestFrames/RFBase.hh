@@ -29,12 +29,13 @@
 
 #ifndef RFBase_HH
 #define RFBase_HH
+
 #include <iostream>
 #include <string>
 #include <TVector3.h>
 #include <TLorentzVector.h>
-#include "RestFrames/RFLog.hh"
 #include "RestFrames/RFList.hh"
+#include "RestFrames/RFLog.hh"
 
 using namespace std;
 

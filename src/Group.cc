@@ -120,6 +120,9 @@ namespace RestFrames {
     m_StatesToSplitPtr->Add(m_GroupStatePtr);
  
     if(!InitializeJigsaws()){
+      m_Log << LogWarning;
+      m_Log << "Unable to initialize jigsaws";
+      m_Log << m_End;
       SetBody(false);
       SetMind(false);
       return false;
@@ -140,7 +143,13 @@ namespace RestFrames {
     while(m_StatesToSplitPtr->GetN() > 0){
       State* statePtr = m_StatesToSplitPtr->Get(0);
       if(!SplitState(statePtr)){
-	if(statePtr->GetNFrames() != 1) return false; 
+	if(statePtr->GetNFrames() != 1){
+	  m_Log << LogVerbose;
+	  m_Log << "Cannot find Jigsaw to split State for frames:" << endl;
+	  m_Log << Log(statePtr->GetFrames());
+	  m_Log << m_End;
+	  return false; 
+	}
 	m_StatesToSplitPtr->Remove(statePtr);
       }
     }
@@ -158,7 +167,15 @@ namespace RestFrames {
 	if(jigsawPtr->GetPriority() < jigsawForSplitPtr->GetPriority()) jigsawForSplitPtr = jigsawPtr;
       }
     }
-    if(!jigsawForSplitPtr) return false;
+    if(!jigsawForSplitPtr)
+      return false;
+    
+    m_Log << LogVerbose;
+    m_Log << "Found Jigsaw to split State." << endl; 
+    m_Log << " Frames:" << endl << "   ";
+    m_Log << Log(statePtr->GetFrames()) << endl;
+    m_Log << " Jigsaw:" << Log(jigsawForSplitPtr);
+    m_Log << m_End;
     InitializeJigsaw(jigsawForSplitPtr);
     m_JigsawsToUsePtr->Remove(jigsawForSplitPtr);
     return true;
@@ -166,7 +183,12 @@ namespace RestFrames {
 
   void Group::InitializeJigsaw(Jigsaw* jigsawPtr){
     if(!jigsawPtr) return;
-    if(!jigsawPtr->IsSoundBody()) return;
+    if(!jigsawPtr->IsSoundBody()){
+      m_Log << LogWarning;
+      m_Log << "Unable to initialize Jigsaw ";
+      m_Log << jigsawPtr->GetName() << m_End;
+      return;
+    }
 
     State* statePtr = m_StatesToSplitPtr->Get(0);
     StateList* statesPtr = jigsawPtr->InitializeOutputStates(statePtr);

@@ -39,7 +39,7 @@ namespace RestFrames {
   //InvisibleRapidityJigsaw class methods
   ///////////////////////////////////////////////
   InvisibleRapidityJigsaw::InvisibleRapidityJigsaw(const string& sname, const string& stitle) : 
-    NVisibleMInvisibleJigsaw(sname, stitle, 1, 1)
+    InvisibleJigsaw(sname, stitle, 1, 1)
   {
     Init();
   }

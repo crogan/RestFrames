@@ -42,7 +42,7 @@ namespace RestFrames {
 
   class InvisibleJigsaw : public Jigsaw {
   public:
-    InvisibleJigsaw(const string& sname, const string& stitle);
+    InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis);
     virtual ~InvisibleJigsaw();
 
     void AddVisibleFrame(RestFrame& framePtr, int i = 0);
@@ -58,11 +58,16 @@ namespace RestFrames {
 
     virtual bool InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr);
 
+    virtual bool IsSoundBody() const ;
+    virtual void SetGroup(Group* groupPtr);
+
   protected:
     virtual State* NewOutputState();
 
   private:
-    void Init();
+    void Init(int Ninv, int Nvis);
+    int m_Nvis;
+    int m_Ninv;  
   
   };
 

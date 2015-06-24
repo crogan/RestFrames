@@ -110,9 +110,9 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
-    g_Log << "Ready for event generation" << m_End;
+    g_Log << "Ready for event generation" << g_End;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << m_End;								    
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // Set up reco analysis tree
   RLabFrame LAB_R("LAB_R","LAB");
   RDecayFrame TT_R("TT_R","t #bar{t}");
@@ -142,9 +142,9 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready for Group and Jigsaw initialization" << m_End;
+    g_Log << "Ready for Group and Jigsaw initialization" << g_End;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << m_End;	 
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << g_End;	 
   
   // define groups for the reconstruction trees
   InvisibleGroup INV_R("INV_R","WIMP Jigsaws");
@@ -182,9 +182,9 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree for analysis from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready event analysis" << m_End;
+    g_Log << "Ready event analysis" << g_End;
   } else
-    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_R) << endl;	
+    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
 
   //////////////////////////////////////////////////////////////
   // draw some pictures of our trees
@@ -256,7 +256,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << m_End;
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree

@@ -30,7 +30,7 @@
 #ifndef InvisibleRapidityJigsaw_HH
 #define InvisibleRapidityJigsaw_HH
 
-#include "RestFrames/NVisibleMInvisibleJigsaw.hh"
+#include "RestFrames/InvisibleJigsaw.hh"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleRapidityJigsaw class
   ///////////////////////////////////////////////
-  class InvisibleRapidityJigsaw : public NVisibleMInvisibleJigsaw {
+  class InvisibleRapidityJigsaw : public InvisibleJigsaw {
   public:
     //constructor and destructor
     InvisibleRapidityJigsaw(const string& sname, const string& stitle);

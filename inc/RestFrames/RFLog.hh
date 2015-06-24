@@ -31,10 +31,13 @@
 #define RFLog_HH
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <map>
 #include <exception>
 
 using namespace std;
+
+#include "RestFrames/RFList.hh"
 
 namespace RestFrames {
 
@@ -61,7 +64,7 @@ namespace RestFrames {
     static RFLog& EndMessage(RFLog& log);
       
     RFLog& operator<< (LogType type);
-    
+
     template <class T> RFLog& operator<< (T arg){
       m_Message << arg;
       return *this;
@@ -83,7 +86,9 @@ namespace RestFrames {
     string GetFormattedSource() const;
     string GetFormattedMessage(const string& message);
 
-    void PrintObject(RFBase* objPtr);
+    void PrintObject(const RFBase* objPtr);
+    template <class T>
+    void PrintList(const RFList<T>* listPtr);
 
     LogType m_CurType;
     string m_Source;
@@ -91,7 +96,8 @@ namespace RestFrames {
 
   };
 
-  template <> RFLog& RFLog::operator<< (RFBase* arg);
+  template <> RFLog& RFLog::operator<< (const RFBase* arg);
+  template <> RFLog& RFLog::operator<< (const RFList<RFBase>* arg);
 
   inline RFLog& RFLog::operator<< (RFLog& (*_f)(RFLog&)){
     return (_f)(*this);
@@ -114,8 +120,12 @@ namespace RestFrames {
 
   extern RFLog g_Log;
 
-  RFBase* Log(const RFBase& obj);
-  RFBase* Log(RFBase* ptr);
+  const RFBase* Log(const RFBase& obj);
+  const RFBase* Log(const RFBase* ptr);
+  template <class T> 
+  const RFList<RFBase>* Log(const RFList<T>& list){ return (const RFList<RFBase>*)&list; }
+  template <class T> 
+  const RFList<RFBase>* Log(const RFList<T>* ptr){ return (const RFList<RFBase>*)ptr; }
 
 #define m_Log (*m_LogPtr)
 #define m_End RFLog::EndMessage  

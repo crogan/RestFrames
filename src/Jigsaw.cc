@@ -123,24 +123,11 @@ namespace RestFrames {
   bool Jigsaw::CanSplit(const RFList<RestFrame>* framesPtr){
     if(!framesPtr) return false;
 
-    m_Log << LogVerbose;
-    m_Log << "Testing whether this Jigsaw can act on RestFrames in list: " << endl;
-    int NiF = framesPtr->GetN();
-    m_Log << "   to split:";
-    for(int i = 0; i < NiF; i++)
-      m_Log << "   " << framesPtr->Get(i)->GetName();
-
     int NoF = m_OutputFrames.size();
     RFList<RestFrame> frames;
-    m_Log << endl << "   with (" << NoF << " jigsaws): ";
-    for(int i = 0; i < NoF; i++){
-      int Nf = m_OutputFrames[i]->GetN();
-      m_Log << "(" << Nf << " in jigsaw) ";
-      for(int j = 0; j < Nf; j++)
-	m_Log << " " << m_OutputFrames[i]->Get(j)->GetName() << "  ";
+    for(int i = 0; i < NoF; i++)
       frames.Add(m_OutputFrames[i]);
-    }
-    m_Log << m_End;
+    
     return frames.IsSame(framesPtr);
   }
 

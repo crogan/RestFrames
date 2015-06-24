@@ -39,7 +39,7 @@ namespace RestFrames {
   //ContraBoostInvariantJigsaw class methods
   ///////////////////////////////////////////////
   ContraBoostInvariantJigsaw::ContraBoostInvariantJigsaw(const string& sname,const string& stitle) : 
-    NVisibleMInvisibleJigsaw(sname, stitle, 2, 2)
+    InvisibleJigsaw(sname, stitle, 2, 2)
   {
     Init();
   }

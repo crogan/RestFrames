@@ -36,6 +36,8 @@ using namespace std;
 
 namespace RestFrames {
 
+  class RFBase;
+
   // default RFLog parameters
   map<LogType,bool> RFLog::m_PrintMap = InitPrintMap();
   ostream* RFLog::m_Ostr = &cerr;
@@ -152,8 +154,15 @@ namespace RestFrames {
     return log;
   }
 
-  void RFLog::PrintObject(RFBase* objPtr){
+  void RFLog::PrintObject(const RFBase* objPtr){
     m_Message << objPtr->PrintString();
+  }
+
+  template <class T>
+  void RFLog::PrintList(const RFList<T>* listPtr){
+    int N = listPtr->GetN();
+    for(int i = 0; i < N; i++) 
+      m_Message << listPtr->Get(i)->GetName() << " ";
   }
 
   void SetLogPrint(LogType type, bool print){
@@ -173,12 +182,17 @@ namespace RestFrames {
     if(NMAX > 0) RFLog::m_NMAX = NMAX;
   }
 
-  RFBase* Log(const RFBase& obj){ return (RFBase*)&obj; }
-  RFBase* Log(RFBase* ptr){ return (RFBase*)ptr; }
+  template <> RFLog& RFLog::operator<< (const RFBase* arg){
+    PrintObject(arg);
+    return *this;
+  }
 
-  template <> RFLog& RFLog::operator<< (RFBase* arg){
-      PrintObject(arg);
-      return *this;
-    }
+  template <> RFLog& RFLog::operator<< (const RFList<RFBase>* arg){
+    PrintList(arg);
+    return *this;
+  }
+
+  const RFBase* Log(const RFBase& obj){ return (const RFBase*)&obj; }
+  const RFBase* Log(const RFBase* ptr){ return (const RFBase*)ptr; }
 
 }

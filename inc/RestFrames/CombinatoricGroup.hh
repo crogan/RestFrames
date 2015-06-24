@@ -31,7 +31,6 @@
 #define CombinatoricGroup_HH
 
 #include "RestFrames/Group.hh"
-#include "RestFrames/State.hh"
 #include "RestFrames/StateList.hh"
 
 using namespace std;

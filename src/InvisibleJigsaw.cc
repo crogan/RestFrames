@@ -40,18 +40,20 @@ namespace RestFrames {
   // InvisibleJigsaw class
   ///////////////////////////////////////////////
 
-  InvisibleJigsaw::InvisibleJigsaw(const string& sname, const string& stitle) : 
+  InvisibleJigsaw::InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis) : 
     Jigsaw(sname, stitle)
   {
-    Init();
+    Init(Ninv, Nvis);
   }
 
   InvisibleJigsaw::~InvisibleJigsaw(){
    
   }
 
-  void InvisibleJigsaw::Init(){
+  void InvisibleJigsaw::Init(int Ninv, int Nvis){
     m_Type = JInvisible;
+    m_Ninv = Ninv;
+    m_Nvis = Nvis;
   }
 
   void InvisibleJigsaw::AddVisibleFrame(RestFrame& frame, int i){
@@ -181,6 +183,50 @@ namespace RestFrames {
     }
     chain_jigsawPtr->Add(this);
     
+    return true;
+  }
+
+  void InvisibleJigsaw::SetGroup(Group* groupPtr){
+    Jigsaw::SetGroup(groupPtr);
+    if(!groupPtr) return;
+    if(m_Ninv == 1) AddInvisibleFrame(groupPtr->GetFrames());
+  }
+
+  bool InvisibleJigsaw::IsSoundBody() const {
+    if(!Jigsaw::IsSoundBody()){
+      m_Log << LogWarning << "Problem with Jigsaw" << m_End;
+      SetBody(false);
+      return false;
+    }
+
+    int Ndep = m_DependancyFrames.size();
+    int Nout = m_OutputFrames.size();
+
+    if(Ndep != m_Nvis || Nout != m_Ninv){
+      m_Log << LogWarning;
+      m_Log << "Incorrect number of input/output frames for jigsaw";
+      m_Log<< m_End;
+      SetBody(false);
+      return false;
+    }
+    for(int i = 0; i < Ndep; i++)
+      if(m_DependancyFrames[i]->GetN() == 0){
+	m_Log << LogWarning;
+	m_Log << "Empty collection of visible frames: " << i;
+	m_Log << m_End;
+	SetBody(false);
+	return false;
+      }
+    for(int i = 0; i < Nout; i++)
+      if(m_OutputFrames[i]->GetN() == 0){
+	m_Log << LogWarning;
+	m_Log << "Empty collection of invisible frames: " << i;
+	m_Log << m_End;
+	SetBody(false);
+	return false;
+      }
+   
+    SetBody(true);
     return true;
   }
 

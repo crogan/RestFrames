@@ -30,7 +30,7 @@
 #ifndef ContraBoostInvariantJigsaw_HH
 #define ContraBoostInvariantJigsaw_HH
 
-#include "RestFrames/NVisibleMInvisibleJigsaw.hh"
+#include "RestFrames/InvisibleJigsaw.hh"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // ContraBoostInvariantJigsaw class
   ///////////////////////////////////////////////
-  class ContraBoostInvariantJigsaw : public NVisibleMInvisibleJigsaw {
+  class ContraBoostInvariantJigsaw : public InvisibleJigsaw {
   public:
     //constructor and destructor
     ContraBoostInvariantJigsaw(const string& sname, const string& stitle);

@@ -30,7 +30,7 @@
 #ifndef InvisibleMassJigsaw_HH
 #define InvisibleMassJigsaw_HH
 
-#include "RestFrames/NVisibleMInvisibleJigsaw.hh"
+#include "RestFrames/InvisibleJigsaw.hh"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleMassJigsaw class
   ///////////////////////////////////////////////
-  class InvisibleMassJigsaw : public NVisibleMInvisibleJigsaw {
+  class InvisibleMassJigsaw : public InvisibleJigsaw {
   public:
     InvisibleMassJigsaw(const string& sname, const string& stitle);
     virtual ~InvisibleMassJigsaw();

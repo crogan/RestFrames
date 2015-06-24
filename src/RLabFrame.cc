@@ -73,8 +73,12 @@ namespace RestFrames {
     delete groupsPtr;
     int Ngroup = m_LabGroups.GetN();
     for(int i = 0; i < Ngroup; i++){
-      if(!m_LabGroups.Get(i)->InitializeAnalysis()) return false;
-      
+      if(!m_LabGroups.Get(i)->InitializeAnalysis()){
+	m_Log << LogWarning;
+	m_Log << "Unable to initialize analysis for Group ";
+	m_Log << Log(m_LabGroups.Get(i)) << m_End;
+	return false;
+      }
     }
     return true;
   }
