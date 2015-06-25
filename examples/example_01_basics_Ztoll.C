@@ -29,14 +29,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TLorentzVector.h>
-#include <TVector3.h>
-#include <TCanvas.h>
-#include <iostream>
-#include "RestFrames/RLabFrame.hh"
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/FramePlot.hh"
+#include "RestFrames/RestFrames.hh"
 
 using namespace std;
 using namespace RestFrames;

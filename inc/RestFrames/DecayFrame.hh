@@ -36,8 +36,6 @@ using namespace std;
 
 namespace RestFrames {
 
-  class RestFrame;
-
   ///////////////////////////////////////////////
   // DecayFrame class
   // Class for an intermediate state

@@ -29,8 +29,6 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TLorentzVector.h>
-#include <TVector3.h>
 #include <TFile.h>
 #include <TCanvas.h>
 #include <TLatex.h>
@@ -38,20 +36,7 @@
 #include <TStyle.h>
 #include <TH1D.h>
 #include <TH2D.h>
-#include <TRandom.h>
-#include <iostream>
-#include "RestFrames/RLabFrame.hh"
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/GLabFrame.hh"
-#include "RestFrames/GDecayFrame.hh"
-#include "RestFrames/GVisibleFrame.hh"
-#include "RestFrames/GInvisibleFrame.hh"
-#include "RestFrames/InvisibleGroup.hh"
-#include "RestFrames/InvisibleMassJigsaw.hh"
-#include "RestFrames/InvisibleRapidityJigsaw.hh"
-#include "RestFrames/FramePlot.hh"
+#include "RestFrames/RestFrames.hh"
 
 void setstyle();
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title = "", string label = "");
