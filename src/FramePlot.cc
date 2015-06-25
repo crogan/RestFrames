@@ -461,8 +461,9 @@ namespace RestFrames {
 
     if(jigsawPtr){
       if(linkPtr->DoLabel()){
-	icolor = color_Node[jigsawPtr->GetPriority()+2];
-	icolor_fill = color_fill_Node[jigsawPtr->GetPriority()+2];
+	int priority = GetJigsawPriority(jigsawPtr->GetNOutputStates(), jigsawPtr->GetNDependancyStates());
+	icolor = color_Node[priority];
+	icolor_fill = color_fill_Node[priority];
       } else {
 	int Nj = m_Jigsaws.GetN();
 	int index = m_Jigsaws.GetIndex(jigsawPtr);
@@ -753,6 +754,12 @@ namespace RestFrames {
     m_CanvasPtr->cd();
     lat->DrawLatex(x,y,title.c_str());
     m_Objects.push_back(lat);
+  }
+
+  int FramePlot::GetJigsawPriority(int Nout, int Ndep) const {
+    if(Nout == 1 && Ndep == 0) return 0;
+    if(Nout == 1 && Ndep == 1) return 1;
+    return 2;
   }
   
   ///////////////////////////////////////////////

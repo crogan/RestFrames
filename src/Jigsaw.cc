@@ -56,7 +56,6 @@ namespace RestFrames {
 
   void Jigsaw::Init(){
     SetKey(GenKey());
-    m_Priority = 0.;
     m_GroupPtr = nullptr;
     m_InputStatePtr = nullptr;
     m_DependancyJigsawsPtr = new RFList<Jigsaw>();
@@ -102,6 +101,14 @@ namespace RestFrames {
     int newkey = m_class_key;
     m_class_key++;
     return newkey;
+  }
+
+  int Jigsaw::GetNOutputStates() const {
+    return m_OutputFrames.size();
+  }
+
+  int Jigsaw::GetNDependancyStates() const {
+    return m_DependancyFrames.size();
   }
 
   bool Jigsaw::IsInvisibleJigsaw() const {

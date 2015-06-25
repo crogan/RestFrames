@@ -163,8 +163,14 @@ namespace RestFrames {
     for(int i = 0; i < N; i++){
       Jigsaw* jigsawPtr = m_JigsawsToUsePtr->Get(i);
       if(jigsawPtr->CanSplit(statePtr)){
-	if(!jigsawForSplitPtr) jigsawForSplitPtr = jigsawPtr;
-	if(jigsawPtr->GetPriority() < jigsawForSplitPtr->GetPriority()) jigsawForSplitPtr = jigsawPtr;
+	if(!jigsawForSplitPtr){
+	  jigsawForSplitPtr = jigsawPtr;
+	  continue;
+	}
+	if(jigsawPtr->GetNOutputStates() <= jigsawForSplitPtr->GetNOutputStates())
+	  if((jigsawPtr->GetNOutputStates() < jigsawForSplitPtr->GetNOutputStates()) ||
+	     (jigsawPtr->GetNDependancyStates() < jigsawForSplitPtr->GetNDependancyStates())) 
+	    jigsawForSplitPtr = jigsawPtr;
       }
     }
     if(!jigsawForSplitPtr)

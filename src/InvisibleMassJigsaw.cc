@@ -44,13 +44,9 @@ namespace RestFrames {
     Init();
   }
  
-  InvisibleMassJigsaw::~InvisibleMassJigsaw(){
-  
-  }
+  InvisibleMassJigsaw::~InvisibleMassJigsaw(){}
 
-  void InvisibleMassJigsaw::Init(){
-    m_Priority = -2;
-  }
+  void InvisibleMassJigsaw::Init(){}
 
   bool InvisibleMassJigsaw::AnalyzeEvent(){
     if(!IsSoundMind() || !m_GroupPtr){

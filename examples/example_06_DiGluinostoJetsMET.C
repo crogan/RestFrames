@@ -214,6 +214,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   FramePlot* treePlot_R = new FramePlot("tree_R","Signal-like Reconstruction Tree");
   treePlot_R->AddFrameTree(LAB_R);
+  treePlot_R->AddJigsaw(MinMassJigsaw_R);
+  treePlot_R->AddJigsaw(RapidityJigsaw_R);
+  treePlot_R->AddJigsaw(ContraBoostJigsaw_R);
   treePlot_R->DrawFramePlot();
   TCanvas* c_recotree = treePlot_R->GetCanvas();
 

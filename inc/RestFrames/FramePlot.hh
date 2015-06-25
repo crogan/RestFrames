@@ -29,8 +29,8 @@ namespace RestFrames {
   const int style_Default = 1;
 
   //const int color_Leaf[3] = {kOrange-4,kMagenta-8,kCyan-6};
-  //const int color_Leaf[3] = {kOrange-4,kCyan-6,kMagenta-8};
-  const int color_Leaf[3] = {kCyan-6,kOrange-4,kMagenta-9};
+  const int color_Leaf[3] = {kOrange-4,kCyan-6,kMagenta-8};
+  //const int color_Leaf[3] = {kCyan-6,kOrange-4,kMagenta-9};
   const int style_Leaf = 7;
 
   enum FramePlotType { PNone, PFrame, PGroup };
@@ -119,6 +119,8 @@ namespace RestFrames {
     void DrawJigsawLegend();
 
     void ConvertNodeCoordinates(vector<FramePlotNode*>* nodesPtr);
+
+    int GetJigsawPriority(int Nout, int Ndep) const;
   };
 
   ///////////////////////////////////////////////

@@ -48,9 +48,7 @@ namespace RestFrames {
   
   }
 
-  void InvisibleRapidityJigsaw::Init(){
-    m_Priority = -1;
-  }
+  void InvisibleRapidityJigsaw::Init(){}
 
   bool InvisibleRapidityJigsaw::AnalyzeEvent(){
     m_Spirit = false;

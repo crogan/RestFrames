@@ -64,7 +64,7 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   setstyle();
 
   double mW = 81.;
-  int Ngen = 1000000;
+  int Ngen = 100000;
 
   // Set up toy generation and event analysis trees:
   GLabFrame LAB_G("LAB_G","LAB");
@@ -104,13 +104,18 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
  
   InvisibleMassJigsaw MassJigsaw("MASS_JIGSAW","mass Jigsaw");
   INV.AddJigsaw(MassJigsaw);
-
+  
   InvisibleRapidityJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
   RapidityJigsaw.AddVisibleFrame(L_R);
 
   if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
 
+  FramePlot* invPlot = new FramePlot("inv_R","Invisible Jigsaws");
+  invPlot->AddGroupTree(INV);
+  invPlot->DrawFramePlot();
+  TCanvas* c_inv = invPlot->GetCanvas();
+  
   // Now we book some histograms of kinematic variables
   TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,90.);
   TH1D* h_cosW   = new TH1D("h_cosW","h_cosW",100,-1.,1.);

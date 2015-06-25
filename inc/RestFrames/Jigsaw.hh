@@ -60,8 +60,8 @@ namespace RestFrames {
     /// \brief String of information associated with object
     virtual string PrintString(LogType type = LogVerbose) const;
 
-    int GetPriority() const { return m_Priority; }
-    void SetPriority(int p){ m_Priority = p; }
+    int GetNOutputStates() const;
+    int GetNDependancyStates() const;
 
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
@@ -93,7 +93,6 @@ namespace RestFrames {
     static int m_class_key;
 
     JigsawType m_Type;
-    int m_Priority;
 
     Group* m_GroupPtr;
     State* m_InputStatePtr;
