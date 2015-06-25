@@ -69,16 +69,6 @@ namespace RestFrames {
     m_Frames.Clear();
   }
 
-  // State *State::Copy() const {
-  //   State* statePtr = new State(m_Key);
-  //   statePtr->SetParentJigsaw(m_ParentJigsawPtr);
-  //   statePtr->SetChildJigsaw(m_ChildJigsawPtr);
-  //   statePtr->SetFourVector(m_P);
-  //   int N = GetNFrames();
-  //   for(int i = 0; i < N; i++) statePtr->AddFrame(m_Frames.Get(i));
-  //   return statePtr;
-  // }
-
   int State::GenKey(){
     int newkey = m_class_key;
     m_class_key++;
@@ -89,16 +79,25 @@ namespace RestFrames {
     m_P.Boost(B);
   }
 
+  void State::AddFrame(RestFrame& frame){
+    AddFrame(&frame);
+  }
+
   void State::AddFrame(RestFrame* framePtr){
     if(!framePtr) return;
     if(!framePtr->IsVisibleFrame() && !framePtr->IsInvisibleFrame()) return;
     m_Frames.Add(framePtr);
   }
 
-  void State::AddFrame(RFList<RestFrame>* framesPtr){
+  void State::AddFrame(const RFList<RestFrame>* framesPtr){
     if(!framesPtr) return;
     int N = framesPtr->GetN();
     for(int i = 0; i < N; i++) AddFrame(framesPtr->Get(i));
+  }
+
+  void State::AddFrame(const RFList<RestFrame>& frames){
+    int N = frames.GetN();
+    for(int i = 0; i < N; i++) AddFrame(frames.Get(i));
   }
 
   bool State::IsFrame(const RestFrame* framePtr) const {

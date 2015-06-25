@@ -76,11 +76,20 @@ namespace RestFrames {
   }
 
   template <class T>
-  bool RFList<T>::Add(RFList<T>* objsPtr){
+  bool RFList<T>::Add(const RFList<T>* objsPtr){
     int N = objsPtr->GetN();
     double ret = true;
     for(int i = 0; i < N; i++) 
       if(!Add(objsPtr->Get(i))) ret = false;
+    return ret;
+  }
+
+  template <class T>
+  bool RFList<T>::Add(const RFList<T>& objs){
+    int N = objs.GetN();
+    double ret = true;
+    for(int i = 0; i < N; i++) 
+      if(!Add(objs.Get(i))) ret = false;
     return ret;
   }
 

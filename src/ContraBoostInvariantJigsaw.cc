@@ -59,20 +59,20 @@ namespace RestFrames {
     for(int i = 0 ; i < Nchild; i++){
       InvisibleState* statePtr = dynamic_cast<InvisibleState*>(GetChildState(i));
       if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsawsPtr);
-      StateList* statesPtr = m_DependancyStates[i];
-      int N = statesPtr->GetN();
+      StateList states = m_DependancyStates[i];
+      int N = states.GetN();
       for(int j = 0; j < N; j++){
-	State* jstatePtr = statesPtr->Get(j);
+	State* jstatePtr = states.Get(j);
 	if(jstatePtr) jstatePtr->FillGroupJigsawDependancies(jigsawsPtr);
       }
     }
   }
 
   double ContraBoostInvariantJigsaw::GetMinimumMass(){
-    double Minv1 = dynamic_cast<InvisibleState*>(m_OutputStatesPtr->Get(0))->GetMinimumMass();
-    double Minv2 = dynamic_cast<InvisibleState*>(m_OutputStatesPtr->Get(1))->GetMinimumMass();
-    TLorentzVector Pvis1 = m_DependancyStates[0]->GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1]->GetFourVector();
+    double Minv1 = dynamic_cast<InvisibleState*>(m_OutputStates.Get(0))->GetMinimumMass();
+    double Minv2 = dynamic_cast<InvisibleState*>(m_OutputStates.Get(1))->GetMinimumMass();
+    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
+    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double Mvis1 = fabs(Pvis1.M());
     double Mvis2 = fabs(Pvis2.M());
     double Minv = max(0.,max(Minv1,Minv2));
@@ -93,8 +93,8 @@ namespace RestFrames {
     if(!m_Mind || !m_GroupPtr) return m_Spirit;
     
     CalcCoef();
-    TLorentzVector Pvis1 = m_DependancyStates[0]->GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1]->GetFourVector();
+    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
+    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     TLorentzVector INV = m_InputStatePtr->GetFourVector();
 
     // go to the rest frame of (Pvis1+Pvis2+INV system)
@@ -127,18 +127,18 @@ namespace RestFrames {
     INV1.Boost(Boost);
     INV2.Boost(Boost);
 
-    m_OutputStatesPtr->Get(0)->SetFourVector(INV1);
-    m_OutputStatesPtr->Get(1)->SetFourVector(INV2);
+    m_OutputStates.Get(0)->SetFourVector(INV1);
+    m_OutputStates.Get(1)->SetFourVector(INV2);
     
     m_Spirit = true;
     return m_Spirit;
   }
 
   void ContraBoostInvariantJigsaw::CalcCoef(){
-    double Minv1 = dynamic_cast<InvisibleState*>(m_OutputStatesPtr->Get(0))->GetMinimumMass();
-    double Minv2 = dynamic_cast<InvisibleState*>(m_OutputStatesPtr->Get(1))->GetMinimumMass();
-    TLorentzVector Pvis1 = m_DependancyStates[0]->GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1]->GetFourVector();
+    double Minv1 = dynamic_cast<InvisibleState*>(m_OutputStates.Get(0))->GetMinimumMass();
+    double Minv2 = dynamic_cast<InvisibleState*>(m_OutputStates.Get(1))->GetMinimumMass();
+    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
+    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double m1 = fabs(Pvis1.M());
     double m2 = fabs(Pvis2.M());
     double Minv = max(Minv1,Minv2);

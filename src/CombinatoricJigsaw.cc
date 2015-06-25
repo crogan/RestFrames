@@ -108,7 +108,7 @@ namespace RestFrames {
     int Ngroup = group_jigsawsPtr->GetN();
     for(int i = Ngroup-1; i >= 0; i--){
       Jigsaw* jigsawPtr = group_jigsawsPtr->Get(i);
-      m_DependancyJigsawsPtr->Remove(jigsawPtr);
+      m_DependancyJigsaws.Remove(jigsawPtr);
       if(!chain_jigsawPtr->Contains(jigsawPtr)){
 	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
 	  m_Mind = false;
@@ -117,11 +117,11 @@ namespace RestFrames {
       }
     }
     // Satisfy dependancy jigsaws
-    while(m_DependancyJigsawsPtr->GetN() > 0){
-      Jigsaw* jigsawPtr = m_DependancyJigsawsPtr->Get(m_DependancyJigsawsPtr->GetN()-1);
+    while(m_DependancyJigsaws.GetN() > 0){
+      Jigsaw* jigsawPtr = m_DependancyJigsaws.Get(m_DependancyJigsaws.GetN()-1);
       // Remove dependancy if already in chain
       if(chain_jigsawPtr->Contains(jigsawPtr)){
-	m_DependancyJigsawsPtr->Remove(jigsawPtr);
+	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
       
@@ -130,7 +130,7 @@ namespace RestFrames {
 	  m_Mind = false;
 	  return false;
 	}
-	m_DependancyJigsawsPtr->Remove(jigsawPtr);
+	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
       RFList<Jigsaw>* temp_chainPtr = chain_jigsawPtr->Copy();
@@ -142,7 +142,7 @@ namespace RestFrames {
       }
       temp_chainPtr->Remove(this);
       temp_chainPtr->Remove(chain_jigsawPtr);
-      m_DependancyJigsawsPtr->Remove(temp_chainPtr);
+      m_DependancyJigsaws.Remove(temp_chainPtr);
       m_ExecuteJigsaws.Add(temp_chainPtr);
       
       delete temp_chainPtr;
@@ -178,9 +178,9 @@ namespace RestFrames {
     m_Outputs.clear();
     m_NForOutput.clear();
     m_NExclusive.clear();
-    int Noutput = m_OutputStatesPtr->GetN();
+    int Noutput = m_OutputStates.GetN();
     for(int i = 0; i < Noutput; i++){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_OutputStatesPtr->Get(i));
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_OutputStates.Get(i));
       if(!statePtr) return false;
       m_Outputs.push_back(statePtr);
       RFList<RestFrame>* framesPtr = statePtr->GetFrames();

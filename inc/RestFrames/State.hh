@@ -55,7 +55,9 @@ namespace RestFrames {
     //virtual State *Copy() const;
 
     virtual void AddFrame(RestFrame* framePtr);
-    virtual void AddFrame(RFList<RestFrame>* framesPtr);
+    virtual void AddFrame(RestFrame& frame);
+    virtual void AddFrame(const RFList<RestFrame>* framesPtr);
+    virtual void AddFrame(const RFList<RestFrame>& frames);
     void ClearFrames();
     RFList<RestFrame>* GetFrames() const;
     RestFrame* GetFrame() const;

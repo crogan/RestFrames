@@ -31,6 +31,7 @@
 #define Jigsaw_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -38,7 +39,6 @@ namespace RestFrames {
 
   class Group;
   class State;
-  class StateList;
 
   enum JigsawType { JInvisible, JCombinatoric };
 
@@ -97,13 +97,13 @@ namespace RestFrames {
     Group* m_GroupPtr;
     State* m_InputStatePtr;
 
-    vector<RFList<RestFrame>*> m_OutputFrames;
-    vector<RFList<RestFrame>*> m_DependancyFrames;
+    vector<RFList<RestFrame> > m_OutputFrames;
+    vector<RFList<RestFrame> > m_DependancyFrames;
 
-    StateList* m_OutputStatesPtr;
-    vector<StateList*> m_DependancyStates;
+    StateList m_OutputStates;
+    vector<StateList> m_DependancyStates;
 
-    RFList<Jigsaw>* m_DependancyJigsawsPtr;
+    RFList<Jigsaw> m_DependancyJigsaws;
 
     virtual State* NewOutputState();
     void AddOutputFrame(RestFrame* framePtr, int i = 0);

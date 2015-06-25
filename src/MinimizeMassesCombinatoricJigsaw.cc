@@ -208,7 +208,7 @@ namespace RestFrames {
 	ExecuteDependancyJigsaws();
 	// Evaluate metric for this cominatoric
 	for(int i = 0; i < Ndeps;  i++){
-	  hem[i] += m_DependancyStates[i]->GetFourVector();
+	  hem[i] += m_DependancyStates[i].GetFourVector();
 	  // Nhem[i] += m_DependancyStates[i]->GetN();
 	}
 	TVector3 boost = (hem[0]+hem[1]).BoostVector();

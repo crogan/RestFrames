@@ -49,7 +49,8 @@ namespace RestFrames {
   
     bool Add(T obj);
     bool Add(T* objPtr);
-    bool Add(RFList<T>* objsPtr);
+    bool Add(const RFList<T>* objsPtr);
+    bool Add(const RFList<T>& objs);
     int Remove(const T* objPtr);
     void Remove(const RFList<T>* objsPtr);
     void Clear();

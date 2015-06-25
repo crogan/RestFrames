@@ -55,7 +55,7 @@ namespace RestFrames {
     if(!m_Mind || !m_GroupPtr) return m_Spirit;
     
     TLorentzVector inv_P = m_InputStatePtr->GetFourVector();
-    TLorentzVector vis_P = m_DependancyStates[0]->GetFourVector();
+    TLorentzVector vis_P = m_DependancyStates[0].GetFourVector();
 
     // double Minv = inv_P.M();
     // TVector3 Pinv = inv_P.Vect();
@@ -71,7 +71,7 @@ namespace RestFrames {
     boostZ.SetY(0.);
     inv_P.Boost(boostZ);
 
-    m_OutputStatesPtr->Get(0)->SetFourVector(inv_P);
+    m_OutputStates.Get(0)->SetFourVector(inv_P);
     
     m_Spirit = true;
     return m_Spirit;

@@ -126,22 +126,22 @@ namespace RestFrames {
 
   bool InvisibleJigsaw::InitializeDependancyJigsaws(){
     if(!m_Mind) return false;
-    m_DependancyJigsawsPtr->Clear();
+    m_DependancyJigsaws.Clear();
 
     RFList<Jigsaw>* jigsawsPtr = new RFList<Jigsaw>();
     FillStateJigsawDependancies(jigsawsPtr);
     jigsawsPtr->Remove(this);
-    m_DependancyJigsawsPtr->Add(jigsawsPtr);
+    m_DependancyJigsaws.Add(jigsawsPtr);
 
     jigsawsPtr->Clear();
     FillInvisibleMassJigsawDependancies(jigsawsPtr);
     jigsawsPtr->Remove(this);
-    m_DependancyJigsawsPtr->Add(jigsawsPtr);
+    m_DependancyJigsaws.Add(jigsawsPtr);
 
     jigsawsPtr->Clear();
     FillGroupJigsawDependancies(jigsawsPtr);
     jigsawsPtr->Remove(this);
-    m_DependancyJigsawsPtr->Add(jigsawsPtr);
+    m_DependancyJigsaws.Add(jigsawsPtr);
 
     delete jigsawsPtr;
     return m_Mind;
@@ -164,21 +164,21 @@ namespace RestFrames {
 	  return false;
 	}
       }
-      m_DependancyJigsawsPtr->Remove(jigsawPtr);
+      m_DependancyJigsaws.Remove(jigsawPtr);
     }
     // Satisfy dependancy jigsaws
-    while(m_DependancyJigsawsPtr->GetN() > 0){
-      Jigsaw* jigsawPtr = m_DependancyJigsawsPtr->Get(m_DependancyJigsawsPtr->GetN()-1);
+    while(m_DependancyJigsaws.GetN() > 0){
+      Jigsaw* jigsawPtr = m_DependancyJigsaws.Get(m_DependancyJigsaws.GetN()-1);
       if(chain_jigsawPtr->Contains(jigsawPtr)){
-	m_DependancyJigsawsPtr->Remove(jigsawPtr);
+	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
-      if(jigsawPtr->DependsOnJigsaw(this)) m_DependancyJigsawsPtr->Remove(jigsawPtr);
+      if(jigsawPtr->DependsOnJigsaw(this)) m_DependancyJigsaws.Remove(jigsawPtr);
       if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
 	m_Mind = false;
 	return false;
       }
-      m_DependancyJigsawsPtr->Remove(jigsawPtr);
+      m_DependancyJigsaws.Remove(jigsawPtr);
       continue;
     }
     chain_jigsawPtr->Add(this);
@@ -210,7 +210,7 @@ namespace RestFrames {
       return false;
     }
     for(int i = 0; i < Ndep; i++)
-      if(m_DependancyFrames[i]->GetN() == 0){
+      if(m_DependancyFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of visible frames: " << i;
 	m_Log << m_End;
@@ -218,7 +218,7 @@ namespace RestFrames {
 	return false;
       }
     for(int i = 0; i < Nout; i++)
-      if(m_OutputFrames[i]->GetN() == 0){
+      if(m_OutputFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of invisible frames: " << i;
 	m_Log << m_End;
