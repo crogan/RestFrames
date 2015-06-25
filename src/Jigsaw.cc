@@ -112,6 +112,16 @@ namespace RestFrames {
     return m_Type == JCombinatoric;
   }
 
+  string Jigsaw::PrintString(LogType type) const {
+    string output = RFBase::PrintString(type);
+    if(IsInvisibleJigsaw())
+      output += "   Type: Invisible \n";
+    if(IsCombinatoricJigsaw())
+      output += "   Type: Combinatoric \n";
+
+    return output;
+  }
+
   void Jigsaw::SetGroup(Group* groupPtr){
     m_GroupPtr = groupPtr;
   }

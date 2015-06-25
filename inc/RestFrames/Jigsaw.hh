@@ -57,6 +57,9 @@ namespace RestFrames {
 
     JigsawType GetType() const { return m_Type; }
   
+    /// \brief String of information associated with object
+    virtual string PrintString(LogType type = LogVerbose) const;
+
     int GetPriority() const { return m_Priority; }
     void SetPriority(int p){ m_Priority = p; }
 

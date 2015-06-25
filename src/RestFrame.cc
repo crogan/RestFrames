@@ -117,6 +117,23 @@ namespace RestFrames {
     return m_Ana == FGen; 
   }
 
+  string RestFrame::PrintString(LogType type) const {
+    string output = RFBase::PrintString(type);
+    if(IsLabFrame())
+      output += "   Frame Type: Lab \n";
+    if(IsDecayFrame())
+      output += "   Frame Type: Decay \n";
+    if(IsVisibleFrame())
+      output += "   Frame Type: Visible \n";
+    if(IsInvisibleFrame())
+      output += "   Frame Type: Invisible \n";
+    if(IsGFrame())
+      output += "   Ana Type: : Generator \n";
+    if(IsGFrame())
+      output += "   Ana Type: : Generator \n";
+    return output;
+  }
+
   void RestFrame::RemoveChild(const RestFrame* framePtr){
     m_Body = false;
     m_Mind = false;

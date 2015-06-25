@@ -92,6 +92,9 @@ namespace RestFrames {
     
     /// \brief Is this a GFrame (for event generation) (yes/no)
     bool IsGFrame() const;
+
+    /// \brief String of information about RestFrame
+    virtual string PrintString(LogType type = LogVerbose) const;
     
     ///@}
 
