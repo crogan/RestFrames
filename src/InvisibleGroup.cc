@@ -76,7 +76,7 @@ namespace RestFrames {
     if(!jigsawPtr) return false;
     if(jigsawPtr->GetGroup()) return false;
     if(!jigsawPtr->IsInvisibleJigsaw()) return false;
-    if(m_JigsawsToUsePtr->Add(jigsawPtr)) jigsawPtr->SetGroup(this);
+    if(m_JigsawsToUse.Add(jigsawPtr)) jigsawPtr->SetGroup(this);
     return true;
   }
 

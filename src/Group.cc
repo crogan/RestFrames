@@ -30,7 +30,6 @@
 #include "RestFrames/Group.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/State.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -49,29 +48,21 @@ namespace RestFrames {
 
   Group::~Group(){
     Clear();
-    delete m_JigsawsPtr;
-    delete m_JigsawsToUsePtr;
-    delete m_StatesPtr;
-    delete m_StatesToSplitPtr;
   }
 
   void Group::Init(){
     SetKey(GenKey());
     m_GroupStatePtr = nullptr;
-    m_JigsawsPtr = new RFList<Jigsaw>();
-    m_JigsawsToUsePtr = new RFList<Jigsaw>();
-    m_StatesPtr = new StateList();
-    m_StatesToSplitPtr = new StateList();
     m_Log.SetSource("Group "+GetName());
   }
 
   void Group::Clear(){
     if(m_GroupStatePtr) delete m_GroupStatePtr;
     m_Frames.Clear();
-    m_StatesPtr->Clear();
-    m_JigsawsPtr->Clear();
-    m_StatesToSplitPtr->Clear();
-    m_JigsawsToUsePtr->Clear(); 
+    m_States.Clear();
+    m_Jigsaws.Clear();
+    m_StatesToSplit.Clear();
+    m_JigsawsToUse.Clear(); 
   }
 
   int Group::GenKey(){
@@ -102,7 +93,7 @@ namespace RestFrames {
   }
 
   RFList<Jigsaw>* Group::GetJigsaws() const {
-    return m_JigsawsPtr->Copy();
+    return m_Jigsaws.Copy();
   }
 
   State* Group::GetGroupState() const {
@@ -110,14 +101,14 @@ namespace RestFrames {
   }
 
   bool Group::InitializeAnalysis(){
-    m_StatesPtr->Clear();
-    m_StatesToSplitPtr->Clear();
+    m_States.Clear();
+    m_StatesToSplit.Clear();
     if(m_GroupStatePtr) delete m_GroupStatePtr;
 
     m_GroupStatePtr = InitializeGroupState();
     m_GroupStatePtr->AddFrame(&m_Frames);
-    m_StatesPtr->Add(m_GroupStatePtr);
-    m_StatesToSplitPtr->Add(m_GroupStatePtr);
+    m_States.Add(m_GroupStatePtr);
+    m_StatesToSplit.Add(m_GroupStatePtr);
  
     if(!InitializeJigsaws()){
       m_Log << LogWarning;
@@ -140,8 +131,8 @@ namespace RestFrames {
   }
 
   bool Group::InitializeJigsaws(){
-    while(m_StatesToSplitPtr->GetN() > 0){
-      State* statePtr = m_StatesToSplitPtr->Get(0);
+    while(m_StatesToSplit.GetN() > 0){
+      State* statePtr = m_StatesToSplit.Get(0);
       if(!SplitState(statePtr)){
 	if(statePtr->GetNFrames() != 1){
 	  m_Log << LogVerbose;
@@ -150,18 +141,18 @@ namespace RestFrames {
 	  m_Log << m_End;
 	  return false; 
 	}
-	m_StatesToSplitPtr->Remove(statePtr);
+	m_StatesToSplit.Remove(statePtr);
       }
     }
     return true;
   }
 
   bool Group::SplitState(const State* statePtr){
-    int N = m_JigsawsToUsePtr->GetN();
+    int N = m_JigsawsToUse.GetN();
     
     Jigsaw* jigsawForSplitPtr = nullptr;
     for(int i = 0; i < N; i++){
-      Jigsaw* jigsawPtr = m_JigsawsToUsePtr->Get(i);
+      Jigsaw* jigsawPtr = m_JigsawsToUse.Get(i);
       if(jigsawPtr->CanSplit(statePtr)){
 	if(!jigsawForSplitPtr){
 	  jigsawForSplitPtr = jigsawPtr;
@@ -183,7 +174,7 @@ namespace RestFrames {
     m_Log << " Jigsaw:" << Log(jigsawForSplitPtr);
     m_Log << m_End;
     InitializeJigsaw(jigsawForSplitPtr);
-    m_JigsawsToUsePtr->Remove(jigsawForSplitPtr);
+    m_JigsawsToUse.Remove(jigsawForSplitPtr);
     return true;
   }
 
@@ -196,21 +187,21 @@ namespace RestFrames {
       return;
     }
 
-    State* statePtr = m_StatesToSplitPtr->Get(0);
+    State* statePtr = m_StatesToSplit.Get(0);
     StateList* statesPtr = jigsawPtr->InitializeOutputStates(statePtr);
-    m_StatesToSplitPtr->Remove(statePtr);
-    m_StatesToSplitPtr->Add(statesPtr);
-    m_StatesPtr->Add(statesPtr);
-    m_JigsawsPtr->Add(jigsawPtr);
+    m_StatesToSplit.Remove(statePtr);
+    m_StatesToSplit.Add(statesPtr);
+    m_States.Add(statesPtr);
+    m_Jigsaws.Add(jigsawPtr);
     if(statesPtr) delete statesPtr;
     return;
   }
 
   State* Group::GetState(const RestFrame* framePtr) const{
     if(!framePtr) return nullptr;
-    int Ns = m_StatesPtr->GetN();
+    int Ns = m_States.GetN();
     for(int i = Ns-1; i >= 0; i--){
-      State* statePtr = m_StatesPtr->Get(i);
+      State* statePtr = m_States.Get(i);
       if(statePtr->IsFrame(framePtr)){
 	return statePtr;
       }
@@ -227,9 +218,9 @@ namespace RestFrames {
     if(!framesPtr) return false;
 
     statesPtr = new StateList();
-    int Ns = m_StatesPtr->GetN();
+    int Ns = m_States.GetN();
     for(int i = 0; i < Ns; i++){
-      State* istatePtr = m_StatesPtr->Get(i);
+      State* istatePtr = m_States.Get(i);
       RFList<RestFrame>* iframesPtr = istatePtr->GetFrames();
       if(framesPtr->Contains(iframesPtr)){
 	int Nsol = statesPtr->GetN();

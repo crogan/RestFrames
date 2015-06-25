@@ -111,7 +111,7 @@ namespace RestFrames {
     if(!jigsawPtr) return false;
     if(jigsawPtr->GetGroup()) return false;
     if(!jigsawPtr->IsCombinatoricJigsaw()) return false;
-    if(m_JigsawsToUsePtr->Add(jigsawPtr)) jigsawPtr->SetGroup(this);
+    if(m_JigsawsToUse.Add(jigsawPtr)) jigsawPtr->SetGroup(this);
     return true;
   }
 
@@ -179,9 +179,9 @@ namespace RestFrames {
   const RestFrame* CombinatoricGroup::GetFrame(const GroupElementID elementID){
     //State* elementPtr = (State*)elementID;
     const State* elementPtr = elementID;
-    int N = m_StatesPtr->GetN();
+    int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_StatesPtr->Get(i));
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
       if(!statePtr) continue;
       if(statePtr->ContainsElement(elementPtr)){
 	RestFrame* framePtr = statePtr->GetFrame();
@@ -194,9 +194,9 @@ namespace RestFrames {
   TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const GroupElementID elementID){
     const State* elementPtr = elementID;
     TLorentzVector P(0.,0.,0.,0.);
-    int N = m_StatesPtr->GetN();
+    int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_StatesPtr->Get(i));
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
       if(!statePtr) continue;
       if(statePtr->ContainsElement(elementPtr)){
 	P = elementPtr->GetFourVector();

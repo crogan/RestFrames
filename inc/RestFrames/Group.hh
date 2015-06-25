@@ -31,6 +31,7 @@
 #define Group_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -38,7 +39,6 @@ namespace RestFrames {
  
   class Jigsaw;
   class State;
-  class StateList;
 
   enum GroupType { GInvisible, GCombinatoric };
 
@@ -77,24 +77,17 @@ namespace RestFrames {
 
   protected:
     static int m_class_key;
-    mutable bool m_Body;
-    mutable bool m_Mind;
-    mutable bool m_Spirit;
 
-    string m_Name;
-    string m_Title;
     GroupType m_Type;
-    int m_Key;
 
     State* m_GroupStatePtr;
     RFList<RestFrame> m_Frames;
   
-    StateList* m_StatesPtr;
-    StateList* m_StatesToSplitPtr;
+    StateList m_States;
+    StateList m_StatesToSplit;
 
-    //RFList<Jigsaw>* m_JigsawsPtr;
-    RFList<Jigsaw>* m_JigsawsPtr;
-    RFList<Jigsaw>* m_JigsawsToUsePtr;
+    RFList<Jigsaw> m_Jigsaws;
+    RFList<Jigsaw> m_JigsawsToUse;
 
     virtual State* InitializeGroupState();
     bool InitializeJigsaws();
