@@ -49,10 +49,18 @@ namespace RestFrames {
   }
 
   bool LabFrame::IsSoundBody() const {
-    RestFrame::IsSoundBody();
+    if(!RestFrame::IsSoundBody()){
+      SetBody(false);
+      return false;
+    }
     int Nchild = GetNChildren();
-    if(Nchild != 1 || m_ParentLinkPtr) m_Body = false;
-    return m_Body;
+    if(Nchild != 1 || GetParentFrame()){
+      m_Log << LogWarning << "Problem with parent or child frames" << m_End;
+      SetBody(false);
+      return false;
+    }
+    SetBody(true);
+    return true;
   }
 
   void LabFrame::SetChildFrame(RestFrame& frame){
@@ -95,7 +103,7 @@ namespace RestFrames {
   }
 
   double LabFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
-    if(m_ChildLinks.size() < 1) return 0.;
+    if(GetNChildren() < 1) return 0.;
     TVector3 V1(0.,0.,1.);
     TVector3 V2;
     if(framePtr){
@@ -108,7 +116,7 @@ namespace RestFrames {
 
   TVector3 LabFrame::GetDecayPlaneNormalVector() const {
     TVector3 V(0.,0.,0.);
-    if(m_ChildLinks.size() < 1) return V;
+    if(GetNChildren() < 1) return V;
    
     TVector3 V1 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
     TVector3 V2(0.,0.,1.);

@@ -32,7 +32,6 @@
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/StateList.hh"
 #include "RestFrames/CombinatoricState.hh"
-#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -123,7 +122,7 @@ namespace RestFrames {
     //m_ChildStates_UnAssembled.clear();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      RestFrame* framePtr = m_ChildLinks[i]->GetChildFrame();
+      RestFrame* framePtr = GetChildFrame(i);
       if(!m_IsBackedUp){
 	m_ChildFrames_UnAssembled.Add(framePtr);
 	m_ChildStates_UnAssembled.push_back(m_ChildStates[i]->Copy());

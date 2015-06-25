@@ -30,7 +30,6 @@
 #include "RestFrames/RFrame.hh"
 #include "RestFrames/Group.hh"
 #include "RestFrames/StateList.hh"
-#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -199,7 +198,7 @@ namespace RestFrames {
     for(int i = 0; i < Nchild; i++){
       TLorentzVector P = m_ChildStates[i]->GetFourVector();
       TVector3 B_child = P.BoostVector();
-      m_ChildLinks[i]->SetBoostVector(B_child);
+      SetChildBoostVector(i, B_child);
       Ptot += P;
 
       RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
@@ -210,7 +209,7 @@ namespace RestFrames {
       }
       if(!childPtr->AnalyzeEventRecursive()){
 	m_Log << LogWarning;
-	m_Log << "Event analysis failed for child frame: ";
+	m_Log << "Recursive event analysis failed for child frame: ";
 	m_Log << Log(childPtr) << m_End;
 	SetSpirit(false);
 	return false;

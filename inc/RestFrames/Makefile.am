@@ -1,7 +1,7 @@
 RestFramesincludedir=$(includedir)/RestFrames
 
 RestFramesinclude_HEADERS = RestFrames_LinkDef.h RFBase.hh RFList.hh RFLog.hh RestFrame.hh\
-	FrameLink.hh FramePlot.hh RFrame.hh GFrame.hh LabFrame.hh DecayFrame.hh\
+	FramePlot.hh RFrame.hh GFrame.hh LabFrame.hh DecayFrame.hh\
 	VisibleFrame.hh InvisibleFrame.hh RLabFrame.hh RDecayFrame.hh RVisibleFrame.hh\
 	RInvisibleFrame.hh GLabFrame.hh GDecayFrame.hh GVisibleFrame.hh GInvisibleFrame.hh\
 	State.hh StateList.hh InvisibleState.hh CombinatoricState.hh Group.hh\

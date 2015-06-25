@@ -35,8 +35,6 @@
 using namespace std;
 
 namespace RestFrames {
-
-  class FrameLink;
   
   /// Type of RestFrame, with respect to its decays
   enum FrameType { FVisible, FInvisible, FDecay, FLab};
@@ -124,13 +122,13 @@ namespace RestFrames {
     /// if it is already listed as a child.
     void AddChildFrame(RestFrame* framePtr);
 
-    /// \brief Set the parent link for this frame
+    /// \brief Set the parent frame for this frame
     ///
-    /// \param linkPtr     pointer to FrameLink of parent frame
+    /// \param framePtr     pointer to parent frame
     ///
     /// Method for connecting a child frame to its parent frame, 
-    /// via a pointer to a FrameLink *linkPtr*.
-    void SetParentLink(FrameLink* linkPtr);
+    /// via a pointer to parent frame.
+    void SetParentFrame(const RestFrame* framePtr);
 
     /// \brief Remove a child of this frame by pointer
     ///
@@ -281,23 +279,30 @@ namespace RestFrames {
     FrameType m_Type;
     AnaType m_Ana;
 
-    FrameLink* m_ParentLinkPtr;
-    vector<FrameLink*> m_ChildLinks;
-
-    FrameLink* GetChildLink(int i) const;
-    FrameLink* GetParentLink() const;
-    void SetChildBoostVector(int i, const TVector3& boost) const;
-    TVector3 GetChildBoostVector(int i) const;
-    TVector3 GetParentBoostVector() const;
-
     // 4-vector of this state in the frame it's initialized
     TLorentzVector m_P;
+    
     // the reference frame where this four-vector is defined
     const RestFrame* m_ProdFramePtr;
 
+    // list of child frames
+    RFList<RestFrame> m_ChildFrames;
+    vector<TVector3> m_ChildBoosts;
+
+    // parent frame
+    const RestFrame* m_ParentFramePtr;
+    TVector3 m_ParentBoost;
+
+    void SetChildBoostVector(int i, const TVector3& boost);
+    void SetParentBoostVector(const TVector3& boost);
+    TVector3 GetChildBoostVector(int i) const;
+    TVector3 GetParentBoostVector() const;
+
     virtual void SetFourVector(const TLorentzVector& V, const RestFrame* framePtr);
-    bool FindPathToFrame(const RestFrame* framePtr, vector<FrameLink*>* linksPtr, 
-			 vector<int>* linkSignsPtr, const RestFrame* prevPtr) const;
+    bool FindPathToFrame(const RestFrame* framePtr, const RestFrame *prevPtr, 
+			 vector<TVector3>& boosts) const;
+    // bool FindPathToFrame(const RestFrame* framePtr, vector<FrameLink*>* linksPtr, 
+    // 			 vector<int>* linkSignsPtr, const RestFrame* prevPtr) const;
 
     // Tree construction checks
     bool IsCircularTree(vector<int>* KEYS) const;

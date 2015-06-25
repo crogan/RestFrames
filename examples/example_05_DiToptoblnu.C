@@ -82,6 +82,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
 
   //
   // Set up toy generation tree (not needed for reconstruction)
+  g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
   GLabFrame LAB_G("LAB_G","LAB");
   GDecayFrame TT_G("TT_G","t #bar{t}");
   GDecayFrame Ta_G("Ta_G","t_{a}");
@@ -114,6 +115,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   } else
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // Set up reco analysis tree
+   g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
   RLabFrame LAB_R("LAB_R","LAB");
   RDecayFrame TT_R("TT_R","t #bar{t}");
   RDecayFrame Ta_R("Ta_R","t_{a}");

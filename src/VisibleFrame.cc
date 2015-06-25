@@ -50,11 +50,18 @@ namespace RestFrames {
   }
 
   bool VisibleFrame::IsSoundBody() const {
-    RestFrame::IsSoundBody();
-   
+    if(!RestFrame::IsSoundBody()){
+      SetBody(false);
+      return false;
+    }
     int Nchild = GetNChildren();
-    if(Nchild > 0 || !m_ParentLinkPtr) m_Body = false;
-    return m_Body;
+    if(Nchild > 0 || !GetParentFrame()){
+      m_Log << LogWarning << "Problem with parent or child frames" << m_End;
+      SetBody(false);
+      return false;
+    }
+    SetBody(true);
+    return true;
   }
 
   void VisibleFrame::SetLabFrameFourVector(const TLorentzVector& V){

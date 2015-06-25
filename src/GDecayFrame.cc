@@ -28,7 +28,6 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/GDecayFrame.hh"
-#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -60,7 +59,7 @@ namespace RestFrames {
   bool GDecayFrame::IsSoundBody() const{
     RestFrame::IsSoundBody();
     int Nchild = GetNChildren();
-    if(Nchild < 2 || !m_ParentLinkPtr) m_Body = false;
+    if(Nchild < 2 || !GetParentFrame()) m_Body = false;
     return m_Body;
   }
 
@@ -153,7 +152,7 @@ namespace RestFrames {
 
     vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(Mass, ChildMasses, 
-			     m_ParentLinkPtr->GetBoostVector(),
+			     GetParentBoostVector(),
 			     GetParentFrame()->GetDecayPlaneNormalVector(),
 			     ChildVectors);
     

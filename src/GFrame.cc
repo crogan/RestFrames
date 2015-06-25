@@ -31,7 +31,6 @@
 #include <TRandom3.h>
 #include <TDatime.h>
 #include "RestFrames/GFrame.hh"
-#include "RestFrames/FrameLink.hh"
 
 using namespace std;
 
@@ -96,8 +95,9 @@ namespace RestFrames {
       TLorentzVector P = P_children[i];
       TVector3 B_child = P.BoostVector();
 
-      m_ChildLinks[i]->SetBoostVector(B_child);
+      SetChildBoostVector(i, B_child);
       dynamic_cast<GFrame*>(GetChildFrame(i))->SetFourVector(P,this);
+      //GetChildFrame(i)->SetFourVector(P,this);
     }
   }
 
