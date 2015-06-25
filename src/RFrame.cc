@@ -45,7 +45,7 @@ namespace RestFrames {
   }
 
   RFrame::~RFrame(){
-   ClearStates();
+   RemoveChildStates();
   }
 
   void RFrame::Init(){
@@ -53,15 +53,7 @@ namespace RestFrames {
     m_GroupPtr = nullptr;
   }
 
-  void RFrame::ClearRFrame(){
-    ClearStates();
-  }
-
-  void RFrame::ClearStates(){
-    int N = m_ChildStates.size();
-    for(int i = 0; i < N; i++){
-      delete m_ChildStates[i];
-    }
+  void RFrame::RemoveChildStates(){
     m_ChildStates.clear();
   }
   
@@ -94,7 +86,7 @@ namespace RestFrames {
       RestFrame *childPtr = GetChildFrame(i);
       if(!childPtr) return false;
 
-      m_ChildStates.push_back(new StateList());
+      m_ChildStates.push_back(StateList());
     
       RFList<RestFrame> *framesPtr = childPtr->GetListFramesType(FVisible);
       int Nframe = framesPtr->GetN();
@@ -105,7 +97,7 @@ namespace RestFrames {
 	  continue;
 	}
 	int index = statesPtr->GetIndexFrame(framesPtr->Get(f));
-	if(index >= 0)  m_ChildStates[i]->Add(statesPtr->Get(index));
+	if(index >= 0)  m_ChildStates[i].Add(statesPtr->Get(index));
       }
       delete framesPtr;
     }
@@ -135,7 +127,7 @@ namespace RestFrames {
 	  if(groupPtr->ContainsFrame(framePtr)){
 	    State* statePtr = groupPtr->GetState(framePtr);
 	    if(!statePtr) return false;
-	    m_ChildStates[c]->Add(statePtr);
+	    m_ChildStates[c].Add(statePtr);
 	    break;
 	  }
 	}
@@ -146,7 +138,7 @@ namespace RestFrames {
   }
 
   bool RFrame::InitializeStates(const StateList* statesPtr, const RFList<Group>* groupsPtr){
-    ClearStates();
+    RemoveChildStates();
     m_Mind = false;
     if(!m_Body){
       cout << endl << "Initialize Analysis Failure --: ";
@@ -188,7 +180,7 @@ namespace RestFrames {
     if(!IsSoundMind()){
       m_Log << LogWarning;
       m_Log << "Unable to analyze event. ";
-      m_Log << "Requires successfull call to \"InitializeAnalysis()\"";
+      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
       m_Log << "from LabFrame" << m_End;
       SetSpirit(false);
       return false;
@@ -196,7 +188,7 @@ namespace RestFrames {
     TLorentzVector Ptot(0,0,0,0);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      TLorentzVector P = m_ChildStates[i]->GetFourVector();
+      TLorentzVector P = m_ChildStates[i].GetFourVector();
       TVector3 B_child = P.BoostVector();
       SetChildBoostVector(i, B_child);
       Ptot += P;
@@ -205,7 +197,7 @@ namespace RestFrames {
       childPtr->SetFourVector(P,this);
       if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
 	B_child *= -1.;
-	m_ChildStates[i]->Boost(B_child);
+	m_ChildStates[i].Boost(B_child);
       }
       if(!childPtr->AnalyzeEventRecursive()){
 	m_Log << LogWarning;
@@ -216,7 +208,7 @@ namespace RestFrames {
       } 
       if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
 	B_child *= -1.;
-	m_ChildStates[i]->Boost(B_child);
+	m_ChildStates[i].Boost(B_child);
       }
     }
     if(m_Type == FLab) SetFourVector(Ptot,this);

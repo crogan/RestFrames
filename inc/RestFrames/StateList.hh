@@ -49,6 +49,9 @@ namespace RestFrames {
     StateList(const vector<State*>* listPtr);
     ~StateList();
 
+    // bool Add(const StateList* objsPtr);
+    // bool Add(const StateList& objs);
+
     StateList* Copy() const;
 
     int GetIndexFrame(const RestFrame* framePtr) const;

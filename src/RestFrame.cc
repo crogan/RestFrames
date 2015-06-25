@@ -125,9 +125,9 @@ namespace RestFrames {
     if(IsInvisibleFrame())
       output += "   Frame Type: Invisible \n";
     if(IsGFrame())
-      output += "   Ana Type: : Generator \n";
+      output += "   Ana Type: Generator \n";
     if(IsRFrame())
-      output += "   Ana Type: : Reconstruction \n";
+      output += "   Ana Type: Reconstruction \n";
     return output;
   }
 
@@ -173,8 +173,6 @@ namespace RestFrames {
       m_Log << LogWarning << "Frame is already among children: " << Log(framePtr) << m_End;
       return;
     }
-
-    m_Log << LogVerbose << "Adding child frame " << framePtr->GetName() << m_End;
     
     if(!m_ChildFrames.Add(framePtr)){
       m_Log << LogWarning << "Unable to add child frame:";
@@ -230,7 +228,7 @@ namespace RestFrames {
       m_Log << m_End;
       return;
     }
-    m_ChildBoosts[i].SetXYZ(boost.X(),boost.Y(),boost.Z());
+    m_ChildBoosts[i] = boost;
     GetChildFrame(i)->SetParentBoostVector(-1.*boost);
   }
 
@@ -268,7 +266,8 @@ namespace RestFrames {
     framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildFrame(i)->FillListFramesRecursive(framesPtr);
+      if(GetChildFrame(i))
+	GetChildFrame(i)->FillListFramesRecursive(framesPtr);
     
     return framesPtr;
   }
@@ -279,7 +278,8 @@ namespace RestFrames {
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
+      if(GetChildFrame(i))
+	GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
    
     return framesPtr;
   }
@@ -306,33 +306,34 @@ namespace RestFrames {
     framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildFrame(i)->FillListFramesRecursive(framesPtr);
+      if(GetChildFrame(i))
+	GetChildFrame(i)->FillListFramesRecursive(framesPtr);
   }
   
   void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>* framesPtr){
     if(m_Type == type) framesPtr->Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
+      if(GetChildFrame(i))
+	GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
   }
 
-  bool RestFrame::IsCircularTree(vector<int>* KEYS) const {
-    int Nkey = KEYS->size();
-  
+  bool RestFrame::IsCircularTree(vector<int>& keys) const {
+    int Nkey = keys.size();
+
     for(int i = 0; i < Nkey; i++){
-      if((*KEYS)[i] == m_Key){
+      if(keys[i] == GetKey()){
 	m_Log << LogWarning << "This RestFrame appears more than once in the tree" << m_End;
 	return true;
       }
     }
-    KEYS->push_back(m_Key);
+    keys.push_back(GetKey());
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i)->IsCircularTree(KEYS)){
-	m_Log << LogWarning << "Tree is circular" << m_End;
-	return true;
-      }
-     
+      if(GetChildFrame(i))
+	if(GetChildFrame(i)->IsCircularTree(keys))
+	  return true;
+       
     return false;
   }
 

@@ -274,7 +274,6 @@ namespace RestFrames {
     static int m_class_key;     
 
     virtual bool IsSoundBody() const;
-    bool IsSoundBodyRecursive() const;
 
     FrameType m_Type;
     AnaType m_Ana;
@@ -282,14 +281,14 @@ namespace RestFrames {
     // 4-vector of this state in the frame it's initialized
     TLorentzVector m_P;
     
-    // the reference frame where this four-vector is defined
+    // the reference frame where this four-vector is initialized
     const RestFrame* m_ProdFramePtr;
 
-    // list of child frames
+    // list of child frames and boosts
     RFList<RestFrame> m_ChildFrames;
     vector<TVector3> m_ChildBoosts;
 
-    // parent frame
+    // parent frame and boost
     const RestFrame* m_ParentFramePtr;
     TVector3 m_ParentBoost;
 
@@ -301,12 +300,11 @@ namespace RestFrames {
     virtual void SetFourVector(const TLorentzVector& V, const RestFrame* framePtr);
     bool FindPathToFrame(const RestFrame* framePtr, const RestFrame *prevPtr, 
 			 vector<TVector3>& boosts) const;
-    // bool FindPathToFrame(const RestFrame* framePtr, vector<FrameLink*>* linksPtr, 
-    // 			 vector<int>* linkSignsPtr, const RestFrame* prevPtr) const;
 
     // Tree construction checks
-    bool IsCircularTree(vector<int>* KEYS) const;
+    bool IsCircularTree(vector<int>& keys) const;
     bool IsConsistentAnaTree(AnaType ana) const;
+    bool IsSoundBodyRecursive() const;
 
     // Recursively get lists of frames
     void FillListFramesRecursive(RFList<RestFrame>* framesPtr);

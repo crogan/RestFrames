@@ -73,25 +73,22 @@ namespace RestFrames {
   }
 
   bool LabFrame::InitializeTree() const {
-    vector<int>* KEYS = new vector<int>;
-    if(IsCircularTree(KEYS)){
+     vector<int> keys;
+    if(IsCircularTree(keys)){
       cout << endl << "Consistent Topology Failure: ";
       cout << "Tree is circular in construction" << endl;
-      KEYS->clear();
-      return false;
-    }
-    KEYS->clear();
- 
-    if(!IsConsistentAnaTree(m_Ana)){
-      cout << endl << "Consistent Topology Failure: ";
-      cout << "Tree contains mixture of node types (Reco, Gen)" << endl;
-      KEYS->clear();
       return false;
     }
 
     if(!IsSoundBodyRecursive()){
       cout << endl << "Consistent Topology Failure: ";
       cout << "UnSound frame in tree" << endl;
+      return false;
+    }
+ 
+    if(!IsConsistentAnaTree(m_Ana)){
+      cout << endl << "Consistent Topology Failure: ";
+      cout << "Tree contains mixture of node types (Reco, Gen)" << endl;
       return false;
     }
     

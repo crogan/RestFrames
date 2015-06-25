@@ -56,15 +56,15 @@ namespace RestFrames {
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
     RFList<RestFrame> m_ChildFrames_UnAssembled;
-    vector<StateList*> m_ChildStates_UnAssembled;
+    vector<StateList> m_ChildStates_UnAssembled;
 
-    RFList<RestFrame> m_VisibleFrames;
-    RFList<RestFrame> m_DecayFrames;
+    RFList<RFrame> m_VisibleFrames;
+    RFList<RFrame> m_DecayFrames;
     int m_Nvisible;
     int m_Ndecay;
 
-    RestFrame* GetNewDecayFrame(const string& sname, const string& stitle);
-    RestFrame* GetNewVisibleFrame(const string& sname, const string& stitle);
+    RFrame* GetNewDecayFrame(const string& sname, const string& stitle);
+    RFrame* GetNewVisibleFrame(const string& sname, const string& stitle);
     void ClearNewDecayFrames();
 
     bool m_IsAssembled;

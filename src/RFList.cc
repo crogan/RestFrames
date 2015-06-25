@@ -28,7 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/RFList.hh"
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/RFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
 #include "RestFrames/State.hh"
@@ -212,6 +212,7 @@ namespace RestFrames {
 
   template class RFList<RFBase>;
   template class RFList<RestFrame>; 
+  template class RFList<RFrame>; 
   template class RFList<Jigsaw>;
   template class RFList<Group>;
   template class RFList<State>;

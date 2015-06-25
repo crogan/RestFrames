@@ -47,7 +47,7 @@ namespace RestFrames {
     RFrame(const string& sname, const string& stitle);
     virtual ~RFrame();
 
-    virtual void ClearRFrame();
+    void RemoveChildStates();
 
     virtual void SetGroup(Group* groupPtr);
     Group* GetGroup() const { return m_GroupPtr; }
@@ -59,7 +59,7 @@ namespace RestFrames {
     virtual bool AnalyzeEventRecursive();
 
   protected:
-    vector<StateList*> m_ChildStates;
+    vector<StateList> m_ChildStates;
     Group* m_GroupPtr;
 
     virtual bool InitializeStatesRecursive(const StateList* statesPtr, const RFList<Group>* groupsPtr);
@@ -70,7 +70,7 @@ namespace RestFrames {
 
   private:
     void Init();
-    void ClearStates();
+
   };
 
 }

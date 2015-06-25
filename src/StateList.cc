@@ -63,6 +63,22 @@ namespace RestFrames {
 
   StateList::~StateList(){}
 
+  // bool StateList::Add(const StateList* objsPtr){
+  //   int N = objsPtr->GetN();
+  //   double ret = true;
+  //   for(int i = 0; i < N; i++) 
+  //     if(!Add(objsPtr->Get(i))) ret = false;
+  //   return ret;
+  // }
+
+  // bool StateList::Add(const StateList& objs){
+  //   int N = objs.GetN();
+  //   double ret = true;
+  //   for(int i = 0; i < N; i++) 
+  //     if(!Add(objs.Get(i))) ret = false;
+  //   return ret;
+  // }
+
   int StateList::GetIndexFrame(const RestFrame* framePtr) const {
     int N = GetN();
     for(int i = 0; i < N; i++){

@@ -68,6 +68,9 @@ using namespace RestFrames;
 void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   setstyle();
 
+  SetLogPrint(LogVerbose,true);
+  SetLogPrint(LogDebug,true);
+
   double mG = 1000.;
   double mX = 100.;
   int Ngen = 10000;
@@ -355,10 +358,16 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     double jet1PT[2];
     //*** 2nd leading jet pT _associated with this hemisphere_
     double jet2PT[2];
+    //*** Pinv / HG
+    double Pinv[2];
       
     for(int i = 0; i < 2; i++){
       NV[i] =  VIS_R.GetNElementsInFrame(VS[i]);
       NV[i] += VIS_R.GetNElementsInFrame(VC[i]);
+
+      TVector3 vP1 = VS[i]->GetFourVector(G[i]).Vect();
+      TVector3 vP2 = VC[i]->GetFourVector(G[i]).Vect();
+      Pinv[i] = 2.*(vP1+vP2).Mag()/(vP1.Mag()+vP2.Mag()+(vP1+vP2).Mag());
 
       cosG[i] = G[i]->GetCosDecayAngle();
 

@@ -57,7 +57,6 @@ namespace RestFrames {
   }
 
   void RLabFrame::ClearStates(){
-    m_Log << LogVerbose << "Clearing States associated with this frame" << m_End;
     int Ns = m_LabStates.GetN();
     for(int i = 0; i < Ns; i++){
       delete m_LabStates.Get(i);
