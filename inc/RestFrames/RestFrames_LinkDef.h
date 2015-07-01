@@ -5,6 +5,14 @@
 using namespace RestFrames;
 
 #pragma link C++ class RFBase;
+
+#pragma link C++ class RFList<RFBase>;
+#pragma link C++ class RFList<RestFrame>; 
+#pragma link C++ class RFList<RFrame>; 
+#pragma link C++ class RFList<Jigsaw>;
+#pragma link C++ class RFList<Group>;
+#pragma link C++ class RFList<State>;
+
 #pragma link C++ class RFLog;
 
 #pragma link C++ class RestFrame;
@@ -55,13 +63,6 @@ using namespace RestFrames;
 #pragma link C++ class FramePlotNode;
 #pragma link C++ class FramePlotLink;
 
-#pragma link C++ class RFList<RFBase>;
-#pragma link C++ class RFList<RestFrame>; 
-#pragma link C++ class RFList<RFrame>; 
-#pragma link C++ class RFList<Jigsaw>;
-#pragma link C++ class RFList<Group>;
-#pragma link C++ class RFList<State>;
-
 #elif __MAKECINT__
 
 #pragma link off all typedefs;
@@ -103,9 +104,7 @@ using namespace RestFrames;
 #pragma link C++ class RSelfAssemblingFrame+;
 
 #pragma link C++ enum LogType+;
-
 #pragma link C++ enum FrameType+;
-//#pragma link C++ class std::vector<FrameType>+;
 
 #pragma link C++ class Group+;
 #pragma link C++ class InvisibleGroup+;
