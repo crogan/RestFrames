@@ -61,7 +61,7 @@ namespace RestFrames {
   }
 
   template <class T>
-  bool RFList<T>::Add(T obj){
+  bool RFList<T>::Add(T& obj){
     return Add(&obj);
   }
 

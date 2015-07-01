@@ -45,7 +45,7 @@ namespace RestFrames {
     RFList();
     virtual ~RFList();
   
-    bool Add(T obj);
+    bool Add(T& obj);
     bool Add(T* objPtr);
     bool Add(const RFList<T>* objsPtr);
     bool Add(const RFList<T>& objs);
