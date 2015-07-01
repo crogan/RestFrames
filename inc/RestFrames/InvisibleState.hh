@@ -36,8 +36,6 @@ using namespace std;
 
 namespace RestFrames {
 
-  class State;
-
   ///////////////////////////////////////////////
   // InvisibleState class
   ///////////////////////////////////////////////
@@ -47,7 +45,7 @@ namespace RestFrames {
     virtual ~InvisibleState();
 
     virtual double GetMinimumMass();
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr);
+    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr);
 
   protected:
     void Init();

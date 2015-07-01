@@ -5,6 +5,7 @@
 #include <map>
 #include <TCanvas.h>
 #include "RestFrames/RestFrame.hh"
+#include "RestFrames/State.hh"
 
 using namespace std;
 
@@ -14,7 +15,6 @@ namespace RestFrames {
   class RDecayFrame;
   class Jigsaw;
   class Group;
-  class State;
   class FramePlotNode;
   class FramePlotLink;
 
@@ -45,13 +45,13 @@ namespace RestFrames {
 
     // tree drawing functions
     void AddFrameTree(const RestFrame* framePtr);
-    void AddFrameTree(const RFrame* framePtr, const RFList<Jigsaw>* jigsawsPtr);
+    void AddFrameTree(const RFrame* framePtr, const RestFrames::RFList<Jigsaw>* jigsawsPtr);
     void AddFrameTree(const RFrame* framePtr, Jigsaw* jigsawPtr);
     void AddGroupTree(const Group* groupPtr);
     void AddJigsaw(Jigsaw* jigsawPtr);
 
     void AddFrameTree(const RestFrame& frame);
-    void AddFrameTree(const RFrame& frame, const RFList<Jigsaw>& jigsaws);
+    void AddFrameTree(const RFrame& frame, const RestFrames::RFList<Jigsaw>& jigsaws);
     void AddFrameTree(const RFrame& frame, Jigsaw& jigsaw);
     void AddGroupTree(const Group& group);
     void AddJigsaw(Jigsaw& jigsaw);
@@ -82,8 +82,8 @@ namespace RestFrames {
     map<FrameType,int> m_FrameColorMap;
     map<FrameType,int> m_FrameColorFillMap;
 
-    RFList<RestFrame> m_Frames;
-    RFList<Jigsaw> m_Jigsaws;
+    RestFrames::RFList<RestFrame> m_Frames;
+    RestFrames::RFList<Jigsaw> m_Jigsaws;
     const Group* m_GroupPtr;
    
     void ClearTree();
@@ -155,7 +155,7 @@ namespace RestFrames {
     bool m_DoLabel;
     bool m_DoSquare;
     const RestFrame* m_FramePtr;
-    RFList<Jigsaw>* m_JigsawsPtr;
+    RestFrames::RFList<Jigsaw>* m_JigsawsPtr;
     State* m_StatePtr;
     void Init();
   };

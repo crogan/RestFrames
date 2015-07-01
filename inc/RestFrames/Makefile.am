@@ -7,5 +7,5 @@ RestFramesinclude_HEADERS = RestFrames_LinkDef.h RestFrames.hh RFBase.hh RFList.
 	State.hh StateList.hh InvisibleState.hh CombinatoricState.hh Group.hh\
 	InvisibleGroup.hh CombinatoricGroup.hh Jigsaw.hh InvisibleJigsaw.hh\
 	CombinatoricJigsaw.hh InvisibleMassJigsaw.hh InvisibleRapidityJigsaw.hh\
-	NVisibleMInvisibleJigsaw.hh MinimizeMassesCombinatoricJigsaw.hh\
+	MinimizeMassesCombinatoricJigsaw.hh\
 	ContraBoostInvariantJigsaw.hh RSelfAssemblingFrame.hh 

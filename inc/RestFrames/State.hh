@@ -52,19 +52,17 @@ namespace RestFrames {
 
     void Clear();
 
-    //virtual State *Copy() const;
-
     virtual void AddFrame(RestFrame* framePtr);
     virtual void AddFrame(RestFrame& frame);
-    virtual void AddFrame(const RFList<RestFrame>* framesPtr);
-    virtual void AddFrame(const RFList<RestFrame>& frames);
+    virtual void AddFrame(const RestFrames::RFList<RestFrame>* framesPtr);
+    virtual void AddFrame(const RestFrames::RFList<RestFrame>& frames);
     void ClearFrames();
     RFList<RestFrame>* GetFrames() const;
     RestFrame* GetFrame() const;
     int GetNFrames() const { return m_Frames.GetN(); }
 
     bool IsFrame(const RestFrame* framePtr) const;
-    bool IsFrames(const RFList<RestFrame>* framesPtr) const;
+    bool IsFrames(const RestFrames::RFList<RestFrame>* framesPtr) const;
 
     void SetParentJigsaw(Jigsaw* jigsawPtr){ m_ParentJigsawPtr = jigsawPtr; }
     void SetChildJigsaw(Jigsaw* jigsawPtr){ m_ChildJigsawPtr = jigsawPtr; }
@@ -75,8 +73,8 @@ namespace RestFrames {
     void SetFourVector(const TLorentzVector& V);
     virtual TLorentzVector GetFourVector() const; 
 
-    virtual void FillGroupJigsawDependancies(RFList<Jigsaw>* jigsawsPtr) const;
-    virtual void FillStateJigsawDependancies(RFList<Jigsaw>* jigsawsPtr) const;
+    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr) const;
+    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr) const;
 	
   protected:
     static int m_class_key;
@@ -84,7 +82,7 @@ namespace RestFrames {
     StateType m_Type;
 
     TLorentzVector m_P;
-    RFList<RestFrame> m_Frames;
+    RestFrames::RFList<RestFrame> m_Frames;
 
     Jigsaw *m_ParentJigsawPtr;
     Jigsaw *m_ChildJigsawPtr;

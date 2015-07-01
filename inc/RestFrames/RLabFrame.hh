@@ -53,8 +53,8 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
   protected:
-    RFList<Group>  m_LabGroups;
-    RFList<Jigsaw> m_LabJigsaws;
+    RestFrames::RFList<Group>  m_LabGroups;
+    RestFrames::RFList<Jigsaw> m_LabJigsaws;
     StateList      m_LabStates;
   
     bool InitializeLabStates();

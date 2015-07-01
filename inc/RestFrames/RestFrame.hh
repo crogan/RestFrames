@@ -285,7 +285,7 @@ namespace RestFrames {
     const RestFrame* m_ProdFramePtr;
 
     // list of child frames and boosts
-    RFList<RestFrame> m_ChildFrames;
+    RestFrames::RFList<RestFrame> m_ChildFrames;
     vector<TVector3> m_ChildBoosts;
 
     // parent frame and boost

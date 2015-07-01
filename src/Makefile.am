@@ -14,7 +14,7 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFLi
 	State.cc StateList.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
-	NVisibleMInvisibleJigsaw.cc MinimizeMassesCombinatoricJigsaw.cc\
+	MinimizeMassesCombinatoricJigsaw.cc\
 	ContraBoostInvariantJigsaw.cc RSelfAssemblingFrame.cc 
 
 uninstall-hook:

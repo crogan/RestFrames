@@ -52,14 +52,14 @@ namespace RestFrames {
 
     virtual void AddFrame(RestFrame& frame, int i = 0);
     virtual void AddFrame(RestFrame* framePtr, int i = 0);
-    virtual void AddFrame(RFList<RestFrame>* framesPtr, int i = 0);
+    virtual void AddFrame(RestFrames::RFList<RestFrame>* framesPtr, int i = 0);
 
-    virtual bool InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr);
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>* chain_jigsawPtr);
   
   protected:
     virtual State* NewOutputState();
 
-    RFList<Jigsaw> m_ExecuteJigsaws;
+    RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
 
     vector<State*> m_Inputs;

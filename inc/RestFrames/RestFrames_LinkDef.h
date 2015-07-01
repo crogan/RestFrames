@@ -1,10 +1,13 @@
 #ifdef __ROOTCLING__
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/RFLog.hh"
+#include "RestFrames/RestFrames.hh"
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
 
+#pragma link C++ class RFBase;
+#pragma link C++ class RFLog;
+
 #pragma link C++ class RestFrame;
-#pragma link C++ class RestFrameList;
 #pragma link C++ class LabFrame;
 #pragma link C++ class DecayFrame;
 #pragma link C++ class InvisibleFrame;
@@ -25,20 +28,19 @@ using namespace RestFrames;
 
 #pragma link C++ enum FrameType;
 #pragma link C++ class std::vector<FrameType>;
-#pragma link C++ class FrameLink;
+
+#pragma link C++ enum LogType;
+#pragma link C++ class std::map<LogType,bool>;
 
 #pragma link C++ class Group;
-#pragma link C++ class GroupList;
 #pragma link C++ class InvisibleGroup;
 #pragma link C++ class CombinatoricGroup;
 
 #pragma link C++ class Jigsaw;
-#pragma link C++ class JigsawList;
 
 #pragma link C++ class InvisibleJigsaw;
 #pragma link C++ class InvisibleMassJigsaw;
 #pragma link C++ class InvisibleRapidityJigsaw;
-#pragma link C++ class NVisibleMInvisibleJigsaw;
 #pragma link C++ class ContraBoostInvariantJigsaw;
 
 #pragma link C++ class CombinatoricJigsaw;
@@ -53,6 +55,13 @@ using namespace RestFrames;
 #pragma link C++ class FramePlotNode;
 #pragma link C++ class FramePlotLink;
 
+#pragma link C++ class RFList<RFBase>;
+#pragma link C++ class RFList<RestFrame>; 
+#pragma link C++ class RFList<RFrame>; 
+#pragma link C++ class RFList<Jigsaw>;
+#pragma link C++ class RFList<Group>;
+#pragma link C++ class RFList<State>;
+
 #elif __MAKECINT__
 
 #pragma link off all typedefs;
@@ -63,8 +72,18 @@ using namespace RestFrames;
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
 
+#pragma link C++ class RFBase+;
+
+#pragma link C++ class RFList<RFBase>+;
+#pragma link C++ class RFList<RestFrame>+; 
+#pragma link C++ class RFList<RFrame>+; 
+#pragma link C++ class RFList<Jigsaw>+;
+#pragma link C++ class RFList<Group>+;
+#pragma link C++ class RFList<State>+;
+
+#pragma link C++ class RFLog+;
+
 #pragma link C++ class RestFrame+;
-#pragma link C++ class RestFrameList+;
 #pragma link C++ class LabFrame+;
 #pragma link C++ class DecayFrame+;
 #pragma link C++ class InvisibleFrame+;
@@ -83,22 +102,20 @@ using namespace RestFrames;
 #pragma link C++ class RVisibleFrame+;
 #pragma link C++ class RSelfAssemblingFrame+;
 
+#pragma link C++ enum LogType+;
+
 #pragma link C++ enum FrameType+;
-#pragma link C++ class std::vector<FrameType>+;
-#pragma link C++ class FrameLink+;
+//#pragma link C++ class std::vector<FrameType>+;
 
 #pragma link C++ class Group+;
-#pragma link C++ class GroupList+;
 #pragma link C++ class InvisibleGroup+;
 #pragma link C++ class CombinatoricGroup+;
 
 #pragma link C++ class Jigsaw+;
-#pragma link C++ class JigsawList+;
 
 #pragma link C++ class InvisibleJigsaw+;
 #pragma link C++ class InvisibleMassJigsaw+;
 #pragma link C++ class InvisibleRapidityJigsaw+;
-#pragma link C++ class NVisibleMInvisibleJigsaw+;
 #pragma link C++ class ContraBoostInvariantJigsaw+;
 
 #pragma link C++ class CombinatoricJigsaw+;

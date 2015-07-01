@@ -38,7 +38,6 @@ using namespace std;
 namespace RestFrames {
  
   class Jigsaw;
-  class State;
 
   enum GroupType { GInvisible, GCombinatoric };
 
@@ -68,7 +67,7 @@ namespace RestFrames {
     RFList<Jigsaw>* GetJigsaws() const;
 
     State* GetGroupState() const;
-    bool GetState(const RFList<RestFrame>* framesPtr, StateList*& statesPtr);
+    bool GetState(const RestFrames::RFList<RestFrame>* framesPtr, StateList*& statesPtr);
     State* GetState(const RestFrame* framePtr) const;
 
     virtual bool InitializeAnalysis();
@@ -81,13 +80,13 @@ namespace RestFrames {
     GroupType m_Type;
 
     State* m_GroupStatePtr;
-    RFList<RestFrame> m_Frames;
+    RestFrames::RFList<RestFrame> m_Frames;
   
     StateList m_States;
     StateList m_StatesToSplit;
 
-    RFList<Jigsaw> m_Jigsaws;
-    RFList<Jigsaw> m_JigsawsToUse;
+    RestFrames::RFList<Jigsaw> m_Jigsaws;
+    RestFrames::RFList<Jigsaw> m_JigsawsToUse;
 
     virtual State* InitializeGroupState();
     bool InitializeJigsaws();

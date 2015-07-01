@@ -38,15 +38,14 @@ using namespace std;
 namespace RestFrames {
 
   class RestFrame;
-  class State;
 
-  class StateList : public RFList<State> {
+  class StateList : public RestFrames::RFList<State> {
   public:
     StateList();
-    StateList(const RFList<State>& list);
-    StateList(const RFList<State>* listPtr);
-    StateList(const vector<State*>& list);
-    StateList(const vector<State*>* listPtr);
+    StateList(const RestFrames::RFList<RestFrames::State>& list);
+    StateList(const RestFrames::RFList<RestFrames::State>* listPtr);
+    StateList(const std::vector<RestFrames::State*>& list);
+    StateList(const std::vector<RestFrames::State*>* listPtr);
     ~StateList();
 
     // bool Add(const StateList* objsPtr);

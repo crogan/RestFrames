@@ -45,7 +45,7 @@ TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title = "", string l
 using namespace std;
 using namespace RestFrames;
 
-void example_03_MultipleDecays_Toptoblnu(string output_name = "output_02.root"){
+void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   setstyle();
 
   double mtop = 173.;

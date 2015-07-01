@@ -38,7 +38,6 @@ using namespace std;
 namespace RestFrames {
 
   class Group;
-  class State;
 
   enum JigsawType { JInvisible, JCombinatoric };
 
@@ -70,10 +69,10 @@ namespace RestFrames {
     Group* GetGroup() const;
 
     bool CanSplit(const State* statePtr);
-    bool CanSplit(const RFList<RestFrame>* framesPtr);
+    bool CanSplit(const RestFrames::RFList<RestFrame>* framesPtr);
   
     virtual StateList* InitializeOutputStates(State* statePtr);
-    virtual bool InitializeDependancyStates(const StateList* statesPtr, const RFList<Group>* groupsPtr);
+    virtual bool InitializeDependancyStates(const StateList* statesPtr, const RestFrames::RFList<Group>* groupsPtr);
     virtual bool InitializeDependancyJigsaws();
 
     virtual int GetNChildStates() const;
@@ -81,10 +80,10 @@ namespace RestFrames {
     virtual RFList<RestFrame>* GetChildFrames(int i) const;
     virtual RFList<RestFrame>* GetChildFrames() const;
 
-    virtual void FillGroupJigsawDependancies(RFList<Jigsaw>* jigsawsPtr);
-    virtual void FillStateJigsawDependancies(RFList<Jigsaw>* jigsawsPtr);
+    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr);
+    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr);
 
-    virtual bool InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr) = 0;
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>* chain_jigsawPtr) = 0;
     bool DependsOnJigsaw(Jigsaw* jigsawPtr);
 
     virtual bool AnalyzeEvent() = 0;
@@ -97,13 +96,13 @@ namespace RestFrames {
     Group* m_GroupPtr;
     State* m_InputStatePtr;
 
-    vector<RFList<RestFrame> > m_OutputFrames;
-    vector<RFList<RestFrame> > m_DependancyFrames;
+    vector<RestFrames::RFList<RestFrame> > m_OutputFrames;
+    vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
 
     StateList m_OutputStates;
     vector<StateList> m_DependancyStates;
 
-    RFList<Jigsaw> m_DependancyJigsaws;
+    RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
     virtual State* NewOutputState();
     void AddOutputFrame(RestFrame* framePtr, int i = 0);

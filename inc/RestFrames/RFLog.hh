@@ -97,7 +97,7 @@ namespace RestFrames {
   };
 
   template <> RFLog& RFLog::operator<< (const RFBase* arg);
-  template <> RFLog& RFLog::operator<< (const RFList<RFBase>* arg);
+  template <> RFLog& RFLog::operator<< (const RestFrames::RFList<RFBase>* arg);
 
   inline RFLog& RFLog::operator<< (RFLog& (*_f)(RFLog&)){
     return (_f)(*this);
@@ -127,9 +127,11 @@ namespace RestFrames {
   template <class T> 
   const RFList<RFBase>* Log(const RFList<T>* ptr){ return (const RFList<RFBase>*)ptr; }
 
-#define m_Log (*m_LogPtr)
-#define m_End RFLog::EndMessage  
-#define g_End RFLog::EndMessage
+#ifndef __MAKECINT__
+  #define m_Log (*m_LogPtr)
+  #define m_End RFLog::EndMessage  
+  #define g_End RFLog::EndMessage
+#endif
 
   class RestFramesException : public exception {
 
@@ -151,7 +153,7 @@ namespace RestFrames {
   void SetLogPrint(LogType type, bool print = true);
   void SetLogStream(ostream* ostr);
   void SetLogMaxWidth(int NMAX);
-  map<LogType,bool> InitPrintMap();
+  map<RestFrames::LogType,bool> InitPrintMap();
 
 }
 

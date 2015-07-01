@@ -39,7 +39,7 @@ namespace RestFrames {
   class RFBase;
 
   // default RFLog parameters
-  map<LogType,bool> RFLog::m_PrintMap = InitPrintMap();
+  map<RestFrames::LogType,bool> RFLog::m_PrintMap = InitPrintMap();
   ostream* RFLog::m_Ostr = &cerr;
   int RFLog::m_NMAX = 100;
 
