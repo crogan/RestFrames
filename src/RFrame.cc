@@ -64,49 +64,47 @@ namespace RestFrames {
     m_GroupPtr = groupPtr;
   }
 
-  RFList<Group>* RFrame::GetListGroups() const {
-    RFList<Group>* groupsPtr = new RFList<Group>();
-    FillListGroupsRecursive(groupsPtr);
-    return groupsPtr;
+  RFList<Group> RFrame::GetListGroups() const {
+    RFList<Group> groups;
+    FillListGroupsRecursive(groups);
+    return groups;
   }
 
-  void RFrame::FillListGroupsRecursive(RFList<Group>* groupsPtr) const{
-    if(m_GroupPtr) groupsPtr->Add(m_GroupPtr);
+  void RFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
+    groups.Add(m_GroupPtr);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
-      if(childPtr) childPtr->FillListGroupsRecursive(groupsPtr);
+      RFrame* childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
+      if(childPtr) childPtr->FillListGroupsRecursive(groups);
     }
   }
 
-  bool RFrame::InitializeNoGroupStates(const StateList* statesPtr){
+  bool RFrame::InitializeNoGroupStates(const StateList& states){
     int Nchild = GetNChildren();
   
     for(int i = 0; i < Nchild; i++){
-      RestFrame *childPtr = GetChildFrame(i);
+      RestFrame* childPtr = GetChildFrame(i);
       if(!childPtr) return false;
 
       m_ChildStates.push_back(StateList());
     
-      RFList<RestFrame> *framesPtr = childPtr->GetListFramesType(FVisible);
-      int Nframe = framesPtr->GetN();
+      RFList<RestFrame> frames = childPtr->GetListFramesType(FVisible);
+      int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
-	RFrame* rframePtr = dynamic_cast<RFrame*>(framesPtr->Get(f));
+	RFrame* rframePtr = dynamic_cast<RFrame*>(frames.Get(f));
 	if(!rframePtr) return false;
 	if(rframePtr->GetGroup()){
 	  continue;
 	}
-	int index = statesPtr->GetIndexFrame(framesPtr->Get(f));
-	if(index >= 0)  m_ChildStates[i].Add(statesPtr->Get(index));
+	int index = states.GetIndexFrame(frames.Get(f));
+	if(index >= 0)  m_ChildStates[i].Add(states.Get(index));
       }
-      delete framesPtr;
     }
     return true;
   }
 
-  bool RFrame::InitializeGroupStates(const RFList<Group>* groupsPtr){
-    if(!groupsPtr) return false;
-    int Ngroup = groupsPtr->GetN();
+  bool RFrame::InitializeGroupStates(const RFList<Group>& groups){
+    int Ngroup = groups.GetN();
     int Nchild = GetNChildren();
     
     vector<FrameType> terminal_types;
@@ -114,15 +112,13 @@ namespace RestFrames {
     terminal_types.push_back(FInvisible);
 
     for(int c = 0; c < Nchild; c++){
-      RestFrame* childPtr = GetChildFrame(c);
-      if(!childPtr) return false;
-      RFList<RestFrame>* child_framesPtr = childPtr->GetListFramesType(terminal_types);
-      int Nframe = child_framesPtr->GetN();
+      RFList<RestFrame> frames = GetChildFrame(c)->GetListFramesType(terminal_types);
+      int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
-	RestFrame* framePtr = child_framesPtr->Get(f);
+	RestFrame* framePtr = frames.Get(f);
 	if(!framePtr) return false;
 	for(int g = 0; g < Ngroup; g++){
-	  Group* groupPtr = groupsPtr->Get(g);
+	  Group* groupPtr = groups.Get(g);
 	  if(!groupPtr) return false;
 	  if(groupPtr->ContainsFrame(framePtr)){
 	    State* statePtr = groupPtr->GetState(framePtr);
@@ -132,12 +128,11 @@ namespace RestFrames {
 	  }
 	}
       }
-      delete child_framesPtr;
     }
     return true;
   }
 
-  bool RFrame::InitializeStates(const StateList* statesPtr, const RFList<Group>* groupsPtr){
+  bool RFrame::InitializeStates(const StateList& states, const RFList<Group>& groups){
     RemoveChildStates();
     m_Mind = false;
     if(!m_Body){
@@ -145,22 +140,22 @@ namespace RestFrames {
       cout << "UnSound frame " << m_Name.c_str() << " in tree" << endl;
       return false;
     }
-    if(!InitializeNoGroupStates(statesPtr)) return false;
-    if(!InitializeGroupStates(groupsPtr)) return false;
+    if(!InitializeNoGroupStates(states)) return false;
+    if(!InitializeGroupStates(groups)) return false;
     
     m_Mind = true;
     return true;
   }
   
-  bool RFrame::InitializeStatesRecursive(const StateList* statesPtr, const RFList<Group>* groupsPtr){
-    if(!InitializeStates(statesPtr,groupsPtr)) return false;
+  bool RFrame::InitializeStatesRecursive(const StateList& states, const RFList<Group>& groups){
+    if(!InitializeStates(states, groups)) return false;
 
     int Nchild = GetNChildren();
     bool child_mind = true;
     for(int i = 0; i < Nchild; i++){
       RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
       if(!childPtr) return false;
-      if(!childPtr->InitializeStatesRecursive(statesPtr,groupsPtr)) child_mind = false;;
+      if(!childPtr->InitializeStatesRecursive(states, groups)) child_mind = false;;
     }
     m_Mind = child_mind;
     return m_Mind;

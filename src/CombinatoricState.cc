@@ -67,13 +67,12 @@ namespace RestFrames {
     m_Elements.Add(statePtr);
   }
 
-  void CombinatoricState::AddElement(StateList* statesPtr){
-    if(!statesPtr) return;
-    int N = statesPtr->GetN();
-    for(int i = 0; i < N; i++) AddElement(statesPtr->Get(i));
+  void CombinatoricState::AddElement(const StateList& states){
+    int N = states.GetN();
+    for(int i = 0; i < N; i++) AddElement(states.Get(i));
   }
 
-  StateList* CombinatoricState::GetElements() const {
+  StateList CombinatoricState::GetElements() const {
     return m_Elements.Copy();
   }
 

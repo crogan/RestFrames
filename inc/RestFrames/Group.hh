@@ -60,14 +60,14 @@ namespace RestFrames {
     virtual void AddFrame(RestFrame* framePtr) = 0;
     void RemoveFrame(const RestFrame* framePtr);
     bool ContainsFrame(const RestFrame* framePtr) const;
-    RFList<RestFrame>* GetFrames() const;
+    RestFrames::RFList<RestFrame> GetFrames() const;
 
     virtual bool AddJigsaw(Jigsaw& jigsaw) = 0;
     virtual bool AddJigsaw(Jigsaw* jigsawPtr) = 0;
-    RFList<Jigsaw>* GetJigsaws() const;
+    RestFrames::RFList<Jigsaw> GetJigsaws() const;
 
     State* GetGroupState() const;
-    bool GetState(const RestFrames::RFList<RestFrame>* framesPtr, StateList*& statesPtr);
+    StateList GetStates(const RestFrames::RFList<RestFrame>& frames) const;
     State* GetState(const RestFrame* framePtr) const;
 
     virtual bool InitializeAnalysis();
@@ -91,6 +91,7 @@ namespace RestFrames {
     virtual State* InitializeGroupState();
     bool InitializeJigsaws();
     void InitializeJigsaw(Jigsaw* jigsawPtr);
+
     bool SplitState(const State* statePtr);
 
   private:

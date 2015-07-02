@@ -5,7 +5,6 @@
 #include <map>
 #include <TCanvas.h>
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/State.hh"
 
 using namespace std;
 
@@ -15,6 +14,7 @@ namespace RestFrames {
   class RDecayFrame;
   class Jigsaw;
   class Group;
+  class State;
   class FramePlotNode;
   class FramePlotLink;
 
@@ -45,7 +45,7 @@ namespace RestFrames {
 
     // tree drawing functions
     void AddFrameTree(const RestFrame* framePtr);
-    void AddFrameTree(const RFrame* framePtr, const RestFrames::RFList<Jigsaw>* jigsawsPtr);
+    void AddFrameTree(const RFrame* framePtr, const RestFrames::RFList<Jigsaw>& jigsaws);
     void AddFrameTree(const RFrame* framePtr, Jigsaw* jigsawPtr);
     void AddGroupTree(const Group* groupPtr);
     void AddJigsaw(Jigsaw* jigsawPtr);
@@ -118,7 +118,7 @@ namespace RestFrames {
     void DrawTitle(const string& title);
     void DrawJigsawLegend();
 
-    void ConvertNodeCoordinates(vector<FramePlotNode*>* nodesPtr);
+    void ConvertNodeCoordinates(vector<FramePlotNode*>& nodesPtr);
 
     int GetJigsawPriority(int Nout, int Ndep) const;
   };

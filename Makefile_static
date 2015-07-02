@@ -25,6 +25,8 @@ all: $(OUTLIB)libRestFrames.so
 
 $(OUTLIB)libRestFrames.so: $(OBJ_FILES) $(HH_FILES)
 	$(CXX) $(SOFLAGS) -o $@ $(GLIBS) $(OBJ_FILES)
+	mkdir -p include/RestFrames/
+	cp inc/RestFrames/*.hh include/RestFrames/.
 
 $(OUTOBJ)%.o: src/%.cc inc/RestFrames/%.hh
 	$(CXX) $(CXXFLAGS) -c $< -o $@

@@ -50,8 +50,8 @@ namespace RestFrames {
 
     void ClearElements();
     void AddElement(State* statePtr);
-    void AddElement(StateList* statesPtr);
-    StateList* GetElements() const;
+    void AddElement(const StateList& states);
+    StateList GetElements() const;
     int GetNElements() const;
     bool ContainsElement(const State* statePtr) const;
 

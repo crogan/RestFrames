@@ -55,7 +55,7 @@ namespace RestFrames {
   protected:
     RestFrames::RFList<Group>  m_LabGroups;
     RestFrames::RFList<Jigsaw> m_LabJigsaws;
-    StateList      m_LabStates;
+    StateList m_LabStates;
   
     bool InitializeLabStates();
     bool InitializeLabGroups();

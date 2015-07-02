@@ -61,9 +61,9 @@ namespace RestFrames {
     return 0.;
   }
 
-  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){
+  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){
     InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
-    if(jigsawPtr) jigsawPtr->FillInvisibleMassJigsawDependancies(jigsawsPtr);
+    if(jigsawPtr) jigsawPtr->FillInvisibleMassJigsawDependancies(jigsaws);
   }
 
 }

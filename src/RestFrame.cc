@@ -260,62 +260,60 @@ namespace RestFrames {
     return m_ParentBoost;
   }
 
-  RFList<RestFrame>* RestFrame::GetListFrames(){
-    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
-
-    framesPtr->Add(this);
+  RFList<RestFrame> RestFrame::GetListFrames(){
+    RFList<RestFrame> frames;
+    frames.Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesRecursive(framesPtr);
+	GetChildFrame(i)->FillListFramesRecursive(frames);
     
-    return framesPtr;
+    return frames;
   }
 
-  RFList<RestFrame>* RestFrame::GetListFramesType(FrameType type){
-    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
-    
-    if(m_Type == type) framesPtr->Add(this);
+  RFList<RestFrame> RestFrame::GetListFramesType(FrameType type){
+    RFList<RestFrame> frames;
+    if(m_Type == type) frames.Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
+	GetChildFrame(i)->FillListFramesTypeRecursive(type, frames);
    
-    return framesPtr;
+    return frames;
   }
 
-  RFList<RestFrame>* RestFrame::GetListFramesType(const vector<FrameType>& types){
-    RFList<RestFrame>* framesPtr = new RFList<RestFrame>();
+  RFList<RestFrame> RestFrame::GetListFramesType(const vector<FrameType>& types){
+    RFList<RestFrame> frames;
 
     int Ntype = types.size();
     for(int i = 0; i < Ntype; i++)
-      FillListFramesTypeRecursive(types[i], framesPtr);
+      FillListFramesTypeRecursive(types[i], frames);
 
-    return framesPtr;
+    return frames;
   }
 
-  RFList<RestFrame>* RestFrame::GetListVisibleFrames(){
+  RFList<RestFrame> RestFrame::GetListVisibleFrames(){
     return GetListFramesType(FVisible);
   }
 
-  RFList<RestFrame>* RestFrame::GetListInvisibleFrames(){
+  RFList<RestFrame> RestFrame::GetListInvisibleFrames(){
     return GetListFramesType(FInvisible);
   }
 
-  void RestFrame::FillListFramesRecursive(RFList<RestFrame>* framesPtr){
-    framesPtr->Add(this);
+  void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames){
+    frames.Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesRecursive(framesPtr);
+	GetChildFrame(i)->FillListFramesRecursive(frames);
   }
   
-  void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>* framesPtr){
-    if(m_Type == type) framesPtr->Add(this);
+  void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>& frames){
+    if(m_Type == type) frames.Add(this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesTypeRecursive(type, framesPtr);
+	GetChildFrame(i)->FillListFramesTypeRecursive(type, frames);
   }
 
   bool RestFrame::IsCircularTree(vector<int>& keys) const {
@@ -387,6 +385,10 @@ namespace RestFrames {
 
   double RestFrame::GetMass() const {
     return m_P.M();
+  }
+
+  double RestFrame::GetCosDecayAngle(const RestFrame& frame) const{
+    return GetCosDecayAngle(&frame);
   }
 
   double RestFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
@@ -605,13 +607,14 @@ namespace RestFrames {
     if(!framePtr || !m_Spirit) return V;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RFList<RestFrame>* framesPtr = GetChildFrame(c)->GetListVisibleFrames();
-      int Nf = framesPtr->GetN();
-      for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
-      delete framesPtr;
+      RFList<RestFrame> frames = GetChildFrame(c)->GetListVisibleFrames();
+      int Nf = frames.GetN();
+      for(int f = 0; f < Nf; f++) 
+	V += frames.Get(f)->GetFourVector(framePtr);
     }
     return V;
   }
+
   TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame& frame) const {
     return GetInvisibleFourVector(&frame);
   }
@@ -621,19 +624,20 @@ namespace RestFrames {
     if(!framePtr) framePtr = this;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RFList<RestFrame>* framesPtr = GetChildFrame(c)->GetListInvisibleFrames();
-      int Nf = framesPtr->GetN();
-      for(int f = 0; f < Nf; f++) V += framesPtr->Get(f)->GetFourVector(framePtr);
-      delete framesPtr;
+      RFList<RestFrame> frames = GetChildFrame(c)->GetListInvisibleFrames();
+      int Nf = frames.GetN();
+      for(int f = 0; f < Nf; f++) V += frames.Get(f)->GetFourVector(framePtr);
     }
     return V;
   }
+
   double RestFrame::GetEnergy(const RestFrame& frame) const {
     return GetFourVector(&frame).E();
   }
   double RestFrame::GetEnergy(const RestFrame* framePtr) const {
     return GetFourVector(framePtr).E();
   }
+
   double RestFrame::GetMomentum(const RestFrame& frame) const {
     return GetFourVector(&frame).P();
   }
@@ -663,13 +667,10 @@ namespace RestFrames {
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       RestFrame* childPtr = GetChildFrame(i);
-      RFList<RestFrame>* framesPtr = childPtr->GetListFrames();
-      if(framesPtr->Contains(framePtr)){
-	delete framesPtr;
+      if(childPtr->GetListFrames().Contains(framePtr)){
 	if(depth == 1) return childPtr;
 	else return childPtr->GetFrameAtDepth(depth-1,framePtr);
       }
-      delete framesPtr;
     }
     return nullptr;
   }

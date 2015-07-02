@@ -67,21 +67,13 @@ namespace RestFrames {
 
   template <class T>
   bool RFList<T>::Add(T* objPtr){
+    if(!objPtr) return false;
     int N = GetN();
     for(int i = 0; i < N; i++){
       if(m_Objs[i]->IsSame(objPtr)) return false;
     }
     m_Objs.push_back(objPtr);
     return true;
-  }
-
-  template <class T>
-  bool RFList<T>::Add(const RFList<T>* objsPtr){
-    int N = objsPtr->GetN();
-    double ret = true;
-    for(int i = 0; i < N; i++) 
-      if(!Add(objsPtr->Get(i))) ret = false;
-    return ret;
   }
 
   template <class T>
@@ -106,9 +98,9 @@ namespace RestFrames {
   }
 
   template <class T>
-  void RFList<T>::Remove(const RFList<T>* objsPtr){
-    int N = objsPtr->GetN();
-    for(int i = 0; i < N; i++) Remove(objsPtr->Get(i));
+  void RFList<T>::Remove(const RFList<T>& objs){
+    int N = objs.GetN();
+    for(int i = 0; i < N; i++) Remove(objs.Get(i));
   }
 
   template <class T>
@@ -122,19 +114,17 @@ namespace RestFrames {
   }
 
   template <class T>
-  bool RFList<T>::Contains(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return false;
-    int N = objsPtr->GetN();
+  bool RFList<T>::Contains(const RFList<T>& objs) const {
+    int N = objs.GetN();
     for(int i = 0; i < N; i++){
-      if(!Contains(objsPtr->Get(i))) return false;
+      if(!Contains(objs.Get(i))) return false;
     }
     return true;
   }
 
   template <class T>
-  bool RFList<T>::IsSame(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return false;
-    return SizeUnion(objsPtr) == SizeIntersection(objsPtr);
+  bool RFList<T>::IsSame(const RFList<T>& objs) const {
+    return SizeUnion(objs) == SizeIntersection(objs);
   }
 
   template <class T>
@@ -147,75 +137,68 @@ namespace RestFrames {
   }
 
   template <class T>
-  RFList<T>* RFList<T>::Copy() const {
-    RFList<T>* objsPtr = new RFList<T>();
+  RFList<T> RFList<T>::Copy() const {
+    RFList<T> objs;
     int N = GetN();
-    for(int i = 0; i < N; i++) objsPtr->Add(m_Objs[i]);
-    return objsPtr;
+    for(int i = 0; i < N; i++) objs.Add(m_Objs[i]);
+    return objs;
   }
 
   template <class T>
-  RFList<T>* RFList<T>::Union(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return nullptr;
-    RFList<T>* union_objsPtr_this = Copy();
-    RFList<T>* union_objsPtr_that = objsPtr->Copy();
-    union_objsPtr_this->Add(union_objsPtr_that);
-    delete union_objsPtr_that;
-    return union_objsPtr_this;
+  RFList<T> RFList<T>::Union(const RFList<T>& objs) const {
+    RFList<T> objs_this = Copy();
+    objs_this.Add(objs);
+    return objs_this;
   }
 
   template <class T>
-  RFList<T>* RFList<T>::Intersection(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return nullptr;
-    RFList<T>* intersection_objsPtr = new RFList<T>();
-    int N = objsPtr->GetN();
+  RFList<T> RFList<T>::Intersection(const RFList<T>& objs) const {
+    RFList<T> inter; 
+    int N = objs.GetN();
     for(int i = 0; i < N; i++){
-      if(Contains(objsPtr->Get(i))) intersection_objsPtr->Add(objsPtr->Get(i));
+      if(Contains(objs.Get(i))) inter.Add(objs.Get(i));
     }
-    return intersection_objsPtr;
+    return inter;
   }
 
   template <class T>
-  RFList<T>* RFList<T>::Complement(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return nullptr;
-    RFList<T>* complement_objsPtr = Copy();
-    int N = objsPtr->GetN();
-    for(int i = 0; i < N; i++){
-      if(complement_objsPtr->Contains(objsPtr->Get(i))) complement_objsPtr->Remove(objsPtr->Get(i));
-    }
-    return complement_objsPtr;
+  RFList<T> RFList<T>::Complement(const RFList<T>& objs) const {
+    RFList<T> comp = Copy();
+    int N = objs.GetN();
+    for(int i = 0; i < N; i++)
+      if(comp.Contains(objs.Get(i))) 
+	comp.Remove(objs.Get(i));
+    
+    return comp;
   }
 
   template <class T>
-  int RFList<T>::SizeUnion(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return 0;
+  int RFList<T>::SizeUnion(const RFList<T>& objs) const {
     int Nthis = GetN();
-    int Nthat = objsPtr->GetN();
-    for(int i = 0; i < Nthat; i++){
-      if(!Contains(objsPtr->Get(i))) Nthis++;
-    }
+    int Nthat = objs.GetN();
+    for(int i = 0; i < Nthat; i++)
+      if(!Contains(objs.Get(i))) Nthis++;
+    
     return Nthis;
   }
 
   template <class T>
-  int RFList<T>::SizeIntersection(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return 0;
+  int RFList<T>::SizeIntersection(const RFList<T>& objs) const {
     int Nthis = 0;
-    int Nthat = objsPtr->GetN();
-    for(int i = 0; i < Nthat; i++){
-      if(Contains(objsPtr->Get(i))) Nthis++;
-    }
+    int Nthat = objs.GetN();
+    for(int i = 0; i < Nthat; i++)
+      if(Contains(objs.Get(i))) Nthis++;
+    
     return Nthis;
   }
 
   template <class T>
-  int RFList<T>::SizeComplement(const RFList<T>* objsPtr) const {
-    if(!objsPtr) return 0;
+  int RFList<T>::SizeComplement(const RFList<T>& objs) const {
     int Nthis = GetN();
-    int Nthat = objsPtr->GetN();
-    for(int i = 0; i < Nthat; i++){
-      if(Contains(objsPtr->Get(i))) Nthis--;
-    }
+    int Nthat = objs.GetN();
+    for(int i = 0; i < Nthat; i++)
+      if(Contains(objs.Get(i))) Nthis--;
+    
     return Nthis;
   }
 

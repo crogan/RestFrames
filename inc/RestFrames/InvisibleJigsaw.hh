@@ -47,16 +47,16 @@ namespace RestFrames {
 
     void AddVisibleFrame(RestFrame& framePtr, int i = 0);
     void AddVisibleFrame(RestFrame* framePtr, int i = 0);
-    void AddVisibleFrame(RestFrames::RFList<RestFrame>* framesPtr, int i = 0);
+    void AddVisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
     void AddInvisibleFrame(RestFrame& framePtr, int i = 0);
     void AddInvisibleFrame(RestFrame* framePtr, int i = 0);
-    void AddInvisibleFrame(RestFrames::RFList<RestFrame>* framesPtr, int i = 0);
+    void AddInvisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
     virtual double GetMinimumMass();
     virtual bool InitializeDependancyJigsaws();
-    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsaws);
+    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>* chain_jigsawPtr);
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
 
     virtual bool IsSoundBody() const ;
     virtual void SetGroup(Group* groupPtr);

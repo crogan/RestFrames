@@ -71,47 +71,45 @@ namespace RestFrames {
     vector<FrameType> terminals;
     terminals.push_back(FVisible);
     terminals.push_back(FInvisible);
-    RFList<RestFrame> *framesPtr = framePtr->GetListFramesType(terminals);
-    int N = framesPtr->GetN();
+    RFList<RestFrame> frames = framePtr->GetListFramesType(terminals);
+    int N = frames.GetN();
     for(int f = 0; f < N; f++){
-      if(m_GroupPtr->ContainsFrame(framesPtr->Get(f))){
-	AddOutputFrame(framesPtr->Get(f), i);
+      if(m_GroupPtr->ContainsFrame(frames.Get(f))){
+	AddOutputFrame(frames.Get(f), i);
       } else {
-	AddDependancyFrame(framesPtr->Get(f), i);
+	AddDependancyFrame(frames.Get(f), i);
       }
     }
-    delete framesPtr;
-  
   }
 
-  void CombinatoricJigsaw::AddFrame(RFList<RestFrame>* framesPtr, int i){
-    if(!framesPtr) return;
-    int N = framesPtr->GetN();
-    for(int f = 0; f < N; f++){
-      AddFrame(framesPtr->Get(f),i);
-    }
+  void CombinatoricJigsaw::AddFrame(const RFList<RestFrame>& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddFrame(frames.Get(f),i);
   }
 
   State* CombinatoricJigsaw::NewOutputState(){
     return new CombinatoricState();
   }
 
-  bool CombinatoricJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr){
-    if(!m_Mind) return false;
-    if(chain_jigsawPtr->Contains(this)) return true;
+  bool CombinatoricJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& chain_jigsaws){
+    if(!IsSoundMind()) return false;
+    if(chain_jigsaws.Contains(this)) return true;
+
     m_ExecuteJigsaws.Clear();
 
     // Add group dependancy jigsaws first
-    RFList<Jigsaw>* group_jigsawsPtr = new RFList<Jigsaw>();
-    FillGroupJigsawDependancies(group_jigsawsPtr);
-    group_jigsawsPtr->Remove(this);
-    int Ngroup = group_jigsawsPtr->GetN();
+    RFList<Jigsaw> group_jigsaws; 
+    FillGroupJigsawDependancies(group_jigsaws);
+    group_jigsaws.Remove(this);
+
+    int Ngroup = group_jigsaws.GetN();
     for(int i = Ngroup-1; i >= 0; i--){
-      Jigsaw* jigsawPtr = group_jigsawsPtr->Get(i);
+      Jigsaw* jigsawPtr = group_jigsaws.Get(i);
       m_DependancyJigsaws.Remove(jigsawPtr);
-      if(!chain_jigsawPtr->Contains(jigsawPtr)){
-	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
-	  m_Mind = false;
+      if(!chain_jigsaws.Contains(jigsawPtr)){
+	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsaws)){
+	  SetMind(false);
 	  return false;
 	}
       }
@@ -120,35 +118,33 @@ namespace RestFrames {
     while(m_DependancyJigsaws.GetN() > 0){
       Jigsaw* jigsawPtr = m_DependancyJigsaws.Get(m_DependancyJigsaws.GetN()-1);
       // Remove dependancy if already in chain
-      if(chain_jigsawPtr->Contains(jigsawPtr)){
+      if(chain_jigsaws.Contains(jigsawPtr)){
 	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
       
       if(!jigsawPtr->DependsOnJigsaw(this)){
-	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
-	  m_Mind = false;
+	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsaws)){
+	  SetMind(false);
 	  return false;
 	}
 	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
-      RFList<Jigsaw>* temp_chainPtr = chain_jigsawPtr->Copy();
-      temp_chainPtr->Add(&m_ExecuteJigsaws);
-      temp_chainPtr->Add(this);
-      if(!jigsawPtr->InitializeJigsawExecutionList(temp_chainPtr)){
-	m_Mind = false;
+      RFList<Jigsaw> temp_chain = chain_jigsaws.Copy();
+      temp_chain.Add(m_ExecuteJigsaws);
+      temp_chain.Add(this);
+      if(!jigsawPtr->InitializeJigsawExecutionList(temp_chain)){
+	SetMind(false);
 	return false;
       }
-      temp_chainPtr->Remove(this);
-      temp_chainPtr->Remove(chain_jigsawPtr);
-      m_DependancyJigsaws.Remove(temp_chainPtr);
-      m_ExecuteJigsaws.Add(temp_chainPtr);
-      
-      delete temp_chainPtr;
+      temp_chain.Remove(this);
+      temp_chain.Remove(chain_jigsaws);
+      m_DependancyJigsaws.Remove(temp_chain);
+      m_ExecuteJigsaws.Add(temp_chain);
     }
-    chain_jigsawPtr->Add(this);
-    chain_jigsawPtr->Add(&m_ExecuteJigsaws);
+    chain_jigsaws.Add(this);
+    chain_jigsaws.Add(m_ExecuteJigsaws);
     return true;
   }
 
@@ -170,10 +166,10 @@ namespace RestFrames {
     if(!groupPtr) return false;
 
     m_Inputs.clear();
-    const StateList* elementsPtr = input_statePtr->GetElements();
-    int Ninput = elementsPtr->GetN();
+    const StateList elements = input_statePtr->GetElements();
+    int Ninput = elements.GetN();
     for(int i = 0; i < Ninput; i++)
-      m_Inputs.push_back(elementsPtr->Get(i));
+      m_Inputs.push_back(elements.Get(i));
 
     m_Outputs.clear();
     m_NForOutput.clear();
@@ -183,14 +179,14 @@ namespace RestFrames {
       CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_OutputStates.Get(i));
       if(!statePtr) return false;
       m_Outputs.push_back(statePtr);
-      RFList<RestFrame>* framesPtr = statePtr->GetFrames();
-      int Nf = framesPtr->GetN();
+      RFList<RestFrame> frames = statePtr->GetFrames();
+      int Nf = frames.GetN();
       int NTOT = 0;
       bool exclTOT = true;
       for(int f = 0; f < Nf; f++){
 	int N = -1;
 	bool excl = false;
-	groupPtr->GetNElementsForFrame(framesPtr->Get(f), N, excl);
+	groupPtr->GetNElementsForFrame(frames.Get(f), N, excl);
 	if(N < 0) return false;
 	NTOT += N;
 	exclTOT = exclTOT && excl;

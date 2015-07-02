@@ -162,12 +162,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   HemiJigsaw_R.AddFrame(V1b_R,1);
   HemiJigsaw_R.AddFrame(V2a_R,0);
   HemiJigsaw_R.AddFrame(V2b_R,1);
-  MinimizeMassesCombinatoricJigsaw CaHemiJigsaw_R("CbHEM_JIGSAW_R","Minimize m _{C_{a}} Jigsaw");
+  MinimizeMassesCombinatoricJigsaw CaHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{a}} Jigsaw");
   VIS_R.AddJigsaw(CaHemiJigsaw_R);
   CaHemiJigsaw_R.AddFrame(V1a_R,0);
   CaHemiJigsaw_R.AddFrame(V2a_R,1);
   CaHemiJigsaw_R.AddFrame(Xa_R,1);
-  MinimizeMassesCombinatoricJigsaw CbHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
+  MinimizeMassesCombinatoricJigsaw CbHemiJigsaw_R("CbHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
   VIS_R.AddJigsaw(CbHemiJigsaw_R);
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);

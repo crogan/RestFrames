@@ -62,16 +62,14 @@ namespace RestFrames {
 
   void InvisibleJigsaw::AddVisibleFrame(RestFrame* framePtr, int i){
     if(!framePtr) return;
-    RFList<RestFrame>* framesPtr = framePtr->GetListVisibleFrames();
-    AddDependancyFrame(framesPtr, i);
-    delete framesPtr;
+    RFList<RestFrame> frames = framePtr->GetListVisibleFrames();
+    AddDependancyFrame(frames, i);
   }
 
-  void InvisibleJigsaw::AddVisibleFrame(RFList<RestFrame>* framesPtr, int i){
-    int N = framesPtr->GetN();
-    for(int f = 0; f < N; f++){
-      AddVisibleFrame(framesPtr->Get(f), i);
-    }
+  void InvisibleJigsaw::AddVisibleFrame(const RFList<RestFrame>& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddVisibleFrame(frames.Get(f), i);
   }
 
   void InvisibleJigsaw::AddInvisibleFrame(RestFrame& frame, int i){
@@ -81,20 +79,18 @@ namespace RestFrames {
   void InvisibleJigsaw::AddInvisibleFrame(RestFrame* framePtr, int i){
     if(!m_GroupPtr) return;
   
-    RFList<RestFrame>* framesPtr = framePtr->GetListInvisibleFrames();
-    int N = framesPtr->GetN();
+    RFList<RestFrame> frames = framePtr->GetListInvisibleFrames();
+    int N = frames.GetN();
     for(int f = 0; f < N; f++){
-      if(m_GroupPtr->ContainsFrame(framesPtr->Get(f))) 
-	AddOutputFrame(framesPtr->Get(f), i);
+      if(m_GroupPtr->ContainsFrame(frames.Get(f))) 
+	AddOutputFrame(frames.Get(f), i);
     }  
-    delete framesPtr;
   }
 
-  void InvisibleJigsaw::AddInvisibleFrame(RFList<RestFrame>* framesPtr, int i){
-    int N = framesPtr->GetN();
-    for(int f = 0; f < N; f++){
-      AddInvisibleFrame(framesPtr->Get(f), i);
-    }
+  void InvisibleJigsaw::AddInvisibleFrame(const RFList<RestFrame>& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddInvisibleFrame(frames.Get(f), i);
   }
 
   State* InvisibleJigsaw::NewOutputState(){
@@ -114,74 +110,73 @@ namespace RestFrames {
     return M;
   }
 
-  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){ 
-    if(!jigsawsPtr) return;
-   
+  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){ 
     int Nchild = GetNChildStates();
     for(int i = 0; i < Nchild; i++){
       InvisibleState* statePtr = dynamic_cast<InvisibleState*>(GetChildState(i));
-      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsawsPtr);
+      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsaws);
     }
   }
 
   bool InvisibleJigsaw::InitializeDependancyJigsaws(){
-    if(!m_Mind) return false;
+    if(!IsSoundMind()) return false;
     m_DependancyJigsaws.Clear();
 
-    RFList<Jigsaw>* jigsawsPtr = new RFList<Jigsaw>();
-    FillStateJigsawDependancies(jigsawsPtr);
-    jigsawsPtr->Remove(this);
-    m_DependancyJigsaws.Add(jigsawsPtr);
+    RFList<Jigsaw> jigsaws; 
+    FillStateJigsawDependancies(jigsaws);
+    jigsaws.Remove(this);
+    m_DependancyJigsaws.Add(jigsaws);
 
-    jigsawsPtr->Clear();
-    FillInvisibleMassJigsawDependancies(jigsawsPtr);
-    jigsawsPtr->Remove(this);
-    m_DependancyJigsaws.Add(jigsawsPtr);
+    jigsaws.Clear();
+    FillInvisibleMassJigsawDependancies(jigsaws);
+    jigsaws.Remove(this);
+    m_DependancyJigsaws.Add(jigsaws);
 
-    jigsawsPtr->Clear();
-    FillGroupJigsawDependancies(jigsawsPtr);
-    jigsawsPtr->Remove(this);
-    m_DependancyJigsaws.Add(jigsawsPtr);
+    jigsaws.Clear();
+    FillGroupJigsawDependancies(jigsaws);
+    jigsaws.Remove(this);
+    m_DependancyJigsaws.Add(jigsaws);
 
-    delete jigsawsPtr;
-    return m_Mind;
+    return true;
   }
 
-  bool InvisibleJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>* chain_jigsawPtr){
-    if(!m_Mind) return false;
-    if(chain_jigsawPtr->Contains(this)) return true;
+  bool InvisibleJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& chain_jigsaws){
+   if(!IsSoundMind()) return false;
+    if(chain_jigsaws.Contains(this)) return true;
 
     // Add group dependancy jigsaws first
-    RFList<Jigsaw>* group_jigsawsPtr = new RFList<Jigsaw>();
-    FillGroupJigsawDependancies(group_jigsawsPtr);
-    group_jigsawsPtr->Remove(this);
-    int Ngroup = group_jigsawsPtr->GetN();
+    RFList<Jigsaw> group_jigsaws;
+    FillGroupJigsawDependancies(group_jigsaws);
+    group_jigsaws.Remove(this);
+
+    int Ngroup = group_jigsaws.GetN();
     for(int i = Ngroup-1; i >= 0; i--){
-      Jigsaw* jigsawPtr = group_jigsawsPtr->Get(i);
-      if(!chain_jigsawPtr->Contains(jigsawPtr)){
-	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
-	  m_Mind = false;
+      Jigsaw* jigsawPtr = group_jigsaws.Get(i);
+      if(!chain_jigsaws.Contains(jigsawPtr)){
+	if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsaws)){
+	  SetMind(false);
 	  return false;
 	}
       }
       m_DependancyJigsaws.Remove(jigsawPtr);
     }
+
     // Satisfy dependancy jigsaws
     while(m_DependancyJigsaws.GetN() > 0){
       Jigsaw* jigsawPtr = m_DependancyJigsaws.Get(m_DependancyJigsaws.GetN()-1);
-      if(chain_jigsawPtr->Contains(jigsawPtr)){
+      if(chain_jigsaws.Contains(jigsawPtr)){
 	m_DependancyJigsaws.Remove(jigsawPtr);
 	continue;
       }
       if(jigsawPtr->DependsOnJigsaw(this)) m_DependancyJigsaws.Remove(jigsawPtr);
-      if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawPtr)){
-	m_Mind = false;
+      if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsaws)){
+	SetMind(false);
 	return false;
       }
       m_DependancyJigsaws.Remove(jigsawPtr);
       continue;
     }
-    chain_jigsawPtr->Add(this);
+    chain_jigsaws.Add(this);
     
     return true;
   }

@@ -48,7 +48,7 @@ namespace RestFrames {
     virtual double GetMinimumMass();
     virtual bool AnalyzeEvent();
 
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsaws);
+    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws);
 
   protected:
     void CalcCoef();

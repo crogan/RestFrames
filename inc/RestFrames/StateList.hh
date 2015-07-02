@@ -43,15 +43,10 @@ namespace RestFrames {
   public:
     StateList();
     StateList(const RestFrames::RFList<RestFrames::State>& list);
-    StateList(const RestFrames::RFList<RestFrames::State>* listPtr);
-    StateList(const std::vector<RestFrames::State*>& list);
-    StateList(const std::vector<RestFrames::State*>* listPtr);
+    StateList(const std::vector<State*>& list);
     ~StateList();
 
-    // bool Add(const StateList* objsPtr);
-    // bool Add(const StateList& objs);
-
-    StateList* Copy() const;
+    StateList Copy() const;
 
     int GetIndexFrame(const RestFrame* framePtr) const;
     TLorentzVector GetFourVector() const;

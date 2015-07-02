@@ -88,11 +88,11 @@ namespace RestFrames {
     return m_Frames.Contains(framePtr);
   }
 
-  RFList<RestFrame>* Group::GetFrames() const {
+  RFList<RestFrame> Group::GetFrames() const {
     return m_Frames.Copy();
   }
 
-  RFList<Jigsaw>* Group::GetJigsaws() const {
+  RFList<Jigsaw> Group::GetJigsaws() const {
     return m_Jigsaws.Copy();
   }
 
@@ -101,12 +101,15 @@ namespace RestFrames {
   }
 
   bool Group::InitializeAnalysis(){
+    m_Log << LogVerbose;
+    m_Log << "Initializing Group for analysis...";
+    m_Log << m_End;
     m_States.Clear();
     m_StatesToSplit.Clear();
     if(m_GroupStatePtr) delete m_GroupStatePtr;
 
     m_GroupStatePtr = InitializeGroupState();
-    m_GroupStatePtr->AddFrame(&m_Frames);
+    m_GroupStatePtr->AddFrame(m_Frames);
     m_States.Add(m_GroupStatePtr);
     m_StatesToSplit.Add(m_GroupStatePtr);
  
@@ -119,7 +122,7 @@ namespace RestFrames {
       return false;
     }
     m_Log << LogVerbose;
-    m_Log << "Successfully initialized Group for analysis";
+    m_Log << "...Done";
     m_Log << m_End;
     SetBody(true);
     SetMind(true);
@@ -168,7 +171,7 @@ namespace RestFrames {
       return false;
     
     m_Log << LogVerbose;
-    m_Log << "Found Jigsaw to split State." << endl; 
+    m_Log << "Found Jigsaw to split State:" << endl; 
     m_Log << " Frames:" << endl << "   ";
     m_Log << Log(statePtr->GetFrames()) << endl;
     m_Log << " Jigsaw:" << Log(jigsawForSplitPtr);
@@ -188,16 +191,15 @@ namespace RestFrames {
     }
 
     State* statePtr = m_StatesToSplit.Get(0);
-    StateList* statesPtr = jigsawPtr->InitializeOutputStates(statePtr);
+    StateList states = jigsawPtr->InitializeOutputStates(statePtr);
     m_StatesToSplit.Remove(statePtr);
-    m_StatesToSplit.Add(statesPtr);
-    m_States.Add(statesPtr);
+    m_StatesToSplit.Add(states);
+    m_States.Add(states);
     m_Jigsaws.Add(jigsawPtr);
-    if(statesPtr) delete statesPtr;
     return;
   }
-
-  State* Group::GetState(const RestFrame* framePtr) const{
+ 
+  State* Group::GetState(const RestFrame* framePtr) const {
     if(!framePtr) return nullptr;
     int Ns = m_States.GetN();
     for(int i = Ns-1; i >= 0; i--){
@@ -210,54 +212,50 @@ namespace RestFrames {
     return nullptr;
   }
   
-  bool Group::GetState(const RFList<RestFrame>* framesPtr, StateList*& statesPtr){
-    if(statesPtr){
-      delete statesPtr;
-      statesPtr = nullptr;
-    }
-    if(!framesPtr) return false;
+  StateList Group::GetStates(const RestFrames::RFList<RestFrame>& frames) const {
+    StateList states;
 
-    statesPtr = new StateList();
+    // Find States that correspond to these frames, giving
+    // preference to States that include more frames (less dependancies)
     int Ns = m_States.GetN();
     for(int i = 0; i < Ns; i++){
-      State* istatePtr = m_States.Get(i);
-      RFList<RestFrame>* iframesPtr = istatePtr->GetFrames();
-      if(framesPtr->Contains(iframesPtr)){
-	int Nsol = statesPtr->GetN();
+      RFList<RestFrame> iframes = m_States.Get(i)->GetFrames();
+      if(frames.Contains(iframes)){
+	int Nsol = states.GetN();
 	bool isnew = true;
 	for(int j = 0; j < Nsol; j++){
-	  State* jstatePtr = statesPtr->Get(j);
-	  RFList<RestFrame>* jframesPtr = jstatePtr->GetFrames();
-	  if(iframesPtr->Contains(jframesPtr)){
-	    statesPtr->Remove(jstatePtr);
-	    delete jframesPtr;
+	  // if new copy of existing frame list appears, discard old
+	  RFList<RestFrame> jframes = states.Get(j)->GetFrames();
+	  if(iframes.Contains(jframes)){
+	    states.Remove(states.Get(j));
 	    break;
 	  }
-	  if(jframesPtr->Contains(iframesPtr)){
+	  // if subset of existing frame list appears, discard new
+	  if(jframes.Contains(iframes)){
 	    isnew = false;
-	    delete jframesPtr;
 	    break;
 	  }
-	  delete jframesPtr;
 	}
-	if(isnew) statesPtr->Add(istatePtr);
+	if(isnew) states.Add(m_States.Get(i));
       }
-      delete iframesPtr;
     }
-    RFList<RestFrame>* match_framesPtr = new RFList<RestFrame>();
-    Ns = statesPtr->GetN();
-    for(int i = 0; i < Ns; i++){
-      match_framesPtr->Add(statesPtr->Get(i)->GetFrames());
+
+    // check to see whether collection of states 
+    // includes all requested frames
+    RFList<RestFrame> match_frames;
+    Ns = states.GetN();
+    for(int i = 0; i < Ns; i++)
+      match_frames.Add(states.Get(i)->GetFrames());
+    
+    if(!frames.IsSame(match_frames)){
+      m_Log << LogWarning;
+      m_Log << "Unable to find States corresponding to frames: " << endl;
+      m_Log << Log(frames) << m_End;
+      SetMind(false);
+      return StateList();
     }
-    if(!framesPtr->IsSame(match_framesPtr)){
-      delete match_framesPtr;
-      delete statesPtr;
-      statesPtr = nullptr;
-      m_Mind = false;
-      return false;
-    }
-    delete match_framesPtr;
-    return true;
+    
+    return states;
   }
 
 }

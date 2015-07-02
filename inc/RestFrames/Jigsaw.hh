@@ -69,21 +69,22 @@ namespace RestFrames {
     Group* GetGroup() const;
 
     bool CanSplit(const State* statePtr);
-    bool CanSplit(const RestFrames::RFList<RestFrame>* framesPtr);
+    bool CanSplit(const RestFrames::RFList<RestFrame>& frames);
   
-    virtual StateList* InitializeOutputStates(State* statePtr);
-    virtual bool InitializeDependancyStates(const StateList* statesPtr, const RestFrames::RFList<Group>* groupsPtr);
+    virtual StateList InitializeOutputStates(State* statePtr);
+    virtual bool InitializeDependancyStates(const StateList& states, 
+					    const RestFrames::RFList<Group>& groups);
     virtual bool InitializeDependancyJigsaws();
 
     virtual int GetNChildStates() const;
     virtual State* GetChildState(int i) const;
-    virtual RFList<RestFrame>* GetChildFrames(int i) const;
-    virtual RFList<RestFrame>* GetChildFrames() const;
+    virtual RestFrames::RFList<RestFrame> GetChildFrames(int i) const;
+    virtual RestFrames::RFList<RestFrame> GetChildFrames() const;
 
-    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr);
-    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>* jigsawsPtr);
+    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
+    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>* chain_jigsawPtr) = 0;
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaw) = 0;
     bool DependsOnJigsaw(Jigsaw* jigsawPtr);
 
     virtual bool AnalyzeEvent() = 0;
@@ -106,9 +107,9 @@ namespace RestFrames {
 
     virtual State* NewOutputState();
     void AddOutputFrame(RestFrame* framePtr, int i = 0);
-    void AddOutputFrame(RFList<RestFrame>* framesPtr, int i = 0);
+    void AddOutputFrame(const RFList<RestFrame>& frames, int i = 0);
     void AddDependancyFrame(RestFrame* framePtr, int i = 0);
-    void AddDependancyFrame(RFList<RestFrame>* framesPtr, int i = 0);
+    void AddDependancyFrame(const RFList<RestFrame>& frames, int i = 0);
 
   private:
     void Init();

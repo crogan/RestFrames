@@ -127,7 +127,7 @@ namespace RestFrames {
 
     FillFrameTree(framePtr);
     InitTreeGrid();
-    ConvertNodeCoordinates(&m_TreeNodes);
+    ConvertNodeCoordinates(m_TreeNodes);
   }
 
   void FramePlot::AddFrameTree(const RFrame& frame, Jigsaw& jigsaw){
@@ -135,21 +135,21 @@ namespace RestFrames {
   }
   void FramePlot::AddFrameTree(const RFrame* framePtr, Jigsaw* jigsawPtr){
     if(!framePtr) return;
-   
+
     AddFrameTree(framePtr);
     AddJigsaw(jigsawPtr);
   }
 
   void FramePlot::AddFrameTree(const RFrame& frame, const RFList<Jigsaw>& jigsaws){
-    AddFrameTree(&frame,&jigsaws);
+    AddFrameTree(&frame, jigsaws);
   }
-  void FramePlot::AddFrameTree(const RFrame* framePtr, const RFList<Jigsaw>* jigsawsPtr){
+  void FramePlot::AddFrameTree(const RFrame* framePtr, const RFList<Jigsaw>& jigsaws){
     if(!framePtr) return;
-    if(!jigsawsPtr) return;
+
     AddFrameTree(framePtr);
 
-    int N = jigsawsPtr->GetN();
-    for(int j = 0; j < N; j++) AddJigsaw(jigsawsPtr->Get(j));
+    int N = jigsaws.GetN();
+    for(int j = 0; j < N; j++) AddJigsaw(jigsaws.Get(j));
   }
 
   void FramePlot::AddJigsaw(Jigsaw& jigsaw){
@@ -158,8 +158,8 @@ namespace RestFrames {
   void FramePlot::AddJigsaw(Jigsaw* jigsawPtr){
     if(!jigsawPtr) return;
     
-    RFList<RestFrame>* framesPtr = jigsawPtr->GetChildFrames();
-    if(m_Frames.Contains(framesPtr)){
+    RFList<RestFrame> frames = jigsawPtr->GetChildFrames();
+    if(m_Frames.Contains(frames)){
       if(m_Jigsaws.Add(jigsawPtr)){
 	FillJigsawLink(jigsawPtr);
 	if(jigsawPtr->IsInvisibleJigsaw()){
@@ -172,7 +172,6 @@ namespace RestFrames {
 	}
       }
     }
-    delete framesPtr;
   }
 
   void FramePlot::AddGroupTree(const Group& group){
@@ -186,7 +185,7 @@ namespace RestFrames {
 
     FillGroupTree(groupPtr);
     InitTreeGrid();
-    ConvertNodeCoordinates(&m_TreeNodes);
+    ConvertNodeCoordinates(m_TreeNodes);
   }
 
   void FramePlot::InitTreeGrid(){
@@ -198,20 +197,20 @@ namespace RestFrames {
     if(m_Type == PGroup) m_Node_R = min(min(0.65/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
   }
 
-  void FramePlot::ConvertNodeCoordinates(vector<FramePlotNode*>* nodesPtr){
+  void FramePlot::ConvertNodeCoordinates(vector<FramePlotNode*>& nodes){
     double xmin = 0.;
     double xmax = 1.;
     double ymin = 0.;
     double ymax = 1.;
     if(m_Type == PFrame) ymax = 0.8;
-    int Nnode = nodesPtr->size();
+    int Nnode = nodes.size();
     for(int i = 0; i < Nnode; i++){
-      double new_x = nodesPtr->at(i)->GetX();
-      double new_y = nodesPtr->at(i)->GetY();
+      double new_x = nodes[i]->GetX();
+      double new_y = nodes[i]->GetY();
       new_x = xmin + (xmax-xmin)*(new_x+0.5)/double(m_Ncol[int(new_y)]);
       new_y = ymin + (ymax-ymin)*(1.-(new_y+0.5)/double(m_Nrow));
-      nodesPtr->at(i)->SetX(new_x);
-      nodesPtr->at(i)->SetY(new_y);
+      nodes[i]->SetX(new_x);
+      nodes[i]->SetY(new_y);
     }
   }
    
@@ -386,16 +385,16 @@ namespace RestFrames {
     if(!groupPtr) return;
     FramePlotNode* high_old = nullptr;
     FramePlotNode* high_new = nullptr;
-    vector<RFList<RestFrame>*> child_framesPtr;
+    //vector<RFList<RestFrame> > child_frames;
     for(int s = 0; s < Nsplit; s++){
-      RFList<RestFrame>* framesPtr = jigsawPtr->GetChildFrames(s);
+      RFList<RestFrame> frames = jigsawPtr->GetChildFrames(s);
       int Nnode = m_TreeNodes.size();
       FramePlotNode* last_nodePtr = nullptr;
       double high = -1.;
       for(int n = 0; n < Nnode; n++){
 	FramePlotNode* nodePtr = m_TreeNodes[n];
 	const RestFrame* framePtr = nodePtr->GetFrame();
-	if(framesPtr->Contains(framePtr)){
+	if(frames.Contains(framePtr)){
 	  nodePtr->AddJigsaw(jigsawPtr);
 	  if(groupPtr->ContainsFrame(framePtr) || false){
 	    if(nodePtr->GetY() > high){
@@ -413,7 +412,7 @@ namespace RestFrames {
 	  last_nodePtr = nodePtr;
 	}
       }
-      delete framesPtr;
+      
       if(s != 0){
 	FramePlotLink* linkPtr = new FramePlotLink(high_old,high_new);
 	linkPtr->SetWavy(true);
@@ -624,18 +623,18 @@ namespace RestFrames {
   }
 
   string FramePlot::GetStateTitle(State* statePtr){
-    RFList<RestFrame> *framesPtr = statePtr->GetFrames();
-    int Nf = framesPtr->GetN();
+    RFList<RestFrame> frames = statePtr->GetFrames();
+    int Nf = frames.GetN();
     string title = "";
     if(Nf > 2) title.append("#splitline{");
-    title.append(framesPtr->Get(0)->GetTitle());
+    title.append(frames.Get(0)->GetTitle());
     for(int f = 1; f < Nf; f++){
       if(f%((Nf+1)/2) == 0 && Nf > 2) title.append("}{");
       title.append("+ ");
-      title.append(framesPtr->Get(f)->GetTitle());
+      title.append(frames.Get(f)->GetTitle());
     }
     if(Nf > 2) title.append("}");
-    delete framesPtr;
+   
     return title;
   }
 

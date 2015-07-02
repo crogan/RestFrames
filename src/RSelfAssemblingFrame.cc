@@ -97,10 +97,7 @@ namespace RestFrames {
       SetBody(true);
 
     // group list
-    RFList<Group>* groupsPtr = GetListGroups();
-    RFList<Group> groups;
-    groups.Add(groupsPtr);
-    delete groupsPtr;
+    RFList<Group> groups = GetListGroups();
 
     // state list
     StateList states;
@@ -108,9 +105,9 @@ namespace RestFrames {
     RemoveChildStates();
     int Ncs = m_ChildStates_UnAssembled.size();
     for(int i = 0; i < Ncs; i++)
-      states.Add(&m_ChildStates_UnAssembled[i]);
+      states.Add(m_ChildStates_UnAssembled[i]);
 
-    if(!InitializeStates(&states, &groups)){
+    if(!InitializeStates(states, groups)){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after disassembly";
       m_Log << m_End;
@@ -129,10 +126,7 @@ namespace RestFrames {
       return;
     }
 
-    RFList<Group>* groupsPtr = GetListGroups();
-    RFList<Group> groups;
-    groups.Add(groupsPtr);
-    delete groupsPtr;
+    RFList<Group> groups = GetListGroups();
 
     // new States
     StateList states;
@@ -162,10 +156,10 @@ namespace RestFrames {
       if(m_ChildStates[i].GetN() == 1){ 
 	CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_ChildStates[i].Get(0));
 	if(statePtr){ // is CombinatoricState
-	  const StateList* elementsPtr = statePtr->GetElements();
-	  int Nelement = elementsPtr->GetN();
+	  StateList elements = statePtr->GetElements();
+	  int Nelement = elements.GetN();
 	  for(int e = 0; e < Nelement; e++){
-	    State* elementPtr = elementsPtr->Get(e);
+	    State* elementPtr = elements.Get(e);
 	    // Get a new visible frame for each individual state
 	    RestFrame* new_framePtr = GetNewVisibleFrame(framePtr->GetName(),framePtr->GetTitle());
 	    elementPtr->ClearFrames();
@@ -176,7 +170,6 @@ namespace RestFrames {
 	    Ps.push_back(V);
 	    states.Add(elementPtr);
 	  }
-	  delete elementsPtr;
 	  expand = true;
 	}
       }
@@ -185,7 +178,7 @@ namespace RestFrames {
 	TLorentzVector V = m_ChildStates[i].GetFourVector();
 	if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	Ps.push_back(V);
-	states.Add(&m_ChildStates[i]);
+	states.Add(m_ChildStates[i]);
       }
     }
 
@@ -202,7 +195,7 @@ namespace RestFrames {
     }
 
     SetMind(true);
-    if(!InitializeStates(&states, &groups)){
+    if(!InitializeStates(states, groups)){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after assembly";
       m_Log << m_End;
@@ -210,7 +203,7 @@ namespace RestFrames {
     }
 
     for(int i = 0; i < m_Ndecay; i++)
-      if(!m_DecayFrames.Get(i)->InitializeStates(&states, &groups)){
+      if(!m_DecayFrames.Get(i)->InitializeStates(states, groups)){
 	m_Log << LogWarning;
 	m_Log << "Problem connecting states after assembly in frame:";
 	m_Log << Log(m_DecayFrames.Get(i));
@@ -218,7 +211,7 @@ namespace RestFrames {
       }
     
     for(int i = 0; i < m_Nvisible; i++)
-      if(!m_VisibleFrames.Get(i)->InitializeStates(&states, &groups)){
+      if(!m_VisibleFrames.Get(i)->InitializeStates(states, groups)){
 	m_Log << LogWarning;
 	m_Log << "Problem connecting states after assembly in frame:";
 	m_Log << Log(m_VisibleFrames.Get(i));

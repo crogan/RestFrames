@@ -41,43 +41,13 @@ namespace RestFrames {
       Add(list.Get(i));
   }
 
-  StateList::StateList(const RFList<State>* listPtr){
-    if(!listPtr) return;
-    int N = listPtr->GetN();
-    for(int i = 0; i < N; i++)
-      Add(listPtr->Get(i));
-  }
-
    StateList::StateList(const vector<State*>& list){
     int N = list.size();
     for(int i = 0; i < N; i++)
       Add(list[i]);
   }
 
-  StateList::StateList(const vector<State*>* listPtr){
-    if(!listPtr) return;
-    int N = listPtr->size();
-    for(int i = 0; i < N; i++)
-      Add(listPtr->at(i));
-  }
-
   StateList::~StateList(){}
-
-  // bool StateList::Add(const StateList* objsPtr){
-  //   int N = objsPtr->GetN();
-  //   double ret = true;
-  //   for(int i = 0; i < N; i++) 
-  //     if(!Add(objsPtr->Get(i))) ret = false;
-  //   return ret;
-  // }
-
-  // bool StateList::Add(const StateList& objs){
-  //   int N = objs.GetN();
-  //   double ret = true;
-  //   for(int i = 0; i < N; i++) 
-  //     if(!Add(objs.Get(i))) ret = false;
-  //   return ret;
-  // }
 
   int StateList::GetIndexFrame(const RestFrame* framePtr) const {
     int N = GetN();
@@ -87,11 +57,9 @@ namespace RestFrames {
     return -1;
   }
 
-  StateList* StateList::Copy() const {
-    StateList* statesPtr = new StateList(m_Objs);
-    // int N = GetN();
-    // for(int i = 0; i < N; i++) statesPtr->Add(m_Objs[i]);
-    return statesPtr;
+  StateList StateList::Copy() const {
+    StateList states(m_Objs); 
+    return states;
   }
 
    TLorentzVector StateList::GetFourVector() const {

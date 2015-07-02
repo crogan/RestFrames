@@ -47,25 +47,24 @@ namespace RestFrames {
   
     bool Add(T& obj);
     bool Add(T* objPtr);
-    bool Add(const RFList<T>* objsPtr);
     bool Add(const RFList<T>& objs);
     int Remove(const T* objPtr);
-    void Remove(const RFList<T>* objsPtr);
+    void Remove(const RFList<T>& objs);
     void Clear();
     int GetN() const { return m_Objs.size(); }
     T* Get(int i) const;
     int GetIndex(const T* objPtr) const;
     bool Contains(const T* objPtr) const;
-    bool Contains(const RFList<T>* objsPtr) const;
+    bool Contains(const RFList<T>& objs) const;
 
-    bool IsSame(const RFList<T>* objsPtr) const;
-    RFList<T>* Copy() const;
-    RFList<T>* Union(const RFList<T>* objsPtr) const;
-    RFList<T>* Intersection(const RFList<T>* objsPtr) const;
-    RFList<T>* Complement(const RFList<T>* objsPtr) const;
-    int SizeUnion(const RFList<T>* objsPtr) const;
-    int SizeIntersection(const RFList<T>* objsPtr) const;
-    int SizeComplement(const RFList<T>* objsPtr) const;
+    bool IsSame(const RFList<T>& objs) const;
+    RFList<T> Copy() const;
+    RFList<T> Union(const RFList<T>& objs) const;
+    RFList<T> Intersection(const RFList<T>& objs) const;
+    RFList<T> Complement(const RFList<T>& objs) const;
+    int SizeUnion(const RFList<T>& objs) const;
+    int SizeIntersection(const RFList<T>& objs) const;
+    int SizeComplement(const RFList<T>& objs) const;
 
   protected:
     vector<T*> m_Objs;

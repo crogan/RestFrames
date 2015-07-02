@@ -42,6 +42,7 @@ namespace RestFrames {
     InvisibleJigsaw(sname, stitle, 2, 2)
   {
     Init();
+    cout << "ADADADADA" << endl;
   }
  
   ContraBoostInvariantJigsaw::~ContraBoostInvariantJigsaw(){
@@ -52,18 +53,17 @@ namespace RestFrames {
    
   }
 
-  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>* jigsawsPtr){ 
-    if(!jigsawsPtr) return;
-    
+  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){ 
     int Nchild = GetNChildStates();
     for(int i = 0 ; i < Nchild; i++){
       InvisibleState* statePtr = dynamic_cast<InvisibleState*>(GetChildState(i));
-      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsawsPtr);
-      StateList states = m_DependancyStates[i];
+      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsaws);
+      StateList states;
+      states.Add(m_DependancyStates[i]);
       int N = states.GetN();
       for(int j = 0; j < N; j++){
 	State* jstatePtr = states.Get(j);
-	if(jstatePtr) jstatePtr->FillGroupJigsawDependancies(jigsawsPtr);
+	if(jstatePtr) jstatePtr->FillGroupJigsawDependancies(jigsaws);
       }
     }
   }
@@ -89,8 +89,10 @@ namespace RestFrames {
   }
 
   bool ContraBoostInvariantJigsaw::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupPtr) return m_Spirit;
+    if(!IsSoundMind()){
+      SetSpirit(false);
+      return false;
+    }
     
     CalcCoef();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
@@ -103,7 +105,6 @@ namespace RestFrames {
     Pvis2.Boost(-Boost);
     INV.Boost(-Boost);
 
-    
     double E1 = Pvis1.E();
     double E2 = Pvis2.E();
     TVector3 P1 = Pvis1.Vect();

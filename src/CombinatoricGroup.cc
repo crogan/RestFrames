@@ -151,7 +151,7 @@ namespace RestFrames {
     }
     
     group_statePtr->ClearElements();
-    group_statePtr->AddElement(&m_StateElements);    
+    group_statePtr->AddElement(m_StateElements);    
 
     SetSpirit(true);
     return true;

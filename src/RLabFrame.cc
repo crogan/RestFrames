@@ -66,10 +66,10 @@ namespace RestFrames {
   
   bool RLabFrame::InitializeLabGroups(){
     m_Log << LogVerbose << "Initializing Groups associated with this tree" << m_End;
+    
     m_LabGroups.Clear();
-    RFList<Group> *groupsPtr = GetListGroups();
-    m_LabGroups.Add(groupsPtr);
-    delete groupsPtr;
+    m_LabGroups.Add(GetListGroups());
+
     int Ngroup = m_LabGroups.GetN();
     for(int i = 0; i < Ngroup; i++){
       if(!m_LabGroups.Get(i)->InitializeAnalysis()){
@@ -84,37 +84,43 @@ namespace RestFrames {
 
   bool RLabFrame::InitializeLabStates(){
     m_Log << LogVerbose << "Initializing States associated with this tree" << m_End;
+    
     ClearStates();
-    RFList<RestFrame>* framesPtr = GetListFramesType(FVisible);
-    int Nf = framesPtr->GetN();
+    
+    // create states for visible frames not assigned to a Group
+    RFList<RestFrame> frames = GetListFramesType(FVisible);
+    int Nf = frames.GetN();
     int Ng = m_LabGroups.GetN();
     for(int f = 0; f < Nf; f++){
       bool has_group = false;
       for(int g = 0; g < Ng; g++){
-	if(m_LabGroups.Get(g)->ContainsFrame(framesPtr->Get(f))){
+	if(m_LabGroups.Get(g)->ContainsFrame(frames.Get(f))){
 	  has_group = true;
 	  break;
 	}
       }
       if(!has_group) {
 	State* statePtr = new State();
-	statePtr->AddFrame(framesPtr->Get(f));
+	statePtr->AddFrame(frames.Get(f));
 	m_LabStates.Add(statePtr);
       }
     }
-    delete framesPtr;
 
-    framesPtr = GetListFramesType(FInvisible);
-    Nf = framesPtr->GetN();
+    // check that all invisible frames are assigned to a Group
+    frames = GetListFramesType(FInvisible);
+    Nf = frames.GetN();
     for(int i = 0; i < Nf; i++){
       bool has_group = false;
       for(int g = 0; g < Ng; g++){
-	if(m_LabGroups.Get(g)->ContainsFrame(framesPtr->Get(i))){
+	if(m_LabGroups.Get(g)->ContainsFrame(frames.Get(i))){
 	  has_group = true;
 	  break;
 	}
       }
       if(!has_group){
+	m_Log << LogWarning;
+	m_Log << "Found InvisibleFrame without an assigned group: " << endl;
+	m_Log << Log(frames.Get(i)) << m_End;
 	return false;
       }
     }
@@ -123,58 +129,60 @@ namespace RestFrames {
 
   bool RLabFrame::InitializeLabJigsaws(){
     m_Log << LogVerbose << "Initializing Jigsaws associated with this tree" << m_End;
+    
     m_LabJigsaws.Clear();
+    
     int Ng = m_LabGroups.GetN();
-    // Initialize Dependancy States in jigsaws
+    
+    // Initialize Dependancy States in Jigsaws
     for(int g = 0; g < Ng; g++){
-      Group* groupPtr = m_LabGroups.Get(g);
-      RFList<Jigsaw>* jigsawsPtr = groupPtr->GetJigsaws();
-      int Nj = jigsawsPtr->GetN();
-      for(int j = 0; j < Nj; j++){
-	Jigsaw* jigsawPtr = jigsawsPtr->Get(j);
-	if(!jigsawPtr->InitializeDependancyStates(&m_LabStates,&m_LabGroups)){
-	  delete jigsawsPtr;
+      RFList<Jigsaw> jigsaws = m_LabGroups.Get(g)->GetJigsaws();
+      int Nj = jigsaws.GetN();
+      for(int j = 0; j < Nj; j++)
+	if(!jigsaws.Get(j)->InitializeDependancyStates(m_LabStates, m_LabGroups)){
+	  m_Log << LogWarning;
+	  m_Log << "Unable to initialize dependancy states for Jigsaw:" << endl;
+	  m_Log << Log(jigsaws.Get(j)) << m_End;
 	  return false;
 	}
-      }
-      delete jigsawsPtr;
     }
-    // Initialize Dependancy Jigsaw lists in jigsaws
+
+    // Initialize Dependancy Jigsaw lists inside jigsaws
     for(int g = 0; g < Ng; g++){
-      Group* groupPtr = m_LabGroups.Get(g);
-      RFList<Jigsaw>* jigsawsPtr = groupPtr->GetJigsaws();
-      int Nj = jigsawsPtr->GetN();
+      RFList<Jigsaw> jigsaws = m_LabGroups.Get(g)->GetJigsaws();
+      int Nj = jigsaws.GetN();
       for(int j = 0; j < Nj; j++){
-	Jigsaw* jigsawPtr = jigsawsPtr->Get(j);
+	Jigsaw* jigsawPtr = jigsaws.Get(j);
 	if(!jigsawPtr->InitializeDependancyJigsaws()){
-	  delete jigsawsPtr;
+	  m_Log << LogWarning;
+	  m_Log << "Unable to initialize dependancy Jigsaw list for Jigsaw:" << endl;
+	  m_Log << Log(jigsaws.Get(j)) << m_End;
 	  return false;
 	}
 	m_LabJigsaws.Add(jigsawPtr);
       }
-      delete jigsawsPtr;
     }
     // Initialize Jigsaw execution list
-    RFList<Jigsaw>* chain_jigsawsPtr = new RFList<Jigsaw>();
+    RFList<Jigsaw> chain_jigsaws;
     int Nj = m_LabJigsaws.GetN();
     for(int i = 0; i < Nj; i++){
-      Jigsaw* jigsawPtr = m_LabJigsaws.Get(i);
-      if(!jigsawPtr->InitializeJigsawExecutionList(chain_jigsawsPtr)){
+      if(!m_LabJigsaws.Get(i)->InitializeJigsawExecutionList(chain_jigsaws)){
 	m_LabJigsaws.Clear();
-	delete chain_jigsawsPtr;
+	m_Log << LogWarning;
+	m_Log << "Unable to initialize Jigsaw execution list in Jigsaw:" << endl;
+	m_Log << Log(m_LabJigsaws.Get(i)) << m_End;
 	return false;
       }
     }  
     
     m_LabJigsaws.Clear();
-    m_LabJigsaws.Add(chain_jigsawsPtr);
-    delete chain_jigsawsPtr;
+    m_LabJigsaws.Add(chain_jigsaws);
 
     return true;
   }
 
   bool RLabFrame::InitializeAnalysis(){
-    m_Log << LogVerbose << "Initializing this tree for analysis" << m_End;
+    m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
    
     if(!InitializeLabGroups()){
       m_Log << LogWarning << "Unable to intialize Groups" << m_End;
@@ -192,12 +200,13 @@ namespace RestFrames {
       SetMind(false);
       return false;
     }
-    if(!InitializeStatesRecursive(&m_LabStates,&m_LabGroups)){
+    if(!InitializeStatesRecursive(m_LabStates, m_LabGroups)){
       m_Log << LogWarning << "Unable to recursively initialize tree" << m_End;
       SetMind(false);
       return false;
     }
 
+    m_Log << LogVerbose << "...Done" << m_End;
     SetMind(true);
     return true;
   }
@@ -230,10 +239,9 @@ namespace RestFrames {
     int Ns = m_LabStates.GetN();
     for(int i = 0; i < Ns; i++){
       State* statePtr = m_LabStates.Get(i);
-      RFList<RestFrame>* framesPtr = statePtr->GetFrames();
-      VisibleFrame* vframePtr = dynamic_cast<VisibleFrame*>(framesPtr->Get(0));
+      RFList<RestFrame> frames = statePtr->GetFrames();
+      VisibleFrame* vframePtr = dynamic_cast<VisibleFrame*>(frames.Get(0));
       if(vframePtr) statePtr->SetFourVector(vframePtr->GetLabFrameFourVector());
-      delete framesPtr;
     }
   
     int Ng = m_LabGroups.GetN();

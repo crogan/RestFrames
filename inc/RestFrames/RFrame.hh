@@ -52,9 +52,9 @@ namespace RestFrames {
     virtual void SetGroup(Group* groupPtr);
     Group* GetGroup() const { return m_GroupPtr; }
 
-    RFList<Group>* GetListGroups() const;
+    RestFrames::RFList<Group> GetListGroups() const;
 
-    virtual bool InitializeStates(const StateList* statesPtr, const RestFrames::RFList<Group>* groupsPtr);
+    virtual bool InitializeStates(const StateList& states, const RestFrames::RFList<Group>& groups);
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
@@ -62,11 +62,11 @@ namespace RestFrames {
     vector<StateList> m_ChildStates;
     Group* m_GroupPtr;
 
-    virtual bool InitializeStatesRecursive(const StateList* statesPtr, const RestFrames::RFList<Group>* groupsPtr);
-    virtual bool InitializeNoGroupStates(const StateList* statesPtr);
-    virtual bool InitializeGroupStates(const RestFrames::RFList<Group>* groupsPtr);
+    virtual bool InitializeStatesRecursive(const StateList& states, const RestFrames::RFList<Group>& groups);
+    virtual bool InitializeNoGroupStates(const StateList& states);
+    virtual bool InitializeGroupStates(const RestFrames::RFList<Group>& groups);
 
-    void FillListGroupsRecursive(RestFrames::RFList<Group>* groupsPtr) const;
+    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
 
   private:
     void Init();
