@@ -5,6 +5,7 @@
 using namespace RestFrames;
 
 #pragma link C++ class RFBase;
+#pragma link C++ class RFKey;
 
 #pragma link C++ class RFList<RFBase>;
 #pragma link C++ class RFList<RestFrame>; 
@@ -12,6 +13,8 @@ using namespace RestFrames;
 #pragma link C++ class RFList<Jigsaw>;
 #pragma link C++ class RFList<Group>;
 #pragma link C++ class RFList<State>;
+#pragma link C++ class RFList<InvisibleState>;
+#pragma link C++ class RFList<CombinatoricState>;
 
 #pragma link C++ class RFLog;
 
@@ -74,13 +77,15 @@ using namespace RestFrames;
 using namespace RestFrames;
 
 #pragma link C++ class RFBase+;
-
+#pragma link C++ class RFKey+;
 #pragma link C++ class RFList<RFBase>+;
 #pragma link C++ class RFList<RestFrame>+; 
 #pragma link C++ class RFList<RFrame>+; 
 #pragma link C++ class RFList<Jigsaw>+;
 #pragma link C++ class RFList<Group>+;
 #pragma link C++ class RFList<State>+;
+#pragma link C++ class RFList<InvisibleState>+;
+#pragma link C++ class RFList<CombinatoricState>+;
 
 #pragma link C++ class RFLog+;
 

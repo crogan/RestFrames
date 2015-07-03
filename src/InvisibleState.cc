@@ -51,6 +51,10 @@ namespace RestFrames {
     m_Type = SInvisible;
   }
 
+  void InvisibleState::Clear(){
+    State::Clear();
+  }
+
   double InvisibleState::GetMinimumMass(){
     InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
     if(jigsawPtr) return jigsawPtr->GetMinimumMass();

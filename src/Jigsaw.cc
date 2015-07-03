@@ -47,9 +47,7 @@ namespace RestFrames {
     Init();
   }
 
-  Jigsaw::~Jigsaw(){
-    Clear();
-  }
+  Jigsaw::~Jigsaw(){ }
 
   void Jigsaw::Init(){
     SetKey(GenKey());
@@ -59,21 +57,10 @@ namespace RestFrames {
   }
 
   void Jigsaw::Clear(){
-    ClearOutputStates();
-    ClearDependancyStates();
-    m_DependancyJigsaws.Clear();
-  }
-  
-  void Jigsaw::ClearOutputStates(){
-    int Nos = m_OutputStates.GetN();
-    for(int i = 0; i < Nos; i++){
-      delete m_OutputStates.Get(i);
-    }
     m_OutputStates.Clear();
-  }
-
-  void Jigsaw::ClearDependancyStates(){
     m_DependancyStates.clear();
+    m_DependancyJigsaws.Clear();
+    RFBase::Clear();
   }
 
   int Jigsaw::GenKey(){
@@ -132,7 +119,14 @@ namespace RestFrames {
   }
 
   State* Jigsaw::NewOutputState(){
-    return new State();
+    State* statePtr = new State();
+    AddDependent(statePtr);
+    m_OutputStates.Add(statePtr);
+    return statePtr;
+  }
+
+  void Jigsaw::ClearOutputStates(){
+    m_OutputStates.Clear();
   }
 
   StateList Jigsaw::InitializeOutputStates(State* statePtr){
@@ -148,13 +142,12 @@ namespace RestFrames {
       State* new_statePtr = NewOutputState();
       new_statePtr->AddFrame(m_OutputFrames[i]);
       new_statePtr->SetParentJigsaw(this);
-      m_OutputStates.Add(new_statePtr);
     }
     return m_OutputStates.Copy();
   }
 
   bool Jigsaw::InitializeDependancyStates(const StateList& states, const RFList<Group>& groups){
-    ClearDependancyStates();
+    m_DependancyStates.clear();
     
     if(!IsSoundBody()){
       SetMind(false);

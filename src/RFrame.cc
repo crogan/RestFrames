@@ -44,17 +44,16 @@ namespace RestFrames {
     Init();
   }
 
-  RFrame::~RFrame(){
-   RemoveChildStates();
-  }
+  RFrame::~RFrame(){ }
 
   void RFrame::Init(){
     m_Ana = FReco;
     m_GroupPtr = nullptr;
   }
 
-  void RFrame::RemoveChildStates(){
+  void RFrame::Clear(){
     m_ChildStates.clear();
+    RestFrame::Clear();
   }
   
   void RFrame::SetGroup(Group* groupPtr){
@@ -133,7 +132,7 @@ namespace RestFrames {
   }
 
   bool RFrame::InitializeStates(const StateList& states, const RFList<Group>& groups){
-    RemoveChildStates();
+    m_ChildStates.clear();
     m_Mind = false;
     if(!m_Body){
       cout << endl << "Initialize Analysis Failure --: ";

@@ -250,7 +250,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    vector<GroupElementID> jetID;                    // ID for tracking jets in tree
+    vector<RFKey> jetID;                    // ID for tracking jets in tree
     for(int i = 0; i < int(JETS.size()); i++) 
       jetID.push_back(VIS_R.AddLabFrameFourVector(JETS[i]));
     LAB_R.AnalyzeEvent();                            // analyze the event

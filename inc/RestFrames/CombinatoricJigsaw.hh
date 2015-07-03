@@ -48,7 +48,7 @@ namespace RestFrames {
     CombinatoricJigsaw(const string& sname, const string& stitle);
     virtual ~CombinatoricJigsaw();
 
-    void Clear();
+    virtual void Clear();
 
     virtual void AddFrame(RestFrame& frame, int i = 0);
     virtual void AddFrame(RestFrame* framePtr, int i = 0);
@@ -58,6 +58,8 @@ namespace RestFrames {
   
   protected:
     virtual State* NewOutputState();
+    virtual void ClearOutputStates();
+    RestFrames::RFList<CombinatoricState> m_CombinatoricOutputStates;
 
     RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();

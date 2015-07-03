@@ -47,9 +47,7 @@ namespace RestFrames {
     Init();
   }
 
-  State::~State(){
-    Clear();
-  }
+  State::~State(){ }
 
   void State::Init(){
     SetKey(GenKey());
@@ -63,6 +61,7 @@ namespace RestFrames {
     m_ChildJigsawPtr = nullptr;
     m_P.SetPxPyPzE(0.,0.,0.,0.);
     m_Frames.Clear();
+    RFBase::Clear();
   }
 
   void State::ClearFrames(){

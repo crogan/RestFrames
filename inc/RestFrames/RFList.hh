@@ -35,6 +35,34 @@
 using namespace std;
 
 namespace RestFrames {
+  
+  ///////////////////////////////////////////////
+  // RFKey class
+  ///////////////////////////////////////////////
+  class RFKey {
+
+  public:
+    RFKey(){ }
+    RFKey(const RFKey& key){ m_Key = key.GetKey(); }
+    ~RFKey(){ }
+
+    void operator=(const RFKey& key){ m_Key = key.GetKey(); }
+
+    bool operator==(const RFKey& key) const { return (m_Key == key.GetKey()); }
+
+    void SetKey(int key){ m_Key = key; }
+
+    int GetKey() const { return m_Key; }
+
+    bool IsSame(const RFKey& key) const {
+      return m_Key == key.GetKey();
+    }
+
+  private:
+    int m_Key;
+
+  };
+ 
 
   ///////////////////////////////////////////////
   // RFList class
@@ -48,13 +76,19 @@ namespace RestFrames {
     bool Add(T& obj);
     bool Add(T* objPtr);
     bool Add(const RFList<T>& objs);
+    int Remove(const T& obj);
     int Remove(const T* objPtr);
     void Remove(const RFList<T>& objs);
     void Clear();
     int GetN() const { return m_Objs.size(); }
     T* Get(int i) const;
+    T* Get(const RFKey& key) const;
+    int GetIndex(const RFKey& key) const;
     int GetIndex(const T* objPtr) const;
+    int GetIndex(const T& obj) const;
+    bool Contains(const RFKey& key) const;
     bool Contains(const T* objPtr) const;
+    bool Contains(const T& obj) const;
     bool Contains(const RFList<T>& objs) const;
 
     bool IsSame(const RFList<T>& objs) const;

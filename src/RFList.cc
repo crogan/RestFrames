@@ -31,7 +31,8 @@
 #include "RestFrames/RFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
-#include "RestFrames/State.hh"
+#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
 
@@ -52,6 +53,15 @@ namespace RestFrames {
   template <class T>
   void RFList<T>::Clear(){
     m_Objs.clear();
+  }
+
+  template <class T>
+  T* RFList<T>::Get(const RFKey& key) const{
+    int N = GetN();
+    for(int i = 0; i < N; i++)
+      if(m_Objs[i]->IsSame(key)) return m_Objs[i];
+    
+    return nullptr;
   }
 
   template <class T>
@@ -98,6 +108,18 @@ namespace RestFrames {
   }
 
   template <class T>
+  int RFList<T>::Remove(const T& obj){
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      if(m_Objs[i]->IsSame(obj)){
+	m_Objs.erase(m_Objs.begin()+i);
+	return i;
+      }
+    }
+    return -1;
+  }
+
+  template <class T>
   void RFList<T>::Remove(const RFList<T>& objs){
     int N = objs.GetN();
     for(int i = 0; i < N; i++) Remove(objs.Get(i));
@@ -114,6 +136,24 @@ namespace RestFrames {
   }
 
   template <class T>
+  bool RFList<T>::Contains(const RFKey& key) const {
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      if(m_Objs[i]->IsSame(key)) return true;
+    }
+    return false;
+  }
+
+  template <class T>
+  bool RFList<T>::Contains(const T& obj) const {
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      if(m_Objs[i]->IsSame(obj)) return true;
+    }
+    return false;
+  }
+
+  template <class T>
   bool RFList<T>::Contains(const RFList<T>& objs) const {
     int N = objs.GetN();
     for(int i = 0; i < N; i++){
@@ -125,6 +165,24 @@ namespace RestFrames {
   template <class T>
   bool RFList<T>::IsSame(const RFList<T>& objs) const {
     return SizeUnion(objs) == SizeIntersection(objs);
+  }
+
+  template <class T>
+  int RFList<T>::GetIndex(const RFKey& key) const {
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      if(m_Objs[i]->IsSame(key)) return i;
+    }
+    return -1;
+  }
+
+  template <class T>
+  int RFList<T>::GetIndex(const T& obj) const {
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      if(m_Objs[i]->IsSame(obj)) return i;
+    }
+    return -1;
   }
 
   template <class T>
@@ -208,5 +266,7 @@ namespace RestFrames {
   template class RFList<Jigsaw>;
   template class RFList<Group>;
   template class RFList<State>;
+  template class RFList<InvisibleState>;
+  template class RFList<CombinatoricState>;
 
 }

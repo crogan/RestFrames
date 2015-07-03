@@ -46,15 +46,14 @@ namespace RestFrames {
     Init();
   }
 
-  CombinatoricJigsaw::~CombinatoricJigsaw(){
-    
-  }
+  CombinatoricJigsaw::~CombinatoricJigsaw(){ }
 
   void CombinatoricJigsaw::Init(){
     m_Type = JCombinatoric;
   }
 
   void CombinatoricJigsaw::Clear(){
+    ClearOutputStates();
     Jigsaw::Clear();
   }
 
@@ -89,7 +88,16 @@ namespace RestFrames {
   }
 
   State* CombinatoricJigsaw::NewOutputState(){
-    return new CombinatoricState();
+    CombinatoricState* statePtr = new CombinatoricState();
+    AddDependent(statePtr);
+    m_OutputStates.Add(statePtr);
+    m_CombinatoricOutputStates.Add(statePtr);
+    return statePtr;
+  }
+
+  void CombinatoricJigsaw::ClearOutputStates(){
+    m_OutputStates.Clear();
+    m_CombinatoricOutputStates.Clear();
   }
 
   bool CombinatoricJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& chain_jigsaws){
@@ -174,9 +182,9 @@ namespace RestFrames {
     m_Outputs.clear();
     m_NForOutput.clear();
     m_NExclusive.clear();
-    int Noutput = m_OutputStates.GetN();
+    int Noutput = m_CombinatoricOutputStates.GetN();
     for(int i = 0; i < Noutput; i++){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_OutputStates.Get(i));
+      CombinatoricState* statePtr = m_CombinatoricOutputStates.Get(i);
       if(!statePtr) return false;
       m_Outputs.push_back(statePtr);
       RFList<RestFrame> frames = statePtr->GetFrames();

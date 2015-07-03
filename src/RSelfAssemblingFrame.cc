@@ -47,14 +47,7 @@ namespace RestFrames {
     Init();
   }
   
-  RSelfAssemblingFrame::~RSelfAssemblingFrame(){
-    int Nv = m_VisibleFrames.GetN();
-    for(int i = 0; i < Nv; i++) delete m_VisibleFrames.Get(i);
-    m_VisibleFrames.Clear();
-    int Nd = m_DecayFrames.GetN();
-    for(int i = 0; i < Nd; i++) delete m_DecayFrames.Get(i);
-    m_DecayFrames.Clear();
-  }
+  RSelfAssemblingFrame::~RSelfAssemblingFrame(){ }
 
   void RSelfAssemblingFrame::Init(){
     m_RType = RDSelfAssembling;
@@ -64,6 +57,12 @@ namespace RestFrames {
     m_Mind_UnAssembled = false;
     m_Nvisible = 0;
     m_Ndecay = 0;
+  }
+
+  void RSelfAssemblingFrame::Clear(){
+    m_VisibleFrames.Clear();
+    m_DecayFrames.Clear();
+    RFrame::Clear();
   }
 
   void RSelfAssemblingFrame::ClearEventRecursive(){
@@ -83,7 +82,7 @@ namespace RestFrames {
   
     // replace frames with unassembled ones
     RemoveChildren();
-    ClearNewDecayFrames();
+    ClearNewFrames();
     int Ncf = m_ChildFrames_UnAssembled.GetN();
     for(int i = 0; i < Ncf; i++)
       AddChildFrame(m_ChildFrames_UnAssembled.Get(i));
@@ -102,7 +101,7 @@ namespace RestFrames {
     // state list
     StateList states;
 
-    RemoveChildStates();
+    m_ChildStates.clear();
     int Ncs = m_ChildStates_UnAssembled.size();
     for(int i = 0; i < Ncs; i++)
       states.Add(m_ChildStates_UnAssembled[i]);
@@ -183,8 +182,8 @@ namespace RestFrames {
     }
 
     RemoveChildren();
-    RemoveChildStates();
-   
+    m_ChildStates.clear();
+
     AssembleRecursive(this, frames, Ps); 
 
     if(!IsSoundBodyRecursive()){
@@ -331,14 +330,15 @@ namespace RestFrames {
     return true;
   }
 
-  void RSelfAssemblingFrame::ClearNewDecayFrames(){
+  void RSelfAssemblingFrame::ClearNewFrames(){
     int N = m_DecayFrames.GetN();
-    for(int i = 0; i < N; i++) m_DecayFrames.Get(i)->RemoveChildren();
+    for(int i = 0; i < N; i++) m_DecayFrames.Get(i)->Clear();
+    N = m_VisibleFrames.GetN();
+    for(int i = 0; i < N; i++) m_VisibleFrames.Get(i)->Clear();
   }
 
   RFrame* RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
-      m_DecayFrames.Get(m_Ndecay)->RemoveChildStates();
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
     }
@@ -349,13 +349,13 @@ namespace RestFrames {
     RDecayFrame* framePtr = new RDecayFrame(name.str(),title.str());
     
     m_DecayFrames.Add(framePtr);
+    AddDependent(framePtr);
     m_Ndecay++;
     return framePtr;
   }
 
   RFrame* RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
-      m_VisibleFrames.Get(m_Nvisible)->RemoveChildStates();
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
     }
@@ -366,17 +366,16 @@ namespace RestFrames {
     RVisibleFrame* framePtr = new RVisibleFrame(name.str(),title.str());
     
     m_VisibleFrames.Add(framePtr);
+    AddDependent(framePtr);
     m_Nvisible++;
     return framePtr;
   }
 
-  const RestFrame* RSelfAssemblingFrame::GetFrame(GroupElementID obj) const {
+  const RestFrame* RSelfAssemblingFrame::GetFrame(const RFKey& key) const {
     if(!m_IsAssembled) return nullptr;
 
-    const State* statePtr = obj;
-
     for(int i = 0; i < m_ChildStates.size(); i++){
-      int index = m_ChildStates[i].GetIndex(statePtr);
+      int index = m_ChildStates[i].GetIndex(key);
       if(index >= 0) return m_ChildStates[i].Get(index)->GetFrame();
     }
     return nullptr;

@@ -45,6 +45,8 @@ namespace RestFrames {
     CombinatoricState();
     virtual ~CombinatoricState();
 	
+    virtual void Clear();
+
     virtual void Boost(const TVector3& B);
     virtual TLorentzVector GetFourVector() const; 
 
@@ -53,7 +55,9 @@ namespace RestFrames {
     void AddElement(const StateList& states);
     StateList GetElements() const;
     int GetNElements() const;
-    bool ContainsElement(const State* statePtr) const;
+    bool ContainsElement(const State& state) const;
+    bool ContainsElement(const RFKey& key) const;
+    const State* GetElement(const RFKey& key) const;
 
   protected:
     StateList m_Elements;

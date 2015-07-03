@@ -44,6 +44,7 @@ namespace RestFrames {
 
   RFBase::~RFBase(){
     delete m_LogPtr;
+    RFBase::Clear();
   }
 
   void RFBase::Init(const string& sname, const string& stitle){
@@ -55,22 +56,37 @@ namespace RestFrames {
     m_LogPtr = new RFLog();
   }
 
+  void RFBase::Clear(){
+    int N = m_Owns.size();
+    for(int i = 0; i < N; i++){
+      delete m_Owns[i];
+    }
+    m_Owns.clear();
+  }
+
+  void RFBase::AddDependent(RFBase* dep){
+    if(dep) m_Owns.push_back(dep);
+  }
+
+  bool RFBase::IsSame(const RFKey& key) const {
+    return (m_Key == key);
+  }
+
   bool RFBase::IsSame(const RFBase& obj) const {
     return IsSame(&obj);
   }
      
   bool RFBase::IsSame(const RFBase* objPtr) const {
     if(!objPtr) return false;
-    if(m_Key == objPtr->GetKey()) return true;
-    return false;
+    return objPtr->IsSame(m_Key);
   }
 
   void RFBase::SetKey(int key) {
-    m_Key = key;
+    m_Key.SetKey(key);
   }
 
-  int RFBase::GetKey() const {
-    return m_Key;
+  RFKey RFBase::GetKey() const {
+    return RFKey(m_Key);
   }
 
   string RFBase::GetName() const {

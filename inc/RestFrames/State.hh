@@ -50,7 +50,7 @@ namespace RestFrames {
     State();
     virtual ~State();
 
-    void Clear();
+    virtual void Clear();
 
     virtual void AddFrame(RestFrame* framePtr);
     virtual void AddFrame(RestFrame& frame);
@@ -85,15 +85,13 @@ namespace RestFrames {
     TLorentzVector m_P;
     RestFrames::RFList<RestFrame> m_Frames;
 
-    Jigsaw *m_ParentJigsawPtr;
-    Jigsaw *m_ChildJigsawPtr;
+    Jigsaw* m_ParentJigsawPtr;
+    Jigsaw* m_ChildJigsawPtr;
 
   private:
     void Init();
     int GenKey();
   };
-
-  typedef const State* GroupElementID;
 
 }
 

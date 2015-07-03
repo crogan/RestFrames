@@ -44,6 +44,8 @@ namespace RestFrames {
     InvisibleState();
     virtual ~InvisibleState();
 
+    virtual void Clear();
+
     virtual double GetMinimumMass();
     virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
 

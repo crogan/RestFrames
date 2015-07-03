@@ -36,11 +36,56 @@ using namespace std;
 
 namespace RestFrames {
   
+  class RestFrame;
+
   /// Type of RestFrame, with respect to its decays
   enum FrameType { FVisible, FInvisible, FDecay, FLab};
 
   /// Type of RestFrame, with respect to its analysis capabilities
   enum AnaType { FReco, FGen };
+
+  class RestFrameList {
+  public:
+    RestFrameList(){ }
+    ~RestFrameList(){ }
+    
+    void AddFrame(const RestFrame* frame){ m_Frames.push_back(frame); }
+    
+    vector<const RestFrame*> GetList() const { return m_Frames; }
+
+    RestFrameList& operator+(const RestFrame& frame);
+    RestFrameList& operator+(const RestFrameList& list);
+
+    double GetMass() const;
+
+    TLorentzVector GetFourVector(const RestFrame& frame) const {
+      return GetFourVector(&frame);
+    }
+    TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
+
+    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const {
+      return GetVisibleFourVector(&frame);
+    } 
+    TLorentzVector GetVisibleFourVector(const RestFrame* framePtr = nullptr) const;
+
+    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const {
+      return GetInvisibleFourVector(&frame);
+    }
+    TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const;
+
+    double GetEnergy(const RestFrame& frame) const {
+      return GetEnergy(&frame);
+    }
+    double GetEnergy(const RestFrame* framePtr = nullptr) const;
+
+    double GetMomentum(const RestFrame& frame) const {
+      return GetMomentum(&frame);
+    }
+    double GetMomentum(const RestFrame* framePtr = nullptr) const;
+
+  private:
+    vector<const RestFrame*> m_Frames;
+  };
 
   ////////////////////////////////////////////////////////////////////
   /// \brief Base class for all *reference* *frame* objects
@@ -60,6 +105,9 @@ namespace RestFrames {
     RestFrame(const string& sname, const string& stitle);
     
     virtual ~RestFrame();
+
+    /// \brief Clears RestFrame of all connections to other objects
+    virtual void Clear();
 
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame type methods
@@ -229,7 +277,26 @@ namespace RestFrames {
     ////////////////////////////////////////////////////////////////////
     ///@{
 
+    RestFrameList operator+(const RestFrame& frame){ 
+      RestFrameList list;
+      list.AddFrame(&frame);
+      list.AddFrame(this);
+      return list;
+    }
+
     virtual double GetMass() const;
+    TLorentzVector GetFourVector(const RestFrame& frame) const;
+    virtual TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
+    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
+    virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
+    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
+    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const; 
+    double GetEnergy(const RestFrame& frame) const;
+    virtual double GetEnergy(const RestFrame* framePtr) const;
+    double GetMomentum(const RestFrame& frame) const;
+    virtual double GetMomentum(const RestFrame* framePtr) const;
+
+
     double GetCosDecayAngle(const RestFrame& frame) const;
     virtual double GetCosDecayAngle(const RestFrame* framePtr = nullptr) const;
     virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
@@ -246,16 +313,6 @@ namespace RestFrames {
     virtual double GetScalarVisibleMomentum() const;
     virtual double GetTransverseScalarVisibleMomentum(const TVector3& axis = TVector3(0.,0.,1.), 
 						      const RestFrame* framePtr = nullptr) const;
-    TLorentzVector GetFourVector(const RestFrame& frame) const;
-    virtual TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
-    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
-    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const; 
-    double GetEnergy(const RestFrame& frame) const;
-    virtual double GetEnergy(const RestFrame* framePtr) const;
-    double GetMomentum(const RestFrame& frame) const;
-    virtual double GetMomentum(const RestFrame* framePtr) const;
     int GetFrameDepth(const RestFrame& frame) const;
     virtual int GetFrameDepth(const RestFrame* framePtr) const;
     const RestFrame* GetFrameAtDepth(int depth, const RestFrame& frame) const;
@@ -303,7 +360,7 @@ namespace RestFrames {
 			 vector<TVector3>& boosts) const;
 
     // Tree construction checks
-    bool IsCircularTree(vector<int>& keys) const;
+    bool IsCircularTree(vector<RFKey>& keys) const;
     bool IsConsistentAnaTree(AnaType ana) const;
     bool IsSoundBodyRecursive() const;
 

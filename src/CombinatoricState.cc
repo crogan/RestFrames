@@ -51,13 +51,12 @@ namespace RestFrames {
     m_Type = SCombinatoric;
   }
 
+  void CombinatoricState::Clear(){
+    ClearElements();
+    State::Clear();
+  }
+
   void CombinatoricState::ClearElements(){
-    /*
-    int N = GetNElements();
-    for(int i = 0; i < N; i++){
-      delete m_Elements.Get(i);
-    }
-    */
     m_Elements.Clear();
   }
 
@@ -80,8 +79,16 @@ namespace RestFrames {
     return m_Elements.GetN();
   }
 
-  bool CombinatoricState::ContainsElement(const State* statePtr) const {
-    return m_Elements.Contains(statePtr);
+  bool CombinatoricState::ContainsElement(const RFKey& key) const {
+    return m_Elements.Contains(key);
+  }
+
+  bool CombinatoricState::ContainsElement(const State& state) const {
+    return m_Elements.Contains(state);
+  }
+
+  const State* CombinatoricState::GetElement(const RFKey& key) const {
+    return m_Elements.Get(key);
   }
 
   void CombinatoricState::Boost(const TVector3& B){

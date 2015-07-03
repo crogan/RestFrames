@@ -31,10 +31,13 @@
 #define InvisibleJigsaw_HH
 
 #include "RestFrames/Jigsaw.hh"
+//#include "RestFrames/InvisibleState.hh"
 
 using namespace std;
 
 namespace RestFrames {
+
+  class InvisibleState;
 
   ///////////////////////////////////////////////
   // InvisibleJigsaw class
@@ -44,6 +47,8 @@ namespace RestFrames {
   public:
     InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis);
     virtual ~InvisibleJigsaw();
+
+    virtual void Clear();
 
     void AddVisibleFrame(RestFrame& framePtr, int i = 0);
     void AddVisibleFrame(RestFrame* framePtr, int i = 0);
@@ -63,6 +68,8 @@ namespace RestFrames {
 
   protected:
     virtual State* NewOutputState();
+    virtual void ClearOutputStates();
+    RestFrames::RFList<InvisibleState> m_InvisibleOutputStates;
 
   private:
     void Init(int Ninv, int Nvis);

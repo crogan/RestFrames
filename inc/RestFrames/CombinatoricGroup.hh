@@ -47,7 +47,7 @@ namespace RestFrames {
     CombinatoricGroup(const string& sname, const string& stitle);
     virtual ~CombinatoricGroup();
 
-    void Clear();
+    virtual void Clear();
 
     virtual void AddFrame(RestFrame& frame);
     virtual void AddFrame(RestFrame* framePtr);
@@ -63,14 +63,14 @@ namespace RestFrames {
 
     // Event analysis functions
     void ClearFourVectors();
-    GroupElementID AddLabFrameFourVector(const TLorentzVector& V);
+    RFKey AddLabFrameFourVector(const TLorentzVector& V);
     int GetNFourVectors() const;
 
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();
 
-    const RestFrame* GetFrame(const GroupElementID elementID);
-    TLorentzVector GetLabFrameFourVector(const GroupElementID elementID);
+    const RestFrame* GetFrame(const RFKey& key);
+    TLorentzVector GetLabFrameFourVector(const RFKey& key);
     int GetNElementsInFrame(const RestFrame& frame);
     int GetNElementsInFrame(const RestFrame* framePtr);
 	
@@ -82,6 +82,7 @@ namespace RestFrames {
     virtual State* InitializeGroupState();
     void ClearElements();
     void AddElement(State* statePtr);
+    void AddElement(State& state);
     int GetNElements() const;
 
   private:

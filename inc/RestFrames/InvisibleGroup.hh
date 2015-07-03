@@ -44,6 +44,8 @@ namespace RestFrames {
     InvisibleGroup(const string& sname, const string& stitle);
     virtual ~InvisibleGroup();
 	
+    virtual void Clear();
+
     virtual void AddFrame(RestFrame& frame);
     virtual void AddFrame(RestFrame* framePtr);
     virtual bool AddJigsaw(Jigsaw& jigsaw);

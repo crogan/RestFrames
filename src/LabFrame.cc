@@ -73,7 +73,7 @@ namespace RestFrames {
   }
 
   bool LabFrame::InitializeTree() const {
-     vector<int> keys;
+     vector<RFKey> keys;
     if(IsCircularTree(keys)){
       cout << endl << "Consistent Topology Failure: ";
       cout << "Tree is circular in construction" << endl;

@@ -61,9 +61,12 @@ namespace RestFrames {
     
     virtual ~RFBase();
 
+    /// \brief Clears RFBase of all connections to other objects
+    virtual void Clear();
+
     ////////////////////////////////////////////////////////////////////
-    /// \name RestFrame identity/comparison methods
-    /// \brief RestFrame identity query member functions
+    /// \name RFBase identity/comparison methods
+    /// \brief RFBase identity query member functions
     /// 
     /// Member functions for identifying/comparing class instances
     ////////////////////////////////////////////////////////////////////
@@ -72,15 +75,18 @@ namespace RestFrames {
     /// \brief sets object identification key
     void SetKey(int key);
 
-    /// \brief Returns object identification key
-    int GetKey() const;
-    
+    /// \brief gets object identification key
+    RFKey GetKey() const;
+
     /// \brief Returns object name 
     string GetName() const;
     
     /// \brief Returns object title 
     string GetTitle() const;
     
+    /// \brief Tests whether key is the same as this
+    bool IsSame(const RFKey& key) const;
+
     /// \brief Tests whether *obj* is the same as this
     bool IsSame(const RFBase& obj) const;
     
@@ -94,6 +100,9 @@ namespace RestFrames {
 
     /// \brief String of information associated with object
     virtual string PrintString(LogType type = LogVerbose) const;
+
+    /// \brief pointer to RFBase object owned by this one
+    void AddDependent(RFBase* dep);
 
   protected:    
     mutable bool m_Body;       
@@ -111,10 +120,11 @@ namespace RestFrames {
 
     string m_Name;
     string m_Title;
-    int m_Key;
+    RFKey m_Key;
 
   private:
     void Init(const string& sname, const string& stitle);
+    vector<RFBase*> m_Owns;
     
   };
 

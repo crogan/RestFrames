@@ -47,7 +47,7 @@ namespace RestFrames {
   }
 
   Group::~Group(){
-    Clear();
+    if(m_GroupStatePtr) delete m_GroupStatePtr;
   }
 
   void Group::Init(){
@@ -63,6 +63,7 @@ namespace RestFrames {
     m_Jigsaws.Clear();
     m_StatesToSplit.Clear();
     m_JigsawsToUse.Clear(); 
+    RFBase::Clear();
   }
 
   int Group::GenKey(){
@@ -104,10 +105,9 @@ namespace RestFrames {
     m_Log << LogVerbose;
     m_Log << "Initializing Group for analysis...";
     m_Log << m_End;
+    if(m_GroupStatePtr) delete m_GroupStatePtr;
     m_States.Clear();
     m_StatesToSplit.Clear();
-    if(m_GroupStatePtr) delete m_GroupStatePtr;
-
     m_GroupStatePtr = InitializeGroupState();
     m_GroupStatePtr->AddFrame(m_Frames);
     m_States.Add(m_GroupStatePtr);
@@ -130,7 +130,8 @@ namespace RestFrames {
   }
 
   State* Group::InitializeGroupState(){
-    return new State();
+    State* state = new State();
+    return state;
   }
 
   bool Group::InitializeJigsaws(){

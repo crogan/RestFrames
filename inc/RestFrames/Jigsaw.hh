@@ -106,6 +106,7 @@ namespace RestFrames {
     RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
     virtual State* NewOutputState();
+    virtual void ClearOutputStates();
     void AddOutputFrame(RestFrame* framePtr, int i = 0);
     void AddOutputFrame(const RFList<RestFrame>& frames, int i = 0);
     void AddDependancyFrame(RestFrame* framePtr, int i = 0);
@@ -114,8 +115,6 @@ namespace RestFrames {
   private:
     void Init();
     int GenKey();
-    void ClearOutputStates();
-    void ClearDependancyStates();
   };
 }
 

@@ -45,10 +45,12 @@ namespace RestFrames {
     RSelfAssemblingFrame(const string& sname, const string& stitle);
     virtual ~RSelfAssemblingFrame();
 
+    virtual void Clear();
+
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
-    const RestFrame* GetFrame(GroupElementID obj) const;
+    const RestFrame* GetFrame(const RFKey& key) const;
 
   private:
     void Init();
@@ -65,7 +67,7 @@ namespace RestFrames {
 
     RFrame* GetNewDecayFrame(const string& sname, const string& stitle);
     RFrame* GetNewVisibleFrame(const string& sname, const string& stitle);
-    void ClearNewDecayFrames();
+    void ClearNewFrames();
 
     bool m_IsAssembled;
     bool m_IsBackedUp;

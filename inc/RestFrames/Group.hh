@@ -49,6 +49,7 @@ namespace RestFrames {
     Group(const string& sname, const string& stitle);
     virtual ~Group();
 
+    /// \brief Clears Group of all connections to other objects
     virtual void Clear();
 
     bool IsInvisibleGroup() const;

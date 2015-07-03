@@ -257,13 +257,12 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    vector<GroupElementID> B_ID;                      // ID for tracking jets in tree
+    vector<RFKey> B_ID;                      // ID for tracking jets in tree
     B_ID.push_back(B_R.AddLabFrameFourVector(Ba_G.GetFourVector()));
     B_ID.push_back(B_R.AddLabFrameFourVector(Bb_G.GetFourVector()));
     La_R.SetLabFrameFourVector(La_G.GetFourVector());
     Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
     LAB_R.AnalyzeEvent();                            // analyze the event
-
 
     //////////////////////////////////////
     // Observable Calculations
@@ -272,6 +271,12 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     //
     // signal tree observables
     //
+
+    g_Log << LogDebug;
+    g_Log << TT_R.GetMass() << " ";
+    g_Log << (Ta_R.GetFourVector()+Tb_R.GetFourVector()).M() << " ";
+    g_Log << (Ta_R+Tb_R).GetMass() << " ";
+    g_Log << (Ba_R+La_R+Bb_R+Lb_R+Na_R+Nb_R).GetMass() << " " << g_End;
 
     //*** total CM mass
     double shat = TT_R.GetMass();
@@ -370,6 +375,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   delete can;
 
   foutput->Close();
+  g_Log << LogInfo << "Finished" << g_End;
 }
 
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title, string label){

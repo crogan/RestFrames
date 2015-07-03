@@ -56,7 +56,7 @@ namespace RestFrames {
     int today = now->GetDate();
     int clock = now->GetTime();
     delete now;
-    int seed = today+clock+m_Key;
+    int seed = today+clock+m_Key.GetKey();
     m_Random = new TRandom3(seed);
     
   }

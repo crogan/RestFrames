@@ -46,12 +46,14 @@ namespace RestFrames {
     Init();
   }
 
-  InvisibleGroup::~InvisibleGroup(){
-   
-  }
+  InvisibleGroup::~InvisibleGroup(){ }
 
   void InvisibleGroup::Init(){
     m_Type = GInvisible;
+  }
+
+  void InvisibleGroup::Clear(){
+    Group::Clear();
   }
 
   void InvisibleGroup::AddFrame(RestFrame& frame){

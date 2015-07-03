@@ -48,6 +48,8 @@ namespace RestFrames {
     RLabFrame(const string& sname, const string& stitle);
     virtual ~RLabFrame();
   
+    virtual void Clear();
+
     virtual bool InitializeAnalysis();
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();

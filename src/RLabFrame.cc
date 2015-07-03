@@ -56,6 +56,11 @@ namespace RestFrames {
   
   }
 
+  void RLabFrame::Clear(){
+    ClearStates();
+    RFrame::Clear();
+  }
+
   void RLabFrame::ClearStates(){
     int Ns = m_LabStates.GetN();
     for(int i = 0; i < Ns; i++){
@@ -184,6 +189,14 @@ namespace RestFrames {
   bool RLabFrame::InitializeAnalysis(){
     m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
    
+    if(!IsSoundBody()){
+      m_Log << LogWarning;
+      m_Log << "Unable to initialize tree for analysis before ";
+      m_Log << "successful call of \"InitializeTree()\"" << endl << m_End;
+      SetMind(false);
+      return false;
+    }
+
     if(!InitializeLabGroups()){
       m_Log << LogWarning << "Unable to intialize Groups" << m_End;
       SetMind(false);

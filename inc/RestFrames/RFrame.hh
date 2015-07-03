@@ -47,7 +47,8 @@ namespace RestFrames {
     RFrame(const string& sname, const string& stitle);
     virtual ~RFrame();
 
-    void RemoveChildStates();
+    /// \brief Clears RFrame of all connections to other objects
+    virtual void Clear();
 
     virtual void SetGroup(Group* groupPtr);
     Group* GetGroup() const { return m_GroupPtr; }

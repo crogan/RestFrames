@@ -46,8 +46,11 @@ namespace RestFrames {
     Init(Ninv, Nvis);
   }
 
-  InvisibleJigsaw::~InvisibleJigsaw(){
-   
+  InvisibleJigsaw::~InvisibleJigsaw(){ }
+
+  void InvisibleJigsaw::Clear(){
+    ClearOutputStates();
+    Jigsaw::Clear();
   }
 
   void InvisibleJigsaw::Init(int Ninv, int Nvis){
@@ -93,8 +96,17 @@ namespace RestFrames {
       AddInvisibleFrame(frames.Get(f), i);
   }
 
+  void InvisibleJigsaw::ClearOutputStates(){
+    m_OutputStates.Clear();
+    m_InvisibleOutputStates.Clear();
+  }
+
   State* InvisibleJigsaw::NewOutputState(){
-    return new InvisibleState();
+    InvisibleState* statePtr = new InvisibleState();
+    AddDependent(statePtr);
+    m_OutputStates.Add(statePtr);
+    m_InvisibleOutputStates.Add(statePtr);
+    return statePtr;
   }
 
   double InvisibleJigsaw::GetMinimumMass(){
@@ -102,7 +114,7 @@ namespace RestFrames {
     int N = GetNChildStates();
     double M = 0.;
     for(int i = 0; i < N; i++){
-      InvisibleState* statePtr = dynamic_cast<InvisibleState*>(GetChildState(i));
+      InvisibleState* statePtr = m_InvisibleOutputStates.Get(i);
       if(!statePtr) return 0.;
       M += statePtr->GetMinimumMass();
     }

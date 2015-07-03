@@ -47,9 +47,7 @@ namespace RestFrames {
     Init();
   }
 
-  CombinatoricGroup::~CombinatoricGroup(){
-    Clear();
-  }
+  CombinatoricGroup::~CombinatoricGroup(){ }
 
   void CombinatoricGroup::Init(){
     m_Type = GCombinatoric;
@@ -59,10 +57,8 @@ namespace RestFrames {
     ClearElements();
     m_NElementsForFrame.clear();
     m_NExclusiveElementsForFrame.clear(); 
-    int Ninit = m_InitStates.GetN();
-    for(int i = 0; i < Ninit; i++)
-      delete m_InitStates.Get(i);
     m_InitStates.Clear();
+    Group::Clear();
   }
 
   void CombinatoricGroup::AddFrame(RestFrame& frame){
@@ -123,6 +119,11 @@ namespace RestFrames {
     m_StateElements.Clear();
   }
 
+  void CombinatoricGroup::AddElement(State& state){
+    m_StateElements.Add(state);
+  }
+
+
   void CombinatoricGroup::AddElement(State* statePtr){
     m_StateElements.Add(statePtr);
   }
@@ -161,7 +162,7 @@ namespace RestFrames {
     ClearElements();
    }
 
-  GroupElementID CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
+  RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
     State* statePtr = GetNewState();
     
     TLorentzVector P = V;
@@ -169,21 +170,19 @@ namespace RestFrames {
     statePtr->SetFourVector(P);
     AddElement(statePtr);
    
-    return statePtr;
+    return statePtr->GetKey();
   }
 
   int CombinatoricGroup::GetNFourVectors() const{
     return GetNElements();
   }
 
-  const RestFrame* CombinatoricGroup::GetFrame(const GroupElementID elementID){
-    //State* elementPtr = (State*)elementID;
-    const State* elementPtr = elementID;
+  const RestFrame* CombinatoricGroup::GetFrame(const RFKey& key){
     int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
       CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
       if(!statePtr) continue;
-      if(statePtr->ContainsElement(elementPtr)){
+      if(statePtr->ContainsElement(key)){
 	RestFrame* framePtr = statePtr->GetFrame();
 	if(framePtr) return framePtr;
       }
@@ -191,19 +190,17 @@ namespace RestFrames {
     return nullptr;
   }
 
-  TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const GroupElementID elementID){
-    const State* elementPtr = elementID;
+  TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const RFKey& key){
     TLorentzVector P(0.,0.,0.,0.);
     int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
       CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
       if(!statePtr) continue;
-      if(statePtr->ContainsElement(elementPtr)){
-	P = elementPtr->GetFourVector();
-	break;
-      }
+      if(statePtr->ContainsElement(key))
+	return statePtr->GetElement(key)->GetFourVector();
+      
     }
-    return P;
+    return TLorentzVector(0.,0.,0.,0.);
   }
 
   int CombinatoricGroup::GetNElementsInFrame(const RestFrame& frame){
@@ -222,6 +219,7 @@ namespace RestFrames {
       return m_InitStates.Get(GetNElements());
 
     State* statePtr = new State();
+    AddDependent(statePtr);
     m_InitStates.Add(statePtr);
     return statePtr;
   }
