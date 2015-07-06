@@ -44,15 +44,15 @@ namespace RestFrames {
    StateList::StateList(const vector<State*>& list){
     int N = list.size();
     for(int i = 0; i < N; i++)
-      Add(list[i]);
+      Add(*list[i]);
   }
 
   StateList::~StateList(){}
 
-  int StateList::GetIndexFrame(const RestFrame* framePtr) const {
+  int StateList::GetIndexFrame(const RestFrame& frame) const {
     int N = GetN();
     for(int i = 0; i < N; i++){
-      if(m_Objs[i]->IsFrame(framePtr)) return i;
+      if(m_Objs[i]->IsFrame(frame)) return i;
     }
     return -1;
   }

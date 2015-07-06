@@ -55,7 +55,7 @@ namespace RestFrames {
       return false;
     }
     int Nchild = GetNChildren();
-    if(Nchild < 1 || !GetParentFrame()){
+    if(Nchild < 1 || GetParentFrame().IsEmpty()){
       SetBody(false);
       return false;
     } 

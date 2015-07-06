@@ -55,7 +55,7 @@ namespace RestFrames {
       return false;
     }
     int Nchild = GetNChildren();
-    if(Nchild > 0 || !GetParentFrame()){
+    if(Nchild > 0 || GetParentFrame().IsEmpty()){
       m_Log << LogWarning << "Problem with parent or child frames" << m_End;
       SetBody(false);
       return false;

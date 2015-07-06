@@ -44,6 +44,12 @@ namespace RestFrames {
     Init();
   }
 
+  RFrame::RFrame() : 
+    RestFrame()
+  {
+    Init();
+  }
+
   RFrame::~RFrame(){ }
 
   void RFrame::Init(){
@@ -52,15 +58,26 @@ namespace RestFrames {
   }
 
   void RFrame::Clear(){
+    if(m_GroupPtr)
+      m_GroupPtr->RemoveFrame(*this);
     m_ChildStates.clear();
     RestFrame::Clear();
   }
   
-  void RFrame::SetGroup(Group* groupPtr){
-    if(m_GroupPtr){
-      m_GroupPtr->RemoveFrame(this);
-    }
-    m_GroupPtr = groupPtr;
+  void RFrame::SetGroup(Group& group){
+    if(group.IsEmpty()) return;
+
+    if(m_GroupPtr)
+      m_GroupPtr->RemoveFrame(*this);
+    
+    m_GroupPtr = &group;
+  }
+
+  Group& RFrame::GetGroup() const { 
+    if(m_GroupPtr)
+      return *m_GroupPtr;
+    else 
+      return g_Group;
   }
 
   RFList<Group> RFrame::GetListGroups() const {
@@ -70,31 +87,27 @@ namespace RestFrames {
   }
 
   void RFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
-    groups.Add(m_GroupPtr);
+    if(m_GroupPtr) groups.Add(*m_GroupPtr);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      RFrame* childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
+      RFrame* childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
       if(childPtr) childPtr->FillListGroupsRecursive(groups);
     }
   }
 
   bool RFrame::InitializeNoGroupStates(const StateList& states){
     int Nchild = GetNChildren();
-  
     for(int i = 0; i < Nchild; i++){
-      RestFrame* childPtr = GetChildFrame(i);
-      if(!childPtr) return false;
-
+      RestFrame& child = GetChildFrame(i);
       m_ChildStates.push_back(StateList());
-    
-      RFList<RestFrame> frames = childPtr->GetListFramesType(FVisible);
+      RFList<RestFrame> frames = child.GetListFramesType(FVisible);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
-	RFrame* rframePtr = dynamic_cast<RFrame*>(frames.Get(f));
+	RFrame* rframePtr = dynamic_cast<RFrame*>(&frames.Get(f));
 	if(!rframePtr) return false;
-	if(rframePtr->GetGroup()){
+	if(!rframePtr->GetGroup().IsEmpty())
 	  continue;
-	}
+       
 	int index = states.GetIndexFrame(frames.Get(f));
 	if(index >= 0)  m_ChildStates[i].Add(states.Get(index));
       }
@@ -111,18 +124,17 @@ namespace RestFrames {
     terminal_types.push_back(FInvisible);
 
     for(int c = 0; c < Nchild; c++){
-      RFList<RestFrame> frames = GetChildFrame(c)->GetListFramesType(terminal_types);
+      RFList<RestFrame> frames = GetChildFrame(c).GetListFramesType(terminal_types);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
-	RestFrame* framePtr = frames.Get(f);
-	if(!framePtr) return false;
+	RestFrame& frame = frames.Get(f);
 	for(int g = 0; g < Ngroup; g++){
-	  Group* groupPtr = groups.Get(g);
-	  if(!groupPtr) return false;
-	  if(groupPtr->ContainsFrame(framePtr)){
-	    State* statePtr = groupPtr->GetState(framePtr);
-	    if(!statePtr) return false;
-	    m_ChildStates[c].Add(statePtr);
+	  Group& group = groups.Get(g);
+	  if(group.IsEmpty()) return false;
+	  if(group.ContainsFrame(frame)){
+	    State& state = group.GetState(frame);
+	    if(state.IsEmpty()) return false;
+	    m_ChildStates[c].Add(state);
 	    break;
 	  }
 	}
@@ -152,7 +164,7 @@ namespace RestFrames {
     int Nchild = GetNChildren();
     bool child_mind = true;
     for(int i = 0; i < Nchild; i++){
-      RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
+      RFrame *childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
       if(!childPtr) return false;
       if(!childPtr->InitializeStatesRecursive(states, groups)) child_mind = false;;
     }
@@ -167,7 +179,7 @@ namespace RestFrames {
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
-      GetChildFrame(i)->ClearEventRecursive();
+      GetChildFrame(i).ClearEventRecursive();
   }
 
   bool RFrame::AnalyzeEventRecursive(){
@@ -187,8 +199,8 @@ namespace RestFrames {
       SetChildBoostVector(i, B_child);
       Ptot += P;
 
-      RFrame *childPtr = dynamic_cast<RFrame*>(GetChildFrame(i));
-      childPtr->SetFourVector(P,this);
+      RFrame *childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
+      childPtr->SetFourVector(P,*this);
       if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
 	B_child *= -1.;
 	m_ChildStates[i].Boost(B_child);
@@ -205,7 +217,7 @@ namespace RestFrames {
 	m_ChildStates[i].Boost(B_child);
       }
     }
-    if(m_Type == FLab) SetFourVector(Ptot,this);
+    if(m_Type == FLab) SetFourVector(Ptot,*this);
     SetSpirit(true);
     return true;
   }

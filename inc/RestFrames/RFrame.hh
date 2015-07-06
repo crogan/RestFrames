@@ -45,13 +45,14 @@ namespace RestFrames {
   class RFrame : public virtual RestFrame {
   public:
     RFrame(const string& sname, const string& stitle);
+    RFrame();
     virtual ~RFrame();
 
     /// \brief Clears RFrame of all connections to other objects
     virtual void Clear();
 
-    virtual void SetGroup(Group* groupPtr);
-    Group* GetGroup() const { return m_GroupPtr; }
+    virtual void SetGroup(Group& group);
+    Group& GetGroup() const;
 
     RestFrames::RFList<Group> GetListGroups() const;
 

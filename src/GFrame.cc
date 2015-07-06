@@ -71,7 +71,7 @@ namespace RestFrames {
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
-      GetChildFrame(i)->ClearEventRecursive();
+      GetChildFrame(i).ClearEventRecursive();
   }
 
   bool GFrame::AnalyzeEventRecursive(){
@@ -80,7 +80,7 @@ namespace RestFrames {
 
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++){
-      if(!GetChildFrame(i)->AnalyzeEventRecursive()){
+      if(!GetChildFrame(i).AnalyzeEventRecursive()){
 	return false;
       }
     }
@@ -96,8 +96,7 @@ namespace RestFrames {
       TVector3 B_child = P.BoostVector();
 
       SetChildBoostVector(i, B_child);
-      dynamic_cast<GFrame*>(GetChildFrame(i))->SetFourVector(P,this);
-      //GetChildFrame(i)->SetFourVector(P,this);
+      dynamic_cast<GFrame*>(&GetChildFrame(i))->SetFourVector(P,*this);
     }
   }
 

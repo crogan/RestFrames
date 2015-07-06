@@ -51,13 +51,13 @@ namespace RestFrames {
     virtual TLorentzVector GetFourVector() const; 
 
     void ClearElements();
-    void AddElement(State* statePtr);
+    void AddElement(State& state);
     void AddElement(const StateList& states);
     StateList GetElements() const;
     int GetNElements() const;
     bool ContainsElement(const State& state) const;
     bool ContainsElement(const RFKey& key) const;
-    const State* GetElement(const RFKey& key) const;
+    const State& GetElement(const RFKey& key) const;
 
   protected:
     StateList m_Elements;

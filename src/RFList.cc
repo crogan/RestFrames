@@ -38,13 +38,13 @@ using namespace std;
 
 namespace RestFrames {
 
+   RFKey g_Key(-1);
+
   ///////////////////////////////////////////////
   // RFList class methods
   ///////////////////////////////////////////////
   template <class T>
-  RFList<T>::RFList(){
-   
-  }
+  RFList<T>::RFList(){ }
   template <class T>
   RFList<T>::~RFList<T>(){
     Clear();
@@ -56,33 +56,28 @@ namespace RestFrames {
   }
 
   template <class T>
-  T* RFList<T>::Get(const RFKey& key) const{
+  T& RFList<T>::Get(const RFKey& key) const{
     int N = GetN();
     for(int i = 0; i < N; i++)
-      if(m_Objs[i]->IsSame(key)) return m_Objs[i];
+      if(m_Objs[i]->IsSame(key)) return *m_Objs[i];
     
-    return nullptr;
+    return GetDefault();
   }
 
   template <class T>
-  T* RFList<T>::Get(int i) const { 
-    if(i < 0 || i >= GetN()) return nullptr;
-    return m_Objs[i];
+  T& RFList<T>::Get(int i) const { 
+    if(i < 0 || i >= GetN()) return GetDefault();
+    return *m_Objs[i];
   }
 
   template <class T>
   bool RFList<T>::Add(T& obj){
-    return Add(&obj);
-  }
-
-  template <class T>
-  bool RFList<T>::Add(T* objPtr){
-    if(!objPtr) return false;
+    if(obj.IsSame(g_Key)) return false;
     int N = GetN();
     for(int i = 0; i < N; i++){
-      if(m_Objs[i]->IsSame(objPtr)) return false;
+      if(m_Objs[i]->IsSame(obj)) return false;
     }
-    m_Objs.push_back(objPtr);
+    m_Objs.push_back(&obj);
     return true;
   }
 
@@ -93,18 +88,6 @@ namespace RestFrames {
     for(int i = 0; i < N; i++) 
       if(!Add(objs.Get(i))) ret = false;
     return ret;
-  }
-
-  template <class T>
-  int RFList<T>::Remove(const T* objPtr){
-    int N = GetN();
-    for(int i = 0; i < N; i++){
-      if(m_Objs[i]->IsSame(objPtr)){
-	m_Objs.erase(m_Objs.begin()+i);
-	return i;
-      }
-    }
-    return -1;
   }
 
   template <class T>
@@ -123,16 +106,6 @@ namespace RestFrames {
   void RFList<T>::Remove(const RFList<T>& objs){
     int N = objs.GetN();
     for(int i = 0; i < N; i++) Remove(objs.Get(i));
-  }
-
-  template <class T>
-  bool RFList<T>::Contains(const T* objPtr) const {
-    if(!objPtr) return false;
-    int N = GetN();
-    for(int i = 0; i < N; i++){
-      if(m_Objs[i]->IsSame(objPtr)) return true;
-    }
-    return false;
   }
 
   template <class T>
@@ -186,19 +159,10 @@ namespace RestFrames {
   }
 
   template <class T>
-  int RFList<T>::GetIndex(const T* objPtr) const {
-    int N = GetN();
-    for(int i = 0; i < N; i++){
-      if(m_Objs[i]->IsSame(objPtr)) return i;
-    }
-    return -1;
-  }
-
-  template <class T>
   RFList<T> RFList<T>::Copy() const {
     RFList<T> objs;
     int N = GetN();
-    for(int i = 0; i < N; i++) objs.Add(m_Objs[i]);
+    for(int i = 0; i < N; i++) objs.Add(*m_Objs[i]);
     return objs;
   }
 
@@ -258,6 +222,14 @@ namespace RestFrames {
       if(Contains(objs.Get(i))) Nthis--;
     
     return Nthis;
+  }
+
+  template <class T>
+  T& RFList<T>::GetDefault() const {
+    // initialize default instance, if not done already
+    if(!m_DefaultPtr)
+      m_DefaultPtr = new T();
+    return *m_DefaultPtr;
   }
 
   template class RFList<RFBase>;

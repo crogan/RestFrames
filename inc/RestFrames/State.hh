@@ -48,27 +48,27 @@ namespace RestFrames {
   class State : public RFBase {
   public:
     State();
+    State(const RFKey& key);
     virtual ~State();
 
     virtual void Clear();
 
-    virtual void AddFrame(RestFrame* framePtr);
     virtual void AddFrame(RestFrame& frame);
     virtual void AddFrame(const RestFrames::RFList<RestFrame>& frames);
 
     void ClearFrames();
 
     RestFrames::RFList<RestFrame> GetFrames() const;
-    RestFrame* GetFrame() const;
+    RestFrame& GetFrame() const;
     int GetNFrames() const { return m_Frames.GetN(); }
 
-    bool IsFrame(const RestFrame* framePtr) const;
+    bool IsFrame(const RestFrame& frame) const;
     bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
 
-    void SetParentJigsaw(Jigsaw* jigsawPtr){ m_ParentJigsawPtr = jigsawPtr; }
-    void SetChildJigsaw(Jigsaw* jigsawPtr){ m_ChildJigsawPtr = jigsawPtr; }
-    Jigsaw* GetParentJigsaw() const { return m_ParentJigsawPtr; }
-    Jigsaw* GetChildJigsaw() const { return m_ChildJigsawPtr; }
+    void SetParentJigsaw(Jigsaw& jigsaw);
+    void SetChildJigsaw(Jigsaw& jigsaw);
+    Jigsaw const& GetParentJigsaw() const;
+    Jigsaw const& GetChildJigsaw() const;
 
     virtual void Boost(const TVector3& B);
     void SetFourVector(const TLorentzVector& V);
@@ -92,6 +92,8 @@ namespace RestFrames {
     void Init();
     int GenKey();
   };
+
+  extern State g_State;
 
 }
 

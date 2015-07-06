@@ -47,6 +47,13 @@ namespace RestFrames {
     Init();
   }
 
+  State::State(const RFKey& key)
+    : RFBase("State", "State") 
+  {
+    Init();
+    SetKey(key);
+  }
+
   State::~State(){ }
 
   void State::Init(){
@@ -55,6 +62,8 @@ namespace RestFrames {
     m_ChildJigsawPtr = nullptr;
     m_Log.SetSource("State");
   }
+
+  State g_State(g_Key);
 
   void State::Clear(){
     m_ParentJigsawPtr = nullptr;
@@ -79,13 +88,9 @@ namespace RestFrames {
   }
 
   void State::AddFrame(RestFrame& frame){
-    AddFrame(&frame);
-  }
-
-  void State::AddFrame(RestFrame* framePtr){
-    if(!framePtr) return;
-    if(!framePtr->IsVisibleFrame() && !framePtr->IsInvisibleFrame()) return;
-    m_Frames.Add(framePtr);
+    if(frame.IsEmpty()) return;
+    if(!frame.IsVisibleFrame() && !frame.IsInvisibleFrame()) return;
+    m_Frames.Add(frame);
   }
 
   void State::AddFrame(const RFList<RestFrame>& frames){
@@ -93,10 +98,10 @@ namespace RestFrames {
     for(int i = 0; i < N; i++) AddFrame(frames.Get(i));
   }
 
-  bool State::IsFrame(const RestFrame* framePtr) const {
-    if(!framePtr) return false;
+  bool State::IsFrame(const RestFrame& frame) const {
+    if(frame.IsEmpty()) return false;
     if(m_Frames.GetN() != 1) return false;
-    return m_Frames.Get(0)->IsSame(framePtr);
+    return m_Frames.Get(0) == frame;
   }
 
   bool State::IsFrames(const RFList<RestFrame>& frames) const {
@@ -107,9 +112,33 @@ namespace RestFrames {
     return m_Frames.Copy();
   }
 
-  RestFrame* State::GetFrame() const {
-    if(m_Frames.GetN() != 1) return nullptr;
+  RestFrame& State::GetFrame() const {
+    if(m_Frames.GetN() != 1) return g_RestFrame;
     return m_Frames.Get(0);
+  }
+
+  void State::SetParentJigsaw(Jigsaw& jigsaw){ 
+    if(jigsaw.IsEmpty()) return;
+    m_ParentJigsawPtr = &jigsaw; 
+  }
+
+  void State::SetChildJigsaw(Jigsaw& jigsaw){
+    if(jigsaw.IsEmpty()) return;
+    m_ChildJigsawPtr = &jigsaw; 
+  }
+
+  Jigsaw const& State::GetParentJigsaw() const { 
+    if(m_ParentJigsawPtr)
+      return *m_ParentJigsawPtr;
+    else 
+      return g_Jigsaw;
+  }
+  
+  Jigsaw const& State::GetChildJigsaw() const { 
+    if(m_ChildJigsawPtr)
+      return *m_ChildJigsawPtr;
+    else
+      return g_Jigsaw;
   }
 
   void State::SetFourVector(const TLorentzVector& V){

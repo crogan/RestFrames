@@ -54,7 +54,7 @@ namespace RestFrames {
       return false;
     }
     int Nchild = GetNChildren();
-    if(Nchild != 1 || GetParentFrame()){
+    if(Nchild != 1 || GetParentFrame().IsEmpty()){
       m_Log << LogWarning << "Problem with parent or child frames" << m_End;
       SetBody(false);
       return false;
@@ -63,13 +63,8 @@ namespace RestFrames {
     return true;
   }
 
-  void LabFrame::SetChildFrame(RestFrame& frame){
-    SetChildFrame(&frame);
-  }
-
-  void LabFrame::SetChildFrame(RestFrame* framePtr){ 
-    if(!framePtr) return;
-    AddChildFrame(framePtr); 
+  void LabFrame::SetChildFrame(RestFrame& frame){ 
+    AddChildFrame(frame); 
   }
 
   bool LabFrame::InitializeTree() const {
@@ -99,14 +94,14 @@ namespace RestFrames {
     return GetInvisibleFourVector().Vect();
   }
 
-  double LabFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
+  double LabFrame::GetCosDecayAngle(const RestFrame& frame) const {
     if(GetNChildren() < 1) return 0.;
     TVector3 V1(0.,0.,1.);
     TVector3 V2;
-    if(framePtr){
-      V2 = framePtr->GetFourVector(this).Vect().Unit();
+    if(!frame.IsEmpty()){
+      V2 = frame.GetFourVector(*this).Vect().Unit();
     } else {
-      V2 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
+      V2 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
     }
     return V1.Dot(V2);
   }
@@ -115,7 +110,7 @@ namespace RestFrames {
     TVector3 V(0.,0.,0.);
     if(GetNChildren() < 1) return V;
    
-    TVector3 V1 = GetChildFrame(0)->GetFourVector(this).Vect().Unit();
+    TVector3 V1 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
     TVector3 V2(0.,0.,1.);
     return V1.Cross(V2).Unit();
   }

@@ -106,7 +106,7 @@ namespace RestFrames {
     for(int i = 0; i < Ncs; i++)
       states.Add(m_ChildStates_UnAssembled[i]);
 
-    if(!InitializeStates(states, groups)){
+    if(!InitializeStatesRecursive(states, groups)){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after disassembly";
       m_Log << m_End;
@@ -139,13 +139,9 @@ namespace RestFrames {
     m_ChildStates_UnAssembled.clear();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      RestFrame* framePtr = GetChildFrame(i);
-      
+      RestFrame& frame = GetChildFrame(i);
       // fill unassembled lists
-      m_ChildFrames_UnAssembled.Add(framePtr);
-      StateList list;
-      // list.Add(m_ChildStates[i]);
-      // m_ChildStates_UnAssembled.push_back(list);
+      m_ChildFrames_UnAssembled.Add(frame);
       m_ChildStates_UnAssembled.push_back(m_ChildStates[i]);
       
       bool expand = false; 
@@ -153,27 +149,27 @@ namespace RestFrames {
       // if there is only one State associated with child, 
       // check for CombinatoricState to expand
       if(m_ChildStates[i].GetN() == 1){ 
-	CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_ChildStates[i].Get(0));
+	CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_ChildStates[i].Get(0));
 	if(statePtr){ // is CombinatoricState
 	  StateList elements = statePtr->GetElements();
 	  int Nelement = elements.GetN();
 	  for(int e = 0; e < Nelement; e++){
-	    State* elementPtr = elements.Get(e);
+	    State& element = elements.Get(e);
 	    // Get a new visible frame for each individual state
-	    RestFrame* new_framePtr = GetNewVisibleFrame(framePtr->GetName(),framePtr->GetTitle());
-	    elementPtr->ClearFrames();
-	    elementPtr->AddFrame(new_framePtr);
-	    frames.push_back(new_framePtr);
-	    TLorentzVector V = elementPtr->GetFourVector();
+	    RestFrame& new_frame = GetNewVisibleFrame(frame.GetName(),frame.GetTitle());
+	    element.ClearFrames();
+	    element.AddFrame(new_frame);
+	    frames.push_back(&new_frame);
+	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
-	    states.Add(elementPtr);
+	    states.Add(element);
 	  }
 	  expand = true;
 	}
       }
       if(!expand){
-	frames.push_back(framePtr);
+	frames.push_back(&frame);
 	TLorentzVector V = m_ChildStates[i].GetFourVector();
 	if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	Ps.push_back(V);
@@ -184,7 +180,7 @@ namespace RestFrames {
     RemoveChildren();
     m_ChildStates.clear();
 
-    AssembleRecursive(this, frames, Ps); 
+    AssembleRecursive(*this, frames, Ps); 
 
     if(!IsSoundBodyRecursive()){
       m_Log << LogWarning;
@@ -194,36 +190,36 @@ namespace RestFrames {
     }
 
     SetMind(true);
-    if(!InitializeStates(states, groups)){
+    if(!InitializeStatesRecursive(states, groups)){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after assembly";
       m_Log << m_End;
       SetMind(false);
     }
 
-    for(int i = 0; i < m_Ndecay; i++)
-      if(!m_DecayFrames.Get(i)->InitializeStates(states, groups)){
-	m_Log << LogWarning;
-	m_Log << "Problem connecting states after assembly in frame:";
-	m_Log << Log(m_DecayFrames.Get(i));
-	SetMind(false);
-      }
+    // for(int i = 0; i < m_Ndecay; i++)
+    //   if(!m_DecayFrames.Get(i).InitializeStates(states, groups)){
+    // 	m_Log << LogWarning;
+    // 	m_Log << "Problem connecting states after assembly in frame:";
+    // 	m_Log << Log(m_DecayFrames.Get(i));
+    // 	SetMind(false);
+    //   }
     
-    for(int i = 0; i < m_Nvisible; i++)
-      if(!m_VisibleFrames.Get(i)->InitializeStates(states, groups)){
-	m_Log << LogWarning;
-	m_Log << "Problem connecting states after assembly in frame:";
-	m_Log << Log(m_VisibleFrames.Get(i));
-	SetMind(false);
-      }
+    // for(int i = 0; i < m_Nvisible; i++)
+    //   if(!m_VisibleFrames.Get(i).InitializeStates(states, groups)){
+    // 	m_Log << LogWarning;
+    // 	m_Log << "Problem connecting states after assembly in frame:";
+    // 	m_Log << Log(m_VisibleFrames.Get(i));
+    // 	SetMind(false);
+    //   }
    
     m_IsAssembled = true;
   }
 
-  void RSelfAssemblingFrame::AssembleRecursive(RestFrame* framePtr, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
+  void RSelfAssemblingFrame::AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
     int Ninput = frames.size();
     if(Ninput <= 1){
-      for(int i = 0; i < Ninput; i++) framePtr->AddChildFrame(frames[i]);
+      for(int i = 0; i < Ninput; i++) frame.AddChildFrame(*frames[i]);
       return;
     }
 
@@ -298,11 +294,11 @@ namespace RestFrames {
     for(int i = 0; i < 2; i++){
       int j = (i+flip)%2;
       if(child_frames[j].size() == 1){
-	framePtr->AddChildFrame(child_frames[j][0]);
+	frame.AddChildFrame(*child_frames[j][0]);
       } else {
-	RestFrame* new_framePtr = GetNewDecayFrame(GetName(),GetTitle());
-	framePtr->AddChildFrame(new_framePtr);
-	AssembleRecursive(new_framePtr, child_frames[j], child_Ps[j]);
+	RestFrame& new_frame = GetNewDecayFrame(GetName(),GetTitle());
+	frame.AddChildFrame(new_frame);
+	AssembleRecursive(new_frame, child_frames[j], child_Ps[j]);
       }
     }
   }
@@ -321,7 +317,7 @@ namespace RestFrames {
     Assemble();
     if(!RFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
-      m_Log << "Unable to recursively analyze event with";
+      m_Log << "Unable to recursively analyze event with ";
       m_Log << "assembled RSelfAssemblingFrame" << m_End;
       SetSpirit(false);
       return false;
@@ -332,12 +328,12 @@ namespace RestFrames {
 
   void RSelfAssemblingFrame::ClearNewFrames(){
     int N = m_DecayFrames.GetN();
-    for(int i = 0; i < N; i++) m_DecayFrames.Get(i)->Clear();
+    for(int i = 0; i < N; i++) m_DecayFrames.Get(i).Clear();
     N = m_VisibleFrames.GetN();
-    for(int i = 0; i < N; i++) m_VisibleFrames.Get(i)->Clear();
+    for(int i = 0; i < N; i++) m_VisibleFrames.Get(i).Clear();
   }
 
-  RFrame* RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
+  RFrame& RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
@@ -348,13 +344,13 @@ namespace RestFrames {
     title << "#left(" << stitle << "#right)_{" << m_Ndecay+1 << "}";
     RDecayFrame* framePtr = new RDecayFrame(name.str(),title.str());
     
-    m_DecayFrames.Add(framePtr);
+    m_DecayFrames.Add(*framePtr);
     AddDependent(framePtr);
     m_Ndecay++;
-    return framePtr;
+    return *framePtr;
   }
 
-  RFrame* RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
+  RFrame& RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
@@ -365,20 +361,20 @@ namespace RestFrames {
     title << "#left(" << stitle << "#right)_{" << m_Nvisible+1 << "}";
     RVisibleFrame* framePtr = new RVisibleFrame(name.str(),title.str());
     
-    m_VisibleFrames.Add(framePtr);
+    m_VisibleFrames.Add(*framePtr);
     AddDependent(framePtr);
     m_Nvisible++;
-    return framePtr;
+    return *framePtr;
   }
 
-  const RestFrame* RSelfAssemblingFrame::GetFrame(const RFKey& key) const {
-    if(!m_IsAssembled) return nullptr;
+  RestFrame const& RSelfAssemblingFrame::GetFrame(const RFKey& key) const {
+    if(!m_IsAssembled) return g_RestFrame;
 
     for(int i = 0; i < m_ChildStates.size(); i++){
       int index = m_ChildStates[i].GetIndex(key);
-      if(index >= 0) return m_ChildStates[i].Get(index)->GetFrame();
+      if(index >= 0) return m_ChildStates[i].Get(index).GetFrame();
     }
-    return nullptr;
+    return g_RestFrame;
   }
 
 }

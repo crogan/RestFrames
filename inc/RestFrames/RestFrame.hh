@@ -49,7 +49,7 @@ namespace RestFrames {
     RestFrameList(){ }
     ~RestFrameList(){ }
     
-    void AddFrame(const RestFrame* frame){ m_Frames.push_back(frame); }
+    void AddFrame(const RestFrame& frame){ m_Frames.push_back(&frame); }
     
     vector<const RestFrame*> GetList() const { return m_Frames; }
 
@@ -58,34 +58,24 @@ namespace RestFrames {
 
     double GetMass() const;
 
-    TLorentzVector GetFourVector(const RestFrame& frame) const {
-      return GetFourVector(&frame);
-    }
-    TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
+    TLorentzVector GetFourVector() const;
+    TLorentzVector GetFourVector(const RestFrame& frame) const; 
 
-    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const {
-      return GetVisibleFourVector(&frame);
-    } 
-    TLorentzVector GetVisibleFourVector(const RestFrame* framePtr = nullptr) const;
+    TLorentzVector GetVisibleFourVector() const;
+    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const;
 
-    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const {
-      return GetInvisibleFourVector(&frame);
-    }
-    TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const;
+    TLorentzVector GetInvisibleFourVector() const;
+    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const;
 
-    double GetEnergy(const RestFrame& frame) const {
-      return GetEnergy(&frame);
-    }
-    double GetEnergy(const RestFrame* framePtr = nullptr) const;
+    double GetEnergy(const RestFrame& frame) const;
 
-    double GetMomentum(const RestFrame& frame) const {
-      return GetMomentum(&frame);
-    }
-    double GetMomentum(const RestFrame* framePtr = nullptr) const;
+    double GetMomentum(const RestFrame& frame) const;
 
   private:
     vector<const RestFrame*> m_Frames;
   };
+
+  extern RestFrame g_RestFrame;
 
   ////////////////////////////////////////////////////////////////////
   /// \brief Base class for all *reference* *frame* objects
@@ -103,6 +93,10 @@ namespace RestFrames {
     /// \param stitle   class instance title used in figures
     ////////////////////////////////////////////////////////////////////
     RestFrame(const string& sname, const string& stitle);
+    
+    RestFrame(const RFKey& key);
+
+    RestFrame();
     
     virtual ~RestFrame();
 
@@ -161,30 +155,23 @@ namespace RestFrames {
     /// if it is already listed as a child.
     void AddChildFrame(RestFrame& frame);
 
-    /// \brief Add a child RestFrame to this frame
-    ///
-    /// \param framePtr    pointer to RestFrame to be added as child
-    ///
-    /// Method for adding a RestFrame pointed to by *framePtr* as a 
-    /// child of this frame. &(*framePtr*) will not be added as a child
-    /// if it is already listed as a child.
-    void AddChildFrame(RestFrame* framePtr);
-
     /// \brief Set the parent frame for this frame
     ///
-    /// \param framePtr     pointer to parent frame
+    /// \param frame     parent frame
     ///
-    /// Method for connecting a child frame to its parent frame, 
-    /// via a pointer to parent frame.
-    void SetParentFrame(const RestFrame* framePtr);
+    /// Method for connecting a child frame to its parent frame
+    void SetParentFrame(RestFrame& frame);
 
-    /// \brief Remove a child of this frame by pointer
+    /// \brief Remove the parent frame setting
+    void SetParentFrame();
+
+    /// \brief Remove a child of this frame 
     ///
-    /// \param framePtr     pointer to child frame to be removed
+    /// \param frame     child frame to be removed
     ///
-    /// Method for removing a child, pointed to by *framePtr*, from the
+    /// Method for removing a child *frame* from the
     /// list of children of this frame (if it is in that list).
-    void RemoveChild(const RestFrame* framePtr);
+    void RemoveChild(const RestFrame& frame);
 
     /// \brief Remove a child of this frame by index
     ///
@@ -213,22 +200,62 @@ namespace RestFrames {
     /// \brief Get the number of child frames inheriting from this one
     int GetNChildren() const;
 
-    /// \brief Get the pointer to the frame of the *i* th child
-    RestFrame* GetChildFrame(int i) const;
+    /// \brief Get the number of descendents of this frame
+    virtual int GetNDescendants() const;
 
-    /// \brief Get the index of &(*framePtr*) 
+    /// \brief Get the frame of the *i* th child
+    RestFrame& GetChildFrame(int i) const;
+
+    /// \brief Get the index of *frame* 
     ///
-    /// \param framePtr   pointer to child frame whose index is returned
+    /// \param frame   child frame whose index is returned
     ///
-    /// Return the index of child frame &(*framePtr*). Will return -1
-    /// if &(*framePtr*) is not among the children
-    int GetChildIndex(const RestFrame* framePtr) const;
+    /// Return the index of child frame *frame*. Will return -1
+    /// if *frame* is not among the children
+    int GetChildIndex(const RestFrame& frame) const;
 
-    /// \brief Returns a pointer to the parent of this frame
-    const RestFrame* GetParentFrame() const;
+    /// \brief Returns the parent of this frame
+    ///
+    /// Returns the parent frame of this frame.
+    /// If the parent frame is not set, an empty
+    /// frame is returned.
+    const RestFrame& GetParentFrame() const;
 
-    /// \brief Returns a pointer to the LabFrame that this frame inherits from
-    const RestFrame* GetLabFrame() const;
+    /// \brief Returns the LabFrame that this frame inherits from
+    ///
+    /// Returns the LabFrame frame of this frame's tree.
+    /// If a LabFrame cannot be found, an empty frame 
+    /// is returned.
+    const RestFrame& GetLabFrame() const;
+
+    /// \brief Returns the production frame of this frame
+    virtual const RestFrame& GetProductionFrame() const;
+
+    /// \brief Returns the sibling frame of this frame
+    ///
+    /// Returns the the first child frame of the parent 
+    /// frame of this one that is not this frame.
+    virtual const RestFrame& GetSiblingFrame() const;
+
+    /// \brief Returns the depth of *frame* 
+    ///
+    /// \param frame    frame whose depth is returned
+    ///
+    /// Returns the depth of *frame* relative to this frame. 
+    /// If *frame* is not among the descendents of this frame,
+    /// -1 is returned.
+    virtual int GetFrameDepth(const RestFrame& frame) const;
+
+    /// \brief Returns the frame at depth
+    ///
+    /// \param depth    depth of desired frame
+    /// \param frame    descendent frame that defines path
+    ///
+    /// Returns the frame at a depth *depth* down from this frame. The path
+    /// through the descendents of this frame is defined as that proceeding 
+    /// towards *frame*. If no frame exists at *depth* along this path, an
+    /// empty frame is returned.
+    RestFrame const& GetFrameAtDepth(int depth, const RestFrame& frame) const;
 
     /// \brief Returns a list of frames inheriting from this one
     ///
@@ -263,10 +290,10 @@ namespace RestFrames {
     ///@}
 
     /// \brief Recursively clear event information from this frame and its children
-    virtual void ClearEventRecursive() = 0;
+    virtual void ClearEventRecursive(){ }
 
     /// \brief Recursively analyze event in this frame and its children
-    virtual bool AnalyzeEventRecursive() = 0;
+    virtual bool AnalyzeEventRecursive(){ return false; }
 
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame frame retrieval methods
@@ -279,51 +306,43 @@ namespace RestFrames {
 
     RestFrameList operator+(const RestFrame& frame){ 
       RestFrameList list;
-      list.AddFrame(&frame);
-      list.AddFrame(this);
+      list.AddFrame(frame);
+      list.AddFrame(*this);
       return list;
     }
 
     virtual double GetMass() const;
-    TLorentzVector GetFourVector(const RestFrame& frame) const;
-    virtual TLorentzVector GetFourVector(const RestFrame* framePtr = nullptr) const;
-    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetVisibleFourVector(const RestFrame* framePtr) const; 
-    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
-    virtual TLorentzVector GetInvisibleFourVector(const RestFrame* framePtr = nullptr) const; 
-    double GetEnergy(const RestFrame& frame) const;
-    virtual double GetEnergy(const RestFrame* framePtr) const;
-    double GetMomentum(const RestFrame& frame) const;
-    virtual double GetMomentum(const RestFrame* framePtr) const;
+    virtual TLorentzVector GetFourVector() const;
+    virtual TLorentzVector GetFourVector(const RestFrame& frame) const;
+   
+    virtual TLorentzVector GetVisibleFourVector() const; 
+    virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
+    
+    virtual TLorentzVector GetInvisibleFourVector() const; 
+    virtual TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
+    
+    virtual double GetEnergy(const RestFrame& frame) const;
+    virtual double GetMomentum(const RestFrame& frame) const;
 
-
-    double GetCosDecayAngle(const RestFrame& frame) const;
-    virtual double GetCosDecayAngle(const RestFrame* framePtr = nullptr) const;
+    virtual double GetCosDecayAngle() const;
+    virtual double GetCosDecayAngle(const RestFrame& frame) const;
     virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
-					 const RestFrame* framePtr = nullptr) const;
+					   const RestFrame& frame = g_RestFrame) const;
     virtual double GetDeltaPhiBoostVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-					   const RestFrame* framePtr = nullptr) const;
+					   const RestFrame& frame = g_RestFrame) const;
     virtual double GetDeltaPhiDecayVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-					   const RestFrame* framePtr = nullptr) const;
+					   const RestFrame& frame = g_RestFrame) const;
     virtual double GetDeltaPhiVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-				      const RestFrame* framePtr = nullptr) const;
+				      const RestFrame& frame = g_RestFrame) const;
     virtual double GetVisibleShape() const;
     virtual double GetTransverseVisibleShape(const TVector3& axis = TVector3(0.,0.,1.), 
-					     const RestFrame* framePtr = nullptr) const;
+					     const RestFrame& frame = g_RestFrame) const;
     virtual double GetScalarVisibleMomentum() const;
     virtual double GetTransverseScalarVisibleMomentum(const TVector3& axis = TVector3(0.,0.,1.), 
-						      const RestFrame* framePtr = nullptr) const;
-    int GetFrameDepth(const RestFrame& frame) const;
-    virtual int GetFrameDepth(const RestFrame* framePtr) const;
-    const RestFrame* GetFrameAtDepth(int depth, const RestFrame& frame) const;
-    virtual const RestFrame* GetFrameAtDepth(int depth, const RestFrame* framePtr) const;
-    virtual const RestFrame* GetProductionFrame() const;
-    virtual const RestFrame* GetSiblingFrame() const;
-    virtual int GetNDescendants() const;
+						      const RestFrame& frame = g_RestFrame) const;
     virtual TVector3 GetBoostInParentFrame() const;
     virtual double GetGammaInParentFrame() const;
     virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
-    virtual double GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const;
     virtual TVector3 GetDecayPlaneNormalVector() const;
 
     ///@}
@@ -347,7 +366,7 @@ namespace RestFrames {
     vector<TVector3> m_ChildBoosts;
 
     // parent frame and boost
-    const RestFrame* m_ParentFramePtr;
+    RestFrame* m_ParentFramePtr;
     TVector3 m_ParentBoost;
 
     void SetChildBoostVector(int i, const TVector3& boost);
@@ -355,8 +374,8 @@ namespace RestFrames {
     TVector3 GetChildBoostVector(int i) const;
     TVector3 GetParentBoostVector() const;
 
-    virtual void SetFourVector(const TLorentzVector& V, const RestFrame* framePtr);
-    bool FindPathToFrame(const RestFrame* framePtr, const RestFrame* prevPtr, 
+    virtual void SetFourVector(const TLorentzVector& V, const RestFrame& prod_frame);
+    bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 vector<TVector3>& boosts) const;
 
     // Tree construction checks

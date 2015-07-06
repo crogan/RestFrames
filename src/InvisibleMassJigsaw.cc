@@ -59,10 +59,10 @@ namespace RestFrames {
     }
 
     TLorentzVector inv_P = m_InputStatePtr->GetFourVector();
-    double M = dynamic_cast<InvisibleState*>(m_OutputStates.Get(0))->GetMinimumMass();
+    double M = dynamic_cast<InvisibleState*>(&m_OutputStates.Get(0))->GetMinimumMass();
 
     inv_P.SetVectM(inv_P.Vect(),M);
-    m_OutputStates.Get(0)->SetFourVector(inv_P);
+    m_OutputStates.Get(0).SetFourVector(inv_P);
 
     SetSpirit(true);
     return true;

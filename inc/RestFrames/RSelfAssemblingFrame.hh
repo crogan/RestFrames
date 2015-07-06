@@ -50,7 +50,7 @@ namespace RestFrames {
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
-    const RestFrame* GetFrame(const RFKey& key) const;
+    const RestFrame& GetFrame(const RFKey& key) const;
 
   private:
     void Init();
@@ -65,17 +65,15 @@ namespace RestFrames {
     int m_Nvisible;
     int m_Ndecay;
 
-    RFrame* GetNewDecayFrame(const string& sname, const string& stitle);
-    RFrame* GetNewVisibleFrame(const string& sname, const string& stitle);
+    RFrame& GetNewDecayFrame(const string& sname, const string& stitle);
+    RFrame& GetNewVisibleFrame(const string& sname, const string& stitle);
     void ClearNewFrames();
 
     bool m_IsAssembled;
     bool m_IsBackedUp;
     void Disassemble();
     void Assemble();
-    void AssembleRecursive(RestFrame* framePtr, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
-
-    //const RestFrame* GetFrame(const State* statePtr) const;
+    void AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
   };
 
 }

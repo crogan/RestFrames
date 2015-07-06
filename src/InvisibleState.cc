@@ -59,7 +59,7 @@ namespace RestFrames {
     InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
     if(jigsawPtr) return jigsawPtr->GetMinimumMass();
     if(GetNFrames() == 1){
-      RInvisibleFrame* framePtr = dynamic_cast<RInvisibleFrame*>(m_Frames.Get(0));
+      RInvisibleFrame* framePtr = dynamic_cast<RInvisibleFrame*>(&m_Frames.Get(0));
       if(framePtr) return framePtr->GetMinimumMass();
     }
     return 0.;

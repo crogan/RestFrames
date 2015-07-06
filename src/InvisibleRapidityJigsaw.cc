@@ -71,7 +71,7 @@ namespace RestFrames {
     boostZ.SetY(0.);
     inv_P.Boost(boostZ);
 
-    m_OutputStates.Get(0)->SetFourVector(inv_P);
+    m_OutputStates.Get(0).SetFourVector(inv_P);
     
     m_Spirit = true;
     return m_Spirit;

@@ -38,12 +38,17 @@ namespace RestFrames {
   // RFBase class methods
   ///////////////////////////////////////////////
 
+  RFBase::RFBase(){
+    Init("Default", "Default");
+    SetKey(g_Key);
+  }
+
   RFBase::RFBase(const string& sname, const string& stitle){
     Init(sname, stitle);
   }
 
   RFBase::~RFBase(){
-    delete m_LogPtr;
+    if(m_LogPtr) delete m_LogPtr;
     RFBase::Clear();
   }
 
@@ -57,11 +62,16 @@ namespace RestFrames {
   }
 
   void RFBase::Clear(){
+    SetBody(false);
     int N = m_Owns.size();
     for(int i = 0; i < N; i++){
       delete m_Owns[i];
     }
     m_Owns.clear();
+  }
+
+  bool RFBase::IsEmpty() const {
+    return IsSame(g_Key);
   }
 
   void RFBase::AddDependent(RFBase* dep){
@@ -71,18 +81,17 @@ namespace RestFrames {
   bool RFBase::IsSame(const RFKey& key) const {
     return (m_Key == key);
   }
-
-  bool RFBase::IsSame(const RFBase& obj) const {
-    return IsSame(&obj);
-  }
      
-  bool RFBase::IsSame(const RFBase* objPtr) const {
-    if(!objPtr) return false;
-    return objPtr->IsSame(m_Key);
+  bool RFBase::IsSame(const RFBase& obj) const {
+    return obj == m_Key;
   }
 
   void RFBase::SetKey(int key) {
     m_Key.SetKey(key);
+  }
+
+  void RFBase::SetKey(const RFKey& key) {
+    m_Key.SetKey(key.GetKey());
   }
 
   RFKey RFBase::GetKey() const {

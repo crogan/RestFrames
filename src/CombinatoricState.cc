@@ -60,10 +60,9 @@ namespace RestFrames {
     m_Elements.Clear();
   }
 
-  void CombinatoricState::AddElement(State* statePtr){
-    if(!statePtr) return;
-    //m_Elements.Add(statePtr->Copy());
-    m_Elements.Add(statePtr);
+  void CombinatoricState::AddElement(State& state){
+    if(state.IsEmpty()) return;
+    m_Elements.Add(state);
   }
 
   void CombinatoricState::AddElement(const StateList& states){
@@ -87,7 +86,7 @@ namespace RestFrames {
     return m_Elements.Contains(state);
   }
 
-  const State* CombinatoricState::GetElement(const RFKey& key) const {
+  State const& CombinatoricState::GetElement(const RFKey& key) const {
     return m_Elements.Get(key);
   }
 

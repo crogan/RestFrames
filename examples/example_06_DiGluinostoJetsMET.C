@@ -226,7 +226,8 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // (relative to gluino mass via gamma)
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%(Ngen/10) == 0) 
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
@@ -246,7 +247,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     JETS.push_back(V2a_G.GetFourVector());
     JETS.push_back(V1b_G.GetFourVector());
     JETS.push_back(V2b_G.GetFourVector());
-    
+
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
@@ -307,8 +308,8 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     //*** delta phi between lab and GG decay planes
     double dphiLGG = LAB_R.GetDeltaPhiDecayPlanes(GG_R);
     
-    TLorentzVector vV1 = G[0]->GetVisibleFourVector(G[0]);
-    TLorentzVector vV2 = G[1]->GetVisibleFourVector(G[1]);
+    TLorentzVector vV1 = G[0]->GetVisibleFourVector(*G[0]);
+    TLorentzVector vV2 = G[1]->GetVisibleFourVector(*G[1]);
 
     //*** gluino mass
     double MG = (vV1.M2()-vV2.M2())/(2.*(vV1.E()-vV2.E()));
@@ -346,11 +347,11 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     double Pinv[2];
       
     for(int i = 0; i < 2; i++){
-      NV[i] =  VIS_R.GetNElementsInFrame(VS[i]);
-      NV[i] += VIS_R.GetNElementsInFrame(VC[i]);
+      NV[i] =  VIS_R.GetNElementsInFrame(*VS[i]);
+      NV[i] += VIS_R.GetNElementsInFrame(*VC[i]);
 
-      TVector3 vP1 = VS[i]->GetFourVector(G[i]).Vect();
-      TVector3 vP2 = VC[i]->GetFourVector(G[i]).Vect();
+      TVector3 vP1 = VS[i]->GetFourVector(*G[i]).Vect();
+      TVector3 vP2 = VC[i]->GetFourVector(*G[i]).Vect();
       Pinv[i] = 2.*(vP1+vP2).Mag()/(vP1.Mag()+vP2.Mag()+(vP1+vP2).Mag());
 
       cosG[i] = G[i]->GetCosDecayAngle();
@@ -358,7 +359,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
       int N = jetID.size();
       double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
       for(int j = 0; j < N; j++){
-	const RestFrame* frame = VIS_R.GetFrame(jetID[j]);
+	const RestFrame& frame = VIS_R.GetFrame(jetID[j]);
 	if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
 	  double pT = VIS_R.GetLabFrameFourVector(jetID[j]).Pt();
 	  if(pT > pTmax[0]){
@@ -375,7 +376,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
       if(NV[i] > 1){
 	cosC[i] = C[i]->GetCosDecayAngle();
-	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(C[i]);
+	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(*C[i]);
 	RCG[i] = (C[i]->GetMass()-X[i]->GetMass())/(G[i]->GetMass()-X[i]->GetMass());
       } else {
 	cosC[i] = -2.;
@@ -388,7 +389,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     //
     // background tree observables
     //
-    TLorentzVector Psib = I_B.GetSiblingFrame()->GetFourVector(LAB_B);
+    TLorentzVector Psib = I_B.GetSiblingFrame().GetFourVector(LAB_B);
     TLorentzVector Pmet = I_B.GetFourVector(LAB_B);
       
     //*** 

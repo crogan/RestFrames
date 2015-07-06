@@ -89,7 +89,7 @@ namespace RestFrames {
     if(!m_Body) return false;
 
     TLorentzVector P;
-    double M = GetChildFrame(0)->GetMass();
+    double M = GetChildFrame(0).GetMass();
     if(m_Phi < 0.) m_Phi = 2.*acos(-1.)*GetRandom();
 
     P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));

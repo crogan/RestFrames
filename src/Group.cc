@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/Group.hh"
+#include "RestFrames/RestFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/State.hh"
 
@@ -46,9 +47,24 @@ namespace RestFrames {
     Init();
   }
 
+  Group::Group(const RFKey& key)
+    : RFBase()
+  {
+    Init();
+    SetKey(key);
+  }
+
+  Group::Group()
+    : RFBase()
+  {
+    Init();
+  }
+
   Group::~Group(){
     if(m_GroupStatePtr) delete m_GroupStatePtr;
   }
+
+  Group g_Group(g_Key);
 
   void Group::Init(){
     SetKey(GenKey());
@@ -80,13 +96,18 @@ namespace RestFrames {
     return m_Type == GCombinatoric;
   }
 
-  void Group::RemoveFrame(const RestFrame* framePtr){
-    if(!framePtr) return;
-    m_Frames.Remove(framePtr);
+  void Group::RemoveFrame(const RestFrame& frame){
+    SetBody(false);
+    m_Frames.Remove(frame);
   }
 
-  bool Group::ContainsFrame(const RestFrame* framePtr) const {
-    return m_Frames.Contains(framePtr);
+  void Group::RemoveJigsaw(const Jigsaw& jigsaw){
+    SetBody(false);
+    m_Jigsaws.Remove(jigsaw);
+  }
+
+  bool Group::ContainsFrame(const RestFrame& frame) const {
+    return m_Frames.Contains(frame);
   }
 
   RFList<RestFrame> Group::GetFrames() const {
@@ -97,8 +118,11 @@ namespace RestFrames {
     return m_Jigsaws.Copy();
   }
 
-  State* Group::GetGroupState() const {
-    return m_GroupStatePtr;
+  State const& Group::GetGroupState() const {
+    if(m_GroupStatePtr)
+      return *m_GroupStatePtr;
+    else
+      return g_State;
   }
 
   bool Group::InitializeAnalysis(){
@@ -108,10 +132,10 @@ namespace RestFrames {
     if(m_GroupStatePtr) delete m_GroupStatePtr;
     m_States.Clear();
     m_StatesToSplit.Clear();
-    m_GroupStatePtr = InitializeGroupState();
+    m_GroupStatePtr = &InitializeGroupState();
     m_GroupStatePtr->AddFrame(m_Frames);
-    m_States.Add(m_GroupStatePtr);
-    m_StatesToSplit.Add(m_GroupStatePtr);
+    m_States.Add(*m_GroupStatePtr);
+    m_StatesToSplit.Add(*m_GroupStatePtr);
  
     if(!InitializeJigsaws()){
       m_Log << LogWarning;
@@ -129,35 +153,35 @@ namespace RestFrames {
     return true;
   }
 
-  State* Group::InitializeGroupState(){
+  State& Group::InitializeGroupState(){
     State* state = new State();
-    return state;
+    return *state;
   }
 
   bool Group::InitializeJigsaws(){
     while(m_StatesToSplit.GetN() > 0){
-      State* statePtr = m_StatesToSplit.Get(0);
-      if(!SplitState(statePtr)){
-	if(statePtr->GetNFrames() != 1){
+      State& state = m_StatesToSplit.Get(0);
+      if(!SplitState(state)){
+	if(state.GetNFrames() != 1){
 	  m_Log << LogVerbose;
 	  m_Log << "Cannot find Jigsaw to split State for frames:" << endl;
-	  m_Log << Log(statePtr->GetFrames());
+	  m_Log << Log(state.GetFrames());
 	  m_Log << m_End;
 	  return false; 
 	}
-	m_StatesToSplit.Remove(statePtr);
+	m_StatesToSplit.Remove(state);
       }
     }
     return true;
   }
 
-  bool Group::SplitState(const State* statePtr){
+  bool Group::SplitState(const State& state){
     int N = m_JigsawsToUse.GetN();
     
     Jigsaw* jigsawForSplitPtr = nullptr;
     for(int i = 0; i < N; i++){
-      Jigsaw* jigsawPtr = m_JigsawsToUse.Get(i);
-      if(jigsawPtr->CanSplit(statePtr)){
+      Jigsaw* jigsawPtr = &m_JigsawsToUse.Get(i);
+      if(jigsawPtr->CanSplit(state)){
 	if(!jigsawForSplitPtr){
 	  jigsawForSplitPtr = jigsawPtr;
 	  continue;
@@ -174,43 +198,42 @@ namespace RestFrames {
     m_Log << LogVerbose;
     m_Log << "Found Jigsaw to split State:" << endl; 
     m_Log << " Frames:" << endl << "   ";
-    m_Log << Log(statePtr->GetFrames()) << endl;
+    m_Log << Log(state.GetFrames()) << endl;
     m_Log << " Jigsaw:" << Log(jigsawForSplitPtr);
     m_Log << m_End;
-    InitializeJigsaw(jigsawForSplitPtr);
-    m_JigsawsToUse.Remove(jigsawForSplitPtr);
+    InitializeJigsaw(*jigsawForSplitPtr);
+    m_JigsawsToUse.Remove(*jigsawForSplitPtr);
     return true;
   }
 
-  void Group::InitializeJigsaw(Jigsaw* jigsawPtr){
-    if(!jigsawPtr) return;
-    if(!jigsawPtr->IsSoundBody()){
+  void Group::InitializeJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw.IsSoundBody()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw ";
-      m_Log << jigsawPtr->GetName() << m_End;
+      m_Log << jigsaw.GetName() << m_End;
       return;
     }
 
-    State* statePtr = m_StatesToSplit.Get(0);
-    StateList states = jigsawPtr->InitializeOutputStates(statePtr);
-    m_StatesToSplit.Remove(statePtr);
+    State& state = m_StatesToSplit.Get(0);
+    StateList states = jigsaw.InitializeOutputStates(state);
+    m_StatesToSplit.Remove(state);
     m_StatesToSplit.Add(states);
     m_States.Add(states);
-    m_Jigsaws.Add(jigsawPtr);
+    m_Jigsaws.Add(jigsaw);
     return;
   }
  
-  State* Group::GetState(const RestFrame* framePtr) const {
-    if(!framePtr) return nullptr;
+  State& Group::GetState(const RestFrame& frame) const {
+    if(frame.IsEmpty()) return g_State;
     int Ns = m_States.GetN();
     for(int i = Ns-1; i >= 0; i--){
-      State* statePtr = m_States.Get(i);
-      if(statePtr->IsFrame(framePtr)){
-	return statePtr;
+      State& state = m_States.Get(i);
+      if(state.IsFrame(frame)){
+	return state;
       }
     }
     m_Mind = false;
-    return nullptr;
+    return g_State;
   }
   
   StateList Group::GetStates(const RestFrames::RFList<RestFrame>& frames) const {
@@ -220,13 +243,13 @@ namespace RestFrames {
     // preference to States that include more frames (less dependancies)
     int Ns = m_States.GetN();
     for(int i = 0; i < Ns; i++){
-      RFList<RestFrame> iframes = m_States.Get(i)->GetFrames();
+      RFList<RestFrame> iframes = m_States.Get(i).GetFrames();
       if(frames.Contains(iframes)){
 	int Nsol = states.GetN();
 	bool isnew = true;
 	for(int j = 0; j < Nsol; j++){
 	  // if new copy of existing frame list appears, discard old
-	  RFList<RestFrame> jframes = states.Get(j)->GetFrames();
+	  RFList<RestFrame> jframes = states.Get(j).GetFrames();
 	  if(iframes.Contains(jframes)){
 	    states.Remove(states.Get(j));
 	    break;
@@ -246,7 +269,7 @@ namespace RestFrames {
     RFList<RestFrame> match_frames;
     Ns = states.GetN();
     for(int i = 0; i < Ns; i++)
-      match_frames.Add(states.Get(i)->GetFrames());
+      match_frames.Add(states.Get(i).GetFrames());
     
     if(!frames.IsSame(match_frames)){
       m_Log << LogWarning;

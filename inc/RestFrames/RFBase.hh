@@ -58,11 +58,16 @@ namespace RestFrames {
     /// \param stitle   class instance title used in figures
     ////////////////////////////////////////////////////////////////////
     RFBase(const string& sname, const string& stitle);
+
+    RFBase();
     
     virtual ~RFBase();
 
     /// \brief Clears RFBase of all connections to other objects
     virtual void Clear();
+
+    /// \brief Checks whether this is default (empty) instance of class
+    bool IsEmpty() const;
 
     ////////////////////////////////////////////////////////////////////
     /// \name RFBase identity/comparison methods
@@ -74,6 +79,9 @@ namespace RestFrames {
     
     /// \brief sets object identification key
     void SetKey(int key);
+
+    /// \brief sets object identification key
+    void SetKey(const RFKey& key);
 
     /// \brief gets object identification key
     RFKey GetKey() const;
@@ -90,9 +98,12 @@ namespace RestFrames {
     /// \brief Tests whether *obj* is the same as this
     bool IsSame(const RFBase& obj) const;
     
-    /// \brief Tests whether *objPtr* points to this
-    bool IsSame(const RFBase* objPtr) const;
-    
+    /// \brief Tests whether key is the same as this
+    bool operator==(const RFKey& key) const { return IsSame(key); }
+
+    /// \brief Tests whether *obj* is the same as this
+    bool operator==(const RFBase& obj) const { return IsSame(obj); }
+
     ///@} // end identity/comparison methods
 
     /// \brief Print information associated with object

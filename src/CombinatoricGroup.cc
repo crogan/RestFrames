@@ -62,34 +62,28 @@ namespace RestFrames {
   }
 
   void CombinatoricGroup::AddFrame(RestFrame& frame){
-    AddFrame(&frame);
-  }
-
-  void CombinatoricGroup::AddFrame(RestFrame* framePtr){
-    if(!framePtr->IsRFrame() || !framePtr->IsVisibleFrame()) return;
-    RFrame *ptr = dynamic_cast<RFrame*>(framePtr);
+    if(frame.IsEmpty()) return;
+    if(!frame.IsRFrame() || !frame.IsVisibleFrame()) return;
+    RFrame *ptr = dynamic_cast<RFrame*>(&frame);
     if(ptr){
-      ptr->SetGroup(this);
-      m_Frames.Add(framePtr);
+      ptr->SetGroup(*this);
+      m_Frames.Add(frame);
       if(m_Frames.GetN() == int(m_NElementsForFrame.size())) return;
       m_NElementsForFrame.push_back(1.);
       m_NExclusiveElementsForFrame.push_back(false);
     }
   }
-
-  void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, int N, bool exclusive_N){
-    SetNElementsForFrame(&frame,N,exclusive_N);
-  }
   
-  void CombinatoricGroup::SetNElementsForFrame(const RestFrame* framePtr, int N, bool exclusive_N){
-    int index = m_Frames.GetIndex(framePtr);
+  void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, int N, bool exclusive_N){
+    int index = m_Frames.GetIndex(frame);
     if(index < 0) return;
     m_NElementsForFrame[index] = N;
     m_NExclusiveElementsForFrame[index] = exclusive_N;
   }
 
-  void CombinatoricGroup::GetNElementsForFrame(const RestFrame* framePtr, int& N, bool& exclusive_N){
-    int index = m_Frames.GetIndex(framePtr);
+  void CombinatoricGroup::GetNElementsForFrame(const RestFrame& frame, int& N, 
+					       bool& exclusive_N) const {
+    int index = m_Frames.GetIndex(frame);
     if(index < 0){
       N = -1;
       exclusive_N = false;
@@ -100,19 +94,28 @@ namespace RestFrames {
   }
 
   bool CombinatoricGroup::AddJigsaw(Jigsaw& jigsaw){
-    return AddJigsaw(&jigsaw);
-  }
-
-  bool CombinatoricGroup::AddJigsaw(Jigsaw* jigsawPtr){
-    if(!jigsawPtr) return false;
-    if(jigsawPtr->GetGroup()) return false;
-    if(!jigsawPtr->IsCombinatoricJigsaw()) return false;
-    if(m_JigsawsToUse.Add(jigsawPtr)) jigsawPtr->SetGroup(this);
+    SetBody(false);
+    if(jigsaw.IsEmpty()) return false;
+    if(!jigsaw.GetGroup().IsEmpty()){
+      m_Log << LogWarning;
+      m_Log << "Cannot add Jigsaw - already assigned to Group:";
+      m_Log << endl << " Jigsaw:" << endl << Log(jigsaw);
+      m_Log << endl << " Group:" << endl << Log(jigsaw.GetGroup());
+      m_Log << m_End;
+      return false;
+    }
+    if(!jigsaw.IsCombinatoricJigsaw()){
+      m_Log << LogWarning;
+      m_Log << "Cannot add non-Invisible Jigsaw:";
+      m_Log << Log(jigsaw) << m_End;
+      return false;
+    }
+    if(m_JigsawsToUse.Add(jigsaw)) jigsaw.SetGroup(*this);
     return true;
   }
 
-  State* CombinatoricGroup::InitializeGroupState(){
-    return new CombinatoricState();
+  State& CombinatoricGroup::InitializeGroupState(){
+    return *(new CombinatoricState());
   }
 
   void CombinatoricGroup::ClearElements(){
@@ -121,11 +124,6 @@ namespace RestFrames {
 
   void CombinatoricGroup::AddElement(State& state){
     m_StateElements.Add(state);
-  }
-
-
-  void CombinatoricGroup::AddElement(State* statePtr){
-    m_StateElements.Add(statePtr);
   }
 
   int CombinatoricGroup::GetNElements() const{
@@ -163,65 +161,60 @@ namespace RestFrames {
    }
 
   RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
-    State* statePtr = GetNewState();
+    State& state = GetNewState();
     
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
-    statePtr->SetFourVector(P);
-    AddElement(statePtr);
+    state.SetFourVector(P);
+    AddElement(state);
    
-    return statePtr->GetKey();
+    return state.GetKey();
   }
 
   int CombinatoricGroup::GetNFourVectors() const{
     return GetNElements();
   }
 
-  const RestFrame* CombinatoricGroup::GetFrame(const RFKey& key){
+  RestFrame const& CombinatoricGroup::GetFrame(const RFKey& key) const {
     int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_States.Get(i));
       if(!statePtr) continue;
       if(statePtr->ContainsElement(key)){
-	RestFrame* framePtr = statePtr->GetFrame();
-	if(framePtr) return framePtr;
+	return statePtr->GetFrame();
       }
     }
-    return nullptr;
+    return g_RestFrame;
   }
 
-  TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const RFKey& key){
+  TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const RFKey& key) const {
     TLorentzVector P(0.,0.,0.,0.);
     int N = m_States.GetN();
     for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(m_States.Get(i));
+      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_States.Get(i));
       if(!statePtr) continue;
       if(statePtr->ContainsElement(key))
-	return statePtr->GetElement(key)->GetFourVector();
+	return statePtr->GetElement(key).GetFourVector();
       
     }
     return TLorentzVector(0.,0.,0.,0.);
   }
 
-  int CombinatoricGroup::GetNElementsInFrame(const RestFrame& frame){
-    return GetNElementsInFrame(&frame);
-  }
-  int CombinatoricGroup::GetNElementsInFrame(const RestFrame* framePtr){
-    if(!framePtr) return -1;
-    if(!ContainsFrame(framePtr)) return -1;
-    CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(GetState(framePtr));
+  int CombinatoricGroup::GetNElementsInFrame(const RestFrame& frame) const {
+    if(!ContainsFrame(frame)) return -1;
+    CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&GetState(frame));
     if(!statePtr) return -1;
     return statePtr->GetNElements();
   }
 
-  State* CombinatoricGroup::GetNewState(){
+  State& CombinatoricGroup::GetNewState(){
     if(GetNElements() < m_InitStates.GetN())
       return m_InitStates.Get(GetNElements());
 
     State* statePtr = new State();
     AddDependent(statePtr);
-    m_InitStates.Add(statePtr);
-    return statePtr;
+    m_InitStates.Add(*statePtr);
+    return *statePtr;
   }
 
 }

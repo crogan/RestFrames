@@ -75,8 +75,8 @@ namespace RestFrames {
 
   map<LogType,bool> InitPrintMap(){
     map<LogType,bool> m;
-    m[LogVerbose]  = false;
-    m[LogDebug]    = false;
+    m[LogVerbose]  = true;
+    m[LogDebug]    = true;
     m[LogInfo]     = true;
     m[LogWarning]  = true;
     m[LogError]    = true;
@@ -127,7 +127,6 @@ namespace RestFrames {
       while (true) {
 	current_pos = message.find( '\n', previous_pos );
 	string line = message.substr( previous_pos, current_pos - previous_pos );
-	if(line == "") break;
 	
 	ostringstream message_to_send;
 	message_to_send.setf(std::ios::adjustfield, std::ios::left); 
@@ -162,7 +161,7 @@ namespace RestFrames {
   void RFLog::PrintList(const RFList<T>* listPtr){
     int N = listPtr->GetN();
     for(int i = 0; i < N; i++) 
-      m_Message << listPtr->Get(i)->GetName() << " ";
+      m_Message << listPtr->Get(i).GetName() << " ";
   }
 
   void SetLogPrint(LogType type, bool print){

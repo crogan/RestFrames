@@ -47,19 +47,17 @@ namespace RestFrames {
     virtual void Clear();
 
     virtual void AddFrame(RestFrame& frame);
-    virtual void AddFrame(RestFrame* framePtr);
     virtual bool AddJigsaw(Jigsaw& jigsaw);
-    virtual bool AddJigsaw(Jigsaw* jigsawPtr);
 
     // Event analysis functions
     virtual void SetLabFrameFourVector(const TLorentzVector& V);
     virtual void SetLabFrameThreeVector(const TVector3& V);
-    virtual TLorentzVector GetLabFrameFourVector();
+    virtual TLorentzVector GetLabFrameFourVector() const;
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();
 
   protected:
-    virtual State* InitializeGroupState();
+    virtual State& InitializeGroupState();
 
   private:
     TLorentzVector m_Lab_P;

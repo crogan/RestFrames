@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <map>
 #include <TCanvas.h>
+#include "RestFrames/RFBase.hh"
 #include "RestFrames/RestFrame.hh"
 
 using namespace std;
@@ -38,23 +39,17 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // FramePlot class
   ///////////////////////////////////////////////
-  class FramePlot {
+  class FramePlot : public RFBase {
   public:
     FramePlot(const string& sname, const string& stitle);
     ~FramePlot();
 
     // tree drawing functions
-    void AddFrameTree(const RestFrame* framePtr);
-    void AddFrameTree(const RFrame* framePtr, const RestFrames::RFList<Jigsaw>& jigsaws);
-    void AddFrameTree(const RFrame* framePtr, Jigsaw* jigsawPtr);
-    void AddGroupTree(const Group* groupPtr);
-    void AddJigsaw(Jigsaw* jigsawPtr);
-
     void AddFrameTree(const RestFrame& frame);
     void AddFrameTree(const RFrame& frame, const RestFrames::RFList<Jigsaw>& jigsaws);
-    void AddFrameTree(const RFrame& frame, Jigsaw& jigsaw);
+    void AddFrameTree(const RFrame& frame, const Jigsaw& jigsaw);
     void AddGroupTree(const Group& group);
-    void AddJigsaw(Jigsaw& jigsaw);
+    void AddJigsaw(const Jigsaw& jigsaw);
 
     void DrawFramePlot();
 
@@ -64,8 +59,6 @@ namespace RestFrames {
     TCanvas* GetCanvas() const;
 
   private:
-    string m_Name;
-    string m_Title;
     FramePlotType m_Type;
 
     TCanvas* m_CanvasPtr;
@@ -78,12 +71,12 @@ namespace RestFrames {
     int m_NInvJigsaw;
     int m_NCombJigsaw;
     bool m_SelfAssembling;
-    map<Jigsaw*,int> m_JigsawColorMap;
+    map<const Jigsaw*,int> m_JigsawColorMap;
     map<FrameType,int> m_FrameColorMap;
     map<FrameType,int> m_FrameColorFillMap;
 
-    RestFrames::RFList<RestFrame> m_Frames;
-    RestFrames::RFList<Jigsaw> m_Jigsaws;
+    vector<const RestFrame*> m_Frames;
+    vector<const Jigsaw*> m_Jigsaws;
     const Group* m_GroupPtr;
    
     void ClearTree();
@@ -91,17 +84,16 @@ namespace RestFrames {
 
     void InitTreeGrid();
 
-    string GetStateTitle(State* statePtr);
+    string GetStateTitle(const State& state);
     string GetSetTitle(const string& set, const string& index);
 
-    void AddFrame(const RestFrame* framePtr);
-    void AddFrame(RestFrame* framePtr);
-    void FillFrameTree(const RestFrame* framePtr);
-    void FillFrameTreeMap(int irow, const RestFrame* framePtr);
-    void FillFrameTreeMap(int irow, const RDecayFrame* framePtr);
-    void FillGroupTree(const Group* groupPtr);
-    void FillGroupTreeMap(int irow, State* statePtr);
-    void FillJigsawLink(Jigsaw* jigsawPtr);
+    void AddFrame(const RestFrame& frame);
+    void FillFrameTree(const RestFrame& frame);
+    void FillFrameTreeMap(int irow, const RestFrame& frame);
+    void FillFrameTreeMap(int irow, const RDecayFrame& frame);
+    void FillGroupTree(const Group& group);
+    void FillGroupTreeMap(int irow, const State& state);
+    void FillJigsawLink(const Jigsaw& jigsaw);
 
     vector<FramePlotNode*> m_TreeNodes;
     vector<FramePlotLink*> m_TreeLinks;
@@ -133,18 +125,18 @@ namespace RestFrames {
     
     void SetX(double x);
     void SetY(double y);
-    void SetFrame(const RestFrame* framePtr);
-    void AddJigsaw(Jigsaw* jigsawPtr);
-    void SetState(State* statePtr);
+    void SetFrame(const RestFrame& frame);
+    void AddJigsaw(const Jigsaw& jigsaw);
+    void SetState(const State& state);
     void SetLabel(const string& label);
     void SetSquare(bool square);
     double GetX() const;
     double GetY() const;
     string GetLabel() const;
-    const RestFrame* GetFrame() const;
+    RestFrame const& GetFrame() const;
     int GetNJigsaws() const;
-    RFList<Jigsaw>* GetJigsawList() const;
-    State* GetState() const;
+    vector<const RestFrames::Jigsaw*> GetJigsawList() const;
+    State const& GetState() const;
     bool DoLabel() const;
     bool DoSquare() const;
 
@@ -155,8 +147,8 @@ namespace RestFrames {
     bool m_DoLabel;
     bool m_DoSquare;
     const RestFrame* m_FramePtr;
-    RestFrames::RFList<Jigsaw>* m_JigsawsPtr;
-    State* m_StatePtr;
+    vector<const Jigsaw*> m_Jigsaws;
+    const State* m_StatePtr;
     void Init();
   };
 
@@ -170,14 +162,14 @@ namespace RestFrames {
 
     void SetLabel(const string& label);
     void SetWavy(bool wavy);
-    void SetJigsaw(Jigsaw* jigsawPtr);
+    void SetJigsaw(const Jigsaw& jigsaw);
 
     FramePlotNode* GetNode1() const;
     FramePlotNode* GetNode2() const;
     bool DoWavy() const;
     string GetLabel() const;
     bool DoLabel() const;
-    Jigsaw* GetJigsaw() const;
+    Jigsaw const& GetJigsaw() const;
 
   private:
     FramePlotNode* m_Node1Ptr;
@@ -185,7 +177,7 @@ namespace RestFrames {
     bool m_Wavy;
     bool m_DoLabel;
     string m_Label;
-    Jigsaw* m_JigsawPtr;
+    const Jigsaw* m_JigsawPtr;
     void Init();
   };
 

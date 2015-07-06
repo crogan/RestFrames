@@ -47,6 +47,8 @@ namespace RestFrames {
   class Jigsaw : public RFBase {
   public:
     Jigsaw(const string& sname, const string& stitle);
+    Jigsaw(const RFKey& key);
+    Jigsaw();
     
     virtual ~Jigsaw();
   
@@ -65,29 +67,31 @@ namespace RestFrames {
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
 
-    virtual void SetGroup(Group* groupPtr);
-    Group* GetGroup() const;
+    virtual void SetGroup();
+    virtual void SetGroup(Group& group);
+    Group& GetGroup() const;
 
-    bool CanSplit(const State* statePtr);
-    bool CanSplit(const RestFrames::RFList<RestFrame>& frames);
+    bool CanSplit(const State& state) const;
+    bool CanSplit(const RestFrames::RFList<RestFrame>& frames) const;
   
-    virtual StateList InitializeOutputStates(State* statePtr);
+    virtual StateList InitializeOutputStates(State& state);
     virtual bool InitializeDependancyStates(const StateList& states, 
 					    const RestFrames::RFList<Group>& groups);
     virtual bool InitializeDependancyJigsaws();
 
     virtual int GetNChildStates() const;
-    virtual State* GetChildState(int i) const;
+    virtual State& GetChildState(int i) const;
     virtual RestFrames::RFList<RestFrame> GetChildFrames(int i) const;
     virtual RestFrames::RFList<RestFrame> GetChildFrames() const;
 
     virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
     virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaw) = 0;
-    bool DependsOnJigsaw(Jigsaw* jigsawPtr);
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaw)
+    { return false; }
+    bool DependsOnJigsaw(const Jigsaw& jigsawPtr) const;
 
-    virtual bool AnalyzeEvent() = 0;
+    virtual bool AnalyzeEvent(){ return false; }
   
   protected:
     static int m_class_key;
@@ -95,7 +99,7 @@ namespace RestFrames {
     JigsawType m_Type;
 
     Group* m_GroupPtr;
-    State* m_InputStatePtr;
+    const State* m_InputStatePtr;
 
     vector<RestFrames::RFList<RestFrame> > m_OutputFrames;
     vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
@@ -105,17 +109,19 @@ namespace RestFrames {
 
     RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
-    virtual State* NewOutputState();
+    virtual State& NewOutputState();
     virtual void ClearOutputStates();
-    void AddOutputFrame(RestFrame* framePtr, int i = 0);
+    void AddOutputFrame(RestFrame& frame, int i = 0);
     void AddOutputFrame(const RFList<RestFrame>& frames, int i = 0);
-    void AddDependancyFrame(RestFrame* framePtr, int i = 0);
+    void AddDependancyFrame(RestFrame& frame, int i = 0);
     void AddDependancyFrame(const RFList<RestFrame>& frames, int i = 0);
 
   private:
     void Init();
     int GenKey();
   };
+
+  extern Jigsaw g_Jigsaw;
 }
 
 #endif

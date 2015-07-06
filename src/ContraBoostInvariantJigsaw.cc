@@ -42,7 +42,6 @@ namespace RestFrames {
     InvisibleJigsaw(sname, stitle, 2, 2)
   {
     Init();
-    cout << "ADADADADA" << endl;
   }
  
   ContraBoostInvariantJigsaw::~ContraBoostInvariantJigsaw(){
@@ -56,20 +55,17 @@ namespace RestFrames {
   void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){ 
     int Nchild = GetNChildStates();
     for(int i = 0 ; i < Nchild; i++){
-      InvisibleState* statePtr =  m_InvisibleOutputStates.Get(i);
-      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsaws);
+      m_InvisibleOutputStates.Get(i).FillInvisibleMassJigsawDependancies(jigsaws);
       
       int N = m_DependancyStates[i].GetN();
-      for(int j = 0; j < N; j++){
-	State* jstatePtr = m_DependancyStates[i].Get(j);
-	if(jstatePtr) jstatePtr->FillGroupJigsawDependancies(jigsaws);
-      }
+      for(int j = 0; j < N; j++)
+	m_DependancyStates[i].Get(j).FillGroupJigsawDependancies(jigsaws);
     }
   }
 
   double ContraBoostInvariantJigsaw::GetMinimumMass(){
-    double Minv1 = m_InvisibleOutputStates.Get(0)->GetMinimumMass();
-    double Minv2 = m_InvisibleOutputStates.Get(1)->GetMinimumMass();
+    double Minv1 = m_InvisibleOutputStates.Get(0).GetMinimumMass();
+    double Minv2 = m_InvisibleOutputStates.Get(1).GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double Mvis1 = fabs(Pvis1.M());
@@ -127,16 +123,16 @@ namespace RestFrames {
     INV1.Boost(Boost);
     INV2.Boost(Boost);
 
-    m_OutputStates.Get(0)->SetFourVector(INV1);
-    m_OutputStates.Get(1)->SetFourVector(INV2);
+    m_OutputStates.Get(0).SetFourVector(INV1);
+    m_OutputStates.Get(1).SetFourVector(INV2);
     
     m_Spirit = true;
     return m_Spirit;
   }
 
   void ContraBoostInvariantJigsaw::CalcCoef(){
-    double Minv1 = dynamic_cast<InvisibleState*>(m_InvisibleOutputStates.Get(0))->GetMinimumMass();
-    double Minv2 = dynamic_cast<InvisibleState*>(m_OutputStates.Get(1))->GetMinimumMass();
+    double Minv1 = dynamic_cast<InvisibleState*>(&m_InvisibleOutputStates.Get(0))->GetMinimumMass();
+    double Minv2 = dynamic_cast<InvisibleState*>(&m_OutputStates.Get(1))->GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double m1 = fabs(Pvis1.M());

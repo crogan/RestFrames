@@ -57,33 +57,44 @@ namespace RestFrames {
   }
 
   void InvisibleGroup::AddFrame(RestFrame& frame){
-    AddFrame(&frame);
-  }
-
-  void InvisibleGroup::AddFrame(RestFrame* framePtr){
-    if(!framePtr) return;
-    if(!framePtr->IsRFrame() || !framePtr->IsInvisibleFrame()) return;
-    RFrame *ptr = dynamic_cast<RFrame*>(framePtr);
+    SetBody(false);
+    if(frame.IsEmpty()) return;
+    if(!frame.IsRFrame() || !frame.IsInvisibleFrame()) return;
+    RFrame *ptr = dynamic_cast<RFrame*>(&frame);
     if(ptr){
-      ptr->SetGroup(this);
-      m_Frames.Add(framePtr);
+      ptr->SetGroup(*this);
+      m_Frames.Add(frame);
     }
   }
 
   bool InvisibleGroup::AddJigsaw(Jigsaw& jigsaw){
-    return AddJigsaw(&jigsaw);
-  }
+    SetBody(false);
 
-  bool InvisibleGroup::AddJigsaw(Jigsaw* jigsawPtr){
-    if(!jigsawPtr) return false;
-    if(jigsawPtr->GetGroup()) return false;
-    if(!jigsawPtr->IsInvisibleJigsaw()) return false;
-    if(m_JigsawsToUse.Add(jigsawPtr)) jigsawPtr->SetGroup(this);
+    if(jigsaw.IsEmpty()) return false;
+    if(!jigsaw.GetGroup().IsEmpty()){
+      if(jigsaw.GetGroup() == *this)
+	return true;
+      m_Log << LogWarning;
+      m_Log << "Cannot add Jigsaw - already assigned to Group:";
+      m_Log << endl << " Jigsaw:" << endl << Log(jigsaw);
+      m_Log << endl << " Group:" << endl << Log(jigsaw.GetGroup());
+      m_Log << m_End;
+      return false;
+    }
+    if(!jigsaw.IsInvisibleJigsaw()){
+      m_Log << LogWarning;
+      m_Log << "Cannot add non-Invisible Jigsaw:";
+      m_Log << Log(jigsaw) << m_End;
+      return false;
+    }
+    if(m_JigsawsToUse.Add(jigsaw))
+      jigsaw.SetGroup(*this);
+     
     return true;
   }
 
-  State* InvisibleGroup::InitializeGroupState(){
-    return new InvisibleState();
+  State& InvisibleGroup::InitializeGroupState(){
+    return *(new InvisibleState());
   }
 
   // Event analysis functions
@@ -100,7 +111,7 @@ namespace RestFrames {
     m_Lab_P.SetVectM(V,0.0);
   }
 
-  TLorentzVector InvisibleGroup::GetLabFrameFourVector(){
+  TLorentzVector InvisibleGroup::GetLabFrameFourVector() const {
     return m_Lab_P;
   }
 

@@ -18,12 +18,12 @@ namespace RestFrames {
   // FramePlot class methods
   // class which can plot RestFrame trees
   ///////////////////////////////////////////////
-  FramePlot::FramePlot(const string& sname, const string& stitle){
+  FramePlot::FramePlot(const string& sname, const string& stitle)
+    : RFBase(sname, stitle){
     m_Type = PNone;
-    m_Name = sname;
-    m_Title = stitle;
     m_GroupPtr = nullptr;
     m_CanvasPtr = nullptr;
+    m_Log.SetSource("FramePlot "+GetName());
   }
   
   FramePlot::~FramePlot(){
@@ -50,8 +50,8 @@ namespace RestFrames {
     }
     m_LeafLinks.clear();
 
-    m_Frames.Clear();
-    m_Jigsaws.Clear();
+    m_Frames.clear();
+    m_Jigsaws.clear();
     m_GroupPtr = nullptr;
     m_Type = PNone;
     m_NInvJigsaw = 0;
@@ -99,7 +99,7 @@ namespace RestFrames {
     SetCanvas();
 
     if(m_Type == PFrame){
-      bool do_jigsaws = (m_Jigsaws.GetN() > 0);
+      bool do_jigsaws = (m_Jigsaws.size() > 0);
       DrawTreeLinks();
       if(do_jigsaws) DrawTreeNodes(true);
       if(do_jigsaws) DrawLeafLinks();
@@ -118,72 +118,71 @@ namespace RestFrames {
   }
 
   void FramePlot::AddFrameTree(const RestFrame& frame){
-    AddFrameTree(&frame);
-  }
-  void FramePlot::AddFrameTree(const RestFrame* framePtr){
-    if(!framePtr) return;
+    if(frame.IsEmpty()) return;
     ClearTree();
     m_Type = PFrame;
 
-    FillFrameTree(framePtr);
+    FillFrameTree(frame);
     InitTreeGrid();
     ConvertNodeCoordinates(m_TreeNodes);
   }
 
-  void FramePlot::AddFrameTree(const RFrame& frame, Jigsaw& jigsaw){
-    AddFrameTree(&frame,&jigsaw);
-  }
-  void FramePlot::AddFrameTree(const RFrame* framePtr, Jigsaw* jigsawPtr){
-    if(!framePtr) return;
+  void FramePlot::AddFrameTree(const RFrame& frame, const Jigsaw& jigsaw){
+    if(frame.IsEmpty()) return;
 
-    AddFrameTree(framePtr);
-    AddJigsaw(jigsawPtr);
+    AddFrameTree(frame);
+    AddJigsaw(jigsaw);
   }
 
   void FramePlot::AddFrameTree(const RFrame& frame, const RFList<Jigsaw>& jigsaws){
-    AddFrameTree(&frame, jigsaws);
-  }
-  void FramePlot::AddFrameTree(const RFrame* framePtr, const RFList<Jigsaw>& jigsaws){
-    if(!framePtr) return;
+    if(frame.IsEmpty()) return;
 
-    AddFrameTree(framePtr);
+    AddFrameTree(frame);
 
     int N = jigsaws.GetN();
     for(int j = 0; j < N; j++) AddJigsaw(jigsaws.Get(j));
   }
 
-  void FramePlot::AddJigsaw(Jigsaw& jigsaw){
-    AddJigsaw(&jigsaw);
-  }
-  void FramePlot::AddJigsaw(Jigsaw* jigsawPtr){
-    if(!jigsawPtr) return;
+  void FramePlot::AddJigsaw(const Jigsaw& jigsaw){
+    if(jigsaw.IsEmpty()) return;
     
-    RFList<RestFrame> frames = jigsawPtr->GetChildFrames();
-    if(m_Frames.Contains(frames)){
-      if(m_Jigsaws.Add(jigsawPtr)){
-	FillJigsawLink(jigsawPtr);
-	if(jigsawPtr->IsInvisibleJigsaw()){
-	  m_JigsawColorMap[jigsawPtr] = color_Leaf[0]+m_NInvJigsaw;
-	  m_NInvJigsaw++;
-	}
-	if(jigsawPtr->IsCombinatoricJigsaw()){
-	  m_JigsawColorMap[jigsawPtr] = color_Leaf[1]+m_NCombJigsaw;
-	  m_NCombJigsaw++;
+    int Nj = m_Jigsaws.size();
+    for(int i = 0; i < Nj; i++)
+      if(*m_Jigsaws[i] == jigsaw)
+	return;
+
+    RFList<RestFrame> frames = jigsaw.GetChildFrames();
+    int N = frames.GetN();
+    int M = m_Frames.size();
+    for(int i = 0; i < N; i++){
+      bool found = false;
+      for(int j = 0; j < M; j++){
+	if(frames.Get(i) == *m_Frames[j]){
+	  found = true;
+	  break;
 	}
       }
+      if(!found) return;
+    }
+    
+    FillJigsawLink(jigsaw);
+    if(jigsaw.IsInvisibleJigsaw()){
+      m_JigsawColorMap[&jigsaw] = color_Leaf[0]+m_NInvJigsaw;
+      m_NInvJigsaw++;
+    }
+    if(jigsaw.IsCombinatoricJigsaw()){
+      m_JigsawColorMap[&jigsaw] = color_Leaf[1]+m_NCombJigsaw;
+      m_NCombJigsaw++;
     }
   }
 
   void FramePlot::AddGroupTree(const Group& group){
-    AddGroupTree(&group);
-  }
-  void FramePlot::AddGroupTree(const Group* groupPtr){
-    if(!groupPtr) return;
     ClearTree();
-    m_GroupPtr = groupPtr;
+    if(group.IsEmpty()) return;
+    m_GroupPtr = &group;
     m_Type = PGroup;
 
-    FillGroupTree(groupPtr);
+    FillGroupTree(group);
     InitTreeGrid();
     ConvertNodeCoordinates(m_TreeNodes);
   }
@@ -213,90 +212,83 @@ namespace RestFrames {
       nodes[i]->SetY(new_y);
     }
   }
-   
-  void FramePlot::AddFrame(RestFrame* framePtr){
-    m_Frames.Add(framePtr);
-    if(m_FrameColorMap[framePtr->GetType()] <= 0){
-      m_FrameColorMap[framePtr->GetType()] = color_Node[int(framePtr->GetType())];
-      m_FrameColorFillMap[framePtr->GetType()] = color_fill_Node[int(framePtr->GetType())];
+
+  void FramePlot::AddFrame(const RestFrame& frame){
+    int N = m_Frames.size();
+    for(int i = 0; i < N; i++)
+      if(*m_Frames[i] == frame)
+	return;
+    if(m_FrameColorMap[frame.GetType()] <= 0){
+      m_FrameColorMap[frame.GetType()] = color_Node[int(frame.GetType())];
+      m_FrameColorFillMap[frame.GetType()] = color_fill_Node[int(frame.GetType())];
     }
   }
 
-  void FramePlot::AddFrame(const RestFrame* framePtr){
-    if(m_FrameColorMap[framePtr->GetType()] <= 0){
-      m_FrameColorMap[framePtr->GetType()] = color_Node[int(framePtr->GetType())];
-      m_FrameColorFillMap[framePtr->GetType()] = color_fill_Node[int(framePtr->GetType())];
-    }
-  }
-
-  void FramePlot::FillFrameTree(const RestFrame* framePtr){
+  void FramePlot::FillFrameTree(const RestFrame& frame){
     m_Nrow = 0;
     m_Ncol.clear();
 
     FramePlotNode* top_nodePtr = new FramePlotNode();
     top_nodePtr->SetX(0.);
     top_nodePtr->SetY(0.);
-    top_nodePtr->SetFrame(framePtr);
-    top_nodePtr->SetLabel(framePtr->GetTitle());
+    top_nodePtr->SetFrame(frame);
+    top_nodePtr->SetLabel(frame.GetTitle());
     m_TreeNodes.push_back(top_nodePtr);
-    AddFrame(framePtr);
+    AddFrame(frame);
     m_Ncol.push_back(1);
-    FillFrameTreeMap(0, framePtr);
+    FillFrameTreeMap(0, frame);
     m_Nrow = m_Ncol.size();
   }
 
-  void FramePlot::FillFrameTreeMap(int irow, const RestFrame* framePtr){
-    if(framePtr->IsDecayFrame() && framePtr->IsRFrame()){
-      const RDecayFrame* rframePtr = dynamic_cast<const RDecayFrame*>(framePtr);
+  void FramePlot::FillFrameTreeMap(int irow, const RestFrame& frame){
+    if(frame.IsDecayFrame() && frame.IsRFrame()){
+      const RDecayFrame* rframePtr = dynamic_cast<const RDecayFrame*>(&frame);
       if(rframePtr){
 	if(rframePtr->IsSelfAssemblingFrame()){
-	  FillFrameTreeMap(irow, rframePtr);
+	  FillFrameTreeMap(irow, *rframePtr);
 	  return;
 	}
       }
     }
     FramePlotNode* frame_nodePtr = m_TreeNodes[m_TreeNodes.size()-1];
 
-    int Nchild = framePtr->GetNChildren();
+    int Nchild = frame.GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      RestFrame* childPtr = framePtr->GetChildFrame(i);
-      if(!childPtr) continue;
+      const RestFrame& child = frame.GetChildFrame(i);
       if(irow+1 >= int(m_Ncol.size())){
   	m_Ncol.push_back(0);
       }
       FramePlotNode* child_nodePtr = new FramePlotNode();
       child_nodePtr->SetX(m_Ncol[irow+1]);
       child_nodePtr->SetY(irow+1);
-      child_nodePtr->SetFrame(childPtr);
-      child_nodePtr->SetLabel(childPtr->GetTitle());
+      child_nodePtr->SetFrame(child);
+      child_nodePtr->SetLabel(child.GetTitle());
       m_TreeNodes.push_back(child_nodePtr);
-      AddFrame(childPtr);
+      AddFrame(child);
       FramePlotLink* linkPtr = new FramePlotLink(frame_nodePtr,child_nodePtr);
       m_TreeLinks.push_back(linkPtr);
       m_Ncol[irow+1]++;
-      FillFrameTreeMap(irow+1,childPtr);
+      FillFrameTreeMap(irow+1,child);
     }
   }
 
-  void FramePlot::FillFrameTreeMap(int irow, const RDecayFrame* framePtr){
+  void FramePlot::FillFrameTreeMap(int irow, const RDecayFrame& frame){
     FramePlotNode* frame_nodePtr = m_TreeNodes[m_TreeNodes.size()-1];
     frame_nodePtr->SetSquare(true);
     m_SelfAssembling = true;
 
-    int Nchild = framePtr->GetNChildren();
- 
+    int Nchild = frame.GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      RestFrame* childPtr = framePtr->GetChildFrame(i);
-      if(!childPtr) continue;
+      const RestFrame& child = frame.GetChildFrame(i);
       bool expand_child = false;
        int N = -1;
        bool excl = false;
-      if(childPtr->IsVisibleFrame() && childPtr->IsRFrame()){
-	RVisibleFrame* rvframePtr = dynamic_cast<RVisibleFrame*>(childPtr);
+      if(child.IsVisibleFrame() && child.IsRFrame()){
+	const RVisibleFrame* rvframePtr = dynamic_cast<const RVisibleFrame*>(&child);
 	if(!rvframePtr) continue;
-	CombinatoricGroup* groupPtr = dynamic_cast<CombinatoricGroup*>(rvframePtr->GetGroup());
+	CombinatoricGroup* groupPtr = dynamic_cast<CombinatoricGroup*>(&rvframePtr->GetGroup());
 	if(groupPtr){
-	  groupPtr->GetNElementsForFrame(rvframePtr, N, excl);
+	  groupPtr->GetNElementsForFrame(*rvframePtr, N, excl);
 	  if( (N >= 2 && excl) || (N >= 1 && !excl) ) expand_child = true;
 	}
       }
@@ -308,104 +300,104 @@ namespace RestFrames {
 	  FramePlotNode* child_nodePtr = new FramePlotNode();
 	  child_nodePtr->SetX(m_Ncol[irow+1]+ double(j-1)*0.08);
 	  child_nodePtr->SetY(irow+1);
-	  child_nodePtr->SetFrame(childPtr);
-	  if(j == 2) child_nodePtr->SetLabel(GetSetTitle(childPtr->GetTitle(),"i"));
+	  child_nodePtr->SetFrame(child);
+	  if(j == 2) child_nodePtr->SetLabel(GetSetTitle(child.GetTitle(),"i"));
 	  m_TreeNodes.push_back(child_nodePtr);
 	  FramePlotLink* linkPtr = new FramePlotLink(frame_nodePtr,child_nodePtr);
 	  m_TreeLinks.push_back(linkPtr);
 	}
 	m_Ncol[irow+1]++;
-	AddFrame(childPtr);
+	AddFrame(child);
       } else {
 	FramePlotNode* child_nodePtr = new FramePlotNode();
 	child_nodePtr->SetX(m_Ncol[irow+1]);
 	child_nodePtr->SetY(irow+1);
-	child_nodePtr->SetFrame(childPtr);
-	child_nodePtr->SetLabel(childPtr->GetTitle());
+	child_nodePtr->SetFrame(child);
+	child_nodePtr->SetLabel(child.GetTitle());
 	m_TreeNodes.push_back(child_nodePtr);
-	AddFrame(childPtr);
+	AddFrame(child);
 	FramePlotLink* linkPtr = new FramePlotLink(frame_nodePtr,child_nodePtr);
 	m_TreeLinks.push_back(linkPtr);
 	m_Ncol[irow+1]++;
-	FillFrameTreeMap(irow+1,childPtr);
+	FillFrameTreeMap(irow+1,child);
       }
     }
   }
 
-  void FramePlot::FillGroupTree(const Group* groupPtr){
+  void FramePlot::FillGroupTree(const Group& group){
     m_Nrow = 0;
     m_Ncol.clear();
   
-    State* top_statePtr = groupPtr->GetGroupState();
-    if(!top_statePtr) return;
+    const State& top_state = group.GetGroupState();
+    if(top_state.IsEmpty()) return;
 
     FramePlotNode* top_nodePtr = new FramePlotNode();
     top_nodePtr->SetX(0.);
     top_nodePtr->SetY(0.);
-    top_nodePtr->SetState(top_statePtr);
-    top_nodePtr->SetLabel(GetStateTitle(top_statePtr));
+    top_nodePtr->SetState(top_state);
+    top_nodePtr->SetLabel(GetStateTitle(top_state));
     m_TreeNodes.push_back(top_nodePtr);
     m_Ncol.push_back(1);
-    FillGroupTreeMap(0, top_statePtr);
+    FillGroupTreeMap(0, top_state);
 
     m_Nrow = m_Ncol.size();
   }
 
-  void FramePlot::FillGroupTreeMap(int irow, State* statePtr){
-    Jigsaw* jigsawPtr = statePtr->GetChildJigsaw();
-    if(!jigsawPtr) return;
+  void FramePlot::FillGroupTreeMap(int irow, const State& state){
+    const Jigsaw& jigsaw = state.GetChildJigsaw();
+    if(jigsaw.IsEmpty()) return;
 
     FramePlotNode* state_nodePtr = m_TreeNodes[int(m_TreeNodes.size())-1];
-    int Nchild = jigsawPtr->GetNChildStates();
+    int Nchild = jigsaw.GetNChildStates();
 
     for(int i = 0; i < Nchild; i++){
-      State* childPtr = jigsawPtr->GetChildState(i);
-      if(!childPtr) continue;
+      State& child = jigsaw.GetChildState(i);
+      if(child.IsEmpty()) continue;
       if(irow+1 >= int(m_Ncol.size())){
 	m_Ncol.push_back(0);
       }
       FramePlotNode *child_nodePtr = new FramePlotNode();
       child_nodePtr->SetX(m_Ncol[irow+1]);
       child_nodePtr->SetY(irow+1);
-      child_nodePtr->SetState(childPtr);
-      child_nodePtr->SetLabel(GetStateTitle(childPtr));
+      child_nodePtr->SetState(child);
+      child_nodePtr->SetLabel(GetStateTitle(child));
       m_TreeNodes.push_back(child_nodePtr);
       FramePlotLink* linkPtr = new FramePlotLink(state_nodePtr,child_nodePtr);
-      linkPtr->SetJigsaw(jigsawPtr);
-      linkPtr->SetLabel(jigsawPtr->GetTitle());
+      linkPtr->SetJigsaw(jigsaw);
+      linkPtr->SetLabel(jigsaw.GetTitle());
       m_TreeLinks.push_back(linkPtr);
       m_Ncol[irow+1]++;
-      FillGroupTreeMap(irow+1,childPtr);
+      FillGroupTreeMap(irow+1, child);
     }
   }
 
-  void FramePlot::FillJigsawLink(Jigsaw* jigsawPtr){
-    int Nsplit = jigsawPtr->GetNChildStates();
-    Group *groupPtr = jigsawPtr->GetGroup();
-    if(!groupPtr) return;
+  void FramePlot::FillJigsawLink(const Jigsaw& jigsaw){
+    int Nsplit = jigsaw.GetNChildStates();
+    Group& group = jigsaw.GetGroup();
+    if(group.IsEmpty()) return;
     FramePlotNode* high_old = nullptr;
     FramePlotNode* high_new = nullptr;
     //vector<RFList<RestFrame> > child_frames;
     for(int s = 0; s < Nsplit; s++){
-      RFList<RestFrame> frames = jigsawPtr->GetChildFrames(s);
+      RFList<RestFrame> frames = jigsaw.GetChildFrames(s);
       int Nnode = m_TreeNodes.size();
       FramePlotNode* last_nodePtr = nullptr;
       double high = -1.;
       for(int n = 0; n < Nnode; n++){
 	FramePlotNode* nodePtr = m_TreeNodes[n];
-	const RestFrame* framePtr = nodePtr->GetFrame();
-	if(frames.Contains(framePtr)){
-	  nodePtr->AddJigsaw(jigsawPtr);
-	  if(groupPtr->ContainsFrame(framePtr) || false){
+	const RestFrame& frame = nodePtr->GetFrame();
+	if(frames.Contains(frame)){
+	  nodePtr->AddJigsaw(jigsaw);
+	  if(group.ContainsFrame(frame)){
 	    if(nodePtr->GetY() > high){
 	      high_new = nodePtr;
 	      high = nodePtr->GetY();
 	    }
 	  }
 	  if(last_nodePtr){
-	    if(!last_nodePtr->GetFrame()->IsSame(nodePtr->GetFrame())){
+	    if(!(last_nodePtr->GetFrame() == nodePtr->GetFrame())){
 	      FramePlotLink* linkPtr = new FramePlotLink(last_nodePtr,nodePtr);
-	      linkPtr->SetJigsaw(jigsawPtr);
+	      linkPtr->SetJigsaw(jigsaw);
 	      m_LeafLinks.push_back(linkPtr);
 	    }
 	  }
@@ -416,7 +408,7 @@ namespace RestFrames {
       if(s != 0){
 	FramePlotLink* linkPtr = new FramePlotLink(high_old,high_new);
 	linkPtr->SetWavy(true);
-	linkPtr->SetJigsaw(jigsawPtr);
+	linkPtr->SetJigsaw(jigsaw);
 	m_LeafLinks.push_back(linkPtr);
       }
       high_old = high_new;
@@ -425,23 +417,20 @@ namespace RestFrames {
 
   void FramePlot::DrawTreeNodes(bool with_rings){
     int Nnode = m_TreeNodes.size();
-    for(int i = 0; i < Nnode; i++){
+    for(int i = 0; i < Nnode; i++)
       DrawNode(m_TreeNodes[i], with_rings);
-    }
   }
 
   void FramePlot::DrawTreeLinks(){
     int Nlink = m_TreeLinks.size();
-    for(int i = 0; i < Nlink; i++){
+    for(int i = 0; i < Nlink; i++)
       DrawLink(m_TreeLinks[i]);
-    }
   }
 
   void FramePlot::DrawLeafLinks(){
     int Nlink = m_LeafLinks.size();
-    for(int i = 0; i < Nlink; i++){
+    for(int i = 0; i < Nlink; i++)
       DrawLink(m_LeafLinks[i]);
-    }
   }
 
   void FramePlot::DrawLink(FramePlotLink* linkPtr){
@@ -456,26 +445,32 @@ namespace RestFrames {
     int isize = int(m_Node_R*70.);
     bool DoWavy = linkPtr->DoWavy();
 
-    Jigsaw* jigsawPtr = linkPtr->GetJigsaw();
+    const Jigsaw& jigsaw = linkPtr->GetJigsaw();
 
-    if(jigsawPtr){
+    if(!jigsaw.IsEmpty()){
       if(linkPtr->DoLabel()){
-	int priority = GetJigsawPriority(jigsawPtr->GetNOutputStates(), jigsawPtr->GetNDependancyStates());
+	int priority = GetJigsawPriority(jigsaw.GetNOutputStates(), jigsaw.GetNDependancyStates());
 	icolor = color_Node[priority];
 	icolor_fill = color_fill_Node[priority];
       } else {
-	int Nj = m_Jigsaws.GetN();
-	int index = m_Jigsaws.GetIndex(jigsawPtr);
+	int Nj = m_Jigsaws.size();
+	int index = -1;
+	for(int i = 0; i < Nj; i++){
+	  if(*m_Jigsaws[i] == jigsaw){
+	    index = i;
+	    break;
+	  }
+	}
 	x0 += (double(index+1)-double(Nj+1)/2.)*m_Node_R*1./max(4.,double(Nj));
 	x1 += (double(index+1)-double(Nj+1)/2.)*m_Node_R*1./max(4.,double(Nj));
-	icolor = m_JigsawColorMap[jigsawPtr];
+	icolor = m_JigsawColorMap[&jigsaw];
 	if(DoWavy){
 	  istyle = style_Leaf;
 	  isize++;
 	}
       }
     }
-
+      
     if(fabs(y0-y1) > 1e-10){ // nodes are at different heights - draw line
       TLine *line = new TLine(x0,y0,x1,y1);
       line->SetLineColor(icolor);
@@ -552,31 +547,31 @@ namespace RestFrames {
     int iwidth = int(m_Node_R*50.);;
     bool square = nodePtr->DoSquare();
 
-    const RestFrame* framePtr = nodePtr->GetFrame();
+    const RestFrame& frame = nodePtr->GetFrame();
 
-    if(framePtr){
-      icolor = m_FrameColorMap[framePtr->GetType()];
-      icolor_fill = m_FrameColorFillMap[framePtr->GetType()];
-    } 
+    if(!frame.IsEmpty()){
+      icolor = m_FrameColorMap[frame.GetType()];
+      icolor_fill = m_FrameColorFillMap[frame.GetType()]; 
+    }
 
     if(with_rings){
-      RFList<Jigsaw>* jigsawsPtr = nodePtr->GetJigsawList();
-      int Njigsaw = jigsawsPtr->GetN();
+      vector<const Jigsaw*> jigsaws = nodePtr->GetJigsawList();
+      int Njigsaw = jigsaws.size();
       for(int i = 0; i < Njigsaw; i++){
 	double R = 1.03 + double(Njigsaw-i)*0.08;
-	Jigsaw* jigsawPtr = jigsawsPtr->Get(i);
+	const Jigsaw& jigsaw = *jigsaws[i];
 	if(square){
 	  TBox* ring = new TBox(x-m_Node_R*R*0.88,y-m_Node_R*R*0.88,
 				x+m_Node_R*R*0.88,y+m_Node_R*R*0.88);
-	  ring->SetLineColor(m_JigsawColorMap[jigsawPtr]);
-	  ring->SetFillColor(m_JigsawColorMap[jigsawPtr]);
+	  ring->SetLineColor(m_JigsawColorMap[&jigsaw]);
+	  ring->SetFillColor(m_JigsawColorMap[&jigsaw]);
 	  m_CanvasPtr->cd();
 	  ring->Draw();
 	  m_Objects.push_back(ring);
 	} else {
 	  TArc* ring = new TArc(x,y,m_Node_R*R);
-	  ring->SetLineColor(m_JigsawColorMap[jigsawPtr]);
-	  ring->SetFillColor(m_JigsawColorMap[jigsawPtr]);
+	  ring->SetLineColor(m_JigsawColorMap[&jigsaw]);
+	  ring->SetFillColor(m_JigsawColorMap[&jigsaw]);
 	  m_CanvasPtr->cd();
 	  ring->Draw();
 	  m_Objects.push_back(ring);
@@ -622,16 +617,16 @@ namespace RestFrames {
     }
   }
 
-  string FramePlot::GetStateTitle(State* statePtr){
-    RFList<RestFrame> frames = statePtr->GetFrames();
+  string FramePlot::GetStateTitle(const State& state){
+    RFList<RestFrame> frames = state.GetFrames();
     int Nf = frames.GetN();
     string title = "";
     if(Nf > 2) title.append("#splitline{");
-    title.append(frames.Get(0)->GetTitle());
+    title.append(frames.Get(0).GetTitle());
     for(int f = 1; f < Nf; f++){
       if(f%((Nf+1)/2) == 0 && Nf > 2) title.append("}{");
       title.append("+ ");
-      title.append(frames.Get(f)->GetTitle());
+      title.append(frames.Get(f).GetTitle());
     }
     if(Nf > 2) title.append("}");
    
@@ -711,11 +706,11 @@ namespace RestFrames {
 
     vector<string> ititle;
     vector<int> icolor;
-    int Nj = m_Jigsaws.GetN();
+    int Nj = m_Jigsaws.size();
     for(int i = 0; i < Nj; i++){
-      icolor.push_back(m_JigsawColorMap[m_Jigsaws.Get(i)]);
+      icolor.push_back(m_JigsawColorMap[m_Jigsaws[i]]);
       for(int j = 0; j < 2; j++)
-	if(m_Jigsaws.Get(i)->GetType() == jigsaw_type[j]) ititle.push_back(jigsaw_title[j]);
+	if(m_Jigsaws[i]->GetType() == jigsaw_type[j]) ititle.push_back(jigsaw_title[j]);
     }
 
     TLine* dum[Nj];
@@ -768,9 +763,7 @@ namespace RestFrames {
     Init();
   }
   
-  FramePlotNode::~FramePlotNode(){ 
-    if(m_JigsawsPtr) delete m_JigsawsPtr;
-  }
+  FramePlotNode::~FramePlotNode(){ }
 
   void FramePlotNode::Init(){
     m_X = 0;
@@ -780,26 +773,49 @@ namespace RestFrames {
     m_DoSquare = false;
     m_FramePtr = nullptr;
     m_StatePtr = nullptr;
-    m_JigsawsPtr = new RFList<Jigsaw>();
   }
     
   void FramePlotNode::SetX(double x){ m_X = x; }
   void FramePlotNode::SetY(double y){ m_Y = y; }
   void FramePlotNode::SetLabel(const string& label){ m_Label = label; m_DoLabel = true; }
   void FramePlotNode::SetSquare(bool square){ m_DoSquare = square; }
-  void FramePlotNode::SetFrame(const RestFrame* framePtr){ m_FramePtr = framePtr; }
-  void FramePlotNode::SetState(State* statePtr){ m_StatePtr = statePtr; }
-  void FramePlotNode::AddJigsaw(Jigsaw* jigsawPtr){ m_JigsawsPtr->Add(jigsawPtr); }
+  void FramePlotNode::SetFrame(const RestFrame& frame){ m_FramePtr = &frame; }
+  void FramePlotNode::SetState(const State& state){ m_StatePtr = &state; }
+  void FramePlotNode::AddJigsaw(const Jigsaw& jigsaw){ 
+    int N = m_Jigsaws.size();
+    for(int i = 0; i < N; i++)
+      if(*m_Jigsaws[i] == jigsaw)
+	return;
+    m_Jigsaws.push_back(&jigsaw);
+  }
   
   double FramePlotNode::GetX() const { return m_X; }
   double FramePlotNode::GetY() const { return m_Y; }
   string FramePlotNode::GetLabel() const { return m_Label; }
-  const RestFrame* FramePlotNode::GetFrame() const { return m_FramePtr; }
-  State* FramePlotNode::GetState() const { return m_StatePtr; }
+  const RestFrame& FramePlotNode::GetFrame() const { 
+    if(m_FramePtr)
+      return *m_FramePtr;
+    else 
+      return g_RestFrame;
+  }
+
+  const State& FramePlotNode::GetState() const { 
+    if(m_StatePtr)
+      return *m_StatePtr;
+    else
+      return g_State;
+  }
   bool FramePlotNode::DoLabel() const { return m_DoLabel; }
   bool FramePlotNode::DoSquare() const { return m_DoSquare; }
-  int FramePlotNode::GetNJigsaws() const { return m_JigsawsPtr->GetN(); }
-  RFList<Jigsaw>* FramePlotNode::GetJigsawList() const { return m_JigsawsPtr; }
+  int FramePlotNode::GetNJigsaws() const { return m_Jigsaws.size(); }
+  vector<const Jigsaw*> FramePlotNode::GetJigsawList() const {
+    vector<const Jigsaw*> list;
+    int N = m_Jigsaws.size();
+    for(int i = 0; i < N; i++)
+      list.push_back(m_Jigsaws[i]);
+    return list;
+  }
+    
 
   ///////////////////////////////////////////////
   // FramePlotLink class methods
@@ -821,13 +837,18 @@ namespace RestFrames {
 
   void FramePlotLink::SetWavy(bool wavy){ m_Wavy = wavy; }
   void FramePlotLink::SetLabel(const string& label){ m_Label = label; m_DoLabel = true; }
-  void FramePlotLink::SetJigsaw(Jigsaw* jigsawPtr){ m_JigsawPtr = jigsawPtr; }
+  void FramePlotLink::SetJigsaw(const Jigsaw& jigsaw){ m_JigsawPtr = &jigsaw; }
   
   FramePlotNode* FramePlotLink::GetNode1() const { return m_Node1Ptr; }
   FramePlotNode* FramePlotLink::GetNode2() const { return m_Node2Ptr; }
   bool FramePlotLink::DoWavy() const { return m_Wavy; }
   string FramePlotLink::GetLabel() const { return m_Label; }
   bool FramePlotLink::DoLabel() const { return m_DoLabel; }
-  Jigsaw* FramePlotLink::GetJigsaw() const { return m_JigsawPtr; }
+  Jigsaw const& FramePlotLink::GetJigsaw() const { 
+    if(m_JigsawPtr)
+      return *m_JigsawPtr;
+    else 
+      return g_Jigsaw;
+  }
 
 }

@@ -43,6 +43,7 @@ namespace RestFrames {
 
   public:
     RFKey(){ }
+    RFKey(int key){ m_Key = key; }
     RFKey(const RFKey& key){ m_Key = key.GetKey(); }
     ~RFKey(){ }
 
@@ -63,6 +64,7 @@ namespace RestFrames {
 
   };
  
+  extern RFKey g_Key;
 
   ///////////////////////////////////////////////
   // RFList class
@@ -74,20 +76,16 @@ namespace RestFrames {
     virtual ~RFList();
   
     bool Add(T& obj);
-    bool Add(T* objPtr);
     bool Add(const RFList<T>& objs);
     int Remove(const T& obj);
-    int Remove(const T* objPtr);
     void Remove(const RFList<T>& objs);
     void Clear();
     int GetN() const { return m_Objs.size(); }
-    T* Get(int i) const;
-    T* Get(const RFKey& key) const;
+    T& Get(int i) const;
+    T& Get(const RFKey& key) const;
     int GetIndex(const RFKey& key) const;
-    int GetIndex(const T* objPtr) const;
     int GetIndex(const T& obj) const;
     bool Contains(const RFKey& key) const;
-    bool Contains(const T* objPtr) const;
     bool Contains(const T& obj) const;
     bool Contains(const RFList<T>& objs) const;
 
@@ -102,7 +100,13 @@ namespace RestFrames {
 
   protected:
     vector<T*> m_Objs;
+    static T* m_DefaultPtr;
+    T& GetDefault() const;
+
   };
+
+  template <typename T>
+  T* RFList<T>::m_DefaultPtr = nullptr;
 
 }
 

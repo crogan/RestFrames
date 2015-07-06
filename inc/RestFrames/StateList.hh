@@ -48,7 +48,7 @@ namespace RestFrames {
 
     StateList Copy() const;
 
-    int GetIndexFrame(const RestFrame* framePtr) const;
+    int GetIndexFrame(const RestFrame& frame) const;
     TLorentzVector GetFourVector() const;
     void Boost(const TVector3& B);
 

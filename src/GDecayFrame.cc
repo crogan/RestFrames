@@ -59,7 +59,7 @@ namespace RestFrames {
   bool GDecayFrame::IsSoundBody() const{
     RestFrame::IsSoundBody();
     int Nchild = GetNChildren();
-    if(Nchild < 2 || !GetParentFrame()) m_Body = false;
+    if(Nchild < 2 || GetParentFrame().IsEmpty()) m_Body = false;
     return m_Body;
   }
 
@@ -119,7 +119,7 @@ namespace RestFrames {
     int Nchild = GetNChildren();
     if(Nchild != 2) return -1.;
     double m[2];
-    for(int i = 0; i < 2; i++) m[i] = GetChildFrame(i)->GetMass();
+    for(int i = 0; i < 2; i++) m[i] = GetChildFrame(i).GetMass();
     double Mass;
     if(m_ChildP >= 0.){
       Mass = 0.;
@@ -142,7 +142,7 @@ namespace RestFrames {
     vector<double> ChildMasses;
     double ChildMassTOT = 0.;
     for(int i = 0; i < Nchild; i++){
-      double ChildMass = max(0.,GetChildFrame(i)->GetMass());
+      double ChildMass = max(0.,GetChildFrame(i).GetMass());
       ChildMasses.push_back(ChildMass);
       ChildMassTOT += ChildMass;
     }
@@ -153,7 +153,7 @@ namespace RestFrames {
     vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(Mass, ChildMasses, 
 			     GetParentBoostVector(),
-			     GetParentFrame()->GetDecayPlaneNormalVector(),
+			     GetParentFrame().GetDecayPlaneNormalVector(),
 			     ChildVectors);
     
     SetChildren(ChildVectors);

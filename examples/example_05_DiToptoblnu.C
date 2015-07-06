@@ -67,6 +67,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   GDecayFrame TT_G("TT_G","t #bar{t}");
   GDecayFrame Ta_G("Ta_G","t_{a}");
   GDecayFrame Tb_G("Tb_G","t_{b}");
+
   GDecayFrame Wa_G("Wa_G","W_{a}");
   GDecayFrame Wb_G("Wb_G","W_{b}");
   GVisibleFrame Ba_G("Ba_G","b_{a}");
@@ -126,8 +127,8 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LAB_R.GetName() << endl;
     g_Log << "Ready for Group and Jigsaw initialization" << g_End;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << g_End;	 
-  
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << g_End;  
+
   // define groups for the reconstruction trees
   InvisibleGroup INV_R("INV_R","WIMP Jigsaws");
   INV_R.AddFrame(Na_R);
@@ -153,20 +154,21 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   ContraBoostJigsaw_R.AddVisibleFrame((Tb_R.GetListVisibleFrames()), 1);
   ContraBoostJigsaw_R.AddInvisibleFrame((Ta_R.GetListInvisibleFrames()), 0);
   ContraBoostJigsaw_R.AddInvisibleFrame((Tb_R.GetListInvisibleFrames()), 1);
-  
+
   MinimizeMassesCombinatoricJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m(b #it{l}) Jigsaw");
   B_R.AddJigsaw(HemiJigsaw_R);
   HemiJigsaw_R.AddFrame((Ta_R.GetListVisibleFrames()),0);
   HemiJigsaw_R.AddFrame((Tb_R.GetListVisibleFrames()),1);
 
+  g_Log << LogInfo << "Initializing tree for analysis" << m_End;
   // check reconstruction trees
   if(LAB_R.InitializeAnalysis()){
     g_Log << LogInfo;
-    g_Log << "Successfully initialized tree for analysis from LabFrame ";
+    g_Log << "...Successfully initialized tree for analysis from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
     g_Log << "Ready event analysis" << g_End;
   } else
-    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
+    g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
 
   //////////////////////////////////////////////////////////////
   // draw some pictures of our trees
@@ -272,12 +274,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     // signal tree observables
     //
 
-    g_Log << LogDebug;
-    g_Log << TT_R.GetMass() << " ";
-    g_Log << (Ta_R.GetFourVector()+Tb_R.GetFourVector()).M() << " ";
-    g_Log << (Ta_R+Tb_R).GetMass() << " ";
-    g_Log << (Ba_R+La_R+Bb_R+Lb_R+Na_R+Nb_R).GetMass() << " " << g_End;
-
     //*** total CM mass
     double shat = TT_R.GetMass();
     
@@ -319,10 +315,10 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     for(int h = 0; h < 2; h++){
       cosT[h] = T[h]->GetCosDecayAngle();
       cosW[h] = W[h]->GetCosDecayAngle();
-      EB[h]   = B[h]->GetEnergy(T[h]);
-      EL[h]   = L[h]->GetEnergy(W[h]);
+      EB[h]   = B[h]->GetEnergy(*T[h]);
+      EL[h]   = L[h]->GetEnergy(*W[h]);
 
-      double PB = B[h]->GetMomentum(T[h]);
+      double PB = B[h]->GetMomentum(*T[h]);
       MW[h] = 2.*EL[h];
       MT[h] = EB[h] + sqrt( PB*PB + MW[h]*MW[h] );
 
@@ -349,28 +345,28 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
 
-  FramePlot* framePlot = new FramePlot("framePlot","framePlot");
-  framePlot->AddFrameTree(LAB_G);
-  framePlot->DrawFramePlot();
-  TCanvas* can = framePlot->GetCanvas();
+  FramePlot framePlot("framePlot","framePlot");
+  framePlot.AddFrameTree(LAB_G);
+  framePlot.DrawFramePlot();
+  TCanvas* can = framePlot.GetCanvas();
   can->Write("c_GenTree",TObject::kOverwrite);
   delete can;
 
-  framePlot->AddFrameTree(LAB_R);
-  framePlot->DrawFramePlot();
-  can = framePlot->GetCanvas();
+  framePlot.AddFrameTree(LAB_R);
+  framePlot.DrawFramePlot();
+  can = framePlot.GetCanvas();
   can->Write("c_RecoTree",TObject::kOverwrite);
   delete can;
 
-  framePlot->AddGroupTree(INV_R);
-  framePlot->DrawFramePlot();
-  can = framePlot->GetCanvas();
+  framePlot.AddGroupTree(INV_R);
+  framePlot.DrawFramePlot();
+  can = framePlot.GetCanvas();
   can->Write("c_InvTree",TObject::kOverwrite);
   delete can;
 
-  framePlot->AddGroupTree(B_R);
-  framePlot->DrawFramePlot();
-  can = framePlot->GetCanvas();
+  framePlot.AddGroupTree(B_R);
+  framePlot.DrawFramePlot();
+  can = framePlot.GetCanvas();
   can->Write("c_VisTree",TObject::kOverwrite);
   delete can;
 

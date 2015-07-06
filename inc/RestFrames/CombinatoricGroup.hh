@@ -50,16 +50,12 @@ namespace RestFrames {
     virtual void Clear();
 
     virtual void AddFrame(RestFrame& frame);
-    virtual void AddFrame(RestFrame* framePtr);
     virtual void SetNElementsForFrame(const RestFrame& frame, 
 				      int N, bool exclusive_N = false);
-    virtual void SetNElementsForFrame(const RestFrame* framePtr, 
-				      int N, bool exclusive_N = false);
-    virtual void GetNElementsForFrame(const RestFrame* framePtr, 
-				      int& N, bool& exclusive_N);
+    virtual void GetNElementsForFrame(const RestFrame& frame, 
+				      int& N, bool& exclusive_N) const;
 
     virtual bool AddJigsaw(Jigsaw& jigsaw);
-    virtual bool AddJigsaw(Jigsaw* jigsawPtr);
 
     // Event analysis functions
     void ClearFourVectors();
@@ -69,25 +65,23 @@ namespace RestFrames {
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();
 
-    const RestFrame* GetFrame(const RFKey& key);
-    TLorentzVector GetLabFrameFourVector(const RFKey& key);
-    int GetNElementsInFrame(const RestFrame& frame);
-    int GetNElementsInFrame(const RestFrame* framePtr);
+    RestFrame const& GetFrame(const RFKey& key) const;
+    TLorentzVector GetLabFrameFourVector(const RFKey& key) const;
+    int GetNElementsInFrame(const RestFrame& frame) const;
 	
   protected:
     StateList m_StateElements;
     vector<int> m_NElementsForFrame;
     vector<bool> m_NExclusiveElementsForFrame; 
 
-    virtual State* InitializeGroupState();
+    virtual State& InitializeGroupState();
     void ClearElements();
-    void AddElement(State* statePtr);
     void AddElement(State& state);
     int GetNElements() const;
 
   private:
     void Init();
-    State* GetNewState();
+    State& GetNewState();
     StateList m_InitStates;
   };
 

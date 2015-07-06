@@ -51,13 +51,12 @@ namespace RestFrames {
     virtual void Clear();
 
     virtual void AddFrame(RestFrame& frame, int i = 0);
-    virtual void AddFrame(RestFrame* framePtr, int i = 0);
     virtual void AddFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
     virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
   
   protected:
-    virtual State* NewOutputState();
+    virtual State& NewOutputState();
     virtual void ClearOutputStates();
     RestFrames::RFList<CombinatoricState> m_CombinatoricOutputStates;
 

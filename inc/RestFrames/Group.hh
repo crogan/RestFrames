@@ -47,6 +47,8 @@ namespace RestFrames {
   class Group : public RFBase {
   public:
     Group(const string& sname, const string& stitle);
+    Group(const RFKey& key);
+    Group();
     virtual ~Group();
 
     /// \brief Clears Group of all connections to other objects
@@ -57,23 +59,22 @@ namespace RestFrames {
 
     GroupType GetType() const { return m_Type; }
 
-    virtual void AddFrame(RestFrame& frame) = 0;
-    virtual void AddFrame(RestFrame* framePtr) = 0;
-    void RemoveFrame(const RestFrame* framePtr);
-    bool ContainsFrame(const RestFrame* framePtr) const;
+    virtual void AddFrame(RestFrame& frame){ }
+    void RemoveFrame(const RestFrame& frame);
+    bool ContainsFrame(const RestFrame& frame) const;
     RestFrames::RFList<RestFrame> GetFrames() const;
 
-    virtual bool AddJigsaw(Jigsaw& jigsaw) = 0;
-    virtual bool AddJigsaw(Jigsaw* jigsawPtr) = 0;
+    virtual bool AddJigsaw(Jigsaw& jigsaw){ return false; }
+    void RemoveJigsaw(const Jigsaw& jigsaw);
     RestFrames::RFList<Jigsaw> GetJigsaws() const;
 
-    State* GetGroupState() const;
+    State const& GetGroupState() const;
     StateList GetStates(const RestFrames::RFList<RestFrame>& frames) const;
-    State* GetState(const RestFrame* framePtr) const;
+    State& GetState(const RestFrame& frame) const;
 
     virtual bool InitializeAnalysis();
-    virtual void ClearEvent() = 0;
-    virtual bool AnalyzeEvent() = 0;
+    virtual void ClearEvent(){ };
+    virtual bool AnalyzeEvent(){ return false; };
 
   protected:
     static int m_class_key;
@@ -89,17 +90,19 @@ namespace RestFrames {
     RestFrames::RFList<Jigsaw> m_Jigsaws;
     RestFrames::RFList<Jigsaw> m_JigsawsToUse;
 
-    virtual State* InitializeGroupState();
+    virtual State& InitializeGroupState();
     bool InitializeJigsaws();
-    void InitializeJigsaw(Jigsaw* jigsawPtr);
+    void InitializeJigsaw(Jigsaw& jigsaw);
 
-    bool SplitState(const State* statePtr);
+    bool SplitState(const State& state);
 
   private:
     void Init();
     int GenKey();
   };
 
+  extern Group g_Group;
+  
 }
 
 #endif

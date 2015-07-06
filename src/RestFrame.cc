@@ -38,11 +38,26 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   int RestFrame::m_class_key = 0;
 
+  RestFrame::RestFrame()
+    : RFBase() 
+  {
+    Init();
+  }
+
+  RestFrame::RestFrame(const RFKey& key)
+    : RFBase() 
+  {
+    Init();
+    SetKey(key);
+  }
+
   RestFrame::RestFrame(const string& sname, const string& stitle)
     : RFBase(sname, stitle) 
   {
     Init();
   }
+
+  RestFrame g_RestFrame(g_Key);
 
   RestFrame::~RestFrame(){ }
 
@@ -54,7 +69,7 @@ namespace RestFrames {
   }
 
   void RestFrame::Clear(){
-    SetParentFrame(nullptr);
+    SetParentFrame();
     RemoveChildren();
     RFBase::Clear();
   }
@@ -68,7 +83,7 @@ namespace RestFrames {
   bool RestFrame::IsSoundBody() const {
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(!GetChildFrame(i)){
+      if(GetChildFrame(i).IsEmpty()){
 	SetBody(false);
 	m_Log << LogWarning << "NULL child frame pointer" << m_End;
 	return false;
@@ -81,7 +96,7 @@ namespace RestFrames {
     if(!IsSoundBody()) return false;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(!GetChildFrame(i)->IsSoundBodyRecursive()){
+      if(!GetChildFrame(i).IsSoundBodyRecursive()){
 	m_Log << LogWarning;
 	m_Log << "Problem with recursive tree structure from frame: ";
 	m_Log << Log(GetChildFrame(i)) << m_End;
@@ -135,55 +150,65 @@ namespace RestFrames {
     return output;
   }
 
-  void RestFrame::RemoveChild(const RestFrame* framePtr){
-    RemoveChildIndex(GetChildIndex(framePtr));
+  void RestFrame::RemoveChild(const RestFrame& frame){
+    RemoveChildIndex(GetChildIndex(frame));
   }
 
   void RestFrame::RemoveChildIndex(int i){
     SetBody(false);
     if(i < 0 || i >= GetNChildren()) return;
-    
-    GetChildFrame(i)->SetParentFrame(nullptr);
+    RestFrame& child = GetChildFrame(i);
     m_ChildFrames.Remove(GetChildFrame(i));
     m_ChildBoosts.erase(m_ChildBoosts.begin()+i);
+    child.SetParentFrame();
   }
 
   void RestFrame::RemoveChildren(){
     SetBody(false);
     int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      if(GetChildFrame(i)) 
-	GetChildFrame(i)->SetParentFrame(nullptr);
+    for(int i = N-1; i >= 0; i--)
+      RemoveChildIndex(i);
+
     m_ChildFrames.Clear();
     m_ChildBoosts.clear();
   }
 
-  void RestFrame::SetParentFrame(const RestFrame* framePtr){
-    if(m_Type != FLab) m_ParentFramePtr = framePtr;
+  void RestFrame::SetParentFrame(RestFrame& frame){
+    SetBody(false);
+    if(frame.IsEmpty()){
+      m_Log << LogWarning << "Cannot set empty frame as parent." << m_End;
+    }
+    if(m_Type != FLab) m_ParentFramePtr = &frame;
   }
 
-  void RestFrame::AddChildFrame(RestFrame& frame){
-    AddChildFrame(&frame);
+  void RestFrame::SetParentFrame(){
+    SetBody(false);
+    RestFrame* framePtr = m_ParentFramePtr;
+    m_ParentFramePtr = nullptr;
+    if(framePtr)
+      framePtr->RemoveChild(*this);
   }
   
-  void RestFrame::AddChildFrame(RestFrame* framePtr){
-    if(!framePtr) return;
+  void RestFrame::AddChildFrame(RestFrame& frame){
     SetBody(false);
-    if(framePtr->IsLabFrame()){
-      m_Log << LogWarning << "Cannot add LabFrame frame as child: " << Log(framePtr) << m_End;
+    if(frame.IsEmpty()){
+      m_Log << LogWarning << "Cannot add empty frame as child." << m_End;
       return;
     }
-    if(GetChildIndex(framePtr) >= 0){
-      m_Log << LogWarning << "Frame is already among children: " << Log(framePtr) << m_End;
+    if(frame.IsLabFrame()){
+      m_Log << LogWarning << "Cannot add LabFrame frame as child: " << Log(frame) << m_End;
       return;
     }
-    
-    if(!m_ChildFrames.Add(framePtr)){
+    if(GetChildIndex(frame) >= 0){
+      m_Log << LogWarning << "Frame is already among children: " << Log(frame) << m_End;
+      return;
+    }
+    if(!m_ChildFrames.Add(frame)){
       m_Log << LogWarning << "Unable to add child frame:";
-      m_Log << Log(framePtr) << m_End;
+      m_Log << Log(frame) << m_End;
       return;
     }
-    framePtr->SetParentFrame(this);
+    frame.SetParentFrame(*this);
     m_ChildBoosts.push_back(TVector3(0.,0.,0.));
   }
 
@@ -191,41 +216,46 @@ namespace RestFrames {
     return m_ChildFrames.GetN();
   }
 
-  int RestFrame::GetChildIndex(const RestFrame* framePtr) const {
-    if(!framePtr) return -1;
-
+  int RestFrame::GetChildIndex(const RestFrame& frame) const {
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i)->IsSame(framePtr)) return i;
+      if(GetChildFrame(i).IsSame(frame)) return i;
     
     return -1;
   }
 
-  RestFrame* RestFrame::GetChildFrame(int i) const {
+  RestFrame& RestFrame::GetChildFrame(int i) const {
     int Nchild = GetNChildren();
-    if(i >= Nchild || i < 0 || !m_ChildFrames.Get(i)) return nullptr;
+    if(i >= Nchild || i < 0){
+      m_Log << LogWarning;
+      m_Log << "Cannot GetChildFrame(" << i << "). ";
+      m_Log << "No " << i << "th child" << m_End;
+    }
     return m_ChildFrames.Get(i);
   }
 
-  const RestFrame* RestFrame::GetParentFrame() const {
-    return m_ParentFramePtr;
+  RestFrame const& RestFrame::GetParentFrame() const {
+    if(m_ParentFramePtr)
+      return *m_ParentFramePtr;
+    else 
+      return m_ChildFrames.Get(-1);
   }
 
-  const RestFrame* RestFrame::GetLabFrame() const {
-    if(m_Type == FLab) return this;
-    const RestFrame* parentPtr = GetParentFrame();
+  RestFrame const& RestFrame::GetLabFrame() const {
+    if(m_Type == FLab) return *this;
+    const RestFrame* parentPtr = &GetParentFrame();
     if(!parentPtr){
       m_Log << LogWarning;
       m_Log << "Unable to find LabFrame above this frame. ";
-      m_Log << "No pointer to parent frame." << m_End;
-      return nullptr;
+      m_Log << "No parent frame set" << m_End;
+      return m_ChildFrames.Get(-1);
     } 
     return parentPtr->GetLabFrame();
   } 
 
   void RestFrame::SetChildBoostVector(int i, const TVector3& boost) {
     int N = GetNChildren();
-    if(i < 0 || i >= N || !GetChildFrame(i)){
+    if(i < 0 || i >= N){
       m_Log << LogWarning;
       m_Log << "Unable to set child " << i;
       m_Log << "'s boost vector. No entry " << i;
@@ -233,11 +263,11 @@ namespace RestFrames {
       return;
     }
     m_ChildBoosts[i] = boost;
-    GetChildFrame(i)->SetParentBoostVector(-1.*boost);
+    GetChildFrame(i).SetParentBoostVector(-1.*boost);
   }
 
   void RestFrame::SetParentBoostVector(const TVector3& boost) {
-    if(!GetParentFrame()){
+    if(GetParentFrame().IsEmpty()){
       m_Log << LogWarning;
       m_Log << "Unable to set parent boost vector. ";
       m_Log << "No parent frame linked.";
@@ -250,7 +280,7 @@ namespace RestFrames {
 
   TVector3 RestFrame::GetChildBoostVector(int i) const {
     int N = GetNChildren();
-    if(i < 0 || i >= N || !GetChildFrame(i)){
+    if(i < 0 || i >= N){
       m_Log << LogWarning;
       m_Log << "Unable to get child " << i;
       m_Log << "'s boost vector. No entry " << i;
@@ -266,22 +296,20 @@ namespace RestFrames {
 
   RFList<RestFrame> RestFrame::GetListFrames(){
     RFList<RestFrame> frames;
-    frames.Add(this);
+    frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesRecursive(frames);
+	GetChildFrame(i).FillListFramesRecursive(frames);
     
     return frames;
   }
 
   RFList<RestFrame> RestFrame::GetListFramesType(FrameType type){
     RFList<RestFrame> frames;
-    if(m_Type == type) frames.Add(this);
+    if(m_Type == type) frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesTypeRecursive(type, frames);
+	GetChildFrame(i).FillListFramesTypeRecursive(type, frames);
    
     return frames;
   }
@@ -305,24 +333,21 @@ namespace RestFrames {
   }
 
   void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames){
-    frames.Add(this);
+    frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesRecursive(frames);
+      GetChildFrame(i).FillListFramesRecursive(frames);
   }
   
   void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>& frames){
-    if(m_Type == type) frames.Add(this);
+    if(m_Type == type) frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i))
-	GetChildFrame(i)->FillListFramesTypeRecursive(type, frames);
+      GetChildFrame(i).FillListFramesTypeRecursive(type, frames);
   }
 
   bool RestFrame::IsCircularTree(vector<RFKey>& keys) const {
     int Nkey = keys.size();
-
     for(int i = 0; i < Nkey; i++){
       if(keys[i] == GetKey()){
 	m_Log << LogWarning << "This RestFrame appears more than once in the tree" << m_End;
@@ -332,9 +357,8 @@ namespace RestFrames {
     keys.push_back(GetKey());
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i))
-	if(GetChildFrame(i)->IsCircularTree(keys))
-	  return true;
+      if(GetChildFrame(i).IsCircularTree(keys))
+	return true;
        
     return false;
   }
@@ -344,43 +368,42 @@ namespace RestFrames {
     
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(!GetChildFrame(i)->IsConsistentAnaTree(ana)) return false;
+      if(!GetChildFrame(i).IsConsistentAnaTree(ana)) return false;
     
     return true;
   }
 
-  bool RestFrame::FindPathToFrame(const RestFrame* framePtr, const RestFrame *prevPtr, 
+  bool RestFrame::FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 				  vector<TVector3>& boosts) const {
-    if(IsSame(framePtr)) return true;
+    if(IsSame(dest_frame)) return true;
   
     vector<const RestFrame*> try_frames;
     vector<TVector3> try_boosts;
 
-    if(GetParentFrame()){
-      try_frames.push_back(GetParentFrame());
+    if(!GetParentFrame().IsEmpty()){
+      try_frames.push_back(&GetParentFrame());
       try_boosts.push_back(GetParentBoostVector());
     }
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i)){
-	try_frames.push_back(GetChildFrame(i));
-	try_boosts.push_back(GetChildBoostVector(i));
-      }
+    for(int i = 0; i < Nchild; i++){
+      try_frames.push_back(&GetChildFrame(i));
+      try_boosts.push_back(GetChildBoostVector(i));
+    }
 
     int Ntry = try_frames.size();
     for(int i = 0; i < Ntry; i++){
       const RestFrame* nextPtr = try_frames[i];
-      if(nextPtr->IsSame(prevPtr)) continue;
+      if(nextPtr->IsSame(prev_frame)) continue;
       boosts.push_back(try_boosts[i]);
-      if(nextPtr->FindPathToFrame(framePtr,this,boosts)) return true;
+      if(nextPtr->FindPathToFrame(dest_frame,*this,boosts)) return true;
       boosts.pop_back();
     }
     return false;
   }
 
-  void RestFrame::SetFourVector(const TLorentzVector& V, const RestFrame* framePtr){
+  void RestFrame::SetFourVector(const TLorentzVector& V, const RestFrame& prod_frame){
     m_P.SetVectM(V.Vect(),V.M());
-    m_ProdFramePtr = framePtr;  
+    m_ProdFramePtr = &prod_frame;  
   }
 
   //////////////////////////////
@@ -391,41 +414,45 @@ namespace RestFrames {
     return m_P.M();
   }
 
-  double RestFrame::GetCosDecayAngle(const RestFrame& frame) const{
-    return GetCosDecayAngle(&frame);
-  }
-
-  double RestFrame::GetCosDecayAngle(const RestFrame* framePtr) const {
+  double RestFrame::GetCosDecayAngle() const {
     if(!m_Spirit){
       //m_Log << LogInfo << "Can't call analysis function CosDecayAngle" << sendl;
       return 0.;
     }
-    if(!GetParentFrame()) return 0.;
+    if(GetParentFrame().IsEmpty()) return 0.;
+    if(GetNChildren() < 1) return 0.;
     TVector3 V1 = GetParentBoostVector().Unit();
-    TVector3 V2(0.,0.,0.);
-    if(framePtr){
-      V2 = framePtr->GetFourVector(this).Vect().Unit();
-    } else {
-      RestFrame* childPtr = GetChildFrame(0);
-      if(childPtr) V2 = childPtr->GetFourVector(this).Vect().Unit();
+    TVector3 V2 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
+    return V1.Dot(V2);
+  }
+
+  double RestFrame::GetCosDecayAngle(const RestFrame& frame) const {
+    if(frame.IsEmpty())
+      return GetCosDecayAngle();
+
+    if(!m_Spirit){
+      //m_Log << LogInfo << "Can't call analysis function CosDecayAngle" << sendl;
+      return 0.;
     }
+    if(GetParentFrame().IsEmpty()) return 0.;
+    TVector3 V1 = GetParentBoostVector().Unit();
+    TVector3 V2 = frame.GetFourVector(*this).Vect().Unit();
     return V1.Dot(V2);
   }
   
   // Get decay angle in plane perpendicular to 3-vector 'axis', where axis is defined
   // in the production frame of 'this'. Decay angle is relative to frame 'framePtr'
   // unless framePtr == nullptr (default), in which case is it first child of 'this'
-  double RestFrame::GetDeltaPhiDecayAngle(const TVector3& axis, const RestFrame* framePtr) const {
+  double RestFrame::GetDeltaPhiDecayAngle(const TVector3& axis, const RestFrame& frame) const {
     if(!m_Spirit) return 0.;
-    const RestFrame* prod_framePtr = GetProductionFrame();
-    if(!prod_framePtr) return 0.;
-    TLorentzVector Pthis = GetFourVector(prod_framePtr);
+    const RestFrame& prod_frame = GetParentFrame();
+    TLorentzVector Pthis = GetFourVector(prod_frame);
     TLorentzVector Pchild;
-    if(framePtr){
-      Pchild = framePtr->GetFourVector(prod_framePtr);
+    if(!frame.IsEmpty()){
+      Pchild = frame.GetFourVector(prod_frame);
     } else {
-      if(GetNChildren() <= 0) return 0.;
-      Pchild = GetChildFrame(0)->GetFourVector(prod_framePtr);
+      if(GetNChildren() < 1) return 0.;
+      Pchild = GetChildFrame(0).GetFourVector(prod_frame);
     }
 
     TVector3 boost_par = Pthis.BoostVector();
@@ -443,10 +470,9 @@ namespace RestFrames {
   // Get angle between 'this' boost and visible children in plane 
   // perpendicular to 3-vector 'axis', where axis is defined
   // in 'framePtr' (default gives lab frame). 
-  double RestFrame::GetDeltaPhiBoostVisible(const TVector3& axis, const RestFrame* framePtr) const {
-    if(!framePtr) framePtr = GetLabFrame();
-    TLorentzVector Pvis = GetVisibleFourVector(framePtr);
-    TLorentzVector Pthis = GetFourVector(framePtr);
+  double RestFrame::GetDeltaPhiBoostVisible(const TVector3& axis, const RestFrame& frame) const {
+    TLorentzVector Pvis = GetVisibleFourVector(frame);
+    TLorentzVector Pthis = GetFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -465,12 +491,12 @@ namespace RestFrames {
   // and visible children in plane 
   // perpendicular to 3-vector 'axis', where axis is defined
   // in 'framePtr' (default gives lab frame). 
-  double RestFrame::GetDeltaPhiDecayVisible(const TVector3& axis, const RestFrame* framePtr) const {
+  double RestFrame::GetDeltaPhiDecayVisible(const TVector3& axis, const RestFrame& frame) const {
     if(GetNChildren() < 1) return 0.;
-    if(!framePtr) framePtr = GetLabFrame();
-    TLorentzVector Pvis   = GetVisibleFourVector(framePtr);
-    TLorentzVector Pchild = GetChildFrame(0)->GetFourVector(framePtr);
-    TLorentzVector Pthis  = GetFourVector(framePtr);
+
+    TLorentzVector Pvis   = GetVisibleFourVector(frame);
+    TLorentzVector Pchild = GetChildFrame(0).GetFourVector(frame);
+    TLorentzVector Pthis  = GetFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -492,13 +518,12 @@ namespace RestFrames {
   // Get angle between the visible portions of children 1 and 2
   // in the plane perpendicular to 3-vector 'axis', where
   // axis is defined in 'framePtr' (default gives lab frame). 
-  double RestFrame::GetDeltaPhiVisible(const TVector3& axis, const RestFrame* framePtr) const {
+  double RestFrame::GetDeltaPhiVisible(const TVector3& axis, const RestFrame& frame) const {
     if(GetNChildren() != 2) return 0.;
-    if(!framePtr) framePtr = GetLabFrame();
-    if(!framePtr) return 0.;
-    TLorentzVector Pthis = GetFourVector(framePtr);
-    TLorentzVector P1 = GetChildFrame(0)->GetVisibleFourVector(framePtr);
-    TLorentzVector P2 = GetChildFrame(1)->GetVisibleFourVector(framePtr);
+ 
+    TLorentzVector Pthis = GetFourVector(frame);
+    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(frame);
+    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -519,19 +544,18 @@ namespace RestFrames {
 
   double RestFrame::GetVisibleShape() const {
     if(GetNChildren() != 2) return 0.;
-    TVector3 P1 = GetChildFrame(0)->GetVisibleFourVector(this).Vect();
-    TVector3 P2 = GetChildFrame(1)->GetVisibleFourVector(this).Vect();
+    TVector3 P1 = GetChildFrame(0).GetVisibleFourVector(*this).Vect();
+    TVector3 P2 = GetChildFrame(1).GetVisibleFourVector(*this).Vect();
     if(P1.Mag()+P2.Mag() > 0.) return sqrt(pow(P1.Mag()+P2.Mag(),2.)-(P1-P2).Mag2())/(P1.Mag()+P2.Mag());
     else return 0.;
   }
  
-  double RestFrame::GetTransverseVisibleShape(const TVector3& axis, const RestFrame* framePtr) const {
+  double RestFrame::GetTransverseVisibleShape(const TVector3& axis, const RestFrame& frame) const {
     if(GetNChildren() != 2) return 0.;
-    if(!framePtr) framePtr = GetLabFrame();
-    if(!framePtr) return 0.;
-    TLorentzVector Pthis = GetFourVector(framePtr);
-    TLorentzVector P1 = GetChildFrame(0)->GetVisibleFourVector(framePtr);
-    TLorentzVector P2 = GetChildFrame(1)->GetVisibleFourVector(framePtr);
+   
+    TLorentzVector Pthis = GetFourVector(frame);
+    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(frame);
+    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -553,18 +577,16 @@ namespace RestFrames {
 
   double RestFrame::GetScalarVisibleMomentum() const {
     if(GetNChildren() != 2) return 0.;
-    TLorentzVector P1 = GetChildFrame(0)->GetVisibleFourVector(this);
-    TLorentzVector P2 = GetChildFrame(1)->GetVisibleFourVector(this);
+    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(*this);
+    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(*this);
     return P1.P() + P2.P();
   }
-  double RestFrame::GetTransverseScalarVisibleMomentum(const TVector3& axis, 
-						       const RestFrame* framePtr) const {
+  double RestFrame::GetTransverseScalarVisibleMomentum(const TVector3& axis, const RestFrame& frame) const {
     if(GetNChildren() != 2) return 0.;
-    if(!framePtr) framePtr = GetLabFrame();
-    if(!framePtr) return 0.;
-    TLorentzVector Pthis = GetFourVector(framePtr);
-    TLorentzVector P1 = GetChildFrame(0)->GetVisibleFourVector(framePtr);
-    TLorentzVector P2 = GetChildFrame(1)->GetVisibleFourVector(framePtr);
+    
+    TLorentzVector Pthis = GetFourVector(frame);
+    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(frame);
+    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
@@ -583,18 +605,30 @@ namespace RestFrames {
     return V1.Mag()+V2.Mag();
   }
 
-  TLorentzVector RestFrame::GetFourVector(const RestFrame& frame) const {
-    return GetFourVector(&frame);
+  TLorentzVector RestFrame::GetFourVector() const {
+    TLorentzVector V = m_P;
+    
+    if(IsLabFrame()) return V;
+
+    const RestFrame& lab = GetLabFrame();
+    if(lab.IsEmpty()){
+      m_Log << LogWarning;
+      m_Log << "Cannot find lab frame to evaluate four vector";
+      m_Log << m_End;
+      return V;
+    }
+    return GetFourVector(lab);
+
   }
-  TLorentzVector RestFrame::GetFourVector(const RestFrame* framePtr) const {
-    TLorentzVector V(0.,0.,0.,0.);
-    if(!framePtr) framePtr = GetLabFrame();
+
+  TLorentzVector RestFrame::GetFourVector(const RestFrame& frame) const {
+    if(frame.IsEmpty()) return GetFourVector();
  
-    V.SetVectM(m_P.Vect(),m_P.M());
-    if(framePtr->IsSame(m_ProdFramePtr)) return V;
+    TLorentzVector V = m_P;
+    if(frame.IsSame(*m_ProdFramePtr)) return V;
 
     vector<TVector3> boosts;
-    if(!m_ProdFramePtr->FindPathToFrame(framePtr, nullptr, boosts)) return V;
+    if(!m_ProdFramePtr->FindPathToFrame(frame, *this, boosts)) return V;
   
     int Nboost = boosts.size();
     for(int i = 0; i < Nboost; i++){
@@ -603,94 +637,97 @@ namespace RestFrames {
     return V;
   }
 
-  TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame& frame) const {
-    return GetVisibleFourVector(&frame);
+  TLorentzVector RestFrame::GetVisibleFourVector() const {    
+    const RestFrame& lab = GetLabFrame();
+    if(lab.IsEmpty()){
+      m_Log << LogWarning;
+      m_Log << "Cannot find lab frame to evaluate four vector";
+      m_Log << m_End;
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+    return GetVisibleFourVector(lab);
   }
-  TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame* framePtr) const {
+  TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame& frame) const {
+    if(frame.IsEmpty()) return GetVisibleFourVector();
+
     TLorentzVector V(0.,0.,0.,0.);
-    if(!framePtr || !m_Spirit) return V;
+    if(!m_Spirit) return V;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RFList<RestFrame> frames = GetChildFrame(c)->GetListVisibleFrames();
+      RFList<RestFrame> frames = GetChildFrame(c).GetListVisibleFrames();
       int Nf = frames.GetN();
       for(int f = 0; f < Nf; f++) 
-	V += frames.Get(f)->GetFourVector(framePtr);
+	V += frames.Get(f).GetFourVector(frame);
     }
     return V;
   }
 
-  TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame& frame) const {
-    return GetInvisibleFourVector(&frame);
+  TLorentzVector RestFrame::GetInvisibleFourVector() const {
+    const RestFrame& lab = GetLabFrame();
+    if(lab.IsEmpty()){
+      m_Log << LogWarning;
+      m_Log << "Cannot find lab frame to evaluate four vector";
+      m_Log << m_End;
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+    return GetInvisibleFourVector(lab);
   }
-  TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame* framePtr) const {
+  TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame& frame) const {
+    if(frame.IsEmpty()) return GetVisibleFourVector();
+
     TLorentzVector V(0.,0.,0.,0.);
     if(!m_Spirit) return V;
-    if(!framePtr) framePtr = this;
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RFList<RestFrame> frames = GetChildFrame(c)->GetListInvisibleFrames();
+      RFList<RestFrame> frames = GetChildFrame(c).GetListInvisibleFrames();
       int Nf = frames.GetN();
-      for(int f = 0; f < Nf; f++) V += frames.Get(f)->GetFourVector(framePtr);
+      for(int f = 0; f < Nf; f++) 
+	V += frames.Get(f).GetFourVector(frame);
     }
     return V;
   }
 
   double RestFrame::GetEnergy(const RestFrame& frame) const {
-    return GetFourVector(&frame).E();
-  }
-  double RestFrame::GetEnergy(const RestFrame* framePtr) const {
-    return GetFourVector(framePtr).E();
+    return GetFourVector(frame).E();
   }
 
   double RestFrame::GetMomentum(const RestFrame& frame) const {
-    return GetFourVector(&frame).P();
-  }
-  double RestFrame::GetMomentum(const RestFrame *framePtr) const {
-    return GetFourVector(framePtr).P();
+    return GetFourVector(frame).P();
   }
 
   int RestFrame::GetFrameDepth(const RestFrame& frame) const {
-    return GetFrameDepth(&frame);
-  }
-  int RestFrame::GetFrameDepth(const RestFrame* framePtr) const {
-    if(!framePtr) return -1;
-    if(IsSame(framePtr)) return 0.;
+    if(frame.IsEmpty()) return -1;
+    if(IsSame(frame)) return 0.;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      int depth = GetChildFrame(i)->GetFrameDepth(framePtr);
+      int depth = GetChildFrame(i).GetFrameDepth(frame);
       if(depth >= 0) return depth+1;
     }
     return -1;
   }
 
-  const RestFrame* RestFrame::GetFrameAtDepth(int depth, const RestFrame& frame) const {
-    return GetFrameAtDepth(depth, &frame);
-  }
-  const RestFrame* RestFrame::GetFrameAtDepth(int depth, const RestFrame* framePtr) const {
-    if(!framePtr || depth < 1) return nullptr;
+  RestFrame const& RestFrame::GetFrameAtDepth(int depth, const RestFrame& frame) const {
+    if(frame.IsEmpty() || depth < 1) return m_ChildFrames.Get(-1);
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      RestFrame* childPtr = GetChildFrame(i);
-      if(childPtr->GetListFrames().Contains(framePtr)){
-	if(depth == 1) return childPtr;
-	else return childPtr->GetFrameAtDepth(depth-1,framePtr);
+      RestFrame& child = GetChildFrame(i);
+      if(child.GetListFrames().Contains(frame)){
+	if(depth == 1) return child;
+	else return child.GetFrameAtDepth(depth-1,frame);
       }
     }
-    return nullptr;
+    return m_ChildFrames.Get(-1);
   }
 
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame& frame) const {
-    return GetDeltaPhiDecayPlanes(&frame);
-  }
-  double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame* framePtr) const {
-    if(!framePtr) return 0.;
+    if(frame.IsEmpty()) return 0.;
     if(GetNChildren() < 1) return 0.;
 
-    TVector3 vNorm_frame = framePtr->GetDecayPlaneNormalVector();
+    TVector3 vNorm_frame = frame.GetDecayPlaneNormalVector();
     TVector3 vNorm_this = GetDecayPlaneNormalVector();
     double dphi = vNorm_this.Angle(vNorm_frame);
 
-    if(framePtr->GetFourVector(this).Vect().Cross(vNorm_frame).Dot(vNorm_this) < 0.){
+    if(frame.GetFourVector(*this).Vect().Cross(vNorm_frame).Dot(vNorm_this) < 0.){
       dphi = TMath::Pi()*2. - dphi;
     }
 
@@ -701,23 +738,26 @@ namespace RestFrames {
     TVector3 V(0.,0.,0.);
     if(GetNChildren() < 2) return V;
 
-    TVector3 V1 = GetChildFrame(0)->GetFourVector(GetParentFrame()).Vect();
-    TVector3 V2 = GetChildFrame(1)->GetFourVector(GetParentFrame()).Vect();
+    TVector3 V1 = GetChildFrame(0).GetFourVector(GetParentFrame()).Vect();
+    TVector3 V2 = GetChildFrame(1).GetFourVector(GetParentFrame()).Vect();
     return V1.Cross(V2).Unit();
   }
 
-  const RestFrame* RestFrame::GetProductionFrame() const {
-    return m_ProdFramePtr;
+  RestFrame const& RestFrame::GetProductionFrame() const {
+    if(m_ProdFramePtr)
+      return *m_ProdFramePtr;
+    else 
+      return m_ChildFrames.Get(-1);
   }
 
-  const RestFrame* RestFrame::GetSiblingFrame() const {
-    if(IsLabFrame()) return nullptr;
+  RestFrame const& RestFrame::GetSiblingFrame() const {
+    if(IsLabFrame()) return m_ChildFrames.Get(-1);
     int Nsib = m_ProdFramePtr->GetNChildren();
     for(int s = 0; s < Nsib; s++){
       if(IsSame(m_ProdFramePtr->GetChildFrame(s))) continue;
       return m_ProdFramePtr->GetChildFrame(s);
     }
-    return nullptr; 
+    return m_ChildFrames.Get(-1); 
   }
 
   int RestFrame::GetNDescendants() const {
@@ -725,14 +765,14 @@ namespace RestFrames {
     if(Nchild == 0) return 1;
     int Nd = 0;
     for(int i = 0; i < Nchild; i++){
-      Nd += GetChildFrame(i)->GetNDescendants();
+      Nd += GetChildFrame(i).GetNDescendants();
     }
     return Nd;
   }
 
   TVector3 RestFrame::GetBoostInParentFrame() const{
     TVector3 V(0.,0.,0.);
-    if(!GetParentFrame()) return V;
+    if(GetParentFrame().IsEmpty()) return V;
     return -1.*GetParentBoostVector();
   }
 
@@ -743,7 +783,7 @@ namespace RestFrames {
   }
 
   RestFrameList& RestFrameList::operator+(const RestFrame& frame){ 
-    AddFrame(&frame);
+    AddFrame(frame);
     return *this;
   }
 
@@ -751,7 +791,7 @@ namespace RestFrames {
     vector<const RestFrame*> frames = list.GetList();
     int N = frames.size();
     for(int i = 0; i < N; i++)
-      AddFrame(frames[i]);
+      AddFrame(*frames[i]);
     
     return *this;
   }
@@ -764,43 +804,67 @@ namespace RestFrames {
     return V.M();
   }
 
-  TLorentzVector RestFrameList::GetFourVector(const RestFrame* framePtr) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector(framePtr);
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetVisibleFourVector(const RestFrame* framePtr) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetVisibleFourVector(framePtr);
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetInvisibleFourVector(const RestFrame* framePtr) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetInvisibleFourVector(framePtr);
-    return V;
-  }
-
-  double RestFrameList::GetEnergy(const RestFrame* framePtr) const {
+  TLorentzVector RestFrameList::GetFourVector() const {
     int N = m_Frames.size();
     TLorentzVector V(0.,0.,0.,0.);
     for(int i = 0; i < N; i++)
       V += m_Frames[i]->GetFourVector();
+    return V;
+  }
+
+  TLorentzVector RestFrameList::GetFourVector(const RestFrame& frame) const {
+    int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetFourVector(frame);
+    return V;
+  }
+
+  TLorentzVector RestFrameList::GetVisibleFourVector() const {
+    int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetVisibleFourVector();
+    return V;
+  }
+
+  TLorentzVector RestFrameList::GetVisibleFourVector(const RestFrame& frame) const {
+    int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetVisibleFourVector(frame);
+    return V;
+  }
+
+  TLorentzVector RestFrameList::GetInvisibleFourVector() const {
+     int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetInvisibleFourVector();
+    return V;
+  }
+
+  TLorentzVector RestFrameList::GetInvisibleFourVector(const RestFrame& frame) const {
+    int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetInvisibleFourVector(frame);
+    return V;
+  }
+
+  double RestFrameList::GetEnergy(const RestFrame& frame) const {
+    int N = m_Frames.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Frames[i]->GetFourVector(frame);
     return V.E();
   }
 
-  double RestFrameList::GetMomentum(const RestFrame* framePtr) const {
+  double RestFrameList::GetMomentum(const RestFrame& frame) const {
     int N = m_Frames.size();
     TLorentzVector V(0.,0.,0.,0.);
     for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector();
+      V += m_Frames[i]->GetFourVector(frame);
     return V.P();
   }
 
