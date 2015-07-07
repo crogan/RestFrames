@@ -40,6 +40,30 @@ namespace RestFrames {
 
    RFKey g_Key(-1);
 
+  template <typename T>
+  T& RFList<T>::m_Empty = RFList<T>::m_EmptyHandler.GetEmpty();
+  template <typename T>
+  RFListEmpty<T> RFList<T>::m_EmptyHandler(g_Key);
+
+  ///////////////////////////////////////////////
+  // RFListEmpty class methods
+  ///////////////////////////////////////////////
+  template <class T>
+  RFListEmpty<T>::RFListEmpty(const RFKey& key){ 
+    m_Empty = new T(); 
+    m_Empty->SetKey(key); 
+  }
+
+  template <class T>
+  RFListEmpty<T>::~RFListEmpty(){ 
+    delete m_Empty; 
+  }
+
+  template <class T>
+  T& RFListEmpty<T>::GetEmpty() const { 
+    return *m_Empty; 
+  } 
+
   ///////////////////////////////////////////////
   // RFList class methods
   ///////////////////////////////////////////////
@@ -61,12 +85,12 @@ namespace RestFrames {
     for(int i = 0; i < N; i++)
       if(m_Objs[i]->IsSame(key)) return *m_Objs[i];
     
-    return GetDefault();
+    return m_Empty;
   }
 
   template <class T>
   T& RFList<T>::Get(int i) const { 
-    if(i < 0 || i >= GetN()) return GetDefault();
+    if(i < 0 || i >= GetN()) return m_Empty;
     return *m_Objs[i];
   }
 
@@ -222,14 +246,6 @@ namespace RestFrames {
       if(Contains(objs.Get(i))) Nthis--;
     
     return Nthis;
-  }
-
-  template <class T>
-  T& RFList<T>::GetDefault() const {
-    // initialize default instance, if not done already
-    if(!m_DefaultPtr)
-      m_DefaultPtr = new T();
-    return *m_DefaultPtr;
   }
 
   template class RFList<RFBase>;

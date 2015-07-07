@@ -323,7 +323,7 @@ namespace RestFrames {
     }
     
     while(i >= int(m_OutputFrames.size())){
-      m_OutputFrames.push_back(*(new RFList<RestFrame>()));
+      m_OutputFrames.push_back(RFList<RestFrame>());
     }
     m_OutputFrames[i].Add(frame);
   }
@@ -337,7 +337,7 @@ namespace RestFrames {
     if(frame.IsEmpty()) return;
     
     while(i >= int(m_DependancyFrames.size())){
-      m_DependancyFrames.push_back(*(new RFList<RestFrame>()));
+      m_DependancyFrames.push_back(RFList<RestFrame>());
     }
     m_DependancyFrames[i].Add(frame);
   }

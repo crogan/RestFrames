@@ -125,6 +125,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   INV_R.AddFrame(Xa_R);
   INV_R.AddFrame(Xb_R);
   CombinatoricGroup VIS_R("VIS","Visible Object Jigsaws");
+
   // visible frames in first decay step must always have at least one element
   VIS_R.AddFrame(V1a_R);
   VIS_R.AddFrame(V1b_R);

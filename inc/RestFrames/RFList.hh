@@ -66,6 +66,16 @@ namespace RestFrames {
  
   extern RFKey g_Key;
 
+  template <class T>
+  class RFListEmpty {
+  public:
+    RFListEmpty(const RFKey& key);
+    ~RFListEmpty();
+    T& GetEmpty() const;
+  private:
+    T* m_Empty;
+  };
+    
   ///////////////////////////////////////////////
   // RFList class
   ///////////////////////////////////////////////
@@ -100,13 +110,10 @@ namespace RestFrames {
 
   protected:
     vector<T*> m_Objs;
-    static T* m_DefaultPtr;
-    T& GetDefault() const;
+    static RFListEmpty<T> m_EmptyHandler;
+    static T& m_Empty;
 
   };
-
-  template <typename T>
-  T* RFList<T>::m_DefaultPtr = nullptr;
 
 }
 

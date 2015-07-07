@@ -95,13 +95,14 @@ namespace RestFrames {
   bool RestFrame::IsSoundBodyRecursive() const {
     if(!IsSoundBody()) return false;
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++)
+    for(int i = 0; i < Nchild; i++){
       if(!GetChildFrame(i).IsSoundBodyRecursive()){
 	m_Log << LogWarning;
 	m_Log << "Problem with recursive tree structure from frame: ";
 	m_Log << Log(GetChildFrame(i)) << m_End;
 	return false;
       }
+    }
     return true;
   }
 
@@ -238,7 +239,7 @@ namespace RestFrames {
     if(m_ParentFramePtr)
       return *m_ParentFramePtr;
     else 
-      return m_ChildFrames.Get(-1);
+      return g_RestFrame;
   }
 
   RestFrame const& RestFrame::GetLabFrame() const {
@@ -248,7 +249,7 @@ namespace RestFrames {
       m_Log << LogWarning;
       m_Log << "Unable to find LabFrame above this frame. ";
       m_Log << "No parent frame set" << m_End;
-      return m_ChildFrames.Get(-1);
+      return g_RestFrame;
     } 
     return parentPtr->GetLabFrame();
   } 
@@ -716,7 +717,7 @@ namespace RestFrames {
 	else return child.GetFrameAtDepth(depth-1,frame);
       }
     }
-    return m_ChildFrames.Get(-1);
+    return g_RestFrame;
   }
 
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame& frame) const {
@@ -747,17 +748,17 @@ namespace RestFrames {
     if(m_ProdFramePtr)
       return *m_ProdFramePtr;
     else 
-      return m_ChildFrames.Get(-1);
+      return g_RestFrame;
   }
 
   RestFrame const& RestFrame::GetSiblingFrame() const {
-    if(IsLabFrame()) return m_ChildFrames.Get(-1);
+    if(IsLabFrame()) return g_RestFrame;
     int Nsib = m_ProdFramePtr->GetNChildren();
     for(int s = 0; s < Nsib; s++){
       if(IsSame(m_ProdFramePtr->GetChildFrame(s))) continue;
       return m_ProdFramePtr->GetChildFrame(s);
     }
-    return m_ChildFrames.Get(-1); 
+    return g_RestFrame; 
   }
 
   int RestFrame::GetNDescendants() const {
