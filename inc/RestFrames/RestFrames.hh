@@ -33,7 +33,6 @@
 #include "RestFrames/RVisibleFrame.hh"
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/State.hh"
-#include "RestFrames/StateList.hh"
 #include "RestFrames/VisibleFrame.hh"
 
 #endif

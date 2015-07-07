@@ -32,7 +32,6 @@
 
 #include "RestFrames/LabFrame.hh"
 #include "RestFrames/RFrame.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -57,13 +56,12 @@ namespace RestFrames {
   protected:
     RestFrames::RFList<Group>  m_LabGroups;
     RestFrames::RFList<Jigsaw> m_LabJigsaws;
-    StateList m_LabStates;
+    RestFrames::RFList<State> m_LabStates;
   
     bool InitializeLabStates();
     bool InitializeLabGroups();
     bool InitializeLabJigsaws();
 
-    
     bool ExecuteJigsaws();
 
   private:

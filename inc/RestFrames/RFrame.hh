@@ -37,7 +37,7 @@ using namespace std;
 namespace RestFrames {
 
   class Group;
-  class StateList;
+  class State;
 
   ///////////////////////////////////////////////
   // RFrame class
@@ -56,16 +56,18 @@ namespace RestFrames {
 
     RestFrames::RFList<Group> GetListGroups() const;
 
-    virtual bool InitializeStates(const StateList& states, const RestFrames::RFList<Group>& groups);
+    virtual bool InitializeStates(const RestFrames::RFList<State>& states, 
+				  const RestFrames::RFList<Group>& groups);
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
   protected:
-    vector<StateList> m_ChildStates;
+    vector<RestFrames::RFList<State> > m_ChildStates;
     Group* m_GroupPtr;
 
-    virtual bool InitializeStatesRecursive(const StateList& states, const RestFrames::RFList<Group>& groups);
-    virtual bool InitializeNoGroupStates(const StateList& states);
+    virtual bool InitializeStatesRecursive(const RestFrames::RFList<State>& states, 
+					   const RestFrames::RFList<Group>& groups);
+    virtual bool InitializeNoGroupStates(const RestFrames::RFList<State>& states);
     virtual bool InitializeGroupStates(const RestFrames::RFList<Group>& groups);
 
     void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;

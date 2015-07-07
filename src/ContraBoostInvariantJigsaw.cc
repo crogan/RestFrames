@@ -29,7 +29,6 @@
 
 #include "RestFrames/ContraBoostInvariantJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 

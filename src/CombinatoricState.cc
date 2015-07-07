@@ -65,12 +65,12 @@ namespace RestFrames {
     m_Elements.Add(state);
   }
 
-  void CombinatoricState::AddElement(const StateList& states){
+  void CombinatoricState::AddElement(const RFList<State>& states){
     int N = states.GetN();
     for(int i = 0; i < N; i++) AddElement(states.Get(i));
   }
 
-  StateList CombinatoricState::GetElements() const {
+  RFList<State> CombinatoricState::GetElements() const {
     return m_Elements.Copy();
   }
 

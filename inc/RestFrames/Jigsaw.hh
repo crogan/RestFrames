@@ -31,13 +31,13 @@
 #define Jigsaw_HH
 
 #include "RestFrames/RFBase.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class Group;
+  class State;
 
   enum JigsawType { JInvisible, JCombinatoric };
 
@@ -74,8 +74,8 @@ namespace RestFrames {
     bool CanSplit(const State& state) const;
     bool CanSplit(const RestFrames::RFList<RestFrame>& frames) const;
   
-    virtual StateList InitializeOutputStates(State& state);
-    virtual bool InitializeDependancyStates(const StateList& states, 
+    virtual RestFrames::RFList<State> InitializeOutputStates(State& state);
+    virtual bool InitializeDependancyStates(const RestFrames::RFList<State>& states, 
 					    const RestFrames::RFList<Group>& groups);
     virtual bool InitializeDependancyJigsaws();
 
@@ -104,8 +104,8 @@ namespace RestFrames {
     vector<RestFrames::RFList<RestFrame> > m_OutputFrames;
     vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
 
-    StateList m_OutputStates;
-    vector<StateList> m_DependancyStates;
+    RestFrames::RFList<State> m_OutputStates;
+    vector<RestFrames::RFList<State> > m_DependancyStates;
 
     RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 

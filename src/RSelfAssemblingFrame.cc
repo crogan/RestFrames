@@ -30,7 +30,6 @@
 #include <sstream>
 #include "RestFrames/RSelfAssemblingFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/StateList.hh"
 #include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
@@ -99,7 +98,7 @@ namespace RestFrames {
     RFList<Group> groups = GetListGroups();
 
     // state list
-    StateList states;
+    RFList<State> states;
 
     m_ChildStates.clear();
     int Ncs = m_ChildStates_UnAssembled.size();
@@ -128,7 +127,7 @@ namespace RestFrames {
     RFList<Group> groups = GetListGroups();
 
     // new States
-    StateList states;
+    RFList<State> states;
     // new Frames associated with States
     vector<RestFrame*> frames;
     // States' four-vector
@@ -151,7 +150,7 @@ namespace RestFrames {
       if(m_ChildStates[i].GetN() == 1){ 
 	CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_ChildStates[i].Get(0));
 	if(statePtr){ // is CombinatoricState
-	  StateList elements = statePtr->GetElements();
+	  RFList<State> elements = statePtr->GetElements();
 	  int Nelement = elements.GetN();
 	  for(int e = 0; e < Nelement; e++){
 	    State& element = elements.Get(e);

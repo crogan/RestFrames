@@ -58,7 +58,6 @@ using namespace RestFrames;
 #pragma link C++ class MinimizeMassesCombinatoricJigsaw;
 
 #pragma link C++ class State;
-#pragma link C++ class StateList;
 #pragma link C++ class InvisibleState;
 #pragma link C++ class CombinatoricState;
 
@@ -126,7 +125,6 @@ using namespace RestFrames;
 #pragma link C++ class MinimizeMassesCombinatoricJigsaw+;
 
 #pragma link C++ class State+;
-#pragma link C++ class StateList+;
 #pragma link C++ class InvisibleState+;
 #pragma link C++ class CombinatoricState+;
 

@@ -58,7 +58,7 @@ namespace RestFrames {
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
     RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
-    vector<StateList> m_ChildStates_UnAssembled;
+    vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
 
     RestFrames::RFList<RFrame> m_VisibleFrames;
     RestFrames::RFList<RFrame> m_DecayFrames;

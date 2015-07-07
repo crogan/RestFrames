@@ -11,7 +11,7 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFLi
 	RestFrame.cc FramePlot.cc RFrame.cc GFrame.cc LabFrame.cc DecayFrame.cc\
 	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
 	RInvisibleFrame.cc GLabFrame.cc GDecayFrame.cc GVisibleFrame.cc GInvisibleFrame.cc\
-	State.cc StateList.cc InvisibleState.cc CombinatoricState.cc Group.cc\
+	State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
 	MinimizeMassesCombinatoricJigsaw.cc\

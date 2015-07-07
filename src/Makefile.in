@@ -144,7 +144,6 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-GLabFrame.lo libRestFrames_la-GDecayFrame.lo \
 	libRestFrames_la-GVisibleFrame.lo \
 	libRestFrames_la-GInvisibleFrame.lo libRestFrames_la-State.lo \
-	libRestFrames_la-StateList.lo \
 	libRestFrames_la-InvisibleState.lo \
 	libRestFrames_la-CombinatoricState.lo \
 	libRestFrames_la-Group.lo libRestFrames_la-InvisibleGroup.lo \
@@ -404,7 +403,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFLis
 	RestFrame.cc FramePlot.cc RFrame.cc GFrame.cc LabFrame.cc DecayFrame.cc\
 	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
 	RInvisibleFrame.cc GLabFrame.cc GDecayFrame.cc GVisibleFrame.cc GInvisibleFrame.cc\
-	State.cc StateList.cc InvisibleState.cc CombinatoricState.cc Group.cc\
+	State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
 	MinimizeMassesCombinatoricJigsaw.cc\
@@ -527,7 +526,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrames_Dict.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-State.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-StateList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleFrame.Plo@am__quote@
 
 .cc.o:
@@ -697,13 +695,6 @@ libRestFrames_la-State.lo: State.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='State.cc' object='libRestFrames_la-State.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-State.lo `test -f 'State.cc' || echo '$(srcdir)/'`State.cc
-
-libRestFrames_la-StateList.lo: StateList.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-StateList.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-StateList.Tpo -c -o libRestFrames_la-StateList.lo `test -f 'StateList.cc' || echo '$(srcdir)/'`StateList.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-StateList.Tpo $(DEPDIR)/libRestFrames_la-StateList.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='StateList.cc' object='libRestFrames_la-StateList.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-StateList.lo `test -f 'StateList.cc' || echo '$(srcdir)/'`StateList.cc
 
 libRestFrames_la-InvisibleState.lo: InvisibleState.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-InvisibleState.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-InvisibleState.Tpo -c -o libRestFrames_la-InvisibleState.lo `test -f 'InvisibleState.cc' || echo '$(srcdir)/'`InvisibleState.cc

@@ -29,7 +29,7 @@
 
 #include "RestFrames/RFrame.hh"
 #include "RestFrames/Group.hh"
-#include "RestFrames/StateList.hh"
+#include "RestFrames/State.hh"
 
 using namespace std;
 
@@ -95,11 +95,11 @@ namespace RestFrames {
     }
   }
 
-  bool RFrame::InitializeNoGroupStates(const StateList& states){
+  bool RFrame::InitializeNoGroupStates(const RFList<State>& states){
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       RestFrame& child = GetChildFrame(i);
-      m_ChildStates.push_back(StateList());
+      m_ChildStates.push_back(RFList<State>());
       RFList<RestFrame> frames = child.GetListFramesType(FVisible);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
@@ -143,7 +143,8 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeStates(const StateList& states, const RFList<Group>& groups){
+  bool RFrame::InitializeStates(const RFList<State>& states, 
+				const RFList<Group>& groups){
     m_ChildStates.clear();
     m_Mind = false;
     if(!m_Body){
@@ -158,7 +159,8 @@ namespace RestFrames {
     return true;
   }
   
-  bool RFrame::InitializeStatesRecursive(const StateList& states, const RFList<Group>& groups){
+  bool RFrame::InitializeStatesRecursive(const RFList<State>& states, 
+					 const RFList<Group>& groups){
     if(!InitializeStates(states, groups)) return false;
 
     int Nchild = GetNChildren();

@@ -165,16 +165,16 @@ namespace RestFrames {
     m_OutputStates.Clear();
   }
 
-  StateList Jigsaw::InitializeOutputStates(State& state){
+  RFList<State> Jigsaw::InitializeOutputStates(State& state){
     if(state.IsEmpty()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw States with empty ";
       m_Log << "input State" << m_End;
-      return StateList();
+      return RFList<State>();
     }
     ClearOutputStates();
 
-    if(!CanSplit(state)) return StateList();
+    if(!CanSplit(state)) return RFList<State>();
 
     m_InputStatePtr = &state;
     state.SetChildJigsaw(*this);
@@ -188,7 +188,8 @@ namespace RestFrames {
     return m_OutputStates.Copy();
   }
 
-  bool Jigsaw::InitializeDependancyStates(const StateList& states, const RFList<Group>& groups){
+  bool Jigsaw::InitializeDependancyStates(const RFList<State>& states, 
+					  const RFList<Group>& groups){
     m_DependancyStates.clear();
     
     if(!IsSoundBody()){
@@ -204,7 +205,7 @@ namespace RestFrames {
     int Ndep = m_DependancyFrames.size();
     for(int d = 0; d < Ndep; d++){
 
-      m_DependancyStates.push_back(StateList());
+      m_DependancyStates.push_back(RFList<State>());
       for(int i = 0; i < Ngroup; i++)
 	group_frames[i].Clear();
      
@@ -239,7 +240,7 @@ namespace RestFrames {
       }
       for(int g = 0; g < Ngroup; g++){
 	if(group_frames[g].GetN() == 0) continue;
-	StateList group_states = groups.Get(g).GetStates(group_frames[g]);
+	RFList<State> group_states = groups.Get(g).GetStates(group_frames[g]);
 	if(group_states.GetN() == 0){
 	  m_Log << "Cannot find States in Group:" << endl;
 	  m_Log << " Frames:" << endl << "   ";

@@ -5,6 +5,7 @@
 #include "TLegendEntry.h"
 #include "RestFrames/FramePlot.hh"
 #include "RestFrames/Jigsaw.hh"
+#include "RestFrames/State.hh"
 #include "RestFrames/CombinatoricGroup.hh"
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RVisibleFrame.hh"

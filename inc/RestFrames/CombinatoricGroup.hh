@@ -31,7 +31,6 @@
 #define CombinatoricGroup_HH
 
 #include "RestFrames/Group.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -70,7 +69,7 @@ namespace RestFrames {
     int GetNElementsInFrame(const RestFrame& frame) const;
 	
   protected:
-    StateList m_StateElements;
+    RestFrames::RFList<State> m_StateElements;
     vector<int> m_NElementsForFrame;
     vector<bool> m_NExclusiveElementsForFrame; 
 
@@ -82,7 +81,7 @@ namespace RestFrames {
   private:
     void Init();
     State& GetNewState();
-    StateList m_InitStates;
+    RestFrames::RFList<State> m_InitStates;
   };
 
 }

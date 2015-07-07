@@ -170,7 +170,7 @@ namespace RestFrames {
     if(!groupPtr) return false;
 
     m_Inputs.clear();
-    const StateList elements = input_statePtr->GetElements();
+    const RFList<State> elements = input_statePtr->GetElements();
     int Ninput = elements.GetN();
     for(int i = 0; i < Ninput; i++)
       m_Inputs.push_back(&elements.Get(i));

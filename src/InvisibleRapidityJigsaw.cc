@@ -29,7 +29,6 @@
 
 #include "RestFrames/InvisibleRapidityJigsaw.hh"
 #include "RestFrames/State.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 

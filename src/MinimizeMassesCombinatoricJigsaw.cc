@@ -156,7 +156,7 @@ namespace RestFrames {
 	m_Outputs[ihem]->AddElement(*m_Inputs[i]);
       }
       if(m_Outputs[1]->GetFourVector().M() > m_Outputs[0]->GetFourVector().M()){
-	vector<StateList> flip;
+	vector<RFList<State> > flip;
 	for(int i = 0; i < 2; i++) flip.push_back(m_Outputs[i]->GetElements());
 	for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
 	for(int i = 0; i < 2; i++) m_Outputs[i]->AddElement(flip[!i]);

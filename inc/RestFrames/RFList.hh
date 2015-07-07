@@ -31,11 +31,16 @@
 #define RFList_HH
 
 #include <vector>
+#include <TLorentzVector.h>
+#include <TVector3.h>
 
 using namespace std;
 
 namespace RestFrames {
   
+  class State;
+  class RestFrame;
+
   ///////////////////////////////////////////////
   // RFKey class
   ///////////////////////////////////////////////
@@ -107,6 +112,32 @@ namespace RestFrames {
     int SizeUnion(const RFList<T>& objs) const;
     int SizeIntersection(const RFList<T>& objs) const;
     int SizeComplement(const RFList<T>& objs) const;
+
+    // operator overload methods
+    void operator=(const RFList<T>& objs);
+    T& operator[](int i) const;
+    bool operator==(const RFList<T>& objs) const;
+    RFList<T> operator+(T& obj) const;
+    RFList<T> operator+(const RFList<T>& objs) const;
+    RFList<T> operator-(const T& obj) const;
+    RFList<T> operator-(const RFList<T>& objs) const;
+    RFList<T>& operator+=(T& obj);
+    RFList<T>& operator+=(const RFList<T>& objs);
+    RFList<T>& operator-=(const T& obj);
+    RFList<T>& operator-=(const RFList<T>& objs);
+
+    // class type specific methods
+    int GetIndexFrame(const RestFrame& frame) const;
+    double GetMass() const;
+    TLorentzVector GetFourVector() const;
+    TLorentzVector GetFourVector(const RestFrame& frame) const; 
+    TLorentzVector GetVisibleFourVector() const;
+    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const;
+    TLorentzVector GetInvisibleFourVector() const;
+    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const;
+    double GetEnergy(const RestFrame& frame) const;
+    double GetMomentum(const RestFrame& frame) const;
+    void Boost(const TVector3& B);
 
   protected:
     vector<T*> m_Objs;

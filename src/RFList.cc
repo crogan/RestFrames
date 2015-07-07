@@ -248,6 +248,194 @@ namespace RestFrames {
     return Nthis;
   }
 
+  // operator overload methods
+  template <class T>
+  void RFList<T>::operator=(const RFList<T>& objs){ 
+    Clear();
+    Add(objs);
+    return;
+  }
+
+  template <class T>
+  T& RFList<T>::operator[](int i) const {
+    return Get(i);
+  }
+
+  template <class T>
+  bool RFList<T>::operator==(const RFList<T>& objs) const { 
+    return IsSame(objs);
+  }
+
+  template <class T>
+  RFList<T> RFList<T>::operator+(T& obj) const { 
+    RFList<T> list;
+    list.Add(*this);
+    list.Add(obj);
+    return list;
+  }
+
+  template <class T>
+  RFList<T> RFList<T>::operator+(const RFList<T>& objs) const {
+    RFList<T> list;
+    list.Add(*this);
+    list.Add(objs);
+    return list;
+  }
+
+  template <class T>
+  RFList<T> RFList<T>::operator-(const T& obj) const { 
+    RFList<T> list;
+    list.Add(*this);
+    list.Remove(obj);
+    return list;
+  }
+
+  template <class T>
+  RFList<T> RFList<T>::operator-(const RFList<T>& objs) const {
+    RFList<T> list;
+    list.Add(*this);
+    list.Remove(objs);
+    return list;
+  }
+
+  template <class T>
+  RFList<T>& RFList<T>::operator+=(T& obj){ 
+    Add(obj);
+    return *this;
+  }
+
+  template <class T>
+  RFList<T>& RFList<T>::operator+=(const RFList<T>& objs){
+    Add(objs);
+    return *this;
+  }
+
+  template <class T>
+  RFList<T>& RFList<T>::operator-=(const T& obj){ 
+    Remove(obj);
+    return *this;
+  }
+
+  template <class T>
+  RFList<T>& RFList<T>::operator-=(const RFList<T>& objs){
+    Remove(objs);
+    return *this;
+  }
+
+  // class type specific methods
+
+  // RestFrame methods
+  template <>
+  double RFList<RestFrame>::GetMass() const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector();
+    return V.M();
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetFourVector() const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector();
+    return V;
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetFourVector(const RestFrame& frame) const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector(frame);
+    return V;
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetVisibleFourVector() const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetVisibleFourVector();
+    return V;
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetVisibleFourVector(const RestFrame& frame) const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetVisibleFourVector(frame);
+    return V;
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetInvisibleFourVector() const {
+     int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetInvisibleFourVector();
+    return V;
+  }
+
+  template <>
+  TLorentzVector RFList<RestFrame>::GetInvisibleFourVector(const RestFrame& frame) const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetInvisibleFourVector(frame);
+    return V;
+  }
+
+  template <>
+  double RFList<RestFrame>::GetEnergy(const RestFrame& frame) const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector(frame);
+    return V.E();
+  }
+
+  template <>
+  double RFList<RestFrame>::GetMomentum(const RestFrame& frame) const {
+    int N = m_Objs.size();
+    TLorentzVector V(0.,0.,0.,0.);
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector(frame);
+    return V.P();
+  }
+  
+  // State methods
+  template <>
+  int RFList<State>::GetIndexFrame(const RestFrame& frame) const {
+    int N = GetN();
+    for(int i = 0; i < N; i++)
+      if(m_Objs[i]->IsFrame(frame)) return i;
+    
+    return -1;
+  }
+
+  template <>
+  TLorentzVector RFList<State>::GetFourVector() const {
+    TLorentzVector V(0.,0.,0.,0.);
+    int N = GetN();
+    for(int i = 0; i < N; i++)
+      V += m_Objs[i]->GetFourVector();
+    
+    return V;
+  }
+
+  template <>
+  void RFList<State>::Boost(const TVector3& B){
+    int N = GetN();
+    for(int i = 0; i < N; i++){
+      m_Objs[i]->Boost(B);
+    }
+  }
+
+  
+
   template class RFList<RFBase>;
   template class RFList<RestFrame>; 
   template class RFList<RFrame>; 

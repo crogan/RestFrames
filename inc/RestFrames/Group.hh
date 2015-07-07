@@ -31,7 +31,6 @@
 #define Group_HH
 
 #include "RestFrames/RFBase.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -69,7 +68,7 @@ namespace RestFrames {
     RestFrames::RFList<Jigsaw> GetJigsaws() const;
 
     State const& GetGroupState() const;
-    StateList GetStates(const RestFrames::RFList<RestFrame>& frames) const;
+    RestFrames::RFList<State> GetStates(const RestFrames::RFList<RestFrame>& frames) const;
     State& GetState(const RestFrame& frame) const;
 
     virtual bool InitializeAnalysis();
@@ -84,8 +83,8 @@ namespace RestFrames {
     State* m_GroupStatePtr;
     RestFrames::RFList<RestFrame> m_Frames;
   
-    StateList m_States;
-    StateList m_StatesToSplit;
+    RestFrames::RFList<State> m_States;
+    RestFrames::RFList<State> m_StatesToSplit;
 
     RestFrames::RFList<Jigsaw> m_Jigsaws;
     RestFrames::RFList<Jigsaw> m_JigsawsToUse;

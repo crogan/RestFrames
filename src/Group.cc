@@ -215,7 +215,7 @@ namespace RestFrames {
     }
 
     State& state = m_StatesToSplit.Get(0);
-    StateList states = jigsaw.InitializeOutputStates(state);
+    RFList<State> states = jigsaw.InitializeOutputStates(state);
     m_StatesToSplit.Remove(state);
     m_StatesToSplit.Add(states);
     m_States.Add(states);
@@ -236,8 +236,8 @@ namespace RestFrames {
     return g_State;
   }
   
-  StateList Group::GetStates(const RestFrames::RFList<RestFrame>& frames) const {
-    StateList states;
+  RFList<State> Group::GetStates(const RestFrames::RFList<RestFrame>& frames) const {
+    RFList<State> states;
 
     // Find States that correspond to these frames, giving
     // preference to States that include more frames (less dependancies)
@@ -276,9 +276,8 @@ namespace RestFrames {
       m_Log << "Unable to find States corresponding to frames: " << endl;
       m_Log << Log(frames) << m_End;
       SetMind(false);
-      return StateList();
+      return RFList<State>();
     }
-    
     return states;
   }
 

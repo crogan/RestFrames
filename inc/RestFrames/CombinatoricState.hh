@@ -31,7 +31,6 @@
 #define CombinatoricState_HH
 
 #include "RestFrames/State.hh"
-#include "RestFrames/StateList.hh"
 
 using namespace std;
 
@@ -52,15 +51,15 @@ namespace RestFrames {
 
     void ClearElements();
     void AddElement(State& state);
-    void AddElement(const StateList& states);
-    StateList GetElements() const;
+    void AddElement(const RestFrames::RFList<State>& states);
+    RestFrames::RFList<State> GetElements() const;
     int GetNElements() const;
     bool ContainsElement(const State& state) const;
     bool ContainsElement(const RFKey& key) const;
     const State& GetElement(const RFKey& key) const;
 
   protected:
-    StateList m_Elements;
+    RestFrames::RFList<State> m_Elements;
   
   private:
     void Init();
