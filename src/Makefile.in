@@ -131,11 +131,11 @@ am__installdirs = "$(DESTDIR)$(RestFrameslibdir)" \
 LTLIBRARIES = $(RestFrameslib_LTLIBRARIES)
 libRestFrames_la_LIBADD =
 am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
-	libRestFrames_la-RFBase.lo libRestFrames_la-RFList.lo \
-	libRestFrames_la-RFLog.lo libRestFrames_la-RestFrame.lo \
-	libRestFrames_la-FramePlot.lo libRestFrames_la-RFrame.lo \
-	libRestFrames_la-GFrame.lo libRestFrames_la-LabFrame.lo \
-	libRestFrames_la-DecayFrame.lo \
+	libRestFrames_la-RFBase.lo libRestFrames_la-RFKey.lo \
+	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
+	libRestFrames_la-RestFrame.lo libRestFrames_la-FramePlot.lo \
+	libRestFrames_la-RFrame.lo libRestFrames_la-GFrame.lo \
+	libRestFrames_la-LabFrame.lo libRestFrames_la-DecayFrame.lo \
 	libRestFrames_la-VisibleFrame.lo \
 	libRestFrames_la-InvisibleFrame.lo \
 	libRestFrames_la-RLabFrame.lo libRestFrames_la-RDecayFrame.lo \
@@ -399,7 +399,7 @@ RestFrameslibdir = $(libdir)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFList.cc RFLog.cc\
+libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFKey.cc RFList.cc RFLog.cc\
 	RestFrame.cc FramePlot.cc RFrame.cc GFrame.cc LabFrame.cc DecayFrame.cc\
 	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
 	RInvisibleFrame.cc GLabFrame.cc GDecayFrame.cc GVisibleFrame.cc GInvisibleFrame.cc\
@@ -516,6 +516,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-MinimizeMassesCombinatoricJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RDecayFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFBase.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFLog.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFrame.Plo@am__quote@
@@ -562,6 +563,13 @@ libRestFrames_la-RFBase.lo: RFBase.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RFBase.cc' object='libRestFrames_la-RFBase.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFBase.lo `test -f 'RFBase.cc' || echo '$(srcdir)/'`RFBase.cc
+
+libRestFrames_la-RFKey.lo: RFKey.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFKey.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFKey.Tpo -c -o libRestFrames_la-RFKey.lo `test -f 'RFKey.cc' || echo '$(srcdir)/'`RFKey.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RFKey.Tpo $(DEPDIR)/libRestFrames_la-RFKey.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RFKey.cc' object='libRestFrames_la-RFKey.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFKey.lo `test -f 'RFKey.cc' || echo '$(srcdir)/'`RFKey.cc
 
 libRestFrames_la-RFList.lo: RFList.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFList.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFList.Tpo -c -o libRestFrames_la-RFList.lo `test -f 'RFList.cc' || echo '$(srcdir)/'`RFList.cc

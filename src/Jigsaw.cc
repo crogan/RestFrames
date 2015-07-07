@@ -227,7 +227,7 @@ namespace RestFrames {
 	  if(index < 0){
 	    m_Log << LogWarning;
 	    m_Log << "Cannot find States corresponding to frame: " << endl;
-	    m_Log << Log(frame) << m_End;
+	    m_Log << Log(frame) << " " << Log(states) << m_End;
 	    SetMind(false);
 	    return false;
 	  }

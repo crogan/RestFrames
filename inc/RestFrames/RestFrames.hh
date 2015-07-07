@@ -24,6 +24,7 @@
 #include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
 #include "RestFrames/RDecayFrame.hh"
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/RFKey.hh"
 #include "RestFrames/RFList.hh"
 #include "RestFrames/RFLog.hh"
 #include "RestFrames/RFrame.hh"

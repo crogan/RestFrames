@@ -31,45 +31,17 @@
 #define RFList_HH
 
 #include <vector>
-#include <TLorentzVector.h>
-#include <TVector3.h>
 
 using namespace std;
 
+class TLorentzVector;
+class TVector3;
+
 namespace RestFrames {
   
-  class State;
+  class RFKey;
   class RestFrame;
-
-  ///////////////////////////////////////////////
-  // RFKey class
-  ///////////////////////////////////////////////
-  class RFKey {
-
-  public:
-    RFKey(){ }
-    RFKey(int key){ m_Key = key; }
-    RFKey(const RFKey& key){ m_Key = key.GetKey(); }
-    ~RFKey(){ }
-
-    void operator=(const RFKey& key){ m_Key = key.GetKey(); }
-
-    bool operator==(const RFKey& key) const { return (m_Key == key.GetKey()); }
-
-    void SetKey(int key){ m_Key = key; }
-
-    int GetKey() const { return m_Key; }
-
-    bool IsSame(const RFKey& key) const {
-      return m_Key == key.GetKey();
-    }
-
-  private:
-    int m_Key;
-
-  };
- 
-  extern RFKey g_Key;
+  class State;
 
   template <class T>
   class RFListEmpty {
@@ -82,18 +54,18 @@ namespace RestFrames {
   };
     
   ///////////////////////////////////////////////
-  // RFList class
+  // RFListBase class
   ///////////////////////////////////////////////
-  template <class T>
-  class RFList {
+  template <class T, class Derived>
+  class RFListBase {
   public:
-    RFList();
-    virtual ~RFList();
-  
+    RFListBase(){ }
+    virtual ~RFListBase(){ }
+    
     bool Add(T& obj);
-    bool Add(const RFList<T>& objs);
+    bool Add(const Derived& objs);
     int Remove(const T& obj);
-    void Remove(const RFList<T>& objs);
+    void Remove(const Derived& objs);
     void Clear();
     int GetN() const { return m_Objs.size(); }
     T& Get(int i) const;
@@ -102,48 +74,74 @@ namespace RestFrames {
     int GetIndex(const T& obj) const;
     bool Contains(const RFKey& key) const;
     bool Contains(const T& obj) const;
-    bool Contains(const RFList<T>& objs) const;
-
-    bool IsSame(const RFList<T>& objs) const;
-    RFList<T> Copy() const;
-    RFList<T> Union(const RFList<T>& objs) const;
-    RFList<T> Intersection(const RFList<T>& objs) const;
-    RFList<T> Complement(const RFList<T>& objs) const;
-    int SizeUnion(const RFList<T>& objs) const;
-    int SizeIntersection(const RFList<T>& objs) const;
-    int SizeComplement(const RFList<T>& objs) const;
-
+    bool Contains(const Derived& objs) const;
+    
+    bool IsSame(const Derived& objs) const;
+    Derived Copy() const;
+    Derived Union(const Derived& objs) const;
+    Derived Intersection(const Derived& objs) const;
+    Derived Complement(const Derived& objs) const;
+    int SizeUnion(const Derived& objs) const;
+    int SizeIntersection(const Derived& objs) const;
+    int SizeComplement(const Derived& objs) const;
+    
     // operator overload methods
-    void operator=(const RFList<T>& objs);
+    void operator=(const Derived& objs);
     T& operator[](int i) const;
-    bool operator==(const RFList<T>& objs) const;
-    RFList<T> operator+(T& obj) const;
-    RFList<T> operator+(const RFList<T>& objs) const;
-    RFList<T> operator-(const T& obj) const;
-    RFList<T> operator-(const RFList<T>& objs) const;
-    RFList<T>& operator+=(T& obj);
-    RFList<T>& operator+=(const RFList<T>& objs);
-    RFList<T>& operator-=(const T& obj);
-    RFList<T>& operator-=(const RFList<T>& objs);
+    bool operator==(const Derived& objs) const;
+    Derived operator+(T& obj) const;
+    Derived operator+(const Derived& objs) const;
+    Derived operator-(const T& obj) const;
+    Derived operator-(const Derived& objs) const;
+    Derived& operator+=(T& obj);
+    Derived& operator+=(const Derived& objs);
+    Derived& operator-=(const T& obj);
+    Derived& operator-=(const Derived& objs);
+    
+  protected:
+    vector<T*> m_Objs;
+    static RFListEmpty<T> m_EmptyHandler;
+    static T& m_Empty;
+  };
+    
+  ///////////////////////////////////////////////
+  // RFList class
+  ///////////////////////////////////////////////
+  template <class T>
+  class RFList : public RestFrames::RFListBase<T,RFList<T> > {
+  public:
+    RFList() : RFListBase<T,RFList<T> >() { }
+    virtual ~RFList(){ }
+  };
+  
+  template <>
+  class RFList<RestFrames::State>
+    : public RFListBase<State,RFList<RestFrames::State> > {
+  public:
+    RFList() : RFListBase<State,RFList<State> >() { }
+    virtual ~RFList(){ }
 
-    // class type specific methods
     int GetIndexFrame(const RestFrame& frame) const;
+    TLorentzVector GetFourVector() const;
+    void Boost(const TVector3& B) const;
+  };
+
+  template <> 
+  class RFList<RestFrames::RestFrame>
+    : public RFListBase<RestFrame,RFList<RestFrames::RestFrame> > {
+  public:
+    RFList() : RFListBase<RestFrame,RFList<RestFrame> >() { }
+    virtual ~RFList(){ }
+
     double GetMass() const;
     TLorentzVector GetFourVector() const;
-    TLorentzVector GetFourVector(const RestFrame& frame) const; 
+    TLorentzVector GetFourVector(const RestFrame& frame) const;
     TLorentzVector GetVisibleFourVector() const;
     TLorentzVector GetVisibleFourVector(const RestFrame& frame) const;
     TLorentzVector GetInvisibleFourVector() const;
     TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const;
     double GetEnergy(const RestFrame& frame) const;
     double GetMomentum(const RestFrame& frame) const;
-    void Boost(const TVector3& B);
-
-  protected:
-    vector<T*> m_Objs;
-    static RFListEmpty<T> m_EmptyHandler;
-    static T& m_Empty;
-
   };
 
 }

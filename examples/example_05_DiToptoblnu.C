@@ -274,6 +274,12 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     // signal tree observables
     //
 
+    // g_Log << LogDebug << "Checking adding:" << endl;
+    // g_Log << (TT_R.GetFourVector(TT_R)+Ta_R.GetFourVector(TT_R)+Tb_R.GetFourVector(TT_R)).M() << " ";
+    // g_Log << (TT_R+Ta_R+Tb_R).GetFourVector(TT_R).M() << " ";
+    // g_Log << (TT_R+Ta_R+Tb_R).GetFourVector().M() << " " << m_End;
+    // (TT_R+Ta_R+Tb_R).Boost(TVector3(1.,1.,1.));
+
     //*** total CM mass
     double shat = TT_R.GetMass();
     

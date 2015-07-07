@@ -75,8 +75,8 @@ namespace RestFrames {
 
   map<LogType,bool> InitPrintMap(){
     map<LogType,bool> m;
-    m[LogVerbose]  = true;
-    m[LogDebug]    = true;
+    m[LogVerbose]  = false;
+    m[LogDebug]    = false;
     m[LogInfo]     = true;
     m[LogWarning]  = true;
     m[LogError]    = true;

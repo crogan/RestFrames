@@ -35,6 +35,7 @@
 #include <TVector3.h>
 #include <TLorentzVector.h>
 #include "RestFrames/RFList.hh"
+#include "RestFrames/RFKey.hh"
 #include "RestFrames/RFLog.hh"
 
 using namespace std;
