@@ -44,37 +44,6 @@ namespace RestFrames {
   /// Type of RestFrame, with respect to its analysis capabilities
   enum AnaType { FReco, FGen };
 
-  class RestFrameList {
-  public:
-    RestFrameList(){ }
-    ~RestFrameList(){ }
-    
-    void AddFrame(const RestFrame& frame){ m_Frames.push_back(&frame); }
-    
-    vector<const RestFrame*> GetList() const { return m_Frames; }
-
-    RestFrameList& operator+(const RestFrame& frame);
-    RestFrameList& operator+(const RestFrameList& list);
-
-    double GetMass() const;
-
-    TLorentzVector GetFourVector() const;
-    TLorentzVector GetFourVector(const RestFrame& frame) const; 
-
-    TLorentzVector GetVisibleFourVector() const;
-    TLorentzVector GetVisibleFourVector(const RestFrame& frame) const;
-
-    TLorentzVector GetInvisibleFourVector() const;
-    TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const;
-
-    double GetEnergy(const RestFrame& frame) const;
-
-    double GetMomentum(const RestFrame& frame) const;
-
-  private:
-    vector<const RestFrame*> m_Frames;
-  };
-
   extern RestFrame g_RestFrame;
 
   ////////////////////////////////////////////////////////////////////
@@ -304,12 +273,7 @@ namespace RestFrames {
     ////////////////////////////////////////////////////////////////////
     ///@{
 
-    RestFrameList operator+(const RestFrame& frame){ 
-      RestFrameList list;
-      list.AddFrame(frame);
-      list.AddFrame(*this);
-      return list;
-    }
+    RestFrames::RFList<RestFrame> operator+(RestFrame& frame); 
 
     virtual double GetMass() const;
     virtual TLorentzVector GetFourVector() const;

@@ -411,6 +411,13 @@ namespace RestFrames {
   // User Analysis functions
   //////////////////////////////
 
+  RFList<RestFrame> RestFrame::operator+(RestFrame& frame){
+    RFList<RestFrame> list;
+    list.Add(frame);
+    list.Add(*this);
+    return list;
+  }
+
   double RestFrame::GetMass() const {
     return m_P.M();
   }
@@ -626,10 +633,23 @@ namespace RestFrames {
     if(frame.IsEmpty()) return GetFourVector();
  
     TLorentzVector V = m_P;
-    if(frame.IsSame(*m_ProdFramePtr)) return V;
+    if(frame == GetProductionFrame()) return V;
+
+    if(GetProductionFrame().IsEmpty()){
+      m_Log << LogWarning;
+      m_Log << "Unable to get four vector. ";
+      m_Log << "Production frame is not defined." << m_End;
+      return V;
+    }
 
     vector<TVector3> boosts;
-    if(!m_ProdFramePtr->FindPathToFrame(frame, *this, boosts)) return V;
+    if(!GetProductionFrame().FindPathToFrame(frame, g_RestFrame, boosts)){
+      m_Log << LogWarning;
+      m_Log << "Unable to get four vector. ";
+      m_Log << "Cannot find a path to frame " << frame.GetName();
+      m_Log << " from frame " << GetProductionFrame().GetName() << m_End;
+      return V;
+    }
   
     int Nboost = boosts.size();
     for(int i = 0; i < Nboost; i++){
@@ -781,92 +801,6 @@ namespace RestFrames {
     TVector3 vbeta = GetBoostInParentFrame();
     double beta = min(1.,vbeta.Mag());
     return 1./sqrt(1.-beta*beta);
-  }
-
-  RestFrameList& RestFrameList::operator+(const RestFrame& frame){ 
-    AddFrame(frame);
-    return *this;
-  }
-
-  RestFrameList& RestFrameList::operator+(const RestFrameList& list){
-    vector<const RestFrame*> frames = list.GetList();
-    int N = frames.size();
-    for(int i = 0; i < N; i++)
-      AddFrame(*frames[i]);
-    
-    return *this;
-  }
-
-  double RestFrameList::GetMass() const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector();
-    return V.M();
-  }
-
-  TLorentzVector RestFrameList::GetFourVector() const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector();
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetFourVector(const RestFrame& frame) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector(frame);
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetVisibleFourVector() const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetVisibleFourVector();
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetVisibleFourVector(const RestFrame& frame) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetVisibleFourVector(frame);
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetInvisibleFourVector() const {
-     int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetInvisibleFourVector();
-    return V;
-  }
-
-  TLorentzVector RestFrameList::GetInvisibleFourVector(const RestFrame& frame) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetInvisibleFourVector(frame);
-    return V;
-  }
-
-  double RestFrameList::GetEnergy(const RestFrame& frame) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector(frame);
-    return V.E();
-  }
-
-  double RestFrameList::GetMomentum(const RestFrame& frame) const {
-    int N = m_Frames.size();
-    TLorentzVector V(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++)
-      V += m_Frames[i]->GetFourVector(frame);
-    return V.P();
   }
 
 }
