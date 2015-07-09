@@ -88,7 +88,10 @@ namespace RestFrames {
     // operator overload methods
     void operator=(const Derived& objs);
     T& operator[](int i) const;
+    bool operator==(const T& obj) const;
     bool operator==(const Derived& objs) const;
+    bool operator!=(const T& obj) const;
+    bool operator!=(const Derived& objs) const;
     Derived operator+(T& obj) const;
     Derived operator+(const Derived& objs) const;
     Derived operator-(const T& obj) const;

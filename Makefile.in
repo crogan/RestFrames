@@ -99,7 +99,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/inc/RestFrames/RestFrames_config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = restframes-config
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -186,9 +186,10 @@ ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = $(SUBDIRS)
-am__DIST_COMMON = $(srcdir)/Makefile.in AUTHORS COPYING ChangeLog \
-	INSTALL NEWS README compile config.guess config.sub install-sh \
-	ltmain.sh missing
+am__DIST_COMMON = $(srcdir)/Makefile.in \
+	$(top_srcdir)/config/restframes-config.in AUTHORS COPYING \
+	ChangeLog INSTALL NEWS README compile config.guess config.sub \
+	install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -399,14 +400,10 @@ CLEANFILES = $(bin_SCRIPTS) $(libexec_SCRIPTS)
 # 	-e 's|\n|\\n|g' \
 # 	< "$<" > "$@"
 do_subst = $(SED) \
+	-e 's|[@]prefix@|$(prefix)|g' \
 	-e 's|[@]bindir@|$(bindir)|g' \
 	-e 's|[@]libdir@|$(libdir)|g' \
 	-e 's|[@]includedir@|$(includedir)|g' \
-	-e 's|[@]prefix@|$(prefix)|g' \
-	-e 's|[@]CONFIG_CXXFLAGS@|$(CONFIG_CXXFLAGS)|g' \
-	-e 's|[@]CONFIG_LIBS@|$(CONFIG_LIBS)|g' \
-	-e 's|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g' \
-	-e 's|[@]VERSION@|$(VERSION)|g' \
 	-e 's|\n|\\n|g' \
 	< "$<" > "$@"
 
@@ -450,6 +447,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
+restframes-config: $(top_builddir)/config.status $(top_srcdir)/config/restframes-config.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_SCRIPTS)'; test -n "$(bindir)" || list=; \
@@ -956,9 +955,9 @@ uninstall-am: uninstall-binSCRIPTS uninstall-libexecSCRIPTS
 .PRECIOUS: Makefile
 
 
-restframes-config: $(top_srcdir)/config/restframes-config.in Makefile
-	$(do_subst) < $(top_srcdir)/config/restframes-config.in > restframes-config
-	chmod u+x restframes-config
+# restframes-config: $(top_srcdir)/config/restframes-config.in Makefile
+# 	$(do_subst) < $(top_srcdir)/config/restframes-config.in > restframes-config
+# 	chmod u+x restframes-config
 
 setup_RestFrames.sh: $(top_srcdir)/config/setup_RestFrames.sh.in Makefile
 	$(do_subst) < $(top_srcdir)/config/setup_RestFrames.sh.in > setup_RestFrames.sh

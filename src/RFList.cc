@@ -90,11 +90,10 @@ namespace RestFrames {
 
   template <class T, class Derived>
   bool RFListBase<T,Derived>::Add(T& obj){
-    if(obj.IsSame(g_Key)) return false;
+    if(!obj) return false;
     int N = GetN();
-    for(int i = 0; i < N; i++){
+    for(int i = 0; i < N; i++)
       if(m_Objs[i]->IsSame(obj)) return false;
-    }
     m_Objs.push_back(&obj);
     return true;
   }
@@ -256,8 +255,25 @@ namespace RestFrames {
   }
 
   template <class T, class Derived>
+  bool RFListBase<T,Derived>::operator==(const T& obj) const {
+    if(GetN() != 1) return false;
+    return obj == *m_Objs[0];
+  }
+
+  template <class T, class Derived>
   bool RFListBase<T,Derived>::operator==(const Derived& objs) const { 
     return IsSame(objs);
+  }
+
+  template <class T, class Derived>
+  bool RFListBase<T,Derived>::operator!=(const T& obj) const {
+    if(GetN() != 1) return true;
+    return !(obj == *m_Objs[0]);
+  }
+
+  template <class T, class Derived>
+  bool RFListBase<T,Derived>::operator!=(const Derived& objs) const { 
+    return !IsSame(objs);
   }
 
   template <class T, class Derived>

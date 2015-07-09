@@ -100,7 +100,7 @@ namespace RestFrames {
     for(int i = 0; i < Nchild; i++){
       RestFrame& child = GetChildFrame(i);
       m_ChildStates.push_back(RFList<State>());
-      RFList<RestFrame> frames = child.GetListFramesType(FVisible);
+      RFList<RestFrame> frames = child.GetListFrames(FVisible);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
 	RFrame* rframePtr = dynamic_cast<RFrame*>(&frames.Get(f));
@@ -124,7 +124,7 @@ namespace RestFrames {
     terminal_types.push_back(FInvisible);
 
     for(int c = 0; c < Nchild; c++){
-      RFList<RestFrame> frames = GetChildFrame(c).GetListFramesType(terminal_types);
+      RFList<RestFrame> frames = GetChildFrame(c).GetListFrames(terminal_types);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
 	RestFrame& frame = frames.Get(f);

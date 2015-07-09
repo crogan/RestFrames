@@ -83,9 +83,10 @@ namespace RestFrames {
   bool RestFrame::IsSoundBody() const {
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      if(GetChildFrame(i).IsEmpty()){
+      if(!GetChildFrame(i)){
 	SetBody(false);
-	m_Log << LogWarning << "NULL child frame pointer" << m_End;
+	m_Log << LogWarning << "Empty child frame:";
+	m_Log << Log(GetChildFrame(i)) << m_End;
 	return false;
       }
     SetBody(true);
@@ -159,7 +160,7 @@ namespace RestFrames {
     SetBody(false);
     if(i < 0 || i >= GetNChildren()) return;
     RestFrame& child = GetChildFrame(i);
-    m_ChildFrames.Remove(GetChildFrame(i));
+    m_ChildFrames.Remove(child);
     m_ChildBoosts.erase(m_ChildBoosts.begin()+i);
     child.SetParentFrame();
   }
@@ -176,7 +177,7 @@ namespace RestFrames {
 
   void RestFrame::SetParentFrame(RestFrame& frame){
     SetBody(false);
-    if(frame.IsEmpty()){
+    if(!frame){
       m_Log << LogWarning << "Cannot set empty frame as parent." << m_End;
     }
     if(m_Type != FLab) m_ParentFramePtr = &frame;
@@ -192,7 +193,7 @@ namespace RestFrames {
   
   void RestFrame::AddChildFrame(RestFrame& frame){
     SetBody(false);
-    if(frame.IsEmpty()){
+    if(!frame){
       m_Log << LogWarning << "Cannot add empty frame as child." << m_End;
       return;
     }
@@ -244,15 +245,43 @@ namespace RestFrames {
 
   RestFrame const& RestFrame::GetLabFrame() const {
     if(m_Type == FLab) return *this;
-    const RestFrame* parentPtr = &GetParentFrame();
-    if(!parentPtr){
+  
+    if(!GetParentFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to find LabFrame above this frame. ";
       m_Log << "No parent frame set" << m_End;
       return g_RestFrame;
     } 
-    return parentPtr->GetLabFrame();
+    return GetParentFrame().GetLabFrame();
   } 
+
+  RestFrame const& RestFrame::GetSiblingFrame() const {
+    if(!IsSoundBody()) return g_RestFrame;
+
+    if(IsLabFrame()) return g_RestFrame;
+
+    if(!GetParentFrame())
+      return g_RestFrame;
+
+    int Nsib = GetParentFrame().GetNChildren();
+    for(int s = 0; s < Nsib; s++){
+      if(IsSame(GetParentFrame().GetChildFrame(s))) continue;
+      return GetParentFrame().GetChildFrame(s);
+    }
+    return g_RestFrame; 
+  }
+
+  int RestFrame::GetNDescendants() const {
+    if(!IsSoundBody()) return 0.;
+
+    int Nchild = GetNChildren();
+    if(Nchild == 0) return 0;
+    int Nd = 0;
+    for(int i = 0; i < Nchild; i++){
+      Nd += GetChildFrame(i).GetNDescendants();
+    }
+    return Nd;
+  }
 
   void RestFrame::SetChildBoostVector(int i, const TVector3& boost) {
     int N = GetNChildren();
@@ -268,7 +297,7 @@ namespace RestFrames {
   }
 
   void RestFrame::SetParentBoostVector(const TVector3& boost) {
-    if(GetParentFrame().IsEmpty()){
+    if(!GetParentFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to set parent boost vector. ";
       m_Log << "No parent frame linked.";
@@ -301,36 +330,34 @@ namespace RestFrames {
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
 	GetChildFrame(i).FillListFramesRecursive(frames);
-    
     return frames;
   }
 
-  RFList<RestFrame> RestFrame::GetListFramesType(FrameType type){
+  RFList<RestFrame> RestFrame::GetListFrames(FrameType type){
     RFList<RestFrame> frames;
     if(m_Type == type) frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-	GetChildFrame(i).FillListFramesTypeRecursive(type, frames);
-   
+	GetChildFrame(i).FillListFramesRecursive(type, frames);
+    
     return frames;
   }
 
-  RFList<RestFrame> RestFrame::GetListFramesType(const vector<FrameType>& types){
+  RFList<RestFrame> RestFrame::GetListFrames(const vector<FrameType>& types){
     RFList<RestFrame> frames;
-
     int Ntype = types.size();
     for(int i = 0; i < Ntype; i++)
-      FillListFramesTypeRecursive(types[i], frames);
+      FillListFramesRecursive(types[i], frames);
 
     return frames;
   }
 
   RFList<RestFrame> RestFrame::GetListVisibleFrames(){
-    return GetListFramesType(FVisible);
+    return GetListFrames(FVisible);
   }
 
   RFList<RestFrame> RestFrame::GetListInvisibleFrames(){
-    return GetListFramesType(FInvisible);
+    return GetListFrames(FInvisible);
   }
 
   void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames){
@@ -340,11 +367,11 @@ namespace RestFrames {
       GetChildFrame(i).FillListFramesRecursive(frames);
   }
   
-  void RestFrame::FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>& frames){
+  void RestFrame::FillListFramesRecursive(FrameType type, RFList<RestFrame>& frames){
     if(m_Type == type) frames.Add(*this);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildFrame(i).FillListFramesTypeRecursive(type, frames);
+      GetChildFrame(i).FillListFramesRecursive(type, frames);
   }
 
   bool RestFrame::IsCircularTree(vector<RFKey>& keys) const {
@@ -419,15 +446,19 @@ namespace RestFrames {
   }
 
   double RestFrame::GetMass() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
     return m_P.M();
   }
 
   double RestFrame::GetCosDecayAngle() const {
-    if(!m_Spirit){
-      //m_Log << LogInfo << "Can't call analysis function CosDecayAngle" << sendl;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
       return 0.;
     }
-    if(GetParentFrame().IsEmpty()) return 0.;
+    if(!GetParentFrame()) return 0.;
     if(GetNChildren() < 1) return 0.;
     TVector3 V1 = GetParentBoostVector().Unit();
     TVector3 V2 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
@@ -435,14 +466,15 @@ namespace RestFrames {
   }
 
   double RestFrame::GetCosDecayAngle(const RestFrame& frame) const {
-    if(frame.IsEmpty())
-      return GetCosDecayAngle();
-
-    if(!m_Spirit){
-      //m_Log << LogInfo << "Can't call analysis function CosDecayAngle" << sendl;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
       return 0.;
     }
-    if(GetParentFrame().IsEmpty()) return 0.;
+
+    if(!frame)
+      return GetCosDecayAngle();
+
+    if(!GetParentFrame()) return 0.;
     TVector3 V1 = GetParentBoostVector().Unit();
     TVector3 V2 = frame.GetFourVector(*this).Vect().Unit();
     return V1.Dot(V2);
@@ -452,15 +484,19 @@ namespace RestFrames {
   // in the production frame of 'this'. Decay angle is relative to frame 'framePtr'
   // unless framePtr == nullptr (default), in which case is it first child of 'this'
   double RestFrame::GetDeltaPhiDecayAngle(const TVector3& axis, const RestFrame& frame) const {
-    if(!m_Spirit) return 0.;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     const RestFrame& prod_frame = GetParentFrame();
     TLorentzVector Pthis = GetFourVector(prod_frame);
     TLorentzVector Pchild;
-    if(!frame.IsEmpty()){
-      Pchild = frame.GetFourVector(prod_frame);
-    } else {
+    if(!frame){
       if(GetNChildren() < 1) return 0.;
       Pchild = GetChildFrame(0).GetFourVector(prod_frame);
+    } else {
+      Pchild = frame.GetFourVector(prod_frame);
     }
 
     TVector3 boost_par = Pthis.BoostVector();
@@ -479,6 +515,11 @@ namespace RestFrames {
   // perpendicular to 3-vector 'axis', where axis is defined
   // in 'framePtr' (default gives lab frame). 
   double RestFrame::GetDeltaPhiBoostVisible(const TVector3& axis, const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     TLorentzVector Pvis = GetVisibleFourVector(frame);
     TLorentzVector Pthis = GetFourVector(frame);
 
@@ -500,6 +541,11 @@ namespace RestFrames {
   // perpendicular to 3-vector 'axis', where axis is defined
   // in 'framePtr' (default gives lab frame). 
   double RestFrame::GetDeltaPhiDecayVisible(const TVector3& axis, const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     if(GetNChildren() < 1) return 0.;
 
     TLorentzVector Pvis   = GetVisibleFourVector(frame);
@@ -527,6 +573,11 @@ namespace RestFrames {
   // in the plane perpendicular to 3-vector 'axis', where
   // axis is defined in 'framePtr' (default gives lab frame). 
   double RestFrame::GetDeltaPhiVisible(const TVector3& axis, const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     if(GetNChildren() != 2) return 0.;
  
     TLorentzVector Pthis = GetFourVector(frame);
@@ -551,6 +602,11 @@ namespace RestFrames {
   }
 
   double RestFrame::GetVisibleShape() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     if(GetNChildren() != 2) return 0.;
     TVector3 P1 = GetChildFrame(0).GetVisibleFourVector(*this).Vect();
     TVector3 P2 = GetChildFrame(1).GetVisibleFourVector(*this).Vect();
@@ -559,6 +615,11 @@ namespace RestFrames {
   }
  
   double RestFrame::GetTransverseVisibleShape(const TVector3& axis, const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     if(GetNChildren() != 2) return 0.;
    
     TLorentzVector Pthis = GetFourVector(frame);
@@ -584,63 +645,89 @@ namespace RestFrames {
   }
 
   double RestFrame::GetScalarVisibleMomentum() const {
-    if(GetNChildren() != 2) return 0.;
-    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(*this);
-    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(*this);
-    return P1.P() + P2.P();
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    double ret = 0.;
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      ret += GetChildFrame(i).GetVisibleFourVector(*this).P();
+  
+    return ret;
   }
   double RestFrame::GetTransverseScalarVisibleMomentum(const TVector3& axis, const RestFrame& frame) const {
-    if(GetNChildren() != 2) return 0.;
-    
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    double ret = 0.;
+    int N = GetNChildren();
+    vector<TLorentzVector> P;
+   
+    for(int i = 0; i < N; i++)
+      P.push_back(GetChildFrame(i).GetVisibleFourVector(frame));
     TLorentzVector Pthis = GetFourVector(frame);
-    TLorentzVector P1 = GetChildFrame(0).GetVisibleFourVector(frame);
-    TLorentzVector P2 = GetChildFrame(1).GetVisibleFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    for(int i = 0; i < N; i++)
+      P[i].Boost(-boost_par);
     Pthis.Boost(-boost_par);
-    P1.Boost(-boost_par);
-    P2.Boost(-boost_par);
+   
     TVector3 boost_perp = Pthis.BoostVector();
-    P1.Boost(-boost_perp);
-    P2.Boost(-boost_perp);
+    for(int i = 0; i < N; i++)
+      P[i].Boost(-boost_perp);
+    
+    for(int i = 0; i < N; i++){
+      TVector3 V = P[i].Vect();
+      V = V - V.Dot(axis.Unit())*axis.Unit();
+      ret += V.Mag();
+    }
 
-    TVector3 V1 = P1.Vect();
-    TVector3 V2 = P2.Vect();
-    V1 = V1 - V1.Dot(axis.Unit())*axis.Unit();
-    V2 = V2 - V2.Dot(axis.Unit())*axis.Unit();
-
-    return V1.Mag()+V2.Mag();
+    return ret;
   }
 
   TLorentzVector RestFrame::GetFourVector() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
     TLorentzVector V = m_P;
     
     if(IsLabFrame()) return V;
 
     const RestFrame& lab = GetLabFrame();
-    if(lab.IsEmpty()){
+    if(!lab){
       m_Log << LogWarning;
       m_Log << "Cannot find lab frame to evaluate four vector";
       m_Log << m_End;
-      return V;
+      return TLorentzVector(0.,0.,0.,0.);
     }
     return GetFourVector(lab);
 
   }
 
   TLorentzVector RestFrame::GetFourVector(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return GetFourVector();
- 
-    TLorentzVector V = m_P;
-    if(frame == GetProductionFrame()) return V;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
 
-    if(GetProductionFrame().IsEmpty()){
+    if(!frame) return GetFourVector();
+ 
+    if(!GetProductionFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to get four vector. ";
       m_Log << "Production frame is not defined." << m_End;
-      return V;
+      return TLorentzVector(0.,0.,0.,0.);
     }
+
+    TLorentzVector V = m_P;
+    if(frame == GetProductionFrame()) return V;
 
     vector<TVector3> boosts;
     if(!GetProductionFrame().FindPathToFrame(frame, g_RestFrame, boosts)){
@@ -648,19 +735,23 @@ namespace RestFrames {
       m_Log << "Unable to get four vector. ";
       m_Log << "Cannot find a path to frame " << frame.GetName();
       m_Log << " from frame " << GetProductionFrame().GetName() << m_End;
-      return V;
+      return TLorentzVector(0.,0.,0.,0.);
     }
   
     int Nboost = boosts.size();
-    for(int i = 0; i < Nboost; i++){
+    for(int i = 0; i < Nboost; i++)
       V.Boost(-1.*boosts[i]);
-    }
     return V;
   }
 
-  TLorentzVector RestFrame::GetVisibleFourVector() const {    
+  TLorentzVector RestFrame::GetVisibleFourVector() const {   
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+ 
     const RestFrame& lab = GetLabFrame();
-    if(lab.IsEmpty()){
+    if(!lab){
       m_Log << LogWarning;
       m_Log << "Cannot find lab frame to evaluate four vector";
       m_Log << m_End;
@@ -669,7 +760,12 @@ namespace RestFrames {
     return GetVisibleFourVector(lab);
   }
   TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return GetVisibleFourVector();
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
+    if(!frame) return GetVisibleFourVector();
 
     TLorentzVector V(0.,0.,0.,0.);
     if(!m_Spirit) return V;
@@ -684,8 +780,13 @@ namespace RestFrames {
   }
 
   TLorentzVector RestFrame::GetInvisibleFourVector() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
     const RestFrame& lab = GetLabFrame();
-    if(lab.IsEmpty()){
+    if(!lab){
       m_Log << LogWarning;
       m_Log << "Cannot find lab frame to evaluate four vector";
       m_Log << m_End;
@@ -694,7 +795,12 @@ namespace RestFrames {
     return GetInvisibleFourVector(lab);
   }
   TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return GetVisibleFourVector();
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
+    if(!frame) return GetVisibleFourVector();
 
     TLorentzVector V(0.,0.,0.,0.);
     if(!m_Spirit) return V;
@@ -709,15 +815,30 @@ namespace RestFrames {
   }
 
   double RestFrame::GetEnergy(const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     return GetFourVector(frame).E();
   }
 
   double RestFrame::GetMomentum(const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     return GetFourVector(frame).P();
   }
 
   int RestFrame::GetFrameDepth(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return -1;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    if(!frame) return -1;
     if(IsSame(frame)) return 0.;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
@@ -728,7 +849,12 @@ namespace RestFrames {
   }
 
   RestFrame const& RestFrame::GetFrameAtDepth(int depth, const RestFrame& frame) const {
-    if(frame.IsEmpty() || depth < 1) return m_ChildFrames.Get(-1);
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return g_RestFrame;
+    }
+
+    if(!frame || depth < 1) return m_ChildFrames.Get(-1);
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       RestFrame& child = GetChildFrame(i);
@@ -741,7 +867,12 @@ namespace RestFrames {
   }
 
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return 0.;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    if(!frame) return 0.;
     if(GetNChildren() < 1) return 0.;
 
     TVector3 vNorm_frame = frame.GetDecayPlaneNormalVector();
@@ -756,48 +887,49 @@ namespace RestFrames {
   }
   
   TVector3 RestFrame::GetDecayPlaneNormalVector() const {
-    TVector3 V(0.,0.,0.);
-    if(GetNChildren() < 2) return V;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TVector3(0.,0.,0.);
+    }
+
+    if(GetNChildren() < 1) return TVector3(0.,0.,0.);
 
     TVector3 V1 = GetChildFrame(0).GetFourVector(GetParentFrame()).Vect();
-    TVector3 V2 = GetChildFrame(1).GetFourVector(GetParentFrame()).Vect();
+    TVector3 V2 = GetFourVector(GetParentFrame()).Vect();
+
     return V1.Cross(V2).Unit();
   }
 
   RestFrame const& RestFrame::GetProductionFrame() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return g_RestFrame;
+    }
+
     if(m_ProdFramePtr)
       return *m_ProdFramePtr;
     else 
       return g_RestFrame;
   }
 
-  RestFrame const& RestFrame::GetSiblingFrame() const {
-    if(IsLabFrame()) return g_RestFrame;
-    int Nsib = m_ProdFramePtr->GetNChildren();
-    for(int s = 0; s < Nsib; s++){
-      if(IsSame(m_ProdFramePtr->GetChildFrame(s))) continue;
-      return m_ProdFramePtr->GetChildFrame(s);
-    }
-    return g_RestFrame; 
-  }
-
-  int RestFrame::GetNDescendants() const {
-    int Nchild = GetNChildren();
-    if(Nchild == 0) return 1;
-    int Nd = 0;
-    for(int i = 0; i < Nchild; i++){
-      Nd += GetChildFrame(i).GetNDescendants();
-    }
-    return Nd;
-  }
-
-  TVector3 RestFrame::GetBoostInParentFrame() const{
+  TVector3 RestFrame::GetBoostInParentFrame() const {
     TVector3 V(0.,0.,0.);
-    if(GetParentFrame().IsEmpty()) return V;
+
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return V;
+    }
+
+    if(!GetParentFrame()) return V;
     return -1.*GetParentBoostVector();
   }
 
-  double RestFrame::GetGammaInParentFrame() const{
+  double RestFrame::GetGammaInParentFrame() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     TVector3 vbeta = GetBoostInParentFrame();
     double beta = min(1.,vbeta.Mag());
     return 1./sqrt(1.-beta*beta);

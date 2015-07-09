@@ -62,7 +62,14 @@ namespace RestFrames {
   }
 
   void GLabFrame::SetTransverseMomenta(double val){
-    if(val >= 0.) m_PT = val;
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set transverse mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_PT = 0.;
+    } else {
+      m_PT = val;
+    }
   }
 
   void GLabFrame::SetLongitudinalMomenta(double val){
@@ -81,12 +88,13 @@ namespace RestFrames {
   }
 
   void GLabFrame::ResetFrame(){
-    m_Spirit = false;
+    SetSpirit(false);
     ResetProductionAngles();
   }
   
   bool GLabFrame::GenerateFrame(){
-    if(!m_Body) return false;
+    if(!IsSoundBody()) 
+      return false;
 
     TLorentzVector P;
     double M = GetChildFrame(0).GetMass();
@@ -98,22 +106,25 @@ namespace RestFrames {
     ChildVector.push_back(P);
     SetChildren(ChildVector);
     ResetProductionAngles();
+
+    SetSpirit(true);
     
     return true;
   }
 
   void GLabFrame::ClearEvent(){
-    m_Spirit = false;
-    if(!m_Body) return;
-    
+    SetSpirit(false);
+    if(!IsSoundBody()) 
+      return;
     ClearEventRecursive();
   }
 
   bool GLabFrame::AnalyzeEvent(){
-    m_Spirit = false;
-
-    if(!AnalyzeEventRecursive()) return false;
-    m_Spirit = true;
+    if(!AnalyzeEventRecursive()){
+      SetSpirit(false);
+      return false;
+    }
+    SetSpirit(true);
     return m_Spirit;
   }
 

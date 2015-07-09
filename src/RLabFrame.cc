@@ -93,7 +93,7 @@ namespace RestFrames {
     ClearStates();
     
     // create states for visible frames not assigned to a Group
-    RFList<RestFrame> frames = GetListFramesType(FVisible);
+    RFList<RestFrame> frames = GetListFrames(FVisible);
     int Nf = frames.GetN();
     int Ng = m_LabGroups.GetN();
     for(int f = 0; f < Nf; f++){
@@ -112,7 +112,7 @@ namespace RestFrames {
     }
 
     // check that all invisible frames are assigned to a Group
-    frames = GetListFramesType(FInvisible);
+    frames = GetListFrames(FInvisible);
     Nf = frames.GetN();
     for(int i = 0; i < Nf; i++){
       bool has_group = false;

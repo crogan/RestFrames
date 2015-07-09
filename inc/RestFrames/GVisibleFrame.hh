@@ -46,6 +46,7 @@ namespace RestFrames {
     virtual ~GVisibleFrame();
 
     virtual void SetMass(double val);
+    virtual double GetMass() const;
 
   protected:
     double m_Mass;

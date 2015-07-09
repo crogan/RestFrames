@@ -64,26 +64,42 @@ namespace RestFrames {
   }
 
   void GDecayFrame::SetMass(double val){
-    if(val < 0.) return;
-
-    m_Mass = val;
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
     m_MassSet = true;
     m_ChildP = -1.;
     m_ChildGamma = 0.;
   }
 
   void GDecayFrame::SetChildMomentum(double val){
-    if(val < 0.) return;
-
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set child momentum to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_ChildP = 0.;
+    } else {
+      m_ChildP = val;
+    }
     m_Mass = -1.;
     m_MassSet = false;
-    m_ChildP = val;
     m_ChildGamma = 0.;
   }
 
   void GDecayFrame::SetChildGamma(double val){
-    if(val < 1.) return;
-
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set child gamma less than one: ";
+      m_Log << val << ". Setting to one." << m_End;
+      m_ChildGamma = 1.;
+    } else {
+      m_ChildGamma = val;
+    }
     m_Mass = -1.;
     m_MassSet = false;
     m_ChildP = -1.;
@@ -91,9 +107,14 @@ namespace RestFrames {
   }
 
   void GDecayFrame::SetCosDecayAngle(double val){
-    if(fabs(val) > 1.) return;
-
-    m_CosDecayAngle = val;
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "CosDecay angle must be in [-1, 1]: ";
+      m_Log << val << ". Setting to random." << m_End;
+      m_CosDecayAngle = -2.;
+    } else {
+      m_CosDecayAngle = val;
+    }
   }
 
   void GDecayFrame::SetDeltaPhiDecayPlane(double val){
@@ -103,7 +124,7 @@ namespace RestFrames {
   }
 
   void GDecayFrame::ResetFrame(){
-    m_Spirit = false;
+    SetSpirit(false);
     if(m_ChildP > 0. || m_ChildGamma >= 1.) m_MassSet = false;
     ResetDecayAngles();
   }
@@ -136,7 +157,12 @@ namespace RestFrames {
   }
 
   bool GDecayFrame::GenerateFrame(){
-    if(!m_Body) return false;
+    if(!IsSoundBody()){ 
+      m_Log << LogWarning;
+      m_Log << "Unable to generate event for frame";
+      m_Log << m_End;
+      return false;
+    }
     int Nchild = GetNChildren();
 
     vector<double> ChildMasses;
@@ -148,14 +174,20 @@ namespace RestFrames {
     }
 
     double Mass = GetMass();
-    if(Mass <= ChildMassTOT) return false;
+    if(Mass < ChildMassTOT){
+      m_Log << LogWarning;
+      m_Log << "Problem in event generation: frame mass is less ";
+      m_Log << "than the sum of child masses." << m_End;
+      SetSpirit(false);
+      return false;
+    }
+    SetSpirit(true);
 
     vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(Mass, ChildMasses, 
 			     GetParentBoostVector(),
 			     GetParentFrame().GetDecayPlaneNormalVector(),
 			     ChildVectors);
-    
     SetChildren(ChildVectors);
     
     return true;
@@ -198,7 +230,7 @@ namespace RestFrames {
        return Pcm;
      }
 
-     // Recursively generate other two-body decays
+     // Recursively generate other two-body decays for N > 2
      vector<double> M_cR;
      for(int i = 1; i < N_c; i++) M_cR.push_back(M_c[i]);
      TVector3 boost = P_child[1].BoostVector();

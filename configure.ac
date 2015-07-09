@@ -86,6 +86,8 @@ dnl define SOVERSION for shared library labeling
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 AC_SUBST(SOVERSION)
 
+AC_CONFIG_FILES([restframes-config:config/restframes-config.in], [chmod u+x restframes-config])
+
 AC_CONFIG_FILES( Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile config/Makefile)
 
 CONFIG_SUMMARY=""
@@ -106,6 +108,7 @@ dnl finish with a nice message
 dnl-------------------------------------------------------------------
 AC_OUTPUT
 printf "$CONFIG_SUMMARY"
+printf "$CONFIGURE_INVOCATION"
 cat 1>&2 << 'EOF'
 ---------------------------------------------------------------
               INFORMATION FOR RestFrames USERS                 

@@ -51,7 +51,18 @@ namespace RestFrames {
   }
 
   void GVisibleFrame::SetMass(double val){
-    if(val >= 0.) m_Mass = val;
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
+  }
+
+  double GVisibleFrame::GetMass() const {
+    return m_Mass;
   }
 
   void GVisibleFrame::ResetFrame(){ }

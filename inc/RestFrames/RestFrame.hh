@@ -239,7 +239,7 @@ namespace RestFrames {
     /// Returns a list of frames that inherit from this one,
     /// filled recursively and including children of children (and this frame), 
     /// which are of FrameType *type*
-    RestFrames::RFList<RestFrame> GetListFramesType(FrameType type);
+    RestFrames::RFList<RestFrame> GetListFrames(FrameType type);
 
     /// \brief Returns a list of frames inheriting from this one with FrameType *types*
     ///
@@ -248,7 +248,7 @@ namespace RestFrames {
     /// Returns a list of frames that inherit from this one,
     /// filled recursively and including children of children (and this frame), 
     /// which have a FrameType included among *types*
-    RestFrames::RFList<RestFrame> GetListFramesType(const vector<RestFrames::FrameType>& types);
+    RestFrames::RFList<RestFrame> GetListFrames(const vector<RestFrames::FrameType>& types);
 
     /// \brief Returns a list of FVisible frames inheriting from this
     RestFrames::RFList<RestFrame> GetListVisibleFrames();
@@ -349,7 +349,7 @@ namespace RestFrames {
 
     // Recursively get lists of frames
     void FillListFramesRecursive(RFList<RestFrame>& frames);
-    void FillListFramesTypeRecursive(FrameType type, RFList<RestFrame>& frames);
+    void FillListFramesRecursive(FrameType type, RFList<RestFrame>& frames);
 
   private:
     void Init();

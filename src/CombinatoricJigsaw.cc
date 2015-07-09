@@ -66,7 +66,7 @@ namespace RestFrames {
     vector<FrameType> terminals;
     terminals.push_back(FVisible);
     terminals.push_back(FInvisible);
-    RFList<RestFrame> frames = frame.GetListFramesType(terminals);
+    RFList<RestFrame> frames = frame.GetListFrames(terminals);
     int N = frames.GetN();
     for(int f = 0; f < N; f++){
       if(m_GroupPtr->ContainsFrame(frames.Get(f))){

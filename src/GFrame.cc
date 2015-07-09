@@ -61,31 +61,38 @@ namespace RestFrames {
     
   }
 
-  void GFrame::ClearGFrame(){
-   
+  void GFrame::Clear(){
+    RestFrame::Clear();
   }
 
   void GFrame::ClearEventRecursive(){ 
     ResetFrame();
-    if(!m_Body) return;
+    if(!IsSoundBody())
+      return;
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
       GetChildFrame(i).ClearEventRecursive();
+    SetSpirit(false);
   }
 
   bool GFrame::AnalyzeEventRecursive(){
-    m_Spirit = false;
-    if(!GenerateFrame()) return false;
+    if(!GenerateFrame()){
+      m_Log << LogWarning;
+      m_Log << "Unable to generate event for this frame.";
+      m_Log << m_End;
+      SetSpirit(false);
+      return false;
+    }
 
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++){
       if(!GetChildFrame(i).AnalyzeEventRecursive()){
+	SetSpirit(false);
 	return false;
       }
     }
-
-    m_Spirit = true;
+    SetSpirit(true);
     return m_Spirit;
   }
 

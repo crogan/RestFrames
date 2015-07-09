@@ -45,7 +45,7 @@ namespace RestFrames {
     GFrame(const string& sname, const string& stitle);
     virtual ~GFrame();
 
-    virtual void ClearGFrame();
+    virtual void Clear();
 
     virtual void ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();

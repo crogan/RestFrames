@@ -144,6 +144,22 @@ namespace RestFrames {
     return output;
   }
 
+  void RFBase::UnSoundMind(const string& function) const {
+    m_Log << LogWarning;
+    m_Log << "Unable to evaluate function \"" << function << "\". ";
+    m_Log << endl << "Requires a successful call to \"InitializeTree()\" ";
+    m_Log << "from the LabFrame associated with this tree.";
+    m_Log << m_End;
+  }
+
+  void RFBase::UnSoundSpirit(const string& function) const {
+    m_Log << LogWarning;
+    m_Log << "Unable to evaluate function \"" << function << "\". ";
+    m_Log << endl << "Requires a successful call to \"InitializeAnalysis()\" ";
+    m_Log << "from the LabFrame associated with this tree.";
+    m_Log << m_End;
+  }
+
   // Initializer.
   __attribute__((constructor))
   static void initializer(void){

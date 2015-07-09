@@ -160,12 +160,12 @@ case $found_query in
 	echo @prefix@
 	;;
     cxxflags)
-	echo -I@includedir@ @CONFIG_CXXFLAGS@
+	echo -I@prefix@@includedir@ @CONFIG_CXXFLAGS@
 	;;
     libs)
-	libs_string=" @CONFIG_LIBS@ -L@libdir@ -lRestFrames"
+	libs_string=" @CONFIG_LIBS@ -L@prefix@@libdir@ -lRestFrames"
 	if [ "x$found_cxxflags" = "xyes" ] ; then
-	    echo -I@includedir@ @CONFIG_CXXFLAGS@ $libs_string
+	    echo -I@prefix@@includedir@ @CONFIG_CXXFLAGS@ $libs_string
 	else
 	    echo $libs_string
 	fi

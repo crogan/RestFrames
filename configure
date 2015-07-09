@@ -16612,6 +16612,9 @@ fi
 SOVERSION=`echo $VERSION | sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/'`
 
 
+ac_config_files="$ac_config_files restframes-config:config/restframes-config.in"
+
+
 ac_config_files="$ac_config_files Makefile src/Makefile inc/Makefile inc/RestFrames/Makefile examples/Makefile config/Makefile"
 
 
@@ -17755,6 +17758,7 @@ do
     "inc/RestFrames/RestFrames_config.h") CONFIG_HEADERS="$CONFIG_HEADERS inc/RestFrames/RestFrames_config.h:config/config.h.in" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
+    "restframes-config") CONFIG_FILES="$CONFIG_FILES restframes-config:config/restframes-config.in" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "inc/Makefile") CONFIG_FILES="$CONFIG_FILES inc/Makefile" ;;
@@ -19162,6 +19166,7 @@ compiler_lib_search_path=$lt_compiler_lib_search_path_CXX
 _LT_EOF
 
  ;;
+    "restframes-config":F) chmod u+x restframes-config ;;
 
   esac
 done # for ac_tag
@@ -19201,6 +19206,7 @@ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
 printf "$CONFIG_SUMMARY"
+printf "$CONFIGURE_INVOCATION"
 cat 1>&2 << 'EOF'
 ---------------------------------------------------------------
               INFORMATION FOR RestFrames USERS
