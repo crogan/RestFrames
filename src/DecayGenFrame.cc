@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GDecayFrame.cc
+///  \file   DecayGenFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,27 +27,27 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/GDecayFrame.hh"
+#include "RestFrames/DecayGenFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GDecayFrame class
+  // DecayGenFrame class
   ///////////////////////////////////////////////
 
-  GDecayFrame::GDecayFrame(const string& sname, const string& stitle) : 
+  DecayGenFrame::DecayGenFrame(const string& sname, const string& stitle) : 
     RestFrame(sname,stitle), 
     DecayFrame(sname,stitle),
-    GFrame(sname, stitle)
+    GeneratorFrame(sname, stitle)
   {
     Init();
   }
   
-  GDecayFrame::~GDecayFrame(){ }
+  DecayGenFrame::~DecayGenFrame(){ }
 
-  void GDecayFrame::Init(){
+  void DecayGenFrame::Init(){
     m_Mass = -1.;
     m_MassSet = false;
     m_ChildP = -1.;
@@ -56,14 +56,14 @@ namespace RestFrames {
     m_DeltaPhiDecayPlane = -2.;
   }
 
-  bool GDecayFrame::IsSoundBody() const{
+  bool DecayGenFrame::IsSoundBody() const{
     RestFrame::IsSoundBody();
     int Nchild = GetNChildren();
     if(Nchild < 2 || GetParentFrame().IsEmpty()) m_Body = false;
     return m_Body;
   }
 
-  void GDecayFrame::SetMass(double val){
+  void DecayGenFrame::SetMass(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
@@ -77,7 +77,7 @@ namespace RestFrames {
     m_ChildGamma = 0.;
   }
 
-  void GDecayFrame::SetChildMomentum(double val){
+  void DecayGenFrame::SetChildMomentum(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set child momentum to negative value ";
@@ -91,7 +91,7 @@ namespace RestFrames {
     m_ChildGamma = 0.;
   }
 
-  void GDecayFrame::SetChildGamma(double val){
+  void DecayGenFrame::SetChildGamma(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set child gamma less than one: ";
@@ -106,7 +106,7 @@ namespace RestFrames {
     m_ChildGamma = val;
   }
 
-  void GDecayFrame::SetCosDecayAngle(double val){
+  void DecayGenFrame::SetCosDecayAngle(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "CosDecay angle must be in [-1, 1]: ";
@@ -117,24 +117,24 @@ namespace RestFrames {
     }
   }
 
-  void GDecayFrame::SetDeltaPhiDecayPlane(double val){
+  void DecayGenFrame::SetDeltaPhiDecayPlane(double val){
     while(val > acos(-1.)*2.) val -= acos(-1.)*2.;
     while(val < 0.) val += acos(-1.)*2.;
     m_DeltaPhiDecayPlane = val;
   }
 
-  void GDecayFrame::ResetFrame(){
+  void DecayGenFrame::ResetFrame(){
     SetSpirit(false);
     if(m_ChildP > 0. || m_ChildGamma >= 1.) m_MassSet = false;
     ResetDecayAngles();
   }
 
-  void GDecayFrame::ResetDecayAngles(){
+  void DecayGenFrame::ResetDecayAngles(){
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
   }
 
-  double GDecayFrame::GetMass() const{
+  double DecayGenFrame::GetMass() const{
     if(m_MassSet) return m_Mass;
 
     int Nchild = GetNChildren();
@@ -156,7 +156,7 @@ namespace RestFrames {
     return m_Mass;
   }
 
-  bool GDecayFrame::GenerateFrame(){
+  bool DecayGenFrame::GenerateFrame(){
     if(!IsSoundBody()){ 
       m_Log << LogWarning;
       m_Log << "Unable to generate event for frame";
@@ -193,7 +193,7 @@ namespace RestFrames {
     return true;
   }
 
-  double GDecayFrame::GenerateTwoBodyRecursive(double M,const vector<double>& M_c,
+  double DecayGenFrame::GenerateTwoBodyRecursive(double M,const vector<double>& M_c,
 					       const TVector3& axis_par, const TVector3& axis_perp,
 					       vector<TLorentzVector>& P_c)
   {

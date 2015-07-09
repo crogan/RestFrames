@@ -24,11 +24,11 @@ using namespace RestFrames;
 #pragma link C++ class InvisibleFrame;
 #pragma link C++ class VisibleFrame;
 
-#pragma link C++ class GFrame;
-#pragma link C++ class GLabFrame;
-#pragma link C++ class GDecayFrame;
-#pragma link C++ class GInvisibleFrame;
-#pragma link C++ class GVisibleFrame;
+#pragma link C++ class GeneratorFrame;
+#pragma link C++ class LabGenFrame;
+#pragma link C++ class DecayGenFrame;
+#pragma link C++ class InvisibleGenFrame;
+#pragma link C++ class VisibleGenFrame;
 
 #pragma link C++ class RFrame;
 #pragma link C++ class RLabFrame;
@@ -94,11 +94,11 @@ using namespace RestFrames;
 #pragma link C++ class InvisibleFrame+;
 #pragma link C++ class VisibleFrame+;
 
-#pragma link C++ class GFrame+;
-#pragma link C++ class GLabFrame+;
-#pragma link C++ class GDecayFrame+;
-#pragma link C++ class GInvisibleFrame+;
-#pragma link C++ class GVisibleFrame+;
+#pragma link C++ class GeneratorFrame+;
+#pragma link C++ class LabGenFrame+;
+#pragma link C++ class DecayGenFrame+;
+#pragma link C++ class InvisibleGenFrame+;
+#pragma link C++ class VisibleGenFrame+;
 
 #pragma link C++ class RFrame+;
 #pragma link C++ class RLabFrame+;

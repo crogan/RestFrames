@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GDecayFrame.hh
+///  \file   VisibleGenFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,58 +27,48 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef GDecayFrame_HH
-#define GDecayFrame_HH
-
-#include "RestFrames/DecayFrame.hh"
-#include "RestFrames/GFrame.hh"
+#include "RestFrames/VisibleGenFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GDecayFrame class
+  // VisibleGenFrame class
   ///////////////////////////////////////////////
-  class GDecayFrame : public DecayFrame, public GFrame{
-  public:
-    GDecayFrame(const string& sname, const string& stitle);
-    virtual ~GDecayFrame();
+  VisibleGenFrame::VisibleGenFrame(const string& sname, const string& stitle) : 
+    RestFrame(sname, stitle),
+    VisibleFrame(sname, stitle),
+    GeneratorFrame(sname, stitle)
+  {
+    Init();
+  }
 
-    virtual void SetMass(double val);
-    virtual double GetMass() const;
-    
-    // For two-body decays
-    virtual void SetChildMomentum(double val);
-    virtual void SetChildGamma(double val);
-    virtual void SetCosDecayAngle(double val);
-    virtual void SetDeltaPhiDecayPlane(double val);
+  VisibleGenFrame::~VisibleGenFrame(){ }
 
-  protected:
-    mutable double m_Mass;
-    mutable bool m_MassSet;
+  void VisibleGenFrame::Init(){
+    m_Mass = 0.;
+  }
 
-    // For two-body decays
-    double m_ChildP;
-    double m_ChildGamma;
-    double m_CosDecayAngle;
-    double m_DeltaPhiDecayPlane;
+  void VisibleGenFrame::SetMass(double val){
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
+  }
 
-    virtual bool IsSoundBody() const;
+  double VisibleGenFrame::GetMass() const {
+    return m_Mass;
+  }
 
-    virtual void ResetFrame();
-    virtual bool GenerateFrame();
+  void VisibleGenFrame::ResetFrame(){ }
 
-    void ResetDecayAngles();
-    double GenerateTwoBodyRecursive(double M, const vector<double>& M_children, 
-				    const TVector3& axis_par, const TVector3& axis_perp,
-				    vector<TLorentzVector>& P_children);
-
-  private:
-    void Init();
-
-  };
+  bool VisibleGenFrame::GenerateFrame(){ 
+    return true;
+  }
 
 }
-
-#endif

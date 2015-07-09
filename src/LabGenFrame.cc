@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GLabFrame.cc
+///  \file   LabGenFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,41 +27,41 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/GLabFrame.hh"
+#include "RestFrames/LabGenFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GLabFrame class
+  // LabGenFrame class
   ///////////////////////////////////////////////
-  GLabFrame::GLabFrame(const string& sname, const string& stitle) : 
+  LabGenFrame::LabGenFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle), 
     LabFrame(sname, stitle), 
-    GFrame(sname, stitle)
+    GeneratorFrame(sname, stitle)
   {
     Init();
   }
 
-  GLabFrame::~GLabFrame(){
+  LabGenFrame::~LabGenFrame(){
     
   }
 
-  void GLabFrame::Init(){
+  void LabGenFrame::Init(){
     m_PT = 0.;
     m_PL = 0.;
     m_Phi = -1.;
     m_Theta = -1.;
   }
 
-  void GLabFrame::SetThreeVector(const TVector3& P){
+  void LabGenFrame::SetThreeVector(const TVector3& P){
     m_PT = P.Pt();
     m_PL = P.Z();
     SetPhi(P.Phi());
   }
 
-  void GLabFrame::SetTransverseMomenta(double val){
+  void LabGenFrame::SetTransverseMomenta(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set transverse mass to negative value ";
@@ -72,27 +72,27 @@ namespace RestFrames {
     }
   }
 
-  void GLabFrame::SetLongitudinalMomenta(double val){
+  void LabGenFrame::SetLongitudinalMomenta(double val){
     m_PL = val;
   }
 
-  void GLabFrame::SetPhi(double val){
+  void LabGenFrame::SetPhi(double val){
     while(val > acos(-1.)*2.) val -= acos(-1.)*2.;
     while(val < 0.) val += acos(-1.)*2.;
     m_Phi = val;
   }
 
-  void GLabFrame::ResetProductionAngles(){
+  void LabGenFrame::ResetProductionAngles(){
      m_Phi = -1.;
      m_Theta = -1.;
   }
 
-  void GLabFrame::ResetFrame(){
+  void LabGenFrame::ResetFrame(){
     SetSpirit(false);
     ResetProductionAngles();
   }
   
-  bool GLabFrame::GenerateFrame(){
+  bool LabGenFrame::GenerateFrame(){
     if(!IsSoundBody()) 
       return false;
 
@@ -112,14 +112,14 @@ namespace RestFrames {
     return true;
   }
 
-  void GLabFrame::ClearEvent(){
+  void LabGenFrame::ClearEvent(){
     SetSpirit(false);
     if(!IsSoundBody()) 
       return;
     ClearEventRecursive();
   }
 
-  bool GLabFrame::AnalyzeEvent(){
+  bool LabGenFrame::AnalyzeEvent(){
     if(!AnalyzeEventRecursive()){
       SetSpirit(false);
       return false;

@@ -58,16 +58,16 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   //
   // Set up toy generation tree (not needed for reconstruction)
-  GLabFrame LAB_G("LAB_G","LAB");
-  GDecayFrame GG_G("GG_G","#tilde{g}#tilde{g}");
-  GDecayFrame Ga_G("Ga_G","#tilde{g}_{a}");
-  GDecayFrame Gb_G("Gb_G","#tilde{g}_{b}");
-  GVisibleFrame V1a_G("V1a_G","j_{1a}");
-  GVisibleFrame V2a_G("V2a_G","j_{2a}");
-  GInvisibleFrame Xa_G("Xa_G","#tilde{#chi}_{a}");
-  GVisibleFrame V1b_G("V1b_G","j_{1b}");
-  GVisibleFrame V2b_G("V2b_G","j_{2b}");
-  GInvisibleFrame Xb_G("Xb_G","#tilde{#chi}_{b}");
+  LabGenFrame LAB_G("LAB_G","LAB");
+  DecayGenFrame GG_G("GG_G","#tilde{g}#tilde{g}");
+  DecayGenFrame Ga_G("Ga_G","#tilde{g}_{a}");
+  DecayGenFrame Gb_G("Gb_G","#tilde{g}_{b}");
+  VisibleGenFrame V1a_G("V1a_G","j_{1a}");
+  VisibleGenFrame V2a_G("V2a_G","j_{2a}");
+  InvisibleGenFrame Xa_G("Xa_G","#tilde{#chi}_{a}");
+  VisibleGenFrame V1b_G("V1b_G","j_{1b}");
+  VisibleGenFrame V2b_G("V2b_G","j_{2b}");
+  InvisibleGenFrame Xb_G("Xb_G","#tilde{#chi}_{b}");
   LAB_G.SetChildFrame(GG_G);
   GG_G.AddChildFrame(Ga_G);
   GG_G.AddChildFrame(Gb_G);

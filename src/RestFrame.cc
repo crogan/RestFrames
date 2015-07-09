@@ -131,7 +131,7 @@ namespace RestFrames {
     return m_Ana == FReco; 
   }
 
-  bool RestFrame::IsGFrame() const { 
+  bool RestFrame::IsGenFrame() const { 
     return m_Ana == FGen; 
   }
 
@@ -145,7 +145,7 @@ namespace RestFrames {
       output += "   Frame Type: Visible \n";
     if(IsInvisibleFrame())
       output += "   Frame Type: Invisible \n";
-    if(IsGFrame())
+    if(IsGenFrame())
       output += "   Ana Type: Generator \n";
     if(IsRFrame())
       output += "   Ana Type: Reconstruction \n";

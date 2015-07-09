@@ -63,19 +63,18 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   //
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
-  GLabFrame LAB_G("LAB_G","LAB");
-  GDecayFrame TT_G("TT_G","t #bar{t}");
-  GDecayFrame Ta_G("Ta_G","t_{a}");
-  GDecayFrame Tb_G("Tb_G","t_{b}");
-
-  GDecayFrame Wa_G("Wa_G","W_{a}");
-  GDecayFrame Wb_G("Wb_G","W_{b}");
-  GVisibleFrame Ba_G("Ba_G","b_{a}");
-  GVisibleFrame La_G("La_G","#it{l}_{a}");
-  GInvisibleFrame Na_G("Na_G","#nu_{a}");
-  GVisibleFrame Bb_G("Bb_G","b_{b}");
-  GVisibleFrame Lb_G("Lb_G","#it{l}_{b}");
-  GInvisibleFrame Nb_G("Nb_G","#nu_{b}");
+  LabGenFrame LAB_G("LAB_G","LAB");
+  DecayGenFrame TT_G("TT_G","t #bar{t}");
+  DecayGenFrame Ta_G("Ta_G","t_{a}");
+  DecayGenFrame Tb_G("Tb_G","t_{b}");
+  DecayGenFrame Wa_G("Wa_G","W_{a}");
+  DecayGenFrame Wb_G("Wb_G","W_{b}");
+  VisibleGenFrame Ba_G("Ba_G","b_{a}");
+  VisibleGenFrame La_G("La_G","#it{l}_{a}");
+  InvisibleGenFrame Na_G("Na_G","#nu_{a}");
+  VisibleGenFrame Bb_G("Bb_G","b_{b}");
+  VisibleGenFrame Lb_G("Lb_G","#it{l}_{b}");
+  InvisibleGenFrame Nb_G("Nb_G","#nu_{b}");
   LAB_G.SetChildFrame(TT_G);
   TT_G.AddChildFrame(Ta_G);
   TT_G.AddChildFrame(Tb_G);

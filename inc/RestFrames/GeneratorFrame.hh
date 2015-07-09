@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GVisibleFrame.hh
+///  \file   GeneratorFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,36 +27,41 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef GVisibleFrame_HH
-#define GVisibleFrame_HH
+#ifndef GeneratorFrame_HH
+#define GeneratorFrame_HH
 
-#include "RestFrames/VisibleFrame.hh"
-#include "RestFrames/GFrame.hh"
+#include <TRandom.h>
+#include "RestFrames/RestFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GVisibleFrame class
+  // GeneratorFrame class
   ///////////////////////////////////////////////
-  class GVisibleFrame : public VisibleFrame, public GFrame{
+  class GeneratorFrame : public virtual RestFrame {
   public:
-    GVisibleFrame(const string& sname, const string& stitle);
-    virtual ~GVisibleFrame();
+    GeneratorFrame(const string& sname, const string& stitle);
+    virtual ~GeneratorFrame();
 
-    virtual void SetMass(double val);
-    virtual double GetMass() const;
+    virtual void Clear();
+
+    virtual void ClearEventRecursive();
+    virtual bool AnalyzeEventRecursive();
 
   protected:
-    double m_Mass;
+    virtual void ResetFrame() = 0;
+    virtual bool GenerateFrame() = 0;
 
-    virtual void ResetFrame();
-    virtual bool GenerateFrame();
+    void SetChildren(const vector<TLorentzVector>& P_children);
+
+    double GetRandom();
 
   private:
     void Init();
-
+    TRandom *m_Random;
+   
   };
 
 }

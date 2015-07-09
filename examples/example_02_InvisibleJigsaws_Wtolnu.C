@@ -52,10 +52,10 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   int Ngen = 100000;
 
   // Set up toy generation and event analysis trees:
-  GLabFrame LAB_G("LAB_G","LAB");
-  GDecayFrame W_G("W_G","W");
-  GVisibleFrame L_G("L_G","#it{l}");
-  GInvisibleFrame NU_G("NU_G","#nu");
+  LabGenFrame LAB_G("LAB_G","LAB");
+  DecayGenFrame W_G("W_G","W");
+  VisibleGenFrame L_G("L_G","#it{l}");
+  InvisibleGenFrame NU_G("NU_G","#nu");
 
   RLabFrame LAB_R("LAB_R","LAB");
   RDecayFrame W_R("W_R","W");

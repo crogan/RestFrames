@@ -53,12 +53,12 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   int Ngen = 100000;
 
   // Set up toy generation and event analysis trees:
-  GLabFrame LAB_G("LAB_G","LAB");
-  GDecayFrame T_G("T_G","t");
-  GDecayFrame W_G("W_G","W");
-  GVisibleFrame B_G("B_G","b");
-  GVisibleFrame L_G("L_G","#it{l}");
-  GInvisibleFrame NU_G("NU_G","#nu");
+  LabGenFrame LAB_G("LAB_G","LAB");
+  DecayGenFrame T_G("T_G","t");
+  DecayGenFrame W_G("W_G","W");
+  VisibleGenFrame B_G("B_G","b");
+  VisibleGenFrame L_G("L_G","#it{l}");
+  InvisibleGenFrame NU_G("NU_G","#nu");
 
   RLabFrame LAB_R("LAB_R","LAB");
   RDecayFrame T_R("T_R","t");

@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GFrame.cc
+///  \file   GeneratorFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -30,26 +30,26 @@
 #include <math.h>
 #include <TRandom3.h>
 #include <TDatime.h>
-#include "RestFrames/GFrame.hh"
+#include "RestFrames/GeneratorFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GFrame class methods
+  // GeneratorFrame class methods
   ///////////////////////////////////////////////
-  GFrame::GFrame(const string& sname, const string& stitle) 
+  GeneratorFrame::GeneratorFrame(const string& sname, const string& stitle) 
     : RestFrame(sname, stitle)
   {
     Init();
   }
 
-  GFrame::~GFrame(){
+  GeneratorFrame::~GeneratorFrame(){
     delete m_Random;
   }
 
-  void GFrame::Init(){
+  void GeneratorFrame::Init(){
     m_Ana = FGen;
   
     TDatime *now = new TDatime();
@@ -61,11 +61,11 @@ namespace RestFrames {
     
   }
 
-  void GFrame::Clear(){
+  void GeneratorFrame::Clear(){
     RestFrame::Clear();
   }
 
-  void GFrame::ClearEventRecursive(){ 
+  void GeneratorFrame::ClearEventRecursive(){ 
     ResetFrame();
     if(!IsSoundBody())
       return;
@@ -76,7 +76,7 @@ namespace RestFrames {
     SetSpirit(false);
   }
 
-  bool GFrame::AnalyzeEventRecursive(){
+  bool GeneratorFrame::AnalyzeEventRecursive(){
     if(!GenerateFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to generate event for this frame.";
@@ -96,18 +96,18 @@ namespace RestFrames {
     return m_Spirit;
   }
 
-  void GFrame::SetChildren(const vector<TLorentzVector>& P_children){
+  void GeneratorFrame::SetChildren(const vector<TLorentzVector>& P_children){
     int N = P_children.size();
     for(int i = 0; i < N; i++){
       TLorentzVector P = P_children[i];
       TVector3 B_child = P.BoostVector();
 
       SetChildBoostVector(i, B_child);
-      dynamic_cast<GFrame*>(&GetChildFrame(i))->SetFourVector(P,*this);
+      dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->SetFourVector(P,*this);
     }
   }
 
-  double GFrame::GetRandom(){
+  double GeneratorFrame::GetRandom(){
     return m_Random->Rndm();
   }
 

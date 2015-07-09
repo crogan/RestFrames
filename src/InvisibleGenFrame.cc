@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GInvisibleFrame.hh
+///  \file   InvisibleGenFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,38 +27,48 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef GInvisibleFrame_HH
-#define GInvisibleFrame_HH
-
-#include "RestFrames/InvisibleFrame.hh"
-#include "RestFrames/GFrame.hh"
+#include "RestFrames/InvisibleGenFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GInvisibleFrame class
+  // InvisibleGenFrame class
   ///////////////////////////////////////////////
-  class GInvisibleFrame : public InvisibleFrame, public GFrame{
-  public:
-    GInvisibleFrame(const string& sname, const string& stitle);
-    virtual ~GInvisibleFrame();
+  InvisibleGenFrame::InvisibleGenFrame(const string& sname, const string& stitle) : 
+    RestFrame(sname, stitle),
+    InvisibleFrame(sname, stitle),
+    GeneratorFrame(sname, stitle)
+  {
+    Init();
+  }
 
-    virtual void SetMass(double val);
-    virtual double GetMass() const;
+  InvisibleGenFrame::~InvisibleGenFrame(){ }
 
-  protected:
-    double m_Mass;
+  void InvisibleGenFrame::Init(){
+    m_Mass = 0.;
+  }
 
-    virtual void ResetFrame();
-    virtual bool GenerateFrame();
+  void InvisibleGenFrame::SetMass(double val){
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
+  }
 
-  private:
-    void Init();
-   
-  };
+  double InvisibleGenFrame::GetMass() const {
+    return m_Mass;
+  }
+
+  void InvisibleGenFrame::ResetFrame(){ }
+
+  bool InvisibleGenFrame::GenerateFrame(){ 
+    return true;
+  }
 
 }
-
-#endif

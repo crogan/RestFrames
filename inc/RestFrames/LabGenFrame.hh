@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   GVisibleFrame.cc
+///  \file   LabGenFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,48 +27,48 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/GVisibleFrame.hh"
+#ifndef LabGenFrame_HH
+#define LabGenFrame_HH
+
+#include "RestFrames/LabFrame.hh"
+#include "RestFrames/GeneratorFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // GVisibleFrame class
+  // LabGenFrame class
   ///////////////////////////////////////////////
-  GVisibleFrame::GVisibleFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle),
-    VisibleFrame(sname, stitle),
-    GFrame(sname, stitle)
-  {
-    Init();
-  }
+  class LabGenFrame : public LabFrame, public GeneratorFrame {
+  public:
+    LabGenFrame(const string& sname, const string& stitle);
+    virtual ~LabGenFrame();
+  
+    virtual void ClearEvent();
+    virtual bool AnalyzeEvent();
 
-  GVisibleFrame::~GVisibleFrame(){ }
+    virtual void SetThreeVector(const TVector3& P);
+    virtual void SetTransverseMomenta(double val);
+    virtual void SetLongitudinalMomenta(double val);
+    virtual void SetPhi(double val);
+    
+  protected:
+    double m_PT;
+    double m_PL;
+    double m_Phi;
+    double m_Theta;
 
-  void GVisibleFrame::Init(){
-    m_Mass = 0.;
-  }
+    virtual void ResetFrame();
+    virtual bool GenerateFrame();
 
-  void GVisibleFrame::SetMass(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
-      m_Mass = 0.;
-    } else {
-      m_Mass = val;
-    }
-  }
+    void ResetProductionAngles();
 
-  double GVisibleFrame::GetMass() const {
-    return m_Mass;
-  }
-
-  void GVisibleFrame::ResetFrame(){ }
-
-  bool GVisibleFrame::GenerateFrame(){ 
-    return true;
-  }
+  private:
+    void Init();
+    
+  };
 
 }
+
+#endif

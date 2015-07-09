@@ -99,8 +99,8 @@ namespace RestFrames {
     /// \brief Is this an RFrame (for event reconstruction) (yes/no)
     bool IsRFrame() const;
     
-    /// \brief Is this a GFrame (for event generation) (yes/no)
-    bool IsGFrame() const;
+    /// \brief Is this a GenFrame (for event generation) (yes/no)
+    bool IsGenFrame() const;
 
     /// \brief String of information about RestFrame
     virtual string PrintString(LogType type = LogVerbose) const;
