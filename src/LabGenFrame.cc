@@ -48,6 +48,10 @@ namespace RestFrames {
     
   }
 
+  void LabGenFrame::Clear(){
+    GeneratorFrame::Clear();
+  }
+
   void LabGenFrame::Init(){
     m_PT = 0.;
     m_PL = 0.;
@@ -90,6 +94,26 @@ namespace RestFrames {
   void LabGenFrame::ResetFrame(){
     SetSpirit(false);
     ResetProductionAngles();
+  }
+
+  bool LabGenFrame::InitializeAnalysis(){
+    m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
+   
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      SetMind(false);
+      return false;
+    }
+
+    if(!InitializeAnalysisRecursive()){
+      m_Log << LogWarning << "Unable to recursively initialize analysis" << m_End;
+      SetMind(false);
+      return false;
+    }
+
+    m_Log << LogVerbose << "...Done" << m_End;
+    SetMind(true);
+    return true;
   }
   
   bool LabGenFrame::GenerateFrame(){

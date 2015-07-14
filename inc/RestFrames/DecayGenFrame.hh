@@ -37,6 +37,10 @@ using namespace std;
 
 namespace RestFrames {
 
+  class ResonanceGenFrame;
+
+   enum DecayGenType { DGVanilla, DGResonance };
+
   ///////////////////////////////////////////////
   // DecayGenFrame class
   ///////////////////////////////////////////////
@@ -48,6 +52,8 @@ namespace RestFrames {
     virtual void SetMass(double val);
     virtual double GetMass() const;
     
+    bool IsResonanceFrame() const;
+
     // For two-body decays
     virtual void SetChildMomentum(double val);
     virtual void SetChildGamma(double val);
@@ -57,6 +63,20 @@ namespace RestFrames {
   protected:
     mutable double m_Mass;
     mutable bool m_MassSet;
+  
+    DecayGenType m_GType;
+
+    bool m_MarkovChainMC;
+    RestFrames::RFList<ResonanceGenFrame> m_Resonances;
+    vector<int>    m_ResIndex;
+    vector<double> m_ResWidth;
+    vector<double> m_ResPrevProb;
+    vector<double> m_ResPrevMass;
+    
+    bool m_Burnt;
+    static int m_N_MCMC_BurnIn;
+    bool MCMC_BurnIn();
+    bool MCMC_Generate();
 
     // For two-body decays
     double m_ChildP;
@@ -70,14 +90,20 @@ namespace RestFrames {
     virtual bool GenerateFrame();
 
     void ResetDecayAngles();
-    double GenerateTwoBodyRecursive(double M, const vector<double>& M_children, 
+   
+    double GenerateTwoBodyMasses(double M, const vector<double>& M_c, vector<double>& M_2b);
+    double GenerateTwoBodyRecursive(const vector<double>& M_parent, const vector<double>& M_child,
 				    const TVector3& axis_par, const TVector3& axis_perp,
-				    vector<TLorentzVector>& P_children);
+				    vector<TLorentzVector>& P_child);
+    virtual bool InitializeGenAnalysis();
 
   private:
     void Init();
 
   };
+
+  double GetProb(double Mp, double Mc1, double Mc2);
+  int DoubleMax(const void *a, const void *b);
 
 }
 

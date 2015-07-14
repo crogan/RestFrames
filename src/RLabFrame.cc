@@ -225,9 +225,7 @@ namespace RestFrames {
   void RLabFrame::ClearEvent(){
     SetSpirit(false);
     if(!IsSoundBody() || !IsSoundMind()){
-      m_Log << LogWarning << "Unable to ClearEvent. ";
-      m_Log << "Requires a successfull call to \"InitializeAnalysis()\" ";
-      m_Log << "from the LabFrame" << m_End;
+      UnSoundMind(RF_FUNCTION);
       return;
     }
     
@@ -240,11 +238,8 @@ namespace RestFrames {
 
   bool RLabFrame::AnalyzeEvent(){
     if(!IsSoundMind()){
-      m_Log << LogWarning << "Unable to analyze event. ";
-      m_Log << "Requires a successfull call to \"InitializeAnalysis\" ";
-      m_Log << "from the LabFrame" << m_End;
-      SetSpirit(false);
-      return false;
+      UnSoundMind(RF_FUNCTION);
+      return SetSpirit(false);
     }
 
     int Ns = m_LabStates.GetN();
@@ -261,8 +256,7 @@ namespace RestFrames {
 	m_Log << LogWarning;
 	m_Log << "Group failed in event analysis: ";
 	m_Log << Log(m_LabGroups.Get(i)) << m_End;
-	SetSpirit(false);
-	return false;
+	return SetSpirit(false);
       }
     }
 
@@ -272,20 +266,16 @@ namespace RestFrames {
 	m_Log << LogWarning;
 	m_Log << "Jigsaw failed in event analysis: ";
 	m_Log << Log(m_LabJigsaws.Get(i)) << m_End;
-	SetSpirit(false);
-	return false;
+	return SetSpirit(false);
       }
     }
     
     if(!AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Recursive event analysis failed" << m_End;
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
-
-    SetSpirit(true);
-    return true;
+    return SetSpirit(true);
   }
 
 }

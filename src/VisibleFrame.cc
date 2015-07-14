@@ -50,6 +50,7 @@ namespace RestFrames {
   }
 
   bool VisibleFrame::IsSoundBody() const {
+    if(RFBase::IsSoundBody()) return true;
     if(!RestFrame::IsSoundBody()){
       SetBody(false);
       return false;

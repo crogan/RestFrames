@@ -89,8 +89,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = example_01.x$(EXEEXT) example_02.x$(EXEEXT) \
-	example_03.x$(EXEEXT) example_05.x$(EXEEXT) \
-	example_06.x$(EXEEXT)
+	example_03.x$(EXEEXT) example_04.x$(EXEEXT) \
+	example_05.x$(EXEEXT) example_06.x$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -128,6 +128,13 @@ example_03_x_LDADD = $(LDADD)
 example_03_x_DEPENDENCIES = ../src/libRestFrames.la
 example_03_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_03_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_04_x_OBJECTS = 04-example_04_HtoWWto4l.$(OBJEXT)
+example_04_x_OBJECTS = $(am_example_04_x_OBJECTS)
+example_04_x_LDADD = $(LDADD)
+example_04_x_DEPENDENCIES = ../src/libRestFrames.la
+example_04_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_04_x_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_example_05_x_OBJECTS = 05-example_05_DiToptoblnu.$(OBJEXT)
 example_05_x_OBJECTS = $(am_example_05_x_OBJECTS)
@@ -178,11 +185,11 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
-	$(example_03_x_SOURCES) $(example_05_x_SOURCES) \
-	$(example_06_x_SOURCES)
+	$(example_03_x_SOURCES) $(example_04_x_SOURCES) \
+	$(example_05_x_SOURCES) $(example_06_x_SOURCES)
 DIST_SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
-	$(example_03_x_SOURCES) $(example_05_x_SOURCES) \
-	$(example_06_x_SOURCES)
+	$(example_03_x_SOURCES) $(example_04_x_SOURCES) \
+	$(example_05_x_SOURCES) $(example_06_x_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -410,6 +417,9 @@ example_02_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS
 example_03_x_SOURCES = example_03_MultipleDecays_Toptoblnu.C
 example_03_x_SHORTNAME = 03
 example_03_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_04_x_SOURCES = example_04_HtoWWto4l.C
+example_04_x_SHORTNAME = 04
+example_04_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 example_05_x_SOURCES = example_05_DiToptoblnu.C
 example_05_x_SHORTNAME = 05
 example_05_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
@@ -475,6 +485,10 @@ example_03.x$(EXEEXT): $(example_03_x_OBJECTS) $(example_03_x_DEPENDENCIES) $(EX
 	@rm -f example_03.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_03_x_LINK) $(example_03_x_OBJECTS) $(example_03_x_LDADD) $(LIBS)
 
+example_04.x$(EXEEXT): $(example_04_x_OBJECTS) $(example_04_x_DEPENDENCIES) $(EXTRA_example_04_x_DEPENDENCIES) 
+	@rm -f example_04.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_04_x_LINK) $(example_04_x_OBJECTS) $(example_04_x_LDADD) $(LIBS)
+
 example_05.x$(EXEEXT): $(example_05_x_OBJECTS) $(example_05_x_DEPENDENCIES) $(EXTRA_example_05_x_DEPENDENCIES) 
 	@rm -f example_05.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_05_x_LINK) $(example_05_x_OBJECTS) $(example_05_x_LDADD) $(LIBS)
@@ -492,6 +506,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/01-example_01_basics_Ztoll.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/02-example_02_InvisibleJigsaws_Wtolnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/03-example_03_MultipleDecays_Toptoblnu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/04-example_04_HtoWWto4l.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/05-example_05_DiToptoblnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/06-example_06_DiGluinostoJetsMET.Po@am__quote@
 
@@ -557,6 +572,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_03_MultipleDecays_Toptoblnu.C' object='03-example_03_MultipleDecays_Toptoblnu.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_03_x_CXXFLAGS) $(CXXFLAGS) -c -o 03-example_03_MultipleDecays_Toptoblnu.obj `if test -f 'example_03_MultipleDecays_Toptoblnu.C'; then $(CYGPATH_W) 'example_03_MultipleDecays_Toptoblnu.C'; else $(CYGPATH_W) '$(srcdir)/example_03_MultipleDecays_Toptoblnu.C'; fi`
+
+04-example_04_HtoWWto4l.o: example_04_HtoWWto4l.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_04_x_CXXFLAGS) $(CXXFLAGS) -MT 04-example_04_HtoWWto4l.o -MD -MP -MF $(DEPDIR)/04-example_04_HtoWWto4l.Tpo -c -o 04-example_04_HtoWWto4l.o `test -f 'example_04_HtoWWto4l.C' || echo '$(srcdir)/'`example_04_HtoWWto4l.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/04-example_04_HtoWWto4l.Tpo $(DEPDIR)/04-example_04_HtoWWto4l.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_04_HtoWWto4l.C' object='04-example_04_HtoWWto4l.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_04_x_CXXFLAGS) $(CXXFLAGS) -c -o 04-example_04_HtoWWto4l.o `test -f 'example_04_HtoWWto4l.C' || echo '$(srcdir)/'`example_04_HtoWWto4l.C
+
+04-example_04_HtoWWto4l.obj: example_04_HtoWWto4l.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_04_x_CXXFLAGS) $(CXXFLAGS) -MT 04-example_04_HtoWWto4l.obj -MD -MP -MF $(DEPDIR)/04-example_04_HtoWWto4l.Tpo -c -o 04-example_04_HtoWWto4l.obj `if test -f 'example_04_HtoWWto4l.C'; then $(CYGPATH_W) 'example_04_HtoWWto4l.C'; else $(CYGPATH_W) '$(srcdir)/example_04_HtoWWto4l.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/04-example_04_HtoWWto4l.Tpo $(DEPDIR)/04-example_04_HtoWWto4l.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_04_HtoWWto4l.C' object='04-example_04_HtoWWto4l.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_04_x_CXXFLAGS) $(CXXFLAGS) -c -o 04-example_04_HtoWWto4l.obj `if test -f 'example_04_HtoWWto4l.C'; then $(CYGPATH_W) 'example_04_HtoWWto4l.C'; else $(CYGPATH_W) '$(srcdir)/example_04_HtoWWto4l.C'; fi`
 
 05-example_05_DiToptoblnu.o: example_05_DiToptoblnu.C
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_05_x_CXXFLAGS) $(CXXFLAGS) -MT 05-example_05_DiToptoblnu.o -MD -MP -MF $(DEPDIR)/05-example_05_DiToptoblnu.Tpo -c -o 05-example_05_DiToptoblnu.o `test -f 'example_05_DiToptoblnu.C' || echo '$(srcdir)/'`example_05_DiToptoblnu.C

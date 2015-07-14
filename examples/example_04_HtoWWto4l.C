@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_05_DiToptoblnu.C
+///  \file   example_04_HtoWWto4l.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -46,75 +46,82 @@ TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title = "", string l
 using namespace std;
 using namespace RestFrames;
 
-void example_05_DiToptoblnu(string output_name = "output_05.root"){
+void example_04_HtoWWto4l(string output_name = "output_04.root"){
   setstyle();
   
   SetLogPrint(LogVerbose,true);
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(90);
 
-  double mT = 175.;
+  double mH = 125.;
   double mW = 80.;
-  double mB = 2.;
+  double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 10000;
+  int Ngen = 100000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
   LabGenFrame LAB_G("LAB_G","LAB");
-  DecayGenFrame TT_G("TT_G","t #bar{t}");
-  DecayGenFrame Ta_G("Ta_G","t_{a}");
-  DecayGenFrame Tb_G("Tb_G","t_{b}");
-  DecayGenFrame Wa_G("Wa_G","W_{a}");
-  DecayGenFrame Wb_G("Wb_G","W_{b}");
-  VisibleGenFrame Ba_G("Ba_G","b_{a}");
+  DecayGenFrame H_G("H_G","H");
+  ResonanceGenFrame Wa_G("Wa_G","W_{a}");
+  ResonanceGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame La_G("La_G","#it{l}_{a}");
   InvisibleGenFrame Na_G("Na_G","#nu_{a}");
-  VisibleGenFrame Bb_G("Bb_G","b_{b}");
   VisibleGenFrame Lb_G("Lb_G","#it{l}_{b}");
   InvisibleGenFrame Nb_G("Nb_G","#nu_{b}");
-  LAB_G.SetChildFrame(TT_G);
-  TT_G.AddChildFrame(Ta_G);
-  TT_G.AddChildFrame(Tb_G);
-  Ta_G.AddChildFrame(Ba_G);
-  Ta_G.AddChildFrame(Wa_G);
-  Tb_G.AddChildFrame(Bb_G);
-  Tb_G.AddChildFrame(Wb_G);
+  LAB_G.SetChildFrame(H_G);
+  H_G.AddChildFrame(Wa_G);
+  H_G.AddChildFrame(Wb_G);
   Wa_G.AddChildFrame(La_G);
   Wa_G.AddChildFrame(Na_G);
   Wb_G.AddChildFrame(Lb_G);
   Wb_G.AddChildFrame(Nb_G);
 
-  if(LAB_G.InitializeTree() && LAB_G.InitializeAnalysis()){
+  if(LAB_G.InitializeTree()){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
-    g_Log << "Ready for event generation" << g_End;
+    g_Log << "Ready to set masses etc." << g_End;
   } else
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
+  // set Higgs masses
+  H_G.SetMass(mH);
+  // set W masses
+  Wa_G.SetMass(mW);
+  Wb_G.SetMass(mW);
+  Wa_G.SetWidth(wW);
+  Wb_G.SetWidth(wW);
+  // set lepton masses
+  La_G.SetMass(mL);
+  Lb_G.SetMass(mL);
+  // set neutrino masses
+  Na_G.SetMass(mN);
+  Nb_G.SetMass(mN);
+
+  if(LAB_G.InitializeAnalysis()){
+    g_Log << LogInfo;
+    g_Log << "Successfully initialized analysis from LabFrame ";
+    g_Log << LAB_G.GetName() << endl;
+    g_Log << "Ready for event generation" << g_End;
+  } else
+    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_G) << g_End;
+
+
   // Set up reco analysis tree
    g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
   RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame TT_R("TT_R","t #bar{t}");
-  RDecayFrame Ta_R("Ta_R","t_{a}");
-  RDecayFrame Tb_R("Tb_R","t_{b}");
+  RDecayFrame H_R("H_R","H");
   RDecayFrame Wa_R("Wa_R","W_{a}");
   RDecayFrame Wb_R("Wb_R","W_{b}");
-  RVisibleFrame Ba_R("Ba_R","b_{a}");
   RVisibleFrame La_R("La_R","#it{l}_{a}");
   RInvisibleFrame Na_R("Na_R","#nu_{a}");
-  RVisibleFrame Bb_R("Bb_R","b_{b}");
   RVisibleFrame Lb_R("Lb_R","#it{l}_{b}");
   RInvisibleFrame Nb_R("Nb_R","#nu_{b}");
-  LAB_R.SetChildFrame(TT_R);
-  TT_R.AddChildFrame(Ta_R);
-  TT_R.AddChildFrame(Tb_R);
-  Ta_R.AddChildFrame(Ba_R);
-  Ta_R.AddChildFrame(Wa_R);
-  Tb_R.AddChildFrame(Bb_R);
-  Tb_R.AddChildFrame(Wb_R);
+  LAB_R.SetChildFrame(H_R);
+  H_R.AddChildFrame(Wa_R);
+  H_R.AddChildFrame(Wb_R);
   Wa_R.AddChildFrame(La_R);
   Wa_R.AddChildFrame(Na_R);
   Wb_R.AddChildFrame(Lb_R);
@@ -132,12 +139,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   InvisibleGroup INV_R("INV_R","WIMP Jigsaws");
   INV_R.AddFrame(Na_R);
   INV_R.AddFrame(Nb_R);
-  CombinatoricGroup B_R("VIS","b-jet Jigsaws");
-  // visible frames in first decay step must always have at least one element
-  B_R.AddFrame(Ba_R);
-  B_R.AddFrame(Bb_R);
-  B_R.SetNElementsForFrame(Ba_R,1,true);
-  B_R.SetNElementsForFrame(Bb_R,1,true);
 
   // define jigsaws for the reconstruction tree
   InvisibleMassJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
@@ -149,15 +150,10 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
 
   ContraBoostInvariantJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
   INV_R.AddJigsaw(ContraBoostJigsaw_R);
-  ContraBoostJigsaw_R.AddVisibleFrame((Ta_R.GetListVisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddVisibleFrame((Tb_R.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Ta_R.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Tb_R.GetListInvisibleFrames()), 1);
-
-  MinimizeMassesCombinatoricJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m(b #it{l}) Jigsaw");
-  B_R.AddJigsaw(HemiJigsaw_R);
-  HemiJigsaw_R.AddFrame((Ta_R.GetListVisibleFrames()),0);
-  HemiJigsaw_R.AddFrame((Tb_R.GetListVisibleFrames()),1);
+  ContraBoostJigsaw_R.AddVisibleFrame((Wa_R.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddVisibleFrame((Wb_R.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddInvisibleFrame((Wa_R.GetListInvisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddInvisibleFrame((Wb_R.GetListInvisibleFrames()), 1);
 
   g_Log << LogInfo << "Initializing tree for analysis" << m_End;
   // check reconstruction trees
@@ -169,87 +165,33 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   } else
     g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
 
-  //////////////////////////////////////////////////////////////
-  // draw some pictures of our trees
-  //////////////////////////////////////////////////////////////
-
-  // FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
-  // treePlot_G->AddFrameTree(LAB_G);
-  // treePlot_G->DrawFramePlot();
-  // TCanvas* c_gentree = treePlot_G->GetCanvas();
-
-  // FramePlot* treePlot_R = new FramePlot("tree_R","Signal-like Reconstruction Tree");
-  // treePlot_R->AddFrameTree(LAB_R);
-  // treePlot_R->DrawFramePlot();
-  // TCanvas* c_recotree = treePlot_R->GetCanvas();
-
-  // FramePlot* INVPlot_R = new FramePlot("INV_R","Invisible Objects Jigsaws");
-  // INVPlot_R->AddGroupTree(INV_R);
-  // INVPlot_R->DrawFramePlot();
-  // TCanvas* c_invRtree = INVPlot_R->GetCanvas();
-
-  // FramePlot* VISPlot_R = new FramePlot("VIS_R","Visible Objects Jigsaws");
-  // VISPlot_R->AddGroupTree(B_R);
-  // VISPlot_R->DrawFramePlot();
-  // TCanvas* c_visRtree = VISPlot_R->GetCanvas();
-
-  // set top masses
-  Ta_G.SetMass(mT);
-  Tb_G.SetMass(mT);
-  // set W masses
-  Wa_G.SetMass(mW);
-  Wb_G.SetMass(mW);
-  // set B masses
-  Ba_G.SetMass(mB);
-  Bb_G.SetMass(mB);
-  // set : masses
-  La_G.SetMass(mL);
-  Lb_G.SetMass(mL);
-  // set neutrino masses
-  Na_G.SetMass(mN);
-  Nb_G.SetMass(mN);
-
-  RDecayFrame *T[2], *W[2];
-  RVisibleFrame *B[2], *L[2];
+  RDecayFrame *W[2];
+  RVisibleFrame *L[2];
   RInvisibleFrame *N[2];
-  T[0] = &Ta_R;
-  T[1] = &Tb_R;
   W[0] = &Wa_R;
   W[1] = &Wb_R;
-  B[0] = &Ba_R;
-  B[1] = &Bb_R;
   L[0] = &La_R;
   L[1] = &Lb_R;
   N[0] = &Na_R;
   N[1] = &Nb_R;
 
-  double EBtrue = (mT*mT - mW*mW)/mT/2.;
-  double ELtrue = (mW*mW - mN*mN)/mW/2.;
-
   // Now we book some histograms of kinematic variables
-  TH1D* h_MT     = new TH1D("h_MT","h_MT",100,0.,2.);
+  TH1D* h_MH     = new TH1D("h_MH","h_MH",100,0.,2.);
   TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,2.);
-  TH1D* h_EB     = new TH1D("h_EB","h_EB",100,0.,2.);
-  TH1D* h_EL     = new TH1D("h_EL","h_EL",100,0.,2.);
-  TH2D* h_MT_v_MW   = new TH2D("h_MT_v_MW","h_MT_v_MW",50,0.,2.,50,0.,2.);
-  TH2D* h_EB_v_MW   = new TH2D("h_EB_v_MW","h_EB_v_MW",50,0.,2.,50,0.,2.);
+  TH2D* h_MH_v_MW   = new TH2D("h_MH_v_MW","h_MH_v_MW",50,0.,2.,50,0.,2.);
+  TH2D* h_mW_v_mW   = new TH2D("h_mW_v_mW","h_mW_v_mW",50,0.,mH,50,0.,mH);
 
-  // function for randomly determining di-top mass 
-  // (relative to top mass via gamma)
-  TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
 
     // generate event
-    LAB_G.ClearEvent();                             // clear the gen tree
-    double mTT = 2.*mT*f_gamma.GetRandom();         // get a random di-gluino mass
-    TT_G.SetMass(mTT);
-    double PTTT = mTT*gRandom->Rndm();
-    LAB_G.SetTransverseMomenta(PTTT);               // give the di-gluinos some Pt
-    double PzTT = mTT*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzTT);             // give the di-gluinos some Pz
-    LAB_G.AnalyzeEvent();                           // generate a new event
+    LAB_G.ClearEvent();                            // clear the gen tree
+    double PTH = mH*gRandom->Rndm();
+    LAB_G.SetTransverseMomenta(PTH);               // give the Higgs some Pt
+    double PzH = mH*(2.*gRandom->Rndm()-1.);
+    LAB_G.SetLongitudinalMomenta(PzH);             // give the Higgs some Pz
+    LAB_G.AnalyzeEvent();                          // generate a new event
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
@@ -258,9 +200,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    vector<RFKey> B_ID;                      // ID for tracking jets in tree
-    B_ID.push_back(B_R.AddLabFrameFourVector(Ba_G.GetFourVector()));
-    B_ID.push_back(B_R.AddLabFrameFourVector(Bb_G.GetFourVector()));
     La_R.SetLabFrameFourVector(La_G.GetFourVector());
     Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
     LAB_R.AnalyzeEvent();                            // analyze the event
@@ -273,73 +212,22 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     // signal tree observables
     //
 
-    //*** total CM mass
-    double shat = TT_R.GetMass();
-    
-    TVector3 vPTT = TT_R.GetFourVector(LAB_R).Vect();
+    //*** Higgs mass
+    double MH = H_R.GetMass();
+    double MW = Wa_R.GetMass();
 
-    //*** ratio of CM pT to CM mass
-    double RPT = vPTT.Pt() / (vPTT.Pt() + shat/4.);
-    //*** ratio of CM pz to CM mass
-    double RPZ = vPTT.Pz() / (vPTT.Pz() + shat/4.);
-    //*** cos decay angle of TT system
-    double cosTT = TT_R.GetCosDecayAngle();
-    //*** delta phi between lab and TT decay planes
-    double dphiLTT = LAB_R.GetDeltaPhiDecayPlanes(TT_R);
-    
-    double PT = T[0]->GetMomentum(TT_R);
-    
-    //*** delta phi between TT visible decay products and TT decay axis
-    double dphiVT = TT_R.GetDeltaPhiDecayVisible();
-    //*** delta phi between TT visible decay products and TT momentum
-    double dphiVTT = TT_R.GetDeltaPhiBoostVisible();
-
-    // 'hemisphere' (one for each 'top') observables
-
-    //*** cosine top decay angle
-    double cosT[2];
-    //*** cosine W decay angle
-    double cosW[2];
-    //*** delta phi between top and W decay planes
-    double dphiTW[2];
-    //*** Eb in top frame
-    double EB[2];
-    //*** El in W frame
-    double EL[2];
-    //*** top mass
-    double MT[2];
-    //*** W mass
-    double MW[2];
-
-    for(int h = 0; h < 2; h++){
-      cosT[h] = T[h]->GetCosDecayAngle();
-      cosW[h] = W[h]->GetCosDecayAngle();
-      EB[h]   = B[h]->GetEnergy(*T[h]);
-      EL[h]   = L[h]->GetEnergy(*W[h]);
-
-      double PB = B[h]->GetMomentum(*T[h]);
-      MW[h] = 2.*EL[h];
-      MT[h] = EB[h] + sqrt( PB*PB + MW[h]*MW[h] );
-
-      h_MT->Fill(MT[h]/mT);
-      h_MW->Fill(MW[h]/mW);
-      h_EB->Fill(EB[h]/EBtrue);
-      h_EL->Fill(EL[h]/ELtrue);
-      h_MT_v_MW->Fill(MT[h]/mT,MW[h]/mW);
-      h_EB_v_MW->Fill(EB[h]/EBtrue,MW[h]/mW);
-    }
-
-    double MTT = sqrt(MT[0]*MT[0] + PT*PT) + sqrt(MT[1]*MT[1] + PT*PT);
+    h_MH->Fill(MH/mH);
+    h_MW->Fill(MW/mW);
+    h_MH_v_MW->Fill(MH/mH,MW/mW);
+    h_mW_v_mW->Fill(Wa_G.GetMass(),Wb_G.GetMass());
   }
 
   setstyle();
-  string plot_title = "t #bar{t} #rightarrow (b #it{l} #nu)(b #it{l} #nu)";
-  TCanvas *c_MT          = Plot_Me("c_MT", h_MT, "M_{T} / m_{T}^{true}", plot_title);
+  string plot_title = "H #rightarrow W(#it{l} #nu)W(#it{l} #nu)";
+  TCanvas *c_MH          = Plot_Me("c_MH", h_MH, "M_{H} / m_{H}^{true}", plot_title);
   TCanvas *c_MW          = Plot_Me("c_MW", h_MW, "M_{W} / m_{W}^{true}", plot_title);
-  TCanvas *c_EB          = Plot_Me("c_EB", h_EB, "E_{b}^{T-frame} / E_{b}^{true}", plot_title);
-  TCanvas *c_EL          = Plot_Me("c_EL", h_EL, "E_{#it{l}}^{W-frame} / E_{#it{l}}^{true}", plot_title);
-  TCanvas *c_MT_v_MW     = Plot_Me("c_MT_v_MW", h_MT_v_MW, "M_{T} / m_{T}^{true}", "M_{W} / m_{W}^{true}", plot_title);
-  TCanvas *c_EB_v_MW     = Plot_Me("c_EB_v_MW", h_EB_v_MW, "E_{b}^{T-frame} / E_{b}^{true}", "M_{W} / m_{W}^{true}", plot_title);
+  TCanvas *c_MH_v_MW     = Plot_Me("c_MH_v_MW", h_MH_v_MW, "M_{H} / m_{H}^{true}", "M_{W} / m_{W}^{true}", plot_title);
+  TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} / m_{H}^{true}", "m_{Wb}^{true} / m_{W}^{true}", plot_title);
 
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
@@ -361,12 +249,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   framePlot.DrawFramePlot();
   can = framePlot.GetCanvas();
   can->Write("c_InvTree",TObject::kOverwrite);
-  delete can;
-
-  framePlot.AddGroupTree(B_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_VisTree",TObject::kOverwrite);
   delete can;
 
   foutput->Close();
@@ -521,7 +403,7 @@ void setstyle() {
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_05_DiToptoblnu();
+  example_04_HtoWWto4l();
   return 0;
 }
 #endif

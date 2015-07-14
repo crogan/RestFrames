@@ -12,13 +12,13 @@ void test_BW(){
   double WW = 2.5;
 
   int N = 100.;
-  double xmin = 60.;
-  double xmax = 100.;
+  double xmin = 0.;
+  double xmax = 90.;
 
   TH1D *hist[3];
-  hist[0] = new TH1D("hist0","hist0",N,xmin,xmax);
-  hist[1] = new TH1D("hist1","hist1",N,xmin,xmax);
-  hist[2] = new TH1D("hist2","hist2",N,xmin,xmax);
+  hist[0] = new TH1D("hist0","hist0",N,xmin,xmax*2);
+  hist[1] = new TH1D("hist1","hist1",N,xmin,xmax*2);
+  hist[2] = new TH1D("hist2","hist2",N,xmin,xmax*2);
   
   TH2D *hist2D[2];
   hist2D[0] = new TH2D("hist2D0","hist2D0",N,xmin,xmax,N,xmin,xmax);
@@ -73,7 +73,7 @@ double BW_boson(double x, double M, double W){
 }
 double Pcm(double M, double m1, double m2){
   if(M-m1-m2 <= 0.0) return 0.;
-  return m1*m1*m2*m2*sqrt( (M*M-m1*m1-m2*m2)*(M*M-m1*m1-m2*m2) - 4.*m1*m1*m2*m2 )/2./M;
+  return sqrt( (M*M-m1*m1-m2*m2)*(M*M-m1*m1-m2*m2) - 4.*m1*m1*m2*m2 )/2./M;
 }
 
 double BW_rndm(double R, double M, double W, double a, double b){

@@ -12,6 +12,7 @@
 #include "RestFrames/InvisibleGenFrame.hh"
 #include "RestFrames/LabGenFrame.hh"
 #include "RestFrames/VisibleGenFrame.hh"
+#include "RestFrames/ResonanceGenFrame.hh"
 #include "RestFrames/Group.hh"
 #include "RestFrames/InvisibleFrame.hh"
 #include "RestFrames/InvisibleGroup.hh"

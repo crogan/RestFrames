@@ -81,6 +81,7 @@ namespace RestFrames {
   }
   
   bool RestFrame::IsSoundBody() const {
+    if(RFBase::IsSoundBody()) return true;
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       if(!GetChildFrame(i)){

@@ -106,18 +106,21 @@ namespace RestFrames {
     return m_Title;
   }
 
-  void RFBase::SetBody(bool body) const {
+  bool RFBase::SetBody(bool body) const {
     m_Body = body;
     if(!body) SetMind(body);
+    return m_Body;
   }
 
-  void RFBase::SetMind(bool mind) const {
+  bool RFBase::SetMind(bool mind) const {
     m_Mind = mind;
     if(!mind) SetSpirit(mind);
+    return m_Mind;
   }
 
-  void RFBase::SetSpirit(bool spirit) const {
+  bool RFBase::SetSpirit(bool spirit) const {
     m_Spirit = spirit;
+    return m_Spirit;
   }
 
   bool RFBase::IsSoundBody() const {
@@ -144,10 +147,18 @@ namespace RestFrames {
     return output;
   }
 
+  void RFBase::UnSoundBody(const string& function) const {
+    m_Log << LogWarning;
+    m_Log << "Unable to evaluate function \"" << function << "\". ";
+    m_Log << "Requires a successful call to \"InitializeTree()\" ";
+    m_Log << "from the LabFrame associated with this tree.";
+    m_Log << m_End;
+  }
+
   void RFBase::UnSoundMind(const string& function) const {
     m_Log << LogWarning;
     m_Log << "Unable to evaluate function \"" << function << "\". ";
-    m_Log << endl << "Requires a successful call to \"InitializeTree()\" ";
+    m_Log << "Requires a successful call to \"InitializeAnalysis()\" ";
     m_Log << "from the LabFrame associated with this tree.";
     m_Log << m_End;
   }
@@ -155,7 +166,7 @@ namespace RestFrames {
   void RFBase::UnSoundSpirit(const string& function) const {
     m_Log << LogWarning;
     m_Log << "Unable to evaluate function \"" << function << "\". ";
-    m_Log << endl << "Requires a successful call to \"InitializeAnalysis()\" ";
+    m_Log << "Requires a successful call to \"AnalyzeEvent()\" ";
     m_Log << "from the LabFrame associated with this tree.";
     m_Log << m_End;
   }

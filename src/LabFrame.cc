@@ -49,6 +49,7 @@ namespace RestFrames {
   }
 
   bool LabFrame::IsSoundBody() const {
+    if(RFBase::IsSoundBody()) return true;
     if(!RestFrame::IsSoundBody()){
       SetBody(false);
       return false;
@@ -68,24 +69,35 @@ namespace RestFrames {
   }
 
   bool LabFrame::InitializeTree() const {
-     vector<RFKey> keys;
+    m_Log << LogVerbose;
+    m_Log << "Initializing tree skeleton...";
+    m_Log << m_End;
+
+    vector<RFKey> keys;
     if(IsCircularTree(keys)){
-      cout << endl << "Consistent Topology Failure: ";
-      cout << "Tree is circular in construction" << endl;
+      m_Log << LogWarning;
+      m_Log << "Tree is circular in construction";
+      m_Log << m_End;
       return false;
     }
 
     if(!IsSoundBodyRecursive()){
-      cout << endl << "Consistent Topology Failure: ";
-      cout << "UnSound frame in tree" << endl;
+      m_Log << LogWarning;
+      m_Log << "Illegally constructed tree";
+      m_Log << m_End;
       return false;
     }
  
     if(!IsConsistentAnaTree(m_Ana)){
-      cout << endl << "Consistent Topology Failure: ";
-      cout << "Tree contains mixture of node types (Reco, Gen)" << endl;
+      m_Log << LogWarning;
+      m_Log << "Tree is not homogenous in node types (Reco, Gen)";
+      m_Log << m_End;
       return false;
     }
+
+    m_Log << LogVerbose;
+    m_Log << "...Done initializing tree skeleton";
+    m_Log << m_End;
     
     return true;
   }
@@ -95,6 +107,11 @@ namespace RestFrames {
   }
 
   double LabFrame::GetCosDecayAngle(const RestFrame& frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
     if(GetNChildren() < 1) return 0.;
     TVector3 V1(0.,0.,1.);
     TVector3 V2;
@@ -107,8 +124,12 @@ namespace RestFrames {
   }
 
   TVector3 LabFrame::GetDecayPlaneNormalVector() const {
-    TVector3 V(0.,0.,0.);
-    if(GetNChildren() < 1) return V;
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TVector3(0.,0.,0.);
+    }
+
+    if(GetNChildren() < 1) return TVector3(0.,0.,0.);
    
     TVector3 V1 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
     TVector3 V2(0.,0.,1.);

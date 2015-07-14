@@ -58,29 +58,28 @@ namespace RestFrames {
       m_Log << "Unable to analyze event. ";
       m_Log << "Requires successfull call to \"InitializeAnalysis\" ";
       m_Log << "from LabFrame" << m_End;
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
 
     if(!InitializeEvent()){
       m_Log << LogWarning;
       m_Log << "Problem initializing event info" << m_End;
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
 
     // have only implemented this case so far
     if(int(m_Outputs.size()) != 2){
       m_Log << LogWarning;
       m_Log << "output size != 2 no implemented" << m_End;
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
 
     //
     // hard coding this for now...
     //
-    if(int(m_Inputs.size()) < m_NForOutput[0]+m_NForOutput[1]) return false;
+    if(int(m_Inputs.size()) < m_NForOutput[0]+m_NForOutput[1]){
+      return SetSpirit(false);
+    }
 
     int Ninput = m_Inputs.size();
     int Ndeps = m_DependancyStates.size();
@@ -103,7 +102,12 @@ namespace RestFrames {
       TLorentzVector TOT(0.,0.,0.,0.);
       for(int i = 0; i < Ninput; i++) TOT += inputs[i];
       TVector3 boost = TOT.BoostVector();
+      // for(int i = 0; i < Ninput; i++)
+      // 	cout << inputs[i].Px() << " " << inputs[i].Py() << inputs[i].Pz() << inputs[i].E() << endl;
+      
       for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
+      // for(int i = 0; i < Ninput; i++)
+      // 	cout << inputs[i].Px() << " " << inputs[i].Py() << inputs[i].Pz() << inputs[i].E() << endl;
 
       int ip_max[2];
       int jp_max[2];
@@ -145,7 +149,11 @@ namespace RestFrames {
 	  }
 	}
       }
-      if(val_max < 0) return false;
+      if(val_max < 0){
+	cout << "up in here? " << val_max << endl;
+	return false;
+      }
+     
       // initialize output states
       for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
       for(int i = 0; i < 2; i++) m_Outputs[jp_max[i]]->AddElement(*m_Inputs[ip_max[i]]);

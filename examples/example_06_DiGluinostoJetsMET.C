@@ -54,7 +54,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 10000;
+  int Ngen = 100000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -78,6 +78,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   Gb_G.AddChildFrame(V2b_G);
   Gb_G.AddChildFrame(Xb_G);
   if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl;
+  if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl;
   //
   //
 									       
@@ -217,12 +218,18 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   VISPlot_R->DrawFramePlot();
   TCanvas* c_visRtree = VISPlot_R->GetCanvas();
 
+  TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
+
   // set gluino masses
   Ga_G.SetMass(mG);
   Gb_G.SetMass(mG);
   // set X masses
   Xa_G.SetMass(mX);
   Xb_G.SetMass(mX);
+  V1a_G.SetMass(100.);
+  V1b_G.SetMass(100.);
+  V2a_G.SetMass(100.);
+  V2b_G.SetMass(100.);
   // function for randomly determining di-gluino mass 
   // (relative to gluino mass via gamma)
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
@@ -239,6 +246,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     double PzGG = mGG*(2.*gRandom->Rndm()-1.);
     LAB_G.SetLongitudinalMomenta(PzGG);             // give the di-gluinos some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
+
+    if(gRandom->Rndm() > 0.5) {
+      h_M12_v_M13->Fill((V1a_G+Xa_G).GetFourVector().M2()/mG/mG, (V2a_G+Xa_G).GetFourVector().M2()/mG/mG);
+    } else {
+      h_M12_v_M13->Fill((V2a_G+Xa_G).GetFourVector().M2()/mG/mG, (V1a_G+Xa_G).GetFourVector().M2()/mG/mG);
+    }
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
@@ -407,6 +420,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   }
   
+  TCanvas* c_M12_v_M13 = Plot_Me("c_M12_v_M13", h_M12_v_M13, 
+				 "m_{1,2}^{2} [GeV^{2}]", "m_{1,2}^{2} [GeV^{2}]", "");
+
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
   c_gentree->Write();

@@ -1,7 +1,7 @@
 # make RestFrames examples
 SUBDIRS = .
 
-noinst_PROGRAMS = example_01.x example_02.x example_03.x example_05.x example_06.x
+noinst_PROGRAMS = example_01.x example_02.x example_03.x example_04.x example_05.x example_06.x
 
 includestuff = $(top_srcdir)/inc
 LDADD = ../src/libRestFrames.la
@@ -17,6 +17,10 @@ example_02_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS
 example_03_x_SOURCES = example_03_MultipleDecays_Toptoblnu.C
 example_03_x_SHORTNAME = 03
 example_03_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+
+example_04_x_SOURCES = example_04_HtoWWto4l.C
+example_04_x_SHORTNAME = 04
+example_04_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 
 example_05_x_SOURCES = example_05_DiToptoblnu.C
 example_05_x_SHORTNAME = 05

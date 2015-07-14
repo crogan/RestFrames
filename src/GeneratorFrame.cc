@@ -67,7 +67,7 @@ namespace RestFrames {
 
   void GeneratorFrame::ClearEventRecursive(){ 
     ResetFrame();
-    if(!IsSoundBody())
+    if(!IsSoundMind())
       return;
     
     int Nf =  GetNChildren();
@@ -77,6 +77,11 @@ namespace RestFrames {
   }
 
   bool GeneratorFrame::AnalyzeEventRecursive(){
+    if(!IsSoundMind()){
+      UnSoundMind(RF_FUNCTION);
+      SetSpirit(false);
+      return false;
+    }
     if(!GenerateFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to generate event for this frame.";
@@ -107,8 +112,40 @@ namespace RestFrames {
     }
   }
 
-  double GeneratorFrame::GetRandom(){
+  bool GeneratorFrame::InitializeGenAnalysis(){
+    SetMind(true);
+    return true;
+  }
+
+  bool GeneratorFrame::InitializeAnalysisRecursive(){
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      SetMind(false);
+      return false;
+    }
+
+    if(!InitializeGenAnalysis()){
+      SetMind(false);
+      return false;
+    }
+
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++){
+      if(!dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->InitializeAnalysisRecursive()){
+	SetMind(false);
+	return false;
+      }
+    }
+    SetMind(true);
+    return true;
+  }
+
+  double GeneratorFrame::GetRandom() const {
     return m_Random->Rndm();
+  }
+
+  double GeneratorFrame::GetGaus(double mu, double sig) const {
+    return m_Random->Gaus(mu,sig);
   }
 
 }

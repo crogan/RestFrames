@@ -145,6 +145,7 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-DecayGenFrame.lo \
 	libRestFrames_la-VisibleGenFrame.lo \
 	libRestFrames_la-InvisibleGenFrame.lo \
+	libRestFrames_la-ResonanceGenFrame.lo \
 	libRestFrames_la-State.lo libRestFrames_la-InvisibleState.lo \
 	libRestFrames_la-CombinatoricState.lo \
 	libRestFrames_la-Group.lo libRestFrames_la-InvisibleGroup.lo \
@@ -404,7 +405,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFKey
 	RestFrame.cc FramePlot.cc RFrame.cc GeneratorFrame.cc LabFrame.cc DecayFrame.cc\
 	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
 	RInvisibleFrame.cc LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
-	State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
+	ResonanceGenFrame.cc State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
 	MinimizeMassesCombinatoricJigsaw.cc\
@@ -524,6 +525,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RLabFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RSelfAssemblingFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RVisibleFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrames_Dict.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-State.Plo@am__quote@
@@ -697,6 +699,13 @@ libRestFrames_la-InvisibleGenFrame.lo: InvisibleGenFrame.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='InvisibleGenFrame.cc' object='libRestFrames_la-InvisibleGenFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-InvisibleGenFrame.lo `test -f 'InvisibleGenFrame.cc' || echo '$(srcdir)/'`InvisibleGenFrame.cc
+
+libRestFrames_la-ResonanceGenFrame.lo: ResonanceGenFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-ResonanceGenFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Tpo -c -o libRestFrames_la-ResonanceGenFrame.lo `test -f 'ResonanceGenFrame.cc' || echo '$(srcdir)/'`ResonanceGenFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Tpo $(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ResonanceGenFrame.cc' object='libRestFrames_la-ResonanceGenFrame.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-ResonanceGenFrame.lo `test -f 'ResonanceGenFrame.cc' || echo '$(srcdir)/'`ResonanceGenFrame.cc
 
 libRestFrames_la-State.lo: State.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-State.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-State.Tpo -c -o libRestFrames_la-State.lo `test -f 'State.cc' || echo '$(srcdir)/'`State.cc

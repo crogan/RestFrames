@@ -150,14 +150,15 @@ namespace RestFrames {
     mutable bool m_Spirit;   
     mutable RFLog* m_LogPtr;
 
-    void SetBody(bool body) const;
-    void SetMind(bool mind) const;
-    void SetSpirit(bool spirit) const;
+    bool SetBody(bool body) const;
+    bool SetMind(bool mind) const;
+    bool SetSpirit(bool spirit) const;
 
     virtual bool IsSoundBody() const;
     virtual bool IsSoundMind() const;
     virtual bool IsSoundSpirit() const;
 
+    void UnSoundBody(const string& function) const;
     void UnSoundMind(const string& function) const;
     void UnSoundSpirit(const string& function) const;
 

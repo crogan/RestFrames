@@ -1,5 +1,5 @@
 #ifdef __ROOTCLING__
-#include "RestFrames/RFLog.hh"
+//#include "RestFrames/RFLog.hh"
 #include "RestFrames/RestFrames.hh"
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
@@ -10,6 +10,7 @@ using namespace RestFrames;
 #pragma link C++ class RFList<RFBase>;
 #pragma link C++ class RFList<RestFrame>; 
 #pragma link C++ class RFList<RFrame>; 
+#pragma link C++ class RFList<ResonanceGenFrame>;
 #pragma link C++ class RFList<Jigsaw>;
 #pragma link C++ class RFList<Group>;
 #pragma link C++ class RFList<State>;
@@ -29,6 +30,7 @@ using namespace RestFrames;
 #pragma link C++ class DecayGenFrame;
 #pragma link C++ class InvisibleGenFrame;
 #pragma link C++ class VisibleGenFrame;
+#pragma link C++ class ResonanceGenFrame;
 
 #pragma link C++ class RFrame;
 #pragma link C++ class RLabFrame;
@@ -80,6 +82,7 @@ using namespace RestFrames;
 #pragma link C++ class RFList<RFBase>+;
 #pragma link C++ class RFList<RestFrame>+; 
 #pragma link C++ class RFList<RFrame>+; 
+#pragma link C++ class RFList<ResonanceGenFrame>+; 
 #pragma link C++ class RFList<Jigsaw>+;
 #pragma link C++ class RFList<Group>+;
 #pragma link C++ class RFList<State>+;
@@ -99,6 +102,7 @@ using namespace RestFrames;
 #pragma link C++ class DecayGenFrame+;
 #pragma link C++ class InvisibleGenFrame+;
 #pragma link C++ class VisibleGenFrame+;
+#pragma link C++ class ResonanceGenFrame+;
 
 #pragma link C++ class RFrame+;
 #pragma link C++ class RLabFrame+;

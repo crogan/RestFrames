@@ -55,8 +55,11 @@ namespace RestFrames {
     virtual bool GenerateFrame() = 0;
 
     void SetChildren(const vector<TLorentzVector>& P_children);
+    virtual bool InitializeGenAnalysis();
+    virtual bool InitializeAnalysisRecursive();
 
-    double GetRandom();
+    double GetRandom() const;
+    double GetGaus(double mu, double sig) const;
 
   private:
     void Init();

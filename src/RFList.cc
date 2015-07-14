@@ -29,6 +29,7 @@
 
 #include "RestFrames/RFList.hh"
 #include "RestFrames/RFrame.hh"
+#include "RestFrames/ResonanceGenFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
 #include "RestFrames/InvisibleState.hh"
@@ -433,6 +434,7 @@ namespace RestFrames {
   template class RFList<RFBase>;
   template class RFList<RestFrame>; 
   template class RFList<RFrame>; 
+  template class RFList<ResonanceGenFrame>; 
   template class RFList<Jigsaw>;
   template class RFList<Group>;
   template class RFList<State>;
@@ -442,6 +444,7 @@ namespace RestFrames {
   template class RFListBase<RFBase,RFList<RFBase> >;
   template class RFListBase<RestFrame,RFList<RestFrame> >; 
   template class RFListBase<RFrame,RFList<RFrame> >; 
+  template class RFListBase<ResonanceGenFrame,RFList<ResonanceGenFrame> >; 
   template class RFListBase<Jigsaw,RFList<Jigsaw> >;
   template class RFListBase<Group,RFList<Group> >;
   template class RFListBase<State,RFList<State> >;

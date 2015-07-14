@@ -49,6 +49,7 @@ namespace RestFrames {
   }
   
   bool InvisibleFrame::IsSoundBody() const {
+    if(RFBase::IsSoundBody()) return true;
     if(!RestFrame::IsSoundBody()){
       SetBody(false);
       return false;

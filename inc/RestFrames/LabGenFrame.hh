@@ -45,6 +45,9 @@ namespace RestFrames {
     LabGenFrame(const string& sname, const string& stitle);
     virtual ~LabGenFrame();
   
+    virtual void Clear();
+
+    virtual bool InitializeAnalysis();
     virtual void ClearEvent();
     virtual bool AnalyzeEvent();
 

@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   LabFrame.hh
+///  \file   ResonanceGenFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,45 +27,46 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef LabFrame_HH
-#define LabFrame_HH
+#ifndef ResonanceGenFrame_HH
+#define ResonanceGenFrame_HH
 
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/DecayGenFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  class RestFrame;
-
   ///////////////////////////////////////////////
-  // LabFrame class
+  // ResonanceGenFrame class
   ///////////////////////////////////////////////
-  class LabFrame : public virtual RestFrame{
+  class ResonanceGenFrame : public DecayGenFrame {
   public:
-    LabFrame(const string& sname, const string& stitle);
-    virtual ~LabFrame();
+    ResonanceGenFrame(const string& sname, const string& stitle);
+    ResonanceGenFrame();
+    virtual ~ResonanceGenFrame();
 
-    void SetChildFrame(RestFrame& frame);
-    void SetChildFrame(RestFrame* framePtr);
-  
-    virtual bool InitializeTree() const;
-    virtual bool InitializeAnalysis() = 0;
-    virtual void ClearEvent() = 0;
-    virtual bool AnalyzeEvent() = 0;
+    virtual void SetMass(double mass);
+    virtual void SetEvtMass(double mass);
+    virtual void SetWidth(double w);
+    
+    virtual void ResetFrame();
 
-    // Analysis functions
-    TVector3 GetInvisibleMomentum() const;
-  
-    virtual double GetCosDecayAngle(const RestFrame& frame) const;
-    virtual TVector3 GetDecayPlaneNormalVector() const;
+    virtual double GetMass() const;
+    virtual double GetPoleMass() const;
+    virtual double GetMinimumMass() const;
+    virtual double GetWidth() const;
+    virtual double GetProb(double mass) const;
 
   protected:
-    virtual bool IsSoundBody() const;
-
-  private:
+    double m_PoleMass;
+    double m_Width;
     void Init();
+    virtual double GenerateMass(double min_mass = 0.) const;
+
   };
+
+  double GetProb(double Mp, double Mc1, double Mc2);
+  int DoubleMax(const void *a, const void *b);
 
 }
 
