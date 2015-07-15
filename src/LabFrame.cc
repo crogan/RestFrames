@@ -62,13 +62,13 @@ namespace RestFrames {
     }
     int Nchild = T::GetNChildren();
     if(Nchild != 1){
-      *T::m_LogPtr << LogWarning << "Number of LabFrame children != 1: ";
-      *T::m_LogPtr << Nchild << m_End;
+      T::m_Log << LogWarning << "Number of LabFrame children != 1: ";
+      T::m_Log << Nchild << m_End;
       return T::SetBody(false);
     }
     if(!T::GetParentFrame().IsEmpty()){
-      *T::m_LogPtr << LogWarning << "Parent frame of LabFrame is not empty: ";
-      *T::m_LogPtr << Log(T::GetParentFrame()) << m_End;
+      T::m_Log << LogWarning << "Parent frame of LabFrame is not empty: ";
+      T::m_Log << Log(T::GetParentFrame()) << m_End;
       return T::SetBody(false);
     }
     return T::SetBody(true);;
@@ -81,35 +81,35 @@ namespace RestFrames {
 
   template <class T> 
   bool LabFrame<T>::InitializeTree() const {
-    *T::m_LogPtr << LogVerbose;
-    *T::m_LogPtr << "Initializing tree skeleton...";
-    *T::m_LogPtr << m_End;
+    T::m_Log << LogVerbose;
+    T::m_Log << "Initializing tree skeleton...";
+    T::m_Log << m_End;
 
     vector<RFKey> keys;
     if(T::IsCircularTree(keys)){
-      *T::m_LogPtr << LogWarning;
-      *T::m_LogPtr << "Tree is circular in construction";
-      *T::m_LogPtr << m_End;
+      T::m_Log << LogWarning;
+      T::m_Log << "Tree is circular in construction";
+      T::m_Log << m_End;
       return false;
     }
 
     if(!T::IsSoundBodyRecursive()){
-      *T::m_LogPtr << LogWarning;
-      *T::m_LogPtr << "Illegally constructed tree";
-      *T::m_LogPtr << m_End;
+      T::m_Log << LogWarning;
+      T::m_Log << "Illegally constructed tree";
+      T::m_Log << m_End;
       return false;
     }
  
     if(!T::IsConsistentAnaTree(T::m_Ana)){
-      *T::m_LogPtr << LogWarning;
-      *T::m_LogPtr << "Tree is not homogenous in node types (Reco, Gen)";
-      *T::m_LogPtr << m_End;
+      T::m_Log << LogWarning;
+      T::m_Log << "Tree is not homogenous in node types (Reco, Gen)";
+      T::m_Log << m_End;
       return false;
     }
 
-    *T::m_LogPtr << LogVerbose;
-    *T::m_LogPtr << "...Done initializing tree skeleton";
-    *T::m_LogPtr << m_End;
+    T::m_Log << LogVerbose;
+    T::m_Log << "...Done initializing tree skeleton";
+    T::m_Log << m_End;
     
     return true;
   }

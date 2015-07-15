@@ -58,11 +58,11 @@ namespace RestFrames {
   void GeneratorFrame::Init(){
     m_Ana = FGen;
   
-    TDatime *now = new TDatime();
-    int today = now->GetDate();
-    int clock = now->GetTime();
-    delete now;
-    int seed = today+clock+m_Key.GetKey();
+    TDatime now;
+    int today = now.GetDate();
+    int clock = now.GetTime();
+    int key   = GetKey().GetKey();
+    int seed = today+clock+key;
     m_Random = new TRandom3(seed);
     
   }

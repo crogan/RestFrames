@@ -148,7 +148,7 @@ namespace RestFrames {
     mutable bool m_Body;       
     mutable bool m_Mind;       
     mutable bool m_Spirit;   
-    mutable RFLog* m_LogPtr;
+    mutable RFLog m_Log;
 
     bool SetBody(bool body) const;
     bool SetMind(bool mind) const;
@@ -162,12 +162,11 @@ namespace RestFrames {
     void UnSoundMind(const string& function) const;
     void UnSoundSpirit(const string& function) const;
 
+  private:
+    void Init(const string& sname, const string& stitle);
     string m_Name;
     string m_Title;
     RFKey m_Key;
-
-  private:
-    void Init(const string& sname, const string& stitle);
     vector<RFBase*> m_Owns;
     
   };

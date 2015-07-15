@@ -38,17 +38,19 @@ namespace RestFrames {
   // RFBase class methods
   ///////////////////////////////////////////////
 
-  RFBase::RFBase(){
+  RFBase::RFBase()
+    : m_Log()
+  {
     Init("Default", "Default");
     SetKey(g_Key);
   }
 
-  RFBase::RFBase(const string& sname, const string& stitle){
+  RFBase::RFBase(const string& sname, const string& stitle)
+    : m_Log() {
     Init(sname, stitle);
   }
 
   RFBase::~RFBase(){
-    if(m_LogPtr) delete m_LogPtr;
     RFBase::Clear();
   }
 
@@ -58,7 +60,6 @@ namespace RestFrames {
     m_Body   = false;
     m_Mind   = false;
     m_Spirit = false;
-    m_LogPtr = new RFLog();
   }
 
   void RFBase::Clear(){

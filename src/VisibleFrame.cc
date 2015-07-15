@@ -62,7 +62,7 @@ namespace RestFrames {
     }
     int Nchild = T::GetNChildren();
     if(Nchild > 0 || T::GetParentFrame().IsEmpty()){
-      *T::m_LogPtr << LogWarning << "Problem with parent or child frames" << m_End;
+      T::m_Log << LogWarning << "Problem with parent or child frames" << m_End;
       return T::SetBody(false);
     }
     return T::SetBody(true);

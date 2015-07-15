@@ -77,7 +77,7 @@ namespace RestFrames {
 
   void FramePlot::SetCanvas(double xpix, double ypix){
     ClearCanvas();
-    m_CanvasPtr = (TCanvas*) new TCanvas(m_Name.c_str(),m_Title.c_str(),xpix,ypix);
+    m_CanvasPtr = (TCanvas*) new TCanvas(GetName().c_str(),GetTitle().c_str(),xpix,ypix);
     m_CanvasPtr->Range(0.,0.,1.,1.);
   }
 
@@ -90,8 +90,8 @@ namespace RestFrames {
 
   TCanvas* FramePlot::GetCanvas() const {
     TCanvas* canvasPtr = (TCanvas*) m_CanvasPtr->DrawClone();
-    canvasPtr->SetName((m_Name+"_copy").c_str());
-    canvasPtr->SetTitle(m_Title.c_str());
+    canvasPtr->SetName((GetName()+"_copy").c_str());
+    canvasPtr->SetTitle(GetTitle().c_str());
     return canvasPtr;
   }
 

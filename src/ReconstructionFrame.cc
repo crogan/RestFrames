@@ -144,12 +144,12 @@ namespace RestFrames {
   }
 
   bool ReconstructionFrame::InitializeStates(const RFList<State>& states, 
-				const RFList<Group>& groups){
+					     const RFList<Group>& groups){
     m_ChildStates.clear();
     m_Mind = false;
     if(!m_Body){
       cout << endl << "Initialize Analysis Failure --: ";
-      cout << "UnSound frame " << m_Name.c_str() << " in tree" << endl;
+      cout << "UnSound frame " << GetName() << " in tree" << endl;
       return false;
     }
     if(!InitializeNoGroupStates(states)) return false;
