@@ -97,7 +97,7 @@ namespace RestFrames {
     bool IsLabFrame() const;
     
     /// \brief Is this an RFrame (for event reconstruction) (yes/no)
-    bool IsRFrame() const;
+    bool IsRecoFrame() const;
     
     /// \brief Is this a GenFrame (for event generation) (yes/no)
     bool IsGenFrame() const;

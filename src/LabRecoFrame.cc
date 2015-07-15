@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RLabFrame.cc
+///  \file   LabRecoFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,41 +27,39 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/RLabFrame.hh"
+#include "RestFrames/LabRecoFrame.hh"
 #include "RestFrames/State.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
-#include "RestFrames/VisibleFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // RLabFrame class
+  // LabRecoFrame class
   ///////////////////////////////////////////////
-  RLabFrame::RLabFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle), 
-    LabFrame(sname, stitle), 
-    RFrame(sname, stitle)
+  LabRecoFrame::LabRecoFrame(const string& sname, const string& stitle)
+    : LabFrame<ReconstructionFrame>(sname, stitle)
   {
     Init();
   }
 
-  RLabFrame::~RLabFrame(){
+  LabRecoFrame::~LabRecoFrame(){
     ClearStates();
   }
 
-  void RLabFrame::Init(){
+  void LabRecoFrame::Init(){
   
   }
 
-  void RLabFrame::Clear(){
+  void LabRecoFrame::Clear(){
     ClearStates();
-    RFrame::Clear();
+    ReconstructionFrame::Clear();
   }
 
-  void RLabFrame::ClearStates(){
+  void LabRecoFrame::ClearStates(){
     int Ns = m_LabStates.GetN();
     for(int i = 0; i < Ns; i++){
       delete &m_LabStates.Get(i);
@@ -69,7 +67,7 @@ namespace RestFrames {
     m_LabStates.Clear();
   }
   
-  bool RLabFrame::InitializeLabGroups(){
+  bool LabRecoFrame::InitializeLabGroups(){
     m_Log << LogVerbose << "Initializing Groups associated with this tree" << m_End;
     
     m_LabGroups.Clear();
@@ -87,7 +85,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RLabFrame::InitializeLabStates(){
+  bool LabRecoFrame::InitializeLabStates(){
     m_Log << LogVerbose << "Initializing States associated with this tree" << m_End;
     
     ClearStates();
@@ -132,7 +130,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RLabFrame::InitializeLabJigsaws(){
+  bool LabRecoFrame::InitializeLabJigsaws(){
     m_Log << LogVerbose << "Initializing Jigsaws associated with this tree" << m_End;
     
     m_LabJigsaws.Clear();
@@ -184,7 +182,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RLabFrame::InitializeAnalysis(){
+  bool LabRecoFrame::InitializeAnalysis(){
     m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
    
     if(!IsSoundBody()){
@@ -222,7 +220,7 @@ namespace RestFrames {
     return true;
   }
 
-  void RLabFrame::ClearEvent(){
+  void LabRecoFrame::ClearEvent(){
     SetSpirit(false);
     if(!IsSoundBody() || !IsSoundMind()){
       UnSoundMind(RF_FUNCTION);
@@ -236,7 +234,7 @@ namespace RestFrames {
     ClearEventRecursive();
   }
 
-  bool RLabFrame::AnalyzeEvent(){
+  bool LabRecoFrame::AnalyzeEvent(){
     if(!IsSoundMind()){
       UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
@@ -246,7 +244,7 @@ namespace RestFrames {
     for(int i = 0; i < Ns; i++){
       State& state = m_LabStates.Get(i);
       RFList<RestFrame> frames = state.GetFrames();
-      VisibleFrame* vframePtr = dynamic_cast<VisibleFrame*>(&frames.Get(0));
+      VisibleRecoFrame* vframePtr = dynamic_cast<VisibleRecoFrame*>(&frames.Get(0));
       if(vframePtr) state.SetFourVector(vframePtr->GetLabFrameFourVector());
     }
   

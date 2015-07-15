@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RInvisibleFrame.hh
+///  \file   InvisibleRecoFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,29 +27,35 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/RInvisibleFrame.hh"
+#ifndef InvisibleRecoFrame_HH
+#define InvisibleRecoFrame_HH
+
+#include "RestFrames/InvisibleFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // RInvisibleFrame class
+  // InvisibleRecoFrame class
   ///////////////////////////////////////////////
-  RInvisibleFrame::RInvisibleFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle),
-    InvisibleFrame(sname, stitle),
-    RFrame(sname, stitle)
-  {
-    Init();
-  }
+  class InvisibleRecoFrame : public InvisibleFrame<ReconstructionFrame> {
+  public:
+    InvisibleRecoFrame(const string& sname, const string& stitle);
+    virtual ~InvisibleRecoFrame();
 
-  RInvisibleFrame::~RInvisibleFrame(){
-    
-  }
+    double GetMinimumMass() const;
+    void SetMinimumMass(double M);
 
-  void RInvisibleFrame::Init(){
-    minMASS = 0.;
-  }
+  protected:
+    double m_MassMin;
+
+  private:
+    void Init();
+   
+  };
 
 }
+
+#endif

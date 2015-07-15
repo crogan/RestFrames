@@ -41,7 +41,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // LabFrame class
   ///////////////////////////////////////////////
-  class LabFrame : public virtual RestFrame{
+  template <class T>
+  class LabFrame : public T {
   public:
     LabFrame(const string& sname, const string& stitle);
     virtual ~LabFrame();

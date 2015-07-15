@@ -56,12 +56,12 @@ namespace RestFrames {
     virtual double GetMinimumMass() const;
     virtual double GetWidth() const;
     virtual double GetProb(double mass) const;
+    virtual double GenerateMass(double Mmin = 0., double Mmax = -1.) const;
 
   protected:
     double m_PoleMass;
     double m_Width;
     void Init();
-    virtual double GenerateMass(double min_mass = 0.) const;
 
   };
 

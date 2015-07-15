@@ -40,9 +40,10 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // GeneratorFrame class
   ///////////////////////////////////////////////
-  class GeneratorFrame : public virtual RestFrame {
+  class GeneratorFrame : public RestFrame {
   public:
     GeneratorFrame(const string& sname, const string& stitle);
+    GeneratorFrame();
     virtual ~GeneratorFrame();
 
     virtual void Clear();
@@ -51,8 +52,8 @@ namespace RestFrames {
     virtual bool AnalyzeEventRecursive();
 
   protected:
-    virtual void ResetFrame() = 0;
-    virtual bool GenerateFrame() = 0;
+    virtual void ResetFrame(){ }
+    virtual bool GenerateFrame(){ return false; }
 
     void SetChildren(const vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();

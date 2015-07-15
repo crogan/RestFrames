@@ -45,6 +45,12 @@ namespace RestFrames {
     Init();
   }
 
+  GeneratorFrame::GeneratorFrame() 
+    : RestFrame()
+  {
+    Init();
+  }
+
   GeneratorFrame::~GeneratorFrame(){
     delete m_Random;
   }

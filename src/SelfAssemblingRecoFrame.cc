@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RSelfAssemblingFrame.cc
+///  \file   SelfAssemblingRecoFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -28,8 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include <sstream>
-#include "RestFrames/RSelfAssemblingFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
+#include "RestFrames/SelfAssemblingRecoFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
 #include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
@@ -37,18 +37,17 @@ using namespace std;
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // RSelfAssemblingFrame class
+  // SelfAssemblingRecoFrame class
   ///////////////////////////////////////////////
-  RSelfAssemblingFrame::RSelfAssemblingFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname,stitle),
-    RDecayFrame(sname,stitle)
+  SelfAssemblingRecoFrame::SelfAssemblingRecoFrame(const string& sname, const string& stitle)
+    : DecayRecoFrame(sname,stitle)
   {
     Init();
   }
   
-  RSelfAssemblingFrame::~RSelfAssemblingFrame(){ }
+  SelfAssemblingRecoFrame::~SelfAssemblingRecoFrame(){ }
 
-  void RSelfAssemblingFrame::Init(){
+  void SelfAssemblingRecoFrame::Init(){
     m_RType = RDSelfAssembling;
     m_IsAssembled = false;
     m_IsBackedUp = false;
@@ -58,22 +57,22 @@ namespace RestFrames {
     m_Ndecay = 0;
   }
 
-  void RSelfAssemblingFrame::Clear(){
+  void SelfAssemblingRecoFrame::Clear(){
     m_VisibleFrames.Clear();
     m_DecayFrames.Clear();
-    RFrame::Clear();
+    ReconstructionFrame::Clear();
   }
 
-  void RSelfAssemblingFrame::ClearEventRecursive(){
+  void SelfAssemblingRecoFrame::ClearEventRecursive(){
     SetSpirit(false);
    
     if(!IsSoundBody() || !IsSoundMind()) return;
    
     Disassemble();
-    RFrame::ClearEventRecursive();
+    ReconstructionFrame::ClearEventRecursive();
   }
 
-  void RSelfAssemblingFrame::Disassemble(){
+  void SelfAssemblingRecoFrame::Disassemble(){
     if(!m_IsAssembled) return;
 
     m_Nvisible = 0;
@@ -117,7 +116,7 @@ namespace RestFrames {
     m_IsAssembled = false;
   }
 
-  void RSelfAssemblingFrame::Assemble(){
+  void SelfAssemblingRecoFrame::Assemble(){
     if(m_IsAssembled) Disassemble();
     if(!IsSoundBody() || !IsSoundMind()){
       m_Log << LogWarning << "Unable to assemble frame" << m_End;
@@ -215,7 +214,7 @@ namespace RestFrames {
     m_IsAssembled = true;
   }
 
-  void RSelfAssemblingFrame::AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
+  void SelfAssemblingRecoFrame::AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
     int Ninput = frames.size();
     if(Ninput <= 1){
       for(int i = 0; i < Ninput; i++) frame.AddChildFrame(*frames[i]);
@@ -302,22 +301,22 @@ namespace RestFrames {
     }
   }
 
-  bool RSelfAssemblingFrame::AnalyzeEventRecursive(){
+  bool SelfAssemblingRecoFrame::AnalyzeEventRecursive(){
     // Disassemble Frame tree if it assembled
     if(m_IsAssembled) Disassemble();
-    if(!RFrame::AnalyzeEventRecursive()){
+    if(!ReconstructionFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively analyze event with ";
-      m_Log << "disassembled RSelfAssemblingFrame" << m_End;
+      m_Log << "disassembled SelfAssemblingRecoFrame" << m_End;
       SetSpirit(false);
       return false;
     }
     // Assemble Frame tree
     Assemble();
-    if(!RFrame::AnalyzeEventRecursive()){
+    if(!ReconstructionFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively analyze event with ";
-      m_Log << "assembled RSelfAssemblingFrame" << m_End;
+      m_Log << "assembled SelfAssemblingRecoFrame" << m_End;
       SetSpirit(false);
       return false;
     }
@@ -325,14 +324,14 @@ namespace RestFrames {
     return true;
   }
 
-  void RSelfAssemblingFrame::ClearNewFrames(){
+  void SelfAssemblingRecoFrame::ClearNewFrames(){
     int N = m_DecayFrames.GetN();
     for(int i = 0; i < N; i++) m_DecayFrames.Get(i).Clear();
     N = m_VisibleFrames.GetN();
     for(int i = 0; i < N; i++) m_VisibleFrames.Get(i).Clear();
   }
 
-  RFrame& RSelfAssemblingFrame::GetNewDecayFrame(const string& sname, const string& stitle){
+  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewDecayFrame(const string& sname, const string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
@@ -341,7 +340,7 @@ namespace RestFrames {
     name << sname << "_" << m_Ndecay+1;
     ostringstream title; 
     title << "#left(" << stitle << "#right)_{" << m_Ndecay+1 << "}";
-    RDecayFrame* framePtr = new RDecayFrame(name.str(),title.str());
+    DecayRecoFrame* framePtr = new DecayRecoFrame(name.str(),title.str());
     
     m_DecayFrames.Add(*framePtr);
     AddDependent(framePtr);
@@ -349,7 +348,7 @@ namespace RestFrames {
     return *framePtr;
   }
 
-  RFrame& RSelfAssemblingFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
+  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
@@ -358,7 +357,7 @@ namespace RestFrames {
     name << sname << "_" << m_Nvisible+1;
     ostringstream title; 
     title << "#left(" << stitle << "#right)_{" << m_Nvisible+1 << "}";
-    RVisibleFrame* framePtr = new RVisibleFrame(name.str(),title.str());
+    VisibleRecoFrame* framePtr = new VisibleRecoFrame(name.str(),title.str());
     
     m_VisibleFrames.Add(*framePtr);
     AddDependent(framePtr);
@@ -366,7 +365,7 @@ namespace RestFrames {
     return *framePtr;
   }
 
-  RestFrame const& RSelfAssemblingFrame::GetFrame(const RFKey& key) const {
+  RestFrame const& SelfAssemblingRecoFrame::GetFrame(const RFKey& key) const {
     if(!m_IsAssembled) return g_RestFrame;
 
     for(int i = 0; i < m_ChildStates.size(); i++){

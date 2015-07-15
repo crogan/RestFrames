@@ -28,6 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/VisibleFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/GeneratorFrame.hh"
 
 using namespace std;
 
@@ -35,44 +37,50 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // VisibleFrame class methods
   ///////////////////////////////////////////////
-  VisibleFrame::VisibleFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle)
+  template <class T> 
+  VisibleFrame<T>::VisibleFrame(const string& sname, const string& stitle) 
+    : T(sname, stitle)
   {
     Init();
   }
 
-  VisibleFrame::~VisibleFrame(){
+  template <class T> 
+  VisibleFrame<T>::~VisibleFrame(){
     
   }
 
-  void VisibleFrame::Init(){
-    m_Type = FVisible;
+  template <class T> 
+  void VisibleFrame<T>::Init(){
+    T::m_Type = FVisible;
   }
 
-  bool VisibleFrame::IsSoundBody() const {
+  template <class T> 
+  bool VisibleFrame<T>::IsSoundBody() const {
     if(RFBase::IsSoundBody()) return true;
     if(!RestFrame::IsSoundBody()){
-      SetBody(false);
-      return false;
+      return T::SetBody(false);
     }
-    int Nchild = GetNChildren();
-    if(Nchild > 0 || GetParentFrame().IsEmpty()){
-      m_Log << LogWarning << "Problem with parent or child frames" << m_End;
-      SetBody(false);
-      return false;
+    int Nchild = T::GetNChildren();
+    if(Nchild > 0 || T::GetParentFrame().IsEmpty()){
+      *T::m_LogPtr << LogWarning << "Problem with parent or child frames" << m_End;
+      return T::SetBody(false);
     }
-    SetBody(true);
-    return true;
+    return T::SetBody(true);
   }
 
-  void VisibleFrame::SetLabFrameFourVector(const TLorentzVector& V){
+  template <class T> 
+  void VisibleFrame<T>::SetLabFrameFourVector(const TLorentzVector& V){
     m_Lab_P.SetVectM(V.Vect(),V.M());
   }
 
-  TLorentzVector VisibleFrame::GetLabFrameFourVector() const{
+  template <class T> 
+  TLorentzVector VisibleFrame<T>::GetLabFrameFourVector() const{
     TLorentzVector V;
     V.SetVectM(m_Lab_P.Vect(),m_Lab_P.M());
     return V;
   }
+
+  template class VisibleFrame<ReconstructionFrame>;
+  template class VisibleFrame<GeneratorFrame>;
 
 }

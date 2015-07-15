@@ -28,7 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/RFList.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/ResonanceGenFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
@@ -38,8 +38,6 @@
 using namespace std;
 
 namespace RestFrames {
-
-  RFKey g_Key(-1);
 
   template <class T, class Derived>
   T& RFListBase<T,Derived>::m_Empty = RFListBase<T,Derived>::m_EmptyHandler.GetEmpty();
@@ -433,7 +431,8 @@ namespace RestFrames {
 
   template class RFList<RFBase>;
   template class RFList<RestFrame>; 
-  template class RFList<RFrame>; 
+  template class RFList<ReconstructionFrame>;
+  template class RFList<GeneratorFrame>;
   template class RFList<ResonanceGenFrame>; 
   template class RFList<Jigsaw>;
   template class RFList<Group>;
@@ -443,7 +442,8 @@ namespace RestFrames {
 
   template class RFListBase<RFBase,RFList<RFBase> >;
   template class RFListBase<RestFrame,RFList<RestFrame> >; 
-  template class RFListBase<RFrame,RFList<RFrame> >; 
+  template class RFListBase<ReconstructionFrame,RFList<ReconstructionFrame> >; 
+  template class RFListBase<GeneratorFrame,RFList<GeneratorFrame> >;
   template class RFListBase<ResonanceGenFrame,RFList<ResonanceGenFrame> >; 
   template class RFListBase<Jigsaw,RFList<Jigsaw> >;
   template class RFListBase<Group,RFList<Group> >;

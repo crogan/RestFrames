@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RVisibleFrame.hh
+///  \file   LabRecoFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,31 +27,46 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef RVisibleFrame_HH
-#define RVisibleFrame_HH
+#ifndef LabRecoFrame_HH
+#define LabRecoFrame_HH
 
-#include "RestFrames/VisibleFrame.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/LabFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  class RestFrame;
-  class RFrame;
-  class VisibleFrame;
+  class Jigsaw;
 
   ///////////////////////////////////////////////
-  // RVisibleFrame class
+  // LabRecoFrame class
   ///////////////////////////////////////////////
-  class RVisibleFrame : public VisibleFrame, public RFrame{
+  class LabRecoFrame : public LabFrame<ReconstructionFrame> {
   public:
-    RVisibleFrame(const string& sname, const string& stitle);
-    virtual ~RVisibleFrame();
+    LabRecoFrame(const string& sname, const string& stitle);
+    virtual ~LabRecoFrame();
+  
+    virtual void Clear();
+
+    virtual bool InitializeAnalysis();
+    virtual void ClearEvent();
+    virtual bool AnalyzeEvent();
+
+  protected:
+    RestFrames::RFList<Group>  m_LabGroups;
+    RestFrames::RFList<Jigsaw> m_LabJigsaws;
+    RestFrames::RFList<State> m_LabStates;
+  
+    bool InitializeLabStates();
+    bool InitializeLabGroups();
+    bool InitializeLabJigsaws();
+
+    bool ExecuteJigsaws();
 
   private:
     void Init();
-
+    void ClearStates();
   };
 
 }

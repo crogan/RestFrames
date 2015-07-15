@@ -37,9 +37,7 @@ namespace RestFrames {
   // LabGenFrame class
   ///////////////////////////////////////////////
   LabGenFrame::LabGenFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle), 
-    LabFrame(sname, stitle), 
-    GeneratorFrame(sname, stitle)
+    LabFrame<GeneratorFrame>(sname, stitle)
   {
     Init();
   }

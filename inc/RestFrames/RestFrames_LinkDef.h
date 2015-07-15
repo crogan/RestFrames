@@ -9,7 +9,8 @@ using namespace RestFrames;
 
 #pragma link C++ class RFList<RFBase>;
 #pragma link C++ class RFList<RestFrame>; 
-#pragma link C++ class RFList<RFrame>; 
+#pragma link C++ class RFList<ReconstructionFrame>;
+#pragma link C++ class RFList<GeneratorFrame>;  
 #pragma link C++ class RFList<ResonanceGenFrame>;
 #pragma link C++ class RFList<Jigsaw>;
 #pragma link C++ class RFList<Group>;
@@ -20,10 +21,6 @@ using namespace RestFrames;
 #pragma link C++ class RFLog;
 
 #pragma link C++ class RestFrame;
-#pragma link C++ class LabFrame;
-#pragma link C++ class DecayFrame;
-#pragma link C++ class InvisibleFrame;
-#pragma link C++ class VisibleFrame;
 
 #pragma link C++ class GeneratorFrame;
 #pragma link C++ class LabGenFrame;
@@ -32,12 +29,12 @@ using namespace RestFrames;
 #pragma link C++ class VisibleGenFrame;
 #pragma link C++ class ResonanceGenFrame;
 
-#pragma link C++ class RFrame;
-#pragma link C++ class RLabFrame;
-#pragma link C++ class RDecayFrame;
-#pragma link C++ class RInvisibleFrame;
-#pragma link C++ class RVisibleFrame;
-#pragma link C++ class RSelfAssemblingFrame;
+#pragma link C++ class ReconstructionFrame;
+#pragma link C++ class LabRecoFrame;
+#pragma link C++ class DecayRecoFrame;
+#pragma link C++ class InvisibleRecoFrame;
+#pragma link C++ class VisibleRecoFrame;
+#pragma link C++ class SelfAssemblingRecoFrame;
 
 #pragma link C++ enum FrameType;
 #pragma link C++ class std::vector<FrameType>;
@@ -81,7 +78,7 @@ using namespace RestFrames;
 #pragma link C++ class RFKey+;
 #pragma link C++ class RFList<RFBase>+;
 #pragma link C++ class RFList<RestFrame>+; 
-#pragma link C++ class RFList<RFrame>+; 
+#pragma link C++ class RFList<ReconstructionFrame>+; 
 #pragma link C++ class RFList<ResonanceGenFrame>+; 
 #pragma link C++ class RFList<Jigsaw>+;
 #pragma link C++ class RFList<Group>+;
@@ -92,10 +89,6 @@ using namespace RestFrames;
 #pragma link C++ class RFLog+;
 
 #pragma link C++ class RestFrame+;
-#pragma link C++ class LabFrame+;
-#pragma link C++ class DecayFrame+;
-#pragma link C++ class InvisibleFrame+;
-#pragma link C++ class VisibleFrame+;
 
 #pragma link C++ class GeneratorFrame+;
 #pragma link C++ class LabGenFrame+;
@@ -104,12 +97,12 @@ using namespace RestFrames;
 #pragma link C++ class VisibleGenFrame+;
 #pragma link C++ class ResonanceGenFrame+;
 
-#pragma link C++ class RFrame+;
-#pragma link C++ class RLabFrame+;
-#pragma link C++ class RDecayFrame+;
-#pragma link C++ class RInvisibleFrame+;
-#pragma link C++ class RVisibleFrame+;
-#pragma link C++ class RSelfAssemblingFrame+;
+#pragma link C++ class ReconstructionFrame+;
+#pragma link C++ class LabRecoFrame+;
+#pragma link C++ class DecayRecoFrame+;
+#pragma link C++ class InvisibleRecoFrame+;
+#pragma link C++ class VisibleRecoFrame+;
+#pragma link C++ class SelfAssemblingRecoFrame+;
 
 #pragma link C++ enum LogType+;
 #pragma link C++ enum FrameType+;

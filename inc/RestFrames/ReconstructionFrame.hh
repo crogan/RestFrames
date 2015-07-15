@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RDecayFrame.cc
+///  \file   ReconstructionFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,32 +27,56 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/RDecayFrame.hh"
+#ifndef ReconstructionFrame_HH
+#define ReconstructionFrame_HH
+
+#include "RestFrames/RestFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // RDecayFrame class
-  // Class for an intermediate state
-  // inheriting from DecayFrame and RFrame
-  ///////////////////////////////////////////////
-  RDecayFrame::RDecayFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname,stitle), 
-    DecayFrame(sname,stitle),
-    RFrame(sname, stitle)
-  {
-    Init();
-  }
-  
-  RDecayFrame::~RDecayFrame(){ }
+  class Group;
+  class State;
 
-  void RDecayFrame::Init(){
-    m_RType = RDVanilla;
-  }
+  ///////////////////////////////////////////////
+  // ReconstructionFrame class
+  ///////////////////////////////////////////////
+  class ReconstructionFrame : public RestFrame {
+  public:
+    ReconstructionFrame(const string& sname, const string& stitle);
+    ReconstructionFrame();
+    virtual ~ReconstructionFrame();
 
-  bool RDecayFrame::IsSelfAssemblingFrame() const {
-    return m_RType == RDSelfAssembling;
-  }
+    /// \brief Clears ReconstructionFrame of all connections to other objects
+    virtual void Clear();
+
+    virtual void SetGroup(Group& group);
+    Group& GetGroup() const;
+
+    RestFrames::RFList<Group> GetListGroups() const;
+
+    virtual bool InitializeStates(const RestFrames::RFList<State>& states, 
+				  const RestFrames::RFList<Group>& groups);
+    virtual void ClearEventRecursive();
+    virtual bool AnalyzeEventRecursive();
+
+  protected:
+    vector<RestFrames::RFList<State> > m_ChildStates;
+    Group* m_GroupPtr;
+
+    virtual bool InitializeStatesRecursive(const RestFrames::RFList<State>& states, 
+					   const RestFrames::RFList<Group>& groups);
+    virtual bool InitializeNoGroupStates(const RestFrames::RFList<State>& states);
+    virtual bool InitializeGroupStates(const RestFrames::RFList<Group>& groups);
+
+    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
+
+  private:
+    void Init();
+
+  };
+
 }
+
+#endif

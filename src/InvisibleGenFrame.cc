@@ -36,10 +36,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleGenFrame class
   ///////////////////////////////////////////////
-  InvisibleGenFrame::InvisibleGenFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle),
-    InvisibleFrame(sname, stitle),
-    GeneratorFrame(sname, stitle)
+  InvisibleGenFrame::InvisibleGenFrame(const string& sname, const string& stitle)
+    : InvisibleFrame<GeneratorFrame>(sname, stitle)
   {
     Init();
   }

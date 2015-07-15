@@ -84,18 +84,18 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 									       
 
   // Set up 'signal-like' analysis tree
-  RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame GG_R("GG_R","#tilde{g}#tilde{g}");
-  RDecayFrame Ga_R("Ga_R","#tilde{g}_{a}");
-  RDecayFrame Gb_R("Gb_R","#tilde{g}_{b}");
-  RDecayFrame Ca_R("Ca_R","C_{a}");
-  RDecayFrame Cb_R("Cb_R","C_{b}");
-  RVisibleFrame V1a_R("V1a_R","j_{1a}");
-  RVisibleFrame V2a_R("V2a_R","j_{2a}");
-  RInvisibleFrame Xa_R("Xa_R","#tilde{#chi}_{a}");
-  RVisibleFrame V1b_R("V1b_R","j_{1b}");
-  RVisibleFrame V2b_R("V2b_R","j_{2b}");
-  RInvisibleFrame Xb_R("Xb_R","#tilde{#chi}_{b}");
+  LabRecoFrame LAB_R("LAB_R","LAB");
+  DecayRecoFrame GG_R("GG_R","#tilde{g}#tilde{g}");
+  DecayRecoFrame Ga_R("Ga_R","#tilde{g}_{a}");
+  DecayRecoFrame Gb_R("Gb_R","#tilde{g}_{b}");
+  DecayRecoFrame Ca_R("Ca_R","C_{a}");
+  DecayRecoFrame Cb_R("Cb_R","C_{b}");
+  VisibleRecoFrame V1a_R("V1a_R","j_{1a}");
+  VisibleRecoFrame V2a_R("V2a_R","j_{2a}");
+  InvisibleRecoFrame Xa_R("Xa_R","#tilde{#chi}_{a}");
+  VisibleRecoFrame V1b_R("V1b_R","j_{1b}");
+  VisibleRecoFrame V2b_R("V2b_R","j_{2b}");
+  InvisibleRecoFrame Xb_R("Xb_R","#tilde{#chi}_{b}");
   LAB_R.SetChildFrame(GG_R);
   GG_R.AddChildFrame(Ga_R);
   GG_R.AddChildFrame(Gb_R);
@@ -109,10 +109,10 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   Cb_R.AddChildFrame(Xb_R);
 
   // Set up 'background-like' analysis tree
-  RLabFrame LAB_B("LAB_B","LAB");
-  RSelfAssemblingFrame CM_B("CM_B","CM");
-  RVisibleFrame V_B("V_B","Vis");
-  RInvisibleFrame I_B("I_B","Inv");
+  LabRecoFrame LAB_B("LAB_B","LAB");
+  SelfAssemblingRecoFrame CM_B("CM_B","CM");
+  VisibleRecoFrame V_B("V_B","Vis");
+  InvisibleRecoFrame I_B("I_B","Inv");
   LAB_B.SetChildFrame(CM_B);
   CM_B.AddChildFrame(V_B);
   CM_B.AddChildFrame(I_B);
@@ -280,11 +280,11 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     }
     LAB_B.AnalyzeEvent();                                 // analyze the event
 
-    RDecayFrame* G[2];
-    RDecayFrame* C[2];
-    RVisibleFrame* VS[2];
-    RVisibleFrame* VC[2];
-    RInvisibleFrame* X[2];
+    DecayRecoFrame* G[2];
+    DecayRecoFrame* C[2];
+    VisibleRecoFrame* VS[2];
+    VisibleRecoFrame* VC[2];
+    InvisibleRecoFrame* X[2];
     // Randomize the two hemispheres
     int flip = (gRandom->Rndm() > 0.5);
     G[flip] = &Ga_R;

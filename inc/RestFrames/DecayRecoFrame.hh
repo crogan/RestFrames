@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RLabFrame.hh
+///  \file   DecayRecoFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,46 +27,34 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef RLabFrame_HH
-#define RLabFrame_HH
+#ifndef DecayRecoFrame_HH
+#define DecayRecoFrame_HH
 
-#include "RestFrames/LabFrame.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/DecayFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  class Jigsaw;
+   enum RDecayType { RDVanilla, RDSelfAssembling };
 
   ///////////////////////////////////////////////
-  // RLabFrame class
+  // DecayRecoFrame class
   ///////////////////////////////////////////////
-  class RLabFrame : public LabFrame, public RFrame {
+  class DecayRecoFrame : public DecayFrame<ReconstructionFrame> {
   public:
-    RLabFrame(const string& sname, const string& stitle);
-    virtual ~RLabFrame();
-  
-    virtual void Clear();
+    DecayRecoFrame(const string& sname, const string& stitle);
+    virtual ~DecayRecoFrame();
 
-    virtual bool InitializeAnalysis();
-    virtual void ClearEvent();
-    virtual bool AnalyzeEvent();
+    bool IsSelfAssemblingFrame() const;
 
   protected:
-    RestFrames::RFList<Group>  m_LabGroups;
-    RestFrames::RFList<Jigsaw> m_LabJigsaws;
-    RestFrames::RFList<State> m_LabStates;
-  
-    bool InitializeLabStates();
-    bool InitializeLabGroups();
-    bool InitializeLabJigsaws();
-
-    bool ExecuteJigsaws();
+    RDecayType m_RType;
 
   private:
     void Init();
-    void ClearStates();
+
   };
 
 }

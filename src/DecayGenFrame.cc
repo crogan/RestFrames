@@ -40,12 +40,10 @@ namespace RestFrames {
   ///////////////////////////////////////////////
 
   // Number of trials to discard in Metropilis-Hastings MCMC
-  int DecayGenFrame::m_N_MCMC_BurnIn = 10000;
+  int DecayGenFrame::m_N_MCMC_BurnIn = 1000;
 
-  DecayGenFrame::DecayGenFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname,stitle), 
-    DecayFrame(sname,stitle),
-    GeneratorFrame(sname, stitle)
+  DecayGenFrame::DecayGenFrame(const string& sname, const string& stitle) 
+    : DecayFrame<GeneratorFrame>(sname,stitle)
   {
     Init();
   }
@@ -68,9 +66,9 @@ namespace RestFrames {
     m_MarkovChainMC = false;
     m_Resonances.Clear();
     m_ResIndex.clear();
-    m_ResWidth.clear();
     m_ResPrevProb.clear();
     m_ResPrevMass.clear();
+    m_ResPrevMTOT = -1.;
   }
 
   bool DecayGenFrame::IsSoundBody() const{
@@ -187,21 +185,18 @@ namespace RestFrames {
     // check for resonance children
     m_Resonances.Clear();
     m_ResIndex.clear();
-    m_ResWidth.clear();
     m_ResPrevMass.clear();
     m_ResPrevProb.clear();
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
-      if(dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i))){
-	//m_Resonances.Add((ResonanceGenFrame&)GetChildFrame(i));
+      if(dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i)))
 	m_Resonances.Add(*dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i)));
-      }
+      
     int Nres = m_Resonances.GetN();
     for(int i = Nres-1; i >= 0; i--)
-      if(m_Resonances.Get(i).GetWidth() <= 0.){
-	cout << "removing!!!!!!!!!!!!! " << m_Resonances.Get(i).GetWidth()  << endl;
+      if(m_Resonances.Get(i).GetWidth() <= 0.)
 	m_Resonances.Remove(m_Resonances.Get(i));
-      }
+      
     
     Nres = m_Resonances.GetN();
     if(Nres > 0){
@@ -209,7 +204,6 @@ namespace RestFrames {
       m_Burnt = false;
       for(int i = 0; i < Nres; i++){
 	m_ResIndex.push_back(GetChildIndex(m_Resonances[i]));
-	m_ResWidth.push_back(m_Resonances[i].GetWidth());
 	m_ResPrevMass.push_back(0.);
 	m_ResPrevProb.push_back(0.);
       }
@@ -221,9 +215,9 @@ namespace RestFrames {
 
   bool DecayGenFrame::MCMC_BurnIn(){
     m_Log << LogVerbose;
-    m_Log << "Burning in Markov Chain with ";
+    m_Log << "Burning in Markov Chain MC with ";
     m_Log << m_N_MCMC_BurnIn;
-    m_Log << " trials to be discarded" << m_End;
+    m_Log << " trials to be discarded..." << m_End;
 
     int N    = GetNChildren();
     int Nres = m_Resonances.GetN();
@@ -240,15 +234,13 @@ namespace RestFrames {
       Mpolesum += m_Resonances[i].GetPoleMass();
     }
 
-    for(int i = 0; i < Nres; i++){
-      m_ResWidth[i] = m_Resonances[i].GetWidth();
+    for(int i = 0; i < Nres; i++)
       m_ResPrevProb[i]  = 0.;
-    }
-
+    
     if(Msum >= M){
       m_Log << LogWarning;
-      m_Log << "Sum of child masses is in excess of parent mass";
-      m_Log << m_End;
+      m_Log << "Sum of child masses is in excess of parent mass: ";
+      m_Log << M << " < " << Msum << m_End;
       return SetSpirit(false);
     }
 
@@ -258,8 +250,9 @@ namespace RestFrames {
     else
       for(int i = 0; i < Nres; i++)
 	m_ResPrevMass[i] = m_Resonances[i].GetMinimumMass() + (M-Msum)/double(Nres+1);
+    m_ResPrevMTOT = M;
 
-    for(int i = 0; i < m_N_MCMC_BurnIn; i++)
+    for(int i = 0; i < m_N_MCMC_BurnIn; i++){
       if(!MCMC_Generate()){
 	m_Log << LogWarning;
 	m_Log << "Problem with Markov-chain MC generation";
@@ -267,6 +260,9 @@ namespace RestFrames {
 	m_Burnt = false;
 	return false;
       }
+    }
+    m_Log << LogVerbose << "...Done" << m_End;
+
     m_Burnt = true;
     return true;
   }
@@ -277,8 +273,13 @@ namespace RestFrames {
     double M = GetMass();
 
     // Set res masses to previous iter val
-    for(int ires = 0; ires < Nres; ires++)
+    for(int ires = 0; ires < Nres; ires++){
+      if(m_ResPrevMTOT > 0)
+	m_ResPrevMass[ires] = max(m_Resonances.Get(ires).GetMinimumMass()*1.01, 
+				  m_ResPrevMass[ires]*M/m_ResPrevMTOT);
+      
       m_Resonances[ires].SetEvtMass(m_ResPrevMass[ires]);
+    }
 
     // Update masses 1-by-1, 
     // keeping others fixed
@@ -293,16 +294,11 @@ namespace RestFrames {
       }
       Mmax += m_ResPrevMass[ires];
       double Mass = -1.;
-      while((Mass < Mmin) || (Mass >= Mmax)){
-	Mass = GetGaus(m_ResPrevMass[ires],m_ResWidth[ires]);
-	// m_Log << LogDebug;
-	// m_Log << "Prev mass " << m_ResPrevMass[ires];
-	// m_Log << ". Width " << m_ResWidth[ires];
-	// m_Log << "new mass " << Mass << m_End;
-      }
+      Mass = m_Resonances[ires].GenerateMass(Mmin,Mmax);
       ChildMasses[m_ResIndex[ires]] = Mass;
+
       vector<double> TwoBodyMass;
-      double Prob = m_Resonances[ires].GetProb(Mass)*GenerateTwoBodyMasses(M, ChildMasses, TwoBodyMass);
+      double Prob = (Mass/M)*GenerateTwoBodyMasses(M, ChildMasses, TwoBodyMass);
       if(Prob >= GetRandom()*m_ResPrevProb[ires]){
 	m_ResPrevMass[ires] = Mass;
 	m_ResPrevProb[ires] = Prob;
@@ -312,6 +308,7 @@ namespace RestFrames {
 	m_Resonances[ires].SetEvtMass(m_ResPrevMass[ires]); 
       }
     }
+    m_ResPrevMTOT = M;
     return true;
   }
 
@@ -374,7 +371,7 @@ namespace RestFrames {
     if(N_c == 2){
       M_2b.push_back(M);
       M_2b.push_back(M_c[1]);
-      return GetProb(M, M_c[0], M_c[1]);
+      return GetProb(M, M_c[0], M_c[1])/M;
     }
 
     double ETOT = M;
@@ -387,7 +384,7 @@ namespace RestFrames {
     for(int n = 1; n < N_c; n++){
       Emin += M_c[n-1];
       Emax += M_c[n];
-      probMAX *= GetProb(Emax,Emin,M_c[n]);
+      probMAX *= GetProb(Emax,Emin,M_c[n])/M;
     }
 
     // accept/reject for intermediate
@@ -410,7 +407,7 @@ namespace RestFrames {
 
       prob = 1.;
       for(int i = 0; i < N_c-1; i++)
-	prob *= GetProb(M_2b[i],M_2b[i+1],M_c[i]);
+	prob *= GetProb(M_2b[i],M_2b[i+1],M_c[i])/M;
     }
     return prob;
   }

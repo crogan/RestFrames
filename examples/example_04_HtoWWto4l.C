@@ -46,7 +46,7 @@ TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title = "", string l
 using namespace std;
 using namespace RestFrames;
 
-void example_04_HtoWWto4l(string output_name = "output_04.root"){
+void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   setstyle();
   
   SetLogPrint(LogVerbose,true);
@@ -54,6 +54,7 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
   SetLogMaxWidth(90);
 
   double mH = 125.;
+  double wH = 0.04;
   double mW = 80.;
   double wW = 2.5;
   double mL = 0.501;
@@ -64,7 +65,7 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
   LabGenFrame LAB_G("LAB_G","LAB");
-  DecayGenFrame H_G("H_G","H");
+  ResonanceGenFrame H_G("H_G","H");
   ResonanceGenFrame Wa_G("Wa_G","W_{a}");
   ResonanceGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame La_G("La_G","#it{l}_{a}");
@@ -88,6 +89,7 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // set Higgs masses
   H_G.SetMass(mH);
+  H_G.SetWidth(wH);
   // set W masses
   Wa_G.SetMass(mW);
   Wb_G.SetMass(mW);
@@ -110,15 +112,15 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
 
 
   // Set up reco analysis tree
-   g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
-  RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame H_R("H_R","H");
-  RDecayFrame Wa_R("Wa_R","W_{a}");
-  RDecayFrame Wb_R("Wb_R","W_{b}");
-  RVisibleFrame La_R("La_R","#it{l}_{a}");
-  RInvisibleFrame Na_R("Na_R","#nu_{a}");
-  RVisibleFrame Lb_R("Lb_R","#it{l}_{b}");
-  RInvisibleFrame Nb_R("Nb_R","#nu_{b}");
+  g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
+  LabRecoFrame LAB_R("LAB_R","LAB");
+  DecayRecoFrame H_R("H_R","H");
+  DecayRecoFrame Wa_R("Wa_R","W_{a}");
+  DecayRecoFrame Wb_R("Wb_R","W_{b}");
+  VisibleRecoFrame La_R("La_R","#it{l}_{a}");
+  InvisibleRecoFrame Na_R("Na_R","#nu_{a}");
+  VisibleRecoFrame Lb_R("Lb_R","#it{l}_{b}");
+  InvisibleRecoFrame Nb_R("Nb_R","#nu_{b}");
   LAB_R.SetChildFrame(H_R);
   H_R.AddChildFrame(Wa_R);
   H_R.AddChildFrame(Wb_R);
@@ -165,9 +167,9 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
   } else
     g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
 
-  RDecayFrame *W[2];
-  RVisibleFrame *L[2];
-  RInvisibleFrame *N[2];
+  DecayRecoFrame *W[2];
+  VisibleRecoFrame *L[2];
+  InvisibleRecoFrame *N[2];
   W[0] = &Wa_R;
   W[1] = &Wb_R;
   L[0] = &La_R;
@@ -177,6 +179,7 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
 
   // Now we book some histograms of kinematic variables
   TH1D* h_MH     = new TH1D("h_MH","h_MH",100,0.,2.);
+  TH1D* h_mH     = new TH1D("h_mH","h_mH",100,0.,mH*2.);
   TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,2.);
   TH2D* h_MH_v_MW   = new TH2D("h_MH_v_MW","h_MH_v_MW",50,0.,2.,50,0.,2.);
   TH2D* h_mW_v_mW   = new TH2D("h_mW_v_mW","h_mW_v_mW",50,0.,mH,50,0.,mH);
@@ -216,18 +219,20 @@ void example_04_HtoWWto4l(string output_name = "output_04.root"){
     double MH = H_R.GetMass();
     double MW = Wa_R.GetMass();
 
-    h_MH->Fill(MH/mH);
+    h_MH->Fill(MH/H_G.GetMass());		
+    h_mH->Fill(H_G.GetMass());
     h_MW->Fill(MW/mW);
-    h_MH_v_MW->Fill(MH/mH,MW/mW);
+    h_MH_v_MW->Fill(MH/H_G.GetMass(),MW/mW);
     h_mW_v_mW->Fill(Wa_G.GetMass(),Wb_G.GetMass());
   }
 
   setstyle();
   string plot_title = "H #rightarrow W(#it{l} #nu)W(#it{l} #nu)";
   TCanvas *c_MH          = Plot_Me("c_MH", h_MH, "M_{H} / m_{H}^{true}", plot_title);
+  TCanvas *c_mH          = Plot_Me("c_mH", h_mH, "m_{H}^{true} [GeV]", plot_title);
   TCanvas *c_MW          = Plot_Me("c_MW", h_MW, "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_MH_v_MW     = Plot_Me("c_MH_v_MW", h_MH_v_MW, "M_{H} / m_{H}^{true}", "M_{W} / m_{W}^{true}", plot_title);
-  TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} / m_{H}^{true}", "m_{Wb}^{true} / m_{W}^{true}", plot_title);
+  TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} [GeV]", "m_{Wb}^{true} [GeV]", plot_title);
 
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();

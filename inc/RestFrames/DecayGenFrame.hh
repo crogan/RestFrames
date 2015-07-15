@@ -44,7 +44,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // DecayGenFrame class
   ///////////////////////////////////////////////
-  class DecayGenFrame : public DecayFrame, public GeneratorFrame{
+  class DecayGenFrame : public DecayFrame<GeneratorFrame> {
   public:
     DecayGenFrame(const string& sname, const string& stitle);
     virtual ~DecayGenFrame();
@@ -68,8 +68,8 @@ namespace RestFrames {
 
     bool m_MarkovChainMC;
     RestFrames::RFList<ResonanceGenFrame> m_Resonances;
+    double m_ResPrevMTOT;
     vector<int>    m_ResIndex;
-    vector<double> m_ResWidth;
     vector<double> m_ResPrevProb;
     vector<double> m_ResPrevMass;
     

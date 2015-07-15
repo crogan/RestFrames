@@ -37,9 +37,7 @@ namespace RestFrames {
   // VisibleGenFrame class
   ///////////////////////////////////////////////
   VisibleGenFrame::VisibleGenFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle),
-    VisibleFrame(sname, stitle),
-    GeneratorFrame(sname, stitle)
+    VisibleFrame<GeneratorFrame>(sname, stitle)
   {
     Init();
   }

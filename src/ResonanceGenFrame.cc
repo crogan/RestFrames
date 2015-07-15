@@ -38,16 +38,14 @@ namespace RestFrames {
   // ResonanceGenFrame class
   ///////////////////////////////////////////////
 
-  ResonanceGenFrame::ResonanceGenFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname,stitle),
-    DecayGenFrame(sname,stitle)
+  ResonanceGenFrame::ResonanceGenFrame(const string& sname, const string& stitle)
+    : DecayGenFrame(sname,stitle)
   {
     Init();
   }
 
-  ResonanceGenFrame::ResonanceGenFrame() : 
-    RestFrame(),
-    DecayGenFrame("Empty","Empty")
+  ResonanceGenFrame::ResonanceGenFrame()
+    : DecayGenFrame("Empty","Empty")
   {
     Init();
   }
@@ -104,10 +102,7 @@ namespace RestFrames {
     if(m_Width <= 0.)
       m_Mass = m_PoleMass;
     else {
-      double min = GetMinimumMass();
-      m_Mass = -1.;
-      while(m_Mass < min)
-	m_Mass = GenerateMass();
+      m_Mass = GenerateMass(GetMinimumMass());
     }
 
     m_MassSet = true;
@@ -123,15 +118,13 @@ namespace RestFrames {
       return 0.;
     double Mass = 0.;
     int N = GetNChildren();
-    for(int i = 0; i < N; i++){
-      ResonanceGenFrame* framePtr  = 
-	dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i));
-      if(framePtr){
-	Mass += framePtr->GetMinimumMass();
-      } else {
+    for(int i = 0; i < N; i++)
+      if(!m_Resonances.Contains((ResonanceGenFrame&)GetChildFrame(i)))
 	Mass += GetChildFrame(i).GetMass();
-      }
-    }
+    N = m_Resonances.GetN();
+    for(int i = 0; i < N; i++)
+      Mass += m_Resonances.Get(i).GetMinimumMass();
+
     return Mass;
   }
 
@@ -151,12 +144,23 @@ namespace RestFrames {
       return mass*mass/den;
   }
 
-  double ResonanceGenFrame::GenerateMass(double min_mass) const {
+
+
+  double ResonanceGenFrame::GenerateMass(double Mmin, double Mmax) const {
     if(m_Width <= 0. || m_PoleMass <= 0.)
       return 0.;
-    double A = -m_PoleMass/m_Width;
-    double Mass = atan(A) + GetRandom()*(TMath::Pi()/2.-atan(A));
-    return sqrt(Mass);
+    
+    if(Mmin <= 0)
+      Mmin = 0.;
+
+    double M2 = m_PoleMass*m_PoleMass;
+    double MW = m_PoleMass*m_Width;
+    double Imin = atan((Mmin*Mmin-M2)/MW);
+    double Imax = TMath::Pi()/2.;
+    if(Mmax > Mmin)
+      Imax = atan((Mmax*Mmax-M2)/MW);
+    
+    return sqrt(M2 + MW*tan(Imin+GetRandom()*(Imax-Imin)));
   }
 
 }

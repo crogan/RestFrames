@@ -29,7 +29,7 @@
 
 #include "RestFrames/CombinatoricGroup.hh"
 #include "RestFrames/CombinatoricState.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
 using namespace std;
@@ -63,8 +63,8 @@ namespace RestFrames {
 
   void CombinatoricGroup::AddFrame(RestFrame& frame){
     if(frame.IsEmpty()) return;
-    if(!frame.IsRFrame() || !frame.IsVisibleFrame()) return;
-    RFrame *ptr = dynamic_cast<RFrame*>(&frame);
+    if(!frame.IsRecoFrame() || !frame.IsVisibleFrame()) return;
+    ReconstructionFrame* ptr = dynamic_cast<ReconstructionFrame*>(&frame);
     if(ptr){
       ptr->SetGroup(*this);
       m_Frames.Add(frame);

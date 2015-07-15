@@ -40,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // VisibleGenFrame class
   ///////////////////////////////////////////////
-  class VisibleGenFrame : public VisibleFrame, public GeneratorFrame{
+  class VisibleGenFrame : public VisibleFrame<GeneratorFrame> {
   public:
     VisibleGenFrame(const string& sname, const string& stitle);
     virtual ~VisibleGenFrame();

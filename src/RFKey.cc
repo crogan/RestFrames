@@ -31,7 +31,9 @@
 
 namespace RestFrames {
 
-  RFKey::RFKey(){ }
+   RFKey g_Key(-1);
+
+  RFKey::RFKey(){ m_Key = -1; }
   RFKey::RFKey(int key){ m_Key = key; }
   RFKey::RFKey(const RFKey& key){ m_Key = key.GetKey(); }
   RFKey::~RFKey(){ }

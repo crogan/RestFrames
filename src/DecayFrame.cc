@@ -28,6 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/DecayFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/GeneratorFrame.hh"
 
 using namespace std;
 
@@ -36,32 +38,35 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // DecayFrame class
   ///////////////////////////////////////////////
-  DecayFrame::DecayFrame(const string& sname,const string& stitle) : 
-    RestFrame(sname, stitle)
+  template <class T> DecayFrame<T>::DecayFrame(const string& sname,const string& stitle)
+    : T(sname, stitle)
   {
     Init();
   }
 
-  DecayFrame::~DecayFrame(){
+  template <class T> 
+  DecayFrame<T>::~DecayFrame(){
   
   }
-  void DecayFrame::Init(){
-    m_Type = FDecay;
+
+  template <class T> 
+  void DecayFrame<T>::Init(){
+    T::m_Type = FDecay;
   }
 
-  bool DecayFrame::IsSoundBody() const {
+  template <class T> 
+  bool DecayFrame<T>::IsSoundBody() const {
     if(RFBase::IsSoundBody()) return true;
-    if(!RestFrame::IsSoundBody()){
-      SetBody(false);
-      return false;
+    if(!T::IsSoundBody()){
+      return T::SetBody(false);
     }
-    int Nchild = GetNChildren();
-    if(Nchild < 1 || GetParentFrame().IsEmpty()){
-      SetBody(false);
-      return false;
+    int Nchild = T::GetNChildren();
+    if(Nchild < 1 || T::GetParentFrame().IsEmpty()){
+      return T::SetBody(false);
     } 
-
     return true;
   }
 
+  template class DecayFrame<ReconstructionFrame>;
+  template class DecayFrame<GeneratorFrame>;
 }

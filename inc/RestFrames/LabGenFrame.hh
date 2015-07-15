@@ -40,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // LabGenFrame class
   ///////////////////////////////////////////////
-  class LabGenFrame : public LabFrame, public GeneratorFrame {
+  class LabGenFrame : public LabFrame<GeneratorFrame> {
   public:
     LabGenFrame(const string& sname, const string& stitle);
     virtual ~LabGenFrame();

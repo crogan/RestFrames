@@ -60,12 +60,12 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   VisibleGenFrame L_G("L_G","#it{l}");
   InvisibleGenFrame NU_G("NU_G","#nu");
 
-  RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame T_R("T_R","t");
-  RDecayFrame W_R("W_R","W");
-  RVisibleFrame B_R("B_R","b");
-  RVisibleFrame L_R("L_R","#it{l}");
-  RInvisibleFrame NU_R("NU_R","#nu");
+  LabRecoFrame LAB_R("LAB_R","LAB");
+  DecayRecoFrame T_R("T_R","t");
+  DecayRecoFrame W_R("W_R","W");
+  VisibleRecoFrame B_R("B_R","b");
+  VisibleRecoFrame L_R("L_R","#it{l}");
+  InvisibleRecoFrame NU_R("NU_R","#nu");
 
   LAB_G.SetChildFrame(T_G);
   T_G.AddChildFrame(B_G);

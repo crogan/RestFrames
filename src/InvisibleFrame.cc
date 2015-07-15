@@ -28,41 +28,51 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/InvisibleFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/GeneratorFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
+  
+
   ///////////////////////////////////////////////
   // InvisibleFrame class
   ///////////////////////////////////////////////
-  InvisibleFrame::InvisibleFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle)
+  template <class T>
+  InvisibleFrame<T>::InvisibleFrame(const string& sname, const string& stitle)
+    : T(sname, stitle)
   {
     Init();
   }
-  InvisibleFrame::~InvisibleFrame(){
+
+  template <class T>
+  InvisibleFrame<T>::~InvisibleFrame(){
     
   }
-  void InvisibleFrame::Init(){
-    m_Type = FInvisible;
+
+  template <class T>
+  void InvisibleFrame<T>::Init(){
+    T::m_Type = FInvisible;
   }
   
-  bool InvisibleFrame::IsSoundBody() const {
+  template <class T>
+  bool InvisibleFrame<T>::IsSoundBody() const {
     if(RFBase::IsSoundBody()) return true;
     if(!RestFrame::IsSoundBody()){
-      SetBody(false);
-      return false;
+      return T::SetBody(false);
     }
-    int Nchild = GetNChildren();
-    if(Nchild > 0 || GetParentFrame().IsEmpty()){
-      m_Log << LogWarning << "Problem with parent or child frames" << m_End;
-      SetBody(false);
-      return false;
+    int Nchild = T::GetNChildren();
+    if(Nchild > 0 || T::GetParentFrame().IsEmpty()){
+      *T::m_LogPtr << LogWarning << "Problem with parent or child frames" << m_End;
+      return T::SetBody(false);
     }
-    SetBody(true);
-    return true;
+    return T::SetBody(true);
   }
+
+  template class InvisibleFrame<ReconstructionFrame>;
+  template class InvisibleFrame<GeneratorFrame>;
 
 }
 

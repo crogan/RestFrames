@@ -41,7 +41,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleFrame class
   ///////////////////////////////////////////////
-  class InvisibleFrame : public virtual RestFrame{
+  template <class T>
+  class InvisibleFrame : public T {
   public:
     //constructor and destructor
     InvisibleFrame(const string& sname, const string& stitle);

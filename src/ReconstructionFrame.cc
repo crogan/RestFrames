@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RFrame.cc
+///  \file   ReconstructionFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,7 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/Group.hh"
 #include "RestFrames/State.hh"
 
@@ -36,35 +36,35 @@ using namespace std;
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // RFrame class methods
+  // ReconstructionFrame class methods
   ///////////////////////////////////////////////
-  RFrame::RFrame(const string& sname, const string& stitle) : 
+  ReconstructionFrame::ReconstructionFrame(const string& sname, const string& stitle) : 
     RestFrame(sname, stitle)
   {
     Init();
   }
 
-  RFrame::RFrame() : 
+  ReconstructionFrame::ReconstructionFrame() : 
     RestFrame()
   {
     Init();
   }
 
-  RFrame::~RFrame(){ }
+  ReconstructionFrame::~ReconstructionFrame(){ }
 
-  void RFrame::Init(){
+  void ReconstructionFrame::Init(){
     m_Ana = FReco;
     m_GroupPtr = nullptr;
   }
 
-  void RFrame::Clear(){
+  void ReconstructionFrame::Clear(){
     if(m_GroupPtr)
       m_GroupPtr->RemoveFrame(*this);
     m_ChildStates.clear();
     RestFrame::Clear();
   }
   
-  void RFrame::SetGroup(Group& group){
+  void ReconstructionFrame::SetGroup(Group& group){
     if(group.IsEmpty()) return;
 
     if(m_GroupPtr)
@@ -73,29 +73,29 @@ namespace RestFrames {
     m_GroupPtr = &group;
   }
 
-  Group& RFrame::GetGroup() const { 
+  Group& ReconstructionFrame::GetGroup() const { 
     if(m_GroupPtr)
       return *m_GroupPtr;
     else 
       return g_Group;
   }
 
-  RFList<Group> RFrame::GetListGroups() const {
+  RFList<Group> ReconstructionFrame::GetListGroups() const {
     RFList<Group> groups;
     FillListGroupsRecursive(groups);
     return groups;
   }
 
-  void RFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
+  void ReconstructionFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
     if(m_GroupPtr) groups.Add(*m_GroupPtr);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      RFrame* childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
+      ReconstructionFrame* childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
       if(childPtr) childPtr->FillListGroupsRecursive(groups);
     }
   }
 
-  bool RFrame::InitializeNoGroupStates(const RFList<State>& states){
+  bool ReconstructionFrame::InitializeNoGroupStates(const RFList<State>& states){
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       RestFrame& child = GetChildFrame(i);
@@ -103,7 +103,7 @@ namespace RestFrames {
       RFList<RestFrame> frames = child.GetListFrames(FVisible);
       int Nframe = frames.GetN();
       for(int f = 0; f < Nframe; f++){
-	RFrame* rframePtr = dynamic_cast<RFrame*>(&frames.Get(f));
+	ReconstructionFrame* rframePtr = dynamic_cast<ReconstructionFrame*>(&frames.Get(f));
 	if(!rframePtr) return false;
 	if(!rframePtr->GetGroup().IsEmpty())
 	  continue;
@@ -115,7 +115,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeGroupStates(const RFList<Group>& groups){
+  bool ReconstructionFrame::InitializeGroupStates(const RFList<Group>& groups){
     int Ngroup = groups.GetN();
     int Nchild = GetNChildren();
     
@@ -143,7 +143,7 @@ namespace RestFrames {
     return true;
   }
 
-  bool RFrame::InitializeStates(const RFList<State>& states, 
+  bool ReconstructionFrame::InitializeStates(const RFList<State>& states, 
 				const RFList<Group>& groups){
     m_ChildStates.clear();
     m_Mind = false;
@@ -159,14 +159,14 @@ namespace RestFrames {
     return true;
   }
   
-  bool RFrame::InitializeStatesRecursive(const RFList<State>& states, 
+  bool ReconstructionFrame::InitializeStatesRecursive(const RFList<State>& states, 
 					 const RFList<Group>& groups){
     if(!InitializeStates(states, groups)) return false;
 
     int Nchild = GetNChildren();
     bool child_mind = true;
     for(int i = 0; i < Nchild; i++){
-      RFrame *childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
+      ReconstructionFrame *childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
       if(!childPtr) return false;
       if(!childPtr->InitializeStatesRecursive(states, groups)) child_mind = false;;
     }
@@ -174,7 +174,7 @@ namespace RestFrames {
     return m_Mind;
   }
 
-  void RFrame::ClearEventRecursive(){ 
+  void ReconstructionFrame::ClearEventRecursive(){ 
     SetSpirit(false);
    
     if(!IsSoundBody() || !IsSoundMind()) return;
@@ -184,7 +184,7 @@ namespace RestFrames {
       GetChildFrame(i).ClearEventRecursive();
   }
 
-  bool RFrame::AnalyzeEventRecursive(){
+  bool ReconstructionFrame::AnalyzeEventRecursive(){
     if(!IsSoundMind()){
       m_Log << LogWarning;
       m_Log << "Unable to analyze event. ";
@@ -201,7 +201,7 @@ namespace RestFrames {
       SetChildBoostVector(i, B_child);
       Ptot += P;
 
-      RFrame *childPtr = dynamic_cast<RFrame*>(&GetChildFrame(i));
+      ReconstructionFrame* childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
       childPtr->SetFourVector(P,*this);
       if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
 	B_child *= -1.;

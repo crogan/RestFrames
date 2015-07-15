@@ -11,8 +11,8 @@ using namespace std;
 
 namespace RestFrames {
 
-  class RFrame;
-  class RDecayFrame;
+  class ReconstructionFrame;
+  class DecayRecoFrame;
   class Jigsaw;
   class Group;
   class State;
@@ -46,8 +46,8 @@ namespace RestFrames {
 
     // tree drawing functions
     void AddFrameTree(const RestFrame& frame);
-    void AddFrameTree(const RFrame& frame, const RestFrames::RFList<Jigsaw>& jigsaws);
-    void AddFrameTree(const RFrame& frame, const Jigsaw& jigsaw);
+    void AddFrameTree(const ReconstructionFrame& frame, const RestFrames::RFList<Jigsaw>& jigsaws);
+    void AddFrameTree(const ReconstructionFrame& frame, const Jigsaw& jigsaw);
     void AddGroupTree(const Group& group);
     void AddJigsaw(const Jigsaw& jigsaw);
 
@@ -90,7 +90,7 @@ namespace RestFrames {
     void AddFrame(const RestFrame& frame);
     void FillFrameTree(const RestFrame& frame);
     void FillFrameTreeMap(int irow, const RestFrame& frame);
-    void FillFrameTreeMap(int irow, const RDecayFrame& frame);
+    void FillFrameTreeMap(int irow, const DecayRecoFrame& frame);
     void FillGroupTree(const Group& group);
     void FillGroupTreeMap(int irow, const State& state);
     void FillJigsawLink(const Jigsaw& jigsaw);

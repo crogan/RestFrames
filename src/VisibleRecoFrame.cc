@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RSelfAssemblingFrame.hh
+///  \file   VisibleRecoFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,55 +27,27 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef RSelfAssemblingFrame_HH
-#define RSelfAssemblingFrame_HH
-
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/State.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // RSelfAssemblingFrame class
+  // VisibleRecoFrame class
   ///////////////////////////////////////////////
-  class RSelfAssemblingFrame : public RDecayFrame {
-  public:
-    RSelfAssemblingFrame(const string& sname, const string& stitle);
-    virtual ~RSelfAssemblingFrame();
+  VisibleRecoFrame::VisibleRecoFrame(const string& sname, const string& stitle) 
+    : VisibleFrame<ReconstructionFrame>(sname, stitle)
+  {
+    Init();
+  }
 
-    virtual void Clear();
+  VisibleRecoFrame::~VisibleRecoFrame(){
+   
+  }
 
-    virtual void ClearEventRecursive();
-    virtual bool AnalyzeEventRecursive();
-
-    const RestFrame& GetFrame(const RFKey& key) const;
-
-  private:
-    void Init();
-    
-    bool m_Body_UnAssembled;
-    bool m_Mind_UnAssembled; 
-    RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
-    vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
-
-    RestFrames::RFList<RFrame> m_VisibleFrames;
-    RestFrames::RFList<RFrame> m_DecayFrames;
-    int m_Nvisible;
-    int m_Ndecay;
-
-    RFrame& GetNewDecayFrame(const string& sname, const string& stitle);
-    RFrame& GetNewVisibleFrame(const string& sname, const string& stitle);
-    void ClearNewFrames();
-
-    bool m_IsAssembled;
-    bool m_IsBackedUp;
-    void Disassemble();
-    void Assemble();
-    void AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
-  };
+  void VisibleRecoFrame::Init(){
+  
+  }
 
 }
-
-#endif

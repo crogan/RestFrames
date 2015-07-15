@@ -252,7 +252,6 @@ namespace RestFrames {
 	}
 	m_Log << LogVerbose;
 	m_Log << "Adding dependancy States for hemishpere " << d << endl;
-	int Nf = group_frames[g].GetN();
 	int Ns = group_states.GetN();
 	m_Log << " Frames:" << endl << "   ";
 	m_Log << Log(group_frames[g]) << endl;

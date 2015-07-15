@@ -40,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // InvisibleGenFrame class
   ///////////////////////////////////////////////
-  class InvisibleGenFrame : public InvisibleFrame, public GeneratorFrame{
+  class InvisibleGenFrame : public InvisibleFrame<GeneratorFrame> {
   public:
     InvisibleGenFrame(const string& sname, const string& stitle);
     virtual ~InvisibleGenFrame();

@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RDecayFrame.hh
+///  \file   SelfAssemblingRecoFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,34 +27,53 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef RDecayFrame_HH
-#define RDecayFrame_HH
+#ifndef RSelfAssemblingFrame_HH
+#define RSelfAssemblingFrame_HH
 
-#include "RestFrames/DecayFrame.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/DecayRecoFrame.hh"
+#include "RestFrames/State.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-   enum RDecayType { RDVanilla, RDSelfAssembling };
-
   ///////////////////////////////////////////////
-  // RDecayFrame class
+  // SelfAssemblingRecoFrame class
   ///////////////////////////////////////////////
-  class RDecayFrame : public DecayFrame, public RFrame{
+  class SelfAssemblingRecoFrame : public DecayRecoFrame {
   public:
-    RDecayFrame(const string& sname, const string& stitle);
-    virtual ~RDecayFrame();
+    SelfAssemblingRecoFrame(const string& sname, const string& stitle);
+    virtual ~SelfAssemblingRecoFrame();
 
-    bool IsSelfAssemblingFrame() const;
+    virtual void Clear();
 
-  protected:
-    RDecayType m_RType;
+    virtual void ClearEventRecursive();
+    virtual bool AnalyzeEventRecursive();
+
+    const RestFrame& GetFrame(const RFKey& key) const;
 
   private:
     void Init();
+    
+    bool m_Body_UnAssembled;
+    bool m_Mind_UnAssembled; 
+    RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
+    vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
 
+    RestFrames::RFList<ReconstructionFrame> m_VisibleFrames;
+    RestFrames::RFList<ReconstructionFrame> m_DecayFrames;
+    int m_Nvisible;
+    int m_Ndecay;
+
+    ReconstructionFrame& GetNewDecayFrame(const string& sname, const string& stitle);
+    ReconstructionFrame& GetNewVisibleFrame(const string& sname, const string& stitle);
+    void ClearNewFrames();
+
+    bool m_IsAssembled;
+    bool m_IsBackedUp;
+    void Disassemble();
+    void Assemble();
+    void AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
   };
 
 }

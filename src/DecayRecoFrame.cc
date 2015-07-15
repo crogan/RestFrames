@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   RFrame.hh
+///  \file   DecayRecoFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,56 +27,30 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef RFrame_HH
-#define RFrame_HH
-
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/DecayRecoFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  class Group;
-  class State;
-
   ///////////////////////////////////////////////
-  // RFrame class
+  // DecayRecoFrame class
+  // Class for an intermediate state
+  // inheriting from DecayFrame and RFrame
   ///////////////////////////////////////////////
-  class RFrame : public virtual RestFrame {
-  public:
-    RFrame(const string& sname, const string& stitle);
-    RFrame();
-    virtual ~RFrame();
+  DecayRecoFrame::DecayRecoFrame(const string& sname, const string& stitle) 
+    : DecayFrame<ReconstructionFrame>(sname,stitle)
+  {
+    Init();
+  }
+  
+  DecayRecoFrame::~DecayRecoFrame(){ }
 
-    /// \brief Clears RFrame of all connections to other objects
-    virtual void Clear();
+  void DecayRecoFrame::Init(){
+    m_RType = RDVanilla;
+  }
 
-    virtual void SetGroup(Group& group);
-    Group& GetGroup() const;
-
-    RestFrames::RFList<Group> GetListGroups() const;
-
-    virtual bool InitializeStates(const RestFrames::RFList<State>& states, 
-				  const RestFrames::RFList<Group>& groups);
-    virtual void ClearEventRecursive();
-    virtual bool AnalyzeEventRecursive();
-
-  protected:
-    vector<RestFrames::RFList<State> > m_ChildStates;
-    Group* m_GroupPtr;
-
-    virtual bool InitializeStatesRecursive(const RestFrames::RFList<State>& states, 
-					   const RestFrames::RFList<Group>& groups);
-    virtual bool InitializeNoGroupStates(const RestFrames::RFList<State>& states);
-    virtual bool InitializeGroupStates(const RestFrames::RFList<Group>& groups);
-
-    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
-
-  private:
-    void Init();
-
-  };
-
+  bool DecayRecoFrame::IsSelfAssemblingFrame() const {
+    return m_RType == RDSelfAssembling;
+  }
 }
-
-#endif

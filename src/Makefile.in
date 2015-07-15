@@ -133,14 +133,16 @@ libRestFrames_la_LIBADD =
 am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-RFBase.lo libRestFrames_la-RFKey.lo \
 	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
-	libRestFrames_la-RestFrame.lo libRestFrames_la-FramePlot.lo \
-	libRestFrames_la-RFrame.lo libRestFrames_la-GeneratorFrame.lo \
+	libRestFrames_la-FramePlot.lo libRestFrames_la-RestFrame.lo \
+	libRestFrames_la-ReconstructionFrame.lo \
+	libRestFrames_la-GeneratorFrame.lo \
 	libRestFrames_la-LabFrame.lo libRestFrames_la-DecayFrame.lo \
 	libRestFrames_la-VisibleFrame.lo \
 	libRestFrames_la-InvisibleFrame.lo \
-	libRestFrames_la-RLabFrame.lo libRestFrames_la-RDecayFrame.lo \
-	libRestFrames_la-RVisibleFrame.lo \
-	libRestFrames_la-RInvisibleFrame.lo \
+	libRestFrames_la-LabRecoFrame.lo \
+	libRestFrames_la-DecayRecoFrame.lo \
+	libRestFrames_la-VisibleRecoFrame.lo \
+	libRestFrames_la-InvisibleRecoFrame.lo \
 	libRestFrames_la-LabGenFrame.lo \
 	libRestFrames_la-DecayGenFrame.lo \
 	libRestFrames_la-VisibleGenFrame.lo \
@@ -156,7 +158,7 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-InvisibleRapidityJigsaw.lo \
 	libRestFrames_la-MinimizeMassesCombinatoricJigsaw.lo \
 	libRestFrames_la-ContraBoostInvariantJigsaw.lo \
-	libRestFrames_la-RSelfAssemblingFrame.lo
+	libRestFrames_la-SelfAssemblingRecoFrame.lo
 libRestFrames_la_OBJECTS = $(am_libRestFrames_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -402,14 +404,14 @@ RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFKey.cc RFList.cc RFLog.cc\
-	RestFrame.cc FramePlot.cc RFrame.cc GeneratorFrame.cc LabFrame.cc DecayFrame.cc\
-	VisibleFrame.cc InvisibleFrame.cc RLabFrame.cc RDecayFrame.cc RVisibleFrame.cc\
-	RInvisibleFrame.cc LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
+	FramePlot.cc RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc LabFrame.cc DecayFrame.cc\
+	VisibleFrame.cc InvisibleFrame.cc LabRecoFrame.cc DecayRecoFrame.cc VisibleRecoFrame.cc\
+	InvisibleRecoFrame.cc LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
 	ResonanceGenFrame.cc State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
 	MinimizeMassesCombinatoricJigsaw.cc\
-	ContraBoostInvariantJigsaw.cc RSelfAssemblingFrame.cc 
+	ContraBoostInvariantJigsaw.cc SelfAssemblingRecoFrame.cc 
 
 CLEANFILES = *Dict.cxx *Dict.h *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
@@ -501,6 +503,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ContraBoostInvariantJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-DecayFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-DecayGenFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-DecayRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-FramePlot.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-GeneratorFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-Group.Plo@am__quote@
@@ -510,27 +513,26 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleMassJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleRapidityJigsaw.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleState.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-Jigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-LabFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-LabGenFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-LabRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-MinimizeMassesCombinatoricJigsaw.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RDecayFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFBase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFLog.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFrame.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RInvisibleFrame.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RLabFrame.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RSelfAssemblingFrame.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RVisibleFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ReconstructionFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrames_Dict.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-SelfAssemblingRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-State.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleGenFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -588,13 +590,6 @@ libRestFrames_la-RFLog.lo: RFLog.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFLog.lo `test -f 'RFLog.cc' || echo '$(srcdir)/'`RFLog.cc
 
-libRestFrames_la-RestFrame.lo: RestFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RestFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RestFrame.Tpo -c -o libRestFrames_la-RestFrame.lo `test -f 'RestFrame.cc' || echo '$(srcdir)/'`RestFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RestFrame.Tpo $(DEPDIR)/libRestFrames_la-RestFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RestFrame.cc' object='libRestFrames_la-RestFrame.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RestFrame.lo `test -f 'RestFrame.cc' || echo '$(srcdir)/'`RestFrame.cc
-
 libRestFrames_la-FramePlot.lo: FramePlot.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-FramePlot.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-FramePlot.Tpo -c -o libRestFrames_la-FramePlot.lo `test -f 'FramePlot.cc' || echo '$(srcdir)/'`FramePlot.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-FramePlot.Tpo $(DEPDIR)/libRestFrames_la-FramePlot.Plo
@@ -602,12 +597,19 @@ libRestFrames_la-FramePlot.lo: FramePlot.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-FramePlot.lo `test -f 'FramePlot.cc' || echo '$(srcdir)/'`FramePlot.cc
 
-libRestFrames_la-RFrame.lo: RFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFrame.Tpo -c -o libRestFrames_la-RFrame.lo `test -f 'RFrame.cc' || echo '$(srcdir)/'`RFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RFrame.Tpo $(DEPDIR)/libRestFrames_la-RFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RFrame.cc' object='libRestFrames_la-RFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-RestFrame.lo: RestFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RestFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RestFrame.Tpo -c -o libRestFrames_la-RestFrame.lo `test -f 'RestFrame.cc' || echo '$(srcdir)/'`RestFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RestFrame.Tpo $(DEPDIR)/libRestFrames_la-RestFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RestFrame.cc' object='libRestFrames_la-RestFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFrame.lo `test -f 'RFrame.cc' || echo '$(srcdir)/'`RFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RestFrame.lo `test -f 'RestFrame.cc' || echo '$(srcdir)/'`RestFrame.cc
+
+libRestFrames_la-ReconstructionFrame.lo: ReconstructionFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-ReconstructionFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-ReconstructionFrame.Tpo -c -o libRestFrames_la-ReconstructionFrame.lo `test -f 'ReconstructionFrame.cc' || echo '$(srcdir)/'`ReconstructionFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-ReconstructionFrame.Tpo $(DEPDIR)/libRestFrames_la-ReconstructionFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ReconstructionFrame.cc' object='libRestFrames_la-ReconstructionFrame.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-ReconstructionFrame.lo `test -f 'ReconstructionFrame.cc' || echo '$(srcdir)/'`ReconstructionFrame.cc
 
 libRestFrames_la-GeneratorFrame.lo: GeneratorFrame.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-GeneratorFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-GeneratorFrame.Tpo -c -o libRestFrames_la-GeneratorFrame.lo `test -f 'GeneratorFrame.cc' || echo '$(srcdir)/'`GeneratorFrame.cc
@@ -644,33 +646,33 @@ libRestFrames_la-InvisibleFrame.lo: InvisibleFrame.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-InvisibleFrame.lo `test -f 'InvisibleFrame.cc' || echo '$(srcdir)/'`InvisibleFrame.cc
 
-libRestFrames_la-RLabFrame.lo: RLabFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RLabFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RLabFrame.Tpo -c -o libRestFrames_la-RLabFrame.lo `test -f 'RLabFrame.cc' || echo '$(srcdir)/'`RLabFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RLabFrame.Tpo $(DEPDIR)/libRestFrames_la-RLabFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RLabFrame.cc' object='libRestFrames_la-RLabFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-LabRecoFrame.lo: LabRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-LabRecoFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-LabRecoFrame.Tpo -c -o libRestFrames_la-LabRecoFrame.lo `test -f 'LabRecoFrame.cc' || echo '$(srcdir)/'`LabRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-LabRecoFrame.Tpo $(DEPDIR)/libRestFrames_la-LabRecoFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='LabRecoFrame.cc' object='libRestFrames_la-LabRecoFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RLabFrame.lo `test -f 'RLabFrame.cc' || echo '$(srcdir)/'`RLabFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-LabRecoFrame.lo `test -f 'LabRecoFrame.cc' || echo '$(srcdir)/'`LabRecoFrame.cc
 
-libRestFrames_la-RDecayFrame.lo: RDecayFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RDecayFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RDecayFrame.Tpo -c -o libRestFrames_la-RDecayFrame.lo `test -f 'RDecayFrame.cc' || echo '$(srcdir)/'`RDecayFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RDecayFrame.Tpo $(DEPDIR)/libRestFrames_la-RDecayFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RDecayFrame.cc' object='libRestFrames_la-RDecayFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-DecayRecoFrame.lo: DecayRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-DecayRecoFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-DecayRecoFrame.Tpo -c -o libRestFrames_la-DecayRecoFrame.lo `test -f 'DecayRecoFrame.cc' || echo '$(srcdir)/'`DecayRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-DecayRecoFrame.Tpo $(DEPDIR)/libRestFrames_la-DecayRecoFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='DecayRecoFrame.cc' object='libRestFrames_la-DecayRecoFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RDecayFrame.lo `test -f 'RDecayFrame.cc' || echo '$(srcdir)/'`RDecayFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-DecayRecoFrame.lo `test -f 'DecayRecoFrame.cc' || echo '$(srcdir)/'`DecayRecoFrame.cc
 
-libRestFrames_la-RVisibleFrame.lo: RVisibleFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RVisibleFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RVisibleFrame.Tpo -c -o libRestFrames_la-RVisibleFrame.lo `test -f 'RVisibleFrame.cc' || echo '$(srcdir)/'`RVisibleFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RVisibleFrame.Tpo $(DEPDIR)/libRestFrames_la-RVisibleFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RVisibleFrame.cc' object='libRestFrames_la-RVisibleFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-VisibleRecoFrame.lo: VisibleRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-VisibleRecoFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Tpo -c -o libRestFrames_la-VisibleRecoFrame.lo `test -f 'VisibleRecoFrame.cc' || echo '$(srcdir)/'`VisibleRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Tpo $(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='VisibleRecoFrame.cc' object='libRestFrames_la-VisibleRecoFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RVisibleFrame.lo `test -f 'RVisibleFrame.cc' || echo '$(srcdir)/'`RVisibleFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-VisibleRecoFrame.lo `test -f 'VisibleRecoFrame.cc' || echo '$(srcdir)/'`VisibleRecoFrame.cc
 
-libRestFrames_la-RInvisibleFrame.lo: RInvisibleFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RInvisibleFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RInvisibleFrame.Tpo -c -o libRestFrames_la-RInvisibleFrame.lo `test -f 'RInvisibleFrame.cc' || echo '$(srcdir)/'`RInvisibleFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RInvisibleFrame.Tpo $(DEPDIR)/libRestFrames_la-RInvisibleFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RInvisibleFrame.cc' object='libRestFrames_la-RInvisibleFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-InvisibleRecoFrame.lo: InvisibleRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-InvisibleRecoFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-InvisibleRecoFrame.Tpo -c -o libRestFrames_la-InvisibleRecoFrame.lo `test -f 'InvisibleRecoFrame.cc' || echo '$(srcdir)/'`InvisibleRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-InvisibleRecoFrame.Tpo $(DEPDIR)/libRestFrames_la-InvisibleRecoFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='InvisibleRecoFrame.cc' object='libRestFrames_la-InvisibleRecoFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RInvisibleFrame.lo `test -f 'RInvisibleFrame.cc' || echo '$(srcdir)/'`RInvisibleFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-InvisibleRecoFrame.lo `test -f 'InvisibleRecoFrame.cc' || echo '$(srcdir)/'`InvisibleRecoFrame.cc
 
 libRestFrames_la-LabGenFrame.lo: LabGenFrame.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-LabGenFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-LabGenFrame.Tpo -c -o libRestFrames_la-LabGenFrame.lo `test -f 'LabGenFrame.cc' || echo '$(srcdir)/'`LabGenFrame.cc
@@ -798,12 +800,12 @@ libRestFrames_la-ContraBoostInvariantJigsaw.lo: ContraBoostInvariantJigsaw.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-ContraBoostInvariantJigsaw.lo `test -f 'ContraBoostInvariantJigsaw.cc' || echo '$(srcdir)/'`ContraBoostInvariantJigsaw.cc
 
-libRestFrames_la-RSelfAssemblingFrame.lo: RSelfAssemblingFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RSelfAssemblingFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RSelfAssemblingFrame.Tpo -c -o libRestFrames_la-RSelfAssemblingFrame.lo `test -f 'RSelfAssemblingFrame.cc' || echo '$(srcdir)/'`RSelfAssemblingFrame.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RSelfAssemblingFrame.Tpo $(DEPDIR)/libRestFrames_la-RSelfAssemblingFrame.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RSelfAssemblingFrame.cc' object='libRestFrames_la-RSelfAssemblingFrame.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-SelfAssemblingRecoFrame.lo: SelfAssemblingRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-SelfAssemblingRecoFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-SelfAssemblingRecoFrame.Tpo -c -o libRestFrames_la-SelfAssemblingRecoFrame.lo `test -f 'SelfAssemblingRecoFrame.cc' || echo '$(srcdir)/'`SelfAssemblingRecoFrame.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-SelfAssemblingRecoFrame.Tpo $(DEPDIR)/libRestFrames_la-SelfAssemblingRecoFrame.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SelfAssemblingRecoFrame.cc' object='libRestFrames_la-SelfAssemblingRecoFrame.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RSelfAssemblingFrame.lo `test -f 'RSelfAssemblingFrame.cc' || echo '$(srcdir)/'`RSelfAssemblingFrame.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-SelfAssemblingRecoFrame.lo `test -f 'SelfAssemblingRecoFrame.cc' || echo '$(srcdir)/'`SelfAssemblingRecoFrame.cc
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

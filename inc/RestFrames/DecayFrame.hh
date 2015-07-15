@@ -41,7 +41,8 @@ namespace RestFrames {
   // Class for an intermediate state
   // inheriting from RestFrame
   ///////////////////////////////////////////////
-  class DecayFrame : public virtual RestFrame {
+  template <class T>
+  class DecayFrame : public T {
   public:
     //constructor and destructor
     DecayFrame(const string& sname, const string& stitle);

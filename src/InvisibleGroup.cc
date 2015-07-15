@@ -29,7 +29,7 @@
 
 #include "RestFrames/InvisibleGroup.hh"
 #include "RestFrames/InvisibleState.hh"
-#include "RestFrames/RFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
 using namespace std;
@@ -59,8 +59,8 @@ namespace RestFrames {
   void InvisibleGroup::AddFrame(RestFrame& frame){
     SetBody(false);
     if(frame.IsEmpty()) return;
-    if(!frame.IsRFrame() || !frame.IsInvisibleFrame()) return;
-    RFrame *ptr = dynamic_cast<RFrame*>(&frame);
+    if(!frame.IsRecoFrame() || !frame.IsInvisibleFrame()) return;
+    ReconstructionFrame* ptr = dynamic_cast<ReconstructionFrame*>(&frame);
     if(ptr){
       ptr->SetGroup(*this);
       m_Frames.Add(frame);

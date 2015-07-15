@@ -96,18 +96,18 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // Set up reco analysis tree
    g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
-  RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame TT_R("TT_R","t #bar{t}");
-  RDecayFrame Ta_R("Ta_R","t_{a}");
-  RDecayFrame Tb_R("Tb_R","t_{b}");
-  RDecayFrame Wa_R("Wa_R","W_{a}");
-  RDecayFrame Wb_R("Wb_R","W_{b}");
-  RVisibleFrame Ba_R("Ba_R","b_{a}");
-  RVisibleFrame La_R("La_R","#it{l}_{a}");
-  RInvisibleFrame Na_R("Na_R","#nu_{a}");
-  RVisibleFrame Bb_R("Bb_R","b_{b}");
-  RVisibleFrame Lb_R("Lb_R","#it{l}_{b}");
-  RInvisibleFrame Nb_R("Nb_R","#nu_{b}");
+  LabRecoFrame LAB_R("LAB_R","LAB");
+  DecayRecoFrame TT_R("TT_R","t #bar{t}");
+  DecayRecoFrame Ta_R("Ta_R","t_{a}");
+  DecayRecoFrame Tb_R("Tb_R","t_{b}");
+  DecayRecoFrame Wa_R("Wa_R","W_{a}");
+  DecayRecoFrame Wb_R("Wb_R","W_{b}");
+  VisibleRecoFrame Ba_R("Ba_R","b_{a}");
+  VisibleRecoFrame La_R("La_R","#it{l}_{a}");
+  InvisibleRecoFrame Na_R("Na_R","#nu_{a}");
+  VisibleRecoFrame Bb_R("Bb_R","b_{b}");
+  VisibleRecoFrame Lb_R("Lb_R","#it{l}_{b}");
+  InvisibleRecoFrame Nb_R("Nb_R","#nu_{b}");
   LAB_R.SetChildFrame(TT_R);
   TT_R.AddChildFrame(Ta_R);
   TT_R.AddChildFrame(Tb_R);
@@ -209,9 +209,9 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
 
-  RDecayFrame *T[2], *W[2];
-  RVisibleFrame *B[2], *L[2];
-  RInvisibleFrame *N[2];
+  DecayRecoFrame *T[2], *W[2];
+  VisibleRecoFrame *B[2], *L[2];
+  InvisibleRecoFrame *N[2];
   T[0] = &Ta_R;
   T[1] = &Tb_R;
   W[0] = &Wa_R;

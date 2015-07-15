@@ -57,10 +57,10 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   VisibleGenFrame L_G("L_G","#it{l}");
   InvisibleGenFrame NU_G("NU_G","#nu");
 
-  RLabFrame LAB_R("LAB_R","LAB");
-  RDecayFrame W_R("W_R","W");
-  RVisibleFrame L_R("L_R","#it{l}");
-  RInvisibleFrame NU_R("NU_R","#nu");
+  LabRecoFrame LAB_R("LAB_R","LAB");
+  DecayRecoFrame W_R("W_R","W");
+  VisibleRecoFrame L_R("L_R","#it{l}");
+  InvisibleRecoFrame NU_R("NU_R","#nu");
 
   LAB_G.SetChildFrame(W_G);
   W_G.AddChildFrame(L_G);

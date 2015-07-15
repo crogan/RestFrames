@@ -41,7 +41,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // VisibleFrame class
   ///////////////////////////////////////////////
-  class VisibleFrame : public virtual RestFrame {
+  template <class T>
+  class VisibleFrame : public T {
   public:
     //constructor and destructor
     VisibleFrame(const string& sname, const string& stitle);

@@ -7,9 +7,9 @@
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/State.hh"
 #include "RestFrames/CombinatoricGroup.hh"
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/RInvisibleFrame.hh"
+#include "RestFrames/DecayRecoFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
+#include "RestFrames/InvisibleRecoFrame.hh"
 
 using namespace std;
 
@@ -128,14 +128,14 @@ namespace RestFrames {
     ConvertNodeCoordinates(m_TreeNodes);
   }
 
-  void FramePlot::AddFrameTree(const RFrame& frame, const Jigsaw& jigsaw){
+  void FramePlot::AddFrameTree(const ReconstructionFrame& frame, const Jigsaw& jigsaw){
     if(frame.IsEmpty()) return;
 
     AddFrameTree(frame);
     AddJigsaw(jigsaw);
   }
 
-  void FramePlot::AddFrameTree(const RFrame& frame, const RFList<Jigsaw>& jigsaws){
+  void FramePlot::AddFrameTree(const ReconstructionFrame& frame, const RFList<Jigsaw>& jigsaws){
     if(frame.IsEmpty()) return;
 
     AddFrameTree(frame);
@@ -242,8 +242,8 @@ namespace RestFrames {
   }
 
   void FramePlot::FillFrameTreeMap(int irow, const RestFrame& frame){
-    if(frame.IsDecayFrame() && frame.IsRFrame()){
-      const RDecayFrame* rframePtr = dynamic_cast<const RDecayFrame*>(&frame);
+    if(frame.IsDecayFrame() && frame.IsRecoFrame()){
+      const DecayRecoFrame* rframePtr = dynamic_cast<const DecayRecoFrame*>(&frame);
       if(rframePtr){
 	if(rframePtr->IsSelfAssemblingFrame()){
 	  FillFrameTreeMap(irow, *rframePtr);
@@ -273,7 +273,7 @@ namespace RestFrames {
     }
   }
 
-  void FramePlot::FillFrameTreeMap(int irow, const RDecayFrame& frame){
+  void FramePlot::FillFrameTreeMap(int irow, const DecayRecoFrame& frame){
     FramePlotNode* frame_nodePtr = m_TreeNodes[m_TreeNodes.size()-1];
     frame_nodePtr->SetSquare(true);
     m_SelfAssembling = true;
@@ -284,8 +284,8 @@ namespace RestFrames {
       bool expand_child = false;
        int N = -1;
        bool excl = false;
-      if(child.IsVisibleFrame() && child.IsRFrame()){
-	const RVisibleFrame* rvframePtr = dynamic_cast<const RVisibleFrame*>(&child);
+      if(child.IsVisibleFrame() && child.IsRecoFrame()){
+	const VisibleRecoFrame* rvframePtr = dynamic_cast<const VisibleRecoFrame*>(&child);
 	if(!rvframePtr) continue;
 	CombinatoricGroup* groupPtr = dynamic_cast<CombinatoricGroup*>(&rvframePtr->GetGroup());
 	if(groupPtr){
