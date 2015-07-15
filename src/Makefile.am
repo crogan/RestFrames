@@ -33,10 +33,9 @@ RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
-install-data-hook:
+install-data-hook: 
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm temp.rootmap
 
 else
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
@@ -44,8 +43,9 @@ RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/
 
 install-data-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	rm -f temp.rootmap
 	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm temp.rootmap
+	rm -f temp.rootmap
 
 endif

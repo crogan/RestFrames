@@ -66,11 +66,11 @@ namespace RestFrames {
     m_TypeMap[LogWarning]  = "WARNING";
     m_TypeMap[LogError]    = "ERROR";
 
-    m_ColorMap[LogVerbose]  = "\033[36m";
-    m_ColorMap[LogDebug]    = "\033[33m";
-    m_ColorMap[LogInfo]     = "\033[32m";
-    m_ColorMap[LogWarning]  = "\033[35m";
-    m_ColorMap[LogError]    = "\033[31m";
+    m_ColorMap[LogVerbose]  = "\x1b[36m";
+    m_ColorMap[LogDebug]    = "\x1b[33m";
+    m_ColorMap[LogInfo]     = "\x1b[32m";
+    m_ColorMap[LogWarning]  = "\x1b[35m";
+    m_ColorMap[LogError]    = "\x1b[31m";
   }
 
   map<LogType,bool> InitPrintMap(){
@@ -103,7 +103,7 @@ namespace RestFrames {
 	int off = m_NMAX;
 	if(i == 0) off += OFF;
 	string line = message.substr(previous_pos, off);
-	if(i > 0) output += m_ColorMap[m_CurType]+"<...>\033[0m ...";
+	if(i > 0) output += m_ColorMap[m_CurType]+"<...>\x1b[0m ...";
 	output += line;
 	previous_pos += off;
 	if(previous_pos != N && i != Ncut) output += "...\n";
@@ -123,7 +123,7 @@ namespace RestFrames {
       for(int i = 0; i < 8-m_TypeMap[m_CurType].size(); i++){
 	prefix += ' ';
       }
-      prefix += source_name+": \033[0m";
+      prefix += source_name+":\x1b[0m ";
       while (true) {
 	current_pos = message.find( '\n', previous_pos );
 	string line = message.substr( previous_pos, current_pos - previous_pos );
