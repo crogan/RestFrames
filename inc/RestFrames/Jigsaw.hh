@@ -31,12 +31,12 @@
 #define Jigsaw_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/Group.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  class Group;
   class State;
 
   enum JigsawType { JInvisible, JCombinatoric };
@@ -67,8 +67,7 @@ namespace RestFrames {
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
 
-    virtual void SetGroup();
-    virtual void SetGroup(Group& group);
+    virtual void SetGroup(Group& group = g_Group);
     Group& GetGroup() const;
 
     bool CanSplit(const State& state) const;

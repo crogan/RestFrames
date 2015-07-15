@@ -29,7 +29,6 @@
 
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/Group.hh"
 #include "RestFrames/State.hh"
 
 using namespace std;
@@ -110,12 +109,6 @@ namespace RestFrames {
       output += "   Type: Combinatoric \n";
 
     return output;
-  }
-
-  void Jigsaw::SetGroup(){
-    if(m_GroupPtr)
-      m_GroupPtr->RemoveJigsaw(*this);
-    m_GroupPtr = nullptr;
   }
 
   void Jigsaw::SetGroup(Group& group){

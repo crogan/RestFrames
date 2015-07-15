@@ -140,7 +140,7 @@ namespace RestFrames {
 
     if(T::GetNChildren() < 1) return TVector3(0.,0.,0.);
    
-    TVector3 V1 = T::GetChildFrame(0).T::GetFourVector(*this).Vect().Unit();
+    TVector3 V1 = T::GetChildFrame(0).GetFourVector(*this).Vect().Unit();
     TVector3 V2(0.,0.,1.);
     return V1.Cross(V2).Unit();
   }
