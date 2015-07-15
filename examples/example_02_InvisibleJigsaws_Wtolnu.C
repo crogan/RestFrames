@@ -57,20 +57,25 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   VisibleGenFrame L_G("L_G","#it{l}");
   InvisibleGenFrame NU_G("NU_G","#nu");
 
+  LAB_G.SetChildFrame(W_G);
+  W_G.AddChildFrame(L_G);
+  W_G.AddChildFrame(NU_G);
+ 
+  if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl; 
+
+  W_G.SetMass(mW);
+
+  if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl; 
+
   LabRecoFrame LAB_R("LAB_R","LAB");
   DecayRecoFrame W_R("W_R","W");
   VisibleRecoFrame L_R("L_R","#it{l}");
   InvisibleRecoFrame NU_R("NU_R","#nu");
-
-  LAB_G.SetChildFrame(W_G);
-  W_G.AddChildFrame(L_G);
-  W_G.AddChildFrame(NU_G);
-
+  
   LAB_R.SetChildFrame(W_R);
   W_R.AddChildFrame(L_R);
   W_R.AddChildFrame(NU_R);
- 
-  if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl; 
+
   if(!LAB_R.InitializeTree()) cout << "Problem with reconstruction tree" << endl; 
   
   FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
@@ -115,7 +120,6 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   TH2D* h_DcosW_v_PT  = new TH2D("h_DcosW_v_PT","h_DcosW_v_PT",50,-1.,1.,50,0.,1.);
   TH2D* h_DdphiW_v_PT = new TH2D("h_DdphiW_v_PT","h_DdphiW_v_PT",50,-1.,1.,50,0.,1.);
 
-  W_G.SetMass(mW);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
 

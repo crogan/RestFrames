@@ -2,6 +2,9 @@
 #define RestFrames_HH
 
 #include "RestFrames/RFKey.hh"
+#include "RestFrames/RFLog.hh"
+#include "RestFrames/RFBase.hh"
+#include "RestFrames/RFList.hh"
 #include "RestFrames/CombinatoricGroup.hh"
 #include "RestFrames/CombinatoricJigsaw.hh"
 #include "RestFrames/CombinatoricState.hh"
@@ -37,10 +40,6 @@
 #include "RestFrames/InvisibleState.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
-#include "RestFrames/RFBase.hh"
-#include "RestFrames/RFList.hh"
-#include "RestFrames/RFLog.hh"
 #include "RestFrames/State.hh"
-#include "RestFrames/VisibleFrame.hh"
 
 #endif
