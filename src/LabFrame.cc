@@ -61,8 +61,14 @@ namespace RestFrames {
       return T::SetBody(false);;
     }
     int Nchild = T::GetNChildren();
-    if(Nchild != 1 || !T::GetParentFrame().IsEmpty()){
-      *T::m_LogPtr << LogWarning << "Problem with parent or child frames" << m_End;
+    if(Nchild != 1){
+      *T::m_LogPtr << LogWarning << "Number of LabFrame children != 1: ";
+      *T::m_LogPtr << Nchild << m_End;
+      return T::SetBody(false);
+    }
+    if(!T::GetParentFrame().IsEmpty()){
+      *T::m_LogPtr << LogWarning << "Parent frame of LabFrame is not empty: ";
+      *T::m_LogPtr << Log(GetParentFrame()) << m_End;
       return T::SetBody(false);
     }
     return T::SetBody(true);;
