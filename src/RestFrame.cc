@@ -454,30 +454,22 @@ namespace RestFrames {
     return m_P.M();
   }
 
-  double RestFrame::GetCosDecayAngle() const {
-    if(!IsSoundSpirit()){
-      UnSoundSpirit(RF_FUNCTION);
-      return 0.;
-    }
-    if(!GetParentFrame()) return 0.;
-    if(GetNChildren() < 1) return 0.;
-    TVector3 V1 = GetParentBoostVector().Unit();
-    TVector3 V2 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
-    return V1.Dot(V2);
-  }
-
   double RestFrame::GetCosDecayAngle(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
       return 0.;
     }
 
-    if(!frame)
-      return GetCosDecayAngle();
-
-    if(!GetParentFrame()) return 0.;
     TVector3 V1 = GetParentBoostVector().Unit();
-    TVector3 V2 = frame.GetFourVector(*this).Vect().Unit();
+    TVector3 V2;
+    if(!frame.IsEmpty())
+      V2 = frame.GetFourVector(*this).Vect().Unit();
+    else 
+      if(GetNChildren() < 1) 
+	return 0.;
+      else 
+	V2 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
+    
     return V1.Dot(V2);
   }
   

@@ -58,7 +58,7 @@ namespace RestFrames {
     // Analysis functions
     TVector3 GetInvisibleMomentum() const;
   
-    virtual double GetCosDecayAngle(const RestFrame& frame) const;
+    virtual double GetCosDecayAngle(const RestFrame& frame = g_RestFrame) const;
     virtual TVector3 GetDecayPlaneNormalVector() const;
 
   protected:

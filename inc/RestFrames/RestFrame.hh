@@ -288,8 +288,7 @@ namespace RestFrames {
     virtual double GetEnergy(const RestFrame& frame) const;
     virtual double GetMomentum(const RestFrame& frame) const;
 
-    virtual double GetCosDecayAngle() const;
-    virtual double GetCosDecayAngle(const RestFrame& frame) const;
+    virtual double GetCosDecayAngle(const RestFrame& frame = g_RestFrame) const;
     virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
 					   const RestFrame& frame = g_RestFrame) const;
     virtual double GetDeltaPhiBoostVisible(const TVector3& axis = TVector3(0.,0.,1.), 

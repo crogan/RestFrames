@@ -124,9 +124,9 @@ namespace RestFrames {
     TVector3 V1(0.,0.,1.);
     TVector3 V2;
     if(!frame.IsEmpty()){
-      V2 = frame.T::GetFourVector(*this).Vect().Unit();
+      V2 = frame.GetFourVector(*this).Vect().Unit();
     } else {
-      V2 = T::GetChildFrame(0).T::GetFourVector(*this).Vect().Unit();
+      V2 = T::GetChildFrame(0).GetFourVector(*this).Vect().Unit();
     }
     return V1.Dot(V2);
   }

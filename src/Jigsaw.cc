@@ -119,17 +119,14 @@ namespace RestFrames {
   }
 
   void Jigsaw::SetGroup(Group& group){
-    if(group.IsEmpty()){
-      m_Log << LogWarning;
-      m_Log << "Unable to set group to empty" << m_End;
-      return;
-    }
-    if(m_GroupPtr){
-      if(!(*m_GroupPtr == group)){
+    if(m_GroupPtr)
+      if(!(*m_GroupPtr == group))
 	m_GroupPtr->RemoveJigsaw(*this);
-      }
-    }
-    m_GroupPtr = &group;
+	
+    if(!group.IsEmpty())
+      m_GroupPtr = &group;
+    else
+      m_GroupPtr = nullptr;
   }
 
   Group& Jigsaw::GetGroup() const {
