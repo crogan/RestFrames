@@ -68,7 +68,7 @@ namespace RestFrames {
     }
     if(!T::GetParentFrame().IsEmpty()){
       *T::m_LogPtr << LogWarning << "Parent frame of LabFrame is not empty: ";
-      *T::m_LogPtr << Log(GetParentFrame()) << m_End;
+      *T::m_LogPtr << Log(T::GetParentFrame()) << m_End;
       return T::SetBody(false);
     }
     return T::SetBody(true);;
