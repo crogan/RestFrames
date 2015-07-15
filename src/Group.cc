@@ -64,7 +64,7 @@ namespace RestFrames {
     if(m_GroupStatePtr) delete m_GroupStatePtr;
   }
 
-  Group g_Group(g_Key);
+  Group g_Group(RFKey(-1));
 
   void Group::Init(){
     SetKey(GenKey());

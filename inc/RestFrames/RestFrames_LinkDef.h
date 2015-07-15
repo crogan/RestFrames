@@ -36,12 +36,6 @@ using namespace RestFrames;
 #pragma link C++ class VisibleRecoFrame;
 #pragma link C++ class SelfAssemblingRecoFrame;
 
-#pragma link C++ enum FrameType;
-#pragma link C++ class std::vector<FrameType>;
-
-#pragma link C++ enum LogType;
-#pragma link C++ class std::map<LogType,bool>;
-
 #pragma link C++ class Group;
 #pragma link C++ class InvisibleGroup;
 #pragma link C++ class CombinatoricGroup;
@@ -103,9 +97,6 @@ using namespace RestFrames;
 #pragma link C++ class InvisibleRecoFrame+;
 #pragma link C++ class VisibleRecoFrame+;
 #pragma link C++ class SelfAssemblingRecoFrame+;
-
-#pragma link C++ enum LogType+;
-#pragma link C++ enum FrameType+;
 
 #pragma link C++ class Group+;
 #pragma link C++ class InvisibleGroup+;

@@ -57,7 +57,7 @@ namespace RestFrames {
     Init();
   }
 
-  RestFrame g_RestFrame(g_Key);
+  RestFrame g_RestFrame(RFKey(-1));
 
   RestFrame::~RestFrame(){ }
 

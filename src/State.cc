@@ -63,7 +63,7 @@ namespace RestFrames {
     m_Log.SetSource("State");
   }
 
-  State g_State(g_Key);
+  State g_State(RFKey(-1));
 
   void State::Clear(){
     m_ParentJigsawPtr = nullptr;

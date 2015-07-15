@@ -68,7 +68,7 @@ namespace RestFrames {
     m_Log.SetSource("Jigsaw "+GetName());
   }
 
-  Jigsaw g_Jigsaw(g_Key);
+  Jigsaw g_Jigsaw(RFKey(-1));
 
   void Jigsaw::Clear(){
     if(m_GroupPtr)
