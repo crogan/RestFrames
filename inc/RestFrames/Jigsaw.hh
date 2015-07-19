@@ -47,11 +47,12 @@ namespace RestFrames {
   class Jigsaw : public RFBase {
   public:
     Jigsaw(const string& sname, const string& stitle);
-    Jigsaw(const RFKey& key);
     Jigsaw();
     
     virtual ~Jigsaw();
   
+    static Jigsaw& Empty();
+
     virtual void Clear();
 
     virtual bool IsSoundBody() const;
@@ -67,13 +68,13 @@ namespace RestFrames {
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
 
-    virtual void SetGroup(Group& group = g_Group);
+    virtual void SetGroup(Group& group = Group::Empty());
     Group& GetGroup() const;
 
-    bool CanSplit(const State& state) const;
-    bool CanSplit(const RestFrames::RFList<RestFrame>& frames) const;
+    bool CanResolve(const State& state) const;
+    bool CanResolve(const RestFrames::RFList<RestFrame>& frames) const;
   
-    virtual RestFrames::RFList<State> InitializeOutputStates(State& state);
+    virtual RestFrames::RFList<State> InitializeAnalysis(State& state);
     virtual bool InitializeDependancyStates(const RestFrames::RFList<State>& states, 
 					    const RestFrames::RFList<Group>& groups);
     virtual bool InitializeDependancyJigsaws();
@@ -108,7 +109,7 @@ namespace RestFrames {
 
     RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
-    virtual State& NewOutputState();
+    virtual State& NewOutputState() = 0;
     virtual void ClearOutputStates();
     void AddOutputFrame(RestFrame& frame, int i = 0);
     void AddOutputFrame(const RFList<RestFrame>& frames, int i = 0);
@@ -120,7 +121,6 @@ namespace RestFrames {
     int GenKey();
   };
 
-  extern Jigsaw g_Jigsaw;
 }
 
 #endif

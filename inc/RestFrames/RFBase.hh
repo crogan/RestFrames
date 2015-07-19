@@ -53,9 +53,9 @@
 #include <string>
 #include <TVector3.h>
 #include <TLorentzVector.h>
-#include "RestFrames/RFList.hh"
 #include "RestFrames/RFKey.hh"
 #include "RestFrames/RFLog.hh"
+#include "RestFrames/RFList.hh"
 
 using namespace std;
 
@@ -85,6 +85,8 @@ namespace RestFrames {
 
     /// \brief Clears RFBase of all connections to other objects
     virtual void Clear();
+
+    static RFBase& Empty();
 
     /// \brief Checks whether this is default (empty) instance of class
     bool IsEmpty() const;
@@ -163,6 +165,7 @@ namespace RestFrames {
     void UnSoundSpirit(const string& function) const;
 
   private:
+    static RFBase m_Empty;
     void Init(const string& sname, const string& stitle);
     string m_Name;
     string m_Title;

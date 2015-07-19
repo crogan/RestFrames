@@ -31,38 +31,45 @@
 #define InvisibleGroup_HH
 
 #include "RestFrames/Group.hh"
+#include "RestFrames/InvisibleState.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // InvisibleGroup class
-  ///////////////////////////////////////////////
+  class InvisibleState;
+
   class InvisibleGroup : public Group {
   public:
     InvisibleGroup(const string& sname, const string& stitle);
+    InvisibleGroup();
     virtual ~InvisibleGroup();
 	
     virtual void Clear();
 
-    virtual void AddFrame(RestFrame& frame);
-    virtual bool AddJigsaw(Jigsaw& jigsaw);
+    static InvisibleGroup& Empty();
 
+    virtual void AddFrame(RestFrame& frame);
+    virtual void AddJigsaw(Jigsaw& jigsaw);
+
+    virtual InvisibleState& GetParentState() const;
+
+    virtual bool ClearEvent();
+    virtual bool AnalyzeEvent();
+    
     // Event analysis functions
     virtual void SetLabFrameFourVector(const TLorentzVector& V);
     virtual void SetLabFrameThreeVector(const TVector3& V);
     virtual TLorentzVector GetLabFrameFourVector() const;
-    virtual void ClearEvent();
-    virtual bool AnalyzeEvent();
 
   protected:
-    virtual State& InitializeGroupState();
+    virtual InvisibleState& InitializeParentState();
+    virtual InvisibleState& GetChildState(int i) const;
 
   private:
-    TLorentzVector m_Lab_P;
+    static InvisibleGroup m_Empty;
     void Init();
-
+    TLorentzVector m_Lab_P;
   };
 
 }

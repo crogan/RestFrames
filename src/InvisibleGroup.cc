@@ -46,10 +46,17 @@ namespace RestFrames {
     Init();
   }
 
-  InvisibleGroup::~InvisibleGroup(){ }
+  InvisibleGroup::InvisibleGroup() : Group() {}
+ 
+
+  InvisibleGroup::~InvisibleGroup() {}
 
   void InvisibleGroup::Init(){
-    m_Type = GInvisible;
+    m_Type = kInvisibleGroup;
+  }
+
+  InvisibleGroup& InvisibleGroup::Empty(){
+    return InvisibleGroup::m_Empty;
   }
 
   void InvisibleGroup::Clear(){
@@ -57,50 +64,41 @@ namespace RestFrames {
   }
 
   void InvisibleGroup::AddFrame(RestFrame& frame){
-    SetBody(false);
-    if(frame.IsEmpty()) return;
-    if(!frame.IsRecoFrame() || !frame.IsInvisibleFrame()) return;
-    ReconstructionFrame* ptr = dynamic_cast<ReconstructionFrame*>(&frame);
-    if(ptr){
-      ptr->SetGroup(*this);
-      m_Frames.Add(frame);
-    }
+    if(!frame) return;
+    if(!frame.IsInvisibleFrame()) return;
+    if(!frame.IsRecoFrame()) return;
+    Group::AddFrame(frame);
   }
 
-  bool InvisibleGroup::AddJigsaw(Jigsaw& jigsaw){
-    SetBody(false);
-
-    if(jigsaw.IsEmpty()) return false;
-    if(!jigsaw.GetGroup().IsEmpty()){
-      if(jigsaw.GetGroup() == *this)
-	return true;
-      m_Log << LogWarning;
-      m_Log << "Cannot add Jigsaw - already assigned to Group:";
-      m_Log << endl << " Jigsaw:" << endl << Log(jigsaw);
-      m_Log << endl << " Group:" << endl << Log(jigsaw.GetGroup());
-      m_Log << m_End;
-      return false;
-    }
-    if(!jigsaw.IsInvisibleJigsaw()){
-      m_Log << LogWarning;
-      m_Log << "Cannot add non-Invisible Jigsaw:";
-      m_Log << Log(jigsaw) << m_End;
-      return false;
-    }
-    if(m_JigsawsToUse.Add(jigsaw))
-      jigsaw.SetGroup(*this);
-     
-    return true;
+  void InvisibleGroup::AddJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(!jigsaw.IsInvisibleJigsaw()) return;
+    Group::AddJigsaw(jigsaw);
   }
 
-  State& InvisibleGroup::InitializeGroupState(){
+  InvisibleState& InvisibleGroup::InitializeParentState(){
     return *(new InvisibleState());
   }
 
-  // Event analysis functions
-  void InvisibleGroup::ClearEvent(){
-    if(!IsSoundMind()) return;
+  InvisibleState& InvisibleGroup::GetParentState() const {
+    if(m_GroupStatePtr)
+      return static_cast<InvisibleState&>(*m_GroupStatePtr);
+    else
+      return InvisibleState::Empty();
+  }
+
+  InvisibleState& InvisibleGroup::GetChildState(int i) const {
+    if(!m_States[i])
+      return InvisibleState::Empty();
+    else
+      return static_cast<InvisibleState&>(m_States[i]);
+  }
+
+  bool InvisibleGroup::ClearEvent(){
+    if(!IsSoundMind()) 
+      return SetSpirit(false);
     m_Lab_P.SetPxPyPzE(0.,0.,0.,0.);
+    return true;
   }
   
   void InvisibleGroup::SetLabFrameFourVector(const TLorentzVector& V){
@@ -116,19 +114,14 @@ namespace RestFrames {
   }
 
   bool InvisibleGroup::AnalyzeEvent(){
-    if(!IsSoundMind() || !m_GroupStatePtr){
-      m_Log << LogWarning;
-      m_Log << "Unable to analyze event. ";
-      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
-      m_Log << "from LabFrame" << m_End;
-      SetSpirit(false);
-      return false;
+    if(!IsSoundMind()){
+      UnSoundMind(RF_FUNCTION);
+      return SetSpirit(false);
     }
-
     m_GroupStatePtr->SetFourVector(m_Lab_P);
-
-    SetSpirit(true);
-    return true;
+    return SetSpirit(true);;
   }
   
+  InvisibleGroup InvisibleGroup::m_Empty;
+
 }

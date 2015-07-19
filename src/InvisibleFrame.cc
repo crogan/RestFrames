@@ -54,7 +54,7 @@ namespace RestFrames {
 
   template <class T>
   void InvisibleFrame<T>::Init(){
-    T::m_Type = FInvisible;
+    T::m_Type = kInvisibleFrame;
   }
   
   template <class T>

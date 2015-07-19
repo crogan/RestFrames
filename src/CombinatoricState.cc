@@ -28,6 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/VisibleState.hh"
+#include "RestFrames/RestFrame.hh"
 
 using namespace std;
 
@@ -43,35 +45,79 @@ namespace RestFrames {
     Init();
   }
 
+  CombinatoricState::CombinatoricState(const RFKey& key) : 
+    State(key)
+  {
+    Init();
+  }
+
   CombinatoricState::~CombinatoricState(){
     ClearElements();
   }
 
   void CombinatoricState::Init(){
-    m_Type = SCombinatoric;
+    m_Type = kCombinatoricState;
+  }
+
+  CombinatoricState& CombinatoricState::Empty(){
+    return CombinatoricState::m_Empty;
   }
 
   void CombinatoricState::Clear(){
     ClearElements();
+    m_ParentJigsawPtr = nullptr;
+    m_ChildJigsawPtr = nullptr;
     State::Clear();
+  }
+
+  void CombinatoricState::AddFrame(RestFrame& frame){
+    if(!frame) return;
+    if(frame.IsVisibleFrame() &&
+       frame.IsRecoFrame())
+      m_Frames += frame;
+
+  }
+
+  void CombinatoricState::SetParentJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(jigsaw.IsCombinatoricJigsaw())
+      m_ParentJigsawPtr = &jigsaw;
+  }
+
+  void CombinatoricState::SetChildJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(jigsaw.IsInvisibleJigsaw())
+      m_ChildJigsawPtr = &jigsaw;
+  }
+
+  CombinatoricJigsaw const& CombinatoricState::GetParentJigsaw() const {
+    if(m_ParentJigsawPtr)
+      return static_cast<CombinatoricJigsaw&>(*m_ParentJigsawPtr);
+    else
+      return CombinatoricJigsaw::Empty();
+  }
+
+  CombinatoricJigsaw const& CombinatoricState::GetChildJigsaw() const {
+    if(m_ChildJigsawPtr)
+      return static_cast<CombinatoricJigsaw&>(*m_ChildJigsawPtr);
+    else
+      return CombinatoricJigsaw::Empty();
   }
 
   void CombinatoricState::ClearElements(){
     m_Elements.Clear();
   }
 
-  void CombinatoricState::AddElement(State& state){
-    if(state.IsEmpty()) return;
-    m_Elements.Add(state);
+  void CombinatoricState::AddElement(VisibleState& state){
+    m_Elements += state;
   }
 
-  void CombinatoricState::AddElement(const RFList<State>& states){
-    int N = states.GetN();
-    for(int i = 0; i < N; i++) AddElement(states.Get(i));
+  void CombinatoricState::AddElements(const RFList<VisibleState>& states){
+    m_Elements += states;
   }
 
-  RFList<State> CombinatoricState::GetElements() const {
-    return m_Elements.Copy();
+  RFList<VisibleState> CombinatoricState::GetElements() const {
+    return m_Elements;
   }
 
   int CombinatoricState::GetNElements() const {
@@ -86,19 +132,19 @@ namespace RestFrames {
     return m_Elements.Contains(state);
   }
 
-  State const& CombinatoricState::GetElement(const RFKey& key) const {
+  VisibleState const& CombinatoricState::GetElement(const RFKey& key) const {
     return m_Elements.Get(key);
   }
 
   void CombinatoricState::Boost(const TVector3& B){
-    m_Elements.Boost(B);
+    RFList<State>(m_Elements).Boost(B);
     m_P.Boost(B);
   }
 
   TLorentzVector CombinatoricState::GetFourVector() const {
-    if(GetNElements() > 0) return m_Elements.GetFourVector();
-    TLorentzVector V(0.,0.,0.,0.);
-    return V;
+    return RFList<State>(m_Elements).GetFourVector();
   }
+
+  CombinatoricState CombinatoricState::m_Empty(RFKey(-1));
 
 }

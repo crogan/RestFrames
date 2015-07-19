@@ -39,12 +39,11 @@ namespace RestFrames {
   class RestFrame;
 
   /// Type of RestFrame, with respect to its decays
-  enum FrameType { FVisible, FInvisible, FDecay, FLab};
+  enum FrameType { kVanillaFrame, kVisibleFrame, kInvisibleFrame,
+		   kDecayFrame,   kLabFrame};
 
   /// Type of RestFrame, with respect to its analysis capabilities
-  enum AnaType { FReco, FGen };
-
-  extern RestFrame g_RestFrame;
+  enum AnaType { kRecoFrame, kGenFrame };
 
   ////////////////////////////////////////////////////////////////////
   /// \brief Base class for all *reference* *frame* objects
@@ -63,8 +62,7 @@ namespace RestFrames {
     ////////////////////////////////////////////////////////////////////
     RestFrame(const string& sname, const string& stitle);
     
-    RestFrame(const RFKey& key);
-
+    /// \brief Empty constructor
     RestFrame();
     
     virtual ~RestFrame();
@@ -72,9 +70,18 @@ namespace RestFrames {
     /// \brief Clears RestFrame of all connections to other objects
     virtual void Clear();
 
+    /// \brief Returns empty instance of class
+    static RestFrame& Empty();
+
+    /// \brief Set axis perpendicular to transverse plane
+    static void SetAxis(const TVector3& axis);
+
+    /// \brief Retrieve axis perpendicular to transverse plane
+    static TVector3 const& GetAxis();
+
     ////////////////////////////////////////////////////////////////////
-    /// \name RestFrame type methods
-    /// \brief RestFrame type query member functions
+    /// \name FrameBase type methods
+    /// \brief FrameBase type query member functions
     ///
     /// Member functions for identifying *FrameType* and *AnaType* of
     /// reference frame
@@ -84,25 +91,25 @@ namespace RestFrames {
     /// \brief Returns RestFrame (*FrameType*) type 
     FrameType GetType() const;
     
-    /// \brief Is this an FVisible type frame? (yes/no)
+    /// \brief Is this a Visible type frame? (yes/no)
     bool IsVisibleFrame() const;
     
-    /// \brief Is this an FInvisible type frame? (yes/no)
+    /// \brief Is this an Invisible type frame? (yes/no)
     bool IsInvisibleFrame() const;
     
-    /// \brief Is this an FDecay type frame? (yes/no)
+    /// \brief Is this a Decay type frame? (yes/no)
     bool IsDecayFrame() const;
     
-    /// \brief Is this an FLab type frame? (yes/no)
+    /// \brief Is this a Lab type frame? (yes/no)
     bool IsLabFrame() const;
     
-    /// \brief Is this an RFrame (for event reconstruction) (yes/no)
+    /// \brief Is this an RecoFrame (for event reconstruction) (yes/no)
     bool IsRecoFrame() const;
     
     /// \brief Is this a GenFrame (for event generation) (yes/no)
     bool IsGenFrame() const;
 
-    /// \brief String of information about RestFrame
+    /// \brief String of information about FrameBase
     virtual string PrintString(LogType type = LogVerbose) const;
     
     ///@}
@@ -122,17 +129,21 @@ namespace RestFrames {
     /// Method for adding a RestFrame *frame* as a child 
     /// of this frame. *frame* will not be added as a child
     /// if it is already listed as a child.
-    void AddChildFrame(RestFrame& frame);
+    virtual void AddChildFrame(RestFrame& frame);
+
+    /// \brief Add a list of children to this frame
+    ///
+    /// \param frames    RestFrames to be added as children
+    void AddChildFrames(const RestFrames::RFList<RestFrame>& frames);
 
     /// \brief Set the parent frame for this frame
     ///
     /// \param frame     parent frame
     ///
     /// Method for connecting a child frame to its parent frame
-    void SetParentFrame(RestFrame& frame);
-
-    /// \brief Remove the parent frame setting
-    void SetParentFrame();
+    /// Empty default sets parent frame to none
+    virtual void SetParentFrame(RestFrame& frame = 
+				RestFrame::Empty());
 
     /// \brief Remove a child of this frame 
     ///
@@ -140,22 +151,13 @@ namespace RestFrames {
     ///
     /// Method for removing a child *frame* from the
     /// list of children of this frame (if it is in that list).
-    void RemoveChild(const RestFrame& frame);
-
-    /// \brief Remove a child of this frame by index
-    ///
-    /// \param index     index of child to be removed
-    ///
-    /// Method for removing the *index* th child of the frame.
-    /// If *index* does not correspond to a valid child then 
-    /// no children are removed.
-    void RemoveChildIndex(int index);
+    void RemoveChild(RestFrame& frame);
 
     /// \brief Remove all the children of this frame
     ///
     /// Method for removing all the children of this frame. 
-    /// No child is left behind.
-    virtual void RemoveChildren();
+    /// No child left behind.
+    void RemoveChildren();
   
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame frame retrieval methods
@@ -170,41 +172,43 @@ namespace RestFrames {
     int GetNChildren() const;
 
     /// \brief Get the number of descendents of this frame
-    virtual int GetNDescendants() const;
-
-    /// \brief Get the frame of the *i* th child
-    RestFrame& GetChildFrame(int i) const;
-
-    /// \brief Get the index of *frame* 
-    ///
-    /// \param frame   child frame whose index is returned
-    ///
-    /// Return the index of child frame *frame*. Will return -1
-    /// if *frame* is not among the children
-    int GetChildIndex(const RestFrame& frame) const;
+    int GetNDescendants() const;
 
     /// \brief Returns the parent of this frame
     ///
     /// Returns the parent frame of this frame.
     /// If the parent frame is not set, an empty
     /// frame is returned.
-    const RestFrame& GetParentFrame() const;
+    virtual RestFrame const& GetParentFrame() const;
+
+    /// \brief Get the frame of the *i* th child
+    virtual RestFrame& GetChildFrame(int i) const;
+
+    /// \brief Returns the parent of this frame
+    ///
+    /// Returns the parent frame of this frame.
+    /// If the parent frame is not set, an empty
+    /// frame is returned.
+
+    /// \brief Returns a list of this frame's children
+    RestFrames::RFList<RestFrame> GetChildren() const;
 
     /// \brief Returns the LabFrame that this frame inherits from
     ///
     /// Returns the LabFrame frame of this frame's tree.
     /// If a LabFrame cannot be found, an empty frame 
     /// is returned.
-    const RestFrame& GetLabFrame() const;
+    virtual RestFrame const& GetLabFrame() const;
 
     /// \brief Returns the production frame of this frame
-    virtual const RestFrame& GetProductionFrame() const;
+    virtual RestFrame const& GetProductionFrame() const;
 
     /// \brief Returns the sibling frame of this frame
     ///
     /// Returns the the first child frame of the parent 
-    /// frame of this one that is not this frame.
-    virtual const RestFrame& GetSiblingFrame() const;
+    /// frame of this one that is not this frame. Returns
+    /// an empty frame if there is no sibling frame
+    virtual RestFrame const& GetSiblingFrame() const;
 
     /// \brief Returns the depth of *frame* 
     ///
@@ -213,7 +217,7 @@ namespace RestFrames {
     /// Returns the depth of *frame* relative to this frame. 
     /// If *frame* is not among the descendents of this frame,
     /// -1 is returned.
-    virtual int GetFrameDepth(const RestFrame& frame) const;
+    int GetFrameDepth(const RestFrame& frame) const;
 
     /// \brief Returns the frame at depth
     ///
@@ -224,48 +228,38 @@ namespace RestFrames {
     /// through the descendents of this frame is defined as that proceeding 
     /// towards *frame*. If no frame exists at *depth* along this path, an
     /// empty frame is returned.
-    RestFrame const& GetFrameAtDepth(int depth, const RestFrame& frame) const;
-
+    virtual RestFrame const& GetFrameAtDepth(int depth, const RestFrame& frame) const;
+    
     /// \brief Returns a list of frames inheriting from this one
     ///
     /// Returns a list of frames that inherit from this one,
-    /// filled recursively and including children of children (and this frame)
-    RestFrames::RFList<RestFrame> GetListFrames();
+    /// filled recursively and including children of children
+    /// which are of FrameType *type*. If *type* is LabFrame
+    /// (default) then *type* is ignored and all frames are included.
+    virtual RestFrames::RFList<RestFrame> GetListFrames(FrameType type = kLabFrame);
 
-    /// \brief Returns a list of frames inheriting from this one with FrameType *type*
-    ///
-    /// \param type    FrameType of frames to be included in list
-    ///
-    /// Returns a list of frames that inherit from this one,
-    /// filled recursively and including children of children (and this frame), 
-    /// which are of FrameType *type*
-    RestFrames::RFList<RestFrame> GetListFrames(FrameType type);
+    /// \brief Returns a list of VisibleFrames inheriting from this
+    virtual RestFrames::RFList<RestFrame> GetListVisibleFrames();
 
-    /// \brief Returns a list of frames inheriting from this one with FrameType *types*
-    ///
-    /// \param types    FrameType's of frames to be included in list
-    ///
-    /// Returns a list of frames that inherit from this one,
-    /// filled recursively and including children of children (and this frame), 
-    /// which have a FrameType included among *types*
-    RestFrames::RFList<RestFrame> GetListFrames(const vector<RestFrames::FrameType>& types);
-
-    /// \brief Returns a list of FVisible frames inheriting from this
-    RestFrames::RFList<RestFrame> GetListVisibleFrames();
-
-    /// \brief Returns a list of FInvisible frames inheriting from this
-    RestFrames::RFList<RestFrame> GetListInvisibleFrames();
+    /// \brief Returns a list of InvisibleFrames inheriting from this
+    virtual RestFrames::RFList<RestFrame> GetListInvisibleFrames();
     
     ///@}
 
+    /// \brief Recursively initialize this frame's tree
+    virtual bool InitializeTreeRecursive();
+
+    /// \brief Recursively initialize this frame and its children for analysis
+    virtual bool InitializeAnalysisRecursive() = 0;
+
     /// \brief Recursively clear event information from this frame and its children
-    virtual void ClearEventRecursive(){ }
+    virtual bool ClearEventRecursive() = 0;
 
     /// \brief Recursively analyze event in this frame and its children
-    virtual bool AnalyzeEventRecursive(){ return false; }
+    virtual bool AnalyzeEventRecursive() = 0;
 
     ////////////////////////////////////////////////////////////////////
-    /// \name RestFrame frame retrieval methods
+    /// \name RestFrame event analysis functions
     /// \brief RestFrame member functions for accessing connected frames
     /// 
     /// Member functions which can be used to access RestFrames 
@@ -276,44 +270,57 @@ namespace RestFrames {
     RestFrames::RFList<RestFrame> operator+(RestFrame& frame); 
 
     virtual double GetMass() const;
-    virtual TLorentzVector GetFourVector() const;
-    virtual TLorentzVector GetFourVector(const RestFrame& frame) const;
+ 
+    TLorentzVector GetFourVector(const RestFrame& frame = 
+				 RestFrame::Empty()) const;
    
-    virtual TLorentzVector GetVisibleFourVector() const; 
-    virtual TLorentzVector GetVisibleFourVector(const RestFrame& frame) const; 
+    TLorentzVector GetVisibleFourVector(const RestFrame& frame = 
+					RestFrame::Empty()) const; 
     
-    virtual TLorentzVector GetInvisibleFourVector() const; 
-    virtual TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const; 
+    TLorentzVector GetInvisibleFourVector(const RestFrame& frame = 
+					  RestFrame::Empty()) const; 
     
-    virtual double GetEnergy(const RestFrame& frame) const;
-    virtual double GetMomentum(const RestFrame& frame) const;
+    double GetEnergy(const RestFrame& frame) const;
+    double GetMomentum(const RestFrame& frame) const;
 
-    virtual double GetCosDecayAngle(const RestFrame& frame = g_RestFrame) const;
-    virtual double GetDeltaPhiDecayAngle(const TVector3& axis = TVector3(0.,0.,1.), 
-					   const RestFrame& frame = g_RestFrame) const;
-    virtual double GetDeltaPhiBoostVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-					   const RestFrame& frame = g_RestFrame) const;
-    virtual double GetDeltaPhiDecayVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-					   const RestFrame& frame = g_RestFrame) const;
-    virtual double GetDeltaPhiVisible(const TVector3& axis = TVector3(0.,0.,1.), 
-				      const RestFrame& frame = g_RestFrame) const;
-    virtual double GetVisibleShape() const;
-    virtual double GetTransverseVisibleShape(const TVector3& axis = TVector3(0.,0.,1.), 
-					     const RestFrame& frame = g_RestFrame) const;
-    virtual double GetScalarVisibleMomentum() const;
-    virtual double GetTransverseScalarVisibleMomentum(const TVector3& axis = TVector3(0.,0.,1.), 
-						      const RestFrame& frame = g_RestFrame) const;
-    virtual TVector3 GetBoostInParentFrame() const;
-    virtual double GetGammaInParentFrame() const;
-    virtual double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
-    virtual TVector3 GetDecayPlaneNormalVector() const;
 
+    double GetVisibleShape() const;
+    double GetSumVisibleMomentum() const;
+    double GetSumInvisibleMomentum() const;
+    
+    TVector3 GetBoostInParentFrame() const;
+    double GetGammaInParentFrame() const;
+
+    TVector3 GetDecayPlaneNormalVector() const;
+
+    double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
+
+    double GetCosDecayAngle(const RestFrame& frame = 
+			    RestFrame::Empty()) const;
+
+    double GetDeltaPhiDecayAngle(const TVector3& axis = 
+				 RestFrame::GetAxis(), 
+				 const RestFrame& frame = 
+				 RestFrame::Empty()) const;
+    double GetDeltaPhiBoostVisible(const TVector3& axis = 
+				   RestFrame::GetAxis(), 
+				   const RestFrame& frame = 
+				   RestFrame::Empty()) const;
+    double GetDeltaPhiDecayVisible(const TVector3& axis = 
+				   RestFrame::GetAxis(), 
+				   const RestFrame& frame = 
+				   RestFrame::Empty()) const;
+    double GetDeltaPhiVisible(const TVector3& axis = 
+			      RestFrame::GetAxis(), 
+			      const RestFrame& frame = 
+			      RestFrame::Empty()) const;
     ///@}
 
   protected:
-    static int m_class_key;     
+    static int m_class_key;   
 
-    virtual bool IsSoundBody() const;
+    /// \brief Axis perpendicular to transverse plane in the lab frame
+    static TVector3 m_Axis;
 
     FrameType m_Type;
     AnaType m_Ana;
@@ -326,29 +333,27 @@ namespace RestFrames {
 
     // list of child frames and boosts
     RestFrames::RFList<RestFrame> m_ChildFrames;
-    vector<TVector3> m_ChildBoosts;
+    mutable map<const RestFrame*, TVector3> m_ChildBoosts;
 
     // parent frame and boost
     RestFrame* m_ParentFramePtr;
     TVector3 m_ParentBoost;
 
-    void SetChildBoostVector(int i, const TVector3& boost);
+    void SetChildBoostVector(RestFrame& frame, const TVector3& boost);
     void SetParentBoostVector(const TVector3& boost);
-    TVector3 GetChildBoostVector(int i) const;
+    TVector3 GetChildBoostVector(RestFrame& frame) const;
     TVector3 GetParentBoostVector() const;
 
-    virtual void SetFourVector(const TLorentzVector& V, const RestFrame& prod_frame);
+    void SetFourVector(const TLorentzVector& V, const RestFrame& frame);
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 vector<TVector3>& boosts) const;
 
     // Tree construction checks
+    virtual bool IsSoundBody() const;
     bool IsCircularTree(vector<RFKey>& keys) const;
-    bool IsConsistentAnaTree(AnaType ana) const;
-    bool IsSoundBodyRecursive() const;
 
     // Recursively get lists of frames
-    void FillListFramesRecursive(RFList<RestFrame>& frames);
-    void FillListFramesRecursive(FrameType type, RFList<RestFrame>& frames);
+    void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame);
 
   private:
     void Init();

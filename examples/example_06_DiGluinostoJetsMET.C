@@ -230,6 +230,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   V1b_G.SetMass(100.);
   V2a_G.SetMass(100.);
   V2b_G.SetMass(100.);
+
   // function for randomly determining di-gluino mass 
   // (relative to gluino mass via gamma)
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);

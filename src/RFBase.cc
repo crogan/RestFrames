@@ -41,8 +41,8 @@ namespace RestFrames {
   RFBase::RFBase()
     : m_Log()
   {
-    Init("Default", "Default");
-    SetKey(g_Key);
+    Init("Empty", "Empty");
+    SetKey(RFKey(-1));
   }
 
   RFBase::RFBase(const string& sname, const string& stitle)
@@ -69,6 +69,10 @@ namespace RestFrames {
       delete m_Owns[i];
     }
     m_Owns.clear();
+  }
+
+  RFBase& RFBase::Empty(){
+    return RFBase::m_Empty;
   }
 
   bool RFBase::IsEmpty() const {
@@ -186,5 +190,7 @@ namespace RestFrames {
     printf("http://RestFrames.com\n");
     printf("\x1b[0m" "\n");
   }
+
+  RFBase RFBase::m_Empty;
 
 }

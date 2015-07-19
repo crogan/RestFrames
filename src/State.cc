@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/State.hh"
+#include "RestFrames/VisibleState.hh"
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
@@ -61,9 +62,10 @@ namespace RestFrames {
     m_ParentJigsawPtr = nullptr;
     m_ChildJigsawPtr = nullptr;
     m_Log.SetSource("State");
+    m_Type = kVanillaState;
+    m_P.SetPxPyPzE(0.,0.,0.,0.);
+    m_Frames.Clear();
   }
-
-  State g_State(RFKey(-1));
 
   void State::Clear(){
     m_ParentJigsawPtr = nullptr;
@@ -73,8 +75,8 @@ namespace RestFrames {
     RFBase::Clear();
   }
 
-  void State::ClearFrames(){
-    m_Frames.Clear();
+  State& State::Empty(){
+    return VisibleState::Empty();
   }
 
   int State::GenKey(){
@@ -83,62 +85,66 @@ namespace RestFrames {
     return newkey;
   }
 
-  void State::Boost(const TVector3& B){
-    m_P.Boost(B);
+  /// \brief Returns State (*StateType*) type 
+  StateType State::GetType() const {
+    return m_Type;
+  }
+    
+  /// \brief Is this a VisibleState? (yes/no)
+  bool State::IsVisibleState() const {
+    return m_Type == kVisibleState;
+  }
+    
+  /// \brief Is this an InvisibleState? (yes/no)
+  bool State::IsInvisibleState() const {
+    return m_Type == kInvisibleState;
   }
 
-  void State::AddFrame(RestFrame& frame){
-    if(frame.IsEmpty()) return;
-    if(!frame.IsVisibleFrame() && !frame.IsInvisibleFrame()) return;
-    m_Frames.Add(frame);
+  /// \brief Is this a CombinatoricState? (yes/no)
+  bool State::IsCombinatoricState() const {
+    return m_Type == kCombinatoricState;
   }
 
-  void State::AddFrame(const RFList<RestFrame>& frames){
+  void State::AddFrames(const RFList<RestFrame>& frames){
     int N = frames.GetN();
-    for(int i = 0; i < N; i++) AddFrame(frames.Get(i));
+    for(int i = 0; i < N; i++)
+      AddFrame(frames[i]);
+  }
+
+  RFList<RestFrame> const& State::GetListFrames() const {
+    return m_Frames;
+  }
+
+  int State::GetNFrames() const {
+    return m_Frames.GetN();
   }
 
   bool State::IsFrame(const RestFrame& frame) const {
-    if(frame.IsEmpty()) return false;
+    if(!frame) return false;
     if(m_Frames.GetN() != 1) return false;
-    return m_Frames.Get(0) == frame;
+    return m_Frames[0] == frame;
   }
 
   bool State::IsFrames(const RFList<RestFrame>& frames) const {
-    return m_Frames.IsSame(frames);
-  }
-
-  RFList<RestFrame> State::GetFrames() const {
-    return m_Frames.Copy();
-  }
-
-  RestFrame& State::GetFrame() const {
-    if(m_Frames.GetN() != 1) return g_RestFrame;
-    return m_Frames.Get(0);
-  }
-
-  void State::SetParentJigsaw(Jigsaw& jigsaw){ 
-    if(jigsaw.IsEmpty()) return;
-    m_ParentJigsawPtr = &jigsaw; 
-  }
-
-  void State::SetChildJigsaw(Jigsaw& jigsaw){
-    if(jigsaw.IsEmpty()) return;
-    m_ChildJigsawPtr = &jigsaw; 
+    return m_Frames == frames;
   }
 
   Jigsaw const& State::GetParentJigsaw() const { 
     if(m_ParentJigsawPtr)
       return *m_ParentJigsawPtr;
     else 
-      return g_Jigsaw;
+      return Jigsaw::Empty();
   }
   
   Jigsaw const& State::GetChildJigsaw() const { 
     if(m_ChildJigsawPtr)
       return *m_ChildJigsawPtr;
     else
-      return g_Jigsaw;
+      return Jigsaw::Empty();
+  }
+
+  void State::Boost(const TVector3& B){
+    m_P.Boost(B);
   }
 
   void State::SetFourVector(const TLorentzVector& V){
@@ -147,7 +153,7 @@ namespace RestFrames {
 
   TLorentzVector State::GetFourVector() const {
     TLorentzVector V;
-    V.SetVectM(m_P.Vect(),m_P.M());
+    V.SetVectM(m_P.Vect(),max(0.,m_P.M()));
     return V;
   }
 

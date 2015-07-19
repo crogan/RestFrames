@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/Jigsaw.hh"
+#include "RestFrames/InvisibleJigsaw.hh"
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/State.hh"
 
@@ -46,20 +47,9 @@ namespace RestFrames {
     Init();
   }
 
-  Jigsaw::Jigsaw(const RFKey& key)
-    : RFBase() 
-  {
-    Init();
-    SetKey(key);
-  }
+  Jigsaw::Jigsaw() : RFBase() {}
 
-  Jigsaw::Jigsaw()
-    : RFBase() 
-  {
-    Init();
-  }
-
-  Jigsaw::~Jigsaw(){ }
+  Jigsaw::~Jigsaw() {}
 
   void Jigsaw::Init(){
     SetKey(GenKey());
@@ -68,7 +58,9 @@ namespace RestFrames {
     m_Log.SetSource("Jigsaw "+GetName());
   }
 
-  Jigsaw g_Jigsaw(RFKey(-1));
+  Jigsaw& Jigsaw::Empty(){
+    return InvisibleJigsaw::Empty();
+  }
 
   void Jigsaw::Clear(){
     if(m_GroupPtr)
@@ -126,37 +118,29 @@ namespace RestFrames {
     if(m_GroupPtr)
       return *m_GroupPtr;
     else 
-      return g_Group;
+      return Group::Empty();
   }
 
-  bool Jigsaw::CanSplit(const RFList<RestFrame>& frames) const {
+  bool Jigsaw::CanResolve(const RFList<RestFrame>& frames) const {
     int NoF = m_OutputFrames.size();
     RFList<RestFrame> iframes;
     for(int i = 0; i < NoF; i++)
-      iframes.Add(m_OutputFrames[i]);
+      iframes += m_OutputFrames[i];
     
-    return iframes.IsSame(frames);
+    return iframes == frames;
   }
 
-  bool Jigsaw::CanSplit(const State& state) const {
-    if(state.IsEmpty()) return false;
-    RFList<RestFrame> frames = state.GetFrames();
-    return CanSplit(frames);
-  }
-
-  State& Jigsaw::NewOutputState(){
-    State* statePtr = new State();
-    AddDependent(statePtr);
-    m_OutputStates.Add(*statePtr);
-    return *statePtr;
+  bool Jigsaw::CanResolve(const State& state) const {
+    if(!state) return false;
+    return CanResolve(state.GetListFrames());
   }
 
   void Jigsaw::ClearOutputStates(){
     m_OutputStates.Clear();
   }
 
-  RFList<State> Jigsaw::InitializeOutputStates(State& state){
-    if(state.IsEmpty()){
+  RFList<State> Jigsaw::InitializeAnalysis(State& state){
+    if(!state){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw States with empty ";
       m_Log << "input State" << m_End;
@@ -164,7 +148,7 @@ namespace RestFrames {
     }
     ClearOutputStates();
 
-    if(!CanSplit(state)) return RFList<State>();
+    if(!CanResolve(state)) return RFList<State>();
 
     m_InputStatePtr = &state;
     state.SetChildJigsaw(*this);
@@ -172,10 +156,10 @@ namespace RestFrames {
     int NoF = m_OutputFrames.size();
     for(int i = 0; i < NoF; i++){
       State& new_state = NewOutputState();
-      new_state.AddFrame(m_OutputFrames[i]);
+      new_state.AddFrames(m_OutputFrames[i]);
       new_state.SetParentJigsaw(*this);
     }
-    return m_OutputStates.Copy();
+    return m_OutputStates;
   }
 
   bool Jigsaw::InitializeDependancyStates(const RFList<State>& states, 
@@ -213,32 +197,30 @@ namespace RestFrames {
 	}
 
 	if(no_group){
-	  int index = states.GetIndexFrame(frame);
-	  if(index < 0){
+	  State& state = states.GetFrame(frame);
+	  if(!state){
 	    m_Log << LogWarning;
 	    m_Log << "Cannot find States corresponding to frame: " << endl;
 	    m_Log << Log(frame) << " " << Log(states) << m_End;
-	    SetMind(false);
-	    return false;
+	    return SetMind(false);
 	  }
 	  m_Log << LogVerbose;
 	  m_Log << "Adding dependancy State for hemishpere " << d;
 	  m_Log << " corresponding to frame:";
 	  m_Log << Log(frame) << m_End;
-	  m_DependancyStates[d].Add(states.Get(index));
+	  m_DependancyStates[d].Add(state);
 	}
       }
       for(int g = 0; g < Ngroup; g++){
 	if(group_frames[g].GetN() == 0) continue;
-	RFList<State> group_states = groups.Get(g).GetStates(group_frames[g]);
+	RFList<State> group_states = groups[g].GetChildStates(group_frames[g]);
 	if(group_states.GetN() == 0){
 	  m_Log << "Cannot find States in Group:" << endl;
 	  m_Log << " Frames:" << endl << "   ";
 	  m_Log << Log(group_frames[g]) << endl;
 	  m_Log << " Group:" << endl;
 	  m_Log << Log(groups.Get(g)) << m_End;
-	  SetMind(false);
-	  return false;
+	  return SetMind(false);
 	}
 	m_Log << LogVerbose;
 	m_Log << "Adding dependancy States for hemishpere " << d << endl;
@@ -247,7 +229,8 @@ namespace RestFrames {
 	m_Log << Log(group_frames[g]) << endl;
 	m_Log << " States:" << endl;
 	for(int s = 0; s < Ns; s++){
-	  m_Log << "   state " << s << ": " << Log(group_states.Get(s).GetFrames()) << endl;
+	  m_Log << "   state " << s << ": ";
+	  m_Log << Log(group_states[s].GetListFrames()) << endl;
 	}
 	m_Log << m_End;
 	m_DependancyStates[d].Add(group_states);
@@ -341,7 +324,7 @@ namespace RestFrames {
     int Nout = m_OutputFrames.size();
     for(int i = 0; i < Nout-1; i++)
       for(int j = i+1; j < Nout; j++)
-	if(m_OutputFrames[i].SizeIntersection(m_OutputFrames[j]) > 0){
+	if(m_OutputFrames[i].Intersection(m_OutputFrames[j]).GetN() > 0){
 	  SetBody(false);
 	  return false;
 	}
@@ -365,7 +348,7 @@ namespace RestFrames {
 
   RFList<RestFrame> Jigsaw::GetChildFrames(int i) const {
     if(i < 0 || i >= GetNChildStates()) RFList<RestFrame>();
-    RFList<RestFrame> frames = m_OutputFrames[i].Copy();
+    RFList<RestFrame> frames = m_OutputFrames[i];
     if(i < int(m_DependancyFrames.size())) frames.Add(m_DependancyFrames[i]);
     return frames;
   }

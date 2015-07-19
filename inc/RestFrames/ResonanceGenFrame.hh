@@ -45,6 +45,8 @@ namespace RestFrames {
     ResonanceGenFrame();
     virtual ~ResonanceGenFrame();
 
+    static ResonanceGenFrame& Empty();
+
     virtual void SetMass(double mass);
     virtual void SetEvtMass(double mass);
     virtual void SetWidth(double w);
@@ -59,6 +61,7 @@ namespace RestFrames {
     virtual double GenerateMass(double Mmin = 0., double Mmax = -1.) const;
 
   protected:
+    static ResonanceGenFrame m_Empty;
     double m_PoleMass;
     double m_Width;
     void Init();

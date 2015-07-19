@@ -30,14 +30,15 @@
 #ifndef LabRecoFrame_HH
 #define LabRecoFrame_HH
 
-#include "RestFrames/LabFrame.hh"
 #include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/LabFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class Jigsaw;
+  class VisibleState;
 
   ///////////////////////////////////////////////
   // LabRecoFrame class
@@ -45,18 +46,25 @@ namespace RestFrames {
   class LabRecoFrame : public LabFrame<ReconstructionFrame> {
   public:
     LabRecoFrame(const string& sname, const string& stitle);
+    LabRecoFrame();
     virtual ~LabRecoFrame();
-  
+    
     virtual void Clear();
 
     virtual bool InitializeAnalysis();
-    virtual void ClearEvent();
+    virtual bool ClearEvent();
     virtual bool AnalyzeEvent();
+
+    void AddVisibleState(VisibleState& state) const;
+    void AddVisibleStates(const RestFrames::RFList<VisibleState>& states) const;
+    void RemoveVisibleState(const VisibleState& state) const;
+    void RemoveVisibleStates(const RestFrames::RFList<VisibleState>& states) const;
+    RestFrames::RFList<VisibleState> const& GetVisibleStates() const;
 
   protected:
     RestFrames::RFList<Group>  m_LabGroups;
     RestFrames::RFList<Jigsaw> m_LabJigsaws;
-    RestFrames::RFList<State> m_LabStates;
+    mutable RestFrames::RFList<VisibleState>  m_LabStates;
   
     bool InitializeLabStates();
     bool InitializeLabGroups();

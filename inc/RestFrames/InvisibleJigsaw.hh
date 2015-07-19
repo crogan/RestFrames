@@ -46,18 +46,21 @@ namespace RestFrames {
   class InvisibleJigsaw : public Jigsaw {
   public:
     InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis);
+    InvisibleJigsaw();
     virtual ~InvisibleJigsaw();
 
     virtual void Clear();
+
+    static InvisibleJigsaw& Empty();
 
     void AddVisibleFrame(RestFrame& framePtr, int i = 0);
     void AddVisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
     void AddInvisibleFrame(RestFrame& framePtr, int i = 0);
     void AddInvisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
-    virtual double GetMinimumMass();
+    virtual double GetMinimumMass() const;
     virtual bool InitializeDependancyJigsaws();
-    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
+    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 
     virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
 
@@ -70,6 +73,7 @@ namespace RestFrames {
     RestFrames::RFList<InvisibleState> m_InvisibleOutputStates;
 
   private:
+    static InvisibleJigsaw m_Empty;
     void Init(int Ninv, int Nvis);
     int m_Nvis;
     int m_Ninv;  

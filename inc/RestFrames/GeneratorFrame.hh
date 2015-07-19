@@ -48,8 +48,39 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    virtual void ClearEventRecursive();
+    static GeneratorFrame& Empty();
+
+    virtual bool InitializeAnalysisRecursive();
+    virtual bool ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
+
+    /// \brief Add a child RestFrame to this frame
+    ///
+    /// \param frame    RestFrame to be added as child
+    ///
+    /// Method for adding a RestFrame *frame* as a child 
+    /// of this frame. *frame* will not be added as a child
+    /// if it is already listed as a child.
+    virtual void AddChildFrame(RestFrame& frame);
+
+    /// \brief Set the parent frame for this frame
+    ///
+    /// \param frame     parent frame
+    ///
+    /// Method for connecting a child frame to its parent frame
+    /// Empty default sets parent frame to none
+    virtual void SetParentFrame(RestFrame& frame = 
+				RestFrame::Empty());
+
+    /// \brief Returns the parent of this frame
+    ///
+    /// Returns the parent frame of this frame.
+    /// If the parent frame is not set, an empty
+    /// frame is returned.
+    virtual GeneratorFrame const& GetParentFrame() const;
+
+    /// \brief Get the frame of the *i* th child
+    virtual GeneratorFrame& GetChildFrame(int i) const;
 
   protected:
     virtual void ResetFrame(){ }
@@ -57,7 +88,6 @@ namespace RestFrames {
 
     void SetChildren(const vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();
-    virtual bool InitializeAnalysisRecursive();
 
     double GetRandom() const;
     double GetGaus(double mu, double sig) const;

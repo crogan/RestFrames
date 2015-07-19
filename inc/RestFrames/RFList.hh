@@ -40,71 +40,165 @@ class TVector3;
 namespace RestFrames {
   
   class RFKey;
-  class RestFrame;
   class State;
-
+  class RestFrame;
   template <class T>
-  class RFListEmpty {
-  public:
-    RFListEmpty(const RFKey& key);
-    ~RFListEmpty();
-    T& GetEmpty() const;
-  private:
-    T* m_Empty;
-  };
-    
+  class RFList;
+
   ///////////////////////////////////////////////
   // RFListBase class
   ///////////////////////////////////////////////
   template <class T, class Derived>
   class RFListBase {
   public:
-    RFListBase(){ }
-    virtual ~RFListBase(){ }
+    RFListBase() {}
+
+    virtual ~RFListBase() {}
     
-    bool Add(T& obj);
-    bool Add(const Derived& objs);
-    int Remove(const T& obj);
-    void Remove(const Derived& objs);
     void Clear();
+
+    bool Add(T& obj);
+
+    template <class U>
+    bool Add(const RFList<U>& objs){
+      int N = objs.GetN();
+      double ret = true;
+      for(int i = 0; i < N; i++) 
+	if(!Add((T&)objs[i])) ret = false;
+      return ret;
+    }
+
+    int Remove(const T& obj);
+    
+    template <class U>
+    void Remove(const RFList<U>& objs){
+      int N = objs.GetN();
+      for(int i = 0; i < N; i++) 
+	Remove(objs[i]);
+    }
+
     int GetN() const { return m_Objs.size(); }
+
     T& Get(int i) const;
+
     T& Get(const RFKey& key) const;
+
     int GetIndex(const RFKey& key) const;
+
     int GetIndex(const T& obj) const;
-    bool Contains(const RFKey& key) const;
-    bool Contains(const T& obj) const;
-    bool Contains(const Derived& objs) const;
+
+    template <class U>
+    bool Contains(const U& obj) const{
+      int N = GetN();
+      for(int i = 0; i < N; i++)
+	if(*m_Objs[i] == obj) return true;
+      return false;
+    }
+
+    template <class U>
+    bool Contains(const RFList<U>& objs) const {
+      int N = objs.GetN();
+      for(int i = 0; i < N; i++)
+	if(!Contains(objs[i]))
+	  return false;
+      return true;
+    }
     
-    bool IsSame(const Derived& objs) const;
-    Derived Copy() const;
-    Derived Union(const Derived& objs) const;
-    Derived Intersection(const Derived& objs) const;
-    Derived Complement(const Derived& objs) const;
-    int SizeUnion(const Derived& objs) const;
-    int SizeIntersection(const Derived& objs) const;
-    int SizeComplement(const Derived& objs) const;
-    
-    // operator overload methods
-    void operator=(const Derived& objs);
+    template <class U>
+    bool IsSame(const RFList<U>& objs) const {
+      return Union(objs).GetN() == Intersection(objs).GetN();
+    }
+
+    template <class U>
+    Derived Union(const RFList<U>& objs) const {
+      Derived objs_this = static_cast<const Derived&>(*this);
+      objs_this.Add(objs);
+      return objs_this;
+    }
+
+    template <class U>
+    Derived Intersection(const RFList<U>& objs) const {
+      Derived inter; 
+      int N = objs.GetN();
+      for(int i = 0; i < N; i++)
+	if(Contains(objs[i])) inter.Add(objs[i]);
+      return inter;
+    }
+
+    template <class U>
+    Derived Complement(const RFList<U>& objs) const {
+      Derived comp = static_cast<Derived&>(*this);
+      int N = objs.GetN();
+      for(int i = 0; i < N; i++)
+	if(comp.Contains(objs.Get(i))) 
+	  comp.Remove(objs.Get(i));
+      return comp;
+    }
+
+    Derived& operator=(T& obj){
+      Clear();
+      Add(obj);
+      return static_cast<Derived&>(*this);
+    }
+
+    template <class U>
+    Derived& operator=(const RFList<U>& objs){
+      Clear();
+      Add(objs);
+      return static_cast<Derived&>(*this);
+    }
+
     T& operator[](int i) const;
+
+    T& operator[](const RFKey& key) const;
+
     bool operator==(const T& obj) const;
-    bool operator==(const Derived& objs) const;
+
+    template <class U>
+    bool operator==(const RFList<U>& objs) const {
+      return IsSame(objs);
+    }
+
     bool operator!=(const T& obj) const;
-    bool operator!=(const Derived& objs) const;
+
+    template <class U>
+    bool operator!=(const RFList<U>& objs) const {
+      return !IsSame(objs);
+    }
+
     Derived operator+(T& obj) const;
-    Derived operator+(const Derived& objs) const;
+
+    template <class U>
+    Derived operator+(const RFList<U>& objs) const {
+      Derived list = static_cast<const Derived&>(*this);
+      list.Add(objs);
+      return list;
+    }
+
     Derived operator-(const T& obj) const;
-    Derived operator-(const Derived& objs) const;
+
+    template <class U>
+    Derived operator-(const RFList<U>& objs) const;
+
     Derived& operator+=(T& obj);
-    Derived& operator+=(const Derived& objs);
+
+    template <class U>
+    Derived& operator+=(const RFList<U>& objs){
+      Add(objs);
+      return static_cast<Derived&>(*this);
+    }
+
     Derived& operator-=(const T& obj);
-    Derived& operator-=(const Derived& objs);
+
+    template <class U>
+    Derived& operator-=(const RFList<U>& objs){
+      Remove(objs);
+      return static_cast<Derived&>(*this);
+    }
     
   protected:
     vector<T*> m_Objs;
-    static RFListEmpty<T> m_EmptyHandler;
-    static T& m_Empty;
+  
   };
     
   ///////////////////////////////////////////////
@@ -114,6 +208,12 @@ namespace RestFrames {
   class RFList : public RestFrames::RFListBase<T,RFList<T> > {
   public:
     RFList() : RFListBase<T,RFList<T> >() { }
+    
+    template <class U>
+    RFList(const RFList<U>& objs) : RFListBase<T,RFList<T> >() {
+      RFListBase<T,RFList<T> >::Add(objs);
+    }
+
     virtual ~RFList(){ }
   };
   
@@ -122,9 +222,15 @@ namespace RestFrames {
     : public RFListBase<State,RFList<RestFrames::State> > {
   public:
     RFList() : RFListBase<State,RFList<State> >() { }
+
+    template <class U>
+    RFList(const RFList<U>& objs) : RFListBase<State,RFList<State> >() {
+      Add(objs);
+    }
+
     virtual ~RFList(){ }
 
-    int GetIndexFrame(const RestFrame& frame) const;
+    State& GetFrame(const RestFrame& frame) const;
     TLorentzVector GetFourVector() const;
     void Boost(const TVector3& B) const;
   };
@@ -134,9 +240,16 @@ namespace RestFrames {
     : public RFListBase<RestFrame,RFList<RestFrames::RestFrame> > {
   public:
     RFList() : RFListBase<RestFrame,RFList<RestFrame> >() { }
+
+    template <class U>
+    RFList(const RFList<U>& objs) : RFListBase<RestFrame,RFList<RestFrame> >() {
+      Add(objs);
+    }
+
     virtual ~RFList(){ }
 
     double GetMass() const;
+  
     TLorentzVector GetFourVector() const;
     TLorentzVector GetFourVector(const RestFrame& frame) const;
     TLorentzVector GetVisibleFourVector() const;

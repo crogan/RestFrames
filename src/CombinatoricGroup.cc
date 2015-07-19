@@ -47,14 +47,20 @@ namespace RestFrames {
     Init();
   }
 
-  CombinatoricGroup::~CombinatoricGroup(){ }
+  CombinatoricGroup::CombinatoricGroup() : Group() {}
+
+  CombinatoricGroup::~CombinatoricGroup() {}
 
   void CombinatoricGroup::Init(){
-    m_Type = GCombinatoric;
+    m_Type = kCombinatoricGroup;
+  }
+
+  CombinatoricGroup& CombinatoricGroup::Empty(){
+    return CombinatoricGroup::m_Empty;
   }
 
   void CombinatoricGroup::Clear(){
-    ClearElements();
+    m_Elements.Clear();
     m_NElementsForFrame.clear();
     m_NExclusiveElementsForFrame.clear(); 
     m_InitStates.Clear();
@@ -62,159 +68,115 @@ namespace RestFrames {
   }
 
   void CombinatoricGroup::AddFrame(RestFrame& frame){
-    if(frame.IsEmpty()) return;
-    if(!frame.IsRecoFrame() || !frame.IsVisibleFrame()) return;
-    ReconstructionFrame* ptr = dynamic_cast<ReconstructionFrame*>(&frame);
-    if(ptr){
-      ptr->SetGroup(*this);
-      m_Frames.Add(frame);
-      if(m_Frames.GetN() == int(m_NElementsForFrame.size())) return;
-      m_NElementsForFrame.push_back(1.);
-      m_NExclusiveElementsForFrame.push_back(false);
-    }
+    if(!frame) return;
+    if(!frame.IsVisibleFrame()) return;
+    if(!frame.IsRecoFrame()) return;
+    int N = m_Frames.GetN();
+    Group::AddFrame(frame);
+    if(m_Frames.GetN() == N) 
+      return;
+    m_NElementsForFrame[&frame] = 1;
+    m_NExclusiveElementsForFrame[&frame] = true;
   }
   
-  void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, int N, bool exclusive_N){
-    int index = m_Frames.GetIndex(frame);
-    if(index < 0) return;
-    m_NElementsForFrame[index] = N;
-    m_NExclusiveElementsForFrame[index] = exclusive_N;
+  void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, 
+					       int N, bool exclusive_N){
+    if(!m_Frames.Contains(frame)) return;
+    m_NElementsForFrame[&frame] = max(0, N);
+    m_NExclusiveElementsForFrame[&frame] = exclusive_N;
   }
 
   void CombinatoricGroup::GetNElementsForFrame(const RestFrame& frame, int& N, 
 					       bool& exclusive_N) const {
-    int index = m_Frames.GetIndex(frame);
-    if(index < 0){
-      N = -1;
-      exclusive_N = false;
-      return;
-    }
-    N = m_NElementsForFrame[index];
-    exclusive_N = m_NExclusiveElementsForFrame[index];
+    if(!m_Frames.Contains(frame)) return;
+    N = m_NElementsForFrame[&frame];
+    exclusive_N = m_NExclusiveElementsForFrame[&frame];
   }
 
-  bool CombinatoricGroup::AddJigsaw(Jigsaw& jigsaw){
-    SetBody(false);
-    if(jigsaw.IsEmpty()) return false;
-    if(!jigsaw.GetGroup().IsEmpty()){
-      m_Log << LogWarning;
-      m_Log << "Cannot add Jigsaw - already assigned to Group:";
-      m_Log << endl << " Jigsaw:" << endl << Log(jigsaw);
-      m_Log << endl << " Group:" << endl << Log(jigsaw.GetGroup());
-      m_Log << m_End;
-      return false;
-    }
-    if(!jigsaw.IsCombinatoricJigsaw()){
-      m_Log << LogWarning;
-      m_Log << "Cannot add non-Invisible Jigsaw:";
-      m_Log << Log(jigsaw) << m_End;
-      return false;
-    }
-    if(m_JigsawsToUse.Add(jigsaw)) jigsaw.SetGroup(*this);
-    return true;
+  void CombinatoricGroup::AddJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(!jigsaw.IsCombinatoricJigsaw()) return;
+    Group::AddJigsaw(jigsaw);
   }
 
-  State& CombinatoricGroup::InitializeGroupState(){
+  CombinatoricState& CombinatoricGroup::InitializeParentState(){
     return *(new CombinatoricState());
   }
 
-  void CombinatoricGroup::ClearElements(){
-    m_StateElements.Clear();
+  CombinatoricState& CombinatoricGroup::GetParentState() const {
+    if(m_GroupStatePtr)
+      return static_cast<CombinatoricState&>(*m_GroupStatePtr);
+    else
+      return CombinatoricState::Empty();
   }
 
-  void CombinatoricGroup::AddElement(State& state){
-    m_StateElements.Add(state);
-  }
-
-  int CombinatoricGroup::GetNElements() const{
-    return m_StateElements.GetN();
+  CombinatoricState& CombinatoricGroup::GetChildState(int i) const {
+    if(!m_States[i])
+      return CombinatoricState::Empty();
+    else
+      return static_cast<CombinatoricState&>(m_States[i]);
   }
 
   // Event analysis functions
-  void CombinatoricGroup::ClearEvent(){
-    ClearFourVectors();
+  bool CombinatoricGroup::ClearEvent(){
+    m_Elements.Clear();
+    return true;
   }
  
   bool CombinatoricGroup::AnalyzeEvent(){
-    if(!IsSoundMind() || !m_GroupStatePtr){
-      m_Log << LogWarning << "Unable to Analyze Event" << m_End;
-      SetSpirit(false);
-      return false;
+    if(!IsSoundMind()){
+      UnSoundMind(RF_FUNCTION);
+      return SetSpirit(false);
     }
     
-    CombinatoricState* group_statePtr = dynamic_cast<CombinatoricState*>(m_GroupStatePtr);
-    if(!group_statePtr){
-      m_Log << LogWarning << "Unable to get Group CombinatoricState" << m_End;
-      SetSpirit(false);
-      return false;
-    }
-    
-    group_statePtr->ClearElements();
-    group_statePtr->AddElement(m_StateElements);    
+    GetParentState().ClearElements();
+    GetParentState().AddElements(m_Elements);    
 
-    SetSpirit(true);
-    return true;
+    return SetSpirit(true);
   }
 
-  void CombinatoricGroup::ClearFourVectors(){
-    ClearElements();
-   }
-
   RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
-    State& state = GetNewState();
+    VisibleState& state = GetNewElement();
     
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
     state.SetFourVector(P);
-    AddElement(state);
+    m_Elements.Add(state);
    
     return state.GetKey();
   }
 
-  int CombinatoricGroup::GetNFourVectors() const{
-    return GetNElements();
-  }
-
   RestFrame const& CombinatoricGroup::GetFrame(const RFKey& key) const {
     int N = m_States.GetN();
-    for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_States.Get(i));
-      if(!statePtr) continue;
-      if(statePtr->ContainsElement(key)){
-	return statePtr->GetFrame();
-      }
-    }
-    return g_RestFrame;
+    for(int i = N-1; i >= 0; i--)
+      if(GetChildState(i).ContainsElement(key))
+	return GetChildState(i).GetElement(key).GetFrame();
+    return RestFrame::Empty();
   }
 
   TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const RFKey& key) const {
     TLorentzVector P(0.,0.,0.,0.);
     int N = m_States.GetN();
-    for(int i = N-1; i >= 0; i--){
-      CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&m_States.Get(i));
-      if(!statePtr) continue;
-      if(statePtr->ContainsElement(key))
-	return statePtr->GetElement(key).GetFourVector();
-      
-    }
+    for(int i = N-1; i >= 0; i--)
+      if(GetChildState(i).ContainsElement(key))
+	return GetChildState(i).GetElement(key).GetFourVector();
     return TLorentzVector(0.,0.,0.,0.);
   }
 
   int CombinatoricGroup::GetNElementsInFrame(const RestFrame& frame) const {
     if(!ContainsFrame(frame)) return -1;
-    CombinatoricState* statePtr = dynamic_cast<CombinatoricState*>(&GetState(frame));
-    if(!statePtr) return -1;
-    return statePtr->GetNElements();
+    return static_cast<CombinatoricState&>(Group::GetChildState(frame)).GetNElements();
   }
 
-  State& CombinatoricGroup::GetNewState(){
-    if(GetNElements() < m_InitStates.GetN())
-      return m_InitStates.Get(GetNElements());
-
-    State* statePtr = new State();
+  VisibleState& CombinatoricGroup::GetNewElement(){
+    if(m_Elements.GetN() < m_InitStates.GetN())
+      return m_InitStates[m_Elements.GetN()];
+    VisibleState* statePtr = new VisibleState();
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);
     return *statePtr;
   }
 
+  CombinatoricGroup CombinatoricGroup::m_Empty;
+  
 }

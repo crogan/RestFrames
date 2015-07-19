@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   VisibleGenFrame.cc
+///  \file   VisibleState.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,55 +27,48 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/VisibleGenFrame.hh"
+#ifndef VisibleState_HH
+#define VisibleState_HH
+
+#include "RestFrames/State.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // VisibleGenFrame class
-  ///////////////////////////////////////////////
-  VisibleGenFrame::VisibleGenFrame(const string& sname, const string& stitle) : 
-    VisibleFrame<GeneratorFrame>(sname, stitle)
-  {
-    Init();
-  }
+  class VisibleRecoFrame;
 
-  VisibleGenFrame::VisibleGenFrame() : VisibleFrame<GeneratorFrame>() {}
+  class VisibleState : public State {
+  public:
+    VisibleState();
+    VisibleState(const RFKey& key);
+    virtual ~VisibleState();
 
-  VisibleGenFrame::~VisibleGenFrame(){ }
+    virtual void Clear();
 
-  void VisibleGenFrame::Init(){
-    m_Mass = 0.;
-  }
+    static VisibleState& Empty();
 
-  /// \brief Returns empty instance of class
-  VisibleGenFrame& VisibleGenFrame::Empty(){
-    return VisibleGenFrame::m_Empty;
-  }
+    virtual void AddFrame(RestFrame& frame);
 
-  void VisibleGenFrame::SetMass(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
-      m_Mass = 0.;
-    } else {
-      m_Mass = val;
-    }
-  }
+    virtual RestFrame& GetFrame() const;
 
-  double VisibleGenFrame::GetMass() const {
-    return m_Mass;
-  }
+    virtual bool IsFrame(const RestFrame& frame) const;
+    virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
 
-  void VisibleGenFrame::ResetFrame(){ }
+    virtual void SetParentJigsaw(Jigsaw& jigsaw);
+    virtual void SetChildJigsaw(Jigsaw& jigsaw);    
+	
+    virtual void SetLabFrameFourVector();
 
-  bool VisibleGenFrame::GenerateFrame(){ 
-    return true;
-  }
+  protected:
+    VisibleRecoFrame* m_FramePtr;
 
-  VisibleGenFrame VisibleGenFrame::m_Empty;
+  private:
+    static VisibleState m_Empty;
+    void Init();
+
+  };
 
 }
+
+#endif

@@ -220,8 +220,8 @@ namespace RestFrames {
       if(*m_Frames[i] == frame)
 	return;
     if(m_FrameColorMap[frame.GetType()] <= 0){
-      m_FrameColorMap[frame.GetType()] = color_Node[int(frame.GetType())];
-      m_FrameColorFillMap[frame.GetType()] = color_fill_Node[int(frame.GetType())];
+      m_FrameColorMap[frame.GetType()] = color_Node[int(frame.GetType())-1];
+      m_FrameColorFillMap[frame.GetType()] = color_fill_Node[int(frame.GetType())-1];
     }
   }
 
@@ -329,7 +329,7 @@ namespace RestFrames {
     m_Nrow = 0;
     m_Ncol.clear();
   
-    const State& top_state = group.GetGroupState();
+    const State& top_state = group.GetParentState();
     if(top_state.IsEmpty()) return;
 
     FramePlotNode* top_nodePtr = new FramePlotNode();
@@ -619,7 +619,7 @@ namespace RestFrames {
   }
 
   string FramePlot::GetStateTitle(const State& state){
-    RFList<RestFrame> frames = state.GetFrames();
+    RFList<RestFrame> frames = state.GetListFrames();
     int Nf = frames.GetN();
     string title = "";
     if(Nf > 2) title.append("#splitline{");
@@ -650,10 +650,10 @@ namespace RestFrames {
     frame_title.push_back("Visible States");
     frame_title.push_back("Invisible States");
     vector<FrameType> frame_type;
-    frame_type.push_back(FLab);
-    frame_type.push_back(FDecay);
-    frame_type.push_back(FVisible);
-    frame_type.push_back(FInvisible);
+    frame_type.push_back(kLabFrame);
+    frame_type.push_back(kDecayFrame);
+    frame_type.push_back(kVisibleFrame);
+    frame_type.push_back(kInvisibleFrame);
    
     TLatex* lat = new TLatex(0.,0.,"");
     lat->SetNDC();
@@ -688,8 +688,8 @@ namespace RestFrames {
       white->Draw();
       m_Objects.push_back(white);
       TBox* box = new TBox(X-R*0.88,Y-R*0.88,X+R*0.88,Y+R*0.88);
-      box->SetLineColor(m_FrameColorMap[FDecay]);
-      box->SetFillColor(m_FrameColorFillMap[FDecay]);
+      box->SetLineColor(m_FrameColorMap[kDecayFrame]);
+      box->SetFillColor(m_FrameColorFillMap[kDecayFrame]);
       box->Draw("l");
       m_Objects.push_back(box);
       lat->DrawLatex(X+R*1.3,Y,"Self Assembling");
@@ -797,14 +797,14 @@ namespace RestFrames {
     if(m_FramePtr)
       return *m_FramePtr;
     else 
-      return g_RestFrame;
+      return RestFrame::Empty();
   }
 
   const State& FramePlotNode::GetState() const { 
     if(m_StatePtr)
       return *m_StatePtr;
     else
-      return g_State;
+      return State::Empty();
   }
   bool FramePlotNode::DoLabel() const { return m_DoLabel; }
   bool FramePlotNode::DoSquare() const { return m_DoSquare; }
@@ -849,7 +849,7 @@ namespace RestFrames {
     if(m_JigsawPtr)
       return *m_JigsawPtr;
     else 
-      return g_Jigsaw;
+      return Jigsaw::Empty();
   }
 
 }

@@ -47,7 +47,7 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    virtual void ClearEventRecursive();
+    virtual bool ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
     const RestFrame& GetFrame(const RFKey& key) const;

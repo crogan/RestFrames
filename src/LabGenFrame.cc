@@ -134,11 +134,11 @@ namespace RestFrames {
     return true;
   }
 
-  void LabGenFrame::ClearEvent(){
+  bool LabGenFrame::ClearEvent(){
     SetSpirit(false);
     if(!IsSoundBody()) 
-      return;
-    ClearEventRecursive();
+      return false;
+    return ClearEventRecursive();
   }
 
   bool LabGenFrame::AnalyzeEvent(){

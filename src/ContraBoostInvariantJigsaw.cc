@@ -51,7 +51,7 @@ namespace RestFrames {
    
   }
 
-  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){ 
+  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
     int Nchild = GetNChildStates();
     for(int i = 0 ; i < Nchild; i++){
       m_InvisibleOutputStates.Get(i).FillInvisibleMassJigsawDependancies(jigsaws);
@@ -62,7 +62,7 @@ namespace RestFrames {
     }
   }
 
-  double ContraBoostInvariantJigsaw::GetMinimumMass(){
+  double ContraBoostInvariantJigsaw::GetMinimumMass() const {
     double Minv1 = m_InvisibleOutputStates.Get(0).GetMinimumMass();
     double Minv2 = m_InvisibleOutputStates.Get(1).GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
@@ -84,8 +84,7 @@ namespace RestFrames {
 
   bool ContraBoostInvariantJigsaw::AnalyzeEvent(){
     if(!IsSoundMind()){
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
     
     CalcCoef();
@@ -125,8 +124,7 @@ namespace RestFrames {
     m_OutputStates.Get(0).SetFourVector(INV1);
     m_OutputStates.Get(1).SetFourVector(INV2);
     
-    m_Spirit = true;
-    return m_Spirit;
+    return SetSpirit(true);
   }
 
   void ContraBoostInvariantJigsaw::CalcCoef(){

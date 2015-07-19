@@ -148,7 +148,8 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-VisibleGenFrame.lo \
 	libRestFrames_la-InvisibleGenFrame.lo \
 	libRestFrames_la-ResonanceGenFrame.lo \
-	libRestFrames_la-State.lo libRestFrames_la-InvisibleState.lo \
+	libRestFrames_la-State.lo libRestFrames_la-VisibleState.lo \
+	libRestFrames_la-InvisibleState.lo \
 	libRestFrames_la-CombinatoricState.lo \
 	libRestFrames_la-Group.lo libRestFrames_la-InvisibleGroup.lo \
 	libRestFrames_la-CombinatoricGroup.lo \
@@ -407,7 +408,7 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFKey
 	FramePlot.cc RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc LabFrame.cc DecayFrame.cc\
 	VisibleFrame.cc InvisibleFrame.cc LabRecoFrame.cc DecayRecoFrame.cc VisibleRecoFrame.cc\
 	InvisibleRecoFrame.cc LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
-	ResonanceGenFrame.cc State.cc InvisibleState.cc CombinatoricState.cc Group.cc\
+	ResonanceGenFrame.cc State.cc VisibleState.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
 	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
 	MinimizeMassesCombinatoricJigsaw.cc\
@@ -533,6 +534,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleState.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -715,6 +717,13 @@ libRestFrames_la-State.lo: State.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='State.cc' object='libRestFrames_la-State.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-State.lo `test -f 'State.cc' || echo '$(srcdir)/'`State.cc
+
+libRestFrames_la-VisibleState.lo: VisibleState.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-VisibleState.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-VisibleState.Tpo -c -o libRestFrames_la-VisibleState.lo `test -f 'VisibleState.cc' || echo '$(srcdir)/'`VisibleState.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-VisibleState.Tpo $(DEPDIR)/libRestFrames_la-VisibleState.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='VisibleState.cc' object='libRestFrames_la-VisibleState.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-VisibleState.lo `test -f 'VisibleState.cc' || echo '$(srcdir)/'`VisibleState.cc
 
 libRestFrames_la-InvisibleState.lo: InvisibleState.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-InvisibleState.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-InvisibleState.Tpo -c -o libRestFrames_la-InvisibleState.lo `test -f 'InvisibleState.cc' || echo '$(srcdir)/'`InvisibleState.cc

@@ -48,7 +48,7 @@ namespace RestFrames {
     virtual void Clear();
 
     virtual bool InitializeAnalysis();
-    virtual void ClearEvent();
+    virtual bool ClearEvent();
     virtual bool AnalyzeEvent();
 
     virtual void SetThreeVector(const TVector3& P);

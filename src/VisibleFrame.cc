@@ -45,13 +45,14 @@ namespace RestFrames {
   }
 
   template <class T> 
-  VisibleFrame<T>::~VisibleFrame(){
-    
-  }
+  VisibleFrame<T>::VisibleFrame() : T() {}
+
+  template <class T> 
+  VisibleFrame<T>::~VisibleFrame() {}
 
   template <class T> 
   void VisibleFrame<T>::Init(){
-    T::m_Type = FVisible;
+    T::m_Type = kVisibleFrame;
   }
 
   template <class T> 
@@ -74,7 +75,7 @@ namespace RestFrames {
   }
 
   template <class T> 
-  TLorentzVector VisibleFrame<T>::GetLabFrameFourVector() const{
+  TLorentzVector VisibleFrame<T>::GetLabFrameFourVector() const {
     TLorentzVector V;
     V.SetVectM(m_Lab_P.Vect(),m_Lab_P.M());
     return V;

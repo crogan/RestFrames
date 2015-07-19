@@ -45,10 +45,10 @@ namespace RestFrames {
     ContraBoostInvariantJigsaw(const string& sname, const string& stitle);
     ~ContraBoostInvariantJigsaw();
 
-    virtual double GetMinimumMass();
+    virtual double GetMinimumMass() const;
     virtual bool AnalyzeEvent();
 
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws);
+    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const;
 
   protected:
     void CalcCoef();

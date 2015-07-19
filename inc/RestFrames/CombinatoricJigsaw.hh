@@ -36,6 +36,7 @@ using namespace std;
 
 namespace RestFrames {
 
+  class ReconstructionFrame;
   class CombinatoricState;
 
   ///////////////////////////////////////////////
@@ -46,12 +47,15 @@ namespace RestFrames {
   public:
     //constructor and destructor
     CombinatoricJigsaw(const string& sname, const string& stitle);
+    CombinatoricJigsaw();
     virtual ~CombinatoricJigsaw();
 
     virtual void Clear();
 
-    virtual void AddFrame(RestFrame& frame, int i = 0);
-    virtual void AddFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+    static CombinatoricJigsaw& Empty();
+
+    virtual void AddFrame(ReconstructionFrame& frame, int i = 0);
+    virtual void AddFrame(const RestFrames::RFList<ReconstructionFrame>& frames, int i = 0);
 
     virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
   
@@ -70,6 +74,7 @@ namespace RestFrames {
     virtual bool InitializeEvent();
     
   private:
+    static CombinatoricJigsaw m_Empty;
     void Init();
   };
 

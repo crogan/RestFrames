@@ -43,7 +43,10 @@ namespace RestFrames {
   class VisibleGenFrame : public VisibleFrame<GeneratorFrame> {
   public:
     VisibleGenFrame(const string& sname, const string& stitle);
+    VisibleGenFrame();
     virtual ~VisibleGenFrame();
+
+    static VisibleGenFrame& Empty();
 
     virtual void SetMass(double val);
     virtual double GetMass() const;
@@ -55,6 +58,7 @@ namespace RestFrames {
     virtual bool GenerateFrame();
 
   private:
+    static VisibleGenFrame m_Empty;
     void Init();
 
   };

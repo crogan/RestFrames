@@ -30,8 +30,8 @@
 #ifndef VisibleRecoFrame_HH
 #define VisibleRecoFrame_HH
 
-#include "RestFrames/VisibleFrame.hh"
 #include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/VisibleFrame.hh"
 
 using namespace std;
 
@@ -43,9 +43,13 @@ namespace RestFrames {
   class VisibleRecoFrame : public VisibleFrame<ReconstructionFrame> {
   public:
     VisibleRecoFrame(const string& sname, const string& stitle);
+    VisibleRecoFrame();
     virtual ~VisibleRecoFrame();
 
+    static VisibleRecoFrame& Empty();
+
   private:
+    static VisibleRecoFrame m_Empty;
     void Init();
    
   };

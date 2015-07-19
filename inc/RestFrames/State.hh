@@ -39,11 +39,8 @@ namespace RestFrames {
   class RestFrame;
   class Jigsaw;
 
-  ///////////////////////////////////////////////
-  // State class
-  ///////////////////////////////////////////////
-
-  enum StateType { SVanilla, SInvisible, SCombinatoric };
+  enum StateType { kVanillaState,   kVisibleState,
+		   kInvisibleState, kCombinatoricState };
 
   class State : public RFBase {
   public:
@@ -53,29 +50,40 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    virtual void AddFrame(RestFrame& frame);
-    virtual void AddFrame(const RestFrames::RFList<RestFrame>& frames);
+    static State& Empty();
 
-    void ClearFrames();
+    /// \brief Returns State (*StateType*) type 
+    StateType GetType() const;
+    
+    /// \brief Is this a VisibleState? (yes/no)
+    bool IsVisibleState() const;
+    
+    /// \brief Is this an InvisibleState? (yes/no)
+    bool IsInvisibleState() const;
 
-    RestFrames::RFList<RestFrame> GetFrames() const;
-    RestFrame& GetFrame() const;
-    int GetNFrames() const { return m_Frames.GetN(); }
+    /// \brief Is this a CombinatoricState? (yes/no)
+    bool IsCombinatoricState() const;
 
-    bool IsFrame(const RestFrame& frame) const;
-    bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
+    virtual void AddFrame(RestFrame& frame) = 0;
+    virtual void AddFrames(const RestFrames::RFList<RestFrame>& frames);
 
-    void SetParentJigsaw(Jigsaw& jigsaw);
-    void SetChildJigsaw(Jigsaw& jigsaw);
-    Jigsaw const& GetParentJigsaw() const;
-    Jigsaw const& GetChildJigsaw() const;
+    RestFrames::RFList<RestFrame> const& GetListFrames() const;
+    int GetNFrames() const;
+
+    virtual bool IsFrame(const RestFrame& frame) const;
+    virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
+
+    virtual void SetParentJigsaw(Jigsaw& jigsaw) = 0;
+    virtual void SetChildJigsaw(Jigsaw& jigsaw) = 0;
+    virtual Jigsaw const& GetParentJigsaw() const;
+    virtual Jigsaw const& GetChildJigsaw() const;
 
     virtual void Boost(const TVector3& B);
-    void SetFourVector(const TLorentzVector& V);
+    virtual void SetFourVector(const TLorentzVector& V);
     virtual TLorentzVector GetFourVector() const; 
 
-    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
-    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
+    void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
+    void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 	
   protected:
     static int m_class_key;
@@ -92,8 +100,6 @@ namespace RestFrames {
     void Init();
     int GenKey();
   };
-
-  extern State g_State;
 
 }
 

@@ -189,23 +189,25 @@ namespace RestFrames {
     m_ResPrevProb.clear();
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
-      if(dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i)))
+      if(dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i))){
 	m_Resonances.Add(*dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i)));
+	m_ResIndex[&GetChildFrame(i)] = i;
+      }
       
     int Nres = m_Resonances.GetN();
     for(int i = Nres-1; i >= 0; i--)
-      if(m_Resonances.Get(i).GetWidth() <= 0.)
-	m_Resonances.Remove(m_Resonances.Get(i));
-      
-    
+      if(m_Resonances[i].GetWidth() <= 0.){
+	m_ResIndex.erase(&m_Resonances[i]);
+	m_Resonances.Remove(m_Resonances[i]);
+      }
+     
     Nres = m_Resonances.GetN();
     if(Nres > 0){
       m_MarkovChainMC = true;
       m_Burnt = false;
       for(int i = 0; i < Nres; i++){
-	m_ResIndex.push_back(GetChildIndex(m_Resonances[i]));
-	m_ResPrevMass.push_back(0.);
-	m_ResPrevProb.push_back(0.);
+	m_ResPrevMass[&m_Resonances[i]] = 0.;
+	m_ResPrevProb[&m_Resonances[i]] = 0.;
       }
     } else {
       m_MarkovChainMC = false;
@@ -235,7 +237,7 @@ namespace RestFrames {
     }
 
     for(int i = 0; i < Nres; i++)
-      m_ResPrevProb[i]  = 0.;
+      m_ResPrevProb[&m_Resonances[i]]  = 0.;
     
     if(Msum >= M){
       m_Log << LogWarning;
@@ -246,10 +248,10 @@ namespace RestFrames {
 
     if(Mpolesum < M)
       for(int i = 0; i < Nres; i++)
-	m_ResPrevMass[i] = m_Resonances[i].GetPoleMass();
+	m_ResPrevMass[&m_Resonances[i]] = m_Resonances[i].GetPoleMass();
     else
       for(int i = 0; i < Nres; i++)
-	m_ResPrevMass[i] = m_Resonances[i].GetMinimumMass() + (M-Msum)/double(Nres+1);
+	m_ResPrevMass[&m_Resonances[i]] = m_Resonances[i].GetMinimumMass() + (M-Msum)/double(Nres+1);
     m_ResPrevMTOT = M;
 
     for(int i = 0; i < m_N_MCMC_BurnIn; i++){
@@ -275,10 +277,10 @@ namespace RestFrames {
     // Set res masses to previous iter val
     for(int ires = 0; ires < Nres; ires++){
       if(m_ResPrevMTOT > 0)
-	m_ResPrevMass[ires] = max(m_Resonances.Get(ires).GetMinimumMass()*1.01, 
-				  m_ResPrevMass[ires]*M/m_ResPrevMTOT);
+	m_ResPrevMass[&m_Resonances[ires]] = max(m_Resonances[ires].GetMinimumMass()*1.01, 
+				  m_ResPrevMass[&m_Resonances[ires]]*M/m_ResPrevMTOT);
       
-      m_Resonances[ires].SetEvtMass(m_ResPrevMass[ires]);
+      m_Resonances[ires].SetEvtMass(m_ResPrevMass[&m_Resonances[ires]]);
     }
 
     // Update masses 1-by-1, 
@@ -292,20 +294,20 @@ namespace RestFrames {
 	Mmax -= GetChildFrame(i).GetMass();
 	ChildMasses.push_back(GetChildFrame(i).GetMass());
       }
-      Mmax += m_ResPrevMass[ires];
+      Mmax += m_ResPrevMass[&m_Resonances[ires]];
       double Mass = -1.;
       Mass = m_Resonances[ires].GenerateMass(Mmin,Mmax);
-      ChildMasses[m_ResIndex[ires]] = Mass;
+      ChildMasses[m_ResIndex[&m_Resonances[ires]]] = Mass;
 
       vector<double> TwoBodyMass;
       double Prob = (Mass/M)*GenerateTwoBodyMasses(M, ChildMasses, TwoBodyMass);
-      if(Prob >= GetRandom()*m_ResPrevProb[ires]){
-	m_ResPrevMass[ires] = Mass;
-	m_ResPrevProb[ires] = Prob;
+      if(Prob >= GetRandom()*m_ResPrevProb[&m_Resonances[ires]]){
+	m_ResPrevMass[&m_Resonances[ires]] = Mass;
+	m_ResPrevProb[&m_Resonances[ires]] = Prob;
 	m_Resonances[ires].SetEvtMass(Mass); 
       } else {
-	ChildMasses[m_ResIndex[ires]] = m_ResPrevMass[ires];
-	m_Resonances[ires].SetEvtMass(m_ResPrevMass[ires]); 
+	ChildMasses[m_ResIndex[&m_Resonances[ires]]] = m_ResPrevMass[&m_Resonances[ires]];
+	m_Resonances[ires].SetEvtMass(m_ResPrevMass[&m_Resonances[ires]]); 
       }
     }
     m_ResPrevMTOT = M;

@@ -28,8 +28,10 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
+#include "RestFrames/LabRecoFrame.hh"
 #include "RestFrames/Group.hh"
-#include "RestFrames/State.hh"
+#include "RestFrames/VisibleState.hh"
 
 using namespace std;
 
@@ -38,46 +40,79 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // ReconstructionFrame class methods
   ///////////////////////////////////////////////
-  ReconstructionFrame::ReconstructionFrame(const string& sname, const string& stitle) : 
-    RestFrame(sname, stitle)
+  ReconstructionFrame::ReconstructionFrame(const string& sname, const string& stitle)
+    : RestFrame(sname, stitle)
   {
     Init();
   }
 
-  ReconstructionFrame::ReconstructionFrame() : 
-    RestFrame()
-  {
-    Init();
-  }
+  ReconstructionFrame::ReconstructionFrame()
+    : RestFrame() {}
 
-  ReconstructionFrame::~ReconstructionFrame(){ }
+  ReconstructionFrame::~ReconstructionFrame() {}
 
   void ReconstructionFrame::Init(){
-    m_Ana = FReco;
+    m_Ana = kRecoFrame;
     m_GroupPtr = nullptr;
   }
 
   void ReconstructionFrame::Clear(){
-    if(m_GroupPtr)
-      m_GroupPtr->RemoveFrame(*this);
+    SetGroup();
     m_ChildStates.clear();
     RestFrame::Clear();
   }
-  
-  void ReconstructionFrame::SetGroup(Group& group){
-    if(group.IsEmpty()) return;
 
+  /// \brief Returns empty instance of class
+  ReconstructionFrame& ReconstructionFrame::Empty(){
+    return VisibleRecoFrame::Empty();
+  }
+  
+  void ReconstructionFrame::AddChildFrame(RestFrame& frame){
+    if(!frame) return;
+    if(!frame.IsRecoFrame()) return;
+    RestFrame::AddChildFrame(frame);
+  }
+
+  void ReconstructionFrame::SetParentFrame(RestFrame& frame){
+    if(!frame) return;
+    if(!frame.IsRecoFrame()) return;
+    RestFrame::SetParentFrame(frame);
+  }
+
+  ReconstructionFrame const& ReconstructionFrame::GetParentFrame() const {
+    const RestFrame& frame = RestFrame::GetParentFrame();
+    if(!frame.IsEmpty())
+      return static_cast<const ReconstructionFrame&>(frame);
+    else 
+      return ReconstructionFrame::Empty();
+  }
+
+  ReconstructionFrame& ReconstructionFrame::GetChildFrame(int i) const {
+    RestFrame& frame = RestFrame::GetChildFrame(i);
+    if(!frame.IsEmpty())
+      return static_cast<ReconstructionFrame&>(frame);
+    else 
+      return ReconstructionFrame::Empty();
+  }
+
+  void ReconstructionFrame::SetGroup(Group& group){
     if(m_GroupPtr)
-      m_GroupPtr->RemoveFrame(*this);
-    
-    m_GroupPtr = &group;
+      if(*m_GroupPtr != group){
+	Group* groupPtr = m_GroupPtr;
+	m_GroupPtr = nullptr;
+	groupPtr->RemoveFrame(*this);
+      }
+    if(!group)
+      m_GroupPtr = nullptr;
+    else
+      m_GroupPtr = &group;
   }
 
   Group& ReconstructionFrame::GetGroup() const { 
     if(m_GroupPtr)
       return *m_GroupPtr;
     else 
-      return g_Group;
+      return Group::Empty();
   }
 
   RFList<Group> ReconstructionFrame::GetListGroups() const {
@@ -89,139 +124,139 @@ namespace RestFrames {
   void ReconstructionFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
     if(m_GroupPtr) groups.Add(*m_GroupPtr);
     int Nchild = GetNChildren();
-    for(int i = 0; i < Nchild; i++){
-      ReconstructionFrame* childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
-      if(childPtr) childPtr->FillListGroupsRecursive(groups);
-    }
+    for(int i = 0; i < Nchild; i++)
+      GetChildFrame(i).FillListGroupsRecursive(groups);
   }
 
-  bool ReconstructionFrame::InitializeNoGroupStates(const RFList<State>& states){
+  bool ReconstructionFrame::InitializeVisibleStates(){
+    m_ChildStates.clear();
+    if(!GetLabFrame())
+      return false;
+      
+    const RFList<VisibleState>& states = 
+      static_cast<const LabRecoFrame&>(GetLabFrame()).GetVisibleStates();
+   
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       RestFrame& child = GetChildFrame(i);
-      m_ChildStates.push_back(RFList<State>());
-      RFList<RestFrame> frames = child.GetListFrames(FVisible);
-      int Nframe = frames.GetN();
-      for(int f = 0; f < Nframe; f++){
-	ReconstructionFrame* rframePtr = dynamic_cast<ReconstructionFrame*>(&frames.Get(f));
-	if(!rframePtr) return false;
-	if(!rframePtr->GetGroup().IsEmpty())
-	  continue;
-       
-	int index = states.GetIndexFrame(frames.Get(f));
-	if(index >= 0)  m_ChildStates[i].Add(states.Get(index));
-      }
+      m_ChildStates[&child] = RFList<State>();
+      RFList<ReconstructionFrame> frames = child.GetListVisibleFrames();
+      int Nf = frames.GetN();
+      for(int f = 0; f < Nf; f++)
+	if(!frames[f].GetGroup())
+	  if(!m_ChildStates[&child].Add(RFList<State>(states).GetFrame(frames[f]))){
+	    m_Log << LogWarning;
+	    m_Log << "Unable to associate State with Group-less Frame:";
+	    m_Log << Log(frames[f]) << m_End;
+	    return false;
+	  }
     }
     return true;
   }
 
-  bool ReconstructionFrame::InitializeGroupStates(const RFList<Group>& groups){
+  bool ReconstructionFrame::InitializeGroupStates(){
+    RFList<Group> groups = GetListGroups();
     int Ngroup = groups.GetN();
     int Nchild = GetNChildren();
-    
-    vector<FrameType> terminal_types;
-    terminal_types.push_back(FVisible);
-    terminal_types.push_back(FInvisible);
 
     for(int c = 0; c < Nchild; c++){
-      RFList<RestFrame> frames = GetChildFrame(c).GetListFrames(terminal_types);
+      RFList<RestFrame> frames = 
+	GetChildFrame(c).GetListVisibleFrames() +
+	GetChildFrame(c).GetListInvisibleFrames();
       int Nframe = frames.GetN();
-      for(int f = 0; f < Nframe; f++){
-	RestFrame& frame = frames.Get(f);
-	for(int g = 0; g < Ngroup; g++){
-	  Group& group = groups.Get(g);
-	  if(group.IsEmpty()) return false;
-	  if(group.ContainsFrame(frame)){
-	    State& state = group.GetState(frame);
-	    if(state.IsEmpty()) return false;
-	    m_ChildStates[c].Add(state);
+      for(int f = 0; f < Nframe; f++)
+	for(int g = 0; g < Ngroup; g++)
+	  if(groups[g].ContainsFrame(frames[f])){
+	    State& state = groups[g].GetChildState(frames[f]);
+	    if(!state){
+	      m_Log << LogWarning;
+	      m_Log << "Unable to get State associated with Group Frame: " << endl;
+	      m_Log << " Frame:" << Log(frames[f]);
+	      m_Log << " Group:" << Log(groups[g]) << m_End;
+	      return false;
+	    }
+	    m_ChildStates[&GetChildFrame(c)].Add(state);
 	    break;
 	  }
-	}
-      }
-    }
-    return true;
-  }
-
-  bool ReconstructionFrame::InitializeStates(const RFList<State>& states, 
-					     const RFList<Group>& groups){
-    m_ChildStates.clear();
-    m_Mind = false;
-    if(!m_Body){
-      cout << endl << "Initialize Analysis Failure --: ";
-      cout << "UnSound frame " << GetName() << " in tree" << endl;
-      return false;
-    }
-    if(!InitializeNoGroupStates(states)) return false;
-    if(!InitializeGroupStates(groups)) return false;
+    }  
     
-    m_Mind = true;
     return true;
   }
   
-  bool ReconstructionFrame::InitializeStatesRecursive(const RFList<State>& states, 
-					 const RFList<Group>& groups){
-    if(!InitializeStates(states, groups)) return false;
-
-    int Nchild = GetNChildren();
-    bool child_mind = true;
-    for(int i = 0; i < Nchild; i++){
-      ReconstructionFrame *childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
-      if(!childPtr) return false;
-      if(!childPtr->InitializeStatesRecursive(states, groups)) child_mind = false;;
+  bool ReconstructionFrame::InitializeAnalysisRecursive(){
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      return SetMind(false);
     }
-    m_Mind = child_mind;
-    return m_Mind;
+
+    if(!InitializeVisibleStates())
+      return SetMind(false);
+    if(!InitializeGroupStates())
+      return SetMind(false);
+   
+    int Nchild = GetNChildren();
+    for(int i = 0; i < Nchild; i++)
+      if(!GetChildFrame(i).InitializeAnalysisRecursive()){
+	m_Log << LogWarning;
+	m_Log << "Unable to recursively initialize analysis for frame:";
+	m_Log << Log(GetChildFrame(i)) << m_End;
+	return SetMind(false);
+      }
+
+    return SetMind(true);
   }
 
-  void ReconstructionFrame::ClearEventRecursive(){ 
-    SetSpirit(false);
-   
-    if(!IsSoundBody() || !IsSoundMind()) return;
+  bool ReconstructionFrame::ClearEventRecursive(){ 
+    if(!IsSoundMind()){
+      UnSoundMind(RF_FUNCTION);
+      return false;
+    }
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
-      GetChildFrame(i).ClearEventRecursive();
+      if(!GetChildFrame(i).ClearEventRecursive())
+	return false;
+
+    return true;
   }
 
   bool ReconstructionFrame::AnalyzeEventRecursive(){
     if(!IsSoundMind()){
-      m_Log << LogWarning;
-      m_Log << "Unable to analyze event. ";
-      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
-      m_Log << "from LabFrame" << m_End;
-      SetSpirit(false);
-      return false;
+      UnSoundMind(RF_FUNCTION);
+      return SetSpirit(false);
     }
+    
     TLorentzVector Ptot(0,0,0,0);
+
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
-      TLorentzVector P = m_ChildStates[i].GetFourVector();
+      ReconstructionFrame& child = GetChildFrame(i);
+      TLorentzVector P = m_ChildStates[&child].GetFourVector();
       TVector3 B_child = P.BoostVector();
-      SetChildBoostVector(i, B_child);
+      SetChildBoostVector(child, B_child);
       Ptot += P;
 
-      ReconstructionFrame* childPtr = dynamic_cast<ReconstructionFrame*>(&GetChildFrame(i));
-      childPtr->SetFourVector(P,*this);
-      if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
+      child.SetFourVector(P,*this);
+      bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
+
+      if(!terminal){ 
 	B_child *= -1.;
-	m_ChildStates[i].Boost(B_child);
+	m_ChildStates[&child].Boost(B_child);
       }
-      if(!childPtr->AnalyzeEventRecursive()){
+      if(!child.AnalyzeEventRecursive()){
 	m_Log << LogWarning;
-	m_Log << "Recursive event analysis failed for child frame: ";
-	m_Log << Log(childPtr) << m_End;
-	SetSpirit(false);
-	return false;
+	m_Log << "Recursive event analysis failed for frame: ";
+	m_Log << Log(child) << m_End;
+	return SetSpirit(false);
       } 
-      if(!childPtr->IsVisibleFrame() && !childPtr->IsInvisibleFrame()){ 
+      if(!terminal){ 
 	B_child *= -1.;
-	m_ChildStates[i].Boost(B_child);
+	m_ChildStates[&child].Boost(B_child);
       }
     }
-    if(m_Type == FLab) SetFourVector(Ptot,*this);
-    SetSpirit(true);
-    return true;
+    if(IsLabFrame()) SetFourVector(Ptot,*this);
+    
+    return SetSpirit(true);;
   }
 
 }

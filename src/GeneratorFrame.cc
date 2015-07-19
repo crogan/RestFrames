@@ -31,6 +31,7 @@
 #include <TRandom3.h>
 #include <TDatime.h>
 #include "RestFrames/GeneratorFrame.hh"
+#include "RestFrames/VisibleGenFrame.hh"
 
 using namespace std;
 
@@ -46,17 +47,14 @@ namespace RestFrames {
   }
 
   GeneratorFrame::GeneratorFrame() 
-    : RestFrame()
-  {
-    Init();
-  }
+    : RestFrame() { }
 
   GeneratorFrame::~GeneratorFrame(){
-    delete m_Random;
+    if(m_Random) delete m_Random;
   }
 
   void GeneratorFrame::Init(){
-    m_Ana = FGen;
+    m_Ana = kGenFrame;
   
     TDatime now;
     int today = now.GetDate();
@@ -64,22 +62,58 @@ namespace RestFrames {
     int key   = GetKey().GetKey();
     int seed = today+clock+key;
     m_Random = new TRandom3(seed);
-    
   }
 
   void GeneratorFrame::Clear(){
     RestFrame::Clear();
   }
 
-  void GeneratorFrame::ClearEventRecursive(){ 
+  /// \brief Returns empty instance of class
+  GeneratorFrame& GeneratorFrame::Empty(){
+    return VisibleGenFrame::Empty();
+  }
+
+  
+  void GeneratorFrame::AddChildFrame(RestFrame& frame){
+    if(!frame.IsEmpty())
+      if(!dynamic_cast<GeneratorFrame*>(&frame))
+	return;
+    RestFrame::AddChildFrame(frame);
+  }
+
+  void GeneratorFrame::SetParentFrame(RestFrame& frame){
+    if(!frame.IsEmpty())
+      if(!dynamic_cast<GeneratorFrame*>(&frame))
+	return;
+    RestFrame::SetParentFrame(frame);
+  }
+
+  GeneratorFrame const& GeneratorFrame::GetParentFrame() const {
+    const RestFrame& frame = RestFrame::GetParentFrame();
+    if(!frame.IsEmpty())
+      return static_cast<const GeneratorFrame&>(frame);
+    else 
+      return GeneratorFrame::Empty();
+  }
+
+  GeneratorFrame& GeneratorFrame::GetChildFrame(int i) const {
+    RestFrame& frame = RestFrame::GetChildFrame(i);
+    if(!frame.IsEmpty())
+      return static_cast<GeneratorFrame&>(frame);
+    else 
+      return GeneratorFrame::Empty();
+  }
+
+  bool GeneratorFrame::ClearEventRecursive(){ 
     ResetFrame();
     if(!IsSoundMind())
-      return;
+      return false;
     
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
-      GetChildFrame(i).ClearEventRecursive();
-    SetSpirit(false);
+      if(!GetChildFrame(i).ClearEventRecursive())
+	return false;
+    return true;
   }
 
   bool GeneratorFrame::AnalyzeEventRecursive(){
@@ -113,8 +147,8 @@ namespace RestFrames {
       TLorentzVector P = P_children[i];
       TVector3 B_child = P.BoostVector();
 
-      SetChildBoostVector(i, B_child);
-      dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->SetFourVector(P,*this);
+      SetChildBoostVector(GetChildFrame(i), B_child);
+      GetChildFrame(i).SetFourVector(P,*this);
     }
   }
 

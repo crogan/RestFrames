@@ -31,12 +31,12 @@
 #define CombinatoricGroup_HH
 
 #include "RestFrames/Group.hh"
+#include "RestFrames/VisibleState.hh"
+#include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
 
-namespace RestFrames {
-
-  class Group;
+namespace RestFrames { 
 
   ///////////////////////////////////////////////
   // CombinatoricGroup class
@@ -44,44 +44,47 @@ namespace RestFrames {
   class CombinatoricGroup : public Group {
   public:
     CombinatoricGroup(const string& sname, const string& stitle);
+    CombinatoricGroup();
     virtual ~CombinatoricGroup();
 
     virtual void Clear();
 
+    static CombinatoricGroup& Empty();
+
     virtual void AddFrame(RestFrame& frame);
+    virtual void AddJigsaw(Jigsaw& jigsaw);
+
+    virtual CombinatoricState& GetParentState() const;
+
+    virtual bool ClearEvent();
+    virtual bool AnalyzeEvent();
+
     virtual void SetNElementsForFrame(const RestFrame& frame, 
 				      int N, bool exclusive_N = false);
     virtual void GetNElementsForFrame(const RestFrame& frame, 
 				      int& N, bool& exclusive_N) const;
 
-    virtual bool AddJigsaw(Jigsaw& jigsaw);
-
     // Event analysis functions
-    void ClearFourVectors();
     RFKey AddLabFrameFourVector(const TLorentzVector& V);
     int GetNFourVectors() const;
-
-    virtual void ClearEvent();
-    virtual bool AnalyzeEvent();
 
     RestFrame const& GetFrame(const RFKey& key) const;
     TLorentzVector GetLabFrameFourVector(const RFKey& key) const;
     int GetNElementsInFrame(const RestFrame& frame) const;
 	
   protected:
-    RestFrames::RFList<State> m_StateElements;
-    vector<int> m_NElementsForFrame;
-    vector<bool> m_NExclusiveElementsForFrame; 
+    RestFrames::RFList<VisibleState>    m_Elements;
+    mutable map<const RestFrame*, int>  m_NElementsForFrame;
+    mutable map<const RestFrame*, bool> m_NExclusiveElementsForFrame; 
 
-    virtual State& InitializeGroupState();
-    void ClearElements();
-    void AddElement(State& state);
-    int GetNElements() const;
+    virtual CombinatoricState& InitializeParentState();
+    virtual CombinatoricState& GetChildState(int i) const;
 
   private:
+    static CombinatoricGroup m_Empty;
     void Init();
-    State& GetNewState();
-    RestFrames::RFList<State> m_InitStates;
+    VisibleState& GetNewElement();
+    RestFrames::RFList<VisibleState> m_InitStates;
   };
 
 }

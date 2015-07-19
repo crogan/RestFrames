@@ -43,31 +43,73 @@ namespace RestFrames {
     Init();
   }
 
+  InvisibleState::InvisibleState(const RFKey& key) : State(key){
+    Init();
+  }
+
   InvisibleState::~InvisibleState(){
     
   }
 
   void InvisibleState::Init(){
-    m_Type = SInvisible;
+    m_Type = kInvisibleState;
+  }
+
+  InvisibleState& InvisibleState::Empty(){
+    return InvisibleState::m_Empty;
   }
 
   void InvisibleState::Clear(){
     State::Clear();
   }
 
-  double InvisibleState::GetMinimumMass(){
-    InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
-    if(jigsawPtr) return jigsawPtr->GetMinimumMass();
-    if(GetNFrames() == 1){
-      InvisibleRecoFrame* framePtr = dynamic_cast<InvisibleRecoFrame*>(&m_Frames.Get(0));
-      if(framePtr) return framePtr->GetMinimumMass();
-    }
-    return 0.;
+  void InvisibleState::AddFrame(RestFrame& frame){
+    if(!frame) return;
+    if(frame.IsInvisibleFrame() &&
+       frame.IsRecoFrame())
+      m_Frames += frame;
+
   }
 
-  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws){
-    InvisibleJigsaw* jigsawPtr = dynamic_cast<InvisibleJigsaw*>(m_ChildJigsawPtr);
-    if(jigsawPtr) jigsawPtr->FillInvisibleMassJigsawDependancies(jigsaws);
+  void InvisibleState::SetParentJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(jigsaw.IsInvisibleJigsaw())
+      m_ParentJigsawPtr = &jigsaw;
   }
 
+  void InvisibleState::SetChildJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(jigsaw.IsInvisibleJigsaw())
+      m_ChildJigsawPtr = &jigsaw;
+  }
+
+  InvisibleJigsaw const& InvisibleState::GetParentJigsaw() const {
+    if(m_ParentJigsawPtr)
+      return static_cast<InvisibleJigsaw&>(*m_ParentJigsawPtr);
+    else
+      return InvisibleJigsaw::Empty();
+  }
+
+  InvisibleJigsaw const& InvisibleState::GetChildJigsaw() const {
+    if(m_ChildJigsawPtr)
+      return static_cast<InvisibleJigsaw&>(*m_ChildJigsawPtr);
+    else
+      return InvisibleJigsaw::Empty();
+  }
+
+  double InvisibleState::GetMinimumMass() const {
+    if(!GetChildJigsaw().IsEmpty())
+      return GetChildJigsaw().GetMinimumMass();
+    
+    if(GetNFrames() == 1)
+      return static_cast<InvisibleRecoFrame&>(m_Frames[0]).GetMinimumMass();
+    else
+      return 0.;
+  }
+
+  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
+    GetChildJigsaw().FillInvisibleMassJigsawDependancies(jigsaws);
+  }
+
+  InvisibleState InvisibleState::m_Empty;
 }

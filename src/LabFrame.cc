@@ -38,11 +38,16 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // LabFrame class
   ///////////////////////////////////////////////
-  template <class T> LabFrame<T>::LabFrame(const string& sname, const string& stitle)
+  template <class T> 
+  LabFrame<T>::LabFrame(const string& sname, const string& stitle)
     : T(sname, stitle)
   {
     Init();
   }
+
+  template <class T> 
+  LabFrame<T>::LabFrame() : T() {}
+ 
 
   template <class T> 
   LabFrame<T>::~LabFrame(){
@@ -51,7 +56,7 @@ namespace RestFrames {
 
   template <class T> 
   void LabFrame<T>::Init(){
-    T::m_Type = FLab;
+    T::m_Type = kLabFrame;
   }
 
   template <class T>  
@@ -80,7 +85,7 @@ namespace RestFrames {
   }
 
   template <class T> 
-  bool LabFrame<T>::InitializeTree() const {
+  bool LabFrame<T>::InitializeTree() {
     T::m_Log << LogVerbose;
     T::m_Log << "Initializing tree skeleton...";
     T::m_Log << m_End;
@@ -88,27 +93,20 @@ namespace RestFrames {
     vector<RFKey> keys;
     if(T::IsCircularTree(keys)){
       T::m_Log << LogWarning;
-      T::m_Log << "Tree is circular in construction";
+      T::m_Log << "   Tree is circular in construction";
       T::m_Log << m_End;
       return false;
     }
 
-    if(!T::IsSoundBodyRecursive()){
+    if(!T::InitializeTreeRecursive()){
       T::m_Log << LogWarning;
-      T::m_Log << "Illegally constructed tree";
-      T::m_Log << m_End;
-      return false;
-    }
- 
-    if(!T::IsConsistentAnaTree(T::m_Ana)){
-      T::m_Log << LogWarning;
-      T::m_Log << "Tree is not homogenous in node types (Reco, Gen)";
+      T::m_Log << "   Problem with structure of tree";
       T::m_Log << m_End;
       return false;
     }
 
     T::m_Log << LogVerbose;
-    T::m_Log << "...Done initializing tree skeleton";
+    T::m_Log << "...Done";
     T::m_Log << m_End;
     
     return true;
@@ -117,38 +115,6 @@ namespace RestFrames {
   template <class T> 
   TVector3 LabFrame<T>::GetInvisibleMomentum() const {
     return T::GetInvisibleFourVector().Vect();
-  }
-
-  template <class T> 
-  double LabFrame<T>::GetCosDecayAngle(const RestFrame& frame) const {
-    if(!T::IsSoundSpirit()){
-      T::UnSoundSpirit(RF_FUNCTION);
-      return 0.;
-    }
-
-    if(T::GetNChildren() < 1) return 0.;
-    TVector3 V1(0.,0.,1.);
-    TVector3 V2;
-    if(!frame.IsEmpty()){
-      V2 = frame.GetFourVector(*this).Vect().Unit();
-    } else {
-      V2 = T::GetChildFrame(0).GetFourVector(*this).Vect().Unit();
-    }
-    return V1.Dot(V2);
-  }
-
-  template <class T> 
-  TVector3 LabFrame<T>::GetDecayPlaneNormalVector() const {
-    if(!T::IsSoundSpirit()){
-      T::UnSoundSpirit(RF_FUNCTION);
-      return TVector3(0.,0.,0.);
-    }
-
-    if(T::GetNChildren() < 1) return TVector3(0.,0.,0.);
-   
-    TVector3 V1 = T::GetChildFrame(0).GetFourVector(*this).Vect().Unit();
-    TVector3 V2(0.,0.,1.);
-    return V1.Cross(V2).Unit();
   }
 
   template class LabFrame<ReconstructionFrame>;

@@ -51,7 +51,7 @@ namespace RestFrames {
 
   template <class T> 
   void DecayFrame<T>::Init(){
-    T::m_Type = FDecay;
+    T::m_Type = kDecayFrame;
   }
 
   template <class T> 

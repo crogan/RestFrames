@@ -30,7 +30,7 @@
 #include "RestFrames/CombinatoricJigsaw.hh"
 #include "RestFrames/CombinatoricState.hh"
 #include "RestFrames/CombinatoricGroup.hh"
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/ReconstructionFrame.hh"
 
 using namespace std;
 
@@ -46,7 +46,9 @@ namespace RestFrames {
     Init();
   }
 
-  CombinatoricJigsaw::~CombinatoricJigsaw(){ }
+  CombinatoricJigsaw::CombinatoricJigsaw() : Jigsaw() {}
+
+  CombinatoricJigsaw::~CombinatoricJigsaw() {}
 
   void CombinatoricJigsaw::Init(){
     m_Type = JCombinatoric;
@@ -57,27 +59,29 @@ namespace RestFrames {
     Jigsaw::Clear();
   }
 
-  void CombinatoricJigsaw::AddFrame(RestFrame& frame, int i){
+  CombinatoricJigsaw& CombinatoricJigsaw::Empty(){
+    return CombinatoricJigsaw::m_Empty;
+  }
+
+  void CombinatoricJigsaw::AddFrame(ReconstructionFrame& frame, int i){
     if(frame.IsEmpty()) return;
     if(!m_GroupPtr) return;
     m_Log << LogVerbose;
     m_Log << "Adding frame " << frame.GetName();
     m_Log << " to hemisphere " << i << m_End;
-    vector<FrameType> terminals;
-    terminals.push_back(FVisible);
-    terminals.push_back(FInvisible);
-    RFList<RestFrame> frames = frame.GetListFrames(terminals);
+    RFList<ReconstructionFrame> frames = 
+      frame.GetListVisibleFrames()+frame.GetListInvisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++){
-      if(m_GroupPtr->ContainsFrame(frames.Get(f))){
-	AddOutputFrame(frames.Get(f), i);
+      if(m_GroupPtr->ContainsFrame(frames[f])){
+	AddOutputFrame(frames[f], i);
       } else {
-	AddDependancyFrame(frames.Get(f), i);
+	AddDependancyFrame(frames[f], i);
       }
     }
   }
 
-  void CombinatoricJigsaw::AddFrame(const RFList<RestFrame>& frames, int i){
+  void CombinatoricJigsaw::AddFrame(const RFList<ReconstructionFrame>& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
       AddFrame(frames.Get(f),i);
@@ -135,7 +139,7 @@ namespace RestFrames {
 	m_DependancyJigsaws.Remove(jigsaw);
 	continue;
       }
-      RFList<Jigsaw> temp_chain = chain_jigsaws.Copy();
+      RFList<Jigsaw> temp_chain = chain_jigsaws;
       temp_chain.Add(m_ExecuteJigsaws);
       temp_chain.Add(*this);
       if(!jigsaw.InitializeJigsawExecutionList(temp_chain)){
@@ -182,7 +186,7 @@ namespace RestFrames {
     for(int i = 0; i < Noutput; i++){
       CombinatoricState& state = m_CombinatoricOutputStates.Get(i);
       m_Outputs.push_back(&state);
-      RFList<RestFrame> frames = state.GetFrames();
+      RFList<RestFrame> frames = state.GetListFrames();
       int Nf = frames.GetN();
       int NTOT = 0;
       bool exclTOT = true;
@@ -200,5 +204,7 @@ namespace RestFrames {
 
     return true;
   }
+
+  CombinatoricJigsaw CombinatoricJigsaw::m_Empty;
 
 }

@@ -69,9 +69,9 @@ namespace RestFrames {
     bool m_MarkovChainMC;
     RestFrames::RFList<ResonanceGenFrame> m_Resonances;
     double m_ResPrevMTOT;
-    vector<int>    m_ResIndex;
-    vector<double> m_ResPrevProb;
-    vector<double> m_ResPrevMass;
+    map<const RestFrame*, int>    m_ResIndex;
+    map<const RestFrame*, double> m_ResPrevProb;
+    map<const RestFrame*, double> m_ResPrevMass;
     
     bool m_Burnt;
     static int m_N_MCMC_BurnIn;

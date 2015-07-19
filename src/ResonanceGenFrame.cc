@@ -57,6 +57,10 @@ namespace RestFrames {
     m_Width = 0.;
   }
 
+  ResonanceGenFrame& ResonanceGenFrame::Empty(){
+    return ResonanceGenFrame::m_Empty;
+  }
+
   void ResonanceGenFrame::ResetFrame(){
     SetSpirit(false);
     m_MassSet = false;
@@ -163,4 +167,5 @@ namespace RestFrames {
     return sqrt(M2 + MW*tan(Imin+GetRandom()*(Imax-Imin)));
   }
 
+  ResonanceGenFrame ResonanceGenFrame::m_Empty;
 }

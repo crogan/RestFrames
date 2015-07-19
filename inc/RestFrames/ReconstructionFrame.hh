@@ -31,13 +31,11 @@
 #define ReconstructionFrame_HH
 
 #include "RestFrames/RestFrame.hh"
+#include "RestFrames/Group.hh"
 
 using namespace std;
 
 namespace RestFrames {
-
-  class Group;
-  class State;
 
   ///////////////////////////////////////////////
   // ReconstructionFrame class
@@ -51,29 +49,53 @@ namespace RestFrames {
     /// \brief Clears ReconstructionFrame of all connections to other objects
     virtual void Clear();
 
-    virtual void SetGroup(Group& group);
-    Group& GetGroup() const;
+    static ReconstructionFrame& Empty();
 
+    /// \brief Add a child RestFrame to this frame
+    ///
+    /// \param frame    RestFrame to be added as child
+    ///
+    /// Method for adding a RestFrame *frame* as a child 
+    /// of this frame. *frame* will not be added as a child
+    /// if it is already listed as a child.
+    virtual void AddChildFrame(RestFrame& frame);
+
+    /// \brief Set the parent frame for this frame
+    ///
+    /// \param frame     parent frame
+    ///
+    /// Method for connecting a child frame to its parent frame
+    /// Empty default sets parent frame to none
+    virtual void SetParentFrame(RestFrame& frame = 
+				RestFrame::Empty());
+
+    /// \brief Returns the parent of this frame
+    ///
+    /// Returns the parent frame of this frame.
+    /// If the parent frame is not set, an empty
+    /// frame is returned.
+    virtual ReconstructionFrame const& GetParentFrame() const;
+
+    /// \brief Get the frame of the *i* th child
+    virtual ReconstructionFrame& GetChildFrame(int i) const;
+
+    virtual void SetGroup(Group& group = Group::Empty());
+    Group& GetGroup() const;
     RestFrames::RFList<Group> GetListGroups() const;
 
-    virtual bool InitializeStates(const RestFrames::RFList<State>& states, 
-				  const RestFrames::RFList<Group>& groups);
-    virtual void ClearEventRecursive();
+    virtual bool InitializeAnalysisRecursive();
+    virtual bool ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
   protected:
-    vector<RestFrames::RFList<State> > m_ChildStates;
     Group* m_GroupPtr;
-
-    virtual bool InitializeStatesRecursive(const RestFrames::RFList<State>& states, 
-					   const RestFrames::RFList<Group>& groups);
-    virtual bool InitializeNoGroupStates(const RestFrames::RFList<State>& states);
-    virtual bool InitializeGroupStates(const RestFrames::RFList<Group>& groups);
-
-    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
+    mutable map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
 
   private:
     void Init();
+    bool InitializeVisibleStates();
+    bool InitializeGroupStates();
+    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
 
   };
 

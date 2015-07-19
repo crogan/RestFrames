@@ -42,6 +42,9 @@ namespace RestFrames {
     Init();
   }
 
+  VisibleRecoFrame::VisibleRecoFrame() : VisibleFrame<ReconstructionFrame>() {}
+ 
+
   VisibleRecoFrame::~VisibleRecoFrame(){
    
   }
@@ -49,5 +52,11 @@ namespace RestFrames {
   void VisibleRecoFrame::Init(){
   
   }
+
+  VisibleRecoFrame& VisibleRecoFrame::Empty(){
+    return VisibleRecoFrame::m_Empty;
+  }
+
+  VisibleRecoFrame VisibleRecoFrame::m_Empty;
 
 }

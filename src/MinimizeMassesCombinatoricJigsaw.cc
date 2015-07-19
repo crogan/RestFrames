@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
+#include "RestFrames/VisibleState.hh"
 #include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
@@ -156,18 +157,18 @@ namespace RestFrames {
      
       // initialize output states
       for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
-      for(int i = 0; i < 2; i++) m_Outputs[jp_max[i]]->AddElement(*m_Inputs[ip_max[i]]);
+      for(int i = 0; i < 2; i++) m_Outputs[jp_max[i]]->AddElement(static_cast<VisibleState&>(*m_Inputs[ip_max[i]]));
       TVector3 nRef = inputs[ip_max[0]].Vect().Cross(inputs[ip_max[1]].Vect());
       for(int i = 0; i < Ninput; i++){
 	if((i == ip_max[0]) || (i == ip_max[1])) continue;
 	int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
-	m_Outputs[ihem]->AddElement(*m_Inputs[i]);
+	m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
       }
       if(m_Outputs[1]->GetFourVector().M() > m_Outputs[0]->GetFourVector().M()){
-	vector<RFList<State> > flip;
+	vector<RFList<VisibleState> > flip;
 	for(int i = 0; i < 2; i++) flip.push_back(m_Outputs[i]->GetElements());
 	for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
-	for(int i = 0; i < 2; i++) m_Outputs[i]->AddElement(flip[!i]);
+	for(int i = 0; i < 2; i++) m_Outputs[i]->AddElements(flip[!i]);
       }
     } 
     //////////////////////////////////////
@@ -199,7 +200,7 @@ namespace RestFrames {
 	  key /= 2;
 	  Nhem[ihem]++;
 	  hem[ihem] += inputs[i];
-	  m_Outputs[ihem]->AddElement(*m_Inputs[i]);
+	  m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
 	}
 	// check validity of combinatoric
 	bool valid = true;
@@ -238,7 +239,7 @@ namespace RestFrames {
       for(int i = 0; i < Ninput; i++){
 	int ihem = key%2;
 	key /= 2;
-	m_Outputs[ihem]->AddElement(*m_Inputs[i]);
+	m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
       }
     }
     // Execute depedancy Jigsaws

@@ -46,6 +46,7 @@ namespace RestFrames {
   public:
     //constructor and destructor
     VisibleFrame(const string& sname, const string& stitle);
+    VisibleFrame();
     virtual ~VisibleFrame();
 
     virtual void SetLabFrameFourVector(const TLorentzVector& V);

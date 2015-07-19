@@ -36,9 +36,11 @@ using namespace std;
 
 namespace RestFrames {
  
+  class RestFrame;
   class Jigsaw;
 
-  enum GroupType { GInvisible, GCombinatoric };
+  enum GroupType { kVanillaGroup, kInvisibleGroup, 
+		   kCombinatoricGroup };
 
   ///////////////////////////////////////////////
   // Group class
@@ -46,34 +48,38 @@ namespace RestFrames {
   class Group : public RFBase {
   public:
     Group(const string& sname, const string& stitle);
-    Group(const RFKey& key);
     Group();
     virtual ~Group();
 
     /// \brief Clears Group of all connections to other objects
     virtual void Clear();
 
+    static Group& Empty();
+
     bool IsInvisibleGroup() const;
     bool IsCombinatoricGroup() const;
 
     GroupType GetType() const { return m_Type; }
 
-    virtual void AddFrame(RestFrame& frame){ }
+    virtual void AddFrame(RestFrame& frame);
+    virtual void AddJigsaw(Jigsaw& jigsaw);
+
     void RemoveFrame(const RestFrame& frame);
-    bool ContainsFrame(const RestFrame& frame) const;
-    RestFrames::RFList<RestFrame> GetFrames() const;
-
-    virtual bool AddJigsaw(Jigsaw& jigsaw){ return false; }
     void RemoveJigsaw(const Jigsaw& jigsaw);
-    RestFrames::RFList<Jigsaw> GetJigsaws() const;
 
-    State const& GetGroupState() const;
-    RestFrames::RFList<State> GetStates(const RestFrames::RFList<RestFrame>& frames) const;
-    State& GetState(const RestFrame& frame) const;
+    bool ContainsFrame(const RestFrame& frame) const;
+    bool ContainsJigsaw(const Jigsaw& frame) const;
+    
+    const RestFrames::RFList<RestFrame>& GetListFrames() const;
+    const RestFrames::RFList<Jigsaw>& GetListJigsaws() const;
+
+    virtual State& GetParentState() const;
+    State& GetChildState(const RestFrame& frame) const;
+    RestFrames::RFList<State> GetChildStates(const RestFrames::RFList<RestFrame>& frames) const;
 
     virtual bool InitializeAnalysis();
-    virtual void ClearEvent(){ };
-    virtual bool AnalyzeEvent(){ return false; };
+    virtual bool ClearEvent() = 0;
+    virtual bool AnalyzeEvent() = 0;
 
   protected:
     static int m_class_key;
@@ -82,25 +88,23 @@ namespace RestFrames {
 
     State* m_GroupStatePtr;
     RestFrames::RFList<RestFrame> m_Frames;
-  
-    RestFrames::RFList<State> m_States;
-    RestFrames::RFList<State> m_StatesToSplit;
-
     RestFrames::RFList<Jigsaw> m_Jigsaws;
+    RestFrames::RFList<State> m_States;
+
+    RestFrames::RFList<State> m_StatesToResolve;
     RestFrames::RFList<Jigsaw> m_JigsawsToUse;
 
-    virtual State& InitializeGroupState();
-    bool InitializeJigsaws();
-    void InitializeJigsaw(Jigsaw& jigsaw);
+    virtual State& InitializeParentState() = 0;
+    virtual State& GetChildState(int i) const = 0;
 
-    bool SplitState(const State& state);
+    bool ResolveUnknowns();
+    bool ResolveState(const State& state);
+    void InitializeJigsaw(Jigsaw& jigsaw);
 
   private:
     void Init();
     int GenKey();
   };
-
-  extern Group g_Group;
   
 }
 

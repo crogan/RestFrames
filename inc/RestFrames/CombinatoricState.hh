@@ -31,10 +31,13 @@
 #define CombinatoricState_HH
 
 #include "RestFrames/State.hh"
+#include "RestFrames/CombinatoricJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
+
+  class VisibleState;
 
   ///////////////////////////////////////////////
   // CombinatoricState class
@@ -42,26 +45,38 @@ namespace RestFrames {
   class CombinatoricState : public State {
   public:
     CombinatoricState();
+    CombinatoricState(const RFKey& key);
     virtual ~CombinatoricState();
 	
+    static CombinatoricState& Empty();
+
     virtual void Clear();
+
+    virtual void AddFrame(RestFrame& frame);
+
+    virtual void SetParentJigsaw(Jigsaw& jigsaw);
+    virtual void SetChildJigsaw(Jigsaw& jigsaw);
+    virtual CombinatoricJigsaw const& GetParentJigsaw() const;
+    virtual CombinatoricJigsaw const& GetChildJigsaw() const;
 
     virtual void Boost(const TVector3& B);
     virtual TLorentzVector GetFourVector() const; 
 
     void ClearElements();
-    void AddElement(State& state);
-    void AddElement(const RestFrames::RFList<State>& states);
-    RestFrames::RFList<State> GetElements() const;
+    void AddElement(VisibleState& state);
+    void AddElements(const RestFrames::RFList<VisibleState>& states);
+    RestFrames::RFList<VisibleState> GetElements() const;
     int GetNElements() const;
+
     bool ContainsElement(const State& state) const;
     bool ContainsElement(const RFKey& key) const;
-    const State& GetElement(const RFKey& key) const;
+    const VisibleState& GetElement(const RFKey& key) const;
 
   protected:
-    RestFrames::RFList<State> m_Elements;
+    RestFrames::RFList<VisibleState> m_Elements;
   
   private:
+    static CombinatoricState m_Empty;
     void Init();
 
   };

@@ -36,8 +36,6 @@ using namespace std;
 
 namespace RestFrames {
 
-  class RestFrame;
-
   ///////////////////////////////////////////////
   // LabFrame class
   ///////////////////////////////////////////////
@@ -45,21 +43,19 @@ namespace RestFrames {
   class LabFrame : public T {
   public:
     LabFrame(const string& sname, const string& stitle);
+    LabFrame();
     virtual ~LabFrame();
 
     void SetChildFrame(RestFrame& frame);
     void SetChildFrame(RestFrame* framePtr);
   
-    virtual bool InitializeTree() const;
+    virtual bool InitializeTree();
     virtual bool InitializeAnalysis() = 0;
-    virtual void ClearEvent() = 0;
+    virtual bool ClearEvent() = 0;
     virtual bool AnalyzeEvent() = 0;
 
     // Analysis functions
     TVector3 GetInvisibleMomentum() const;
-  
-    virtual double GetCosDecayAngle(const RestFrame& frame = g_RestFrame) const;
-    virtual TVector3 GetDecayPlaneNormalVector() const;
 
   protected:
     virtual bool IsSoundBody() const;

@@ -35,9 +35,9 @@
 #include <map>
 #include <exception>
 
-using namespace std;
-
 #include "RestFrames/RFList.hh"
+
+using namespace std;
 
 namespace RestFrames {
 
@@ -64,15 +64,15 @@ namespace RestFrames {
     static RFLog& EndMessage(RFLog& log);
       
     RFLog& operator<< (LogType type);
-
-    template <class T> RFLog& operator<< (T arg){
-      m_Message << arg;
-      return *this;
-    }
-
     RFLog& operator<< (RFLog& (*_f)( RFLog&));
     RFLog& operator<< (ostream& (*_f)(ostream&));
     RFLog& operator<< (ios& (*_f)(ios&));
+
+    template <class T> 
+    RFLog& operator<< (T arg){
+      m_Message << arg;
+      return *this;
+    }
 
   private:
     static ostream* m_Ostr;
