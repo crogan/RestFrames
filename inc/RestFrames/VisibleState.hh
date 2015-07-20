@@ -40,8 +40,8 @@ namespace RestFrames {
 
   class VisibleState : public State {
   public:
+    VisibleState(const string& sname, const string& stitle);
     VisibleState();
-    VisibleState(const RFKey& key);
     virtual ~VisibleState();
 
     virtual void Clear();

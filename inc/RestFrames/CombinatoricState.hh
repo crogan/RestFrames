@@ -44,8 +44,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class CombinatoricState : public State {
   public:
+    CombinatoricState(const string& sname, const string& stitle);
     CombinatoricState();
-    CombinatoricState(const RFKey& key);
     virtual ~CombinatoricState();
 	
     static CombinatoricState& Empty();

@@ -27,7 +27,6 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <sstream>
 #include "RestFrames/SelfAssemblingRecoFrame.hh"
 #include "RestFrames/VisibleRecoFrame.hh"
 #include "RestFrames/LabRecoFrame.hh"
@@ -298,11 +297,9 @@ namespace RestFrames {
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
     }
-    ostringstream name;
-    name << sname << "_" << m_Ndecay+1;
-    ostringstream title; 
-    title << "#left(" << stitle << "#right)_{" << m_Ndecay+1 << "}";
-    DecayRecoFrame* framePtr = new DecayRecoFrame(name.str(),title.str());
+    string name  = sname+"_"+std::to_string(m_Ndecay+1);
+    string title = "#left("+stitle+"#right)_{"+std::to_string(m_Ndecay+1)+"}";
+    DecayRecoFrame* framePtr = new DecayRecoFrame(name, title);
     
     m_DecayFrames.Add(*framePtr);
     AddDependent(framePtr);
@@ -315,11 +312,9 @@ namespace RestFrames {
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
     }
-    ostringstream name;
-    name << sname << "_" << m_Nvisible+1;
-    ostringstream title; 
-    title << "#left(" << stitle << "#right)_{" << m_Nvisible+1 << "}";
-    VisibleRecoFrame* framePtr = new VisibleRecoFrame(name.str(),title.str());
+    string name  = sname+"_"+std::to_string(m_Nvisible+1);
+    string title = "#left("+stitle+"#right)_{"+std::to_string(m_Nvisible+1)+"}";
+    VisibleRecoFrame* framePtr = new VisibleRecoFrame(name, title);
     
     m_VisibleFrames.Add(*framePtr);
     AddDependent(framePtr);

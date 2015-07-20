@@ -129,9 +129,10 @@ namespace RestFrames {
   }
 
   InvisibleState& InvisibleJigsaw::GetNewChildState(){
-    InvisibleState* statePtr = new InvisibleState();
+    string name = GetName()+"_"+std::to_string(m_ChildStates.GetN());
+    InvisibleState* statePtr = new InvisibleState(name, name);
     AddDependent(statePtr);
-    m_ChildStates.Add(*statePtr);
+    m_ChildStates += *statePtr;
     return *statePtr;
   }
 

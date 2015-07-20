@@ -35,19 +35,15 @@ using namespace std;
 
 namespace RestFrames {
 
-  VisibleState::VisibleState()
-    : State() 
+  VisibleState::VisibleState(const string& sname, const string& stitle)
+    : State(sname, stitle) 
   {
     Init();
   }
 
-  VisibleState::VisibleState(const RFKey& key)
-    : State(key)
-  {
-    Init();
-  }
+  VisibleState::VisibleState() : State() {}
 
-  VisibleState::~VisibleState(){ }
+  VisibleState::~VisibleState() {}
 
   void VisibleState::Init(){
     m_Type = kVisibleState;
@@ -97,5 +93,5 @@ namespace RestFrames {
 
   void VisibleState::SetChildJigsaw(Jigsaw& jigsaw) {}
 
-  VisibleState VisibleState::m_Empty(RFKey(-1));
+  VisibleState VisibleState::m_Empty;
 }

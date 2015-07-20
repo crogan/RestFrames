@@ -44,7 +44,8 @@ namespace RestFrames {
   class RFBase;
 
   /// Type of Log Message
-  enum LogType { LogError, LogWarning, LogInfo, LogDebug, LogVerbose };
+  enum LogType { LogError, LogWarning, LogInfo, 
+		 LogDebug, LogVerbose };
 
   ///////////////////////////////////////////////
   // RFLog class
@@ -90,6 +91,7 @@ namespace RestFrames {
     template <class T>
     void PrintList(const RFList<T>* listPtr);
 
+    LogType m_DefType;
     LogType m_CurType;
     string m_Source;
     ostringstream m_Message;
@@ -128,7 +130,6 @@ namespace RestFrames {
   const RFList<RFBase>* Log(const RFList<T>* ptr){ return (const RFList<RFBase>*)ptr; }
 
 #ifndef __MAKECINT__
-  //#define m_Log (*m_LogPtr)
   #define m_End RFLog::EndMessage  
   #define g_End RFLog::EndMessage
 #endif

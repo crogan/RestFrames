@@ -41,8 +41,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class InvisibleState : public State {
   public:
+    InvisibleState(const string& sname, const string& stitle);
     InvisibleState();
-    InvisibleState(const RFKey& key);
     virtual ~InvisibleState();
 
     static InvisibleState& Empty();

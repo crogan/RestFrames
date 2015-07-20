@@ -39,17 +39,15 @@ namespace RestFrames {
   // InvisibleState class
   ///////////////////////////////////////////////
 
-  InvisibleState::InvisibleState() : State(){
+  InvisibleState::InvisibleState(const string& sname, const string& stitle)
+    : State(sname, stitle)
+  {
     Init();
   }
 
-  InvisibleState::InvisibleState(const RFKey& key) : State(key){
-    Init();
-  }
+  InvisibleState::InvisibleState() : State() {}
 
-  InvisibleState::~InvisibleState(){
-    
-  }
+  InvisibleState::~InvisibleState() {}
 
   void InvisibleState::Init(){
     m_Type = kInvisibleState;

@@ -4,20 +4,7 @@
 #include <TCanvas.h>
 #include <TSystem.h>
 #include <iostream>
-#include "RestFrames/RestFrame.hh"
-#include "RestFrames/RFrame.hh"
-#include "RestFrames/RLabFrame.hh"
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/RSelfAssemblingFrame.hh"
-#include "RestFrames/InvisibleMassJigsaw.hh"
-#include "RestFrames/InvisibleRapidityJigsaw.hh"
-#include "RestFrames/ContraBoostInvariantJigsaw.hh"
-#include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
-#include "RestFrames/InvisibleGroup.hh"
-#include "RestFrames/CombinatoricGroup.hh"
-#include "RestFrames/FramePlot.hh"
+#include "RestFrames/RestFrames.hh"
 
 using namespace std;
 using namespace RestFrames;
@@ -28,10 +15,10 @@ void TestSelfAssembling(){
   // Setup rest frames code
   //////////////////////////////////////////////////////////////
   std::cout << " Initialize lists of visible, invisible particles and intermediate states " << endl;
-  RestFrames::RLabFrame LAB("LAB","lab");
-  RSelfAssemblingFrame S1("S1","CM");
-  RVisibleFrame V1("V1","#vec{p}");
-  RInvisibleFrame I1("I1","#vec{E}_{T}^{miss}");
+  LabRecoFrame LAB("LAB","lab");
+  SelfAssemblingRecoFrame S1("S1","CM");
+  VisibleRecoFrame V1("V1","#vec{p}");
+  InvisibleRecoFrame I1("I1","#vec{E}_{T}^{miss}");
 
   std::cout << " Define invisible and combinatoric groups " << endl;
   InvisibleGroup INV("INV","Invisible State Jigsaws");
@@ -52,12 +39,12 @@ void TestSelfAssembling(){
 
   std::cout << "Initializing jigsaw rules" << endl; 
 
-  InvisibleMassJigsaw MinMassJigsaw("MINMASS_JIGSAW", "Invisible system mass Jigsaw");
+  SetMassInvJigsaw MinMassJigsaw("MINMASS_JIGSAW", "Invisible system mass Jigsaw");
   INV.AddJigsaw(MinMassJigsaw);
 
-  InvisibleRapidityJigsaw RapidityJigsaw("RAPIDITY_JIGSAW", "Invisible system rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw("RAPIDITY_JIGSAW", "Invisible system rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
-  RapidityJigsaw.AddVisibleFrame((LAB.GetListVisibleFrames()));
+  RapidityJigsaw.AddVisibleFrames((LAB.GetListVisibleFrames()));
 
   cout << "Initializing the tree for analysis : " << endl;
   cout << LAB.InitializeAnalysis() << endl; 
@@ -92,22 +79,22 @@ void TestSelfAssembling(){
     TVector3 MET(gRandom->Rndm(),gRandom->Rndm(),0.);
 
     LAB.ClearEvent();
-    vector<GroupElementID> jetID;
+    vector<RFKey> jetID;
     for(int i = 0; i < Njet; i++) jetID.push_back(VIS.AddLabFrameFourVector(JETS[i]));
     INV.SetLabFrameThreeVector(MET);
     LAB.AnalyzeEvent();
    
     int N = 0;
     for(int i = 0; i < Njet; i++){
-      const RestFrame* frame = S1.GetFrame(jetID[i]);
-      const RestFrame* prod = frame->GetProductionFrame();
-      if(frame) cout << frame->GetName().c_str() << " " << S1.GetFrameDepth(frame) << " " << prod->GetName().c_str() << endl;
+      const RestFrame& frame = S1.GetFrame(jetID[i]);
+      const RestFrame& prod = frame.GetProductionFrame();
+      if(!frame.IsEmpty()) cout << frame.GetName().c_str() << " " << S1.GetFrameDepth(frame) << " " << prod.GetName().c_str() << endl;
     }
-    const RestFrame* prod = I1.GetProductionFrame();
-    cout << "Invis " << S1.GetFrameDepth(I1) << " " << prod->GetName().c_str() << endl;
+    const RestFrame& prod = I1.GetProductionFrame();
+    cout << "Invis " << S1.GetFrameDepth(I1) << " " << prod.GetName().c_str() << endl;
 
-    const RestFrame* depth2 = S1.GetFrameAtDepth(2, I1);
-    if(depth2) cout << "Invis (2) " << depth2->GetName().c_str() << endl;
+    const RestFrame& depth2 = S1.GetFrameAtDepth(2, I1);
+    if(!depth2.IsEmpty()) cout << "Invis (2) " << depth2.GetName().c_str() << endl;
   }
   TreePlot->AddFrameTree(S1);
   //TreePlot->AddJigsaw(RapidityJigsaw);

@@ -100,7 +100,8 @@ namespace RestFrames {
   }
 
   CombinatoricState& CombinatoricGroup::InitializeParentState(){
-    return *(new CombinatoricState());
+    string name = GetName()+"_parent";
+    return *(new CombinatoricState(name, name));
   }
 
   CombinatoricState& CombinatoricGroup::GetParentState() const {
@@ -171,7 +172,8 @@ namespace RestFrames {
   VisibleState& CombinatoricGroup::GetNewElement(){
     if(m_Elements.GetN() < m_InitStates.GetN())
       return m_InitStates[m_Elements.GetN()];
-    VisibleState* statePtr = new VisibleState();
+    string name = GetName()+"_"+std::to_string(m_Elements.GetN()+1);
+    VisibleState* statePtr = new VisibleState(name,name);
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);
     return *statePtr;

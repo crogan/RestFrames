@@ -41,20 +41,15 @@ namespace RestFrames {
   int State::m_class_key = 0;
 
   // constructor 
-  State::State()
-    : RFBase("State", "State") 
+  State::State(const string& sname, const string& stitle)
+    : RFBase(sname, stitle) 
   {
     Init();
   }
 
-  State::State(const RFKey& key)
-    : RFBase("State", "State") 
-  {
-    Init();
-    SetKey(key);
-  }
+  State::State() : RFBase() {}
 
-  State::~State(){ }
+  State::~State() {}
 
   void State::Init(){
     SetKey(GenKey());

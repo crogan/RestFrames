@@ -40,21 +40,15 @@ namespace RestFrames {
   // CombinatoricState class
   ///////////////////////////////////////////////
 
-  CombinatoricState::CombinatoricState() : 
-    State()
+  CombinatoricState::CombinatoricState(const string& sname, const string& stitle) 
+    : State(sname, stitle)
   {
     Init();
   }
 
-  CombinatoricState::CombinatoricState(const RFKey& key) : 
-    State(key)
-  {
-    Init();
-  }
+  CombinatoricState::CombinatoricState() : State() {}
 
-  CombinatoricState::~CombinatoricState(){
-    ClearElements();
-  }
+  CombinatoricState::~CombinatoricState() {}
 
   void CombinatoricState::Init(){
     m_Type = kCombinatoricState;
@@ -132,6 +126,6 @@ namespace RestFrames {
     return RFList<State>(m_Elements).GetFourVector();
   }
 
-  CombinatoricState CombinatoricState::m_Empty(RFKey(-1));
+  CombinatoricState CombinatoricState::m_Empty;
 
 }

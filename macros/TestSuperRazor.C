@@ -3,7 +3,7 @@
 #include <TVector3.h>
 #include <TCanvas.h>
 #include <iostream>
-#include "RestFrames/RestFrame.hh"
+#include "RestFrames/RestFrames.hh"
 #include "RestFrames/RFrame.hh"
 #include "RestFrames/RLabFrame.hh"
 #include "RestFrames/RDecayFrame.hh"

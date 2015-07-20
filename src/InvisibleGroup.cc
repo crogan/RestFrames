@@ -77,7 +77,8 @@ namespace RestFrames {
   }
 
   InvisibleState& InvisibleGroup::InitializeParentState(){
-    return *(new InvisibleState());
+    string name = GetName()+"_parent";
+    return *(new InvisibleState(name, name));
   }
 
   InvisibleState& InvisibleGroup::GetParentState() const {

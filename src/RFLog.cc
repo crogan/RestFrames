@@ -43,7 +43,9 @@ namespace RestFrames {
   ostream* RFLog::m_Ostr = &cerr;
   int RFLog::m_NMAX = 100;
 
-  RFLog::RFLog(const string& source, LogType def_type){
+  RFLog::RFLog(const string& source, LogType def_type)
+    : m_DefType(def_type)
+  {
     Init();
     SetSource(source);
   }
@@ -58,7 +60,7 @@ namespace RestFrames {
 
   void RFLog::Init(){
     m_Source = "Unknown"; 
-    m_CurType = LogInfo;
+    m_CurType = m_DefType;
     m_Message.str("");
     m_TypeMap[LogVerbose]  = "VERBOSE";
     m_TypeMap[LogDebug]    = "DEBUG";
@@ -145,6 +147,7 @@ namespace RestFrames {
       throw RestFramesException(m_Message.str());
     
     m_Message.str("");
+    m_CurType = m_DefType;
     return;
   }
 

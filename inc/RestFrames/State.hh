@@ -44,8 +44,8 @@ namespace RestFrames {
 
   class State : public RFBase {
   public:
+    State(const string& sname, const string& stitle);
     State();
-    State(const RFKey& key);
     virtual ~State();
 
     virtual void Clear();
