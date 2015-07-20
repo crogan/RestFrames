@@ -142,20 +142,30 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   INV_R.AddFrame(Na_R);
   INV_R.AddFrame(Nb_R);
 
+  g_Log << LogDebug << "min mass" << m_End;
   // define jigsaws for the reconstruction tree
-  InvisibleMassJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
+  SetMassInvJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
   INV_R.AddJigsaw(MinMassJigsaw_R);
 
-  InvisibleRapidityJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
-  INV_R.AddJigsaw(RapidityJigsaw_R);
-  RapidityJigsaw_R.AddVisibleFrame((LAB_R.GetListVisibleFrames()));
 
-  ContraBoostInvariantJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
+   g_Log << LogDebug << "rapidity" << m_End;
+  SetRapidityInvJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
+  g_Log << LogDebug << "here" << m_End;
+  INV_R.AddJigsaw(RapidityJigsaw_R);
+  g_Log << LogDebug << "rapidity" << m_End;
+  RapidityJigsaw_R.AddVisibleFrames((LAB_R.GetListVisibleFrames()));
+  g_Log << LogDebug << "rapidity" << m_End;
+
+
+
+   g_Log << LogDebug << "contra" << m_End;
+  ContraBoostInvJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
   INV_R.AddJigsaw(ContraBoostJigsaw_R);
-  ContraBoostJigsaw_R.AddVisibleFrame((Wa_R.GetListVisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddVisibleFrame((Wb_R.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Wa_R.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Wb_R.GetListInvisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddVisibleFrames((Wa_R.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddVisibleFrames((Wb_R.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Wa_R.GetListInvisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Wb_R.GetListInvisibleFrames()), 1);
+   g_Log << LogDebug << "done" << m_End;
 
   g_Log << LogInfo << "Initializing tree for analysis" << m_End;
   // check reconstruction trees

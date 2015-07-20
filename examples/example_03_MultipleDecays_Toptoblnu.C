@@ -102,10 +102,10 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   InvisibleGroup INV("INV","Neutrino Jigsaws");
   INV.AddFrame(NU_R);
  
-  InvisibleMassJigsaw MassJigsaw("MASS_JIGSAW","mass Jigsaw");
+  SetMassInvJigsaw MassJigsaw("MASS_JIGSAW","mass Jigsaw");
   INV.AddJigsaw(MassJigsaw);
 
-  InvisibleRapidityJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
   RapidityJigsaw.AddVisibleFrame(L_R);
   RapidityJigsaw.AddVisibleFrame(B_R);

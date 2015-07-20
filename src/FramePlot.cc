@@ -152,7 +152,7 @@ namespace RestFrames {
       if(*m_Jigsaws[i] == jigsaw)
 	return;
 
-    RFList<RestFrame> frames = jigsaw.GetChildFrames();
+    RFList<RestFrame> frames = jigsaw.GetParentFrames();
     int N = frames.GetN();
     int M = m_Frames.size();
     for(int i = 0; i < N; i++){
@@ -349,7 +349,7 @@ namespace RestFrames {
     if(jigsaw.IsEmpty()) return;
 
     FramePlotNode* state_nodePtr = m_TreeNodes[int(m_TreeNodes.size())-1];
-    int Nchild = jigsaw.GetNChildStates();
+    int Nchild = jigsaw.GetNChildren();
 
     for(int i = 0; i < Nchild; i++){
       State& child = jigsaw.GetChildState(i);
@@ -373,7 +373,7 @@ namespace RestFrames {
   }
 
   void FramePlot::FillJigsawLink(const Jigsaw& jigsaw){
-    int Nsplit = jigsaw.GetNChildStates();
+    int Nsplit = jigsaw.GetNChildren();
     Group& group = jigsaw.GetGroup();
     if(group.IsEmpty()) return;
     FramePlotNode* high_old = nullptr;
@@ -450,7 +450,7 @@ namespace RestFrames {
 
     if(!jigsaw.IsEmpty()){
       if(linkPtr->DoLabel()){
-	int priority = GetJigsawPriority(jigsaw.GetNOutputStates(), jigsaw.GetNDependancyStates());
+	int priority = GetJigsawPriority(jigsaw.GetNChildren(), jigsaw.GetNDependancyStates());
 	icolor = color_Node[priority];
 	icolor_fill = color_fill_Node[priority];
       } else {
@@ -702,8 +702,8 @@ namespace RestFrames {
     jigsaw_title.push_back("Invisible Jigsaw");
     jigsaw_title.push_back("Combinatoric Jigsaw");
     vector<JigsawType> jigsaw_type;
-    jigsaw_type.push_back(JInvisible);
-    jigsaw_type.push_back(JCombinatoric);
+    jigsaw_type.push_back(kInvisibleJigsaw);
+    jigsaw_type.push_back(kCombinatoricJigsaw);
 
     vector<string> ititle;
     vector<int> icolor;

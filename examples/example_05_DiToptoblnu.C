@@ -140,24 +140,24 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   B_R.SetNElementsForFrame(Bb_R,1,true);
 
   // define jigsaws for the reconstruction tree
-  InvisibleMassJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
+  SetMassInvJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
   INV_R.AddJigsaw(MinMassJigsaw_R);
 
-  InvisibleRapidityJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
   INV_R.AddJigsaw(RapidityJigsaw_R);
-  RapidityJigsaw_R.AddVisibleFrame((LAB_R.GetListVisibleFrames()));
+  RapidityJigsaw_R.AddVisibleFrames((LAB_R.GetListVisibleFrames()));
 
-  ContraBoostInvariantJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
+  ContraBoostInvJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
   INV_R.AddJigsaw(ContraBoostJigsaw_R);
-  ContraBoostJigsaw_R.AddVisibleFrame((Ta_R.GetListVisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddVisibleFrame((Tb_R.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Ta_R.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Tb_R.GetListInvisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddVisibleFrames((Ta_R.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddVisibleFrames((Tb_R.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Ta_R.GetListInvisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Tb_R.GetListInvisibleFrames()), 1);
 
-  MinimizeMassesCombinatoricJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m(b #it{l}) Jigsaw");
+  MinMassesCombJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m(b #it{l}) Jigsaw");
   B_R.AddJigsaw(HemiJigsaw_R);
-  HemiJigsaw_R.AddFrame((Ta_R.GetListVisibleFrames()),0);
-  HemiJigsaw_R.AddFrame((Tb_R.GetListVisibleFrames()),1);
+  HemiJigsaw_R.AddFrames((Ta_R.GetListVisibleFrames()),0);
+  HemiJigsaw_R.AddFrames((Tb_R.GetListVisibleFrames()),1);
 
   g_Log << LogInfo << "Initializing tree for analysis" << m_End;
   // check reconstruction trees

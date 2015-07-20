@@ -31,17 +31,12 @@
 #define CombinatoricJigsaw_HH
 
 #include "RestFrames/Jigsaw.hh"
+#include "RestFrames/CombinatoricGroup.hh"
+#include "RestFrames/CombinatoricState.hh"
 
 using namespace std;
 
 namespace RestFrames {
-
-  class ReconstructionFrame;
-  class CombinatoricState;
-
-  ///////////////////////////////////////////////
-  // CombinatoricJigsaw class
-  ///////////////////////////////////////////////
 
   class CombinatoricJigsaw : public Jigsaw {
   public:
@@ -54,27 +49,30 @@ namespace RestFrames {
 
     static CombinatoricJigsaw& Empty();
 
-    virtual void AddFrame(ReconstructionFrame& frame, int i = 0);
-    virtual void AddFrame(const RestFrames::RFList<ReconstructionFrame>& frames, int i = 0);
+    virtual void SetGroup(Group& group = Group::Empty());
+    virtual CombinatoricGroup& GetGroup() const;
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
+    virtual void SetParentState(State& state = State::Empty());
+    virtual CombinatoricState& GetParentState() const;
+    virtual CombinatoricState& GetChildState(int i) const;
+
+    virtual void AddFrame(RestFrame& frame, int i = 0);
+    virtual void AddFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
   
   protected:
-    virtual State& NewOutputState();
-    virtual void ClearOutputStates();
-    RestFrames::RFList<CombinatoricState> m_CombinatoricOutputStates;
-
+    virtual CombinatoricState& GetNewChildState();
+ 
     RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
 
-    vector<State*> m_Inputs;
-    vector<CombinatoricState*> m_Outputs;
-    vector<int> m_NForOutput;
-    vector<bool> m_NExclusive;
     virtual bool InitializeEvent();
+    RestFrames::RFList<VisibleState> m_InputStates;
+    map<const State*, int>  m_NForChild;
+    map<const State*, bool> m_NExclusive;
     
   private:
-    static CombinatoricJigsaw m_Empty;
     void Init();
   };
 

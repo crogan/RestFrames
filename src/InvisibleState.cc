@@ -83,24 +83,9 @@ namespace RestFrames {
       m_ChildJigsawPtr = &jigsaw;
   }
 
-  InvisibleJigsaw const& InvisibleState::GetParentJigsaw() const {
-    if(m_ParentJigsawPtr)
-      return static_cast<InvisibleJigsaw&>(*m_ParentJigsawPtr);
-    else
-      return InvisibleJigsaw::Empty();
-  }
-
-  InvisibleJigsaw const& InvisibleState::GetChildJigsaw() const {
-    if(m_ChildJigsawPtr)
-      return static_cast<InvisibleJigsaw&>(*m_ChildJigsawPtr);
-    else
-      return InvisibleJigsaw::Empty();
-  }
-
   double InvisibleState::GetMinimumMass() const {
     if(!GetChildJigsaw().IsEmpty())
-      return GetChildJigsaw().GetMinimumMass();
-    
+      return static_cast<const InvisibleJigsaw&>(GetChildJigsaw()).GetMinimumMass();
     if(GetNFrames() == 1)
       return static_cast<InvisibleRecoFrame&>(m_Frames[0]).GetMinimumMass();
     else
@@ -108,7 +93,7 @@ namespace RestFrames {
   }
 
   void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
-    GetChildJigsaw().FillInvisibleMassJigsawDependancies(jigsaws);
+    static_cast<const InvisibleJigsaw&>(GetChildJigsaw()).FillInvisibleMassJigsawDependancies(jigsaws);
   }
 
   InvisibleState InvisibleState::m_Empty;

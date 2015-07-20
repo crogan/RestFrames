@@ -31,7 +31,6 @@
 #define InvisibleState_HH
 
 #include "RestFrames/State.hh"
-#include "RestFrames/InvisibleJigsaw.hh"
 
 using namespace std;
 
@@ -54,8 +53,6 @@ namespace RestFrames {
 
     virtual void SetParentJigsaw(Jigsaw& jigsaw);
     virtual void SetChildJigsaw(Jigsaw& jigsaw);
-    virtual InvisibleJigsaw const& GetParentJigsaw() const;
-    virtual InvisibleJigsaw const& GetChildJigsaw() const;
 
     virtual double GetMinimumMass() const;
     virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;

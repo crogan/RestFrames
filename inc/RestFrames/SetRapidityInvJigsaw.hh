@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   ContraBoostInvariantJigsaw.hh
+///  \file   SetRapidityInvJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,8 +27,8 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef ContraBoostInvariantJigsaw_HH
-#define ContraBoostInvariantJigsaw_HH
+#ifndef SetRapidityInvJigsaw_HH
+#define SetRapidityInvJigsaw_HH
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
@@ -36,28 +36,18 @@ using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // ContraBoostInvariantJigsaw class
-  ///////////////////////////////////////////////
-  class ContraBoostInvariantJigsaw : public InvisibleJigsaw {
+  class SetRapidityInvJigsaw : public InvisibleJigsaw {
   public:
-    //constructor and destructor
-    ContraBoostInvariantJigsaw(const string& sname, const string& stitle);
-    ~ContraBoostInvariantJigsaw();
+    SetRapidityInvJigsaw(const string& sname, const string& stitle);
+    SetRapidityInvJigsaw();
+    virtual ~SetRapidityInvJigsaw();
 
-    virtual double GetMinimumMass() const;
+    virtual void SetAxis(const TVector3& axis);
+
     virtual bool AnalyzeEvent();
 
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const;
-
   protected:
-    void CalcCoef();
-    double GetC1(){ return m_C1; }
-    double GetC2(){ return m_C2; }
-
-  private:
-    double m_C1;
-    double m_C2;
+    TVector3 m_Axis;
     void Init();
   
   };

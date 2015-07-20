@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   MinimizeMassesCombinatoricJigsaw.hh
+///  \file   SetMassInvJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,30 +27,45 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef MinimizeMassesCombinatoricJigsaw_HH
-#define MinimizeMassesCombinatoricJigsaw_HH
-
-#include "RestFrames/CombinatoricJigsaw.hh"
+#include "RestFrames/SetMassInvJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // MinimizeMassesCombinatoricJigsaw class
+  //SetMassInvJigsaw class methods
   ///////////////////////////////////////////////
-  class MinimizeMassesCombinatoricJigsaw : public CombinatoricJigsaw{
-  public:
-    MinimizeMassesCombinatoricJigsaw(const string& sname, const string& stitle);
-    virtual ~MinimizeMassesCombinatoricJigsaw();
+  SetMassInvJigsaw::SetMassInvJigsaw(const string& sname, const string& stitle) : 
+    InvisibleJigsaw(sname, stitle, 1, 0) {}
 
-    virtual bool AnalyzeEvent();
+  SetMassInvJigsaw::SetMassInvJigsaw() : InvisibleJigsaw() {}
+ 
+  SetMassInvJigsaw::~SetMassInvJigsaw(){}
 
-  private:
-    void Init();
+  void SetMassInvJigsaw::Init() {}
 
-  };
+  void SetMassInvJigsaw::Clear(){
+    InvisibleJigsaw::Clear();
+  }
+
+  SetMassInvJigsaw& SetMassInvJigsaw::Empty(){
+    return SetMassInvJigsaw::m_Empty;
+  }
+
+  bool SetMassInvJigsaw::AnalyzeEvent(){
+    if(!IsSoundMind())
+      return SetSpirit(false);
+    
+    TLorentzVector inv_P = GetParentState().GetFourVector();
+    double M = GetChildState(0).GetMinimumMass();
+    
+    inv_P.SetVectM(inv_P.Vect(),M);
+    GetChildState(0).SetFourVector(inv_P);
+
+    return SetSpirit(true);
+  }
+
+  SetMassInvJigsaw SetMassInvJigsaw::m_Empty;
 
 }
-
-#endif

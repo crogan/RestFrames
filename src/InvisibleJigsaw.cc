@@ -28,9 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/SetMassInvJigsaw.hh"
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/Group.hh"
-#include "RestFrames/InvisibleState.hh"
 
 using namespace std;
 
@@ -48,84 +47,112 @@ namespace RestFrames {
 
   InvisibleJigsaw::InvisibleJigsaw() : Jigsaw() {}
 
-  InvisibleJigsaw::~InvisibleJigsaw(){ }
+  InvisibleJigsaw::~InvisibleJigsaw() {}
 
   void InvisibleJigsaw::Clear(){
-    ClearOutputStates();
     Jigsaw::Clear();
   }
 
   void InvisibleJigsaw::Init(int Ninv, int Nvis){
-    m_Type = JInvisible;
+    m_Type = kInvisibleJigsaw;
     m_Ninv = Ninv;
     m_Nvis = Nvis;
   }
 
   InvisibleJigsaw& InvisibleJigsaw::Empty(){
-    return InvisibleJigsaw::m_Empty;
+    return SetMassInvJigsaw::Empty();
+  }
+
+  void InvisibleJigsaw::SetGroup(Group& group){
+    if(!group) return;
+    if(!group.IsInvisibleGroup()) return;
+    Jigsaw::SetGroup(group);
+    if(m_Ninv == 1)
+      AddInvisibleFrames(group.GetListFrames());
+  }
+
+  InvisibleGroup& InvisibleJigsaw::GetGroup() const {
+    if(!Jigsaw::GetGroup())
+      return InvisibleGroup::Empty();
+    else
+      return static_cast<InvisibleGroup&>(Jigsaw::GetGroup());
+  }
+
+  void InvisibleJigsaw::SetParentState(State& state){
+    if(!state) return;
+    if(!state.IsInvisibleState()) return;
+    Jigsaw::SetParentState(state);
+  }
+
+  InvisibleState& InvisibleJigsaw::GetParentState() const {
+    if(!Jigsaw::GetParentState())
+      return InvisibleState::Empty();
+    else
+      return static_cast<InvisibleState&>(Jigsaw::GetParentState());
+  }
+
+  InvisibleState& InvisibleJigsaw::GetChildState(int i) const{
+    if(!Jigsaw::GetChildState(i)) 
+      return InvisibleState::Empty();
+    else
+      return static_cast<InvisibleState&>(Jigsaw::GetChildState(i));
   }
 
   void InvisibleJigsaw::AddVisibleFrame(RestFrame& frame, int i){
-    if(frame.IsEmpty()) return;
-    AddDependancyFrame(frame.GetListVisibleFrames(), i);
-  }
-
-  void InvisibleJigsaw::AddVisibleFrame(const RFList<RestFrame>& frames, int i){
+    if(!frame) return;
+    RFList<RestFrame> frames = frame.GetListVisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddVisibleFrame(frames.Get(f), i);
+      if(frames[f].IsRecoFrame())
+	AddDependancyFrame(frames[f], i);
+  }
+
+  void InvisibleJigsaw::AddVisibleFrames(const RFList<RestFrame>& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddVisibleFrame(frames[f], i);
   }
 
   void InvisibleJigsaw::AddInvisibleFrame(RestFrame& frame, int i){
-    if(!m_GroupPtr) return;
+    if(!GetGroup()) return;
     RFList<RestFrame> frames = frame.GetListInvisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      if(m_GroupPtr->ContainsFrame(frames[f]))
-	AddOutputFrame(frames[f], i);
+      if(GetGroup().ContainsFrame(frames[f]))
+	AddChildFrame(frames[f], i);
   }
 
-  void InvisibleJigsaw::AddInvisibleFrame(const RFList<RestFrame>& frames, int i){
+  void InvisibleJigsaw::AddInvisibleFrames(const RFList<RestFrame>& frames, int i){
     int N = frames.GetN();
-    for(int f = 0; f < N; f++){
-      AddInvisibleFrame(frames.Get(f), i);
-    }
+    for(int f = 0; f < N; f++)
+      AddInvisibleFrame(frames[f], i);
   }
 
-  void InvisibleJigsaw::ClearOutputStates(){
-    m_OutputStates.Clear();
-    m_InvisibleOutputStates.Clear();
-  }
-
-  State& InvisibleJigsaw::NewOutputState(){
+  InvisibleState& InvisibleJigsaw::GetNewChildState(){
     InvisibleState* statePtr = new InvisibleState();
     AddDependent(statePtr);
-    m_OutputStates.Add(*statePtr);
-    m_InvisibleOutputStates.Add(*statePtr);
+    m_ChildStates.Add(*statePtr);
     return *statePtr;
   }
 
-  double InvisibleJigsaw::GetMinimumMass() const{
+  double InvisibleJigsaw::GetMinimumMass() const {
     if(!IsSoundMind()) return 0.;
-    int N = GetNChildStates();
+    int N = GetNChildren();
     double M = 0.;
-    for(int i = 0; i < N; i++){
-      InvisibleState& state = m_InvisibleOutputStates.Get(i);
-      M += state.GetMinimumMass();
-    }
+    for(int i = 0; i < N; i++)
+      M += GetChildState(i).GetMinimumMass();
     return M;
   }
 
   void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const{ 
-    int Nchild = GetNChildStates();
-    for(int i = 0; i < Nchild; i++){
-      InvisibleState* statePtr = dynamic_cast<InvisibleState*>(&GetChildState(i));
-      if(statePtr) statePtr->FillInvisibleMassJigsawDependancies(jigsaws);
-    }
+    int Nchild = GetNChildren();
+    for(int i = 0; i < Nchild; i++)
+      GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
   }
 
   bool InvisibleJigsaw::InitializeDependancyJigsaws(){
     if(!IsSoundMind()) return false;
+    
     m_DependancyJigsaws.Clear();
 
     RFList<Jigsaw> jigsaws; 
@@ -146,92 +173,72 @@ namespace RestFrames {
     return true;
   }
 
-  bool InvisibleJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& chain_jigsaws){
-   if(!IsSoundMind()) return false;
-    if(chain_jigsaws.Contains(*this)) return true;
+  bool InvisibleJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& exec_jigsaws){
+    if(!IsSoundMind()) return false;
+    if(exec_jigsaws.Contains(*this)) return true;
 
     // Add group dependancy jigsaws first
     RFList<Jigsaw> group_jigsaws;
     FillGroupJigsawDependancies(group_jigsaws);
-    group_jigsaws.Remove(*this);
+    group_jigsaws -= *this;
 
     int Ngroup = group_jigsaws.GetN();
     for(int i = Ngroup-1; i >= 0; i--){
-      Jigsaw& jigsaw = group_jigsaws.Get(i);
-      if(!chain_jigsaws.Contains(jigsaw)){
-	if(!jigsaw.InitializeJigsawExecutionList(chain_jigsaws)){
-	  SetMind(false);
-	  return false;
-	}
-      }
-      m_DependancyJigsaws.Remove(jigsaw);
+      Jigsaw& jigsaw = group_jigsaws[i];
+      if(!exec_jigsaws.Contains(jigsaw))
+	if(!jigsaw.InitializeJigsawExecutionList(exec_jigsaws))
+	  return SetMind(false);
+      m_DependancyJigsaws -= jigsaw;
     }
-
     // Satisfy dependancy jigsaws
     while(m_DependancyJigsaws.GetN() > 0){
-      Jigsaw& jigsaw = m_DependancyJigsaws.Get(m_DependancyJigsaws.GetN()-1);
-      if(chain_jigsaws.Contains(jigsaw)){
-	m_DependancyJigsaws.Remove(jigsaw);
+      Jigsaw& jigsaw = m_DependancyJigsaws[m_DependancyJigsaws.GetN()-1];
+      if(exec_jigsaws.Contains(jigsaw)){
+	m_DependancyJigsaws -= jigsaw;
 	continue;
       }
-      if(jigsaw.DependsOnJigsaw(*this)) m_DependancyJigsaws.Remove(jigsaw);
-      if(!jigsaw.InitializeJigsawExecutionList(chain_jigsaws)){
-	SetMind(false);
-	return false;
-      }
-      m_DependancyJigsaws.Remove(jigsaw);
-      continue;
+      if(jigsaw.DependsOnJigsaw(*this)) 
+	m_DependancyJigsaws -= jigsaw;
+      if(!jigsaw.InitializeJigsawExecutionList(exec_jigsaws))
+	return SetMind(false);
+      m_DependancyJigsaws -= jigsaw;
     }
-    chain_jigsaws.Add(*this);
-    
+
+    exec_jigsaws += *this;
     return true;
   }
 
-  void InvisibleJigsaw::SetGroup(Group& group){
-    Jigsaw::SetGroup(group);
-    if(m_Ninv == 1)
-      AddInvisibleFrame(group.GetListFrames());
-    
-  }
-
   bool InvisibleJigsaw::IsSoundBody() const {
-    if(!Jigsaw::IsSoundBody()){
-      m_Log << LogWarning << "Problem with Jigsaw" << m_End;
-      SetBody(false);
-      return false;
-    }
+    if(RFBase::IsSoundBody())
+      return true;
 
+    if(!Jigsaw::IsSoundBody())
+      return SetBody(false);
+    
     int Ndep = m_DependancyFrames.size();
-    int Nout = m_OutputFrames.size();
+    int Nout = m_ChildFrames.size();
 
     if(Ndep != m_Nvis || Nout != m_Ninv){
       m_Log << LogWarning;
       m_Log << "Incorrect number of input/output frames for jigsaw";
       m_Log<< m_End;
-      SetBody(false);
-      return false;
+      return SetBody(false);
     }
     for(int i = 0; i < Ndep; i++)
       if(m_DependancyFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of visible frames: " << i;
 	m_Log << m_End;
-	SetBody(false);
-	return false;
+	return SetBody(false);
       }
     for(int i = 0; i < Nout; i++)
-      if(m_OutputFrames[i].GetN() == 0){
+      if(m_ChildFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of invisible frames: " << i;
 	m_Log << m_End;
-	SetBody(false);
-	return false;
+	return SetBody(false);
       }
-   
-    SetBody(true);
-    return true;
+    return SetBody(true);
   }
-
-  InvisibleJigsaw InvisibleJigsaw::m_Empty;
 
 }

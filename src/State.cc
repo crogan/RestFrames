@@ -30,7 +30,6 @@
 #include "RestFrames/State.hh"
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/RestFrame.hh"
-#include "RestFrames/Jigsaw.hh"
 
 using namespace std;
 

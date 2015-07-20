@@ -326,17 +326,17 @@ namespace RestFrames {
     return m_ParentBoost;
   }
 
-  RFList<RestFrame> RestFrame::GetListFrames(FrameType type) {
+  RFList<RestFrame> RestFrame::GetListFrames(FrameType type){
     RFList<RestFrame> frames;
     FillListFramesRecursive(frames,type);
     return frames;
   }
 
-  RFList<RestFrame> RestFrame::GetListVisibleFrames() {
+  RFList<RestFrame> RestFrame::GetListVisibleFrames(){
     return GetListFrames(kVisibleFrame);
   }
 
-  RFList<RestFrame> RestFrame::GetListInvisibleFrames() {
+  RFList<RestFrame> RestFrame::GetListInvisibleFrames(){
     return GetListFrames(kInvisibleFrame);
   }
   

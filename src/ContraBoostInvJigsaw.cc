@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   ContraBoostInvariantJigsaw.cc
+///  \file   ContraBoostInvJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,7 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/ContraBoostInvariantJigsaw.hh"
+#include "RestFrames/ContraBoostInvJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
 
 using namespace std;
@@ -35,36 +35,37 @@ using namespace std;
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  //ContraBoostInvariantJigsaw class methods
+  //ContraBoostInvJigsaw class methods
   ///////////////////////////////////////////////
-  ContraBoostInvariantJigsaw::ContraBoostInvariantJigsaw(const string& sname,const string& stitle) : 
+  ContraBoostInvJigsaw::ContraBoostInvJigsaw(const string& sname,const string& stitle) : 
     InvisibleJigsaw(sname, stitle, 2, 2)
   {
     Init();
   }
+
+  ContraBoostInvJigsaw::ContraBoostInvJigsaw() : InvisibleJigsaw() {}
  
-  ContraBoostInvariantJigsaw::~ContraBoostInvariantJigsaw(){
-  
+  ContraBoostInvJigsaw::~ContraBoostInvJigsaw() {}
+
+  void ContraBoostInvJigsaw::Init() {}
+
+  ContraBoostInvJigsaw& ContraBoostInvJigsaw::Empty(){
+    return ContraBoostInvJigsaw::m_Empty;
   }
 
-  void ContraBoostInvariantJigsaw::Init(){
-   
-  }
-
-  void ContraBoostInvariantJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
-    int Nchild = GetNChildStates();
+  void ContraBoostInvJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
+    int Nchild = GetNChildren();
     for(int i = 0 ; i < Nchild; i++){
-      m_InvisibleOutputStates.Get(i).FillInvisibleMassJigsawDependancies(jigsaws);
-      
+      GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
       int N = m_DependancyStates[i].GetN();
       for(int j = 0; j < N; j++)
-	m_DependancyStates[i].Get(j).FillGroupJigsawDependancies(jigsaws);
+	m_DependancyStates[i][j].FillGroupJigsawDependancies(jigsaws);
     }
   }
 
-  double ContraBoostInvariantJigsaw::GetMinimumMass() const {
-    double Minv1 = m_InvisibleOutputStates.Get(0).GetMinimumMass();
-    double Minv2 = m_InvisibleOutputStates.Get(1).GetMinimumMass();
+  double ContraBoostInvJigsaw::GetMinimumMass() const {
+    double Minv1 = GetChildState(0).GetMinimumMass();
+    double Minv2 = GetChildState(1).GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double Mvis1 = fabs(Pvis1.M());
@@ -82,15 +83,14 @@ namespace RestFrames {
     }
   }
 
-  bool ContraBoostInvariantJigsaw::AnalyzeEvent(){
-    if(!IsSoundMind()){
+  bool ContraBoostInvJigsaw::AnalyzeEvent(){
+    if(!IsSoundMind())
       return SetSpirit(false);
-    }
     
     CalcCoef();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
-    TLorentzVector INV = m_InputStatePtr->GetFourVector();
+    TLorentzVector INV = GetParentState().GetFourVector();
 
     // go to the rest frame of (Pvis1+Pvis2+INV system)
     TVector3 Boost = (Pvis1+Pvis2+INV).BoostVector();
@@ -121,19 +121,19 @@ namespace RestFrames {
     INV1.Boost(Boost);
     INV2.Boost(Boost);
 
-    m_OutputStates.Get(0).SetFourVector(INV1);
-    m_OutputStates.Get(1).SetFourVector(INV2);
+    GetChildState(0).SetFourVector(INV1);
+    GetChildState(1).SetFourVector(INV2);
     
     return SetSpirit(true);
   }
 
-  void ContraBoostInvariantJigsaw::CalcCoef(){
-    double Minv1 = dynamic_cast<InvisibleState*>(&m_InvisibleOutputStates.Get(0))->GetMinimumMass();
-    double Minv2 = dynamic_cast<InvisibleState*>(&m_OutputStates.Get(1))->GetMinimumMass();
+  void ContraBoostInvJigsaw::CalcCoef(){
+    double Minv1 = GetChildState(0).GetMinimumMass();
+    double Minv2 = GetChildState(1).GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
-    double m1 = fabs(Pvis1.M());
-    double m2 = fabs(Pvis2.M());
+    double m1 = max(0.,Pvis1.M());
+    double m2 = max(0.,Pvis2.M());
     double Minv = max(Minv1,Minv2);
     double Mvis = min(m1,m2);
 
@@ -143,7 +143,7 @@ namespace RestFrames {
       return;
     }
     // go to the rest frame of the vis+inv system
-    TLorentzVector INV = m_InputStatePtr->GetFourVector();
+    TLorentzVector INV = GetParentState().GetFourVector();
     TVector3 Boost = (Pvis1+Pvis2+INV).BoostVector();
     Pvis1.Boost(-Boost);
     Pvis2.Boost(-Boost);
@@ -159,5 +159,7 @@ namespace RestFrames {
     m_C1 /= N;
     m_C2 /= N;
   }
+
+  ContraBoostInvJigsaw ContraBoostInvJigsaw::m_Empty;
 
 }

@@ -31,13 +31,13 @@
 #define CombinatoricState_HH
 
 #include "RestFrames/State.hh"
-#include "RestFrames/CombinatoricJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class VisibleState;
+  class Jigsaw;
 
   ///////////////////////////////////////////////
   // CombinatoricState class
@@ -56,8 +56,6 @@ namespace RestFrames {
 
     virtual void SetParentJigsaw(Jigsaw& jigsaw);
     virtual void SetChildJigsaw(Jigsaw& jigsaw);
-    virtual CombinatoricJigsaw const& GetParentJigsaw() const;
-    virtual CombinatoricJigsaw const& GetChildJigsaw() const;
 
     virtual void Boost(const TVector3& B);
     virtual TLorentzVector GetFourVector() const; 

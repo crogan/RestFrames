@@ -55,26 +55,28 @@ namespace RestFrames {
     virtual bool ClearEvent();
     virtual bool AnalyzeEvent();
 
-    void AddVisibleState(VisibleState& state) const;
-    void AddVisibleStates(const RestFrames::RFList<VisibleState>& states) const;
-    void RemoveVisibleState(const VisibleState& state) const;
-    void RemoveVisibleStates(const RestFrames::RFList<VisibleState>& states) const;
-    RestFrames::RFList<VisibleState> const& GetVisibleStates() const;
+    void AddTreeState(VisibleState& state) const;
+    void AddTreeStates(const RestFrames::RFList<VisibleState>& states) const;
+    void RemoveTreeState(const VisibleState& state) const;
+    void RemoveTreeStates(const RestFrames::RFList<VisibleState>& states) const;
+    RestFrames::RFList<VisibleState> const& GetTreeStates() const;
 
   protected:
-    RestFrames::RFList<Group>  m_LabGroups;
-    RestFrames::RFList<Jigsaw> m_LabJigsaws;
-    mutable RestFrames::RFList<VisibleState>  m_LabStates;
+    RestFrames::RFList<Group>  m_TreeGroups;
+    RestFrames::RFList<Jigsaw> m_TreeJigsaws;
+    mutable RestFrames::RFList<VisibleState>  m_TreeStates;
   
-    bool InitializeLabStates();
-    bool InitializeLabGroups();
-    bool InitializeLabJigsaws();
+    bool InitializeTreeStates();
+    bool InitializeTreeGroups();
+    bool InitializeTreeJigsaws();
 
     bool ExecuteJigsaws();
 
   private:
     void Init();
-    void ClearStates();
+    VisibleState& GetNewVisibleState();
+    RestFrames::RFList<VisibleState> m_InitStates;
+
   };
 
 }

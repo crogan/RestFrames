@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   InvisibleMassJigsaw.hh
+///  \file   MinMassesCombJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,28 +27,34 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef InvisibleMassJigsaw_HH
-#define InvisibleMassJigsaw_HH
+#ifndef MinMassesCombJigsaw_HH
+#define MinMassesCombJigsaw_HH
 
-#include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/CombinatoricJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // InvisibleMassJigsaw class
+  // MinMassesCombJigsaw class
   ///////////////////////////////////////////////
-  class InvisibleMassJigsaw : public InvisibleJigsaw {
+  class MinMassesCombJigsaw : public CombinatoricJigsaw {
   public:
-    InvisibleMassJigsaw(const string& sname, const string& stitle);
-    virtual ~InvisibleMassJigsaw();
+    MinMassesCombJigsaw(const string& sname, const string& stitle);
+    MinMassesCombJigsaw();
+    virtual ~MinMassesCombJigsaw();
+
+    virtual void Clear();
+
+    static MinMassesCombJigsaw& Empty();
 
     virtual bool AnalyzeEvent();
-    
-  protected:
+
+  private:
+    static MinMassesCombJigsaw m_Empty;
     void Init();
-  
+
   };
 
 }

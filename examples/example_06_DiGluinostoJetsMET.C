@@ -147,40 +147,40 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // define jigsaws for the reconstruction trees
   
   // signal-like jigsaws
-  InvisibleMassJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
+  SetMassInvJigsaw MinMassJigsaw_R("MINMASS_R", "Invisible system mass Jigsaw");
   INV_R.AddJigsaw(MinMassJigsaw_R);
-  InvisibleRapidityJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw_R("RAPIDITY_R", "Invisible system rapidity Jigsaw");
   INV_R.AddJigsaw(RapidityJigsaw_R);
-  RapidityJigsaw_R.AddVisibleFrame((LAB_R.GetListVisibleFrames()));
-  ContraBoostInvariantJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
+  RapidityJigsaw_R.AddVisibleFrames((LAB_R.GetListVisibleFrames()));
+  ContraBoostInvJigsaw ContraBoostJigsaw_R("CONTRA_R","Contraboost invariant Jigsaw");
   INV_R.AddJigsaw(ContraBoostJigsaw_R);
-  ContraBoostJigsaw_R.AddVisibleFrame((Ga_R.GetListVisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddVisibleFrame((Gb_R.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Ga_R.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddInvisibleFrame((Gb_R.GetListInvisibleFrames()), 1);
-  MinimizeMassesCombinatoricJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m _{V_{a,b}} Jigsaw");
+  ContraBoostJigsaw_R.AddVisibleFrames((Ga_R.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddVisibleFrames((Gb_R.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Ga_R.GetListInvisibleFrames()), 0);
+  ContraBoostJigsaw_R.AddInvisibleFrames((Gb_R.GetListInvisibleFrames()), 1);
+  MinMassesCombJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m _{V_{a,b}} Jigsaw");
   VIS_R.AddJigsaw(HemiJigsaw_R);
   HemiJigsaw_R.AddFrame(V1a_R,0);
   HemiJigsaw_R.AddFrame(V1b_R,1);
   HemiJigsaw_R.AddFrame(V2a_R,0);
   HemiJigsaw_R.AddFrame(V2b_R,1);
-  MinimizeMassesCombinatoricJigsaw CaHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{a}} Jigsaw");
+  MinMassesCombJigsaw CaHemiJigsaw_R("CaHEM_JIGSAW_R","Minimize m _{C_{a}} Jigsaw");
   VIS_R.AddJigsaw(CaHemiJigsaw_R);
   CaHemiJigsaw_R.AddFrame(V1a_R,0);
   CaHemiJigsaw_R.AddFrame(V2a_R,1);
   CaHemiJigsaw_R.AddFrame(Xa_R,1);
-  MinimizeMassesCombinatoricJigsaw CbHemiJigsaw_R("CbHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
+  MinMassesCombJigsaw CbHemiJigsaw_R("CbHEM_JIGSAW_R","Minimize m _{C_{b}} Jigsaw");
   VIS_R.AddJigsaw(CbHemiJigsaw_R);
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);
   CbHemiJigsaw_R.AddFrame(Xb_R,1);
 
   // background tree jigsaws
-  InvisibleMassJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");
+  SetMassInvJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");
   INV_B.AddJigsaw(MinMassJigsaw_B);
-  InvisibleRapidityJigsaw RapidityJigsaw_B("RAPIDITY_B","Invisible system rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw_B("RAPIDITY_B","Invisible system rapidity Jigsaw");
   INV_B.AddJigsaw(RapidityJigsaw_B);
-  RapidityJigsaw_B.AddVisibleFrame((LAB_B.GetListVisibleFrames()));
+  RapidityJigsaw_B.AddVisibleFrames((LAB_B.GetListVisibleFrames()));
 
   // check reconstruction trees
   if(!LAB_R.InitializeAnalysis()) cout << "Problem with signal-tree jigsaws" << endl;

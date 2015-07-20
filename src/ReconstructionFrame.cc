@@ -134,7 +134,7 @@ namespace RestFrames {
       return false;
       
     const RFList<VisibleState>& states = 
-      static_cast<const LabRecoFrame&>(GetLabFrame()).GetVisibleStates();
+      static_cast<const LabRecoFrame&>(GetLabFrame()).GetTreeStates();
    
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){

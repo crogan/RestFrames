@@ -31,17 +31,12 @@
 #define InvisibleJigsaw_HH
 
 #include "RestFrames/Jigsaw.hh"
-//#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/InvisibleGroup.hh"
+#include "RestFrames/InvisibleState.hh"
 
 using namespace std;
 
 namespace RestFrames {
-
-  class InvisibleState;
-
-  ///////////////////////////////////////////////
-  // InvisibleJigsaw class
-  ///////////////////////////////////////////////
 
   class InvisibleJigsaw : public Jigsaw {
   public:
@@ -53,27 +48,29 @@ namespace RestFrames {
 
     static InvisibleJigsaw& Empty();
 
-    void AddVisibleFrame(RestFrame& framePtr, int i = 0);
-    void AddVisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
-    void AddInvisibleFrame(RestFrame& framePtr, int i = 0);
-    void AddInvisibleFrame(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+    virtual void SetGroup(Group& group = Group::Empty());
+    virtual InvisibleGroup& GetGroup() const;
+
+    virtual void SetParentState(State& state = State::Empty());
+    virtual InvisibleState& GetParentState() const;
+    virtual InvisibleState& GetChildState(int i) const;
+
+    virtual void AddVisibleFrame(RestFrame& framePtr, int i = 0);
+    virtual void AddVisibleFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+    virtual void AddInvisibleFrame(RestFrame& framePtr, int i = 0);
+    virtual void AddInvisibleFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
     virtual double GetMinimumMass() const;
-    virtual bool InitializeDependancyJigsaws();
     virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& chain_jigsaws);
-
-    virtual bool IsSoundBody() const ;
-    virtual void SetGroup(Group& groupPtr);
+    virtual bool InitializeDependancyJigsaws();
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
 
   protected:
-    virtual State& NewOutputState();
-    virtual void ClearOutputStates();
-    RestFrames::RFList<InvisibleState> m_InvisibleOutputStates;
+    virtual bool IsSoundBody() const;
+    virtual InvisibleState& GetNewChildState();
 
   private:
-    static InvisibleJigsaw m_Empty;
     void Init(int Ninv, int Nvis);
     int m_Nvis;
     int m_Ninv;  

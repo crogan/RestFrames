@@ -6,6 +6,6 @@ RestFramesinclude_HEADERS = RestFrames_LinkDef.h RestFrames.hh RFBase.hh RFKey.h
 	InvisibleRecoFrame.hh LabGenFrame.hh DecayGenFrame.hh VisibleGenFrame.hh InvisibleGenFrame.hh\
 	ResonanceGenFrame.hh State.hh VisibleState.hh InvisibleState.hh CombinatoricState.hh Group.hh\
 	InvisibleGroup.hh CombinatoricGroup.hh Jigsaw.hh InvisibleJigsaw.hh\
-	CombinatoricJigsaw.hh InvisibleMassJigsaw.hh InvisibleRapidityJigsaw.hh\
-	MinimizeMassesCombinatoricJigsaw.hh\
-	ContraBoostInvariantJigsaw.hh SelfAssemblingRecoFrame.hh 
+	CombinatoricJigsaw.hh SetMassInvJigsaw.hh SetRapidityInvJigsaw.hh\
+	MinMassesCombJigsaw.hh\
+	ContraBoostInvJigsaw.hh SelfAssemblingRecoFrame.hh 

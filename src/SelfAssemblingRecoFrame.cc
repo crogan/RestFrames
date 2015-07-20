@@ -165,7 +165,7 @@ namespace RestFrames {
     }
     SetMind(true);
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
-    lab_frame.AddVisibleStates(states);
+    lab_frame.AddTreeStates(states);
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after assembly";
@@ -173,7 +173,7 @@ namespace RestFrames {
       SetMind(false);
       return;
     }
-    lab_frame.RemoveVisibleStates(states);
+    lab_frame.RemoveTreeStates(states);
 
     m_IsAssembled = true;
   }

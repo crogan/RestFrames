@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   InvisibleRapidityJigsaw.cc
+///  \file   SetRapidityInvJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,53 +27,47 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/InvisibleRapidityJigsaw.hh"
-#include "RestFrames/State.hh"
+#include "RestFrames/SetRapidityInvJigsaw.hh"
+#include "RestFrames/RestFrame.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  //InvisibleRapidityJigsaw class methods
-  ///////////////////////////////////////////////
-  InvisibleRapidityJigsaw::InvisibleRapidityJigsaw(const string& sname, const string& stitle) : 
+  SetRapidityInvJigsaw::SetRapidityInvJigsaw(const string& sname, const string& stitle) : 
     InvisibleJigsaw(sname, stitle, 1, 1)
   {
     Init();
   }
+
+  SetRapidityInvJigsaw::SetRapidityInvJigsaw() : InvisibleJigsaw() {}
  
-  InvisibleRapidityJigsaw::~InvisibleRapidityJigsaw(){
-  
+  SetRapidityInvJigsaw::~SetRapidityInvJigsaw() {}
+ 
+  void SetRapidityInvJigsaw::Init(){
+    m_Axis = RestFrame::GetAxis();
   }
 
-  void InvisibleRapidityJigsaw::Init(){}
+  void SetRapidityInvJigsaw::SetAxis(const TVector3& axis){
+    m_Axis = axis;
+  }
 
-  bool InvisibleRapidityJigsaw::AnalyzeEvent(){
-    m_Spirit = false;
-    if(!m_Mind || !m_GroupPtr) return m_Spirit;
+  bool SetRapidityInvJigsaw::AnalyzeEvent(){
+    if(!IsSoundMind()) 
+      return SetSpirit(false);
     
-    TLorentzVector inv_P = m_InputStatePtr->GetFourVector();
+    TLorentzVector inv_P = GetParentState().GetFourVector();
     TLorentzVector vis_P = m_DependancyStates[0].GetFourVector();
 
-    // double Minv = inv_P.M();
-    // TVector3 Pinv = inv_P.Vect();
-    // Pinv.SetZ(0.0);
-    // double Pz = vis_P.Pz()*sqrt(Minv*Minv+Pinv.Mag2())/sqrt(vis_P.E()*vis_P.E()-vis_P.Pz()*vis_P.Pz());
-    // Pinv.SetXYZ(Pinv.X(),Pinv.Y(),Pz);
-    // inv_P.SetVectM(Pinv,Minv);
-    // //inv_P.SetVectM(inv_P.Vect(),M);
+    TVector3 boostZ = vis_P.BoostVector();
+    boostZ = boostZ.Dot(m_Axis.Unit())*m_Axis.Unit();
 
     inv_P.SetZ(0.0);
-    TVector3 boostZ = vis_P.BoostVector();
-    boostZ.SetX(0.);
-    boostZ.SetY(0.);
     inv_P.Boost(boostZ);
 
-    m_OutputStates.Get(0).SetFourVector(inv_P);
+    GetChildState(0).SetFourVector(inv_P);
     
-    m_Spirit = true;
-    return m_Spirit;
+    return SetSpirit(true);
   }
 
 }

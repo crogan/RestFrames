@@ -31,13 +31,13 @@
 #define State_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/Jigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   class RestFrame;
-  class Jigsaw;
 
   enum StateType { kVanillaState,   kVisibleState,
 		   kInvisibleState, kCombinatoricState };
@@ -73,8 +73,8 @@ namespace RestFrames {
     virtual bool IsFrame(const RestFrame& frame) const;
     virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
 
-    virtual void SetParentJigsaw(Jigsaw& jigsaw) = 0;
-    virtual void SetChildJigsaw(Jigsaw& jigsaw) = 0;
+    virtual void SetParentJigsaw(Jigsaw& jigsaw = Jigsaw::Empty()) = 0;
+    virtual void SetChildJigsaw(Jigsaw& jigsaw = Jigsaw::Empty()) = 0;
     virtual Jigsaw const& GetParentJigsaw() const;
     virtual Jigsaw const& GetChildJigsaw() const;
 

@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   MinimizeMassesCombinatoricJigsaw.cc
+///  \file   MinMassesCombJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,40 +27,38 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
-#include "RestFrames/VisibleState.hh"
-#include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/MinMassesCombJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // MinimizeMassesCombinatoricJigsaw class methods
+  // MinMassesCombJigsaw class methods
   ///////////////////////////////////////////////
-  MinimizeMassesCombinatoricJigsaw::MinimizeMassesCombinatoricJigsaw(const string& sname, const string& stitle) : 
+  MinMassesCombJigsaw::MinMassesCombJigsaw(const string& sname, const string& stitle) : 
     CombinatoricJigsaw(sname, stitle)
   {
     Init();
   }
+
+  MinMassesCombJigsaw::MinMassesCombJigsaw() : CombinatoricJigsaw() {}
   
-  MinimizeMassesCombinatoricJigsaw::~MinimizeMassesCombinatoricJigsaw(){
-  
+  MinMassesCombJigsaw::~MinMassesCombJigsaw() {}
+
+  void MinMassesCombJigsaw::Init() {}
+
+  void MinMassesCombJigsaw::Clear(){
+    CombinatoricJigsaw::Clear();
   }
 
-  void MinimizeMassesCombinatoricJigsaw::Init(){
-  
+  MinMassesCombJigsaw& MinMassesCombJigsaw::Empty(){
+    return MinMassesCombJigsaw::m_Empty;
   }
 
-  bool MinimizeMassesCombinatoricJigsaw::AnalyzeEvent(){
-   
-    if(!IsSoundMind() || !m_GroupPtr){
-      m_Log << LogWarning;
-      m_Log << "Unable to analyze event. ";
-      m_Log << "Requires successfull call to \"InitializeAnalysis\" ";
-      m_Log << "from LabFrame" << m_End;
+  bool MinMassesCombJigsaw::AnalyzeEvent(){
+    if(!IsSoundMind() || !GetGroup())
       return SetSpirit(false);
-    }
 
     if(!InitializeEvent()){
       m_Log << LogWarning;
@@ -69,30 +67,23 @@ namespace RestFrames {
     }
 
     // have only implemented this case so far
-    if(int(m_Outputs.size()) != 2){
+    if(GetNChildren() != 2){
       m_Log << LogWarning;
-      m_Log << "output size != 2 no implemented" << m_End;
+      m_Log << "output size != 2 not implemented" << m_End;
       return SetSpirit(false);
     }
 
-    //
-    // hard coding this for now...
-    //
-    if(int(m_Inputs.size()) < m_NForOutput[0]+m_NForOutput[1]){
-      return SetSpirit(false);
-    }
-
-    int Ninput = m_Inputs.size();
+    int Ninput = m_InputStates.GetN();
     int Ndeps = m_DependancyStates.size();
     
     vector<TLorentzVector> inputs;
     for(int i = 0; i < Ninput; i++)
-      inputs.push_back(m_Inputs[i]->GetFourVector());	
+      inputs.push_back(m_InputStates[i].GetFourVector());	
 
-    bool DO_HEM = (m_NForOutput[0] == 1) && 
-      (m_NForOutput[1] == 1) && 
-      !m_NExclusive[0] && 
-      !m_NExclusive[1] &&
+    bool DO_HEM = (m_NForChild[&GetChildState(0)] == 1) && 
+      (m_NForChild[&GetChildState(1)] == 1) && 
+      !m_NExclusive[&GetChildState(0)] && 
+      !m_NExclusive[&GetChildState(1)] &&
       (int(m_DependancyStates.size()) <= 0);
 
     //////////////////////////////////////
@@ -156,29 +147,25 @@ namespace RestFrames {
       }
      
       // initialize output states
-      for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
-      for(int i = 0; i < 2; i++) m_Outputs[jp_max[i]]->AddElement(static_cast<VisibleState&>(*m_Inputs[ip_max[i]]));
+      for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
+      for(int i = 0; i < 2; i++) GetChildState(jp_max[i]).AddElement(m_InputStates[ip_max[i]]);
       TVector3 nRef = inputs[ip_max[0]].Vect().Cross(inputs[ip_max[1]].Vect());
       for(int i = 0; i < Ninput; i++){
 	if((i == ip_max[0]) || (i == ip_max[1])) continue;
 	int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
-	m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
+	GetChildState(ihem).AddElement(m_InputStates[i]);
       }
-      if(m_Outputs[1]->GetFourVector().M() > m_Outputs[0]->GetFourVector().M()){
+      if(GetChildState(1).GetFourVector().M() > GetChildState(1).GetFourVector().M()){
 	vector<RFList<VisibleState> > flip;
-	for(int i = 0; i < 2; i++) flip.push_back(m_Outputs[i]->GetElements());
-	for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
-	for(int i = 0; i < 2; i++) m_Outputs[i]->AddElements(flip[!i]);
+	for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
+	for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
+	for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
       }
     } 
     //////////////////////////////////////
     // NlogN 2^N brute force 
     //////////////////////////////////////
     if(!DO_HEM){
-      if(m_NExclusive[0] && m_NExclusive[1])
-	if(Ninput != m_NForOutput[0]+m_NForOutput[1]) return false;
-      if(Ninput < m_NForOutput[0]+m_NForOutput[1]) return false;
-      
       int N_comb = 1;
       for(int i = 0; i < Ninput; i++) N_comb *= 2;
       
@@ -191,7 +178,7 @@ namespace RestFrames {
 	TLorentzVector hem[2];
 	for(int i = 0; i < 2; i++){
 	  Nhem[i] = 0;
-	  m_Outputs[i]->ClearElements();
+	  GetChildState(i).ClearElements();
 	  hem[i].SetPxPyPzE(0.,0.,0.,0.);
 	} 
 	// set output states for combinatoric;
@@ -200,20 +187,22 @@ namespace RestFrames {
 	  key /= 2;
 	  Nhem[ihem]++;
 	  hem[ihem] += inputs[i];
-	  m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
+	  GetChildState(ihem).AddElement(m_InputStates[i]);
 	}
 	// check validity of combinatoric
 	bool valid = true;
 	for(int i = 0; i < 2; i++){
-	  if(m_NExclusive[i]){
-	    if(Nhem[i] != m_NForOutput[i]) valid = false;
+	  if(m_NExclusive[&GetChildState(i)]){
+	    if(Nhem[i] != m_NForChild[&GetChildState(i)]) valid = false;
 	  } else {
-	    if(Nhem[i] < m_NForOutput[i]) valid = false;
+	    if(Nhem[i] < m_NForChild[&GetChildState(i)]) valid = false;
 	  }
 	}
 	if(!valid) continue;
+
 	// Execute depedancy Jigsaws
 	ExecuteDependancyJigsaws();
+
 	// Evaluate metric for this cominatoric
 	for(int i = 0; i < Ndeps;  i++){
 	  hem[i] += m_DependancyStates[i].GetFourVector();
@@ -234,24 +223,21 @@ namespace RestFrames {
       if(c_max < 0) return false;
      
       // Set outputs to best combinatoric
-      for(int i = 0; i < 2; i++) m_Outputs[i]->ClearElements();
+      for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
       int key = c_max;
       for(int i = 0; i < Ninput; i++){
 	int ihem = key%2;
 	key /= 2;
-	m_Outputs[ihem]->AddElement(static_cast<VisibleState&>(*m_Inputs[i]));
+	GetChildState(ihem).AddElement(m_InputStates[i]);
       }
     }
     // Execute depedancy Jigsaws
     ExecuteDependancyJigsaws();
 
-    SetSpirit(true);
-    return true;
+    return SetSpirit(true);
   }
+
+  MinMassesCombJigsaw MinMassesCombJigsaw::m_Empty;
 
 }
 
- // vector<State*> m_Inputs;
- //    vector<CombinatoricState*> m_Outputs;
- //    vector<int> m_NForOutput;
- //    vector<bool> m_NExclusive;

@@ -5,10 +5,8 @@
 #include "RestFrames/RFLog.hh"
 #include "RestFrames/RFBase.hh"
 #include "RestFrames/RFList.hh"
-#include "RestFrames/CombinatoricGroup.hh"
-#include "RestFrames/CombinatoricJigsaw.hh"
-#include "RestFrames/CombinatoricState.hh"
-#include "RestFrames/ContraBoostInvariantJigsaw.hh"
+
+#include "RestFrames/FramePlot.hh"
 
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/LabFrame.hh"
@@ -30,16 +28,23 @@
 #include "RestFrames/InvisibleGenFrame.hh"
 #include "RestFrames/ResonanceGenFrame.hh"
 
-#include "RestFrames/FramePlot.hh"
-
 #include "RestFrames/Group.hh"
 #include "RestFrames/InvisibleGroup.hh"
-#include "RestFrames/InvisibleJigsaw.hh"
-#include "RestFrames/InvisibleMassJigsaw.hh"
-#include "RestFrames/InvisibleRapidityJigsaw.hh"
-#include "RestFrames/InvisibleState.hh"
-#include "RestFrames/Jigsaw.hh"
-#include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
+#include "RestFrames/CombinatoricGroup.hh"
+
 #include "RestFrames/State.hh"
+#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/CombinatoricState.hh"
+
+#include "RestFrames/Jigsaw.hh"
+
+#include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/SetMassInvJigsaw.hh"
+#include "RestFrames/SetRapidityInvJigsaw.hh"
+#include "RestFrames/ContraBoostInvJigsaw.hh"
+
+#include "RestFrames/CombinatoricJigsaw.hh"
+#include "RestFrames/MinMassesCombJigsaw.hh"
+
 
 #endif

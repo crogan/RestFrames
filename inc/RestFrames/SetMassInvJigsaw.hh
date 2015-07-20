@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   InvisibleMassJigsaw.hh
+///  \file   SetMassInvJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,44 +27,33 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/InvisibleMassJigsaw.hh"
-#include "RestFrames/InvisibleState.hh"
+#ifndef SetMassInvJigsaw_HH
+#define SetMassInvJigsaw_HH
+
+#include "RestFrames/InvisibleJigsaw.hh"
 
 using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  //InvisibleMassJigsaw class methods
-  ///////////////////////////////////////////////
-  InvisibleMassJigsaw::InvisibleMassJigsaw(const string& sname, const string& stitle) : 
-    InvisibleJigsaw(sname, stitle, 1, 0)
-  {
-    Init();
-  }
- 
-  InvisibleMassJigsaw::~InvisibleMassJigsaw(){}
+  class SetMassInvJigsaw : public InvisibleJigsaw {
+  public:
+    SetMassInvJigsaw(const string& sname, const string& stitle);
+    SetMassInvJigsaw();
+    virtual ~SetMassInvJigsaw();
 
-  void InvisibleMassJigsaw::Init(){}
+    virtual void Clear();
+    
+    static SetMassInvJigsaw& Empty();
 
-  bool InvisibleMassJigsaw::AnalyzeEvent(){
-    if(!IsSoundMind() || !m_GroupPtr){
-      m_Log << LogWarning;
-      m_Log << "Unable to analyze event. ";
-      m_Log << "Requires successfull call to \"InitializeAnalysis()\" ";
-      m_Log << "from LabFrame" << m_End;
-      SetSpirit(false);
-      return false;
-    }
-
-    TLorentzVector inv_P = m_InputStatePtr->GetFourVector();
-    double M = dynamic_cast<InvisibleState*>(&m_OutputStates.Get(0))->GetMinimumMass();
-
-    inv_P.SetVectM(inv_P.Vect(),M);
-    m_OutputStates.Get(0).SetFourVector(inv_P);
-
-    SetSpirit(true);
-    return true;
-  }
+    virtual bool AnalyzeEvent();
+    
+  private:
+    static SetMassInvJigsaw m_Empty;
+    void Init();
+  
+  };
 
 }
+
+#endif

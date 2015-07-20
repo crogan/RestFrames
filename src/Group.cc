@@ -150,7 +150,7 @@ namespace RestFrames {
  
     if(!ResolveUnknowns()){
       m_Log << LogWarning;
-      m_Log << "Unable to resolve uknowns associated with ";
+      m_Log << "Unable to resolve unknowns associated with ";
       m_Log << "Frames in this Group with available Jigsaws";
       m_Log << m_End;
       return SetBody(false);
@@ -172,8 +172,8 @@ namespace RestFrames {
       if(!ResolveState(state)){
 	if(state.GetNFrames() != 1){
 	  m_Log << LogWarning;
-	  m_Log << "Cannot find Jigsaw to Resolve State for frames:" << endl;
-	  m_Log << Log(state.GetListFrames());
+	  m_Log << "Cannot find Jigsaw to Resolve State for frames:";
+	  m_Log << endl << "   " << Log(state.GetListFrames());
 	  m_Log << m_End;
 	  return false; 
 	}
@@ -194,8 +194,8 @@ namespace RestFrames {
 	  jigsawSolutionPtr = jigsawPtr;
 	  continue;
 	}
-	if(jigsawPtr->GetNChildStates() <= jigsawSolutionPtr->GetNChildStates())
-	  if((jigsawPtr->GetNChildStates() < jigsawSolutionPtr->GetNChildStates()) ||
+	if(jigsawPtr->GetNChildren() <= jigsawSolutionPtr->GetNChildren())
+	  if((jigsawPtr->GetNChildren() < jigsawSolutionPtr->GetNChildren()) ||
 	     (jigsawPtr->GetNDependancyStates() < jigsawSolutionPtr->GetNDependancyStates())) 
 	    jigsawSolutionPtr = jigsawPtr;
       }
@@ -204,7 +204,7 @@ namespace RestFrames {
       return false;
     
     m_Log << LogVerbose;
-    m_Log << "Found Jigsaw to split State:" << endl; 
+    m_Log << "Found Jigsaw to resolve State:" << endl; 
     m_Log << " Frames:" << endl << "   ";
     m_Log << Log(state.GetListFrames()) << endl;
     m_Log << " Jigsaw:" << Log(jigsawSolutionPtr);
@@ -215,18 +215,16 @@ namespace RestFrames {
   }
 
   void Group::InitializeJigsaw(Jigsaw& jigsaw){
-    if(!jigsaw.IsSoundBody()){
-      m_Log << LogWarning;
-      m_Log << "Unable to initialize Jigsaw ";
-      m_Log << jigsaw.GetName() << m_End;
-      return;
-    }
-
     State& state = m_StatesToResolve[0];
-    RFList<State> states = jigsaw.InitializeAnalysis(state);
-    m_States.Add(states);
+    jigsaw.SetParentState(state);
+    if(!jigsaw.InitializeTree()){
+      m_Log << LogWarning;
+      m_Log << "Unable to initialize Jigsaw:";
+      m_Log << Log(jigsaw) << m_End;
+    }
+    m_States.Add(jigsaw.GetChildStates());
     m_StatesToResolve.Remove(state);
-    m_StatesToResolve.Add(states);
+    m_StatesToResolve.Add(jigsaw.GetChildStates());
     m_Jigsaws.Add(jigsaw);
     return;
   }
@@ -281,6 +279,13 @@ namespace RestFrames {
       return RFList<State>();
     }
     return states;
+  }
+
+  RestFrame const& Group::GetLabFrame() const {
+    if(m_Frames.GetN() < 1)
+      return RestFrame::Empty();
+    else
+      return m_Frames[0].GetLabFrame();
   }
 
 }

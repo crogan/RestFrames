@@ -15,6 +15,7 @@ using namespace RestFrames;
 #pragma link C++ class RFList<Jigsaw>;
 #pragma link C++ class RFList<Group>;
 #pragma link C++ class RFList<State>;
+#pragma link C++ class RFList<VisibleState>;
 #pragma link C++ class RFList<InvisibleState>;
 #pragma link C++ class RFList<CombinatoricState>;
 
@@ -43,14 +44,15 @@ using namespace RestFrames;
 #pragma link C++ class Jigsaw;
 
 #pragma link C++ class InvisibleJigsaw;
-#pragma link C++ class InvisibleMassJigsaw;
-#pragma link C++ class InvisibleRapidityJigsaw;
-#pragma link C++ class ContraBoostInvariantJigsaw;
+#pragma link C++ class SetMassInvJigsaw;
+#pragma link C++ class SetRapidityInvJigsaw;
+#pragma link C++ class ContraBoostInvJigsaw;
 
 #pragma link C++ class CombinatoricJigsaw;
-#pragma link C++ class MinimizeMassesCombinatoricJigsaw;
+#pragma link C++ class MinMassesCombJigsaw;
 
 #pragma link C++ class State;
+#pragma link C++ class VisibleState;
 #pragma link C++ class InvisibleState;
 #pragma link C++ class CombinatoricState;
 
@@ -77,6 +79,7 @@ using namespace RestFrames;
 #pragma link C++ class RFList<Jigsaw>+;
 #pragma link C++ class RFList<Group>+;
 #pragma link C++ class RFList<State>+;
+#pragma link C++ class RFList<VisibleState>+;
 #pragma link C++ class RFList<InvisibleState>+;
 #pragma link C++ class RFList<CombinatoricState>+;
 
@@ -105,14 +108,15 @@ using namespace RestFrames;
 #pragma link C++ class Jigsaw+;
 
 #pragma link C++ class InvisibleJigsaw+;
-#pragma link C++ class InvisibleMassJigsaw+;
-#pragma link C++ class InvisibleRapidityJigsaw+;
-#pragma link C++ class ContraBoostInvariantJigsaw+;
+#pragma link C++ class SetMassInvJigsaw+;
+#pragma link C++ class SetRapidityInvJigsaw+;
+#pragma link C++ class ContraBoostInvJigsaw+;
 
 #pragma link C++ class CombinatoricJigsaw+;
-#pragma link C++ class MinimizeMassesCombinatoricJigsaw+;
+#pragma link C++ class MinMassesCombJigsaw+;
 
 #pragma link C++ class State+;
+#pragma link C++ class VisibleState+;
 #pragma link C++ class InvisibleState+;
 #pragma link C++ class CombinatoricState+;
 

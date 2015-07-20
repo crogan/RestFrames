@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/Jigsaw.hh"
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/RestFrame.hh"
 
@@ -88,20 +89,6 @@ namespace RestFrames {
     if(!jigsaw) return;
     if(jigsaw.IsInvisibleJigsaw())
       m_ChildJigsawPtr = &jigsaw;
-  }
-
-  CombinatoricJigsaw const& CombinatoricState::GetParentJigsaw() const {
-    if(m_ParentJigsawPtr)
-      return static_cast<CombinatoricJigsaw&>(*m_ParentJigsawPtr);
-    else
-      return CombinatoricJigsaw::Empty();
-  }
-
-  CombinatoricJigsaw const& CombinatoricState::GetChildJigsaw() const {
-    if(m_ChildJigsawPtr)
-      return static_cast<CombinatoricJigsaw&>(*m_ChildJigsawPtr);
-    else
-      return CombinatoricJigsaw::Empty();
   }
 
   void CombinatoricState::ClearElements(){

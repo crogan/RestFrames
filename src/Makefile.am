@@ -13,9 +13,9 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h RFBase.cc RFKe
 	InvisibleRecoFrame.cc LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
 	ResonanceGenFrame.cc State.cc VisibleState.cc InvisibleState.cc CombinatoricState.cc Group.cc\
 	InvisibleGroup.cc CombinatoricGroup.cc Jigsaw.cc InvisibleJigsaw.cc\
-	CombinatoricJigsaw.cc InvisibleMassJigsaw.cc InvisibleRapidityJigsaw.cc\
-	MinimizeMassesCombinatoricJigsaw.cc\
-	ContraBoostInvariantJigsaw.cc SelfAssemblingRecoFrame.cc 
+	CombinatoricJigsaw.cc SetMassInvJigsaw.cc SetRapidityInvJigsaw.cc\
+	MinMassesCombJigsaw.cc\
+	ContraBoostInvJigsaw.cc SelfAssemblingRecoFrame.cc 
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap

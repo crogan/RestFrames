@@ -38,9 +38,6 @@ using namespace std;
 
 namespace RestFrames { 
 
-  ///////////////////////////////////////////////
-  // CombinatoricGroup class
-  ///////////////////////////////////////////////
   class CombinatoricGroup : public Group {
   public:
     CombinatoricGroup(const string& sname, const string& stitle);

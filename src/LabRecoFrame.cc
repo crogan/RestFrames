@@ -48,37 +48,49 @@ namespace RestFrames {
 
   LabRecoFrame::LabRecoFrame() : LabFrame<ReconstructionFrame>() {}
 
-  LabRecoFrame::~LabRecoFrame(){
-    ClearStates();
-  }
+  LabRecoFrame::~LabRecoFrame() {}
 
   void LabRecoFrame::Init() {}
 
   void LabRecoFrame::Clear(){
-    ClearStates();
+    m_TreeGroups.Clear();
+    m_TreeJigsaws.Clear();
+    m_TreeStates.Clear();
     ReconstructionFrame::Clear();
   }
+  
+  void LabRecoFrame::AddTreeState(VisibleState& state) const {
+    m_TreeStates += state;
+  }
 
-  void LabRecoFrame::ClearStates(){
-    int Ns = m_LabStates.GetN();
-    for(int i = 0; i < Ns; i++){
-      delete &m_LabStates.Get(i);
-    }
-    m_LabStates.Clear();
+  void LabRecoFrame::AddTreeStates(const RFList<VisibleState>& states) const {
+    m_TreeStates += states;
+  }
+
+  void LabRecoFrame::RemoveTreeState(const VisibleState& state) const {
+    m_TreeStates -= state;
   }
   
-  bool LabRecoFrame::InitializeLabGroups(){
+  void LabRecoFrame::RemoveTreeStates(const RFList<VisibleState>& states) const {
+    m_TreeStates -= states;
+  }
+
+  RFList<VisibleState> const& LabRecoFrame::GetTreeStates() const {
+    return m_TreeStates;
+  }
+
+  bool LabRecoFrame::InitializeTreeGroups(){
      m_Log << LogVerbose << "Initializing Groups for analysis..." << m_End;
     
-    m_LabGroups.Clear();
-    m_LabGroups.Add(GetListGroups());
+    m_TreeGroups.Clear();
+    m_TreeGroups += GetListGroups();
 
-    int Ngroup = m_LabGroups.GetN();
+    int Ngroup = m_TreeGroups.GetN();
     for(int i = 0; i < Ngroup; i++){
-      if(!m_LabGroups[i].InitializeAnalysis()){
+      if(!m_TreeGroups[i].InitializeAnalysis()){
 	m_Log << LogWarning;
 	m_Log << "Unable to initialize analysis for Group ";
-	m_Log << Log(m_LabGroups.Get(i)) << m_End;
+	m_Log << Log(m_TreeGroups[i]) << m_End;
 	return false;
       }
     }
@@ -86,57 +98,35 @@ namespace RestFrames {
     return true;
   }
 
-  void LabRecoFrame::AddVisibleState(VisibleState& state) const {
-    m_LabStates += state;
-  }
-
-  void LabRecoFrame::AddVisibleStates(const RFList<VisibleState>& states) const {
-    m_LabStates += states;
-  }
-
-  void LabRecoFrame::RemoveVisibleState(const VisibleState& state) const {
-    m_LabStates -= state;
-  }
-  
-  void LabRecoFrame::RemoveVisibleStates(const RFList<VisibleState>& states) const {
-    m_LabStates -= states;
-  }
-
-  RFList<VisibleState> const& LabRecoFrame::GetVisibleStates() const {
-    return m_LabStates;
-  }
-
-  bool LabRecoFrame::InitializeLabStates(){
+  bool LabRecoFrame::InitializeTreeStates(){
     m_Log << LogVerbose << "Initializing States for analysis..." << m_End;
     
-    ClearStates();
-    
-    // create states for visible frames not assigned to a Group
+    m_TreeStates.Clear();
+    int Ng = m_TreeGroups.GetN();
+
     RFList<ReconstructionFrame> frames = GetListVisibleFrames();
     int Nf = frames.GetN();
-    int Ng = m_LabGroups.GetN();
     for(int f = 0; f < Nf; f++){
       bool has_group = false;
       for(int g = 0; g < Ng; g++){
-	if(m_LabGroups[g].ContainsFrame(frames[f])){
+	if(m_TreeGroups[g].ContainsFrame(frames[f])){
 	  has_group = true;
 	  break;
 	}
       }
       if(!has_group) {
-	VisibleState* statePtr = new VisibleState();
-	statePtr->AddFrame(frames[f]);
-	m_LabStates.Add(*statePtr);
+	VisibleState& state = GetNewVisibleState();
+	state.AddFrame(frames[f]);
+	m_TreeStates += state;
       }
     }
 
-    // check that all invisible frames are assigned to a Group
     frames = GetListInvisibleFrames();
     Nf = frames.GetN();
     for(int f = 0; f < Nf; f++){
       bool has_group = false;
       for(int g = 0; g < Ng; g++){
-	if(m_LabGroups[g].ContainsFrame(frames[f])){
+	if(m_TreeGroups[g].ContainsFrame(frames[f])){
 	  has_group = true;
 	  break;
 	}
@@ -152,28 +142,28 @@ namespace RestFrames {
     return true;
   }
 
-  bool LabRecoFrame::InitializeLabJigsaws(){
+  bool LabRecoFrame::InitializeTreeJigsaws(){
     m_Log << LogVerbose << "Initializing Jigsaws for analysis..." << m_End;
     
-    m_LabJigsaws.Clear();
+    m_TreeJigsaws.Clear();
     
-    int Ng = m_LabGroups.GetN();
+    int Ng = m_TreeGroups.GetN();
     
     // Initialize Dependancy States in Jigsaws
     for(int g = 0; g < Ng; g++){
-      RFList<Jigsaw> jigsaws = m_LabGroups[g].GetListJigsaws();
+      RFList<Jigsaw> jigsaws = m_TreeGroups[g].GetListJigsaws();
       int Nj = jigsaws.GetN();
       for(int j = 0; j < Nj; j++)
-	if(!jigsaws[j].InitializeDependancyStates(m_LabStates, m_LabGroups)){
+	if(!jigsaws[j].InitializeAnalysis()){
 	  m_Log << LogWarning;
-	  m_Log << "Unable to initialize dependancy states for Jigsaw:" << endl;
+	  m_Log << "Unable to initialize Jigsaw for analysis:" << endl;
 	  m_Log << Log(jigsaws[j]) << m_End;
 	  return false;
 	}
     }
     // Initialize Dependancy Jigsaw lists inside jigsaws
     for(int g = 0; g < Ng; g++){
-      RFList<Jigsaw> jigsaws = m_LabGroups[g].GetListJigsaws();
+      RFList<Jigsaw> jigsaws = m_TreeGroups[g].GetListJigsaws();
       int Nj = jigsaws.GetN();
       for(int j = 0; j < Nj; j++){
 	Jigsaw& jigsaw = jigsaws[j];
@@ -183,24 +173,23 @@ namespace RestFrames {
 	  m_Log << Log(jigsaw) << m_End;
 	  return false;
 	}
-	m_LabJigsaws.Add(jigsaw);
+	m_TreeJigsaws.Add(jigsaw);
       }
     }
     // Initialize Jigsaw execution list
-    RFList<Jigsaw> chain_jigsaws;
-    int Nj = m_LabJigsaws.GetN();
+    RFList<Jigsaw> exec_jigsaws;
+    int Nj = m_TreeJigsaws.GetN();
     for(int j = 0; j < Nj; j++){
-      if(!m_LabJigsaws[j].InitializeJigsawExecutionList(chain_jigsaws)){
-	m_LabJigsaws.Clear();
+      if(!m_TreeJigsaws[j].InitializeJigsawExecutionList(exec_jigsaws)){
+	m_TreeJigsaws.Clear();
 	m_Log << LogWarning;
 	m_Log << "Unable to initialize Jigsaw execution list in Jigsaw:" << endl;
-	m_Log << Log(m_LabJigsaws[j]) << m_End;
+	m_Log << Log(m_TreeJigsaws[j]) << m_End;
 	return false;
       }
     }  
-    
-    m_LabJigsaws.Clear();
-    m_LabJigsaws.Add(chain_jigsaws);
+    m_TreeJigsaws.Clear();
+    m_TreeJigsaws.Add(exec_jigsaws);
 
     m_Log << LogVerbose << "...Done initializing Jigsaws" << m_End;
     return true;
@@ -214,16 +203,16 @@ namespace RestFrames {
       return SetMind(false);
     }
 
-    if(!InitializeLabGroups()){
+    if(!InitializeTreeGroups()){
       m_Log << LogWarning << "Unable to intialize Groups" << m_End;
       return SetMind(false);
     }
-    if(!InitializeLabStates()){
+    if(!InitializeTreeStates()){
       m_Log << LogWarning << "Unable to intialize States" << m_End;
       return SetMind(false);
     }
     
-    if(!InitializeLabJigsaws()){
+    if(!InitializeTreeJigsaws()){
       m_Log << LogWarning << "Unable to intialize Jigsaws" << m_End;
       return SetMind(false);
     }
@@ -246,9 +235,9 @@ namespace RestFrames {
       return SetMind(false);
     }
     
-    int Ng = m_LabGroups.GetN();
+    int Ng = m_TreeGroups.GetN();
     for(int i = 0; i < Ng; i++)
-      if(!m_LabGroups[i].ClearEvent())
+      if(!m_TreeGroups[i].ClearEvent())
 	return SetMind(false);
     
     if(!ClearEventRecursive())
@@ -262,25 +251,25 @@ namespace RestFrames {
       UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
     }
-    int Ns = m_LabStates.GetN();
+    int Ns = m_TreeStates.GetN();
     for(int i = 0; i < Ns; i++)
-      m_LabStates[i].SetLabFrameFourVector();
+      m_TreeStates[i].SetLabFrameFourVector();
       
-    int Ng = m_LabGroups.GetN();
+    int Ng = m_TreeGroups.GetN();
     for(int i = 0; i < Ng; i++){
-      if(!m_LabGroups[i].AnalyzeEvent()){
+      if(!m_TreeGroups[i].AnalyzeEvent()){
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Group: ";
-	m_Log << Log(m_LabGroups[i]) << m_End;
+	m_Log << Log(m_TreeGroups[i]) << m_End;
 	return SetSpirit(false);
       }
     }
-    int Nj = m_LabJigsaws.GetN();
+    int Nj = m_TreeJigsaws.GetN();
     for(int i = 0; i < Nj; i++){
-      if(!m_LabJigsaws[i].AnalyzeEvent()){
+      if(!m_TreeJigsaws[i].AnalyzeEvent()){
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Jigsaw: ";
-	m_Log << Log(m_LabJigsaws[i]) << m_End;
+	m_Log << Log(m_TreeJigsaws[i]) << m_End;
 	return SetSpirit(false);
       }
     }
@@ -290,6 +279,15 @@ namespace RestFrames {
       return SetSpirit(false);
     }
     return SetSpirit(true);
+  }
+
+  VisibleState& LabRecoFrame::GetNewVisibleState(){
+    if(m_TreeStates.GetN() < m_InitStates.GetN())
+      return m_InitStates[m_TreeStates.GetN()];
+    VisibleState* statePtr = new VisibleState();
+    AddDependent(statePtr);
+    m_InitStates.Add(*statePtr);
+    return *statePtr;
   }
 
 }

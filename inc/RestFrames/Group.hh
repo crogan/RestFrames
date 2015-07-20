@@ -36,8 +36,8 @@ using namespace std;
 
 namespace RestFrames {
  
-  class RestFrame;
   class Jigsaw;
+  class RestFrame;
 
   enum GroupType { kVanillaGroup, kInvisibleGroup, 
 		   kCombinatoricGroup };
@@ -76,6 +76,8 @@ namespace RestFrames {
     virtual State& GetParentState() const;
     State& GetChildState(const RestFrame& frame) const;
     RestFrames::RFList<State> GetChildStates(const RestFrames::RFList<RestFrame>& frames) const;
+
+    RestFrame const& GetLabFrame() const;
 
     virtual bool InitializeAnalysis();
     virtual bool ClearEvent() = 0;
