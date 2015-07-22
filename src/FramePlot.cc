@@ -179,7 +179,7 @@ namespace RestFrames {
 
   void FramePlot::AddGroupTree(const Group& group){
     ClearTree();
-    if(group.IsEmpty()) return;
+    if(!group) return;
     m_GroupPtr = &group;
     m_Type = PGroup;
 
@@ -330,7 +330,7 @@ namespace RestFrames {
     m_Ncol.clear();
   
     const State& top_state = group.GetParentState();
-    if(top_state.IsEmpty()) return;
+    if(!top_state) return;
 
     FramePlotNode* top_nodePtr = new FramePlotNode();
     top_nodePtr->SetX(0.);
@@ -346,8 +346,9 @@ namespace RestFrames {
 
   void FramePlot::FillGroupTreeMap(int irow, const State& state){
     const Jigsaw& jigsaw = state.GetChildJigsaw();
-    if(jigsaw.IsEmpty()) return;
-
+    if(!jigsaw)
+      return;
+    
     FramePlotNode* state_nodePtr = m_TreeNodes[int(m_TreeNodes.size())-1];
     int Nchild = jigsaw.GetNChildren();
 

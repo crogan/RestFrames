@@ -4,19 +4,6 @@
 #include <TCanvas.h>
 #include <iostream>
 #include "RestFrames/RestFrames.hh"
-#include "RestFrames/RFrame.hh"
-#include "RestFrames/RLabFrame.hh"
-#include "RestFrames/RDecayFrame.hh"
-#include "RestFrames/RVisibleFrame.hh"
-#include "RestFrames/RInvisibleFrame.hh"
-#include "RestFrames/RSelfAssemblingFrame.hh"
-#include "RestFrames/InvisibleMassJigsaw.hh"
-#include "RestFrames/InvisibleRapidityJigsaw.hh"
-#include "RestFrames/ContraBoostInvariantJigsaw.hh"
-#include "RestFrames/MinimizeMassesCombinatoricJigsaw.hh"
-#include "RestFrames/InvisibleGroup.hh"
-#include "RestFrames/CombinatoricGroup.hh"
-#include "RestFrames/FramePlot.hh"
 
 using namespace std;
 using namespace RestFrames;
@@ -33,14 +20,14 @@ void TestSuperRazor(){
   // different 'Frames' of interest
   //////////////////////////////////////////////////////////////
   std::cout << " Initialize lists of visible, invisible particles and intermediate states " << endl;
-  RLabFrame LAB("LAB","lab");
-  RDecayFrame SS("SS","SS");
-  RSelfAssemblingFrame S1("S1","#tilde{S}_{a}");
-  RSelfAssemblingFrame S2("S2","#tilde{S}_{b}");
-  RVisibleFrame V1("V1","V_{a}");
-  RVisibleFrame V2("V2","V_{b}");
-  RInvisibleFrame I1("I1","I_{a}");
-  RInvisibleFrame I2("I2","I_{b}");
+  LabRecoFrame LAB("LAB","lab");
+  DecayRecoFrame SS("SS","SS");
+  SelfAssemblingRecoFrame S1("S1","#tilde{S}_{a}");
+  SelfAssemblingRecoFrame S2("S2","#tilde{S}_{b}");
+  VisibleRecoFrame V1("V1","V_{a}");
+  VisibleRecoFrame V2("V2","V_{b}");
+  InvisibleRecoFrame I1("I1","I_{a}");
+  InvisibleRecoFrame I2("I2","I_{b}");
 
   //////////////////////////////////////////////////////////////
   // different 'groups' of particles 
@@ -83,21 +70,21 @@ void TestSuperRazor(){
   // now we define 'jigsaw rules' that tell the tree
   // how to define the objects in our groups 
   //////////////////////////////////////////////////////////////
-  InvisibleMassJigsaw MinMassJigsaw("MINMASS_JIGSAW", "Invisible system mass Jigsaw");
+  SetMassInvJigsaw MinMassJigsaw("MINMASS_JIGSAW", "Invisible system mass Jigsaw");
   INV.AddJigsaw(MinMassJigsaw);
 
-  InvisibleRapidityJigsaw RapidityJigsaw("RAPIDITY_JIGSAW", "Invisible system rapidity Jigsaw");
+  SetRapidityInvJigsaw RapidityJigsaw("RAPIDITY_JIGSAW", "Invisible system rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
-  RapidityJigsaw.AddVisibleFrame((LAB.GetListVisibleFrames()));
+  RapidityJigsaw.AddVisibleFrames((LAB.GetListVisibleFrames()));
   
-  ContraBoostInvariantJigsaw ContraBoostJigsaw("CB_JIGSAW","Contraboost invariant Jigsaw");
+  ContraBoostInvJigsaw ContraBoostJigsaw("CB_JIGSAW","Contraboost invariant Jigsaw");
   INV.AddJigsaw(ContraBoostJigsaw);
-  ContraBoostJigsaw.AddVisibleFrame((S1.GetListVisibleFrames()), 0);
-  ContraBoostJigsaw.AddVisibleFrame((S2.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw.AddInvisibleFrame((S1.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw.AddInvisibleFrame((S2.GetListInvisibleFrames()), 1);
+  ContraBoostJigsaw.AddVisibleFrames((S1.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw.AddVisibleFrames((S2.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw.AddInvisibleFrames((S1.GetListInvisibleFrames()), 0);
+  ContraBoostJigsaw.AddInvisibleFrames((S2.GetListInvisibleFrames()), 1);
 
-  MinimizeMassesCombinatoricJigsaw HemiJigsaw("HEM_JIGSAW","Minimize m _{V_{a,b}} Jigsaw");
+  MinMassesCombJigsaw HemiJigsaw("HEM_JIGSAW","Minimize m _{V_{a,b}} Jigsaw");
   VIS.AddJigsaw(HemiJigsaw);
   HemiJigsaw.AddFrame(V1,0);
   HemiJigsaw.AddFrame(V2,1);
@@ -148,7 +135,7 @@ void TestSuperRazor(){
     LAB.ClearEvent();
     // can use this to see where 
     // each jet ended up in the tree
-    vector<GroupElementID> jetID; 
+    vector<RFKey> jetID; 
     
     // add the jets to the 'VIS' group
     for(int i = 0; i < int(JETS.size()); i++) 
@@ -184,7 +171,7 @@ void TestSuperRazor(){
     cout << "WIMP 'depth' in S2 = " << S2.GetFrameDepth(I2) << endl;
       
     // Can get the frame each WIMP is produced in and calculate things from it
-    const RestFrame* I1_prodframe = I1.GetProductionFrame();
+    const RestFrame& I1_prodframe = I1.GetProductionFrame();
     cout << "P_{I1}^{prod} / M_{S1} = "; 
     cout << I1.GetMomentum(I1_prodframe)/S1.GetMass() << endl;
     

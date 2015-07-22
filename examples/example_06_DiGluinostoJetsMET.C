@@ -54,7 +54,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 100000;
+  int Ngen = 10000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)

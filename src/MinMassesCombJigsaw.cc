@@ -94,12 +94,7 @@ namespace RestFrames {
       TLorentzVector TOT(0.,0.,0.,0.);
       for(int i = 0; i < Ninput; i++) TOT += inputs[i];
       TVector3 boost = TOT.BoostVector();
-      // for(int i = 0; i < Ninput; i++)
-      // 	cout << inputs[i].Px() << " " << inputs[i].Py() << inputs[i].Pz() << inputs[i].E() << endl;
-      
       for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
-      // for(int i = 0; i < Ninput; i++)
-      // 	cout << inputs[i].Px() << " " << inputs[i].Py() << inputs[i].Pz() << inputs[i].E() << endl;
 
       int ip_max[2];
       int jp_max[2];
@@ -141,10 +136,8 @@ namespace RestFrames {
 	  }
 	}
       }
-      if(val_max < 0){
-	cout << "up in here? " << val_max << endl;
+      if(val_max < 0)
 	return false;
-      }
      
       // initialize output states
       for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
@@ -204,10 +197,9 @@ namespace RestFrames {
 	ExecuteDependancyJigsaws();
 
 	// Evaluate metric for this cominatoric
-	for(int i = 0; i < Ndeps;  i++){
+	for(int i = 0; i < Ndeps;  i++)
 	  hem[i] += m_DependancyStates[i].GetFourVector();
-	  // Nhem[i] += m_DependancyStates[i]->GetN();
-	}
+       
 	TVector3 boost = (hem[0]+hem[1]).BoostVector();
 	hem[0].Boost(-boost);
 	hem[1].Boost(-boost);

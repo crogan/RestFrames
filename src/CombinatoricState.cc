@@ -81,7 +81,7 @@ namespace RestFrames {
 
   void CombinatoricState::SetChildJigsaw(Jigsaw& jigsaw){
     if(!jigsaw) return;
-    if(jigsaw.IsInvisibleJigsaw())
+    if(jigsaw.IsCombinatoricJigsaw())
       m_ChildJigsawPtr = &jigsaw;
   }
 
