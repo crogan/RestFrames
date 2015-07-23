@@ -53,8 +53,6 @@ namespace RestFrames {
     const RestFrame& GetFrame(const RFKey& key) const;
 
   private:
-    void Init();
-    
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
     RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;

@@ -60,6 +60,7 @@ namespace RestFrames {
     friend void SetLogPrint(bool print);
     friend void SetLogPrint(LogType type, bool print);
     friend void SetLogStream(ostream* ostr);
+    friend void SetLogColor(bool color);
     friend void SetLogMaxWidth(int NMAX);
 
     static RFLog& EndMessage(RFLog& log);
@@ -77,10 +78,11 @@ namespace RestFrames {
 
   private:
     static ostream* m_Ostr;
+    static bool     m_Color;
+    static int      m_NMAX;
     static map<LogType, bool> m_PrintMap;
-    static int m_NMAX;
-    map<LogType, string>      m_TypeMap;      
-    map<LogType, string>      m_ColorMap;  
+    map<LogType, string> m_TypeMap;      
+    map<LogType, string> m_ColorMap;  
 
     void Send();
     void Init();
@@ -153,6 +155,7 @@ namespace RestFrames {
   void SetLogPrint(bool print = true);
   void SetLogPrint(LogType type, bool print = true);
   void SetLogStream(ostream* ostr);
+  void SetLogColor(bool color = true);
   void SetLogMaxWidth(int NMAX);
   map<RestFrames::LogType,bool> InitPrintMap();
 

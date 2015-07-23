@@ -43,12 +43,6 @@ namespace RestFrames {
   SelfAssemblingRecoFrame::SelfAssemblingRecoFrame(const string& sname, const string& stitle)
     : DecayRecoFrame(sname,stitle)
   {
-    Init();
-  }
-  
-  SelfAssemblingRecoFrame::~SelfAssemblingRecoFrame(){ }
-
-  void SelfAssemblingRecoFrame::Init(){
     m_RType = RDSelfAssembling;
     m_IsAssembled = false;
     m_IsBackedUp = false;
@@ -57,6 +51,8 @@ namespace RestFrames {
     m_Nvisible = 0;
     m_Ndecay = 0;
   }
+  
+  SelfAssemblingRecoFrame::~SelfAssemblingRecoFrame() {}
 
   void SelfAssemblingRecoFrame::Clear(){
     m_VisibleFrames.Clear();

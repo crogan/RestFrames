@@ -41,6 +41,7 @@ namespace RestFrames {
   // default RFLog parameters
   map<RestFrames::LogType,bool> RFLog::m_PrintMap = InitPrintMap();
   ostream* RFLog::m_Ostr = &cerr;
+  bool RFLog::m_Color = true;
   int RFLog::m_NMAX = 100;
 
   RFLog::RFLog(const string& source, LogType def_type)
@@ -56,7 +57,7 @@ namespace RestFrames {
 
   RFLog g_Log("RestFrames Global");
 
-  RFLog::~RFLog() { }
+  RFLog::~RFLog() {}
 
   void RFLog::Init(){
     m_Source = "Unknown"; 
@@ -105,7 +106,12 @@ namespace RestFrames {
 	int off = m_NMAX;
 	if(i == 0) off += OFF;
 	string line = message.substr(previous_pos, off);
-	if(i > 0) output += m_ColorMap[m_CurType]+"<...>\x1b[0m ...";
+	if(i > 0){
+	  if(m_Color)
+	    output += m_ColorMap[m_CurType]+"<...>\x1b[0m ...";
+	  else
+	    output += "<...> ...";
+	}
 	output += line;
 	previous_pos += off;
 	if(previous_pos != N && i != Ncut) output += "...\n";
@@ -121,11 +127,17 @@ namespace RestFrames {
     string message = m_Message.str();
     string::size_type previous_pos = 0, current_pos = 0;
     if(m_PrintMap[m_CurType] && m_Ostr){
-      string prefix = m_ColorMap[m_CurType]+"<"+m_TypeMap[m_CurType]+">";
+      string prefix;
+      if(m_Color)
+	prefix = m_ColorMap[m_CurType]+"<"+m_TypeMap[m_CurType]+">";
+      else
+	prefix = "<"+m_TypeMap[m_CurType]+">";
       for(int i = 0; i < 8-m_TypeMap[m_CurType].size(); i++){
 	prefix += ' ';
       }
-      prefix += source_name+":\x1b[0m ";
+      prefix += source_name+": ";
+      if(m_Color) 
+	prefix +="\x1b[0m";
       while (true) {
 	current_pos = message.find( '\n', previous_pos );
 	string line = message.substr( previous_pos, current_pos - previous_pos );
@@ -178,6 +190,10 @@ namespace RestFrames {
 
   void SetLogStream(ostream* ostr){
     if(ostr) RFLog::m_Ostr = ostr;
+  }
+
+  void SetLogColor(bool color){
+    RFLog::m_Color = color;
   }
 
   void SetLogMaxWidth(int NMAX){
