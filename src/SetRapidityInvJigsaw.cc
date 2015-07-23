@@ -37,16 +37,12 @@ namespace RestFrames {
   SetRapidityInvJigsaw::SetRapidityInvJigsaw(const string& sname, const string& stitle) : 
     InvisibleJigsaw(sname, stitle, 1, 1)
   {
-    Init();
+    m_Axis = RestFrame::GetAxis();
   }
 
   SetRapidityInvJigsaw::SetRapidityInvJigsaw() : InvisibleJigsaw() {}
  
   SetRapidityInvJigsaw::~SetRapidityInvJigsaw() {}
- 
-  void SetRapidityInvJigsaw::Init(){
-    m_Axis = RestFrame::GetAxis();
-  }
 
   void SetRapidityInvJigsaw::SetAxis(const TVector3& axis){
     m_Axis = axis;

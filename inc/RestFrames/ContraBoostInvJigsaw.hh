@@ -55,11 +55,10 @@ namespace RestFrames {
     double GetC2(){ return m_C2; }
 
   private:
-    static ContraBoostInvJigsaw m_Empty;
     double m_C1;
     double m_C2;
-    void Init();
-  
+
+    static ContraBoostInvJigsaw m_Empty;
   };
 
 }

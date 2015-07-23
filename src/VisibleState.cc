@@ -89,9 +89,5 @@ namespace RestFrames {
     SetFourVector(m_FramePtr->GetLabFrameFourVector());
   }
 
-  void VisibleState::SetParentJigsaw(Jigsaw& jigsaw) {}
-
-  void VisibleState::SetChildJigsaw(Jigsaw& jigsaw) {}
-
   VisibleState VisibleState::m_Empty;
 }

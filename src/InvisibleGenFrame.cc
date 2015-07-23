@@ -39,14 +39,10 @@ namespace RestFrames {
   InvisibleGenFrame::InvisibleGenFrame(const string& sname, const string& stitle)
     : InvisibleFrame<GeneratorFrame>(sname, stitle)
   {
-    Init();
+    m_Mass = 0.;
   }
 
   InvisibleGenFrame::~InvisibleGenFrame(){ }
-
-  void InvisibleGenFrame::Init(){
-    m_Mass = 0.;
-  }
 
   void InvisibleGenFrame::SetMass(double val){
     if(val < 0.){
@@ -63,7 +59,7 @@ namespace RestFrames {
     return m_Mass;
   }
 
-  void InvisibleGenFrame::ResetFrame(){ }
+  void InvisibleGenFrame::ResetFrame() {}
 
   bool InvisibleGenFrame::GenerateFrame(){ 
     return true;

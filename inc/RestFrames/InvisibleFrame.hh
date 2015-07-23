@@ -51,9 +51,6 @@ namespace RestFrames {
   protected:
     virtual bool IsSoundBody() const;
 
-  private:
-    void Init();
-
   };
 
 }

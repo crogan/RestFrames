@@ -316,14 +316,27 @@ namespace RestFrames {
 			      RestFrame::Empty()) const;
     ///@}
 
-  protected:
-    static int m_class_key;   
+  protected:   
+    FrameType m_Type;
+    AnaType m_Ana;
+
+    void SetChildBoostVector(RestFrame& frame, const TVector3& boost);
+    void SetParentBoostVector(const TVector3& boost);
+    TVector3 GetChildBoostVector(RestFrame& frame) const;
+    TVector3 GetParentBoostVector() const;
+
+    void SetFourVector(const TLorentzVector& V, const RestFrame& frame);
+
+    // Tree construction checks
+    virtual bool IsSoundBody() const;
+    bool IsCircularTree(vector<RFKey>& keys) const;
+
+  private:
+    /// \brief RestFrame ID key
+    static int m_class_key;
 
     /// \brief Axis perpendicular to transverse plane in the lab frame
     static TVector3 m_Axis;
-
-    FrameType m_Type;
-    AnaType m_Ana;
 
     // 4-vector of this state in the frame it's initialized
     TLorentzVector m_P;
@@ -339,25 +352,12 @@ namespace RestFrames {
     RestFrame* m_ParentFramePtr;
     TVector3 m_ParentBoost;
 
-    void SetChildBoostVector(RestFrame& frame, const TVector3& boost);
-    void SetParentBoostVector(const TVector3& boost);
-    TVector3 GetChildBoostVector(RestFrame& frame) const;
-    TVector3 GetParentBoostVector() const;
-
-    void SetFourVector(const TLorentzVector& V, const RestFrame& frame);
-    bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
-			 vector<TVector3>& boosts) const;
-
-    // Tree construction checks
-    virtual bool IsSoundBody() const;
-    bool IsCircularTree(vector<RFKey>& keys) const;
-
     // Recursively get lists of frames
     void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame);
 
-  private:
-    void Init();
-    int GenKey();
+    bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
+			 vector<TVector3>& boosts) const;
+
   };
 
 }

@@ -73,8 +73,8 @@ namespace RestFrames {
     virtual bool IsFrame(const RestFrame& frame) const;
     virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
 
-    virtual void SetParentJigsaw(Jigsaw& jigsaw = Jigsaw::Empty()) = 0;
-    virtual void SetChildJigsaw(Jigsaw& jigsaw = Jigsaw::Empty()) = 0;
+    virtual void SetParentJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
+    virtual void SetChildJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
     virtual Jigsaw const& GetParentJigsaw() const;
     virtual Jigsaw const& GetChildJigsaw() const;
 
@@ -86,19 +86,17 @@ namespace RestFrames {
     void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 	
   protected:
-    static int m_class_key;
-
     StateType m_Type;
 
-    TLorentzVector m_P;
     RestFrames::RFList<RestFrame> m_Frames;
 
+  private:
+    TLorentzVector m_P;
     Jigsaw* m_ParentJigsawPtr;
     Jigsaw* m_ChildJigsawPtr;
+    
+    static int m_class_key;
 
-  private:
-    void Init();
-    int GenKey();
   };
 
 }

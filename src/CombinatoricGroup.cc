@@ -44,16 +44,12 @@ namespace RestFrames {
   CombinatoricGroup::CombinatoricGroup(const string& sname,const string& stitle) : 
     Group(sname, stitle)
   {
-    Init();
+    m_Type = kCombinatoricGroup;
   }
 
   CombinatoricGroup::CombinatoricGroup() : Group() {}
 
   CombinatoricGroup::~CombinatoricGroup() {}
-
-  void CombinatoricGroup::Init(){
-    m_Type = kCombinatoricGroup;
-  }
 
   CombinatoricGroup& CombinatoricGroup::Empty(){
     return CombinatoricGroup::m_Empty;
@@ -71,9 +67,9 @@ namespace RestFrames {
     if(!frame) return;
     if(!frame.IsVisibleFrame()) return;
     if(!frame.IsRecoFrame()) return;
-    int N = m_Frames.GetN();
+    int N = GetNFrames();
     Group::AddFrame(frame);
-    if(m_Frames.GetN() == N) 
+    if(GetNFrames() == N) 
       return;
     m_NElementsForFrame[&frame] = 1;
     m_NExclusiveElementsForFrame[&frame] = true;
@@ -81,14 +77,14 @@ namespace RestFrames {
   
   void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, 
 					       int N, bool exclusive_N){
-    if(!m_Frames.Contains(frame)) return;
+    if(!ContainsFrame(frame)) return;
     m_NElementsForFrame[&frame] = max(0, N);
     m_NExclusiveElementsForFrame[&frame] = exclusive_N;
   }
 
   void CombinatoricGroup::GetNElementsForFrame(const RestFrame& frame, int& N, 
 					       bool& exclusive_N) const {
-    if(!m_Frames.Contains(frame)) return;
+    if(!ContainsFrame(frame)) return;
     N = m_NElementsForFrame[&frame];
     exclusive_N = m_NExclusiveElementsForFrame[&frame];
   }
@@ -112,10 +108,10 @@ namespace RestFrames {
   }
 
   CombinatoricState& CombinatoricGroup::GetChildState(int i) const {
-    if(!m_States[i])
+    if(!Group::GetChildState(i))
       return CombinatoricState::Empty();
     else
-      return static_cast<CombinatoricState&>(m_States[i]);
+      return static_cast<CombinatoricState&>(Group::GetChildState(i));
   }
 
   // Event analysis functions
@@ -148,7 +144,7 @@ namespace RestFrames {
   }
 
   RestFrame const& CombinatoricGroup::GetFrame(const RFKey& key) const {
-    int N = m_States.GetN();
+    int N = GetNChildStates();
     for(int i = N-1; i >= 0; i--)
       if(GetChildState(i).ContainsElement(key))
 	return GetChildState(i).GetElement(key).GetFrame();
@@ -157,7 +153,7 @@ namespace RestFrames {
 
   TLorentzVector CombinatoricGroup::GetLabFrameFourVector(const RFKey& key) const {
     TLorentzVector P(0.,0.,0.,0.);
-    int N = m_States.GetN();
+    int N = GetNChildStates();
     for(int i = N-1; i >= 0; i--)
       if(GetChildState(i).ContainsElement(key))
 	return GetChildState(i).GetElement(key).GetFourVector();

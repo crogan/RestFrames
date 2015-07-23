@@ -43,17 +43,13 @@ namespace RestFrames {
   InvisibleGroup::InvisibleGroup(const string& sname, const string& stitle) : 
     Group(sname, stitle)
   {
-    Init();
+    m_Type = kInvisibleGroup;
   }
 
   InvisibleGroup::InvisibleGroup() : Group() {}
  
 
   InvisibleGroup::~InvisibleGroup() {}
-
-  void InvisibleGroup::Init(){
-    m_Type = kInvisibleGroup;
-  }
 
   InvisibleGroup& InvisibleGroup::Empty(){
     return InvisibleGroup::m_Empty;
@@ -89,13 +85,14 @@ namespace RestFrames {
   }
 
   InvisibleState& InvisibleGroup::GetChildState(int i) const {
-    if(!m_States[i])
+    if(!Group::GetChildState(i))
       return InvisibleState::Empty();
     else
-      return static_cast<InvisibleState&>(m_States[i]);
+      return static_cast<InvisibleState&>(Group::GetChildState(i));
   }
 
   bool InvisibleGroup::ClearEvent(){
+    SetSpirit(false);
     if(!IsSoundMind()) 
       return SetSpirit(false);
     m_Lab_P.SetPxPyPzE(0.,0.,0.,0.);

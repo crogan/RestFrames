@@ -40,12 +40,14 @@ namespace RestFrames {
   int Group::m_class_key = 0;
 
   Group::Group(const string& sname, const string& stitle)
-    : RFBase(sname, stitle)
+    : RFBase(sname, stitle, Group::m_class_key++)
   {
-    Init();
+    m_Log.SetSource("Group "+GetName());
+    m_Type = kVanillaGroup;
+    m_GroupStatePtr = nullptr;
   }
 
-  Group::Group() : RFBase() {}
+  Group::Group() : RFBase() { m_Type = kVanillaGroup; }
 
   Group::~Group(){
     if(m_GroupStatePtr) delete m_GroupStatePtr;
@@ -53,13 +55,6 @@ namespace RestFrames {
 
   Group& Group::Empty(){
     return InvisibleGroup::Empty();
-  }
-
-  void Group::Init(){
-    SetKey(GenKey());
-    m_Type = kVanillaGroup;
-    m_GroupStatePtr = nullptr;
-    m_Log.SetSource("Group "+GetName());
   }
 
   void Group::Clear(){
@@ -71,12 +66,6 @@ namespace RestFrames {
     m_StatesToResolve.Clear();
     m_JigsawsToUse.Clear(); 
     RFBase::Clear();
-  }
-
-  int Group::GenKey(){
-    int newkey = m_class_key;
-    m_class_key++;
-    return newkey;
   }
 
   bool Group::IsInvisibleGroup() const{
@@ -122,6 +111,10 @@ namespace RestFrames {
 
   bool Group::ContainsFrame(const RestFrame& frame) const {
     return m_Frames.Contains(frame);
+  }
+
+  int Group::GetNFrames() const {
+    return m_Frames.GetN();
   }
 
   const RFList<RestFrame>& Group::GetListFrames() const {
@@ -222,16 +215,27 @@ namespace RestFrames {
       m_Log << "Unable to initialize Jigsaw:";
       m_Log << Log(jigsaw) << m_End;
     }
-    m_States.Add(jigsaw.GetChildStates());
-    m_StatesToResolve.Remove(state);
-    m_StatesToResolve.Add(jigsaw.GetChildStates());
-    m_Jigsaws.Add(jigsaw);
+    m_States += jigsaw.GetChildStates();
+    m_StatesToResolve -= state;
+    m_StatesToResolve += jigsaw.GetChildStates();
+    m_Jigsaws += jigsaw;
     return;
   }
  
+  int Group::GetNChildStates() const {
+    return m_States.GetN();
+  }
+
+  State& Group::GetChildState(int i) const {
+    if(i < 0 || i > GetNChildStates()-1)
+      return State::Empty();
+    else 
+      return m_States[i];
+  }
+
   State& Group::GetChildState(const RestFrame& frame) const {
     if(!frame) return State::Empty();
-    int Ns = m_States.GetN();
+    int Ns = GetNChildStates();
     for(int i = Ns-1; i >= 0; i--)
       if(m_States[i].IsFrame(frame))
 	return m_States[i];

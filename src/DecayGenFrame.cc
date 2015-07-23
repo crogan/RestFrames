@@ -72,10 +72,14 @@ namespace RestFrames {
   }
 
   bool DecayGenFrame::IsSoundBody() const{
-    RestFrame::IsSoundBody();
+    if(RFBase::IsSoundBody())
+      return true;
+    if(!RestFrame::IsSoundBody())
+      return false;
     int Nchild = GetNChildren();
-    if(Nchild < 2 || GetParentFrame().IsEmpty()) m_Body = false;
-    return m_Body;
+    if(Nchild < 2 || GetParentFrame().IsEmpty()) 
+      return SetBody(false);
+    return SetBody(true);
   }
 
   void DecayGenFrame::SetMass(double val){

@@ -37,34 +37,21 @@ namespace RestFrames {
   int RestFrame::m_class_key = 0;
 
   RestFrame::RestFrame() : RFBase() {}
-  RestFrame::~RestFrame() {}
+  RestFrame::~RestFrame() { m_Type = kVanillaFrame; }
 
   RestFrame::RestFrame(const string& sname, const string& stitle)
-    : RFBase(sname, stitle) 
+    : RFBase(sname, stitle, RestFrame::m_class_key++) 
   {
-    Init();
-  }
-
-  void RestFrame::Init(){
-    SetKey(GenKey());
     m_Log.SetSource("RestFrame "+GetName());
     m_Type = kVanillaFrame;
     m_ParentFramePtr = nullptr;
     m_ParentBoost.SetXYZ(0.,0.,0.);
-    m_ChildFrames.Clear();
-    m_ChildBoosts.clear();
   }
 
   void RestFrame::Clear(){
     SetParentFrame();
     RemoveChildren();
     RFBase::Clear();
-  }
-
-  int RestFrame::GenKey(){
-    int newkey = m_class_key;
-    m_class_key++;
-    return newkey;
   }
   
   /// \brief Returns empty instance of class

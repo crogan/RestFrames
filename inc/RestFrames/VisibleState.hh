@@ -54,9 +54,6 @@ namespace RestFrames {
 
     virtual bool IsFrame(const RestFrame& frame) const;
     virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
-
-    virtual void SetParentJigsaw(Jigsaw& jigsaw);
-    virtual void SetChildJigsaw(Jigsaw& jigsaw);    
 	
     virtual void SetLabFrameFourVector();
 

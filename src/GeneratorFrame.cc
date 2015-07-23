@@ -119,26 +119,21 @@ namespace RestFrames {
   bool GeneratorFrame::AnalyzeEventRecursive(){
     if(!IsSoundMind()){
       UnSoundMind(RF_FUNCTION);
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
     if(!GenerateFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to generate event for this frame.";
       m_Log << m_End;
-      SetSpirit(false);
-      return false;
+      return SetSpirit(false);
     }
 
     int Nf =  GetNChildren();
-    for(int i = 0; i < Nf; i++){
-      if(!GetChildFrame(i).AnalyzeEventRecursive()){
-	SetSpirit(false);
-	return false;
-      }
-    }
-    SetSpirit(true);
-    return m_Spirit;
+    for(int i = 0; i < Nf; i++)
+      if(!GetChildFrame(i).AnalyzeEventRecursive())
+	return SetSpirit(false);
+   
+    return SetSpirit(true);
   }
 
   void GeneratorFrame::SetChildren(const vector<TLorentzVector>& P_children){
@@ -153,31 +148,24 @@ namespace RestFrames {
   }
 
   bool GeneratorFrame::InitializeGenAnalysis(){
-    SetMind(true);
-    return true;
+    return SetMind(true);
   }
 
   bool GeneratorFrame::InitializeAnalysisRecursive(){
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
-      SetMind(false);
-      return false;
+      return SetMind(false);
     }
 
-    if(!InitializeGenAnalysis()){
-      SetMind(false);
-      return false;
-    }
+    if(!InitializeGenAnalysis())
+      return SetMind(false);
 
     int N = GetNChildren();
-    for(int i = 0; i < N; i++){
-      if(!dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->InitializeAnalysisRecursive()){
-	SetMind(false);
-	return false;
-      }
-    }
-    SetMind(true);
-    return true;
+    for(int i = 0; i < N; i++)
+      if(!dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->InitializeAnalysisRecursive())
+	return SetMind(false);
+ 
+    return SetMind(true);
   }
 
   double GeneratorFrame::GetRandom() const {

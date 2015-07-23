@@ -78,10 +78,11 @@ namespace RestFrames {
     virtual CombinatoricState& GetChildState(int i) const;
 
   private:
-    static CombinatoricGroup m_Empty;
-    void Init();
     VisibleState& GetNewElement();
     RestFrames::RFList<VisibleState> m_InitStates;
+
+    static CombinatoricGroup m_Empty;
+
   };
 
 }

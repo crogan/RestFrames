@@ -94,28 +94,28 @@ namespace RestFrames {
     virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
   
   protected:
-    static int m_class_key;
     JigsawType m_Type;
     virtual bool IsSoundBody() const;
-
-    Group* m_GroupPtr;
-    State* m_ParentStatePtr;
-
-    RestFrames::RFList<State> m_ChildStates;
-    vector<RestFrames::RFList<RestFrame> > m_ChildFrames;
-
-    vector<RestFrames::RFList<State> > m_DependancyStates;
-    vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
-    RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
     virtual State& GetNewChildState() = 0;
 
     void AddChildFrame(RestFrame& frame, int i = 0);
     void AddDependancyFrame(RestFrame& frame, int i = 0);
 
+    vector<RestFrames::RFList<RestFrame> > m_ChildFrames;
+
+    vector<RestFrames::RFList<State> > m_DependancyStates;
+    vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
+    RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
+
   private:
-    void Init();
-    int GenKey();
+    Group* m_GroupPtr;
+    State* m_ParentStatePtr;
+
+    RestFrames::RFList<State> m_ChildStates;
+
+    static int m_class_key;
+
   };
 
 }

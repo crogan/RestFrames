@@ -39,22 +39,16 @@ namespace RestFrames {
   LabGenFrame::LabGenFrame(const string& sname, const string& stitle) : 
     LabFrame<GeneratorFrame>(sname, stitle)
   {
-    Init();
-  }
-
-  LabGenFrame::~LabGenFrame(){
-    
-  }
-
-  void LabGenFrame::Clear(){
-    GeneratorFrame::Clear();
-  }
-
-  void LabGenFrame::Init(){
     m_PT = 0.;
     m_PL = 0.;
     m_Phi = -1.;
     m_Theta = -1.;
+  }
+
+  LabGenFrame::~LabGenFrame() {}
+
+  void LabGenFrame::Clear(){
+    GeneratorFrame::Clear();
   }
 
   void LabGenFrame::SetThreeVector(const TVector3& P){
@@ -99,19 +93,16 @@ namespace RestFrames {
    
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
-      SetMind(false);
-      return false;
+      return SetMind(false);
     }
 
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning << "Unable to recursively initialize analysis" << m_End;
-      SetMind(false);
-      return false;
+      return SetMind(false);
     }
 
     m_Log << LogVerbose << "...Done" << m_End;
-    SetMind(true);
-    return true;
+    return SetMind(true);
   }
   
   bool LabGenFrame::GenerateFrame(){
@@ -128,10 +119,8 @@ namespace RestFrames {
     ChildVector.push_back(P);
     SetChildren(ChildVector);
     ResetProductionAngles();
-
-    SetSpirit(true);
     
-    return true;
+    return SetSpirit(true);
   }
 
   bool LabGenFrame::ClearEvent(){
@@ -142,12 +131,9 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::AnalyzeEvent(){
-    if(!AnalyzeEventRecursive()){
-      SetSpirit(false);
-      return false;
-    }
-    SetSpirit(true);
-    return m_Spirit;
+    if(!AnalyzeEventRecursive())
+      return SetSpirit(false);
+    return SetSpirit(true);
   }
 
 }

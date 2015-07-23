@@ -20,7 +20,7 @@ namespace RestFrames {
   // class which can plot RestFrame trees
   ///////////////////////////////////////////////
   FramePlot::FramePlot(const string& sname, const string& stitle)
-    : RFBase(sname, stitle){
+    : RFBase(sname, stitle, -1){
     m_Type = PNone;
     m_GroupPtr = nullptr;
     m_CanvasPtr = nullptr;

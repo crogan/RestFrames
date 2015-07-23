@@ -31,18 +31,15 @@
 
 namespace RestFrames {
 
-   RFKey g_Key(-1);
-
-  RFKey::RFKey(){ m_Key = -1; }
   RFKey::RFKey(int key){ m_Key = key; }
   RFKey::RFKey(const RFKey& key){ m_Key = key.GetKey(); }
   RFKey::~RFKey(){ }
 
   void RFKey::operator=(const RFKey& key){ m_Key = key.GetKey(); }
 
-  bool RFKey::operator==(const RFKey& key) const { return (m_Key == key.GetKey()); }
+  bool RFKey::operator==(int key) const { return (m_Key == key); }
 
-  void RFKey::SetKey(int key){ m_Key = key; }
+  bool RFKey::operator==(const RFKey& key) const { return (m_Key == key.GetKey()); }
 
   int RFKey::GetKey() const { return m_Key; }
 

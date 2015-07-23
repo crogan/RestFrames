@@ -38,12 +38,12 @@ namespace RestFrames {
   class RFKey {
 
   public:
-    RFKey();
-    RFKey(int key);
     RFKey(const RFKey& key);
+    RFKey(int key);
     ~RFKey();
 
     void operator=(const RFKey& key);
+    bool operator==(int key) const;
     bool operator==(const RFKey& key) const;
     void SetKey(int key);
     int GetKey() const;
@@ -53,8 +53,6 @@ namespace RestFrames {
     int m_Key;
 
   };
-
-  extern RFKey g_Key;
 
 }
 

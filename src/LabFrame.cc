@@ -42,7 +42,7 @@ namespace RestFrames {
   LabFrame<T>::LabFrame(const string& sname, const string& stitle)
     : T(sname, stitle)
   {
-    Init();
+    T::m_Type = kLabFrame;
   }
 
   template <class T> 
@@ -50,20 +50,14 @@ namespace RestFrames {
  
 
   template <class T> 
-  LabFrame<T>::~LabFrame(){
-  
-  }
-
-  template <class T> 
-  void LabFrame<T>::Init(){
-    T::m_Type = kLabFrame;
-  }
+  LabFrame<T>::~LabFrame() {}
 
   template <class T>  
   bool LabFrame<T>::IsSoundBody() const {
-    if(RFBase::IsSoundBody()) return true;
+    if(RFBase::IsSoundBody()) 
+      return true;
     if(!T::IsSoundBody()){
-      return T::SetBody(false);;
+      return T::SetBody(false);
     }
     int Nchild = T::GetNChildren();
     if(Nchild != 1){

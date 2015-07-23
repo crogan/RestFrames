@@ -41,30 +41,24 @@ namespace RestFrames {
   template <class T> DecayFrame<T>::DecayFrame(const string& sname,const string& stitle)
     : T(sname, stitle)
   {
-    Init();
-  }
-
-  template <class T> 
-  DecayFrame<T>::~DecayFrame(){
-  
-  }
-
-  template <class T> 
-  void DecayFrame<T>::Init(){
     T::m_Type = kDecayFrame;
   }
 
   template <class T> 
+  DecayFrame<T>::~DecayFrame() {}
+
+  template <class T> 
   bool DecayFrame<T>::IsSoundBody() const {
-    if(RFBase::IsSoundBody()) return true;
+    if(RFBase::IsSoundBody()) 
+      return true;
     if(!T::IsSoundBody()){
       return T::SetBody(false);
     }
     int Nchild = T::GetNChildren();
-    if(Nchild < 1 || T::GetParentFrame().IsEmpty()){
+    if(Nchild < 1 || !T::GetParentFrame()){
       return T::SetBody(false);
     } 
-    return true;
+    return  T::SetBody(true);
   }
 
   template class DecayFrame<ReconstructionFrame>;

@@ -53,7 +53,6 @@ namespace RestFrames {
 
   private:
     static MinMassesCombJigsaw m_Empty;
-    void Init();
 
   };
 

@@ -37,16 +37,11 @@ namespace RestFrames {
   // MinMassesCombJigsaw class methods
   ///////////////////////////////////////////////
   MinMassesCombJigsaw::MinMassesCombJigsaw(const string& sname, const string& stitle) : 
-    CombinatoricJigsaw(sname, stitle)
-  {
-    Init();
-  }
+    CombinatoricJigsaw(sname, stitle) {}
 
   MinMassesCombJigsaw::MinMassesCombJigsaw() : CombinatoricJigsaw() {}
   
   MinMassesCombJigsaw::~MinMassesCombJigsaw() {}
-
-  void MinMassesCombJigsaw::Init() {}
 
   void MinMassesCombJigsaw::Clear(){
     CombinatoricJigsaw::Clear();

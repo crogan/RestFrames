@@ -39,16 +39,12 @@ namespace RestFrames {
   VisibleGenFrame::VisibleGenFrame(const string& sname, const string& stitle) : 
     VisibleFrame<GeneratorFrame>(sname, stitle)
   {
-    Init();
+    m_Mass = 0.;
   }
 
   VisibleGenFrame::VisibleGenFrame() : VisibleFrame<GeneratorFrame>() {}
 
-  VisibleGenFrame::~VisibleGenFrame(){ }
-
-  void VisibleGenFrame::Init(){
-    m_Mass = 0.;
-  }
+  VisibleGenFrame::~VisibleGenFrame() {}
 
   /// \brief Returns empty instance of class
   VisibleGenFrame& VisibleGenFrame::Empty(){
@@ -70,7 +66,7 @@ namespace RestFrames {
     return m_Mass;
   }
 
-  void VisibleGenFrame::ResetFrame(){ }
+  void VisibleGenFrame::ResetFrame() {}
 
   bool VisibleGenFrame::GenerateFrame(){ 
     return true;

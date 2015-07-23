@@ -58,8 +58,6 @@ namespace RestFrames {
   private:
     TLorentzVector m_Lab_P;
 
-    void Init();
-
   };
 
 }

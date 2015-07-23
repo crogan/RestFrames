@@ -38,16 +38,11 @@ namespace RestFrames {
   //ContraBoostInvJigsaw class methods
   ///////////////////////////////////////////////
   ContraBoostInvJigsaw::ContraBoostInvJigsaw(const string& sname,const string& stitle) : 
-    InvisibleJigsaw(sname, stitle, 2, 2)
-  {
-    Init();
-  }
+    InvisibleJigsaw(sname, stitle, 2, 2) {}
 
   ContraBoostInvJigsaw::ContraBoostInvJigsaw() : InvisibleJigsaw() {}
  
   ContraBoostInvJigsaw::~ContraBoostInvJigsaw() {}
-
-  void ContraBoostInvJigsaw::Init() {}
 
   ContraBoostInvJigsaw& ContraBoostInvJigsaw::Empty(){
     return ContraBoostInvJigsaw::m_Empty;
@@ -88,6 +83,10 @@ namespace RestFrames {
       return SetSpirit(false);
     
     CalcCoef();
+    double c1 = GetC1();
+    double c2 = GetC2();
+
+
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     TLorentzVector INV = GetParentState().GetFourVector();
@@ -102,8 +101,6 @@ namespace RestFrames {
     double E2 = Pvis2.E();
     TVector3 P1 = Pvis1.Vect();
     TVector3 P2 = Pvis2.Vect();
-    double c1 = GetC1();
-    double c2 = GetC2();
 
     double N = (E1+E2 + sqrt( (E1+E2)*(E1+E2) - (Pvis1+Pvis2).M2() + INV.M2() ))/(c1*E1+c2*E2)/2.;
 

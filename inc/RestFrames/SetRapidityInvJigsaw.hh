@@ -48,7 +48,6 @@ namespace RestFrames {
 
   protected:
     TVector3 m_Axis;
-    void Init();
   
   };
 

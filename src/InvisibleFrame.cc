@@ -44,25 +44,19 @@ namespace RestFrames {
   InvisibleFrame<T>::InvisibleFrame(const string& sname, const string& stitle)
     : T(sname, stitle)
   {
-    Init();
-  }
-
-  template <class T>
-  InvisibleFrame<T>::~InvisibleFrame(){
-    
-  }
-
-  template <class T>
-  void InvisibleFrame<T>::Init(){
     T::m_Type = kInvisibleFrame;
   }
+
+  template <class T>
+  InvisibleFrame<T>::~InvisibleFrame() {}
   
   template <class T>
   bool InvisibleFrame<T>::IsSoundBody() const {
-    if(RFBase::IsSoundBody()) return true;
-    if(!RestFrame::IsSoundBody()){
+    if(RFBase::IsSoundBody()) 
+      return true;
+    if(!RestFrame::IsSoundBody())
       return T::SetBody(false);
-    }
+    
     int Nchild = T::GetNChildren();
     if(Nchild > 0 || T::GetParentFrame().IsEmpty()){
       T::m_Log << LogWarning << "Problem with parent or child frames" << m_End;

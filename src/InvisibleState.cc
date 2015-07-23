@@ -42,16 +42,12 @@ namespace RestFrames {
   InvisibleState::InvisibleState(const string& sname, const string& stitle)
     : State(sname, stitle)
   {
-    Init();
+    m_Type = kInvisibleState;
   }
 
   InvisibleState::InvisibleState() : State() {}
 
   InvisibleState::~InvisibleState() {}
-
-  void InvisibleState::Init(){
-    m_Type = kInvisibleState;
-  }
 
   InvisibleState& InvisibleState::Empty(){
     return InvisibleState::m_Empty;
@@ -72,13 +68,13 @@ namespace RestFrames {
   void InvisibleState::SetParentJigsaw(Jigsaw& jigsaw){
     if(!jigsaw) return;
     if(jigsaw.IsInvisibleJigsaw())
-      m_ParentJigsawPtr = &jigsaw;
+      State::SetParentJigsaw(jigsaw);
   }
 
   void InvisibleState::SetChildJigsaw(Jigsaw& jigsaw){
     if(!jigsaw) return;
     if(jigsaw.IsInvisibleJigsaw())
-      m_ChildJigsawPtr = &jigsaw;
+      State::SetChildJigsaw(jigsaw);
   }
 
   double InvisibleState::GetMinimumMass() const {

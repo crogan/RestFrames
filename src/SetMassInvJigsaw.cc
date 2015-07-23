@@ -41,9 +41,7 @@ namespace RestFrames {
 
   SetMassInvJigsaw::SetMassInvJigsaw() : InvisibleJigsaw() {}
  
-  SetMassInvJigsaw::~SetMassInvJigsaw(){}
-
-  void SetMassInvJigsaw::Init() {}
+  SetMassInvJigsaw::~SetMassInvJigsaw() {}
 
   void SetMassInvJigsaw::Clear(){
     InvisibleJigsaw::Clear();

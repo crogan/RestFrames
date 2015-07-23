@@ -42,21 +42,16 @@ namespace RestFrames {
   int Jigsaw::m_class_key = 0;
 
   Jigsaw::Jigsaw(const string& sname, const string& stitle)
-    : RFBase(sname, stitle) 
+    : RFBase(sname, stitle, Jigsaw::m_class_key++) 
   {
-    Init();
-  }
-
-  Jigsaw::Jigsaw() : RFBase() {}
-
-  Jigsaw::~Jigsaw() {}
-
-  void Jigsaw::Init(){
-    SetKey(GenKey());
+    m_Log.SetSource("Jigsaw "+GetName());
     m_GroupPtr = nullptr;
     m_ParentStatePtr = nullptr;
-    m_Log.SetSource("Jigsaw "+GetName());
   }
+
+  Jigsaw::Jigsaw() : RFBase() { m_Type = kVanillaJigsaw; }
+
+  Jigsaw::~Jigsaw() {}
 
   Jigsaw& Jigsaw::Empty(){
     return InvisibleJigsaw::Empty();
@@ -72,12 +67,6 @@ namespace RestFrames {
     m_DependancyFrames.clear();
     m_DependancyJigsaws.Clear();
     RFBase::Clear();
-  }
-
-  int Jigsaw::GenKey(){
-    int newkey = m_class_key;
-    m_class_key++;
-    return newkey;
   }
 
   bool Jigsaw::IsInvisibleJigsaw() const {
@@ -210,6 +199,7 @@ namespace RestFrames {
       State& new_state = GetNewChildState();
       new_state.AddFrames(m_ChildFrames[i]);
       new_state.SetParentJigsaw(*this);
+      m_ChildStates += new_state;
     }
     return SetBody(true);
   }
@@ -242,11 +232,11 @@ namespace RestFrames {
      
       int Nf = m_DependancyFrames[d].GetN();
       for(int f = 0; f < Nf; f++){
-	RestFrame& frame = m_DependancyFrames[d].Get(f);
+	RestFrame& frame = m_DependancyFrames[d][f];
 
 	bool no_group = true;
 	for(int g = 0; g < Ngroup; g++){
-	  if(groups.Get(g).ContainsFrame(frame)){
+	  if(groups[g].ContainsFrame(frame)){
 	    group_frames[g].Add(frame);
 	    no_group = false;
 	    break;
@@ -262,10 +252,10 @@ namespace RestFrames {
 	    return SetMind(false);
 	  }
 	  m_Log << LogVerbose;
-	  m_Log << "Adding dependancy State for hemishpere " << d;
+	  m_Log << "Adding dependancy State for index " << d;
 	  m_Log << " corresponding to frame:";
 	  m_Log << Log(frame) << m_End;
-	  m_DependancyStates[d].Add(state);
+	  m_DependancyStates[d] += state;
 	}
       }
       for(int g = 0; g < Ngroup; g++){

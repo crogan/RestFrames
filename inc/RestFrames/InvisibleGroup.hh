@@ -47,29 +47,29 @@ namespace RestFrames {
 	
     virtual void Clear();
 
-    static InvisibleGroup& Empty();
-
     virtual void AddFrame(RestFrame& frame);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
     virtual InvisibleState& GetParentState() const;
-
-    virtual bool ClearEvent();
-    virtual bool AnalyzeEvent();
     
     // Event analysis functions
     virtual void SetLabFrameFourVector(const TLorentzVector& V);
     virtual void SetLabFrameThreeVector(const TVector3& V);
     virtual TLorentzVector GetLabFrameFourVector() const;
 
+    static InvisibleGroup& Empty();
+
   protected:
+    virtual bool ClearEvent();
+    virtual bool AnalyzeEvent();
     virtual InvisibleState& InitializeParentState();
     virtual InvisibleState& GetChildState(int i) const;
 
   private:
-    static InvisibleGroup m_Empty;
-    void Init();
     TLorentzVector m_Lab_P;
+
+    static InvisibleGroup m_Empty;
+
   };
 
 }

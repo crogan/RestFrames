@@ -41,7 +41,7 @@ namespace RestFrames {
   VisibleFrame<T>::VisibleFrame(const string& sname, const string& stitle) 
     : T(sname, stitle)
   {
-    Init();
+    T::m_Type = kVisibleFrame;
   }
 
   template <class T> 
@@ -51,18 +51,14 @@ namespace RestFrames {
   VisibleFrame<T>::~VisibleFrame() {}
 
   template <class T> 
-  void VisibleFrame<T>::Init(){
-    T::m_Type = kVisibleFrame;
-  }
-
-  template <class T> 
   bool VisibleFrame<T>::IsSoundBody() const {
-    if(RFBase::IsSoundBody()) return true;
-    if(!RestFrame::IsSoundBody()){
+    if(RFBase::IsSoundBody()) 
+      return true;
+    if(!RestFrame::IsSoundBody())
       return T::SetBody(false);
-    }
+    
     int Nchild = T::GetNChildren();
-    if(Nchild > 0 || T::GetParentFrame().IsEmpty()){
+    if(Nchild > 0 || !T::GetParentFrame()){
       T::m_Log << LogWarning << "Problem with parent or child frames" << m_End;
       return T::SetBody(false);
     }

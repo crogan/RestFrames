@@ -70,6 +70,7 @@ namespace RestFrames {
     bool ContainsFrame(const RestFrame& frame) const;
     bool ContainsJigsaw(const Jigsaw& frame) const;
     
+    int GetNFrames() const;
     const RestFrames::RFList<RestFrame>& GetListFrames() const;
     const RestFrames::RFList<Jigsaw>& GetListJigsaws() const;
 
@@ -84,11 +85,19 @@ namespace RestFrames {
     virtual bool AnalyzeEvent() = 0;
 
   protected:
-    static int m_class_key;
-
     GroupType m_Type;
-
     State* m_GroupStatePtr;
+
+    int GetNChildStates() const;
+    virtual State& GetChildState(int i) const;
+
+    virtual State& InitializeParentState() = 0;
+
+    bool ResolveUnknowns();
+    bool ResolveState(const State& state);
+    void InitializeJigsaw(Jigsaw& jigsaw);
+
+  private:
     RestFrames::RFList<RestFrame> m_Frames;
     RestFrames::RFList<Jigsaw> m_Jigsaws;
     RestFrames::RFList<State> m_States;
@@ -96,16 +105,8 @@ namespace RestFrames {
     RestFrames::RFList<State> m_StatesToResolve;
     RestFrames::RFList<Jigsaw> m_JigsawsToUse;
 
-    virtual State& InitializeParentState() = 0;
-    virtual State& GetChildState(int i) const = 0;
+    static int m_class_key;
 
-    bool ResolveUnknowns();
-    bool ResolveState(const State& state);
-    void InitializeJigsaw(Jigsaw& jigsaw);
-
-  private:
-    void Init();
-    int GenKey();
   };
   
 }

@@ -36,23 +36,15 @@ using namespace std;
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // DecayFrame class
-  // Class for an intermediate state
-  // inheriting from RestFrame
-  ///////////////////////////////////////////////
   template <class T>
   class DecayFrame : public T {
   public:
-    //constructor and destructor
     DecayFrame(const string& sname, const string& stitle);
     virtual ~DecayFrame();
 
   protected:
     virtual bool IsSoundBody() const;
 
-  private:
-    void Init();
   };
 
 }

@@ -77,7 +77,7 @@ namespace RestFrames {
     /// \param sname    class instance name used for log statements
     /// \param stitle   class instance title used in figures
     ////////////////////////////////////////////////////////////////////
-    RFBase(const string& sname, const string& stitle);
+    RFBase(const string& sname, const string& stitle, int key);
 
     RFBase();
     
@@ -101,12 +101,6 @@ namespace RestFrames {
     /// Member functions for identifying/comparing class instances
     ////////////////////////////////////////////////////////////////////
     ///@{
-    
-    /// \brief sets object identification key
-    void SetKey(int key);
-
-    /// \brief sets object identification key
-    void SetKey(const RFKey& key);
 
     /// \brief gets object identification key
     RFKey GetKey() const;
@@ -146,10 +140,7 @@ namespace RestFrames {
     /// \brief pointer to RFBase object owned by this one
     void AddDependent(RFBase* dep);
 
-  protected:    
-    mutable bool m_Body;       
-    mutable bool m_Mind;       
-    mutable bool m_Spirit;   
+  protected:      
     mutable RFLog m_Log;
 
     bool SetBody(bool body) const;
@@ -165,13 +156,16 @@ namespace RestFrames {
     void UnSoundSpirit(const string& function) const;
 
   private:
-    static RFBase m_Empty;
-    void Init(const string& sname, const string& stitle);
     string m_Name;
     string m_Title;
     RFKey m_Key;
+    mutable bool m_Body;       
+    mutable bool m_Mind;       
+    mutable bool m_Spirit; 
     vector<RFBase*> m_Owns;
-    
+
+    static RFBase m_Empty;
+
   };
 
 }

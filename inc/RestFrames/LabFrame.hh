@@ -47,7 +47,6 @@ namespace RestFrames {
     virtual ~LabFrame();
 
     void SetChildFrame(RestFrame& frame);
-    void SetChildFrame(RestFrame* framePtr);
   
     virtual bool InitializeTree();
     virtual bool InitializeAnalysis() = 0;
@@ -60,8 +59,6 @@ namespace RestFrames {
   protected:
     virtual bool IsSoundBody() const;
 
-  private:
-    void Init();
   };
 
 }

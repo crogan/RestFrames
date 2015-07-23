@@ -42,24 +42,18 @@ namespace RestFrames {
 
   // constructor 
   State::State(const string& sname, const string& stitle)
-    : RFBase(sname, stitle) 
+    : RFBase(sname, stitle, State::m_class_key++) 
   {
-    Init();
-  }
-
-  State::State() : RFBase() {}
-
-  State::~State() {}
-
-  void State::Init(){
-    SetKey(GenKey());
-    m_ParentJigsawPtr = nullptr;
-    m_ChildJigsawPtr = nullptr;
     m_Log.SetSource("State");
     m_Type = kVanillaState;
+    m_ParentJigsawPtr = nullptr;
+    m_ChildJigsawPtr = nullptr;
     m_P.SetPxPyPzE(0.,0.,0.,0.);
-    m_Frames.Clear();
   }
+
+  State::State() : RFBase() { m_Type = kVanillaState; }
+
+  State::~State() {}
 
   void State::Clear(){
     m_ParentJigsawPtr = nullptr;
@@ -71,12 +65,6 @@ namespace RestFrames {
 
   State& State::Empty(){
     return VisibleState::Empty();
-  }
-
-  int State::GenKey(){
-    int newkey = m_class_key;
-    m_class_key++;
-    return newkey;
   }
 
   /// \brief Returns State (*StateType*) type 
@@ -121,6 +109,20 @@ namespace RestFrames {
 
   bool State::IsFrames(const RFList<RestFrame>& frames) const {
     return m_Frames == frames;
+  }
+
+  void State::SetParentJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw)
+      m_ParentJigsawPtr = nullptr;
+    else
+      m_ParentJigsawPtr = &jigsaw;
+  }
+
+  void State::SetChildJigsaw(Jigsaw& jigsaw){
+    if(!jigsaw)
+      m_ChildJigsawPtr = nullptr;
+    else
+      m_ChildJigsawPtr = &jigsaw;
   }
 
   Jigsaw const& State::GetParentJigsaw() const { 

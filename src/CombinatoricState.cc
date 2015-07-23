@@ -60,8 +60,6 @@ namespace RestFrames {
 
   void CombinatoricState::Clear(){
     ClearElements();
-    m_ParentJigsawPtr = nullptr;
-    m_ChildJigsawPtr = nullptr;
     State::Clear();
   }
 
@@ -76,13 +74,13 @@ namespace RestFrames {
   void CombinatoricState::SetParentJigsaw(Jigsaw& jigsaw){
     if(!jigsaw) return;
     if(jigsaw.IsCombinatoricJigsaw())
-      m_ParentJigsawPtr = &jigsaw;
+      State::SetParentJigsaw(jigsaw);
   }
 
   void CombinatoricState::SetChildJigsaw(Jigsaw& jigsaw){
     if(!jigsaw) return;
     if(jigsaw.IsCombinatoricJigsaw())
-      m_ChildJigsawPtr = &jigsaw;
+      State::SetChildJigsaw(jigsaw);
   }
 
   void CombinatoricState::ClearElements(){
@@ -119,7 +117,7 @@ namespace RestFrames {
 
   void CombinatoricState::Boost(const TVector3& B){
     RFList<State>(m_Elements).Boost(B);
-    m_P.Boost(B);
+    State::Boost(B);
   }
 
   TLorentzVector CombinatoricState::GetFourVector() const {

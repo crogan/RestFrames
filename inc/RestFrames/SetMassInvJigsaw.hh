@@ -50,7 +50,6 @@ namespace RestFrames {
     
   private:
     static SetMassInvJigsaw m_Empty;
-    void Init();
   
   };
 
