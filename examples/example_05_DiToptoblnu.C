@@ -339,10 +339,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   TCanvas *c_MT_v_MW     = Plot_Me("c_MT_v_MW", h_MT_v_MW, "M_{T} / m_{T}^{true}", "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_EB_v_MW     = Plot_Me("c_EB_v_MW", h_EB_v_MW, "E_{b}^{T-frame} / E_{b}^{true}", "M_{W} / m_{W}^{true}", plot_title);
 
-  TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
-  foutput->cd();
-
-  foutput->Close();
   g_Log << LogInfo << "Finished" << g_End;
 }
 

@@ -234,9 +234,6 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   TCanvas *c_MH_v_MW     = Plot_Me("c_MH_v_MW", h_MH_v_MW, "M_{H} / m_{H}^{true}", "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} [GeV]", "m_{Wb}^{true} [GeV]", plot_title);
 
-  TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
-  foutput->cd();
-
   TreePlot tree_plot("TreePlot","TreePlot");
  
   // generator tree
@@ -247,7 +244,6 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   tree_plot.SetFrameTree(LAB_R);
   tree_plot.Draw("RecoTree", "Reconstruction Tree");
 
-  foutput->Close();
   g_Log << LogInfo << "Finished" << g_End;
 }
 

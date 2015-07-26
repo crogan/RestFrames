@@ -135,7 +135,8 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
 	libRestFrames_la-RFPlot.lo libRestFrames_la-TreePlot.lo \
 	libRestFrames_la-TreePlotNode.lo \
-	libRestFrames_la-TreePlotLink.lo libRestFrames_la-RestFrame.lo \
+	libRestFrames_la-TreePlotLink.lo libRestFrames_la-HistPlot.lo \
+	libRestFrames_la-HistPlotVar.lo libRestFrames_la-RestFrame.lo \
 	libRestFrames_la-ReconstructionFrame.lo \
 	libRestFrames_la-GeneratorFrame.lo \
 	libRestFrames_la-LabFrame.lo libRestFrames_la-DecayFrame.lo \
@@ -407,8 +408,9 @@ RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h\
-	RFBase.cc RFKey.cc RFList.cc RFLog.cc\
-	RFPlot.cc TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
+	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc\
+	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
+	HistPlot.cc HistPlotVar.cc\
 	RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc\
 	LabFrame.cc DecayFrame.cc VisibleFrame.cc InvisibleFrame.cc\
 	LabRecoFrame.cc DecayRecoFrame.cc VisibleRecoFrame.cc InvisibleRecoFrame.cc\
@@ -514,6 +516,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-DecayRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-GeneratorFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-Group.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-HistPlot.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-HistPlotVar.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-InvisibleGroup.Plo@am__quote@
@@ -629,6 +633,20 @@ libRestFrames_la-TreePlotLink.lo: TreePlotLink.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='TreePlotLink.cc' object='libRestFrames_la-TreePlotLink.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-TreePlotLink.lo `test -f 'TreePlotLink.cc' || echo '$(srcdir)/'`TreePlotLink.cc
+
+libRestFrames_la-HistPlot.lo: HistPlot.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-HistPlot.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-HistPlot.Tpo -c -o libRestFrames_la-HistPlot.lo `test -f 'HistPlot.cc' || echo '$(srcdir)/'`HistPlot.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-HistPlot.Tpo $(DEPDIR)/libRestFrames_la-HistPlot.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='HistPlot.cc' object='libRestFrames_la-HistPlot.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-HistPlot.lo `test -f 'HistPlot.cc' || echo '$(srcdir)/'`HistPlot.cc
+
+libRestFrames_la-HistPlotVar.lo: HistPlotVar.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-HistPlotVar.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-HistPlotVar.Tpo -c -o libRestFrames_la-HistPlotVar.lo `test -f 'HistPlotVar.cc' || echo '$(srcdir)/'`HistPlotVar.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-HistPlotVar.Tpo $(DEPDIR)/libRestFrames_la-HistPlotVar.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='HistPlotVar.cc' object='libRestFrames_la-HistPlotVar.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-HistPlotVar.lo `test -f 'HistPlotVar.cc' || echo '$(srcdir)/'`HistPlotVar.cc
 
 libRestFrames_la-RestFrame.lo: RestFrame.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RestFrame.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RestFrame.Tpo -c -o libRestFrames_la-RestFrame.lo `test -f 'RestFrame.cc' || echo '$(srcdir)/'`RestFrame.cc

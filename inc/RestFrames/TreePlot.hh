@@ -48,7 +48,7 @@ namespace RestFrames {
     
     void SetGroupTree(const Group& group);
 
-    TCanvas* Draw(const string& name = "", const string& title = "");
+    void Draw(const string& name = "", const string& title = "");
     
   private:
     TreeType m_Type;

@@ -58,6 +58,8 @@ using namespace RestFrames;
 #pragma link C++ class CombinatoricState;
 
 #pragma link C++ class TreePlot;
+#pragma link C++ class HistPlot;
+#pragma link C++ class HistPlotVar;
 
 #elif __MAKECINT__
 
@@ -121,6 +123,8 @@ using namespace RestFrames;
 #pragma link C++ class CombinatoricState+;
 
 #pragma link C++ class TreePlot+;
+#pragma link C++ class HistPlot+;
+#pragma link C++ class HistPlotVar+;
 
 #endif /* __ROOTCLING__ and __CINT__ */
 

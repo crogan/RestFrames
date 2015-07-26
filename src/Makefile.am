@@ -8,8 +8,9 @@ RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h\
-	RFBase.cc RFKey.cc RFList.cc RFLog.cc\
-	RFPlot.cc TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
+	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc\
+	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
+	HistPlot.cc HistPlotVar.cc\
 	RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc\
 	LabFrame.cc DecayFrame.cc VisibleFrame.cc InvisibleFrame.cc\
 	LabRecoFrame.cc DecayRecoFrame.cc VisibleRecoFrame.cc InvisibleRecoFrame.cc\

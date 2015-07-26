@@ -10,6 +10,8 @@
 #include "RestFrames/TreePlot.hh"
 #include "RestFrames/TreePlotNode.hh"
 #include "RestFrames/TreePlotLink.hh"
+#include "RestFrames/HistPlot.hh"
+#include "RestFrames/HistPlotVar.hh"
 
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/LabFrame.hh"

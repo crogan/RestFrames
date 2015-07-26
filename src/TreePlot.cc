@@ -85,15 +85,11 @@ namespace RestFrames {
     return can;
   }
 
-  TCanvas* TreePlot::Draw(const string& name, const string& title){
-    TCanvas* can = GetNewCanvas(name,title);
-
-    if(m_Type == kVanillaTree){ 
-      AddTObject(can);
-      return can;
-    }
+  void TreePlot::Draw(const string& name, const string& title){
+    if(m_Type == kVanillaTree) 
+      return;
     
-    m_CanvasPtr = can;
+    m_CanvasPtr = GetNewCanvas(name,title);
 
     if(m_Type == kFrameTree){
       bool do_jigsaws = (m_Jigsaws.GetN() > 0);
@@ -113,7 +109,6 @@ namespace RestFrames {
  
     m_CanvasPtr->Draw();
     AddCanvas(m_CanvasPtr);
-    return m_CanvasPtr;
   }
 
   void TreePlot::SetFrameTree(const RestFrame& frame){
