@@ -102,7 +102,6 @@ namespace RestFrames {
 
   };
 
-  double GetProb(double Mp, double Mc1, double Mc2);
   int DoubleMax(const void *a, const void *b);
 
 }

@@ -157,8 +157,14 @@ namespace RestFrames {
     return m_ChildStates[i];
   }
 
-  RestFrames::RFList<State> Jigsaw::GetChildStates() const {
+  RFList<State> Jigsaw::GetChildStates() const {
     return m_ChildStates;
+  }
+
+  RFList<State> Jigsaw::GetDependancyStates(int i) const {
+    if(i < 0 || i >= m_DependancyStates.size())
+      return RFList<State>();
+    return m_DependancyStates[i];
   }
 
   RFList<RestFrame> Jigsaw::GetParentFrames() const {
@@ -170,8 +176,15 @@ namespace RestFrames {
   }
 
   RFList<RestFrame> Jigsaw::GetChildFrames(int i) const {
-    if(i < 0 || i >= m_ChildFrames.size()) RFList<RestFrame>();
+    if(i < 0 || i >= m_ChildFrames.size()) 
+      return RFList<RestFrame>();
     return m_ChildFrames[i];
+  }
+
+  RFList<RestFrame> Jigsaw::GetDependancyFrames(int i) const {
+    if((i < 0) || (i >= int(m_DependancyFrames.size()))) 
+      return RFList<RestFrame>();
+    return m_DependancyFrames[i];
   }
 
   bool Jigsaw::InitializeTree(){

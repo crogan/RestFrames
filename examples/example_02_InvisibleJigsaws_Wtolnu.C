@@ -78,15 +78,16 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
 
   if(!LAB_R.InitializeTree()) cout << "Problem with reconstruction tree" << endl; 
   
-  FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
-  treePlot_G->AddFrameTree(LAB_G);
-  treePlot_G->DrawFramePlot();
-  TCanvas* c_gentree = treePlot_G->GetCanvas();
+  TreePlot tree_plot("TreePlot","TreePlot");
+ 
+  // generator tree
+  tree_plot.SetFrameTree(LAB_G);
+  tree_plot.Draw("GenTree", "Generator Tree");
 
-  FramePlot* treePlot_R = new FramePlot("tree_R","Reconstruction Tree");
-  treePlot_R->AddFrameTree(LAB_R);
-  treePlot_R->DrawFramePlot();
-  TCanvas* c_recotree = treePlot_R->GetCanvas();
+  // reco tree
+  tree_plot.SetFrameTree(LAB_R);
+  tree_plot.Draw("RecoTree", "Reconstruction Tree");
+
 
   // Now we add invisible jigsaws
   InvisibleGroup INV("INV","Neutrino Jigsaws");
@@ -101,10 +102,9 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
 
   if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
 
-  FramePlot* invPlot = new FramePlot("inv_R","Invisible Jigsaws");
-  invPlot->AddGroupTree(INV);
-  invPlot->DrawFramePlot();
-  TCanvas* c_inv = invPlot->GetCanvas();
+  // Invisible Jigsaws
+  tree_plot.SetGroupTree(INV);
+  tree_plot.Draw("InvTree", "InvisibleJigsaws");
   
   // Now we book some histograms of kinematic variables
   TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,90.);
@@ -189,8 +189,6 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
 
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
-  c_gentree->Write();
-  c_recotree->Write();
   c_MW->Write();
   c_cosW->Write(); 
   c_dphiW->Write(); 

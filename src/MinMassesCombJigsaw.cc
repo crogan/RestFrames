@@ -55,173 +55,120 @@ namespace RestFrames {
     if(!IsSoundMind() || !GetGroup())
       return SetSpirit(false);
 
-    if(!InitializeEvent()){
+    if(!InitializeCombinatoric()){
       m_Log << LogWarning;
       m_Log << "Problem initializing event info" << m_End;
       return SetSpirit(false);
     }
 
-    // have only implemented this case so far
-    if(GetNChildren() != 2){
-      m_Log << LogWarning;
-      m_Log << "output size != 2 not implemented" << m_End;
-      return SetSpirit(false);
-    }
-
     int Ninput = m_InputStates.GetN();
-    int Ndeps = m_DependancyStates.size();
-    
+    int Nout   = GetNChildren();
+    int Ndeps  = m_DependancyStates.size();
+
+    bool DO_N3 = (Nout == 2) && (Ndeps <= 0);
+    if(DO_N3){
+      DO_N3 = (m_NForChild[&GetChildState(0)] == 1) && 
+	(m_NForChild[&GetChildState(1)] == 1) && 
+	!m_NExclusive[&GetChildState(0)] && 
+	!m_NExclusive[&GetChildState(1)];
+    }
+    if(!DO_N3)
+      return CombinatoricJigsaw::LoopCombinatoric();
+   
+    // DO 4 N^3 calculation
     vector<TLorentzVector> inputs;
     for(int i = 0; i < Ninput; i++)
       inputs.push_back(m_InputStates[i].GetFourVector());	
-
-    bool DO_HEM = (m_NForChild[&GetChildState(0)] == 1) && 
-      (m_NForChild[&GetChildState(1)] == 1) && 
-      !m_NExclusive[&GetChildState(0)] && 
-      !m_NExclusive[&GetChildState(1)] &&
-      (int(m_DependancyStates.size()) <= 0);
-
-    //////////////////////////////////////
-    // N^3 hemispheres
-    //////////////////////////////////////
-    if(DO_HEM){ 
-      // boost input vectors to CM frame
-      TLorentzVector TOT(0.,0.,0.,0.);
-      for(int i = 0; i < Ninput; i++) TOT += inputs[i];
-      TVector3 boost = TOT.BoostVector();
-      for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
-
-      int ip_max[2];
-      int jp_max[2];
-      for(int i = 0; i < 2; i++) ip_max[i] = -1;
-      for(int i = 0; i < 2; i++) jp_max[i] = -1;
-      double val_max = -1.;
-      // Loop over all 2-jet seed probes
-      int ip[2], jp[2];
-      for(ip[0] = 0; ip[0] < Ninput-1; ip[0]++){
-	for(ip[1] = ip[0]+1; ip[1] < Ninput; ip[1]++){
-	  TVector3 nRef = inputs[ip[0]].Vect().Cross(inputs[ip[1]].Vect());
-	  int Nhem[2];
-	  TLorentzVector hem[2];
-	  for(int i = 0; i < 2; i++){
-	    Nhem[i] = 0;
-	    hem[i].SetPxPyPzE(0.,0.,0.,0.);
-	  }
-	  // Loop over all jets
-	  for(int i = 0; i < Ninput; i++){
-	    if((i == ip[0]) || (i ==ip[1])) continue;
-	    int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
-	    Nhem[ihem]++;
-	    hem[ihem] += inputs[i];
-	  }
-	  // assign 2 probes
-	  for(jp[0] = 0; jp[0] < 2; jp[0]++){
-	    for(jp[1] = 0; jp[1] < 2; jp[1]++){
-	      if(jp[0] == jp[1] && Nhem[!jp[0]] == 0) continue;
-	      TLorentzVector hem_probes[2];
-	      for(int i = 0; i < 2; i++) hem_probes[i] = hem[i];
-	      for(int i = 0; i < 2; i++) hem_probes[jp[i]] += inputs[ip[i]];
-	      double val = hem_probes[0].P() + hem_probes[1].P();
-	      if(val > val_max){
-		val_max = val;
-		for(int i = 0; i < 2; i++) ip_max[i] = ip[i];
-		for(int i = 0; i < 2; i++) jp_max[i] = jp[i];
-	      }
-	    }
-	  }
-	}
-      }
-      if(val_max < 0)
-	return false;
-     
-      // initialize output states
-      for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
-      for(int i = 0; i < 2; i++) GetChildState(jp_max[i]).AddElement(m_InputStates[ip_max[i]]);
-      TVector3 nRef = inputs[ip_max[0]].Vect().Cross(inputs[ip_max[1]].Vect());
-      for(int i = 0; i < Ninput; i++){
-	if((i == ip_max[0]) || (i == ip_max[1])) continue;
-	int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
-	GetChildState(ihem).AddElement(m_InputStates[i]);
-      }
-      if(GetChildState(1).GetFourVector().M() > GetChildState(1).GetFourVector().M()){
-	vector<RFList<VisibleState> > flip;
-	for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
-	for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
-	for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
-      }
-    } 
-    //////////////////////////////////////
-    // NlogN 2^N brute force 
-    //////////////////////////////////////
-    if(!DO_HEM){
-      int N_comb = 1;
-      for(int i = 0; i < Ninput; i++) N_comb *= 2;
-      
-      int c_max = -1;
-      double val_max = -1; 
-      // Loop through combinatorics
-      for(int c = 0; c < N_comb; c++){
-	int key = c;
+    
+    // boost input vectors to CM frame
+    TLorentzVector TOT(0.,0.,0.,0.);
+    for(int i = 0; i < Ninput; i++) TOT += inputs[i];
+    TVector3 boost = TOT.BoostVector();
+    for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
+    
+    int ip_max[2];
+    int jp_max[2];
+    for(int i = 0; i < 2; i++) ip_max[i] = -1;
+    for(int i = 0; i < 2; i++) jp_max[i] = -1;
+    double metric_max = -1.;
+    // Loop over all 2-jet seed probes
+    int ip[2], jp[2];
+    for(ip[0] = 0; ip[0] < Ninput-1; ip[0]++){
+      for(ip[1] = ip[0]+1; ip[1] < Ninput; ip[1]++){
+	TVector3 nRef = inputs[ip[0]].Vect().Cross(inputs[ip[1]].Vect());
 	int Nhem[2];
 	TLorentzVector hem[2];
 	for(int i = 0; i < 2; i++){
 	  Nhem[i] = 0;
-	  GetChildState(i).ClearElements();
 	  hem[i].SetPxPyPzE(0.,0.,0.,0.);
-	} 
-	// set output states for combinatoric;
+	}
+	// Loop over all jets
 	for(int i = 0; i < Ninput; i++){
-	  int ihem = key%2;
-	  key /= 2;
+	  if((i == ip[0]) || (i ==ip[1])) continue;
+	  int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
 	  Nhem[ihem]++;
 	  hem[ihem] += inputs[i];
-	  GetChildState(ihem).AddElement(m_InputStates[i]);
 	}
-	// check validity of combinatoric
-	bool valid = true;
-	for(int i = 0; i < 2; i++){
-	  if(m_NExclusive[&GetChildState(i)]){
-	    if(Nhem[i] != m_NForChild[&GetChildState(i)]) valid = false;
-	  } else {
-	    if(Nhem[i] < m_NForChild[&GetChildState(i)]) valid = false;
+	// assign 2 probes
+	for(jp[0] = 0; jp[0] < 2; jp[0]++){
+	  for(jp[1] = 0; jp[1] < 2; jp[1]++){
+	    if(jp[0] == jp[1] && Nhem[!jp[0]] == 0) continue;
+	    TLorentzVector hem_probes[2];
+	    for(int i = 0; i < 2; i++) hem_probes[i] = hem[i];
+	    for(int i = 0; i < 2; i++) hem_probes[jp[i]] += inputs[ip[i]];
+	    double metric = hem_probes[0].P() + hem_probes[1].P();
+	    if(metric > metric_max){
+	      metric_max = metric;
+	      for(int i = 0; i < 2; i++) ip_max[i] = ip[i];
+	      for(int i = 0; i < 2; i++) jp_max[i] = jp[i];
+	    }
 	  }
 	}
-	if(!valid) continue;
-
-	// Execute depedancy Jigsaws
-	ExecuteDependancyJigsaws();
-
-	// Evaluate metric for this cominatoric
-	for(int i = 0; i < Ndeps;  i++)
-	  hem[i] += m_DependancyStates[i].GetFourVector();
-       
-	TVector3 boost = (hem[0]+hem[1]).BoostVector();
-	hem[0].Boost(-boost);
-	hem[1].Boost(-boost);
-	double val = hem[0].P()+hem[1].P();
-	if(Nhem[0] == 0 || Nhem[1] == 0){
-	  val = 0.; // cout << "zero in Nhem " << val << endl;
-	}
-	if(val >= val_max){
-	  val_max = val;
-	  c_max = c;
-	}
-      }
-      if(c_max < 0) return false;
-     
-      // Set outputs to best combinatoric
-      for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
-      int key = c_max;
-      for(int i = 0; i < Ninput; i++){
-	int ihem = key%2;
-	key /= 2;
-	GetChildState(ihem).AddElement(m_InputStates[i]);
       }
     }
+    if(metric_max < 0)
+      return false;
+    
+    // initialize output states
+    for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
+    for(int i = 0; i < 2; i++) GetChildState(jp_max[i]).AddElement(m_InputStates[ip_max[i]]);
+    TVector3 nRef = inputs[ip_max[0]].Vect().Cross(inputs[ip_max[1]].Vect());
+    for(int i = 0; i < Ninput; i++){
+      if((i == ip_max[0]) || (i == ip_max[1])) continue;
+      int ihem = int(inputs[i].Vect().Dot(nRef) > 0.);
+      GetChildState(ihem).AddElement(m_InputStates[i]);
+    }
+    if(GetChildState(1).GetFourVector().M() > GetChildState(1).GetFourVector().M()){
+      vector<RFList<VisibleState> > flip;
+      for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
+      for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
+      for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
+    }
+    
     // Execute depedancy Jigsaws
     ExecuteDependancyJigsaws();
-
+  
     return SetSpirit(true);
+  }
+
+  double MinMassesCombJigsaw::EvaluateMetric() const {
+    int N = GetNChildren();
+    vector<TLorentzVector> P;
+    for(int i = 0; i < N; i++)
+      P.push_back(GetChildState(i).GetFourVector());
+    N = m_DependancyStates.size();
+    for(int i = 0; i < N; i++)
+      P[i] += GetDependancyStates(i).GetFourVector();
+    
+    double prob = 1.;
+    TLorentzVector SUM(0.,0.,0.,0.);
+    for(int i = 1; i < N; i++)
+      SUM += P[i];
+    for(int i = 0; i < N-1; i++){
+      prob *= GetProb((P[i]+SUM).M(), P[i].M(), SUM.M());
+      SUM -= P[i+1];
+    }
+    return prob;
   }
 
   MinMassesCombJigsaw MinMassesCombJigsaw::m_Empty;

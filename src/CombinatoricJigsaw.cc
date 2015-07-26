@@ -54,7 +54,6 @@ namespace RestFrames {
   }
 
   void CombinatoricJigsaw::Clear(){
-    
     Jigsaw::Clear();
   }
 
@@ -181,7 +180,26 @@ namespace RestFrames {
     return true;
   }
 
-  bool CombinatoricJigsaw::InitializeEvent(){
+  bool CombinatoricJigsaw::AnalyzeEvent(){
+    if(!IsSoundMind() || !GetGroup())
+      return SetSpirit(false);
+
+    if(!InitializeCombinatoric()){
+      m_Log << LogWarning;
+      m_Log << "Problem initializing event info" << m_End;
+      return SetSpirit(false);
+    }
+
+    if(!LoopCombinatoric()){
+      m_Log << LogWarning;
+      m_Log << "Problem looping over combinatorics" << m_End;
+      return SetSpirit(false);
+    }
+
+    return SetSpirit(true);
+  }
+
+  bool CombinatoricJigsaw::InitializeCombinatoric(){
     if(!IsSoundMind()) 
       return SetSpirit(false);
 
@@ -208,7 +226,7 @@ namespace RestFrames {
       for(int f = 0; f < Nf; f++){
 	int N = -1;
 	bool excl = false;
-	GetGroup().GetNElementsForFrame(frames.Get(f), N, excl);
+	GetGroup().GetNElementsForFrame(frames[f], N, excl);
 	if(N < 0) return SetSpirit(false);
 	NTOT += N;
 	exclTOT = exclTOT && excl;
@@ -238,7 +256,85 @@ namespace RestFrames {
       return SetSpirit(false);
     }
 
-    return true;
+    return SetSpirit(true);
+  }
+
+  bool CombinatoricJigsaw::LoopCombinatoric(){
+    int Ninput = m_InputStates.GetN();
+    int Nout   = GetNChildren();	
+
+    int N_comb = 1;
+    for(int i = 0; i < Ninput; i++) N_comb *= Nout;
+   
+    vector<int> Nhem;
+    for(int i = 0; i < Nout; i++)
+      Nhem.push_back(0);
+    
+    int c_max = -1;
+    double metric_max = -1; 
+   
+    for(int c = 0; c < N_comb; c++){
+      int key = c;
+      for(int i = 0; i < Nout; i++){
+	Nhem[i] = 0;
+	GetChildState(i).ClearElements();
+      } 
+
+      // set output states for combinatoric;
+      for(int i = 0; i < Ninput; i++){
+	int ihem = key%Nout;
+	key /= Nout;
+	Nhem[ihem]++;
+	GetChildState(ihem).AddElement(m_InputStates[i]);
+      }
+      
+      // check validity of combinatoric
+      bool valid = true;
+      for(int i = 0; i < Nout; i++){
+	if(m_NExclusive[&GetChildState(i)]){
+	  if(Nhem[i] != m_NForChild[&GetChildState(i)]) 
+	    valid = false;
+	} else {
+	  if(Nhem[i] < m_NForChild[&GetChildState(i)]) 
+	    valid = false;
+	}
+      }
+      if(!valid)
+	continue;
+
+      // Execute depedancy Jigsawsfor this combintoric
+      ExecuteDependancyJigsaws();
+
+      // Evaluate metric for this combinatoric
+      double metric = EvaluateMetric();
+     
+      if(metric >= metric_max){
+	metric_max = metric;
+	c_max = c;
+      }
+    }
+   
+    if(c_max < 0){
+      m_Log << LogWarning;
+      m_Log << "Unable to find combinatoric with positive metric";
+      m_Log << m_End;
+      return SetSpirit(false);
+    }
+     
+    // Set outputs to best combinatoric
+    for(int i = 0; i < 2; i++) 
+      GetChildState(i).ClearElements();
+    int key = c_max;
+    for(int i = 0; i < Ninput; i++){
+      int ihem = key%Nout;
+      key /= Nout;
+      GetChildState(ihem).AddElement(m_InputStates[i]);
+    }
+  
+    // Execute depedancy Jigsaws
+    ExecuteDependancyJigsaws();
+
+    return SetSpirit(true);
   }
 
 }

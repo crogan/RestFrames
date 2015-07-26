@@ -44,9 +44,11 @@ namespace RestFrames {
 
     virtual void Clear();
     
-    static SetMassInvJigsaw& Empty();
+    virtual string GetLabel() const { return "Set Invisible Mass"; }
 
     virtual bool AnalyzeEvent();
+
+    static SetMassInvJigsaw& Empty();
     
   private:
     static SetMassInvJigsaw m_Empty;

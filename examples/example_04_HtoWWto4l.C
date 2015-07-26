@@ -237,24 +237,15 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
 
-  FramePlot framePlot("framePlot","framePlot");
-  framePlot.AddFrameTree(LAB_G);
-  framePlot.DrawFramePlot();
-  TCanvas* can = framePlot.GetCanvas();
-  can->Write("c_GenTree",TObject::kOverwrite);
-  delete can;
+  TreePlot tree_plot("TreePlot","TreePlot");
+ 
+  // generator tree
+  tree_plot.SetFrameTree(LAB_G);
+  tree_plot.Draw("GenTree", "Generator Tree");
 
-  framePlot.AddFrameTree(LAB_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_RecoTree",TObject::kOverwrite);
-  delete can;
-
-  framePlot.AddGroupTree(INV_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_InvTree",TObject::kOverwrite);
-  delete can;
+  // reco tree
+  tree_plot.SetFrameTree(LAB_R);
+  tree_plot.Draw("RecoTree", "Reconstruction Tree");
 
   foutput->Close();
   g_Log << LogInfo << "Finished" << g_End;

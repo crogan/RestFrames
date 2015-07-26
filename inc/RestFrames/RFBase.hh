@@ -51,6 +51,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <TVector3.h>
 #include <TLorentzVector.h>
 #include "RestFrames/RFKey.hh"
@@ -167,6 +168,8 @@ namespace RestFrames {
     static RFBase m_Empty;
 
   };
+
+  double GetProb(double Mp, double Mc1, double Mc2);
 
 }
 

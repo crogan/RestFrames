@@ -47,10 +47,14 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    static MinMassesCombJigsaw& Empty();
+    virtual string GetLabel() const { return "Minimize Masses"; }
 
     virtual bool AnalyzeEvent();
 
+    static MinMassesCombJigsaw& Empty();
+
+  protected:
+    virtual double EvaluateMetric() const;
   private:
     static MinMassesCombJigsaw m_Empty;
 

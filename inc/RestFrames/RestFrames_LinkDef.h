@@ -8,7 +8,8 @@ using namespace RestFrames;
 #pragma link C++ class RFKey;
 
 #pragma link C++ class RFList<RFBase>;
-#pragma link C++ class RFList<RestFrame>; 
+#pragma link C++ class RFList<RestFrame>;
+#pragma link C++ class RFList<const RestFrame>;
 #pragma link C++ class RFList<ReconstructionFrame>;
 #pragma link C++ class RFList<GeneratorFrame>;  
 #pragma link C++ class RFList<ResonanceGenFrame>;
@@ -56,9 +57,7 @@ using namespace RestFrames;
 #pragma link C++ class InvisibleState;
 #pragma link C++ class CombinatoricState;
 
-#pragma link C++ class FramePlot;
-#pragma link C++ class FramePlotNode;
-#pragma link C++ class FramePlotLink;
+#pragma link C++ class TreePlot;
 
 #elif __MAKECINT__
 
@@ -74,6 +73,7 @@ using namespace RestFrames;
 #pragma link C++ class RFKey+;
 #pragma link C++ class RFList<RFBase>+;
 #pragma link C++ class RFList<RestFrame>+; 
+#pragma link C++ class RFList<const RestFrame>+;
 #pragma link C++ class RFList<ReconstructionFrame>+; 
 #pragma link C++ class RFList<ResonanceGenFrame>+; 
 #pragma link C++ class RFList<Jigsaw>+;
@@ -120,9 +120,7 @@ using namespace RestFrames;
 #pragma link C++ class InvisibleState+;
 #pragma link C++ class CombinatoricState+;
 
-#pragma link C++ class FramePlot+;
-#pragma link C++ class FramePlotNode+;
-#pragma link C++ class FramePlotLink+;
+#pragma link C++ class TreePlot+;
 
 #endif /* __ROOTCLING__ and __CINT__ */
 

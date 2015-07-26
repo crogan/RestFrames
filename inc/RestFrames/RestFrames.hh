@@ -6,7 +6,10 @@
 #include "RestFrames/RFBase.hh"
 #include "RestFrames/RFList.hh"
 
-#include "RestFrames/FramePlot.hh"
+#include "RestFrames/RFPlot.hh"
+#include "RestFrames/TreePlot.hh"
+#include "RestFrames/TreePlotNode.hh"
+#include "RestFrames/TreePlotLink.hh"
 
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/LabFrame.hh"

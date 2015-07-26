@@ -54,7 +54,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 10000;
+  int Ngen = 10;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -190,33 +190,31 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // draw some pictures of our trees
   //////////////////////////////////////////////////////////////
 
-  FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
-  treePlot_G->AddFrameTree(LAB_G);
-  treePlot_G->DrawFramePlot();
-  TCanvas* c_gentree = treePlot_G->GetCanvas();
+  TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
+ 
+  // generator tree
+  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->Draw("GenTree", "Generator Tree");
 
-  FramePlot* treePlot_R = new FramePlot("tree_R","Signal-like Reconstruction Tree");
-  treePlot_R->AddFrameTree(LAB_R);
-  treePlot_R->AddJigsaw(MinMassJigsaw_R);
-  treePlot_R->AddJigsaw(RapidityJigsaw_R);
-  treePlot_R->AddJigsaw(ContraBoostJigsaw_R);
-  treePlot_R->DrawFramePlot();
-  TCanvas* c_recotree = treePlot_R->GetCanvas();
+  // signal reco tree
+  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->AddJigsaw(ContraBoostJigsaw_R);
+  tree_plot->AddJigsaw(HemiJigsaw_R);
+  tree_plot->AddJigsaw(CaHemiJigsaw_R);
+  tree_plot->AddJigsaw(CbHemiJigsaw_R);
+  tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree");
 
-  FramePlot* treePlot_B = new FramePlot("tree_B","Background-like Reconstruction Tree");
-  treePlot_B->AddFrameTree(LAB_B);
-  treePlot_B->DrawFramePlot();
-  TCanvas* c_bkgtree = treePlot_B->GetCanvas();
+  // background reco tree
+  tree_plot->SetFrameTree(LAB_B);
+  tree_plot->Draw("BkgRecoTree", "Background Reconstruction Tree");
 
-  FramePlot* INVPlot_R = new FramePlot("INV_R","Invisible Objects Jigsaws");
-  INVPlot_R->AddGroupTree(INV_R);
-  INVPlot_R->DrawFramePlot();
-  TCanvas* c_invRtree = INVPlot_R->GetCanvas();
+  // Invisible Jigsaws
+  tree_plot->SetGroupTree(INV_R);
+  tree_plot->Draw("InvTree", "Invisible Objects Jigsaws");
 
-  FramePlot* VISPlot_R = new FramePlot("VIS_R","Visible Objects Jigsaws");
-  VISPlot_R->AddGroupTree(VIS_R);
-  VISPlot_R->DrawFramePlot();
-  TCanvas* c_visRtree = VISPlot_R->GetCanvas();
+  // Visible Jigsaws
+  tree_plot->SetGroupTree(VIS_R);
+  tree_plot->Draw("VisTree", "Visible Objects Jigsaws");
 
   TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
 
@@ -424,19 +422,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   TCanvas* c_M12_v_M13 = Plot_Me("c_M12_v_M13", h_M12_v_M13, 
 				 "m_{1,2}^{2} [GeV^{2}]", "m_{1,2}^{2} [GeV^{2}]", "");
 
-  TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
-  foutput->cd();
-  c_gentree->Write();
-  c_recotree->Write();
-  c_bkgtree->Write();
-  c_invRtree->Write();
-  c_visRtree->Write();
-  delete c_gentree;
-  delete c_recotree;
-  delete c_bkgtree;
-  delete c_invRtree;
-  delete c_visRtree;
-  foutput->Close();
+  tree_plot->WriteOutput(output_name);
 }
 
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title, string label){

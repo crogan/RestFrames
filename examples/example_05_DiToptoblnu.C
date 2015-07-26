@@ -173,25 +173,23 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   // draw some pictures of our trees
   //////////////////////////////////////////////////////////////
 
-  // FramePlot* treePlot_G = new FramePlot("tree_G","Generator Tree");
-  // treePlot_G->AddFrameTree(LAB_G);
-  // treePlot_G->DrawFramePlot();
-  // TCanvas* c_gentree = treePlot_G->GetCanvas();
+  TreePlot tree_plot("TreePlot","TreePlot");
+ 
+  // generator tree
+  tree_plot.SetFrameTree(LAB_G);
+  tree_plot.Draw("GenTree", "Generator Tree");
+  
+  // reco tree
+  tree_plot.SetFrameTree(LAB_R);
+  tree_plot.Draw("RecoTree", "Reconstruction Tree");
 
-  // FramePlot* treePlot_R = new FramePlot("tree_R","Signal-like Reconstruction Tree");
-  // treePlot_R->AddFrameTree(LAB_R);
-  // treePlot_R->DrawFramePlot();
-  // TCanvas* c_recotree = treePlot_R->GetCanvas();
+  // Invisible Jigsaw tree
+  tree_plot.SetGroupTree(INV_R);
+  tree_plot.Draw("InvTree", "Invisible Jigsaws");
 
-  // FramePlot* INVPlot_R = new FramePlot("INV_R","Invisible Objects Jigsaws");
-  // INVPlot_R->AddGroupTree(INV_R);
-  // INVPlot_R->DrawFramePlot();
-  // TCanvas* c_invRtree = INVPlot_R->GetCanvas();
-
-  // FramePlot* VISPlot_R = new FramePlot("VIS_R","Visible Objects Jigsaws");
-  // VISPlot_R->AddGroupTree(B_R);
-  // VISPlot_R->DrawFramePlot();
-  // TCanvas* c_visRtree = VISPlot_R->GetCanvas();
+  // Visible Jigsaw tree
+  tree_plot.SetGroupTree(B_R);
+  tree_plot.Draw("VisTree", "Visible Jigsaws");
 
   // set top masses
   Ta_G.SetMass(mT);
@@ -343,31 +341,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
 
   TFile *foutput = new TFile(output_name.c_str(),"RECREATE");
   foutput->cd();
-
-  FramePlot framePlot("framePlot","framePlot");
-  framePlot.AddFrameTree(LAB_G);
-  framePlot.DrawFramePlot();
-  TCanvas* can = framePlot.GetCanvas();
-  can->Write("c_GenTree",TObject::kOverwrite);
-  delete can;
-
-  framePlot.AddFrameTree(LAB_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_RecoTree",TObject::kOverwrite);
-  delete can;
-
-  framePlot.AddGroupTree(INV_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_InvTree",TObject::kOverwrite);
-  delete can;
-
-  framePlot.AddGroupTree(B_R);
-  framePlot.DrawFramePlot();
-  can = framePlot.GetCanvas();
-  can->Write("c_VisTree",TObject::kOverwrite);
-  delete can;
 
   foutput->Close();
   g_Log << LogInfo << "Finished" << g_End;

@@ -466,10 +466,6 @@ namespace RestFrames {
     return Pcm;
   }
 
-  double GetProb(double Mp, double Mc1, double Mc2){
-    return sqrt((Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2)/2./Mp;
-  }
-
   int DoubleMax(const void *a, const void *b){
     Double_t aa = *((double*)a);
     Double_t bb = *((double*)b);

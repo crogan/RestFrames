@@ -55,6 +55,8 @@ namespace RestFrames {
     static Jigsaw& Empty();
 
     JigsawType GetType() const { return m_Type; }
+
+    virtual string GetLabel() const { return "Jigsaw"; }
   
     /// \brief String of information associated with Jigsaw
     virtual string PrintString(LogType type = LogVerbose) const;
@@ -70,9 +72,6 @@ namespace RestFrames {
     virtual void SetParentState(State& state);
     virtual State& GetParentState() const;
 
-    int GetNChildStates() const;
-    int GetNDependancyStates() const;
-
     bool CanResolve(const State& state) const;
     bool CanResolve(const RestFrames::RFList<RestFrame>& frames) const;
   
@@ -86,8 +85,12 @@ namespace RestFrames {
     virtual State& GetChildState(int i) const;
     virtual RestFrames::RFList<State> GetChildStates() const;
 
+    int GetNDependancyStates() const;
+    virtual RestFrames::RFList<State> GetDependancyStates(int i) const;
+
     virtual RestFrames::RFList<RestFrame> GetParentFrames() const;
     virtual RestFrames::RFList<RestFrame> GetChildFrames(int i) const;
+    virtual RestFrames::RFList<RestFrame> GetDependancyFrames(int i) const;
 
     bool DependsOnJigsaw(const Jigsaw& jigsaw) const;
     virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);

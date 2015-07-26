@@ -392,10 +392,12 @@ namespace RestFrames {
 
   template class RFList<RFBase>;
   template class RFList<RestFrame>; 
+  template class RFList<const RestFrame>; 
   template class RFList<ReconstructionFrame>;
   template class RFList<GeneratorFrame>;
   template class RFList<ResonanceGenFrame>; 
   template class RFList<Jigsaw>;
+  template class RFList<const Jigsaw>;
   template class RFList<Group>;
   template class RFList<State>;
   template class RFList<VisibleState>;
@@ -404,10 +406,12 @@ namespace RestFrames {
 
   template class RFListBase<RFBase,RFList<RFBase> >;
   template class RFListBase<RestFrame,RFList<RestFrame> >; 
+  template class RFListBase<const RestFrame,RFList<const RestFrame> >; 
   template class RFListBase<ReconstructionFrame,RFList<ReconstructionFrame> >; 
   template class RFListBase<GeneratorFrame,RFList<GeneratorFrame> >;
   template class RFListBase<ResonanceGenFrame,RFList<ResonanceGenFrame> >; 
   template class RFListBase<Jigsaw,RFList<Jigsaw> >;
+  template class RFListBase<const Jigsaw,RFList<const Jigsaw> >;
   template class RFListBase<Group,RFList<Group> >;
   template class RFListBase<State,RFList<State> >;
   template class RFListBase<VisibleState,RFList<VisibleState> >;

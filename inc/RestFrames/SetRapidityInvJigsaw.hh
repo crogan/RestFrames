@@ -42,6 +42,8 @@ namespace RestFrames {
     SetRapidityInvJigsaw();
     virtual ~SetRapidityInvJigsaw();
 
+    virtual string GetLabel() const { return "Set Invisible Rapidity"; }
+
     virtual void SetAxis(const TVector3& axis);
 
     virtual bool AnalyzeEvent();

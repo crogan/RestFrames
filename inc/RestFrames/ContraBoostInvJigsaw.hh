@@ -42,6 +42,8 @@ namespace RestFrames {
     ContraBoostInvJigsaw();
     ~ContraBoostInvJigsaw();
 
+    virtual string GetLabel() const { return "Contra-boost Invariant"; }
+
     static ContraBoostInvJigsaw& Empty();
 
     virtual double GetMinimumMass() const;

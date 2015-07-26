@@ -60,17 +60,22 @@ namespace RestFrames {
     virtual void AddFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
     virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
+
+    virtual bool AnalyzeEvent();
   
   protected:
+    virtual bool InitializeCombinatoric();
+    virtual bool LoopCombinatoric();
+    virtual double EvaluateMetric() const = 0;
+
+    RestFrames::RFList<VisibleState> m_InputStates;
+    map<const State*, int>  m_NForChild;
+    map<const State*, bool> m_NExclusive;
+
     virtual CombinatoricState& GetNewChildState();
  
     RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
-
-    virtual bool InitializeEvent();
-    RestFrames::RFList<VisibleState> m_InputStates;
-    map<const State*, int>  m_NForChild;
-    map<const State*, bool> m_NExclusive;
     
   private:
     void Init();

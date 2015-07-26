@@ -184,4 +184,11 @@ namespace RestFrames {
 
   RFBase RFBase::m_Empty;
 
+  double GetProb(double Mp, double Mc1, double Mc2){
+    if(Mp <= 0.) return 0.;
+    Mc1 = max(Mc1, 0.);
+    Mc2 = max(Mc2, 0.);
+    return sqrt(max(0., (Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2) )/2./Mp;
+  }
+
 }
