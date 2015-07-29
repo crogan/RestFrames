@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   SetMassInvJigsaw.hh
+///  \file   SetMassInvJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)

@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   InvisibleGenFrame.hh
+///  \file   InvisibleGenFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)

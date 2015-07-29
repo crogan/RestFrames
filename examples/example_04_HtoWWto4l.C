@@ -53,7 +53,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 125.;
+  double mH = 1000.;
   double wH = 0.04;
   double mW = 80.;
   double wW = 2.5;
@@ -234,15 +234,21 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   TCanvas *c_MH_v_MW     = Plot_Me("c_MH_v_MW", h_MH_v_MW, "M_{H} / m_{H}^{true}", "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} [GeV]", "m_{Wb}^{true} [GeV]", plot_title);
 
-  TreePlot tree_plot("TreePlot","TreePlot");
+  TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot.SetFrameTree(LAB_G);
-  tree_plot.Draw("GenTree", "Generator Tree");
+  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->Draw("GenTree", "Generator Tree");
 
   // reco tree
-  tree_plot.SetFrameTree(LAB_R);
-  tree_plot.Draw("RecoTree", "Reconstruction Tree");
+  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->Draw("RecoTree", "Reconstruction Tree");
+
+   // reco tree
+  tree_plot->SetGroupTree(INV_R);
+  tree_plot->Draw("InvTree", "Invisible Jigsaws");
+
+ 
 
   g_Log << LogInfo << "Finished" << g_End;
 }

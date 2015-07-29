@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   LabFrame.hh
+///  \file   LabFrame.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)

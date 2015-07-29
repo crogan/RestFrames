@@ -54,19 +54,16 @@ namespace RestFrames {
     RFBase::Clear();
   }
   
-  /// \brief Returns empty instance of class
   RestFrame& RestFrame::Empty(){
     return ReconstructionFrame::Empty();
   }
 
   TVector3 RestFrame::m_Axis = TVector3(0.,0.,1.);
 
-  /// \brief Set axis perpendicular to transverse plane
   void RestFrame::SetAxis(const TVector3& axis){
     RestFrame::m_Axis = axis;
   }
 
-  /// \brief Retrieve axis perpendicular to transverse plane
   TVector3 const& RestFrame::GetAxis(){
     return RestFrame::m_Axis;
   }

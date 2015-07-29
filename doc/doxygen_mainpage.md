@@ -11,7 +11,7 @@ Installation
 To make the shared library _libRestFrames.so_ simply do:
 
     >$ make
-
+	
 which will create _lib/libRestFrames.so_
 
 Examples 

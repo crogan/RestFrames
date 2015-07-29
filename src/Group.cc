@@ -60,6 +60,7 @@ namespace RestFrames {
   void Group::Clear(){
     SetBody(false);
     if(m_GroupStatePtr) delete m_GroupStatePtr;
+    m_GroupStatePtr = nullptr;
     m_Frames.Clear();
     m_States.Clear();
     m_Jigsaws.Clear();
