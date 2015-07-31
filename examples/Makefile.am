@@ -28,6 +28,6 @@ example_05_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS
 
 example_06_x_SOURCES = example_06_DiGluinostoJetsMET.C
 example_06_x_SHORTNAME = 06
-example_06_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_06_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 
 include $(top_srcdir)/config/rootconfig.mk

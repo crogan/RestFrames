@@ -47,10 +47,9 @@ using namespace std;
 using namespace RestFrames;
 
 void example_05_DiToptoblnu(string output_name = "output_05.root"){
-  setstyle();
   
-  SetLogPrint(LogVerbose,true);
-  SetLogPrint(LogDebug,true);
+  SetLogPrint(LogVerbose,false);
+  //SetLogPrint(LogDebug,true);
   SetLogMaxWidth(90);
 
   double mT = 175.;
@@ -151,8 +150,8 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   INV_R.AddJigsaw(ContraBoostJigsaw_R);
   ContraBoostJigsaw_R.AddVisibleFrames((Ta_R.GetListVisibleFrames()), 0);
   ContraBoostJigsaw_R.AddVisibleFrames((Tb_R.GetListVisibleFrames()), 1);
-  ContraBoostJigsaw_R.AddInvisibleFrames((Ta_R.GetListInvisibleFrames()), 0);
-  ContraBoostJigsaw_R.AddInvisibleFrames((Tb_R.GetListInvisibleFrames()), 1);
+  ContraBoostJigsaw_R.AddInvisibleFrame(Na_R, 0);
+  ContraBoostJigsaw_R.AddInvisibleFrame(Nb_R, 1);
 
   MinMassesCombJigsaw HemiJigsaw_R("HEM_JIGSAW_R","Minimize m(b #it{l}) Jigsaw");
   B_R.AddJigsaw(HemiJigsaw_R);
@@ -173,23 +172,23 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   // draw some pictures of our trees
   //////////////////////////////////////////////////////////////
 
-  TreePlot tree_plot("TreePlot","TreePlot");
+  TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot.SetFrameTree(LAB_G);
-  tree_plot.Draw("GenTree", "Generator Tree");
+  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->Draw("GenTree", "Generator Tree");
   
   // reco tree
-  tree_plot.SetFrameTree(LAB_R);
-  tree_plot.Draw("RecoTree", "Reconstruction Tree");
+  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
   // Invisible Jigsaw tree
-  tree_plot.SetGroupTree(INV_R);
-  tree_plot.Draw("InvTree", "Invisible Jigsaws");
+  tree_plot->SetGroupTree(INV_R);
+  tree_plot->Draw("InvTree", "Invisible Jigsaws");
 
   // Visible Jigsaw tree
-  tree_plot.SetGroupTree(B_R);
-  tree_plot.Draw("VisTree", "Visible Jigsaws");
+  tree_plot->SetGroupTree(B_R);
+  tree_plot->Draw("VisTree", "Visible Jigsaws");
 
   // set top masses
   Ta_G.SetMass(mT);
@@ -308,6 +307,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     double MT[2];
     //*** W mass
     double MW[2];
+    
 
     for(int h = 0; h < 2; h++){
       cosT[h] = T[h]->GetCosDecayAngle();
@@ -330,14 +330,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     double MTT = sqrt(MT[0]*MT[0] + PT*PT) + sqrt(MT[1]*MT[1] + PT*PT);
   }
 
-  setstyle();
-  string plot_title = "t #bar{t} #rightarrow (b #it{l} #nu)(b #it{l} #nu)";
-  TCanvas *c_MT          = Plot_Me("c_MT", h_MT, "M_{T} / m_{T}^{true}", plot_title);
-  TCanvas *c_MW          = Plot_Me("c_MW", h_MW, "M_{W} / m_{W}^{true}", plot_title);
-  TCanvas *c_EB          = Plot_Me("c_EB", h_EB, "E_{b}^{T-frame} / E_{b}^{true}", plot_title);
-  TCanvas *c_EL          = Plot_Me("c_EL", h_EL, "E_{#it{l}}^{W-frame} / E_{#it{l}}^{true}", plot_title);
-  TCanvas *c_MT_v_MW     = Plot_Me("c_MT_v_MW", h_MT_v_MW, "M_{T} / m_{T}^{true}", "M_{W} / m_{W}^{true}", plot_title);
-  TCanvas *c_EB_v_MW     = Plot_Me("c_EB_v_MW", h_EB_v_MW, "E_{b}^{T-frame} / E_{b}^{true}", "M_{W} / m_{W}^{true}", plot_title);
+  tree_plot->WriteOutput(output_name);
 
   g_Log << LogInfo << "Finished" << g_End;
 }

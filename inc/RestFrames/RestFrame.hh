@@ -46,12 +46,10 @@ namespace RestFrames {
   class RestFrame : public RFBase {
   public:
     
-    ////////////////////////////////////////////////////////////////////
     /// \brief Standard constructor
     /// 
     /// \param sname    class instance name used for log statements
     /// \param stitle   class instance title used in figures
-    ////////////////////////////////////////////////////////////////////
     RestFrame(const string& sname, const string& stitle);
     
     /// \brief Empty constructor
@@ -59,13 +57,11 @@ namespace RestFrames {
     
     virtual ~RestFrame();
 
-    ////////////////////////////////////////////////////////////////////
     /// \brief Set axis perpendicular to transverse plane
     ///
     /// \param axis    input axis
     /// Sets axis to define the "transverse plane", perpendicular
     /// to the axis.
-    ////////////////////////////////////////////////////////////////////
     static void SetAxis(const TVector3& axis);
 
     /// \brief Retrieve axis which defines transverse plane
@@ -125,7 +121,7 @@ namespace RestFrames {
     /// \param frame    RestFrame to be added as child
     ///
     /// Method for adding a RestFrame as a child 
-    /// of this frame. *frame* will not be added as a child
+    /// of this frame. **frame** will not be added as a child
     /// if it is already listed as a child.
     virtual void AddChildFrame(RestFrame& frame);
 
@@ -201,12 +197,12 @@ namespace RestFrames {
     /// an empty frame if there is no sibling frame.
     virtual RestFrame const& GetSiblingFrame() const;
 
-    /// \brief Returns the depth of *frame* 
+    /// \brief Returns the depth of **frame** 
     ///
     /// \param frame    frame whose depth is returned
     ///
-    /// Returns the depth of *frame* relative to this frame. 
-    /// If *frame* is not among the descendents of this frame,
+    /// Returns the depth of **frame** relative to this frame. 
+    /// If **frame** is not among the descendents of this frame,
     /// -1 is returned.
     int GetFrameDepth(const RestFrame& frame) const;
 
@@ -217,7 +213,7 @@ namespace RestFrames {
     ///
     /// Returns the frame at a depth *depth* down from this frame. The path
     /// through the descendents of this frame is defined as that proceeding 
-    /// towards *frame*. If no frame exists at *depth* along this path, an
+    /// towards **frame**. If no frame exists at *depth* along this path, an
     /// empty frame is returned.
     virtual RestFrame const& GetFrameAtDepth(int depth, const RestFrame& frame) const;
     
@@ -225,8 +221,8 @@ namespace RestFrames {
     ///
     /// Returns a list of frames that inherit from this one,
     /// filled recursively and including children of children
-    /// which are of FrameType *type*. If *type* is LabFrame
-    /// (default) then *type* is ignored and all frames are included.
+    /// which are of FrameType **type**. If **type** is LabFrame
+    /// (default) then all frames, regardless of type, are included.
     virtual RestFrames::RFList<RestFrame> GetListFrames(FrameType type = kLabFrame);
 
     /// \brief Returns a list of VisibleFrame s inheriting from this
@@ -239,10 +235,12 @@ namespace RestFrames {
 
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame event analysis functions
-    /// \brief RestFrame member functions for accessing connected frames
     /// 
-    /// Member functions which can be used to access RestFrames 
-    /// connected to this frame through parent(s) or children.
+    /// Member functions which can be used to analyze an event. Each
+    /// these functions generally requires that the method 
+    /// "AnalyzeEvent()" be successfully called from a LabFrame which is
+    /// connected to this frame. Otherwise, a trivial value will be 
+    /// returned and a warning message printed.
     ////////////////////////////////////////////////////////////////////
     ///@{
 
@@ -250,35 +248,144 @@ namespace RestFrames {
     ///
     /// \param frame    additional RestFrame to add in list
     ///
-    /// Returns a list of RestFrame s containing *frame* and this
+    /// Returns a list of RestFrame s containing __frame__ and this
     RestFrames::RFList<RestFrame> operator+(RestFrame& frame); 
 
+    /// \brief Returns the mass of this frame.
     virtual double GetMass() const;
  
+    /// \brief Returns this frames four-vector in a specified frame
+    ///
+    /// \param frame    rest frame in which to evaluate four-vector
+    ///
+    /// Returns the four-vector of this frame evaluated in the 
+    /// rest frame of __frame__. If __frame__ is empty, then 
+    /// the four-vector will be evaluated in the LabFrame 
+    /// associated with this frame.
     TLorentzVector GetFourVector(const RestFrame& frame = 
 				 RestFrame::Empty()) const;
    
+    /// \brief Returns four-vector of visible descendants
+    ///
+    /// \param frame    rest frame in which to evaluate four-vector
+    ///
+    /// Returns the four-vector all of the visible descendants of 
+    /// this frame, evaluated in the rest frame of __frame__. If 
+    /// __frame__ is empty, then the four-vector will be evaluated 
+    /// in the LabFrame associated with this frame.
     TLorentzVector GetVisibleFourVector(const RestFrame& frame = 
 					RestFrame::Empty()) const; 
     
+    /// \brief Returns four-vector of invisible descendants
+    ///
+    /// \param frame    rest frame in which to evaluate four-vector
+    ///
+    /// Returns the four-vector all of the invisible descendants of 
+    /// this frame, evaluated in the rest frame of __frame__. If 
+    /// __frame__ is empty, then the four-vector will be evaluated 
+    /// in the LabFrame associated with this frame.
     TLorentzVector GetInvisibleFourVector(const RestFrame& frame = 
 					  RestFrame::Empty()) const; 
     
+    /// \brief Returns energy of this frame in specified reference frame
+    ///
+    /// \param frame    rest frame in which to evaluate energy
+    ///
+    /// Returns the energy of this frame, evaluated in the rest frame 
+    /// of __frame__. If __frame__ is empty, then the four-vector will
+    /// be evaluated in the LabFrame associated with this frame.
     double GetEnergy(const RestFrame& frame) const;
+
+    /// \brief Returns magnitude of momentum
+    ///
+    /// \param frame    rest frame in which to evaluate momentum
+    ///
+    /// Returns the momentum of this frame, evaluated in the rest frame 
+    /// of __frame__. If __frame__ is empty, then the four-vector will
+    /// be evaluated in the LabFrame associated with this frame.
     double GetMomentum(const RestFrame& frame) const;
 
-
+    /// \brief Returns visible shape of frame
+    ///
+    /// Returns the visible shape of the frame, calculated from 
+    /// visible frames associated with the children of this frame.
+    /// For each of the _N_ child frames, the four-vector of all
+    /// the visible frames associated with the frame is evaluated in
+    /// this rest frame. The visible shape is then defined as:
+    /// \f[ \mathrm{visible~shape} \equiv
+    ///     \frac{ \sqrt{ \sum_{i}^{N}\sum_{j < i}^{N} 
+    ///          2\left(\left|\vec{p}_{i}\right|\left|\vec{p}_{j}\right|+ 
+    ///          \vec{p}_{i}\cdot\vec{p}_{j}\right) } }
+    ///          { \sum_{i}^{N}\left|\vec{p}_{i}\right| }~. \f]
+    /// If this frame has no children then zero is returned.
     double GetVisibleShape() const;
+
+    /// \brief Returns scalar sum of visible child momenta
+    ///
+    /// Returns the scalar sum of the momenta of the visible 
+    /// frames associated with this frame's children. The
+    /// four-vectors of all the visible frames associated with
+    /// with each child frame are evaluated in this rest frame.
     double GetSumVisibleMomentum() const;
+
+    /// \brief Returns scalar sum of invisible child momenta
+    ///
+    /// Returns the scalar sum of the momenta of the invisible 
+    /// frames associated with this frame's children. The
+    /// four-vectors of all the invisible frames associated with
+    /// with each child frame are evaluated in this rest frame.
     double GetSumInvisibleMomentum() const;
     
+    /// \brief Returns the boost of this frame in it's parent's frame
+    ///
+    /// Returns the three-vector of this frame's momenta, evaluated 
+    /// in it's parent's rest frame. The orientation of the parent 
+    /// frame is defined as that which occurs if one boosts from the 
+    /// LabFrame to this frame via each intermediate frame in the tree
     TVector3 GetBoostInParentFrame() const;
+
+    /// \brief Returns the gamma of this frame in it's parent's frame
     double GetGammaInParentFrame() const;
 
+
+    /// \brief Returns the vector normal to the decay plane of this frame
+    ///
+    /// Returns the vector normal to the decay plane of this frame. The
+    /// normal vector, \f$\hat{n}_{\perp}\f$, is defined as:
+    /// \f[ \hat{n}_{\perp}\ = \frac{ 
+    ///     \vec{p}_{C}^{~P} \times \vec{p}_{F}^{~P} }
+    ///   {\left|\vec{p}_{C}^{~P} \times \vec{p}_{F}^{~P}\right|}~, \f]
+    /// where \f$\vec{p}_{F}^{~P}\f$ is the momentum of this frame
+    /// evaluated in it's parent's rest frame and \f$\vec{p}_{C}^{~P}\f$
+    /// is the momentum of it's first child frame evaluated in the same 
+    /// frame. If this frame is of type LabFrame then \f$\hat{n}_{\perp}\f$
+    /// is defined alternatively as:
+    /// \f[ \hat{n}_{\perp}\ = \frac{ 
+    ///     \vec{p}_{C}^{~F} \times \vec{n}_{\parallel} }
+    ///   {\left|\vec{p}_{C}^{~F} \times \vec{n}_{\parallel}\right|}~, \f]
+    /// where \f$\vec{p}_{C}^{~F}\f$ is the momentum of the child frame 
+    /// evaluated in this frame and \f$\vec{n}_{\parallel}\f$ is the vector
+    /// defining the transverse plane as returned by RestFrame::GetAxis().
+    /// If this frame has no children then an empty vector is returned.
     TVector3 GetDecayPlaneNormalVector() const;
 
+    /// \brief Returns the azimuthal angle between decay planes
+    ///
+    /// \param frame    frame corresponding to other decay plane
+    ///
+    /// Returns the azimuthal angle between the decay planes of 
+    /// this frame and **frame**. The decay planes are defined by
+    /// their normal vectors, as returned by GetDecayPlaneNormalVector().
     double GetDeltaPhiDecayPlanes(const RestFrame& frame) const;
 
+    /// \brief Returns the cosine of this frame's decay angle
+    ///
+    /// \param frame    frame defining child axis
+    ///
+    /// Returns the cosine of this frame's decay angle, 
+    /// \f$\cos\theta_{F}\f$, which is defined as:
+    /// \f[ \cos\theta_{F} = 
+    ///     
     double GetCosDecayAngle(const RestFrame& frame = 
 			    RestFrame::Empty()) const;
 
