@@ -147,7 +147,7 @@ namespace RestFrames {
     int N = GetNChildStates();
     for(int i = N-1; i >= 0; i--)
       if(GetChildState(i).ContainsElement(key))
-	return GetChildState(i).GetElement(key).GetFrame();
+	return GetChildState(i).GetListFrames()[0];
     return RestFrame::Empty();
   }
 

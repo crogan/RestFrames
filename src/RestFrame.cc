@@ -446,15 +446,20 @@ namespace RestFrames {
       return TLorentzVector(0.,0.,0.,0.);
     }
 
-    if(!frame) 
-      return GetVisibleFourVector(GetLabFrame());
+    if(!frame){
+      if(!GetLabFrame())
+	return TLorentzVector(0.,0.,0.,0.);
+      else
+	return GetVisibleFourVector(GetLabFrame());
+    }
+    
+    if(IsVisibleFrame())
+      return GetFourVector(frame);
 
     TLorentzVector V(0.,0.,0.,0.);
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
       RFList<RestFrame> frames = GetChildFrame(c).GetListVisibleFrames();
-      if(GetChildFrame(c).IsVisibleFrame())
-	frames += GetChildFrame(c);
       int Nf = frames.GetN();
       for(int f = 0; f < Nf; f++) 
 	V += frames[f].GetFourVector(frame);
@@ -466,22 +471,27 @@ namespace RestFrames {
    if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
       return TLorentzVector(0.,0.,0.,0.);
-    }
+   }
 
-    if(!frame) 
-      return GetInvisibleFourVector(GetLabFrame());
+   if(!frame){
+     if(!GetLabFrame())
+       return TLorentzVector(0.,0.,0.,0.);
+     else
+       return GetInvisibleFourVector(GetLabFrame());
+   }
 
-    TLorentzVector V(0.,0.,0.,0.);
-    int Nc = GetNChildren();
-    for(int c = 0; c < Nc; c++){
-      RFList<RestFrame> frames = GetChildFrame(c).GetListInvisibleFrames();
-      if(GetChildFrame(c).IsInvisibleFrame())
-	frames += GetChildFrame(c);
-      int Nf = frames.GetN();
-      for(int f = 0; f < Nf; f++) 
-	V += frames[f].GetFourVector(frame);
-    }
-    return V;
+    if(IsInvisibleFrame())
+      return GetFourVector(frame);
+   
+   TLorentzVector V(0.,0.,0.,0.);
+   int Nc = GetNChildren();
+   for(int c = 0; c < Nc; c++){
+     RFList<RestFrame> frames = GetChildFrame(c).GetListInvisibleFrames();
+     int Nf = frames.GetN();
+     for(int f = 0; f < Nf; f++) 
+       V += frames[f].GetFourVector(frame);
+   }
+   return V;
   }
 
   double RestFrame::GetEnergy(const RestFrame& frame) const {

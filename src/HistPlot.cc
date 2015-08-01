@@ -37,6 +37,7 @@ namespace RestFrames {
   {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
     SetPlotTitle(GetTitle());
+    SetPlotCategory("");
     m_Log.SetSource("HistPlot "+GetName());
     HistPlot::SetStyle();
   }
@@ -75,7 +76,7 @@ namespace RestFrames {
   }
     
   void HistPlot::AddHist(const HistPlotVar& var){
-    string name = var.GetName();
+    string name = var.GetName()+"_"+GetName();
     TH1D* hist = new TH1D(name.c_str(),name.c_str(),
 			  128,var.GetMin(),var.GetMax());
     m_HistToVar[hist] = &var;
@@ -84,7 +85,7 @@ namespace RestFrames {
 
   void HistPlot::AddHist(const HistPlotVar& varX,
 			 const HistPlotVar& varY){
-    string name = varX.GetName()+"_v_"+varY.GetName();
+    string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
     TH2D* hist = new TH2D(name.c_str(),name.c_str(),
 			  32,varX.GetMin(),varX.GetMax(),
 			  32,varY.GetMin(),varY.GetMax());
@@ -117,7 +118,7 @@ namespace RestFrames {
   void HistPlot::DrawHist(TH1D* hist){
     const HistPlotVar& var = *m_HistToVar[hist];
     
-    string name = "c_"+var.GetName();
+    string name = "c_"+var.GetName()+"__"+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),700,500);
     can->SetRightMargin(0.05);
     can->Draw();
@@ -154,7 +155,7 @@ namespace RestFrames {
     const HistPlotVar& varX = *m_HistToVars[hist].first;
     const HistPlotVar& varY = *m_HistToVars[hist].second;
     
-    string name = "c_"+varX.GetName()+"_v_"+varY.GetName();
+    string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"__"+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->Draw();
     can->SetGridx();
@@ -185,6 +186,9 @@ namespace RestFrames {
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
+    l.SetTextSize(0.045);
+    l.SetTextFont(132);
+    l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
     
     AddCanvas(can);
   }
@@ -195,6 +199,10 @@ namespace RestFrames {
 
   void HistPlot::SetPlotTitle(const string& title){
     m_PlotTitle = title;
+  }
+
+  void HistPlot::SetPlotCategory(const string& cat){
+    m_PlotCategory = cat;
   }
 
   void HistPlot::SetStyle(){

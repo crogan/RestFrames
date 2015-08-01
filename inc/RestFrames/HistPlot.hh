@@ -67,11 +67,14 @@ namespace RestFrames {
 
     void SetPlotTitle(const string& title);
 
+    void SetPlotCategory(const string& cat);
+
     static void SetStyle();
 
   private:
     string m_PlotLabel;
     string m_PlotTitle;
+    string m_PlotCategory;
     vector<TH1D*> m_1DHists;
     vector<TH2D*> m_2DHists;
     vector<HistPlotVar*> m_Vars;

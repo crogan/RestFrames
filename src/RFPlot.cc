@@ -65,7 +65,8 @@ namespace RestFrames {
     if(N <= 0) return;
 
     TFile* file = new TFile(filename.c_str(),"UPDATE");
-    file->cd();
+    file->mkdir(GetName().c_str());
+    file->cd(GetName().c_str());
     for(int i = 0; i < N; i++)
       m_Canvases[i]->Write("",TObject::kOverwrite);
     file->Close();
