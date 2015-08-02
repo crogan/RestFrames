@@ -307,7 +307,7 @@ namespace RestFrames {
 
       // Evaluate metric for this combinatoric
       double metric = EvaluateMetric();
-     
+
       if(metric >= metric_max){
 	metric_max = metric;
 	c_max = c;

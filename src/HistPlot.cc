@@ -38,6 +38,9 @@ namespace RestFrames {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
     SetPlotTitle(GetTitle());
     SetPlotCategory("");
+    SetScaleLabel("a. u.");
+    m_Scale = 1.;
+    m_SetScale = false;
     m_Log.SetSource("HistPlot "+GetName());
     HistPlot::SetStyle();
   }
@@ -98,12 +101,12 @@ namespace RestFrames {
     int N = m_1DHists.size();
     for(int i = 0; i < N; i++)
       m_1DHists[i]->Fill(m_HistToVar[m_1DHists[i]]->GetVal(), 
-			 weight);
+			 weight*m_Scale);
     N = m_2DHists.size();
     for(int i = 0; i < N; i++)
       m_2DHists[i]->Fill(m_HistToVars[m_2DHists[i]].first->GetVal(), 
 			 m_HistToVars[m_2DHists[i]].second->GetVal(),
-			 weight);
+			 weight*m_Scale);
   }
 
   void HistPlot::Draw(){
@@ -125,7 +128,9 @@ namespace RestFrames {
     can->SetGridx();
     can->SetGridy();
 
-    if(hist->Integral() > 0.) hist->Scale(1./hist->Integral());
+    if(!m_SetScale)
+      if(hist->Integral() > 0.) 
+	hist->Scale(1./hist->Integral());
 
     hist->SetFillColor(kBlue);
     hist->SetFillStyle(3001);
@@ -133,7 +138,7 @@ namespace RestFrames {
     hist->GetXaxis()->SetTitle(var.GetTitle().c_str());
     hist->GetXaxis()->SetTitleOffset(1.27);
     hist->GetXaxis()->CenterTitle();
-    hist->GetYaxis()->SetTitle("a. u.");
+    hist->GetYaxis()->SetTitle(m_ScaleLabel.c_str());
     hist->GetYaxis()->SetTitleOffset(1.13);
     hist->GetYaxis()->CenterTitle();
     hist->GetYaxis()->SetRangeUser(1e-6,1.1*hist->GetMaximum());
@@ -162,7 +167,9 @@ namespace RestFrames {
     can->SetGridy();
     can->SetLogz();
 
-    if(hist->Integral() > 0.) hist->Scale(1./hist->Integral());
+    if(!m_SetScale)
+      if(hist->Integral() > 0.) 
+	hist->Scale(1./hist->Integral());
   
     hist->Draw("COLZ");
     hist->GetXaxis()->SetTitle(varX.GetTitle().c_str());
@@ -171,7 +178,7 @@ namespace RestFrames {
     hist->GetYaxis()->SetTitle(varY.GetTitle().c_str());
     hist->GetYaxis()->SetTitleOffset(1.11);
     hist->GetYaxis()->CenterTitle();
-    hist->GetZaxis()->SetTitle("N_{bin} / N_{total}");
+    hist->GetZaxis()->SetTitle(m_ScaleLabel.c_str());
     hist->GetZaxis()->SetTitleOffset(1.5);
     hist->GetZaxis()->CenterTitle();
     hist->GetZaxis()->SetRangeUser(0.9*hist->GetMinimum(0.0),1.1*hist->GetMaximum());
@@ -191,6 +198,21 @@ namespace RestFrames {
     l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
     
     AddCanvas(can);
+  }
+
+  void HistPlot::SetScale(double scale){
+    if(scale <= 0){
+      m_Scale = 1.;
+      m_SetScale = false;
+      m_ScaleLabel = "a. u.";
+    } else{
+      m_Scale = scale;
+      m_SetScale = true;
+    }
+  }
+
+  void HistPlot::SetScaleLabel(const string& label){
+    m_ScaleLabel = label;
   }
 
   void HistPlot::SetPlotLabel(const string& label){

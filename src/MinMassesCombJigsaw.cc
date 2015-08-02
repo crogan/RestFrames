@@ -65,10 +65,10 @@ namespace RestFrames {
     int Nout   = GetNChildren();
     int Ndeps  = m_DependancyStates.size();
 
-    bool DO_N3 = (Nout == 2) && (Ndeps <= 0);
+    bool DO_N3 = (Nout == 2) && (Ndeps <= 0) && (Ninput >= 2);
     if(DO_N3){
-      DO_N3 = (m_NForChild[&GetChildState(0)] == 1) && 
-	(m_NForChild[&GetChildState(1)] == 1) && 
+      DO_N3 = (m_NForChild[&GetChildState(0)] <= 1) && 
+	(m_NForChild[&GetChildState(1)] <= 1) && 
 	!m_NExclusive[&GetChildState(0)] && 
 	!m_NExclusive[&GetChildState(1)];
     }
@@ -156,8 +156,8 @@ namespace RestFrames {
     vector<TLorentzVector> P;
     for(int i = 0; i < N; i++)
       P.push_back(GetChildState(i).GetFourVector());
-    N = m_DependancyStates.size();
-    for(int i = 0; i < N; i++)
+    int Nd = m_DependancyStates.size();
+    for(int i = 0; i < Nd && i < N; i++)
       P[i] += GetDependancyStates(i).GetFourVector();
     
     double prob = 1.;
