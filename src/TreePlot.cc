@@ -688,9 +688,9 @@ namespace RestFrames {
       ititle.push_back(m_Jigsaws[i].GetLabel().c_str());
     }
 
-    TLine* dum[Nj];
+    vector<TLine*> dum;
     for(int i = 0; i < Nj; i++){
-      dum[i] = (TLine*) new TLine(0.0,0.0,0.001,0.001);
+      dum.push_back(new TLine(0.0,0.0,0.001,0.001));
       dum[i]->SetLineWidth(int(m_Node_R*70.));
       dum[i]->SetLineColor(icolor[i]);
       AddTObject(dum[i]);
@@ -698,9 +698,9 @@ namespace RestFrames {
   
     TLegend* leg = new TLegend(0.60235,0.997-Nj*.078,0.8087,0.997);
     AddTObject(leg);
-    TLegendEntry *entry[Nj];
+    vector<TLegendEntry*> entry;
     for(int i = 0; i < Nj; i++){
-      entry[i] = leg->AddEntry(dum[i], ititle[i].c_str());
+      entry.push_back(leg->AddEntry(dum[i], ititle[i].c_str()));
       entry[i]->SetMarkerSize(0);
       entry[i]->SetMarkerColor(icolor[i]);
     }

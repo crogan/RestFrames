@@ -73,6 +73,8 @@ namespace RestFrames {
 
     void SetScale(double scale = -1);
 
+    void WriteHist(const string& name);
+
     static void SetStyle();
 
   private:

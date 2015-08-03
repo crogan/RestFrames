@@ -397,12 +397,12 @@ namespace RestFrames {
     // two-body decay masses
     double prob = -1.;
     while(prob/probMAX < GetRandom()){
-      double ran[N_c];
-      ran[0] = 0;
+      vector<double> ran;
+      ran.push_back(0.);
       for(int i = 1; i < N_c-1; i++) 
-	ran[i] = GetRandom();
-      qsort(ran+1,N_c-2,sizeof(double),DoubleMax);
-      ran[N_c-1] = 1;
+	ran.push_back(GetRandom());
+      qsort((double*)(&ran[0])+1,N_c-2,sizeof(double),DoubleMax);
+      ran.push_back(1.);
 
       M_2b.clear();
       double Msum = M-ETOT;

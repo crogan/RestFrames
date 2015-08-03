@@ -391,7 +391,6 @@ namespace RestFrames {
   }
 
   template class RFList<RFBase>;
-  template class RFList<RestFrame>; 
   template class RFList<const RestFrame>; 
   template class RFList<ReconstructionFrame>;
   template class RFList<GeneratorFrame>;
@@ -399,7 +398,6 @@ namespace RestFrames {
   template class RFList<Jigsaw>;
   template class RFList<const Jigsaw>;
   template class RFList<Group>;
-  template class RFList<State>;
   template class RFList<VisibleState>;
   template class RFList<InvisibleState>;
   template class RFList<CombinatoricState>;

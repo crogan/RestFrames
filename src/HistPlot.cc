@@ -27,6 +27,8 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#include <TFile.h>
+
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotVar.hh"
 
@@ -152,6 +154,9 @@ namespace RestFrames {
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
+     l.SetTextSize(0.045);
+    l.SetTextFont(132);
+    l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
 
     AddCanvas(can);
   }
@@ -225,6 +230,21 @@ namespace RestFrames {
 
   void HistPlot::SetPlotCategory(const string& cat){
     m_PlotCategory = cat;
+  }
+
+  void HistPlot::WriteHist(const string& name){
+    TFile *file = new TFile(name.c_str(),"UPDATE");
+    file->mkdir(GetName().c_str());
+    file->mkdir((GetName()+"/hist").c_str());
+    file->cd((GetName()+"/hist").c_str());
+    int N = m_1DHists.size();
+    for(int i = 0; i < N; i++)
+      m_1DHists[i]->Write("",TObject::kOverwrite);
+    N = m_2DHists.size();
+    for(int i = 0; i < N; i++)
+      m_2DHists[i]->Write("",TObject::kOverwrite);
+    file->Close();
+    delete file;
   }
 
   void HistPlot::SetStyle(){
