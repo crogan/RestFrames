@@ -1,0 +1,18 @@
+namespace RestFrames {
+/** \class RestFrame "RestFrames/RestFrame.hh"
+
+\brief Base class for all Frame objects
+
+bla bla bla
+
+[Recursive Jigsaw Reconstruction](@ref RJR)
+
+![plot](RestFrames_logo.jpg)
+
+
+
+bla bla
+
+*/
+}
+
