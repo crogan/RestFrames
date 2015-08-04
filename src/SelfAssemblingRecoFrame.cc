@@ -321,8 +321,8 @@ namespace RestFrames {
   RestFrame const& SelfAssemblingRecoFrame::GetFrame(const RFKey& key) const {
     if(!m_IsAssembled)
       return RestFrame::Empty();
-
-    for(int i = 0; i < m_ChildStates.size(); i++){
+    int N = m_ChildStates.size();
+    for(int i = 0; i < N; i++){
       if(m_ChildStates[&GetChildFrame(i)].Contains(key))
 	return m_ChildStates[&GetChildFrame(i)].Get(key).GetListFrames()[0];
     }

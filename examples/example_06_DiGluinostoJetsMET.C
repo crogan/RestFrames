@@ -40,7 +40,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 10;
+  int Ngen = 100000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -202,7 +202,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // tree_plot->SetGroupTree(VIS_R);
   // tree_plot->Draw("VisTree", "Visible Objects Jigsaws");
 
-  // TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
+  TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
 
   // set gluino masses
   Ga_G.SetMass(mG);
@@ -233,11 +233,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     LAB_G.SetLongitudinalMomenta(PzGG);             // give the di-gluinos some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
-    // if(gRandom->Rndm() > 0.5) {
-    //   h_M12_v_M13->Fill((V1a_G+Xa_G).GetFourVector().M2()/mG/mG, (V2a_G+Xa_G).GetFourVector().M2()/mG/mG);
-    // } else {
-    //   h_M12_v_M13->Fill((V2a_G+Xa_G).GetFourVector().M2()/mG/mG, (V1a_G+Xa_G).GetFourVector().M2()/mG/mG);
-    // }
+   
+    h_M12_v_M13->Fill((V1a_G+Xa_G).GetFourVector().M2()/mG/mG, 
+		      (V2a_G+Xa_G).GetFourVector().M2()/mG/mG);
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
@@ -406,8 +404,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   }
   
-  // TCanvas* c_M12_v_M13 = Plot_Me("c_M12_v_M13", h_M12_v_M13, 
-  // 				 "m_{1,2}^{2} [GeV^{2}]", "m_{1,2}^{2} [GeV^{2}]", "");
+  h_M12_v_M13->Draw("COLZ");
 
   // tree_plot->WriteOutput(output_name);
 }

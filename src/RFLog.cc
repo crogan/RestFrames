@@ -114,7 +114,7 @@ namespace RestFrames {
 	}
 	output += line;
 	previous_pos += off;
-	if(previous_pos != N && i != Ncut) output += "...\n";
+	if(int(previous_pos) != N && i != Ncut) output += "...\n";
       }
     } else {
       output = message;
@@ -132,7 +132,7 @@ namespace RestFrames {
 	prefix = m_ColorMap[m_CurType]+"<"+m_TypeMap[m_CurType]+">";
       else
 	prefix = "<"+m_TypeMap[m_CurType]+">";
-      for(int i = 0; i < 8-m_TypeMap[m_CurType].size(); i++){
+      for(int i = 0; i < 8-int(m_TypeMap[m_CurType].size()); i++){
 	prefix += ' ';
       }
       prefix += source_name+": ";

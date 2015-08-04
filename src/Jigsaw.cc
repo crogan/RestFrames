@@ -162,7 +162,7 @@ namespace RestFrames {
   }
 
   RFList<State> Jigsaw::GetDependancyStates(int i) const {
-    if(i < 0 || i >= m_DependancyStates.size())
+    if(i < 0 || i >= int(m_DependancyStates.size()))
       return RFList<State>();
     return m_DependancyStates[i];
   }
@@ -176,7 +176,7 @@ namespace RestFrames {
   }
 
   RFList<RestFrame> Jigsaw::GetChildFrames(int i) const {
-    if(i < 0 || i >= m_ChildFrames.size()) 
+    if(i < 0 || i >= int(m_ChildFrames.size())) 
       return RFList<RestFrame>();
     return m_ChildFrames[i];
   }

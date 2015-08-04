@@ -160,7 +160,7 @@ namespace RestFrames {
     if(Nchild != 2) return -1.;
     double m[2];
     for(int i = 0; i < 2; i++) m[i] = GetChildFrame(i).GetMass();
-    double Mass;
+    double Mass = 0;
     if(m_ChildP >= 0.){
       Mass = 0.;
       for(int i = 0; i < 2; i++) 
