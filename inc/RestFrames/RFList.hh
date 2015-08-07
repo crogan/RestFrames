@@ -239,7 +239,7 @@ namespace RestFrames {
   class RFList<RestFrames::RestFrame>
     : public RFListBase<RestFrame,RFList<RestFrames::RestFrame> > {
   public:
-    RFList() : RFListBase<RestFrame,RFList<RestFrame> >() { }
+    RFList() : RFListBase<RestFrame,RFList<RestFrame> >() {}
 
     template <class U>
     RFList(const RFList<U>& objs) : RFListBase<RestFrame,RFList<RestFrame> >() {

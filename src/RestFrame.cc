@@ -555,7 +555,7 @@ namespace RestFrames {
     double Xsum = 0.;
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
-      Psum += GetChildFrame(i).GetMomentum(*this);
+      Psum += GetChildFrame(i).GetVisibleFourVector(*this).P();
     for(int i = 0; i < N-1; i++){
       TVector3 P1 = GetChildFrame(i).GetVisibleFourVector(*this).Vect();
       for(int j = i+1; j < N; j++){
@@ -700,20 +700,18 @@ namespace RestFrames {
 
     if(IsLabFrame())
       return 0.;
+
     TLorentzVector Pthis   = GetFourVector(frame);
-    TLorentzVector Pparent = GetParentFrame().GetFourVector(frame);
     TLorentzVector Pchild  = GetChildFrame(0).GetFourVector(frame);
 
     TVector3 boost_par = Pthis.BoostVector();
     boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
     Pthis.Boost(-boost_par);
-    Pparent.Boost(-boost_par);
     Pchild.Boost(-boost_par);
     TVector3 boost_perp = Pthis.BoostVector();
-    Pparent.Boost(-boost_perp);
     Pchild.Boost(-boost_perp);
-
-    TVector3 V1 = Pparent.Vect();
+    
+    TVector3 V1 = boost_perp;
     TVector3 V2 = Pchild.Vect();
     V1 = V1 - V1.Dot(axis.Unit())*axis.Unit();
     V2 = V2 - V2.Dot(axis.Unit())*axis.Unit();
