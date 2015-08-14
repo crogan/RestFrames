@@ -40,7 +40,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 100000;
+  int Ngen = 1;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -219,7 +219,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // (relative to gluino mass via gamma)
   //TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%(Ngen/10) == 0) 
+    if(igen%(max(Ngen/10,1)) == 0) 
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
 
     // generate event
@@ -239,12 +239,21 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
-    vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
-    JETS.push_back(V1a_G.GetFourVector());
-    JETS.push_back(V2a_G.GetFourVector());
-    JETS.push_back(V1b_G.GetFourVector());
-    JETS.push_back(V2b_G.GetFourVector());
+    // MET.SetZ(0.);
+    // vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
+    // JETS.push_back(V1a_G.GetFourVector());
+    // JETS.push_back(V2a_G.GetFourVector());
+    // JETS.push_back(V1b_G.GetFourVector());
+    // JETS.push_back(V2b_G.GetFourVector());
+
+    vector<TLorentzVector> JETS;
+    TLorentzVector j1, j2;
+    j1.SetPtEtaPhiM(4.20836e6,-0.240686,2.52994,0.);
+    j2.SetPtEtaPhiM(4.20552e6,0.02966,-0.607627,134116.);
+    JETS.push_back(j1);
+    JETS.push_back(j2);
+
+    MET.SetXYZ(0.,0.,0.);
 
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
@@ -262,7 +271,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
       jet.SetPtEtaPhiM(jet.Pt(), 0., jet.Phi(), jet.M()); // only pass transverse info to bkg-like tree
       VIS_B.AddLabFrameFourVector(jet);
     }
-    LAB_B.AnalyzeEvent();                                 // analyze the event
+    LAB_B.AnalyzeEvent(); // analyze the event
 
     DecayRecoFrame* G[2];
     DecayRecoFrame* C[2];

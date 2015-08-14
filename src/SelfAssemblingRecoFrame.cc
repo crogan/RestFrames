@@ -150,7 +150,6 @@ namespace RestFrames {
     RemoveChildren();
     m_ChildStates.clear();
     AssembleRecursive(*this, frames, Ps); 
-    
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem with recursive tree after assembly";
@@ -174,9 +173,8 @@ namespace RestFrames {
   }
 
   void SelfAssemblingRecoFrame::AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
-
     int Ninput = frames.size();
-    if(Ninput <= 1){
+    if(Ninput <= 2){
       for(int i = 0; i < Ninput; i++) frame.AddChildFrame(*frames[i]);
       return;
     }
@@ -184,10 +182,13 @@ namespace RestFrames {
     TLorentzVector TOT(0.,0.,0.,0.);
     for(int i = 0; i < Ninput; i++) TOT += Ps[i];
     TVector3 boost = TOT.BoostVector();
+    if(boost.Mag() > 1.)
+      boost.SetMagThetaPhi(1.-1e-12,boost.Theta(),boost.Phi());
     for(int i = 0; i < Ninput; i++){
       Ps[i].Boost(-boost);
+      if(Ps[i].M() < 0.)
+	Ps[i].SetPtEtaPhiM(Ps[i].Pt(),Ps[i].Eta(),Ps[i].Phi(),0.);
     }
-
     int ip_max[2];
     int jp_max[2];
     for(int i = 0; i < 2; i++) ip_max[i] = -1;

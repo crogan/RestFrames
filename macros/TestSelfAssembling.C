@@ -50,10 +50,10 @@ void TestSelfAssembling(){
   cout << LAB.InitializeAnalysis() << endl; 
 
   //draw tree with jigsaws
-  FramePlot* TreePlot = new FramePlot("tree","Decay Tree");
-  TreePlot->AddFrameTree(S1);
+  TreePlot* treePlot = new TreePlot("tree","Decay Tree");
+  treePlot->SetFrameTree(S1);
   //TreePlot->AddJigsaw(RapidityJigsaw);
-  TreePlot->DrawFramePlot();
+  treePlot->Draw();
   
   //
   // TEST EVENT Reconcstruction
@@ -64,7 +64,8 @@ void TestSelfAssembling(){
     cout << "Event #" << itrial << " : " << Ntrial << endl;
 
     // generate some random jets
-    int Njet = 2 + int((float(Njetmax)-2.)*gRandom->Rndm());
+    //int Njet = 2 + int((float(Njetmax)-2.)*gRandom->Rndm());
+    int Njet = 8;
     vector<TLorentzVector> JETS;
     for(int ijet = 0; ijet < Njet; ijet++){
       float Px = gRandom->Rndm();
@@ -96,9 +97,9 @@ void TestSelfAssembling(){
     const RestFrame& depth2 = S1.GetFrameAtDepth(2, I1);
     if(!depth2.IsEmpty()) cout << "Invis (2) " << depth2.GetName().c_str() << endl;
   }
-  TreePlot->AddFrameTree(S1);
+  treePlot->SetFrameTree(S1);
   //TreePlot->AddJigsaw(RapidityJigsaw);
-  TreePlot->DrawFramePlot();
+  treePlot->Draw();
   
 }
 
