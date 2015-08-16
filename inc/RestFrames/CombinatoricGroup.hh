@@ -63,7 +63,6 @@ namespace RestFrames {
 
     // Event analysis functions
     RFKey AddLabFrameFourVector(const TLorentzVector& V);
-    int GetNFourVectors() const;
 
     RestFrame const& GetFrame(const RFKey& key) const;
     TLorentzVector GetLabFrameFourVector(const RFKey& key) const;

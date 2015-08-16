@@ -101,10 +101,13 @@ namespace RestFrames {
 
   TCanvas* TreePlot::GetNewCanvas(const string& name, const string& title){
     string sname, stitle;
-    if(name == "")
-      sname = GetName()+to_string(GetNCanvases()+1);
-    else 
+    if(name == ""){
+      char strn[10];
+      sprintf(strn,"%d",GetNCanvases()+1);
+      sname = GetName()+string(strn);
+    } else {
       sname = name;
+    }
     if(title == "")
       stitle = GetTitle();
     else 

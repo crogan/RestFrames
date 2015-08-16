@@ -166,7 +166,9 @@ namespace RestFrames {
   }
 
   CombinatoricState& CombinatoricJigsaw::GetNewChildState(){
-    string name = GetName()+"_"+std::to_string(GetNChildren());
+    char strn[10];
+    sprintf(strn,"%d",GetNChildren());
+    string name = GetName()+"_"+string(strn);
     CombinatoricState* statePtr = new CombinatoricState(name, name);
     AddDependent(statePtr);
     return *statePtr;

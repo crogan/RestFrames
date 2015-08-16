@@ -68,7 +68,6 @@ namespace RestFrames {
     void RemoveJigsaw(const Jigsaw& jigsaw);
 
     bool ContainsFrame(const RestFrame& frame) const;
-    bool ContainsJigsaw(const Jigsaw& frame) const;
     
     int GetNFrames() const;
     const RestFrames::RFList<RestFrame>& GetListFrames() const;

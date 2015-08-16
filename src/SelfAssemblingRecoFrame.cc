@@ -294,8 +294,10 @@ namespace RestFrames {
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
     }
-    string name  = sname+"_"+std::to_string(m_Ndecay+1);
-    string title = "#left("+stitle+"#right)_{"+std::to_string(m_Ndecay+1)+"}";
+    char strn[10];
+    sprintf(strn,"%d",m_Ndecay+1);
+    string name  = sname+"_"+string(strn);
+    string title = "#left("+stitle+"#right)_{"+string(strn)+"}";
     DecayRecoFrame* framePtr = new DecayRecoFrame(name, title);
     
     m_DecayFrames.Add(*framePtr);
@@ -309,8 +311,10 @@ namespace RestFrames {
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
     }
-    string name  = sname+"_"+std::to_string(m_Nvisible+1);
-    string title = "#left("+stitle+"#right)_{"+std::to_string(m_Nvisible+1)+"}";
+    char strn[10];
+    sprintf(strn,"%d",m_Nvisible+1);
+    string name  = sname+"_"+string(strn);
+    string title = "#left("+stitle+"#right)_{"+string(strn)+"}";
     VisibleRecoFrame* framePtr = new VisibleRecoFrame(name, title);
     
     m_VisibleFrames.Add(*framePtr);

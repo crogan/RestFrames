@@ -284,7 +284,9 @@ namespace RestFrames {
   VisibleState& LabRecoFrame::GetNewVisibleState(){
     if(m_TreeStates.GetN() < m_InitStates.GetN())
       return m_InitStates[m_TreeStates.GetN()];
-    string name = GetName()+"_"+std::to_string(m_TreeStates.GetN()+1);
+    char strn[10];
+    sprintf(strn,"%d",m_TreeStates.GetN()+1);
+    string name = GetName()+"_"+string(strn);
     VisibleState* statePtr = new VisibleState(name, name);
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);

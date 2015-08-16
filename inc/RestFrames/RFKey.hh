@@ -45,7 +45,6 @@ namespace RestFrames {
     void operator=(const RFKey& key);
     bool operator==(int key) const;
     bool operator==(const RFKey& key) const;
-    void SetKey(int key);
     int GetKey() const;
     bool IsSame(const RFKey& key) const;
 

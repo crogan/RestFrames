@@ -168,7 +168,9 @@ namespace RestFrames {
   VisibleState& CombinatoricGroup::GetNewElement(){
     if(m_Elements.GetN() < m_InitStates.GetN())
       return m_InitStates[m_Elements.GetN()];
-    string name = GetName()+"_"+std::to_string(m_Elements.GetN()+1);
+    char strn[10];
+    sprintf(strn,"%d",m_Elements.GetN()+1);
+    string name = GetName()+"_"+string(strn);
     VisibleState* statePtr = new VisibleState(name,name);
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);
