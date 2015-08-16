@@ -422,6 +422,8 @@ namespace RestFrames {
     }
 
     TLorentzVector V = m_P;
+    if(V.E() <= 0.)
+      return TLorentzVector(0.,0.,0.,0.);
     if(frame == GetProductionFrame()) return V;
 
     vector<TVector3> boosts;

@@ -139,6 +139,9 @@ namespace RestFrames {
 	    Ps.push_back(V);
 	    states.Add(element);
 	  }
+	  if(Nelement < 1){
+	    expand_frame = false;
+	  }
 	}
       if(!expand_frame){
 	TLorentzVector V = m_ChildStates[&frame].GetFourVector();
