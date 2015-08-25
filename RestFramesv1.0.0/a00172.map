@@ -1,8 +1,5 @@
-<map id="RestFrames::InvisibleState" name="RestFrames::InvisibleState">
-<area shape="rect" id="node2" href="$a00036.html" title="RestFrames::State" alt="" coords="315,92,447,117"/>
-<area shape="rect" id="node4" href="$a00023.html" title="RestFrames::Jigsaw" alt="" coords="525,280,667,305"/>
-<area shape="rect" id="node5" href="$a00014.html" title="RestFrames::Group" alt="" coords="526,193,665,218"/>
-<area shape="rect" id="node3" href="$a00030.html" title="RestFrames::RestFrameList" alt="" coords="394,5,582,31"/>
-<area shape="rect" id="node6" href="$a00024.html" title="RestFrames::JigsawList" alt="" coords="650,92,813,117"/>
-<area shape="rect" id="node7" href="$a00037.html" title="RestFrames::StateList" alt="" coords="854,92,1007,117"/>
+<map id="RestFrames::HistPlot" name="RestFrames::HistPlot">
+<area shape="rect" id="node2" href="$a00036.html" title="RestFrames::RFPlot" alt="" coords="9,167,151,192"/>
+<area shape="rect" id="node3" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="5,92,155,117"/>
+<area shape="rect" id="node4" href="$a00035.html" title="RestFrames::RFLog" alt="" coords="9,5,151,31"/>
 </map>

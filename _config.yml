@@ -18,7 +18,7 @@ defaults:
       path: "examples"
       type: "posts"
     values:
-      layout: post
+      layout: example
       author: "Christopher Rogan"
       category: "examples"
   -
@@ -29,5 +29,13 @@ defaults:
       layout: post
       author: "Christopher Rogan"
       category: "news"
+  -
+    scope:
+      path: "doc"
+      type: "pages"
+    values:
+      layout: page
+      author: "Christopher Rogan"
+      listme: true
 
 # include: [".well-known"]

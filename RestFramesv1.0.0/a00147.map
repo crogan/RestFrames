@@ -1,6 +1,5 @@
-<map id="RestFrames::GLabFrame" name="RestFrames::GLabFrame">
-<area shape="rect" id="node2" href="$a00025.html" title="RestFrames::LabFrame" alt="" coords="5,105,167,131"/>
-<area shape="rect" id="node3" href="$a00029.html" title="Base class for all reference frame objects. " alt="" coords="160,5,327,31"/>
-<area shape="rect" id="node4" href="$a00006.html" title="RestFrames::FrameLink" alt="" coords="191,105,355,131"/>
-<area shape="rect" id="node5" href="$a00011.html" title="RestFrames::GFrame" alt="" coords="379,105,530,131"/>
+<map id="RestFrames::CombinatoricJigsaw" name="RestFrames::CombinatoricJigsaw">
+<area shape="rect" id="node4" href="$a00024.html" title="RestFrames::MinMassesComb\lJigsaw" alt="" coords="5,239,210,277"/>
+<area shape="rect" id="node2" href="$a00020.html" title="RestFrames::Jigsaw" alt="" coords="36,79,179,104"/>
+<area shape="rect" id="node3" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="33,5,182,31"/>
 </map>

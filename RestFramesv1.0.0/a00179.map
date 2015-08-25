@@ -1,4 +1,7 @@
-<map id="RestFrames::LabFrame" name="RestFrames::LabFrame">
-<area shape="rect" id="node2" href="$a00029.html" title="Base class for all reference frame objects. " alt="" coords="47,5,214,31"/>
-<area shape="rect" id="node3" href="$a00006.html" title="RestFrames::FrameLink" alt="" coords="194,105,358,131"/>
+<map id="RestFrames::InvisibleGenFrame" name="RestFrames::InvisibleGenFrame">
+<area shape="rect" id="node2" href="$a00014.html" title="RestFrames::InvisibleFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="11,316,199,355"/>
+<area shape="rect" id="node3" href="$a00010.html" title="RestFrames::GeneratorFrame" alt="" coords="5,241,205,267"/>
+<area shape="rect" id="node4" href="$a00027.html" title="Base class for all Frame objects. " alt="" coords="22,167,189,192"/>
+<area shape="rect" id="node5" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="31,92,180,117"/>
+<area shape="rect" id="node6" href="$a00035.html" title="RestFrames::RFLog" alt="" coords="35,5,176,31"/>
 </map>

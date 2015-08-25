@@ -1,4 +1,23 @@
-<map id="RestFrames::VisibleFrame" name="RestFrames::VisibleFrame">
-<area shape="rect" id="node2" href="$a00029.html" title="Base class for all reference frame objects. " alt="" coords="58,5,225,31"/>
-<area shape="rect" id="node3" href="$a00006.html" title="RestFrames::FrameLink" alt="" coords="209,105,373,131"/>
+<map id="RestFrames::RestFrame" name="RestFrames::RestFrame">
+<area shape="rect" id="node3" href="$a00010.html" title="RestFrames::GeneratorFrame" alt="" coords="418,137,618,163"/>
+<area shape="rect" id="node13" href="$a00025.html" title="RestFrames::Reconstruction\lFrame" alt="" coords="423,319,613,357"/>
+<area shape="rect" id="node2" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="5,232,155,257"/>
+<area shape="rect" id="node4" href="$a00007.html" title="RestFrames::DecayFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="671,5,849,44"/>
+<area shape="rect" id="node7" href="$a00014.html" title="RestFrames::InvisibleFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="666,68,854,107"/>
+<area shape="rect" id="node9" href="$a00021.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="679,131,841,169"/>
+<area shape="rect" id="node11" href="$a00044.html" title="RestFrames::VisibleFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="671,193,850,232"/>
+<area shape="rect" id="node5" href="$a00008.html" title="RestFrames::DecayGenFrame" alt="" coords="906,12,1109,37"/>
+<area shape="rect" id="node6" href="$a00026.html" title="RestFrames::ResonanceGen\lFrame" alt="" coords="1160,5,1354,44"/>
+<area shape="rect" id="node8" href="$a00015.html" title="RestFrames::InvisibleGen\lFrame" alt="" coords="920,68,1094,107"/>
+<area shape="rect" id="node10" href="$a00022.html" title="RestFrames::LabGenFrame" alt="" coords="913,137,1101,163"/>
+<area shape="rect" id="node12" href="$a00045.html" title="RestFrames::VisibleGenFrame" alt="" coords="905,200,1109,225"/>
+<area shape="rect" id="node14" href="$a00007.html" title="RestFrames::DecayFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="671,256,849,295"/>
+<area shape="rect" id="node17" href="$a00014.html" title="RestFrames::InvisibleFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="666,319,854,357"/>
+<area shape="rect" id="node19" href="$a00021.html" title="RestFrames::LabFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="674,381,846,420"/>
+<area shape="rect" id="node21" href="$a00044.html" title="RestFrames::VisibleFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="671,444,850,483"/>
+<area shape="rect" id="node15" href="$a00009.html" title="RestFrames::DecayRecoFrame" alt="" coords="903,263,1111,288"/>
+<area shape="rect" id="node16" href="$a00037.html" title="RestFrames::SelfAssembling\lRecoFrame" alt="" coords="1160,256,1354,295"/>
+<area shape="rect" id="node18" href="$a00018.html" title="RestFrames::InvisibleReco\lFrame" alt="" coords="917,319,1097,357"/>
+<area shape="rect" id="node20" href="$a00023.html" title="RestFrames::LabRecoFrame" alt="" coords="910,388,1104,413"/>
+<area shape="rect" id="node22" href="$a00046.html" title="RestFrames::VisibleRecoFrame" alt="" coords="902,451,1112,476"/>
 </map>

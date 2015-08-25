@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/LabFrame.cc Source File</title>
+<title>RestFrames: inc/RestFrames/VisibleRecoFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -43,24 +43,13 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
-    <div id="projectname">RestFrames
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-</td>
+   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+  </td>
  </tr>
  </tbody>
 </table>
@@ -73,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -114,116 +104,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">LabFrame.cc</div>  </div>
+<div class="title">VisibleRecoFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;RestFrames/LabFrame.hh&quot;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;RestFrames/VisibleFrame.hh&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;RestFrames/RestFrameList.hh&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00113.html">std</a>;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00112.html">RestFrames</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="comment">// LabFrame class</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span>  LabFrame::LabFrame(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle, <span class="keywordtype">int</span> key) : </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    RestFrame(sname, stitle, key)</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    Init();</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  LabFrame::LabFrame(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle) : </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    RestFrame(sname, stitle)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    Init();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  LabFrame::~LabFrame(){</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">void</span> LabFrame::Init(){</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    m_Type = FLab;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">bool</span> LabFrame::IsSoundBody()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    RestFrame::IsSoundBody();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">int</span> Nchild = GetNChildren();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span>(Nchild != 1 || m_ParentLinkPtr) m_Body = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">return</span> m_Body;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">void</span> LabFrame::SetChildFrame(RestFrame&amp; frame){</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    SetChildFrame(&amp;frame);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">void</span> LabFrame::SetChildFrame(RestFrame* framePtr){ </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span>(!framePtr) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    AddChildFrame(framePtr); </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">bool</span> LabFrame::InitializeTree()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    vector&lt;int&gt;* KEYS = <span class="keyword">new</span> vector&lt;int&gt;;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span>(IsCircularTree(KEYS)){</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">&quot;Consistent Topology Failure: &quot;</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      cout &lt;&lt; <span class="stringliteral">&quot;Tree is circular in construction&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      KEYS-&gt;clear();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    KEYS-&gt;clear();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span>(!IsConsistentAnaTree(m_Ana)){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">&quot;Consistent Topology Failure: &quot;</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      cout &lt;&lt; <span class="stringliteral">&quot;Tree contains mixture of node types (Reco, Gen)&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      KEYS-&gt;clear();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBodyRecursive()){</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">&quot;Consistent Topology Failure: &quot;</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      cout &lt;&lt; <span class="stringliteral">&quot;UnSound frame in tree&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  TVector3 LabFrame::GetInvisibleMomentum()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">return</span> GetInvisibleFourVector().Vect();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordtype">double</span> LabFrame::GetCosDecayAngle(<span class="keyword">const</span> RestFrame* framePtr)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">if</span>(m_ChildLinks.size() &lt; 1) <span class="keywordflow">return</span> 0.;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    TVector3 V1(0.,0.,1.);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    TVector3 V2;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">if</span>(framePtr){</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      V2 = framePtr-&gt;GetFourVector(<span class="keyword">this</span>).Vect().Unit();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      V2 = GetChildFrame(0)-&gt;GetFourVector(<span class="keyword">this</span>).Vect().Unit();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> V1.Dot(V2);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  TVector3 LabFrame::GetDecayPlaneNormalVector()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    TVector3 V(0.,0.,0.);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">if</span>(m_ChildLinks.size() &lt; 1) <span class="keywordflow">return</span> V;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    TVector3 V1 = GetChildFrame(0)-&gt;GetFourVector(<span class="keyword">this</span>).Vect().Unit();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    TVector3 V2(0.,0.,1.);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> V1.Cross(V2).Unit();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
-<div class="ttc" id="a00112_html"><div class="ttname"><a href="a00112.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00040_source.html#l00013">CombinatoricGroup.hh:13</a></div></div>
-<div class="ttc" id="a00113_html"><div class="ttname"><a href="a00113.html">std</a></div></div>
+<a href="a00098.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//   the Free Software Foundation; either version 2 of the License, or</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//   (at your option) any later version.</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//   RestFrames is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef VisibleRecoFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define VisibleRecoFrame_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00080.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00096.html">RestFrames/VisibleFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00142.html">std</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00141.html">RestFrames</a> {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">// VisibleRecoFrame class</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00046.html">   43</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00046.html">VisibleRecoFrame</a> : <span class="keyword">public</span> <a class="code" href="a00044.html">VisibleFrame</a>&lt;ReconstructionFrame&gt; {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00046.html">VisibleRecoFrame</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00046.html">VisibleRecoFrame</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00046.html">VisibleRecoFrame</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00046.html">VisibleRecoFrame</a>&amp; Empty();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00046.html">VisibleRecoFrame</a> m_Empty;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> Init();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;   </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00044_html"><div class="ttname"><a href="a00044.html">RestFrames::VisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00045">VisibleFrame.hh:45</a></div></div>
+<div class="ttc" id="a00142_html"><div class="ttname"><a href="a00142.html">std</a></div></div>
+<div class="ttc" id="a00096_html"><div class="ttname"><a href="a00096.html">VisibleFrame.hh</a></div></div>
+<div class="ttc" id="a00141_html"><div class="ttname"><a href="a00141.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00058_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="ttc" id="a00046_html"><div class="ttname"><a href="a00046.html">RestFrames::VisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00043">VisibleRecoFrame.hh:43</a></div></div>
+<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">ReconstructionFrame.hh</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 12 2015 21:50:20 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 30 2015 00:42:10 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

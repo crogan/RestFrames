@@ -51,10 +51,37 @@ html.ios #cse-search-button {
 }
 </style>
 
+
+<h1>News</h1>
 <ul>
-{% for post in site.posts %}
+{% for post in site.categories.news %}
   <li>
-    {{ post.date | date: "%b %d, %Y"  }} &mdash; <a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a>
+   {{ post.date | date: "%b %Y"  }} &mdash; <a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a>
   </li>
 {% endfor %}
+</ul>
+  
+<h1>Examples</h1>
+<ul>
+{% for post in site.categories.examples %}
+  <li>
+  {% if post.nonumber %}
+   Introduction &mdash; <a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a>
+  {% else %}
+   {{ post.date | date: "Example %-d"  }} &mdash; <a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a>
+  {% endif %}
+  </li>
+{% endfor %}
+</ul>
+
+<h1>Documentation Pages</h1>
+<ul>
+<li> <a href="{{site.baseurl}}/RestFramesv1.0.0/">Doxygen</a>
+{% for page in site.pages %}
+  {% if page.listme %}
+  <li>
+   <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+  </li>
+  {% endif %}
+{% endfor %} 
 </ul>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: inc/RestFrames/RestFrameList.hh Source File</title>
+<title>RestFrames: inc/RestFrames/HistPlot.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -43,24 +43,13 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
-    <div id="projectname">RestFrames
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-</td>
+   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+  </td>
  </tr>
  </tbody>
 </table>
@@ -73,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -119,63 +109,100 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RestFrameList.hh</div>  </div>
+<div class="title">HistPlot.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef RestFrameList_HH</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define RestFrameList_HH</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00066.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00113.html">std</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00112.html">RestFrames</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keyword">class </span>RestFrame;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="comment">// RestFrameList class</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00030.html">   16</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00030.html">RestFrameList</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="a00030.html">RestFrameList</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    ~<a class="code" href="a00030.html">RestFrameList</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> Add(<a class="code" href="a00029.html">RestFrame</a>* framePtr);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> Add(<a class="code" href="a00030.html">RestFrameList</a>* framesPtr);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">int</span> Remove(<span class="keyword">const</span> <a class="code" href="a00029.html">RestFrame</a>* framePtr);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">void</span> Remove(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span> Clear();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">int</span> GetN()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Frames.size(); }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="a00029.html">RestFrame</a>* Get(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">int</span> GetIndex(<span class="keyword">const</span> <a class="code" href="a00029.html">RestFrame</a>* framePtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> Contains(<span class="keyword">const</span> <a class="code" href="a00029.html">RestFrame</a>* framePtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">bool</span> Contains(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">bool</span> IsSame(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="a00030.html">RestFrameList</a>* Copy() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="a00030.html">RestFrameList</a>* Union(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="a00030.html">RestFrameList</a>* Intersection(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="a00030.html">RestFrameList</a>* Complement(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> SizeUnion(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">int</span> SizeIntersection(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">int</span> SizeComplement(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrameList</a>* framesPtr) <span class="keyword">const</span>;</div>
+<a href="a00067.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//   the Free Software Foundation; either version 2 of the License, or</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//   (at your option) any later version.</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//   RestFrames is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HistPlot_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HistPlot_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;TLatex.h&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;TColor.h&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;TStyle.h&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;TH1D.h&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;TH2D.h&gt;</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    vector&lt;RestFrame*&gt; m_Frames;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  };</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00088.html">RestFrames/RFPlot.hh</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00141.html">RestFrames</a> {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">class </span>HistPlotVar;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00030_html"><div class="ttname"><a href="a00030.html">RestFrames::RestFrameList</a></div><div class="ttdef"><b>Definition:</b> <a href="a00067_source.html#l00016">RestFrameList.hh:16</a></div></div>
-<div class="ttc" id="a00112_html"><div class="ttname"><a href="a00112.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00040_source.html#l00013">CombinatoricGroup.hh:13</a></div></div>
-<div class="ttc" id="a00029_html"><div class="ttname"><a href="a00029.html">RestFrames::RestFrame</a></div><div class="ttdoc">Base class for all reference frame objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00066_source.html#l00053">RestFrame.hh:53</a></div></div>
-<div class="ttc" id="a00066_html"><div class="ttname"><a href="a00066.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="a00113_html"><div class="ttname"><a href="a00113.html">std</a></div></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a00012.html">   46</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00012.html">HistPlot</a> : <span class="keyword">public</span> <a class="code" href="a00036.html">RFPlot</a> {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00012.html">HistPlot</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ~<a class="code" href="a00012.html">HistPlot</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00012.html#a2278319c24b53c26eccacd5a1a5e160c">Clear</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="a00013.html">HistPlotVar</a> <span class="keyword">const</span>&amp; GetNewVar(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; title, </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                 <span class="keywordtype">double</span> minval, <span class="keywordtype">double</span> maxval);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> AddHist(<span class="keyword">const</span> <a class="code" href="a00013.html">HistPlotVar</a>&amp; var);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> AddHist(<span class="keyword">const</span> <a class="code" href="a00013.html">HistPlotVar</a>&amp; varX,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;         <span class="keyword">const</span> <a class="code" href="a00013.html">HistPlotVar</a>&amp; varY);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> Fill(<span class="keywordtype">double</span> weight = 1.);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> Draw();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> SetPlotLabel(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; label);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> SetPlotTitle(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; title);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> SetStyle();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">string</span> m_PlotLabel;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">string</span> m_PlotTitle;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    vector&lt;TH1D*&gt; m_1DHists;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    vector&lt;TH2D*&gt; m_2DHists;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    vector&lt;HistPlotVar*&gt; m_Vars;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    map&lt;TH1D*,const HistPlotVar*&gt;        m_HistToVar;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    map&lt;TH2D*,pair&lt;<span class="keyword">const</span> <a class="code" href="a00013.html">HistPlotVar</a>*,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;           <span class="keyword">const</span> HistPlotVar*&gt; &gt; m_HistToVars;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> DrawHist(TH1D* hist);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> DrawHist(TH2D* hist);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> ClearHist();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  };</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00088_html"><div class="ttname"><a href="a00088.html">RFPlot.hh</a></div></div>
+<div class="ttc" id="a00012_html_a2278319c24b53c26eccacd5a1a5e160c"><div class="ttname"><a href="a00012.html#a2278319c24b53c26eccacd5a1a5e160c">RestFrames::HistPlot::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RFBase of all connections to other objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00051">HistPlot.cc:51</a></div></div>
+<div class="ttc" id="a00141_html"><div class="ttname"><a href="a00141.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00058_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="ttc" id="a00012_html"><div class="ttname"><a href="a00012.html">RestFrames::HistPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00067_source.html#l00046">HistPlot.hh:46</a></div></div>
+<div class="ttc" id="a00013_html"><div class="ttname"><a href="a00013.html">RestFrames::HistPlotVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00068_source.html#l00042">HistPlotVar.hh:42</a></div></div>
+<div class="ttc" id="a00036_html"><div class="ttname"><a href="a00036.html">RestFrames::RFPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00041">RFPlot.hh:41</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 12 2015 21:50:20 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 30 2015 00:42:09 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

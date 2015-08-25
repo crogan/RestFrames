@@ -46,14 +46,6 @@ title: Archive (sidebar)
     return false;
   }
 </script>
-<a target="_top" href="/" class="logo"><img src="/res/signature-2-inverted-2.png" width="160" height="50" alt="Signature"></a>
-<ul class="navigation">
-  <li><a target="_top" href="/photos/"{% if page.url contains "/photos/" %}class="active"{% endif %} title="A selection of recent photography">Photography</a></li>
-  <li><a target="_top" href="/projects/"{% if page.url contains "/projects/" %}class="active"{% endif %} title="Projects I am or was involved in">Projects</a></li>
-  <li><a target="_top" href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
-  <li><a target="_top" href="/about/"{% if page.url contains "/about/" %}class="active"{% endif %}>About me</a></li>
-  <li><a></a></li>
-</ul>
 
 <p class="h"><b>Recent posts</b></p>
 <ul>
@@ -61,7 +53,7 @@ title: Archive (sidebar)
   <li class="posts">
     <a onclick="return openInParent(this)" target="_top" href="{{ post.url }}">
       <span>{{ post.title }}</span>
-      <info>{{ post.date | date: "%b %d, %Y"  }}</info>
+      <info></info>
     </a>
   </li>
 {% endfor %}

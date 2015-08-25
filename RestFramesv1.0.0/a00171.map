@@ -1,3 +1,4 @@
-<map id="RestFrames::InvisibleState" name="RestFrames::InvisibleState">
-<area shape="rect" id="node2" href="$a00036.html" title="RestFrames::State" alt="" coords="29,5,162,31"/>
+<map id="RestFrames::HistPlot" name="RestFrames::HistPlot">
+<area shape="rect" id="node2" href="$a00036.html" title="RestFrames::RFPlot" alt="" coords="9,79,151,104"/>
+<area shape="rect" id="node3" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="5,5,155,31"/>
 </map>

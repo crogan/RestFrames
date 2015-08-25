@@ -1,0 +1,10 @@
+<map id="RestFrames::ResonanceGenFrame" name="RestFrames::ResonanceGenFrame">
+<area shape="rect" id="node2" href="$a00008.html" title="RestFrames::DecayGenFrame" alt="" coords="1363,49,1566,75"/>
+<area shape="rect" id="node3" href="$a00007.html" title="RestFrames::DecayFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="1027,12,1205,51"/>
+<area shape="rect" id="node4" href="$a00010.html" title="RestFrames::GeneratorFrame" alt="" coords="709,19,909,44"/>
+<area shape="rect" id="node5" href="$a00027.html" title="Base class for all Frame objects. " alt="" coords="438,19,605,44"/>
+<area shape="rect" id="node6" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="239,19,389,44"/>
+<area shape="rect" id="node7" href="$a00035.html" title="RestFrames::RFLog" alt="" coords="5,19,147,44"/>
+<area shape="rect" id="node8" href="$a00031.html" title="RestFrames::RFList\l\&lt; RestFrames::ResonanceGen\lFrame \&gt;" alt="" coords="1013,75,1219,127"/>
+<area shape="rect" id="node9" href="$a00034.html" title="RestFrames::RFListBase\l\&lt; RestFrames::ResonanceGenFrame,\l RFList\&lt; RestFrames::ResonanceGenFrame \&gt; \&gt;" alt="" coords="655,75,964,127"/>
+</map>

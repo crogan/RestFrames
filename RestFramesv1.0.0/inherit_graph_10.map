@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$a00036.html" title="RestFrames::State" alt="" coords="5,40,138,65"/>
-<area shape="rect" id="node2" href="$a00003.html" title="RestFrames::Combinatoric\lState" alt="" coords="186,5,366,44"/>
-<area shape="rect" id="node3" href="$a00022.html" title="RestFrames::InvisibleState" alt="" coords="186,68,366,93"/>
+<area shape="rect" id="node1" href="$a00034.html" title="RestFrames::RFListBase\l\&lt; RestFrames::Reconstruction\lFrame, RFList\&lt; RestFrames\l::ReconstructionFrame \&gt; \&gt;" alt="" coords="5,5,207,71"/>
+<area shape="rect" id="node2" href="$a00031.html" title="RestFrames::RFList\l\&lt; RestFrames::Reconstruction\lFrame \&gt;" alt="" coords="255,12,457,64"/>
 </map>

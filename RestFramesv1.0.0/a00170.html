@@ -43,24 +43,13 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
-    <div id="projectname">RestFrames
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
-</td>
+   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+  </td>
  </tr>
  </tbody>
 </table>
@@ -73,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -117,59 +107,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>RestFrames</b></li><li class="navelem"><a class="el" href="a00022.html">InvisibleState</a></li>  </ul>
+<li class="navelem"><b>RestFrames</b></li><li class="navelem"><a class="el" href="a00012.html">HistPlot</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RestFrames::InvisibleState Member List</div>  </div>
+<div class="title">RestFrames::HistPlot Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a00022.html">RestFrames::InvisibleState</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a00012.html">RestFrames::HistPlot</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AddFrame</b>(RestFrame *framePtr) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>AddFrame</b>(RestFrameList *framesPtr) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Boost</b>(const TVector3 &amp;B) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>Clear</b>() (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>ClearFrames</b>() (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>Copy</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>FillGroupJigsawDependancies</b>(JigsawList *jigsawsPtr) const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>FillInvisibleMassJigsawDependancies</b>(JigsawList *jigsawsPtr) (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>FillStateJigsawDependancies</b>(JigsawList *jigsawsPtr) const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GetChildJigsaw</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetFourVector</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GetFrame</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetFrames</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GetKey</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetMinimumMass</b>() (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GetNFrames</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetParentJigsaw</b>() const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>Init</b>() (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>InvisibleState</b>() (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>InvisibleState</b>(int ikey) (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IsFrame</b>(const RestFrame *framePtr) const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>IsFrames</b>(const RestFrameList *framesPtr) const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IsSame</b>(const State *statePtr) const  (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_ChildJigsawPtr</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>m_class_key</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_Frames</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>m_Key</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_P</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>m_ParentJigsawPtr</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_Type</b> (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetChildJigsaw</b>(Jigsaw *jigsawPtr) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>SetFourVector</b>(const TLorentzVector &amp;V) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetParentJigsaw</b>(Jigsaw *jigsawPtr) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>State</b>() (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>State</b>(int ikey) (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~InvisibleState</b>() (defined in <a class="el" href="a00022.html">RestFrames::InvisibleState</a>)</td><td class="entry"><a class="el" href="a00022.html">RestFrames::InvisibleState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>~State</b>() (defined in <a class="el" href="a00036.html">RestFrames::State</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::State</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AddCanvas</b>(TCanvas *can) (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#ab3a3c5a2066cb8dcc438c60911f31817">AddDependent</a>(RFBase *dep)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AddHist</b>(const HistPlotVar &amp;var) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>AddHist</b>(const HistPlotVar &amp;varX, const HistPlotVar &amp;varY) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AddTObject</b>(TObject *obj) (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a00012.html#a2278319c24b53c26eccacd5a1a5e160c">Clear</a>()</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Draw</b>() (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>Empty</b>() (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Fill</b>(double weight=1.) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a96de00293ba4541aa17886b91f0d7f44">GetKey</a>() const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#a4bae74049300a0d99ae96d8c560a82dd">GetName</a>() const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>GetNCanvases</b>() (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetNewVar</b>(const string &amp;name, const string &amp;title, double minval, double maxval) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a9edae0e18429ee717095d550256fa50b">GetTitle</a>() const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>HistPlot</b>(const string &amp;sname, const string &amp;stitle) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a9885f415a552975f40fe4ced22244736">IsEmpty</a>() const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#a1b9aa1dae4ee3a9b0361a5736bbd9237">IsSame</a>(const RFKey &amp;key) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a1c68e3c172e5ebcd0f46123eb3e45207">IsSame</a>(const RFBase &amp;obj) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IsSoundBody</b>() const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>IsSoundMind</b>() const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IsSoundSpirit</b>() const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_CanvasPtr</b> (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>m_Log</b> (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">mutable</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a539faf3b1fa293c21d6e40a55a7c8f6b">operator!</a>() const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#a31da4e484cb291a9b487489eb83acc14">operator!=</a>(const RFKey &amp;key) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#ab402bf3104be83cd1cd52b9fd3087d51">operator!=</a>(const RFBase &amp;obj) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#ab8a2895ab430febb834ac38ae020bd01">operator==</a>(const RFKey &amp;key) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#abae3b4cc905bdef3cd505c9b8c79b22b">operator==</a>(const RFBase &amp;obj) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#a7cd7fb7e6407bd0bbdb36a0bd129b9c5">Print</a>(LogType type=LogVerbose) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a00029.html#a1648b2976b0a54aa5726e9452da972de">PrintString</a>(LogType type=LogVerbose) const </td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a00029.html#a7307144e746ddba07eac899d34eccfce">RFBase</a>(const string &amp;sname, const string &amp;stitle, int key)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>RFBase</b>() (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>RFPlot</b>(const string &amp;sname, const string &amp;stitle) (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>SetBody</b>(bool body) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetMind</b>(bool mind) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>SetPlotLabel</b>(const string &amp;label) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetPlotTitle</b>(const string &amp;title) (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>SetSpirit</b>(bool spirit) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetStyle</b>() (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>UnSoundBody</b>(const string &amp;function) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>UnSoundMind</b>(const string &amp;function) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>UnSoundSpirit</b>(const string &amp;function) const  (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>WriteOutput</b>(const string &amp;filename) (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>~HistPlot</b>() (defined in <a class="el" href="a00012.html">RestFrames::HistPlot</a>)</td><td class="entry"><a class="el" href="a00012.html">RestFrames::HistPlot</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>~RFBase</b>() (defined in <a class="el" href="a00029.html">RestFrames::RFBase</a>)</td><td class="entry"><a class="el" href="a00029.html">RestFrames::RFBase</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>~RFPlot</b>() (defined in <a class="el" href="a00036.html">RestFrames::RFPlot</a>)</td><td class="entry"><a class="el" href="a00036.html">RestFrames::RFPlot</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 12 2015 21:50:21 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 30 2015 00:42:10 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

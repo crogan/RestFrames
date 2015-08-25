@@ -1,7 +1,4 @@
-<map id="RestFrames::Group" name="RestFrames::Group">
-<area shape="rect" id="node4" href="$a00023.html" title="RestFrames::Jigsaw" alt="" coords="648,123,790,148"/>
-<area shape="rect" id="node2" href="$a00030.html" title="RestFrames::RestFrameList" alt="" coords="5,5,193,31"/>
-<area shape="rect" id="node3" href="$a00036.html" title="RestFrames::State" alt="" coords="957,64,1090,89"/>
-<area shape="rect" id="node5" href="$a00024.html" title="RestFrames::JigsawList" alt="" coords="18,112,181,137"/>
-<area shape="rect" id="node6" href="$a00037.html" title="RestFrames::StateList" alt="" coords="23,181,176,207"/>
+<map id="RestFrames::CombinatoricState" name="RestFrames::CombinatoricState">
+<area shape="rect" id="node2" href="$a00040.html" title="RestFrames::State" alt="" coords="29,79,162,104"/>
+<area shape="rect" id="node3" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="21,5,170,31"/>
 </map>

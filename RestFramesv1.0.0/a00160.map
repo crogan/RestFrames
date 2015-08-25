@@ -1,8 +1,9 @@
-<map id="RestFrames::InvisibleGroup" name="RestFrames::InvisibleGroup">
-<area shape="rect" id="node2" href="$a00014.html" title="RestFrames::Group" alt="" coords="374,72,512,97"/>
-<area shape="rect" id="node5" href="$a00023.html" title="RestFrames::Jigsaw" alt="" coords="670,147,812,172"/>
-<area shape="rect" id="node3" href="$a00030.html" title="RestFrames::RestFrameList" alt="" coords="5,5,193,31"/>
-<area shape="rect" id="node4" href="$a00036.html" title="RestFrames::State" alt="" coords="1002,63,1134,88"/>
-<area shape="rect" id="node6" href="$a00024.html" title="RestFrames::JigsawList" alt="" coords="18,205,181,231"/>
-<area shape="rect" id="node7" href="$a00037.html" title="RestFrames::StateList" alt="" coords="23,136,176,161"/>
+<map id="RestFrames::DecayGenFrame" name="RestFrames::DecayGenFrame">
+<area shape="rect" id="node2" href="$a00007.html" title="RestFrames::DecayFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="1027,5,1205,44"/>
+<area shape="rect" id="node3" href="$a00010.html" title="RestFrames::GeneratorFrame" alt="" coords="709,12,909,37"/>
+<area shape="rect" id="node4" href="$a00027.html" title="Base class for all Frame objects. " alt="" coords="438,12,605,37"/>
+<area shape="rect" id="node5" href="$a00029.html" title="Base class for all RestFrame package objects. " alt="" coords="239,12,389,37"/>
+<area shape="rect" id="node6" href="$a00035.html" title="RestFrames::RFLog" alt="" coords="5,12,147,37"/>
+<area shape="rect" id="node7" href="$a00031.html" title="RestFrames::RFList\l\&lt; RestFrames::ResonanceGen\lFrame \&gt;" alt="" coords="1013,68,1219,120"/>
+<area shape="rect" id="node8" href="$a00034.html" title="RestFrames::RFListBase\l\&lt; RestFrames::ResonanceGenFrame,\l RFList\&lt; RestFrames::ResonanceGenFrame \&gt; \&gt;" alt="" coords="655,68,964,120"/>
 </map>

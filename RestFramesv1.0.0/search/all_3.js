@@ -1,13 +1,10 @@
 var searchData=
 [
-  ['gdecayframe',['GDecayFrame',['../a00010.html',1,'RestFrames']]],
-  ['getname',['GetName',['../a00029.html#aadf4cc4fbfb6564d5f399018f0aea02c',1,'RestFrames::RestFrame']]],
-  ['gettitle',['GetTitle',['../a00029.html#ac8619b4991e8023196fff86932fa247f',1,'RestFrames::RestFrame']]],
-  ['gettype',['GetType',['../a00029.html#a407ac9d261518d4dbe722d39b4b6eb4a',1,'RestFrames::RestFrame']]],
-  ['gframe',['GFrame',['../a00011.html',1,'RestFrames']]],
-  ['ginvisibleframe',['GInvisibleFrame',['../a00012.html',1,'RestFrames']]],
-  ['glabframe',['GLabFrame',['../a00013.html',1,'RestFrames']]],
-  ['group',['Group',['../a00014.html',1,'RestFrames']]],
-  ['grouplist',['GroupList',['../a00015.html',1,'RestFrames']]],
-  ['gvisibleframe',['GVisibleFrame',['../a00016.html',1,'RestFrames']]]
+  ['empty',['Empty',['../a00010.html#a81fa1388135e613f0035040a46d4f025',1,'RestFrames::GeneratorFrame::Empty()'],['../a00025.html#a6a0be829f62622edb64cc24bc5d172ef',1,'RestFrames::ReconstructionFrame::Empty()'],['../a00027.html#aa35b6aa2c1d010000a9e4a47ac042f8e',1,'RestFrames::RestFrame::Empty()'],['../a00045.html#a4b6b1e20ddc0a112fbbad17de012156c',1,'RestFrames::VisibleGenFrame::Empty()']]],
+  ['example_5f01_5fbasics_5fztoll_2ec',['example_01_basics_Ztoll.C',['../a00052.html',1,'']]],
+  ['example_5f02_5finvisiblejigsaws_5fwtolnu_2ec',['example_02_InvisibleJigsaws_Wtolnu.C',['../a00053.html',1,'']]],
+  ['example_5f03_5fmultipledecays_5ftoptoblnu_2ec',['example_03_MultipleDecays_Toptoblnu.C',['../a00054.html',1,'']]],
+  ['example_5f04_5fhtowwto4l_2ec',['example_04_HtoWWto4l.C',['../a00055.html',1,'']]],
+  ['example_5f05_5fditoptoblnu_2ec',['example_05_DiToptoblnu.C',['../a00056.html',1,'']]],
+  ['example_5f06_5fdigluinostojetsmet_2ec',['example_06_DiGluinostoJetsMET.C',['../a00057.html',1,'']]]
 ];
