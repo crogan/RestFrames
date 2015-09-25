@@ -442,6 +442,52 @@ namespace RestFrames {
     return V;
   }
 
+  double RestFrame::GetFourVector(const TLorentzVector& P,
+				  const RestFrame& frame = 
+				  RestFrame::Empty()) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
+    TLorentzVector Pret(0.,0.,0.,0.);
+
+    if(!GetProductionFrame()){
+      m_Log << LogWarning;
+      m_Log << "Unable to get four vector. ";
+      m_Log << "Production frame is not defined." << m_End;
+      return Pret;
+    }
+
+    RestFrame* def_framePtr = &frame;
+    if(!frame)
+      def_framePtr = &GetLabFrame();
+    if(!(*def_framePtr)){
+      m_Log << LogWarning;
+      m_Log << "Unable to get four vector. ";
+      m_Log << "No frame provided for four vector ";
+      m_Log << "definition and LabFrame cannot ";
+      m_Log << " be located." << m_End;
+      return Pret;
+    }
+    
+    vector<TVector3> boosts;
+    if(!def_framePtr->
+       FindPathToFrame(*this, RestFrame::Empty(), boosts)){
+      m_Log << LogWarning;
+      m_Log << "Unable to get four vector. ";
+      m_Log << "Cannot find a path to frame " << GetName();
+      m_Log << " from frame " << def_framePtr->GetName() << m_End;
+      return Pret;
+    }
+
+    int Nboost = boosts.size();
+    Pret = P;
+    for(int i = 0; i < Nboost; i++)
+      Pret.Boost(-1.*boosts[i]);
+    return Pret;
+  }
+
   TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
@@ -511,6 +557,20 @@ namespace RestFrames {
     }
     return GetFourVector(frame).P();
   }
+
+  double RestFrame::GetTransverseMomentum(const RestFrame& frame,
+					  const TVector3& axis = 
+					  RestFrame::GetAxis(), 
+					  const RestFrame& axis_frame = 
+					  RestFrame::Empty()) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+    
+    
+  }
+  
 
   int RestFrame::GetFrameDepth(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
