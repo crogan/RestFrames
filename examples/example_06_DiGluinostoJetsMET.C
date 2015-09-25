@@ -176,31 +176,31 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // draw some pictures of our trees
   //////////////////////////////////////////////////////////////
 
-  // TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
+  TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
-  // // generator tree
-  // tree_plot->SetFrameTree(LAB_G);
-  // tree_plot->Draw("GenTree", "Generator Tree");
+  // generator tree
+  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->Draw("GenTree", "Generator Tree");
 
-  // // signal reco tree
-  // tree_plot->SetFrameTree(LAB_R);
-  // tree_plot->AddJigsaw(ContraBoostJigsaw_R);
-  // tree_plot->AddJigsaw(HemiJigsaw_R);
-  // tree_plot->AddJigsaw(CaHemiJigsaw_R);
-  // tree_plot->AddJigsaw(CbHemiJigsaw_R);
-  // tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree");
+  // signal reco tree
+  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->AddJigsaw(ContraBoostJigsaw_R);
+  tree_plot->AddJigsaw(HemiJigsaw_R);
+  tree_plot->AddJigsaw(CaHemiJigsaw_R);
+  tree_plot->AddJigsaw(CbHemiJigsaw_R);
+  tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree");
 
-  // // background reco tree
-  // tree_plot->SetFrameTree(LAB_B);
-  // tree_plot->Draw("BkgRecoTree", "Background Reconstruction Tree");
+  // background reco tree
+  tree_plot->SetFrameTree(LAB_B);
+  tree_plot->Draw("BkgRecoTree", "Background Reconstruction Tree");
 
-  // // Invisible Jigsaws
-  // tree_plot->SetGroupTree(INV_R);
-  // tree_plot->Draw("InvTree", "Invisible Objects Jigsaws");
+  // Invisible Jigsaws
+  tree_plot->SetGroupTree(INV_R);
+  tree_plot->Draw("InvTree", "Invisible Objects Jigsaws");
 
-  // // Visible Jigsaws
-  // tree_plot->SetGroupTree(VIS_R);
-  // tree_plot->Draw("VisTree", "Visible Objects Jigsaws");
+  // Visible Jigsaws
+  tree_plot->SetGroupTree(VIS_R);
+  tree_plot->Draw("VisTree", "Visible Objects Jigsaws");
 
   TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
 
