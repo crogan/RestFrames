@@ -307,9 +307,9 @@ namespace RestFrames {
 
     /// \brief Returns four vector boosted to different frame
     ///
-    double GetFourVector(const TLorentzVector& P,
-			 const RestFrame& def_frame = 
-			 RestFrame::Empty()) const;
+    TLorentzVector GetFourVector(const TLorentzVector& P,
+				 const RestFrame& def_frame = 
+				 RestFrame::Empty()) const;
 
     /// \brief Returns magnitude of transverse momentum
     ///
@@ -320,7 +320,8 @@ namespace RestFrames {
     /// Returns the transverse momentum of this frame, evaluated in the rest frame 
     /// of __frame__. If __frame__ is empty, then the four-vector will
     /// be evaluated in the LabFrame associated with this frame.
-    double GetTransverseMomentum(const RestFrame& frame,
+    double GetTransverseMomentum(const RestFrame& frame = 
+				 RestFrame::Empty(),
 				 const TVector3& axis = 
 				 RestFrame::GetAxis(), 
 				 const RestFrame& axis_frame = 
@@ -361,7 +362,7 @@ namespace RestFrames {
     ///          \vec{p}_{i}\cdot\vec{p}_{j}\right) } }
     ///          { \sum_{i}^{N}\left|\vec{p}_{i}\right| }~. \f]
     /// If the input vector contains no lists then zero is returned.
-    double GetVisibleShape(const vector<RFList<RestFrame> >& frames) const;
+    /// double GetVisibleShape(const vector<RFList<RestFrame> >& frames) const;
 
     /// \brief Returns scalar sum of visible child momenta
     ///
