@@ -305,6 +305,36 @@ namespace RestFrames {
     /// be evaluated in the LabFrame associated with this frame.
     double GetMomentum(const RestFrame& frame) const;
 
+    /// \brief Returns four vector boosted to different frame
+    ///
+    TLorentzVector GetFourVector(const TLorentzVector& P,
+				 const RestFrame& def_frame = 
+				 RestFrame::Empty()) const;
+
+    /// \brief Returns magnitude of transverse momentum
+    ///
+    /// \param frame       rest frame in which to evaluate momentum
+    /// \param axis        longitudinal axis
+    /// \param axis_frame  rest frame in which axis is defined
+    ///
+    /// Returns the transverse momentum of this frame, evaluated in the rest frame 
+    /// of __frame__. If __frame__ is empty, then the four-vector will
+    /// be evaluated in the LabFrame associated with this frame.
+    double GetTransverseMomentum(const RestFrame& frame = 
+				 RestFrame::Empty(),
+				 const TVector3& axis = 
+				 RestFrame::GetAxis(), 
+				 const RestFrame& axis_frame = 
+				 RestFrame::Empty()) const;
+
+    /// \brief Returns magnitude of transverse momentum in this frame
+    ///
+    double GetTransverseMomentum(const TLorentzVector& P,
+				 const TVector3& axis = 
+				 RestFrame::GetAxis(), 
+				 const RestFrame& axis_frame = 
+				 RestFrame::Empty()) const;
+
     /// \brief Returns visible shape of frame
     ///
     /// Returns the visible shape of the frame, calculated from 
@@ -319,6 +349,20 @@ namespace RestFrames {
     ///          { \sum_{i}^{N}\left|\vec{p}_{i}\right| }~. \f]
     /// If this frame has no children then zero is returned.
     double GetVisibleShape() const;
+
+    /// \brief Returns visible shape of frame
+    ///
+    /// Returns the visible shape of the frame, calculated from 
+    /// the sum four vectors of each frame list in the input vector,
+    /// evaluated in this frame.
+    /// For _N_ four vectors the visible shape is then defined as:
+    /// \f[ \mathrm{visible~shape} \equiv
+    ///     \frac{ \sqrt{ \sum_{i}^{N}\sum_{j < i}^{N} 
+    ///          2\left(\left|\vec{p}_{i}\right|\left|\vec{p}_{j}\right|+ 
+    ///          \vec{p}_{i}\cdot\vec{p}_{j}\right) } }
+    ///          { \sum_{i}^{N}\left|\vec{p}_{i}\right| }~. \f]
+    /// If the input vector contains no lists then zero is returned.
+    /// double GetVisibleShape(const vector<RFList<RestFrame> >& frames) const;
 
     /// \brief Returns scalar sum of visible child momenta
     ///
@@ -335,7 +379,7 @@ namespace RestFrames {
     /// four-vectors of all the invisible frames associated with
     /// with each child frame are evaluated in this rest frame.
     double GetSumInvisibleMomentum() const;
-    
+
     /// \brief Returns the boost of this frame in it's parent's frame
     ///
     /// Returns the three-vector of this frame's momenta, evaluated 

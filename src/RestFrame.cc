@@ -512,6 +512,136 @@ namespace RestFrames {
     return GetFourVector(frame).P();
   }
 
+  double RestFrame::GetTransverseMomentum(const RestFrame& frame,
+					  const TVector3& axis, 
+					  const RestFrame& axis_frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    if(frame == axis_frame){
+      TVector3 V = GetFourVector(frame).Vect();
+      return (V-V.Dot(axis.Unit())*axis.Unit()).Mag();
+    }
+
+    TLorentzVector Pthis  = GetFourVector(axis_frame);
+
+    TLorentzVector Pframe;
+    if(!frame || frame.IsLabFrame()){
+      Pframe = axis_frame.GetFourVector(frame);
+      Pframe.SetVectM(-Pframe.Vect(),Pframe.M());
+    } else {
+      Pframe = frame.GetFourVector(axis_frame);
+    }
+
+    TVector3 boost_par = Pframe.BoostVector();
+
+    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    Pthis.Boost(-boost_par);
+    Pframe.Boost(-boost_par);
+    TVector3 boost_perp = Pframe.BoostVector();
+    Pthis.Boost(-boost_perp);
+   
+    TVector3 V = Pthis.Vect();
+    return (V-V.Dot(axis.Unit())*axis.Unit()).Mag();
+  }
+
+  TLorentzVector RestFrame::GetFourVector(const TLorentzVector& P, 
+					   const RestFrame& def_frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return TLorentzVector(0.,0.,0.,0.);
+    }
+
+    if(IsSame(def_frame) || (!def_frame && IsLabFrame()))
+      return P;
+
+    TLorentzVector Pret = P;
+    
+    vector<TVector3> boosts;
+    if(!def_frame){
+      if(!GetLabFrame().
+	 FindPathToFrame(*this, RestFrame::Empty(), boosts)){
+	m_Log << LogWarning;
+	m_Log << "Unable to get four vector. ";
+	m_Log << "Cannot find a path to frame " << GetName();
+	m_Log << " from frame " << GetLabFrame().GetName() << m_End;
+	return TLorentzVector(0.,0.,0.,0.);
+      }
+    } else {
+       if(!def_frame.
+	 FindPathToFrame(*this, RestFrame::Empty(), boosts)){
+	m_Log << LogWarning;
+	m_Log << "Unable to get four vector. ";
+	m_Log << "Cannot find a path to frame " << GetName();
+	m_Log << " from frame " << GetLabFrame().GetName() << m_End;
+	return TLorentzVector(0.,0.,0.,0.);
+       }
+    }
+    int Nboost = boosts.size();
+    for(int i = 0; i < Nboost; i++)
+      Pret.Boost(-1.*boosts[i]);
+    return Pret;
+  }
+
+  double RestFrame::GetTransverseMomentum(const TLorentzVector& P,
+					   const TVector3& axis, 
+					   const RestFrame& axis_frame) const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return 0.;
+    }
+
+    if(IsLabFrame() && (!axis_frame || axis_frame.IsLabFrame())){
+      TVector3 V = P.Vect();
+      return (V-V.Dot(axis.Unit())*axis.Unit()).Mag();
+    }
+
+    TLorentzVector Pret = P;
+
+    // move P to axis_frame
+    if(!axis_frame.IsLabFrame() && !axis_frame.IsEmpty()){
+      vector<TVector3> boosts;
+      if(!GetLabFrame().
+	 FindPathToFrame(axis_frame, RestFrame::Empty(), boosts)){
+	m_Log << LogWarning;
+	m_Log << "Unable to get four vector. ";
+	m_Log << "Cannot find a path to frame " << axis_frame.GetName();
+	m_Log << " from frame " << GetLabFrame().GetName() << m_End;
+	return 0.;
+      }
+      int Nboost = boosts.size();
+      for(int i = 0; i < Nboost; i++)
+	Pret.Boost(-1.*boosts[i]);
+    }
+
+    if(*this == axis_frame){
+      TVector3 V = Pret.Vect();
+      return (V-V.Dot(axis.Unit())*axis.Unit()).Mag();
+    }
+
+    TLorentzVector Pthis;
+    if(IsLabFrame()){
+      Pthis = axis_frame.GetFourVector();
+      Pthis.SetVectM(-Pthis.Vect(),Pthis.M());
+    } else {
+      Pthis = GetFourVector(axis_frame);
+    }
+
+    TVector3 boost_par = Pthis.BoostVector();
+
+    boost_par = boost_par.Dot(axis.Unit())*axis.Unit();
+    Pret.Boost(-boost_par);
+    Pthis.Boost(-boost_par);
+    TVector3 boost_perp = Pthis.BoostVector();
+    Pret.Boost(-boost_perp);
+   
+    TVector3 V = Pret.Vect();
+    return (V-V.Dot(axis.Unit())*axis.Unit()).Mag();
+  }
+  
+
   int RestFrame::GetFrameDepth(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
