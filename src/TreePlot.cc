@@ -161,6 +161,7 @@ namespace RestFrames {
       return;
     
     RFList<RestFrame> frames = jigsaw.GetParentFrames();
+
     if(!m_Frames.Contains(frames))
       return;
     
@@ -363,10 +364,12 @@ namespace RestFrames {
   }
 
   void TreePlot::FillJigsawLink(const Jigsaw& jigsaw){
+
     int Nsplit = jigsaw.GetNChildren();
     if(!jigsaw.GetGroup()) return;
     TreePlotNode* high_old = nullptr;
     TreePlotNode* high_new = nullptr;
+   
     for(int s = 0; s < Nsplit; s++){
       RFList<RestFrame> frames = jigsaw.GetChildFrames(s)+
 	jigsaw.GetDependancyFrames(s);

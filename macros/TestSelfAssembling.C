@@ -64,8 +64,8 @@ void TestSelfAssembling(){
     cout << "Event #" << itrial << " : " << Ntrial << endl;
 
     // generate some random jets
-    //int Njet = 2 + int((float(Njetmax)-2.)*gRandom->Rndm());
-    int Njet = 8;
+    int Njet = 2 + int((float(Njetmax)-2.)*gRandom->Rndm());
+    
     vector<TLorentzVector> JETS;
     for(int ijet = 0; ijet < Njet; ijet++){
       float Px = gRandom->Rndm();
