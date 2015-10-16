@@ -34,12 +34,14 @@
 
 namespace RestFrames {
 
-  HistPlot::HistPlot(const string& sname, const string& stitle)
+  HistPlot::HistPlot(const string& sname, 
+		     const string& stitle,
+		     const string& cat)
     : RFPlot(sname, stitle)
   {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
     SetPlotTitle(GetTitle());
-    SetPlotCategory("");
+    SetPlotCategory(cat);
     SetScaleLabel("a. u.");
     m_Scale = 1.;
     m_SetScale = false;
@@ -74,8 +76,9 @@ namespace RestFrames {
 
   HistPlotVar const& HistPlot::GetNewVar(const string& name,
 					 const string& title, 
-					 double minval, double maxval){
-    HistPlotVar* var = new HistPlotVar(name,title,minval,maxval);
+					 double minval, double maxval,
+					 const string& unit){
+    HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
     m_Vars.push_back(var);
     return *var;
   }
@@ -124,37 +127,50 @@ namespace RestFrames {
     const HistPlotVar& var = *m_HistToVar[hist];
     
     string name = "c_"+var.GetName()+"__"+GetName();
-    TCanvas* can = new TCanvas(name.c_str(),name.c_str(),700,500);
+    TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
+    can->SetLeftMargin(0.2);
     can->SetRightMargin(0.05);
     can->Draw();
     can->SetGridx();
     can->SetGridy();
 
-    if(!m_SetScale)
+    string XLabel = var.GetTitle();
+
+    string ScaleLabel;
+    if(!m_SetScale){
       if(hist->Integral() > 0.) 
 	hist->Scale(1./hist->Integral());
+      ScaleLabel =  "#frac{1}{N} #frac{dN}{";
+      ScaleLabel += "d( "+XLabel+" )}";
+    } else {
+      hist->Scale(m_Scale);
+      ScaleLabel = m_ScaleLabel;
+    }
+
+    if(var.GetUnit() != "")
+      XLabel += " "+var.GetUnit();
 
     hist->SetFillColor(kBlue);
     hist->SetFillStyle(3001);
     hist->Draw();
-    hist->GetXaxis()->SetTitle(var.GetTitle().c_str());
+    hist->GetXaxis()->SetTitle(XLabel.c_str());
     hist->GetXaxis()->SetTitleOffset(1.27);
     hist->GetXaxis()->CenterTitle();
-    hist->GetYaxis()->SetTitle(m_ScaleLabel.c_str());
-    hist->GetYaxis()->SetTitleOffset(1.13);
+    hist->GetYaxis()->SetTitle(ScaleLabel.c_str());
+    hist->GetYaxis()->SetTitleOffset(1.42);
     hist->GetYaxis()->CenterTitle();
     hist->GetYaxis()->SetRangeUser(1e-6,1.1*hist->GetMaximum());
 
     TLatex l;
     l.SetTextFont(132);	
     l.SetNDC();	
-    l.SetTextSize(0.04);
+    l.SetTextSize(0.045);
     l.SetTextFont(132);
     l.DrawLatex(0.6,0.943,m_PlotTitle.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
-     l.SetTextSize(0.045);
+    l.SetTextSize(0.045);
     l.SetTextFont(132);
     l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
 
@@ -172,18 +188,35 @@ namespace RestFrames {
     can->SetGridy();
     can->SetLogz();
 
-    if(!m_SetScale)
+    string XLabel = varX.GetTitle();
+    string YLabel = varY.GetTitle();
+
+    string ScaleLabel;
+    if(!m_SetScale){
       if(hist->Integral() > 0.) 
 	hist->Scale(1./hist->Integral());
+      ScaleLabel =  "#frac{1}{N} #frac{dN}{";
+      ScaleLabel += "d( "+XLabel+" ) ";
+      ScaleLabel += "d( "+YLabel+" )";
+      ScaleLabel += "}";
+    } else {
+      hist->Scale(m_Scale);
+      ScaleLabel = m_ScaleLabel;
+    }
   
+    if(varX.GetUnit() != "")
+      XLabel += " "+varX.GetUnit();
+    if(varY.GetUnit() != "")
+      YLabel += " "+varY.GetUnit();
+
     hist->Draw("COLZ");
-    hist->GetXaxis()->SetTitle(varX.GetTitle().c_str());
+    hist->GetXaxis()->SetTitle(XLabel.c_str());
     hist->GetXaxis()->SetTitleOffset(1.24);
     hist->GetXaxis()->CenterTitle();
-    hist->GetYaxis()->SetTitle(varY.GetTitle().c_str());
+    hist->GetYaxis()->SetTitle(YLabel.c_str());
     hist->GetYaxis()->SetTitleOffset(1.11);
     hist->GetYaxis()->CenterTitle();
-    hist->GetZaxis()->SetTitle(m_ScaleLabel.c_str());
+    hist->GetZaxis()->SetTitle(ScaleLabel.c_str());
     hist->GetZaxis()->SetTitleOffset(1.5);
     hist->GetZaxis()->CenterTitle();
     hist->GetZaxis()->SetRangeUser(0.9*hist->GetMinimum(0.0),1.1*hist->GetMaximum());
@@ -192,7 +225,7 @@ namespace RestFrames {
     TLatex l;
     l.SetTextFont(132);	
     l.SetNDC();	
-    l.SetTextSize(0.04);
+    l.SetTextSize(0.045);
     l.SetTextFont(132);
     l.DrawLatex(0.7,0.943,m_PlotTitle.c_str());
     l.SetTextSize(0.04);
@@ -307,12 +340,13 @@ namespace RestFrames {
     gStyle->SetPadTickY(1);
     
     const Int_t NRGBs = 5;
-    const Int_t NCont = 255;
+    const Int_t NCont = 28;
+
+    Double_t stops[NRGBs] = { 0.00, 0.5, 0.70, 0.82, 1.00 };
+    Double_t red[NRGBs]   = { 0.00, 0.00, 0.74, 1.00, 1. };
+    Double_t green[NRGBs] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
+    Double_t blue[NRGBs]  = { 0.31, 0.73, 0.08, 0.00, 1.00 };
     
-    Double_t stops[NRGBs] = { 0.00, 0.34, 0.61, 0.84, 1.00 };
-    Double_t red[NRGBs]   = { 0.00, 0.00, 0.87, 1.00, 0.51 };
-    Double_t green[NRGBs] = { 0.00, 0.81, 1.00, 0.20, 0.00 };
-    Double_t blue[NRGBs]  = { 0.51, 1.00, 0.12, 0.00, 0.00 };
     TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
     gStyle->SetNumberContours(NCont);
     

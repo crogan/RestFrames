@@ -94,7 +94,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   } else
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // Set up reco analysis tree
-   g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
+  g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
   LabRecoFrame LAB_R("LAB_R","LAB");
   DecayRecoFrame TT_R("TT_R","t #bar{t}");
   DecayRecoFrame Ta_R("Ta_R","t_{a}");
@@ -118,7 +118,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   Wa_R.AddChildFrame(Na_R);
   Wb_R.AddChildFrame(Lb_R);
   Wb_R.AddChildFrame(Nb_R);
- 
+
   if(LAB_R.InitializeTree()){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";

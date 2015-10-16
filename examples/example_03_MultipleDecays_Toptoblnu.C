@@ -29,112 +29,142 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TFile.h>
-#include <TCanvas.h>
-#include <TLatex.h>
-#include <TColor.h>
-#include <TStyle.h>
-#include <TH1D.h>
-#include <TH2D.h>
 #include "RestFrames/RestFrames.hh"
 
-void setstyle();
-TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title = "", string label = "");
-TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title = "", string label = "");
-
-using namespace std;
 using namespace RestFrames;
 
 void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   setstyle();
 
+  // set particle masses and widths
   double mtop = 173.;
-  double mW = 81.;
+  double wtop = 2.5;
+  double mW   = 81.;
+  double wW   = 2.5;
+  // Number of events to generate
   int Ngen = 100000;
 
-  // Set up toy generation and event analysis trees:
-  LabGenFrame LAB_G("LAB_G","LAB");
-  DecayGenFrame T_G("T_G","t");
-  DecayGenFrame W_G("W_G","W");
-  VisibleGenFrame B_G("B_G","b");
-  VisibleGenFrame L_G("L_G","#it{l}");
-  InvisibleGenFrame NU_G("NU_G","#nu");
+  ////////////////////////////////////////////////////////////////////////////////////////
+  g_Log << LogInfo << "Initializing generator frames and tree..." << g_End;
+  ////////////////////////////////////////////////////////////////////////////////////////
+  LabGenFrame           LAB_Gen("LAB_Gen","LAB");
+  ResonanceGenFrame     T_Gen("T_Gen","t");
+  ResonanceGenFrame     W_Gen("W_Gen","W");
+  VisibleGenFrame       B_Gen("B_Gen","b");
+  VisibleGenFrame       L_Gen("L_Gen","#it{l}");
+  InvisibleGenFrame     NU_Gen("NU_Gen","#nu");
 
-  LAB_G.SetChildFrame(T_G);
-  T_G.AddChildFrame(B_G);
-  T_G.AddChildFrame(W_G);
-  W_G.AddChildFrame(L_G);
-  W_G.AddChildFrame(NU_G);
- 
-  if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl; 
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  T_G.SetMass(mtop);
-  W_G.SetMass(mW);
+  LAB_Gen.SetChildFrame(T_Gen);
+  T_Gen.AddChildFrame(B_Gen);
+  T_Gen.AddChildFrame(W_Gen);
+  W_Gen.AddChildFrame(L_Gen);
+  W_Gen.AddChildFrame(NU_Gen);
 
-  if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl; 
+  if(LAB_Gen.InitializeTree())
+    g_Log << LogInfo << "...Successfully initialized generator tree" << g_End;
+  else
+    g_Log << LogError << "...Failed initializing generator tree" << g_End;
 
-  LabRecoFrame LAB_R("LAB_R","LAB");
-  DecayRecoFrame T_R("T_R","t");
-  DecayRecoFrame W_R("W_R","W");
-  VisibleRecoFrame B_R("B_R","b");
-  VisibleRecoFrame L_R("L_R","#it{l}");
-  InvisibleRecoFrame NU_R("NU_R","#nu");
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB_R.SetChildFrame(T_R);
-  T_R.AddChildFrame(B_R);
-  T_R.AddChildFrame(W_R);
-  W_R.AddChildFrame(L_R);
-  W_R.AddChildFrame(NU_R);
+  T_Gen.SetMass(mtop);
+  T_Gen.SetWidth(wtop);
+  W_Gen.SetMass(mW);
+  W_Gen.SetWidth(wW);
 
-  if(!LAB_R.InitializeTree()) cout << "Problem with reconstruction tree" << endl; 
-  
-  TreePlot tree_plot("TreePlot","TreePlot");
- 
-  // generator tree
-  tree_plot.SetFrameTree(LAB_G);
-  tree_plot.Draw("GenTree", "Generator Tree");
+  if(LAB_Gen.InitializeAnalysis())
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << g_End;
+  else
+    g_Log << LogError << "...Failed initializing generator analysis" << g_End;
+  ////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
-  // reco tree
-  tree_plot.SetFrameTree(LAB_R);
-  tree_plot.Draw("RecoTree", "Reconstruction Tree");
+  ////////////////////////////////////////////////////////////////////////////////////////
+  g_Log << LogInfo << "Initializing reconstruction frames and trees..." << g_End;
+  ////////////////////////////////////////////////////////////////////////////////////////
+  LabRecoFrame       LAB_Mt("LAB_Mt","LAB"); LabRecoFrame       LAB_MW("LAB_MW","LAB");
+  DecayRecoFrame     T_Mt("T_Mt","t");       DecayRecoFrame     T_MW("T_MW","t");
+  DecayRecoFrame     W_Mt("W_Mt","W");       DecayRecoFrame     W_MW("W_MW","W");
+  VisibleRecoFrame   B_Mt("B_Mt","b");       VisibleRecoFrame   B_MW("B_MW","b");
+  VisibleRecoFrame   L_Mt("L_Mt","#it{l}");  VisibleRecoFrame   L_MW("L_MW","#it{l}");
+  InvisibleRecoFrame NU_Mt("NU_Mt","#nu");   InvisibleRecoFrame NU_MW("NU_MW","#nu");
+
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+
+  LAB_Mt.SetChildFrame(T_Mt);                LAB_MW.SetChildFrame(T_MW);
+  T_Mt.AddChildFrame(B_Mt);                  T_MW.AddChildFrame(B_MW);
+  T_Mt.AddChildFrame(W_Mt);                  T_MW.AddChildFrame(W_MW);
+  W_Mt.AddChildFrame(L_Mt);                  W_MW.AddChildFrame(L_MW);
+  W_Mt.AddChildFrame(NU_Mt);                 W_MW.AddChildFrame(NU_MW);
+
+  if(LAB_Mt.InitializeTree() && LAB_MW.InitializeTree())
+    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << g_End;
+  else
+    g_Log << LogError << "...Failed initializing reconstruction trees" << g_End;
+
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   // Now we add invisible jigsaws
-  InvisibleGroup INV("INV","Neutrino Jigsaws");
-  INV.AddFrame(NU_R);
+  InvisibleGroup INV_Mt("INV_Mt","#nu Jigsaws");   InvisibleGroup INV_MW("INV_MW","nu Jigsaws");
+  INV_Mt.AddFrame(NU_Mt);                          INV_MW.AddFrame(NU_MW);
  
-  SetMassInvJigsaw MassJigsaw("MASS_JIGSAW","mass Jigsaw");
-  INV.AddJigsaw(MassJigsaw);
+  SetMassInvJigsaw NuM_Mt("NuM_Mt","M_{#nu} = 0"); SetMassInvJigsaw NuM_MW("NuM_MW","M_{#nu} = 0");
+  INV.AddJigsaw(NuM_Mt);
 
   SetRapidityInvJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
   INV.AddJigsaw(RapidityJigsaw);
   RapidityJigsaw.AddVisibleFrame(L_R);
   RapidityJigsaw.AddVisibleFrame(B_R);
 
-  if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
+  if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
+    g_Log << LogInfo << "...Successfully initialized analyses" << endl << g_End;
+  else
+    g_Log << LogError << "...Failed initializing analyses" << g_End;
+  ////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
-  // Now we book some histograms of kinematic variables
-  TH1D* h_MT     = new TH1D("h_MT","h_MT",100,0.,190.);
-  TH1D* h_EB     = new TH1D("h_EB","h_EB",100,0.,140.);
-  TH1D* h_cosT   = new TH1D("h_cosT","h_cosT",100,-1.,1.);
-  TH1D* h_dphiT  = new TH1D("h_dphiT","h_dphiT",100,0.,2.*TMath::Pi());
-  TH1D* h_DcosT  = new TH1D("h_DcosT","h_DcosT",100,-1.,1.);
-  TH1D* h_DdphiT = new TH1D("h_DdphiT","h_DdphiT",100,-1.,1.);
-  TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,120.);
-  TH1D* h_cosW   = new TH1D("h_cosW","h_cosW",100,-1.,1.);
-  TH1D* h_dphiW  = new TH1D("h_dphiW","h_dphiW",100,0.,2.*TMath::Pi());
-  TH1D* h_DcosW  = new TH1D("h_DcosW","h_DcosW",100,-1.,1.);
-  TH1D* h_DdphiW = new TH1D("h_DdphiW","h_DdphiW",100,-1.,1.);
-  
-  TH2D* h_MT_v_MW   = new TH2D("h_MT_v_MW","h_MT_v_MW",50,0.,190.,50,0,120.);
-  TH2D* h_EB_v_MW   = new TH2D("h_EB_v_MW","h_EB_v_MW",50,0.,140.,50,0,120.);
-  TH2D* h_MT_v_cosT   = new TH2D("h_MT_v_cosT","h_MT_v_cosT",50,0.,190.,50,-1.,1.);
+  TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
+ 
+  tree_plot.SetFrameTree(LAB_Gen);
+  tree_plot.Draw("GenTree", "Generator Tree");
 
-  TH2D* h_MW_v_cosW   = new TH2D("h_MW_v_cosW","h_MW_v_cosW",50,0.,120.,50,-1.,1.);
-  TH2D* h_MW_v_PT     = new TH2D("h_MW_v_PT","h_MW_v_PT",50,0.,90.,50,0.,1.);
-  TH2D* h_cosW_v_PT   = new TH2D("h_cosW_v_PT","h_cosW_v_PT",50,-1.,1.,50,0.,1.);
-  TH2D* h_dphiW_v_PT  = new TH2D("h_dphiW_v_PT","h_dphiW_v_PT",50,0.,2.*TMath::Pi(),50,0.,1.);
-  TH2D* h_DcosW_v_PT  = new TH2D("h_DcosW_v_PT","h_DcosW_v_PT",50,-1.,1.,50,0.,1.);
-  TH2D* h_DdphiW_v_PT = new TH2D("h_DdphiW_v_PT","h_DdphiW_v_PT",50,-1.,1.,50,0.,1.);
+  tree_plot.SetFrameTree(LAB_Mt);
+  tree_plot.Draw("RecoTree", "Reconstruction Tree");
+
+  // Declare observables for histogram booking
+  HistPlot* GenPlot   = new HistPlot("Gen","W #rightarrow #it{l} #nu", 
+				     "Generator Level"); 
+  HistPlot* minMtPlot = new HistPlot("minMt", "W #rightarrow #it{l} #nu",
+				     "min M_{t} reconstruction"); 
+  HistPlot* minWPlot  = new HistPlot("minMW", "W #rightarrow #it{l} #nu",
+				     "min M_{W} reconstruction"); 
+
+  const HistPlotVar& Mt     = GenPlot->GetNewVar("Mt", "M_{t}", 0., 190., "[GeV]");
+  const HistPlotVar& MW     = GenPlot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
+  const HistPlotVar& pTt    = GenPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
+  const HistPlotVar& cosT   = GenPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
+  const HistPlotVar& cosW   = GenPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
+  const HistPlotVar& dphiT  = GenPlot->GetNewVar("dphiT", "#Delta #phi_{t}", 0., 2.*acos(-1.));
+  const HistPlotVar& dphiW  = GenPlot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
+  const HistPlotVar& DcosT  = GenPlot->GetNewVar("DcosW","#theta_{t} - #theta_{t}^{gen}", -1., 1.);
+  const HistPlotVar& DcosW  = GenPlot->GetNewVar("DcosW","#theta_{W} - #theta_{W}^{gen}", -1., 1.);
+  const HistPlotVar& DdphiT = GenPlot->GetNewVar("DdphiW","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
+  const HistPlotVar& DdphiW = GenPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
+
+  GenPlot->AddHist(Mt);       GenPlot->AddHist(MW);
+  minMtPlot->AddHist(Mt);     minMWPlot->AddHist(Mt);
+  minMtPlot->AddHist(MW);     minMWPlot->AddHist(MW);
+  minMtPlot->AddHist(pTt);    minMWPlot->AddHist(pTt);
+  minMtPlot->AddHist(cosT);   minMWPlot->AddHist(cosT);
+  minMtPlot->AddHist(cosW);   minMWPlot->AddHist(cosW);
+  minMtPlot->AddHist(dphiT);  minMWPlot->AddHist(dphiT);
+  minMtPlot->AddHist(dphiW);  minMWPlot->AddHist(dphiW);
+  minMtPlot->AddHist(DcosT);  minMWPlot->AddHist(DcosT);
+  minMtPlot->AddHist(DcosW);  minMWPlot->AddHist(DcosW);
+  minMtPlot->AddHist(DdphiT); minMWPlot->AddHist(DdphiT);
+  minMtPlot->AddHist(DdphiW); minMWPlot->AddHist(DdphiW);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;

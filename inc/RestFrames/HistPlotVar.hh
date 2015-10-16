@@ -43,7 +43,8 @@ namespace RestFrames {
 
   public:
     HistPlotVar(const string& name, const string& title, 
-		double minval, double maxval);
+		double minval, double maxval,
+		const string& unit);
     ~HistPlotVar();
 
     void operator=(double val) const;
@@ -60,9 +61,12 @@ namespace RestFrames {
 
     double GetMax() const;
 
+    string GetUnit() const;
+
   private:
     string m_Name;
     string m_Title;
+    string m_Unit;
     double m_Min;
     double m_Max;
     mutable double m_Val;

@@ -32,9 +32,10 @@
 namespace RestFrames {
 
   HistPlotVar::HistPlotVar(const string& name, const string& title, 
-			   double minval, double maxval)
+			   double minval, double maxval,
+			   const string& unit = "")
     : m_Name(name), m_Title(title), 
-      m_Min(minval), m_Max(maxval), m_Val(0.) {}
+      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.) {}
   
   HistPlotVar::~HistPlotVar() {}
 
@@ -56,6 +57,10 @@ namespace RestFrames {
 
   string HistPlotVar::GetTitle() const {
     return m_Title;
+  }
+
+  string HistPlotVar::GetUnit() const {
+    return m_Unit;
   }
   
   double HistPlotVar::GetMin() const {

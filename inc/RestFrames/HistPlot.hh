@@ -46,13 +46,15 @@ namespace RestFrames {
   class HistPlot : public RFPlot {
 
   public:
-    HistPlot(const string& sname, const string& stitle);
+    HistPlot(const string& sname, const string& stitle,
+	     const string& cat = "");
     ~HistPlot();
 
     virtual void Clear();
 
     HistPlotVar const& GetNewVar(const string& name, const string& title, 
-				 double minval, double maxval);
+				 double minval, double maxval,
+				 const string& unit = "");
     
     void AddHist(const HistPlotVar& var);
 

@@ -96,7 +96,7 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   // Declare observables for histogram booking
   HistPlot* hist_plot = new HistPlot("HistPlot","W #rightarrow #it{l} #nu"); 
 
-  const HistPlotVar& MW     = hist_plot->GetNewVar("MW", "M_{W} [GeV]", 0., 90.);
+  const HistPlotVar& MW     = hist_plot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
   const HistPlotVar& pTW    = hist_plot->GetNewVar("pTW","p_{T}^{W} / m_{W}",0.,1.);
   const HistPlotVar& cosW   = hist_plot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
   const HistPlotVar& dphiW  = hist_plot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
@@ -104,14 +104,17 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   const HistPlotVar& DdphiW = hist_plot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{true}", -1., 1.);
   
   hist_plot->AddHist(MW);
-  hist_plot->AddHist(cosW);
-  hist_plot->AddHist(dphiW);
+  // hist_plot->AddHist(cosW);
+  // hist_plot->AddHist(dphiW);
   hist_plot->AddHist(DcosW);
   hist_plot->AddHist(DdphiW);
   hist_plot->AddHist(MW, cosW);
+  hist_plot->AddHist(MW, dphiW);
   hist_plot->AddHist(MW, pTW);
-  hist_plot->AddHist(cosW, pTW);
-  hist_plot->AddHist(dphiW, pTW);
+  hist_plot->AddHist(cosW, DcosW);
+  hist_plot->AddHist(dphiW, DdphiW);
+  // hist_plot->AddHist(cosW, pTW);
+  // hist_plot->AddHist(dphiW, pTW);
   hist_plot->AddHist(DcosW, pTW);
   hist_plot->AddHist(DdphiW, pTW);
 
@@ -149,6 +152,7 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
  
   hist_plot->Draw();
   hist_plot->WriteOutput(output_name);
+  hist_plot->WriteHist(output_name);
   tree_plot->WriteOutput(output_name);
 
 }
