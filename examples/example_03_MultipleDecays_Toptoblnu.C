@@ -106,17 +106,27 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  // Now we add invisible jigsaws
-  InvisibleGroup INV_Mt("INV_Mt","#nu Jigsaws");   InvisibleGroup INV_MW("INV_MW","nu Jigsaws");
-  INV_Mt.AddFrame(NU_Mt);                          INV_MW.AddFrame(NU_MW);
+  // Invisible Groups
+  InvisibleGroup INV_Mt("INV_Mt","#nu Jigsaws");
+  INV_Mt.AddFrame(NU_Mt);     
+  InvisibleGroup INV_MW("INV_MW","nu Jigsaws");
+  INV_MW.AddFrame(NU_MW);
  
-  SetMassInvJigsaw NuM_Mt("NuM_Mt","M_{#nu} = 0"); SetMassInvJigsaw NuM_MW("NuM_MW","M_{#nu} = 0");
-  INV.AddJigsaw(NuM_Mt);
+  // Set neutrino masses to zero
+  SetMassInvJigsaw NuM_Mt("NuM_Mt","M_{#nu} = 0"); 
+  INV_Mt.AddJigsaw(NuM_Mt);                        
+  SetMassInvJigsaw NuM_MW("NuM_MW","M_{#nu} = 0");
+  INV_MW.AddJigsaw(NuM_MW);
 
-  SetRapidityInvJigsaw RapidityJigsaw("RAPIDITY_JIGSAW","rapidity Jigsaw");
-  INV.AddJigsaw(RapidityJigsaw);
-  RapidityJigsaw.AddVisibleFrame(L_R);
-  RapidityJigsaw.AddVisibleFrame(B_R);
+  // Set neutrino rapidity to that of visible particles
+  SetRapidityInvJigsaw NuR_Mt("NuR_Mt","#eta_{#nu} = #eta_{b+#it{l}}");
+  INV_Mt.AddJigsaw(NuR_Mt);
+  NuR_Mt.AddVisibleFrame(L_R);
+  NuR_Mt.AddVisibleFrame(B_R);
+  SetRapidityInvJigsaw NuR_MW("NuR_Mt","#eta_{#nu} = #eta_{#it{l}}");
+  INV_MW.AddJigsaw(NuR_MW);
+  NuR_MW.AddVisibleFrame(L_R);
+  NuR_MW.AddVisibleFrame(B_R);
 
   if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analyses" << endl << g_End;
@@ -167,7 +177,7 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   minMtPlot->AddHist(DdphiW); minMWPlot->AddHist(DdphiW);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%((min(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree

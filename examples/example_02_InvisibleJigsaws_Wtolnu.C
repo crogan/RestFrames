@@ -113,8 +113,8 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   hist_plot->AddHist(MW, pTW);
   hist_plot->AddHist(cosW, DcosW);
   hist_plot->AddHist(dphiW, DdphiW);
-  // hist_plot->AddHist(cosW, pTW);
-  // hist_plot->AddHist(dphiW, pTW);
+  hist_plot->AddHist(cosW, pTW);
+  hist_plot->AddHist(dphiW, pTW);
   hist_plot->AddHist(DcosW, pTW);
   hist_plot->AddHist(DdphiW, pTW);
 
