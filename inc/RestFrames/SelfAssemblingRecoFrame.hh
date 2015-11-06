@@ -58,6 +58,7 @@ namespace RestFrames {
     RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
     vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
 
+    RestFrames::RFList<State> m_VisibleStates;
     RestFrames::RFList<ReconstructionFrame> m_VisibleFrames;
     RestFrames::RFList<ReconstructionFrame> m_DecayFrames;
     int m_Nvisible;

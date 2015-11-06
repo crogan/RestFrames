@@ -65,6 +65,7 @@ namespace RestFrames {
       UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
     }
+    //ReconstructionFrame::ClearEventRecursive();
     Disassemble();
     return ReconstructionFrame::ClearEventRecursive();
   }
@@ -79,7 +80,7 @@ namespace RestFrames {
     RemoveChildren();
     ClearNewFrames();
     AddChildFrames(m_ChildFrames_UnAssembled);
-    
+
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem with recursive tree after disassembly";
@@ -110,7 +111,7 @@ namespace RestFrames {
     }
 
     // new Visible States
-    RFList<VisibleState> states;
+    m_VisibleStates.Clear();
     // new Frames associated with States
     vector<RestFrame*> frames;
     // States' four-vector
@@ -123,7 +124,7 @@ namespace RestFrames {
     for(int i = 0; i < N; i++){
       ReconstructionFrame& frame = GetChildFrame(i);
       bool expand_frame = false;
-      if(m_ChildStates[&frame].GetN() == 1)
+      if(m_ChildStates[&frame].GetN() == 1 && frame.IsVisibleFrame())
 	if(m_ChildStates[&frame][0].IsCombinatoricState()){
 	  expand_frame = true;
 	  RFList<VisibleState> elements = 
@@ -137,7 +138,8 @@ namespace RestFrames {
 	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
-	    states.Add(element);
+	    // states.Add(element);
+	    m_VisibleStates.Add(element);
 	  }
 	  if(Nelement < 1){
 	    expand_frame = false;
@@ -162,7 +164,8 @@ namespace RestFrames {
     }
     SetMind(true);
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
-    lab_frame.AddTreeStates(states);
+    //lab_frame.AddTreeStates(states);
+    lab_frame.AddTreeStates(m_VisibleStates);
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after assembly";
@@ -170,7 +173,7 @@ namespace RestFrames {
       SetMind(false);
       return;
     }
-    lab_frame.RemoveTreeStates(states);
+    //lab_frame.RemoveTreeStates(states);
 
     m_IsAssembled = true;
   }

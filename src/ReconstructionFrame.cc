@@ -211,7 +211,7 @@ namespace RestFrames {
       UnSoundMind(RF_FUNCTION);
       return false;
     }
-    
+   
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
       if(!GetChildFrame(i).ClearEventRecursive())
