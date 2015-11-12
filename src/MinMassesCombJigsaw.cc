@@ -74,7 +74,7 @@ namespace RestFrames {
     }
     if(!DO_N3)
       return CombinatoricJigsaw::LoopCombinatoric();
-   
+
     // DO 4 N^3 calculation
     vector<TLorentzVector> inputs;
     for(int i = 0; i < Ninput; i++)
@@ -144,7 +144,7 @@ namespace RestFrames {
       for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
       for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
     }
-    
+  
     // Execute depedancy Jigsaws
     ExecuteDependancyJigsaws();
   

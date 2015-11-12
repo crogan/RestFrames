@@ -77,6 +77,8 @@ namespace RestFrames {
     m_Ndecay = 0;
   
     // replace frames with unassembled ones
+    const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
+    lab_frame.RemoveTreeStates(m_VisibleStates);
     RemoveChildren();
     ClearNewFrames();
     AddChildFrames(m_ChildFrames_UnAssembled);

@@ -243,20 +243,23 @@ namespace RestFrames {
 	B_child *= -1.;
 	m_ChildStates[&child].Boost(B_child);
       }
+    
       if(!child.AnalyzeEventRecursive()){
 	m_Log << LogWarning;
 	m_Log << "Recursive event analysis failed for frame: ";
 	m_Log << Log(child) << m_End;
 	return SetSpirit(false);
       } 
+     
       if(!terminal){ 
 	B_child *= -1.;
 	m_ChildStates[&child].Boost(B_child);
       }
     }
+   
     if(IsLabFrame()) SetFourVector(Ptot,*this);
-    
-    return SetSpirit(true);;
+
+    return SetSpirit(true);
   }
 
 }

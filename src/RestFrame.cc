@@ -264,7 +264,7 @@ namespace RestFrames {
     if(!IsSoundBody()) return 0.;
 
     int Nchild = GetNChildren();
-    if(Nchild == 0) return 0;
+    if(Nchild == 0) return 1;
     int Nd = 0;
     for(int i = 0; i < Nchild; i++){
       Nd += GetChildFrame(i).GetNDescendants();
