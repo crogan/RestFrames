@@ -223,13 +223,13 @@ namespace RestFrames {
     /// filled recursively and including children of children
     /// which are of FrameType **type**. If **type** is LabFrame
     /// (default) then all frames, regardless of type, are included.
-    virtual RestFrames::RFList<RestFrame> GetListFrames(FrameType type = kLabFrame);
+    virtual RestFrames::RFList<RestFrame> GetListFrames(FrameType type = kLabFrame) const;
 
-    /// \brief Returns a list of VisibleFrame s inheriting from this
-    virtual RestFrames::RFList<RestFrame> GetListVisibleFrames();
+    /// \brief Returns a list of **VisibleFrame** s inheriting from this
+    virtual RestFrames::RFList<RestFrame> GetListVisibleFrames() const;
 
-    /// \brief Returns a list of InvisibleFrame s inheriting from this
-    virtual RestFrames::RFList<RestFrame> GetListInvisibleFrames();
+    /// \brief Returns a list of **InvisibleFrame** s inheriting from this
+    virtual RestFrames::RFList<RestFrame> GetListInvisibleFrames() const;
     
     ///@}
 
@@ -501,11 +501,10 @@ namespace RestFrames {
     TVector3 m_ParentBoost;
 
     // Recursively get lists of frames
-    void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame);
+    void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame) const;
 
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 vector<TVector3>& boosts) const;
-
   };
 
 }

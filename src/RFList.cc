@@ -70,15 +70,6 @@ namespace RestFrames {
     return true;
   }
 
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::Add(const Derived& objs){
-  //   int N = objs.GetN();
-  //   double ret = true;
-  //   for(int i = 0; i < N; i++) 
-  //     if(!Add(objs.Get(i))) ret = false;
-  //   return ret;
-  // }
-
   template <class T, class Derived>
   int RFListBase<T,Derived>::Remove(const T& obj){
     int N = GetN();
@@ -90,44 +81,6 @@ namespace RestFrames {
     }
     return -1;
   }
-
-  // template <class T, class Derived>
-  // void RFListBase<T,Derived>::Remove(const Derived& objs){
-  //   int N = objs.GetN();
-  //   for(int i = 0; i < N; i++) Remove(objs.Get(i));
-  // }
-
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::Contains(const RFKey& key) const {
-  //   int N = GetN();
-  //   for(int i = 0; i < N; i++){
-  //     if(m_Objs[i]->IsSame(key)) return true;
-  //   }
-  //   return false;
-  // }
-
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::Contains(const T& obj) const {
-  //   int N = GetN();
-  //   for(int i = 0; i < N; i++){
-  //     if(m_Objs[i]->IsSame(obj)) return true;
-  //   }
-  //   return false;
-  // }
-
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::Contains(const Derived& objs) const {
-  //   int N = objs.GetN();
-  //   for(int i = 0; i < N; i++){
-  //     if(!Contains(objs.Get(i))) return false;
-  //   }
-  //   return true;
-  // }
-
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::IsSame(const Derived& objs) const {
-  //   return SizeUnion(objs) == SizeIntersection(objs);
-  // }
 
   template <class T, class Derived>
   int RFListBase<T,Derived>::GetIndex(const RFKey& key) const {
@@ -147,80 +100,6 @@ namespace RestFrames {
     return -1;
   }
 
-  // template <class T, class Derived>
-  // Derived RFListBase<T,Derived>::Copy() const {
-  //   Derived objs;
-  //   int N = GetN();
-  //   for(int i = 0; i < N; i++) objs.Add(*m_Objs[i]);
-  //   return objs;
-  // }
-
-  // template <class T, class Derived>
-  // Derived RFListBase<T,Derived>::Union(const Derived& objs) const {
-  //   Derived objs_this = Copy();
-  //   objs_this.Add(objs);
-  //   return objs_this;
-  // }
-
-  // template <class T, class Derived>
-  // Derived RFListBase<T,Derived>::Intersection(const Derived& objs) const {
-  //   Derived inter; 
-  //   int N = objs.GetN();
-  //   for(int i = 0; i < N; i++){
-  //     if(Contains(objs.Get(i))) inter.Add(objs.Get(i));
-  //   }
-  //   return inter;
-  // }
-
-  // template <class T, class Derived>
-  // Derived RFListBase<T,Derived>::Complement(const Derived& objs) const {
-  //   Derived comp = Copy();
-  //   int N = objs.GetN();
-  //   for(int i = 0; i < N; i++)
-  //     if(comp.Contains(objs.Get(i))) 
-  // 	comp.Remove(objs.Get(i));
-    
-  //   return comp;
-  // }
-
-  // template <class T, class Derived>
-  // int RFListBase<T,Derived>::SizeUnion(const Derived& objs) const {
-  //   int Nthis = GetN();
-  //   int Nthat = objs.GetN();
-  //   for(int i = 0; i < Nthat; i++)
-  //     if(!Contains(objs.Get(i))) Nthis++;
-    
-  //   return Nthis;
-  // }
-
-  // template <class T, class Derived>
-  // int RFListBase<T,Derived>::SizeIntersection(const Derived& objs) const {
-  //   int Nthis = 0;
-  //   int Nthat = objs.GetN();
-  //   for(int i = 0; i < Nthat; i++)
-  //     if(Contains(objs.Get(i))) Nthis++;
-    
-  //   return Nthis;
-  // }
-
-  // template <class T, class Derived>
-  // int RFListBase<T,Derived>::SizeComplement(const Derived& objs) const {
-  //   int Nthis = GetN();
-  //   int Nthat = objs.GetN();
-  //   for(int i = 0; i < Nthat; i++)
-  //     if(Contains(objs.Get(i))) Nthis--;
-    
-  //   return Nthis;
-  // }
-
-  // operator overload methods
-  // template <class T, class Derived>
-  // void RFListBase<T,Derived>::operator=(const Derived& objs){ 
-  //   Clear();
-  //   Add(objs);
-  //   return;
-  // }
-
   template <class T, class Derived>
   T& RFListBase<T,Derived>::operator[](int i) const {
     return Get(i);
@@ -232,21 +111,11 @@ namespace RestFrames {
     return obj == *m_Objs[0];
   }
 
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::operator==(const Derived& objs) const { 
-  //   return IsSame(objs);
-  // }
-
   template <class T, class Derived>
   bool RFListBase<T,Derived>::operator!=(const T& obj) const {
     if(GetN() != 1) return true;
     return !(obj == *m_Objs[0]);
   }
-
-  // template <class T, class Derived>
-  // bool RFListBase<T,Derived>::operator!=(const Derived& objs) const { 
-  //   return !IsSame(objs);
-  // }
 
   template <class T, class Derived>
   Derived RFListBase<T,Derived>::operator+(T& obj) const { 
@@ -255,14 +124,6 @@ namespace RestFrames {
     list.Add(obj);
     return list;
   }
-
-  // template <class T, class Derived>
-  // Derived RFListBase<T,Derived>::operator+(const Derived& objs) const {
-  //   Derived list;
-  //   list.Add((Derived&)*this);
-  //   list.Add(objs);
-  //   return list;
-  // }
 
   template <class T, class Derived>
   Derived RFListBase<T,Derived>::operator-(const T& obj) const { 
@@ -297,12 +158,6 @@ namespace RestFrames {
     Remove(obj);
     return (Derived&)*this;
   }
-
-  // template <class T, class Derived>
-  // Derived& RFListBase<T,Derived>::operator-=(const Derived& objs){
-  //   Remove(objs);
-  //   return (Derived&)*this;
-  // }
 
   // RestFrame methods
   double RFList<RestFrame>::GetMass() const {

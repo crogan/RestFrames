@@ -46,6 +46,7 @@ namespace RestFrames {
     m_Body   = false;
     m_Mind   = false;
     m_Spirit = false;
+    m_This = this;
   }
 
   RFBase::RFBase(const string& sname, const string& stitle, int key)
@@ -55,6 +56,7 @@ namespace RestFrames {
     m_Body   = false;
     m_Mind   = false;
     m_Spirit = false;
+    m_This = this;
   }
 
   RFBase::~RFBase(){

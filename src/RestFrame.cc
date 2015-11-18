@@ -37,6 +37,7 @@ namespace RestFrames {
   int RestFrame::m_class_key = 0;
 
   RestFrame::RestFrame() : RFBase() {}
+  
   RestFrame::~RestFrame() { m_Type = kVanillaFrame; }
 
   RestFrame::RestFrame(const string& sname, const string& stitle)
@@ -310,22 +311,23 @@ namespace RestFrames {
     return m_ParentBoost;
   }
 
-  RFList<RestFrame> RestFrame::GetListFrames(FrameType type){
+  RFList<RestFrame> RestFrame::GetListFrames(FrameType type) const {
     RFList<RestFrame> frames;
     FillListFramesRecursive(frames,type);
     return frames;
   }
 
-  RFList<RestFrame> RestFrame::GetListVisibleFrames(){
+  RFList<RestFrame> RestFrame::GetListVisibleFrames() const {
     return GetListFrames(kVisibleFrame);
   }
 
-  RFList<RestFrame> RestFrame::GetListInvisibleFrames(){
+  RFList<RestFrame> RestFrame::GetListInvisibleFrames() const {
     return GetListFrames(kInvisibleFrame);
   }
   
-  void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type){
-    if(type == GetType() || type == kLabFrame) frames.Add(*this);
+  void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type) const {
+    if(frames.Contains(*this)) return;
+    if(type == GetType() || type == kLabFrame) frames.Add((RestFrame&)(*m_This));
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       GetChildFrame(i).FillListFramesRecursive(frames, type);

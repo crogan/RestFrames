@@ -156,6 +156,8 @@ namespace RestFrames {
     void UnSoundMind(const string& function) const;
     void UnSoundSpirit(const string& function) const;
 
+    RFBase* m_This;
+
   private:
     string m_Name;
     string m_Title;
