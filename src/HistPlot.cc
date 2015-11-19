@@ -50,8 +50,8 @@ namespace RestFrames {
   }
 
   HistPlot::~HistPlot(){
-    int N = m_Vars.size();
-    for(int i = 0; i < N; i++)
+    int Nv = m_Vars.size();
+    for(int i = 0; i < Nv; i++)
       delete m_Vars[i];
     ClearHist();
   }
@@ -75,6 +75,15 @@ namespace RestFrames {
   }
 
   HistPlotVar const& HistPlot::GetNewVar(const string& name,
+					 const string& title, 
+					 double minval, double maxval,
+					 const string& unit){
+    HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
+    m_Vars.push_back(var);
+    return *var;
+  }
+
+  HistPlotCategory const& HistPlot::Get(const string& name,
 					 const string& title, 
 					 double minval, double maxval,
 					 const string& unit){
@@ -259,10 +268,6 @@ namespace RestFrames {
 
   void HistPlot::SetPlotTitle(const string& title){
     m_PlotTitle = title;
-  }
-
-  void HistPlot::SetPlotCategory(const string& cat){
-    m_PlotCategory = cat;
   }
 
   void HistPlot::WriteHist(const string& name){

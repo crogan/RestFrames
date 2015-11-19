@@ -41,6 +41,7 @@
 #include "RestFrames/TreePlotLink.hh"
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotVar.hh"
+#include "RestFrames/HistPlotCategory.hh"
 
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/LabFrame.hh"

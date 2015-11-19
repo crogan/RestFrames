@@ -42,6 +42,7 @@
 namespace RestFrames {
 
   class HistPlotVar;
+  class HistPlotCategory;
 
   class HistPlot : public RFPlot {
 
@@ -69,8 +70,6 @@ namespace RestFrames {
 
     void SetPlotTitle(const string& title);
 
-    void SetPlotCategory(const string& cat);
-
     void SetScaleLabel(const string& label);
 
     void SetScale(double scale = -1);
@@ -82,13 +81,15 @@ namespace RestFrames {
   private:
     string m_PlotLabel;
     string m_PlotTitle;
-    string m_PlotCategory;
     string m_ScaleLabel;
     double m_Scale;
     bool   m_SetScale;
+    
     vector<TH1D*> m_1DHists;
     vector<TH2D*> m_2DHists;
     vector<HistPlotVar*> m_Vars;
+    vector<HistPlotCategory*> m_Categories;
+    
     map<TH1D*,const HistPlotVar*>        m_HistToVar;
     map<TH2D*,pair<const HistPlotVar*,
 		   const HistPlotVar*> > m_HistToVars;

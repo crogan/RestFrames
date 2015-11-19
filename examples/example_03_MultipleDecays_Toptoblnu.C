@@ -176,49 +176,50 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   minMtPlot->AddHist(DdphiW); minMWPlot->AddHist(DdphiW);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((min(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%((max(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
 
-    // // generate event
-    // LAB_G.ClearEvent();                             // clear the gen tree
-    // double PTW = mW*gRandom->Rndm();
-    // LAB_G.SetTransverseMomenta(PTW);                // give the W some Pt
-    // double PzW = mW*(2.*gRandom->Rndm()-1.);
-    // LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
-    // LAB_G.AnalyzeEvent();                           // generate a new event
+    // generate event
+    LAB_Gen.ClearEvent();                           // clear the gen tree
+    double PTt = mtop*gRandom->Rndm();
+    LAB_Gen.SetTransverseMomenta(PTt);              // give the Top some Pt
+    double PZt = mtop*(2.*gRandom->Rndm()-1.);
+    LAB_Gen.SetLongitudinalMomenta(PZt);            // give the Top some Pz
+    LAB_Gen.AnalyzeEvent();                         // generate a new event
 
-    // // analyze event
-    // LAB_R.ClearEvent();                             // clear the reco tree
-    // L_R.SetLabFrameFourVector(L_G.GetFourVector()); // Set lepton 4-vec
-    // B_R.SetLabFrameFourVector(B_G.GetFourVector()); // Set b-jet 4-vec
-    // TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
-    // MET.SetZ(0.);
-    // INV.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
-    // LAB_R.AnalyzeEvent();                   
-    // analyze the event
+    // analyze event
+    LAB_Mt.ClearEvent();                             // clear the reco tree
+    L_Mt.SetLabFrameFourVector(L_Gen.GetFourVector()); // Set lepton 4-vec
+    B_Mt.SetLabFrameFourVector(B_Gen.GetFourVector()); // Set b-jet 4-vec
+    TVector3 MET = LAB_Gen.GetInvisibleMomentum();    // Get the MET from gen tree
+    MET.SetZ(0.);
+    INV_Mt.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
+    LAB_Mt.AnalyzeEvent();                          //analyze the event
 
     // calculate observables
-    // double MT    = T_R.GetMass();
-    // double EB    = B_R.GetEnergy(T_R);
-    // double MTgen = T_G.GetMass();
-    // double cosT     = T_R.GetCosDecayAngle();
-    // double cosTgen  = T_G.GetCosDecayAngle();
-    // double dphiT    = LAB_R.GetDeltaPhiDecayPlanes(T_R);
-    // double dphiTgen = LAB_G.GetDeltaPhiDecayPlanes(T_G);
+    Mt    = T_Mt.GetMass();
+    double MTgen = T_Gen.GetMass();
+    cosT     = T_Mt.GetCosDecayAngle();
+    double cosTgen  = T_Gen.GetCosDecayAngle();
+    dphiT    = LAB_Mt.GetDeltaPhiDecayPlanes(T_Mt);
+    double dphiTgen = LAB_Gen.GetDeltaPhiDecayPlanes(T_Gen);
 
-    // double MW    = W_R.GetMass();
-    // double MWgen = W_G.GetMass();
-    // double cosW     = W_R.GetCosDecayAngle();
-    // double cosWgen  = W_G.GetCosDecayAngle();
-    // double dphiW    = T_R.GetDeltaPhiDecayPlanes(W_R);
-    // double dphiWgen = T_G.GetDeltaPhiDecayPlanes(W_G);
+    MW    = W_Mt.GetMass();
+    double MWgen = W_Gen.GetMass();
+    cosW     = W_Mt.GetCosDecayAngle();
+    double cosWgen  = W_Gen.GetCosDecayAngle();
+    dphiW    = T_Mt.GetDeltaPhiDecayPlanes(W_Mt);
+    double dphiWgen = T_Gen.GetDeltaPhiDecayPlanes(W_Gen);
     
-    // double DcosT = asin(sqrt(1.-cosT*cosT)*cosTgen-sqrt(1.-cosTgen*cosTgen)*cosT);
-    // double DdphiT = asin(sin(dphiT-dphiTgen));
-    // double DcosW = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
-    // double DdphiW = asin(sin(dphiW-dphiWgen));
+    DcosT = asin(sqrt(1.-cosT*cosT)*cosTgen-sqrt(1.-cosTgen*cosTgen)*cosT);
+    DdphiT = asin(sin(dphiT-dphiTgen));
+    DcosW = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
+    DdphiW = asin(sin(dphiW-dphiWgen));
 
+    pTt = PTt / MTgen;
+
+    minMtPlot->Fill();
   }
-
+  minMtPlot->Draw();
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation
