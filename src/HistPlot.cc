@@ -41,7 +41,6 @@ namespace RestFrames {
   {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
     SetPlotTitle(GetTitle());
-    SetPlotCategory(cat);
     SetScaleLabel("a. u.");
     m_Scale = 1.;
     m_SetScale = false;
@@ -83,14 +82,14 @@ namespace RestFrames {
     return *var;
   }
 
-  HistPlotCategory const& HistPlot::Get(const string& name,
-					 const string& title, 
-					 double minval, double maxval,
-					 const string& unit){
-    HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
-    m_Vars.push_back(var);
-    return *var;
-  }
+  // HistPlotCategory const& HistPlot::Get(const string& name,
+  // 					 const string& title, 
+  // 					 double minval, double maxval,
+  // 					 const string& unit){
+  //   HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
+  //   m_Vars.push_back(var);
+  //   return *var;
+  // }
     
   void HistPlot::AddHist(const HistPlotVar& var){
     string name = var.GetName()+"_"+GetName();
@@ -181,7 +180,7 @@ namespace RestFrames {
     l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
+    //l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
 
     AddCanvas(can);
   }
@@ -242,7 +241,7 @@ namespace RestFrames {
     l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
+    //l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
     
     AddCanvas(can);
   }

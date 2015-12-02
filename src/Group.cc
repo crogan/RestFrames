@@ -85,6 +85,12 @@ namespace RestFrames {
     m_Frames.Add(frame);
   }
 
+  void Group::AddFrames(RestFrames::RFList<RestFrame> frames){
+    int N = frames.GetN();
+    for(int i = 0; i < N; i++)
+      AddFrame(frames[i]);
+  }
+
   void Group::AddJigsaw(Jigsaw& jigsaw){
     SetBody(false);
     if(!jigsaw) return;
