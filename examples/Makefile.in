@@ -90,7 +90,8 @@ build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = example_01.x$(EXEEXT) example_02.x$(EXEEXT) \
 	example_03.x$(EXEEXT) example_04.x$(EXEEXT) \
-	example_05.x$(EXEEXT) example_06.x$(EXEEXT)
+	example_05.x$(EXEEXT) example_06.x$(EXEEXT) \
+	example_07.x$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -150,6 +151,13 @@ example_06_x_DEPENDENCIES = ../src/libRestFrames.la
 example_06_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_06_x_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_07_x_OBJECTS = 07-example_07.$(OBJEXT)
+example_07_x_OBJECTS = $(am_example_07_x_OBJECTS)
+example_07_x_LDADD = $(LDADD)
+example_07_x_DEPENDENCIES = ../src/libRestFrames.la
+example_07_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(example_07_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -186,10 +194,12 @@ am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
 	$(example_03_x_SOURCES) $(example_04_x_SOURCES) \
-	$(example_05_x_SOURCES) $(example_06_x_SOURCES)
+	$(example_05_x_SOURCES) $(example_06_x_SOURCES) \
+	$(example_07_x_SOURCES)
 DIST_SOURCES = $(example_01_x_SOURCES) $(example_02_x_SOURCES) \
 	$(example_03_x_SOURCES) $(example_04_x_SOURCES) \
-	$(example_05_x_SOURCES) $(example_06_x_SOURCES)
+	$(example_05_x_SOURCES) $(example_06_x_SOURCES) \
+	$(example_07_x_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -425,7 +435,10 @@ example_05_x_SHORTNAME = 05
 example_05_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 example_06_x_SOURCES = example_06_DiGluinostoJetsMET.C
 example_06_x_SHORTNAME = 06
-example_06_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_06_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_07_x_SOURCES = example_07.C
+example_07_x_SHORTNAME = 07
+example_07_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
@@ -497,6 +510,10 @@ example_06.x$(EXEEXT): $(example_06_x_OBJECTS) $(example_06_x_DEPENDENCIES) $(EX
 	@rm -f example_06.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_06_x_LINK) $(example_06_x_OBJECTS) $(example_06_x_LDADD) $(LIBS)
 
+example_07.x$(EXEEXT): $(example_07_x_OBJECTS) $(example_07_x_DEPENDENCIES) $(EXTRA_example_07_x_DEPENDENCIES) 
+	@rm -f example_07.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_07_x_LINK) $(example_07_x_OBJECTS) $(example_07_x_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -509,6 +526,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/04-example_04_HtoWWto4l.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/05-example_05_DiToptoblnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/06-example_06_DiGluinostoJetsMET.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/07-example_07.Po@am__quote@
 
 .C.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -614,6 +632,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_06_DiGluinostoJetsMET.C' object='06-example_06_DiGluinostoJetsMET.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_06_x_CXXFLAGS) $(CXXFLAGS) -c -o 06-example_06_DiGluinostoJetsMET.obj `if test -f 'example_06_DiGluinostoJetsMET.C'; then $(CYGPATH_W) 'example_06_DiGluinostoJetsMET.C'; else $(CYGPATH_W) '$(srcdir)/example_06_DiGluinostoJetsMET.C'; fi`
+
+07-example_07.o: example_07.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_07_x_CXXFLAGS) $(CXXFLAGS) -MT 07-example_07.o -MD -MP -MF $(DEPDIR)/07-example_07.Tpo -c -o 07-example_07.o `test -f 'example_07.C' || echo '$(srcdir)/'`example_07.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/07-example_07.Tpo $(DEPDIR)/07-example_07.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_07.C' object='07-example_07.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_07_x_CXXFLAGS) $(CXXFLAGS) -c -o 07-example_07.o `test -f 'example_07.C' || echo '$(srcdir)/'`example_07.C
+
+07-example_07.obj: example_07.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_07_x_CXXFLAGS) $(CXXFLAGS) -MT 07-example_07.obj -MD -MP -MF $(DEPDIR)/07-example_07.Tpo -c -o 07-example_07.obj `if test -f 'example_07.C'; then $(CYGPATH_W) 'example_07.C'; else $(CYGPATH_W) '$(srcdir)/example_07.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/07-example_07.Tpo $(DEPDIR)/07-example_07.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_07.C' object='07-example_07.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_07_x_CXXFLAGS) $(CXXFLAGS) -c -o 07-example_07.obj `if test -f 'example_07.C'; then $(CYGPATH_W) 'example_07.C'; else $(CYGPATH_W) '$(srcdir)/example_07.C'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

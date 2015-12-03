@@ -62,6 +62,7 @@ namespace RestFrames {
     GroupType GetType() const { return m_Type; }
 
     virtual void AddFrame(RestFrame& frame);
+    virtual void AddFrames(RestFrames::RFList<RestFrame> frames);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
     void RemoveFrame(const RestFrame& frame);
