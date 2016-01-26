@@ -92,6 +92,14 @@ namespace RestFrames {
     double GetRandom() const;
     double GetGaus(double mu, double sig) const;
 
+    bool m_MCMCActive;
+    bool IsActiveMCMC() const;
+    int GetNActiveMCMC() const;
+    virtual bool RecursiveIterationMCMC();
+    double GenerateMassMCMC() const;
+    void SetMassMCMC() const;
+    double GetProbMCMC() const;
+
   private:
     void Init();
     TRandom *m_Random;

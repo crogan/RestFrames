@@ -55,6 +55,7 @@ namespace RestFrames {
 
   void GeneratorFrame::Init(){
     m_Ana = kGenFrame;
+    m_MCMCActive = false;
   
     TDatime now;
     int today = now.GetDate();
@@ -162,7 +163,7 @@ namespace RestFrames {
 
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
-      if(!dynamic_cast<GeneratorFrame*>(&GetChildFrame(i))->InitializeAnalysisRecursive())
+      if(!GetChildFrame(i).InitializeAnalysisRecursive())
 	return SetMind(false);
  
     return SetMind(true);
@@ -175,5 +176,29 @@ namespace RestFrames {
   double GeneratorFrame::GetGaus(double mu, double sig) const {
     return m_Random->Gaus(mu,sig);
   }
+
+  bool GeneratorFrame::IsActiveMCMC() const {
+    return m_MCMCActive;
+  }
+
+  int GeneratorFrame::GetNActiveMCMC() const {
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      return SetMind(false);
+    }
+    
+    int NActive = int(m_MCMCActive);
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      NActive += GetChildFrame(i).GetNActiveMCMC();
+    
+    return NActive;
+  }
+
+   
+    virtual bool RecursiveIterationMCMC();
+    double GenerateMassMCMC() const;
+    void SetMassMCMC() const;
+    double GetProbMCMC() const;
 
 }
