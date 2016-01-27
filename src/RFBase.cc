@@ -186,7 +186,7 @@ namespace RestFrames {
 
   RFBase RFBase::m_Empty;
 
-  double GetProb(double Mp, double Mc1, double Mc2){
+  double GetP(double Mp, double Mc1, double Mc2){
     if(Mp <= 0.) return 0.;
     Mc1 = max(Mc1, 0.);
     Mc2 = max(Mc2, 0.);

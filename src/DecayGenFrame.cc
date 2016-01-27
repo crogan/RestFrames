@@ -39,9 +39,6 @@ namespace RestFrames {
   // DecayGenFrame class
   ///////////////////////////////////////////////
 
-  // Number of trials to discard in Metropilis-Hastings MCMC
-  int DecayGenFrame::m_N_MCMC_BurnIn = 1000;
-
   DecayGenFrame::DecayGenFrame(const string& sname, const string& stitle) 
     : DecayFrame<GeneratorFrame>(sname,stitle)
   {
@@ -51,24 +48,10 @@ namespace RestFrames {
   DecayGenFrame::~DecayGenFrame(){ }
 
   void DecayGenFrame::Init(){
-    m_Mass = -1.;
-    m_MassSet = false;
+    m_Mass = 0.;
 
-    m_GType = DGVanilla;
-
-    // frame generation param
-    m_ChildP = -1.;
-    m_ChildGamma = -1.;
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
-
-    // MCMC for resonance children
-    m_MarkovChainMC = false;
-    m_Resonances.Clear();
-    m_ResIndex.clear();
-    m_ResPrevProb.clear();
-    m_ResPrevMass.clear();
-    m_ResPrevMTOT = -1.;
   }
 
   bool DecayGenFrame::IsSoundBody() const{
@@ -83,6 +66,7 @@ namespace RestFrames {
   }
 
   void DecayGenFrame::SetMass(double val){
+    SetMind(false);
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
@@ -91,38 +75,7 @@ namespace RestFrames {
     } else {
       m_Mass = val;
     }
-    m_MassSet = true;
-    m_ChildP = -1.;
-    m_ChildGamma = 0.;
-  }
-
-  void DecayGenFrame::SetChildMomentum(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set child momentum to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
-      m_ChildP = 0.;
-    } else {
-      m_ChildP = val;
-    }
-    m_Mass = -1.;
-    m_MassSet = false;
-    m_ChildGamma = 0.;
-  }
-
-  void DecayGenFrame::SetChildGamma(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set child gamma less than one: ";
-      m_Log << val << ". Setting to one." << m_End;
-      m_ChildGamma = 1.;
-    } else {
-      m_ChildGamma = val;
-    }
-    m_Mass = -1.;
-    m_MassSet = false;
-    m_ChildP = -1.;
-    m_ChildGamma = val;
+ 
   }
 
   void DecayGenFrame::SetCosDecayAngle(double val){
@@ -144,283 +97,166 @@ namespace RestFrames {
 
   void DecayGenFrame::ResetFrame(){
     SetSpirit(false);
-    if(m_ChildP > 0. || m_ChildGamma >= 1.) m_MassSet = false;
-    ResetDecayAngles();
-  }
-
-  void DecayGenFrame::ResetDecayAngles(){
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
   }
 
-  double DecayGenFrame::GetMass() const{
-    if(m_MassSet) return m_Mass;
-
-    int Nchild = GetNChildren();
-    if(Nchild != 2) return -1.;
-    double m[2];
-    for(int i = 0; i < 2; i++) m[i] = GetChildFrame(i).GetMass();
-    double Mass = 0;
-    if(m_ChildP >= 0.){
-      Mass = 0.;
-      for(int i = 0; i < 2; i++) 
-	Mass += sqrt(m_ChildP*m_ChildP + m[i]*m[i]);
-    }
-    if(m_ChildGamma >= 0.){
-      Mass = sqrt(4.*m[0]*m[1]*m_ChildGamma*m_ChildGamma
-		  + (m[0]-m[1])*(m[0]-m[1]));
-    }
-    m_Mass = Mass;
-    m_MassSet = true;
+  double DecayGenFrame::GetMass() const {
     return m_Mass;
-  }
-
-  bool DecayGenFrame::IsResonanceFrame() const {
-    return m_GType == DGResonance;
   }
 
   bool DecayGenFrame::InitializeGenAnalysis(){
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
-      SetMind(false);
-      return false;
+      return SetMind(false);
+    } 
+
+    double min_mass = GetMinimumMassMCMC();
+    if(m_Mass < min_mass){
+      m_Log << LogWarning;
+      m_Log << "Unable to initialize analysis: ";
+      m_Log << "decay frame mass (" << m_Mass << ") ";
+      m_Log << "is less than required child masses (";
+      m_Log << min_mass << ")" << m_End;
+      return SetMind(false);
     }
 
-    // check for resonance children
-    m_Resonances.Clear();
-    m_ResIndex.clear();
-    m_ResPrevMass.clear();
-    m_ResPrevProb.clear();
+    m_VarMassChildren.clear();
+    double Mass = GetMass();
     int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      if(dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i))){
-	m_Resonances.Add(*dynamic_cast<ResonanceGenFrame*>(&GetChildFrame(i)));
-	m_ResIndex[&GetChildFrame(i)] = i;
+    for(int i = 0; i < N; i++){
+      double childMass = 0.;
+      GeneratorFrame& child = GetChildFrame(i);
+      if(child.IsVariableMassMCMC()){
+	childMass = child.GenerateMassMCMC(Mass);
+	child.SetMassMCMC(childMass);
+	m_VarMassChildren.push_back(i);
+      } else {
+	childMass = child.GetMass();
       }
-      
-    int Nres = m_Resonances.GetN();
-    for(int i = Nres-1; i >= 0; i--)
-      if(m_Resonances[i].GetWidth() <= 0.){
-	m_ResIndex.erase(&m_Resonances[i]);
-	m_Resonances.Remove(m_Resonances[i]);
-      }
-     
-    Nres = m_Resonances.GetN();
-    if(Nres > 0){
-      m_MarkovChainMC = true;
-      m_Burnt = false;
-      for(int i = 0; i < Nres; i++){
-	m_ResPrevMass[&m_Resonances[i]] = 0.;
-	m_ResPrevProb[&m_Resonances[i]] = 0.;
-      }
-    } else {
-      m_MarkovChainMC = false;
+      Mass -= childMass;
     }
+
+    m_InterMassFracMCMC.clear();
+    m_InterMassFracMCMC.push_back(0.);
+    for(int i = 1; i < N-1; i++) 
+      m_InterMassFracMCMC.push_back(GetRandom());
+    qsort((double*)(&m_InterMassFracMCMC[0])+1,N-2,sizeof(double),DoubleMax);
+    m_InterMassFracMCMC.push_back(1.);
+
     return SetMind(true);
   }
 
-  bool DecayGenFrame::MCMC_BurnIn(){
-    m_Log << LogVerbose;
-    m_Log << "Burning in Markov Chain MC with ";
-    m_Log << m_N_MCMC_BurnIn;
-    m_Log << " trials to be discarded..." << m_End;
-
-    int N    = GetNChildren();
-    int Nres = m_Resonances.GetN();
-    double M = GetMass();
-
-    // initialize MCMC parameters
-    double Msum = 0.;
-    for(int i = 0; i < N; i++)
-      if(!m_Resonances.Contains(GetChildFrame(i).GetKey()))
-	Msum += GetChildFrame(i).GetMass();
-    double Mpolesum = Msum;
-    for(int i = 0; i < Nres; i++){
-      Msum     += m_Resonances[i].GetMinimumMass();
-      Mpolesum += m_Resonances[i].GetPoleMass();
-    }
-
-    for(int i = 0; i < Nres; i++)
-      m_ResPrevProb[&m_Resonances[i]]  = 0.;
+  bool DecayGenFrame::IterateMCMC(){
+    int N = GetNChildren();
+    vector<double> InterMassFrac;
+    InterMassFrac.push_back(0.);
+    for(int i = 1; i < N-1; i++) 
+      InterMassFrac.push_back(GetRandom());
+    qsort((double*)(&InterMassFrac[0])+1,N-2,sizeof(double),DoubleMax);
+    InterMassFrac.push_back(1.);
     
-    if(Msum >= M){
-      m_Log << LogWarning;
-      m_Log << "Sum of child masses is in excess of parent mass: ";
-      m_Log << M << " < " << Msum << m_End;
-      return SetSpirit(false);
+    double probOld = GetProbMCMC(GetMass());
+
+    vector<double> InterMassFracOld = m_InterMassFracMCMC;
+    m_InterMassFracMCMC = InterMassFrac;
+
+    double probNew = GetProbMCMC(GetMass());
+
+    if(probOld > 0.)
+      if(probNew/probOld < GetRandom())
+	m_InterMassFracMCMC = InterMassFracOld;
+
+    int Nvar = m_VarMassChildren.size();
+    for(int v = 0; v < Nvar; v++){
+      int index = m_VarMassChildren[v];
+      GeneratorFrame& child = GetChildFrame(index);
+      
+      double massMax = GetMass();
+      for(int i = 0; i < N; i++)
+	if(i != index)
+	  massMax -= GetChildFrame(i).GetMass();
+
+      double massOld = child.GetMass();
+      double massNew = child.GenerateMassMCMC(massMax);
+      probOld = child.GetProbMCMC(massOld);
+      probNew = child.GetProbMCMC(massNew);
+      probOld /= GetGenerateProbMCMC(massOld);
+      probNew /= GetGenerateProbMCMC(massNew);
+
+      probOld *= GetProbMCMC(GetMass());
+      child.SetMassMCMC(massNew);
+      probNew *= GetProbMCMC(GetMass());
+      
+      if(probOld > 0)
+	if(probNew/probOld < GetRandom())
+	  child.SetMassMCMC(massOld);
     }
-
-    if(Mpolesum < M)
-      for(int i = 0; i < Nres; i++)
-	m_ResPrevMass[&m_Resonances[i]] = m_Resonances[i].GetPoleMass();
-    else
-      for(int i = 0; i < Nres; i++)
-	m_ResPrevMass[&m_Resonances[i]] = m_Resonances[i].GetMinimumMass() + (M-Msum)/double(Nres+1);
-    m_ResPrevMTOT = M;
-
-    for(int i = 0; i < m_N_MCMC_BurnIn; i++){
-      if(!MCMC_Generate()){
-	m_Log << LogWarning;
-	m_Log << "Problem with Markov-chain MC generation";
-	m_Log << m_End;
-	m_Burnt = false;
-	return false;
-      }
-    }
-    m_Log << LogVerbose << "...Done" << m_End;
-
-    m_Burnt = true;
-    return true;
+    
+    return SetMind(true);
   }
 
-  bool DecayGenFrame::MCMC_Generate(){
-    int N    = GetNChildren();
-    int Nres = m_Resonances.GetN();
-    double M = GetMass();
+  double DecayGenFrame::GetProbMCMC(double mass) const {
+    double SumChildMass = 0.;
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      SumChildMass += GetChildFrame(i).GetMass();
 
-    // Set res masses to previous iter val
-    for(int ires = 0; ires < Nres; ires++){
-      if(m_ResPrevMTOT > 0)
-	m_ResPrevMass[&m_Resonances[ires]] = max(m_Resonances[ires].GetMinimumMass()*1.01, 
-				  m_ResPrevMass[&m_Resonances[ires]]*M/m_ResPrevMTOT);
-      
-      m_Resonances[ires].SetEvtMass(m_ResPrevMass[&m_Resonances[ires]]);
+    if(mass < SumChildMass)
+      return 0.;
+
+    double ETOT = mass - SumChildMass;
+    vector<double> InterMass;
+    for(int i = 0; i < N; i++){
+      InterMass.push_back(m_InterMassFracMCMC[N-1-i]*ETOT + SumChildMass);
+      SumChildMass -= GetChildFrame(i).GetMass();
     }
 
-    // Update masses 1-by-1, 
-    // keeping others fixed
-    for(int ires = 0; ires < Nres; ires++){
-      // calculate permissible mass range
-      double Mmin = m_Resonances[ires].GetMinimumMass();
-      double Mmax = M;
-      vector<double> ChildMasses;
-      for(int i = 0; i < N; i++){
-	Mmax -= GetChildFrame(i).GetMass();
-	ChildMasses.push_back(GetChildFrame(i).GetMass());
-      }
-      Mmax += m_ResPrevMass[&m_Resonances[ires]];
-      double Mass = -1.;
-      Mass = m_Resonances[ires].GenerateMass(Mmin,Mmax);
-      ChildMasses[m_ResIndex[&m_Resonances[ires]]] = Mass;
-
-      vector<double> TwoBodyMass;
-      double Prob = (Mass/M)*GenerateTwoBodyMasses(M, ChildMasses, TwoBodyMass);
-      if(Prob >= GetRandom()*m_ResPrevProb[&m_Resonances[ires]]){
-	m_ResPrevMass[&m_Resonances[ires]] = Mass;
-	m_ResPrevProb[&m_Resonances[ires]] = Prob;
-	m_Resonances[ires].SetEvtMass(Mass); 
-      } else {
-	ChildMasses[m_ResIndex[&m_Resonances[ires]]] = m_ResPrevMass[&m_Resonances[ires]];
-	m_Resonances[ires].SetEvtMass(m_ResPrevMass[&m_Resonances[ires]]); 
-      }
-    }
-    m_ResPrevMTOT = M;
-    return true;
+    double prob = 1./mass/mass;
+    for(int i = 0; i < N-1; i++)
+      prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
+    
+    return prob;
   }
 
   bool DecayGenFrame::GenerateFrame(){
-    if(!IsSoundBody()){ 
+    if(!IsSoundMind()){ 
       m_Log << LogWarning;
       m_Log << "Unable to generate event for frame";
       m_Log << m_End;
       return SetSpirit(false);
     }
 
-    if(m_MarkovChainMC){
-      if(!m_Burnt)
-	if(!MCMC_BurnIn())
-	  return SetSpirit(false);
-      if(!MCMC_Generate()){
-	m_Log << "Problem with Markov-chain MC generation";
-	m_Log << m_End;
-	return SetSpirit(false);
-      }
-    }
-
-    int Nchild = GetNChildren();
-
     vector<double> ChildMasses;
-    double ChildMassTOT = 0.;
-    for(int i = 0; i < Nchild; i++){
-      double ChildMass = max(0.,GetChildFrame(i).GetMass());
-      ChildMasses.push_back(ChildMass);
-      ChildMassTOT += ChildMass;
+    double SumChildMass = 0.;
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++){
+      ChildMasses.push_back(GetChildFrame(i).GetMass());
+      SumChildMass += GetChildFrame(i).GetMass();
     }
 
-    double Mass = GetMass();
-    if(Mass <= ChildMassTOT){
-      m_Log << LogWarning;
-      m_Log << "Problem in event generation: frame mass is less ";
-      m_Log << "than or equal to the sum of child masses: ";
-      m_Log << Mass << " <= " << ChildMassTOT << m_End;
-      SetSpirit(false);
-      return false;
+    double ETOT = GetMass() - SumChildMass;
+    vector<double> InterMass;
+    for(int i = 0; i < N; i++){
+      InterMass.push_back(m_InterMassFracMCMC[N-1-i]*ETOT + SumChildMass);
+      SumChildMass -= GetChildFrame(i).GetMass();
     }
+
     SetSpirit(true);
 
-    vector<double> TwoBodyMass;
-    GenerateTwoBodyMasses(Mass,ChildMasses,TwoBodyMass);
-
     vector<TLorentzVector> ChildVectors;
-    GenerateTwoBodyRecursive(TwoBodyMass, ChildMasses,
+    GenerateTwoBodyRecursive(InterMass, ChildMasses,
 			     GetParentBoostVector(),
 			     GetParentFrame().GetDecayPlaneNormalVector(),
 			     ChildVectors);
     SetChildren(ChildVectors);
-    
-    return true;
+
+    return SetSpirit(true);
   }
 
-  double DecayGenFrame::GenerateTwoBodyMasses(double M, const vector<double>& M_c, vector<double>& M_2b){
-    int N_c = M_c.size();
-
-    if(N_c == 2){
-      M_2b.push_back(M);
-      M_2b.push_back(M_c[1]);
-      return GetProb(M, M_c[0], M_c[1])/M;
-    }
-
-    double ETOT = M;
-    for(int i = 0; i < N_c; i++)
-      ETOT -= M_c[i];
-    
-    double Emax = ETOT + M_c[0];
-    double Emin = 0;
-    double probMAX = 1.;
-    for(int n = 1; n < N_c; n++){
-      Emin += M_c[n-1];
-      Emax += M_c[n];
-      probMAX *= GetProb(Emax,Emin,M_c[n])/M;
-    }
-
-    // accept/reject for intermediate
-    // two-body decay masses
-    double prob = -1.;
-    while(prob/probMAX < GetRandom()){
-      vector<double> ran;
-      ran.push_back(0.);
-      for(int i = 1; i < N_c-1; i++) 
-	ran.push_back(GetRandom());
-      qsort((double*)(&ran[0])+1,N_c-2,sizeof(double),DoubleMax);
-      ran.push_back(1.);
-
-      M_2b.clear();
-      double Msum = M-ETOT;
-      for(int i = 0; i < N_c; i++){
-	M_2b.push_back(ran[N_c-1-i]*ETOT + Msum);
-	Msum -= M_c[i];
-      }
-
-      prob = 1.;
-      for(int i = 0; i < N_c-1; i++)
-	prob *= GetProb(M_2b[i],M_2b[i+1],M_c[i])/M;
-    }
-    return prob;
-  }
-
-  double DecayGenFrame::GenerateTwoBodyRecursive(const vector<double>& M_p, const vector<double>& M_c,
-						 const TVector3& axis_par, const TVector3& axis_perp,
-						 vector<TLorentzVector>& P_c){
+  void DecayGenFrame::GenerateTwoBodyRecursive(const vector<double>& M_p, const vector<double>& M_c,
+					       const TVector3& axis_par, const TVector3& axis_perp,
+					       vector<TLorentzVector>& P_c) {
     TVector3 n_par = axis_par.Unit();
     TVector3 n_perp = axis_perp.Unit();
 
@@ -429,8 +265,9 @@ namespace RestFrames {
     double m[2], Mp = M_p[0];
     m[0] = M_c[0];
     m[1] = M_p[1];
-    double Pcm = GetProb(Mp,m[0],m[1]);
     TVector3 V_c[2];
+
+    double Pcm = GetP(Mp, m[0], m[1]);
 
     V_c[0] = Pcm*n_par;
     V_c[1] = -Pcm*n_par;
@@ -440,7 +277,8 @@ namespace RestFrames {
    
     for(int i = 0; i < 2; i++) V_c[i].Rotate(-acos(m_CosDecayAngle),n_perp);
     for(int i = 0; i < 2; i++) V_c[i].Rotate(-m_DeltaPhiDecayPlane,n_par);
-    ResetDecayAngles();
+    m_CosDecayAngle = -2.;
+    m_DeltaPhiDecayPlane = -2.;
 
     TLorentzVector P_child[2];
     for(int i = 0; i < 2; i++) 
@@ -449,7 +287,7 @@ namespace RestFrames {
      
     if(N_c == 2){
       P_c.push_back(P_child[1]);
-      return Pcm;
+      return;
     }
 
     // Recursively generate other two-body decays for N > 2
@@ -459,11 +297,9 @@ namespace RestFrames {
     for(int i = 1; i < N_c; i++) M_cR.push_back(M_c[i]);
     TVector3 boost = P_child[1].BoostVector();
     vector<TLorentzVector> P_cR;
-    Pcm *= GenerateTwoBodyRecursive(M_pR, M_cR, boost, V_c[0].Cross(axis_par), P_cR);
+    GenerateTwoBodyRecursive(M_pR, M_cR, boost, V_c[0].Cross(axis_par), P_cR);
     for(int i = 0; i < N_c-1; i++) P_cR[i].Boost(boost);
     for(int i = 0; i < N_c-1; i++) P_c.push_back(P_cR[i]);
-
-    return Pcm;
   }
 
   int DoubleMax(const void *a, const void *b){

@@ -61,12 +61,6 @@ namespace RestFrames {
     return ResonanceGenFrame::m_Empty;
   }
 
-  void ResonanceGenFrame::ResetFrame(){
-    SetSpirit(false);
-    m_MassSet = false;
-    ResetDecayAngles();
-  }
-
   void ResonanceGenFrame::SetMass(double val){
     if(val < 0.){
       m_Log << LogWarning;
@@ -78,7 +72,7 @@ namespace RestFrames {
     }
   }
 
-  void ResonanceGenFrame::SetEvtMass(double val){
+  void ResonanceGenFrame::SetMassMCMC(double val){
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
@@ -87,84 +81,79 @@ namespace RestFrames {
     } else {
       m_Mass = val;
     }
-    m_MassSet = true;
   }
 
   void ResonanceGenFrame::SetWidth(double val){
+    SetMind(false);
+    
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set width to negative value ";
       m_Log << val << ". Setting to zero." << m_End;
       m_Width = 0.;
-    } else 
+      SetVariableMassMCMC(false);
+    } else {
       m_Width = val;
-  }
-
-  double ResonanceGenFrame::GetMass() const {
-    if(m_MassSet) return m_Mass;
-
-    if(m_Width <= 0.)
-      m_Mass = m_PoleMass;
-    else {
-      m_Mass = GenerateMass(GetMinimumMass());
+      SetVariableMassMCMC(true);
     }
-
-    m_MassSet = true;
-    return m_Mass;
   }
+
 
   double ResonanceGenFrame::GetPoleMass() const {
     return m_PoleMass;
-  }
-
-  double ResonanceGenFrame::GetMinimumMass() const {
-    if(!IsSoundBody()) 
-      return 0.;
-    double Mass = 0.;
-    int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      if(!m_Resonances.Contains((ResonanceGenFrame&)GetChildFrame(i)))
-	Mass += GetChildFrame(i).GetMass();
-    N = m_Resonances.GetN();
-    for(int i = 0; i < N; i++)
-      Mass += m_Resonances.Get(i).GetMinimumMass();
-
-    return Mass;
   }
 
   double ResonanceGenFrame::GetWidth() const {
     return m_Width;
   }
 
-  double ResonanceGenFrame::GetProb(double mass) const {
-    if(m_PoleMass <= 0. || mass < 0.)
-      return 0.;
-
+  double ResonanceGenFrame::GetProbMCMC(double mass) const {
+    if(mass < 0) return 0.;
+    
     double den = (mass*mass-m_PoleMass*m_PoleMass)*(mass*mass-m_PoleMass*m_PoleMass)
       + mass*mass*mass*mass*m_Width*m_Width/m_PoleMass/m_PoleMass;
-    if(den <= 0.)
+
+    if(den > 0.)
+      return DecayGenFrame::GetProbMCMC(mass)*mass*mass/den;
+    else
       return 0.;
-    else 
-      return mass*mass/den;
   }
 
+  double ResonanceGenFrame::GenerateMassMCMC(double max) const {
+    double min = 0.;
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      min += GetChildFrame(i).GetMass();
 
+    if((max < min) && (max < 0))
+      return 0.;
 
-  double ResonanceGenFrame::GenerateMass(double Mmin, double Mmax) const {
-    if(m_Width <= 0. || m_PoleMass <= 0.)
+    if(m_Width <= 0.)
       return 0.;
     
-    if(Mmin <= 0)
-      Mmin = 0.;
-
+    if(min <= 0)
+      min = 0.;
+    
     double M2 = m_PoleMass*m_PoleMass;
     double MW = m_PoleMass*m_Width;
-    double Imin = atan((Mmin*Mmin-M2)/MW);
-    double Imax = TMath::Pi()/2.;
-    if(Mmax > Mmin)
-      Imax = atan((Mmax*Mmax-M2)/MW);
+    double Imin = atan((min*min-M2)/MW);
+    double Imax;
+    if(max <= 0) 
+      Imax = TMath::Pi()/2.;
+    else 
+      Imax = atan((max*max-M2)/MW);
     
     return sqrt(M2 + MW*tan(Imin+GetRandom()*(Imax-Imin)));
+  }
+
+  double ResonanceGenFrame::GetGenerateProbMCMC(double mass) const {
+    double den = mass*mass-m_PoleMass*m_PoleMass;
+    den *= den;
+    den += m_PoleMass*m_PoleMass*m_Width*m_Width;
+    if(den > 0)
+      return 1./den;
+    else
+      return 0.;
   }
 
   ResonanceGenFrame ResonanceGenFrame::m_Empty;

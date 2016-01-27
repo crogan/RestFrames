@@ -48,28 +48,23 @@ namespace RestFrames {
     static ResonanceGenFrame& Empty();
 
     virtual void SetMass(double mass);
-    virtual void SetEvtMass(double mass);
     virtual void SetWidth(double w);
-    
-    virtual void ResetFrame();
 
-    virtual double GetMass() const;
     virtual double GetPoleMass() const;
-    virtual double GetMinimumMass() const;
     virtual double GetWidth() const;
-    virtual double GetProb(double mass) const;
-    virtual double GenerateMass(double Mmin = 0., double Mmax = -1.) const;
+   
+    virtual double GetProbMCMC(double mass) const;
+    virtual double GenerateMassMCMC(double max) const;
+    virtual double GetGenerateProbMCMC(double mass) const;
+    virtual void SetMassMCMC(double mass);
 
-  protected:
+  private:
     static ResonanceGenFrame m_Empty;
+    void Init();
     double m_PoleMass;
     double m_Width;
-    void Init();
 
   };
-
-  double GetProb(double Mp, double Mc1, double Mc2);
-  int DoubleMax(const void *a, const void *b);
 
 }
 

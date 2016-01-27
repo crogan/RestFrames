@@ -55,17 +55,19 @@ namespace RestFrames {
     virtual void SetTransverseMomenta(double val);
     virtual void SetLongitudinalMomenta(double val);
     virtual void SetPhi(double val);
+
+    void SetN_MCMCBurnIn(int N);
     
   protected:
     double m_PT;
     double m_PL;
     double m_Phi;
-    double m_Theta;
 
     virtual void ResetFrame();
     virtual bool GenerateFrame();
 
-    void ResetProductionAngles();
+    virtual bool IterateMCMC();
+    int m_NBurnInMCMC;
 
   private:
     void Init();

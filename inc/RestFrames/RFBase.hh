@@ -171,7 +171,7 @@ namespace RestFrames {
 
   };
 
-  double GetProb(double Mp, double Mc1, double Mc2);
+  double GetP(double Mp, double Mc1, double Mc2);
 
 }
 

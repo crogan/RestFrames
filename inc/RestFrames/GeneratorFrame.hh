@@ -82,9 +82,15 @@ namespace RestFrames {
     /// \brief Get the frame of the *i* th child
     virtual GeneratorFrame& GetChildFrame(int i) const;
 
+    bool IsVariableMassMCMC() const { return m_VarMassMCMC; }
+    virtual double GenerateMassMCMC(double max = -1.) const;
+    virtual double GetProbMCMC(double mass) const;
+    virtual double GetGenerateProbMCMC(double mass) const;
+    virtual void SetMassMCMC(double mass);
+
   protected:
-    virtual void ResetFrame(){ }
-    virtual bool GenerateFrame(){ return false; }
+    virtual void ResetFrame() {}
+    virtual bool GenerateFrame() { return false; }
 
     void SetChildren(const vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();
@@ -92,13 +98,14 @@ namespace RestFrames {
     double GetRandom() const;
     double GetGaus(double mu, double sig) const;
 
-    bool m_MCMCActive;
-    bool IsActiveMCMC() const;
-    int GetNActiveMCMC() const;
-    virtual bool RecursiveIterationMCMC();
-    double GenerateMassMCMC() const;
-    void SetMassMCMC() const;
-    double GetProbMCMC() const;
+    bool m_VarMassMCMC;
+    void SetVariableMassMCMC(bool var = true){ m_VarMassMCMC = var; }
+
+    virtual bool IterateMCMC();
+    bool IterateRecursiveMCMC();
+
+    virtual double GetMinimumMassMCMC() const;
+    
 
   private:
     void Init();

@@ -40,7 +40,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 10000;
+  int Ngen = 100000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -63,6 +63,20 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   Gb_G.AddChildFrame(V1b_G);
   Gb_G.AddChildFrame(V2b_G);
   Gb_G.AddChildFrame(Xb_G);
+
+  double mGG = 2.4*mG;// get a random di-gluino mass
+  GG_G.SetMass(mGG);
+  // set gluino masses
+  Ga_G.SetMass(mG);
+  Gb_G.SetMass(mG);
+  // set X masses
+  Xa_G.SetMass(mX);
+  Xb_G.SetMass(mX);
+  V1a_G.SetMass(100.);
+  V1b_G.SetMass(100.);
+  V2a_G.SetMass(100.);
+  V2b_G.SetMass(100.);
+
   if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl;
   if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl;
   //
@@ -204,17 +218,6 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);
 
-  // set gluino masses
-  Ga_G.SetMass(mG);
-  Gb_G.SetMass(mG);
-  // set X masses
-  Xa_G.SetMass(mX);
-  Xb_G.SetMass(mX);
-  V1a_G.SetMass(100.);
-  V1b_G.SetMass(100.);
-  V2a_G.SetMass(100.);
-  V2b_G.SetMass(100.);
-
   // function for randomly determining di-gluino mass 
   // (relative to gluino mass via gamma)
   //TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
@@ -225,8 +228,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
     //double mGG = 2.*mG*f_gamma.GetRandom();  
-    double mGG = 2.4*mG;// get a random di-gluino mass
-    GG_G.SetMass(mGG);
+ 
     double PTGG = mGG*gRandom->Rndm();
     LAB_G.SetTransverseMomenta(PTGG);               // give the di-gluinos some Pt
     double PzGG = mGG*(2.*gRandom->Rndm()-1.);

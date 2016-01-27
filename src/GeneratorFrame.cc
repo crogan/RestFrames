@@ -55,7 +55,7 @@ namespace RestFrames {
 
   void GeneratorFrame::Init(){
     m_Ana = kGenFrame;
-    m_MCMCActive = false;
+    m_VarMassMCMC = false;
   
     TDatime now;
     int today = now.GetDate();
@@ -131,9 +131,10 @@ namespace RestFrames {
 
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
-      if(!GetChildFrame(i).AnalyzeEventRecursive())
+      if(!GetChildFrame(i).AnalyzeEventRecursive()){
 	return SetSpirit(false);
-   
+      }
+
     return SetSpirit(true);
   }
 
@@ -165,7 +166,7 @@ namespace RestFrames {
     for(int i = 0; i < N; i++)
       if(!GetChildFrame(i).InitializeAnalysisRecursive())
 	return SetMind(false);
- 
+
     return SetMind(true);
   }
 
@@ -177,28 +178,56 @@ namespace RestFrames {
     return m_Random->Gaus(mu,sig);
   }
 
-  bool GeneratorFrame::IsActiveMCMC() const {
-    return m_MCMCActive;
+  bool GeneratorFrame::IterateMCMC(){
+    return true;
   }
 
-  int GeneratorFrame::GetNActiveMCMC() const {
+  bool GeneratorFrame::IterateRecursiveMCMC(){
+     if(!IsSoundMind()){
+       UnSoundMind(RF_FUNCTION);
+       return SetMind(false);
+     }
+    
+     if(!IterateMCMC())
+       return SetMind(false);
+
+     int N = GetNChildren();
+     for(int i = 0; i < N; i++)
+       if(!GetChildFrame(i).IterateRecursiveMCMC())
+	 return SetMind(false);
+
+     return SetMind(true);
+  }
+
+  double GeneratorFrame::GetMinimumMassMCMC() const {
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
-      return SetMind(false);
+      return SetBody(false);
     }
     
-    int NActive = int(m_MCMCActive);
+    double mass = 0.;
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
-      NActive += GetChildFrame(i).GetNActiveMCMC();
-    
-    return NActive;
+      mass += GetChildFrame(i).GetMinimumMassMCMC();
+
+    if(!IsVariableMassMCMC())
+      mass = max(GetMass(),mass);
+
+    return mass;
   }
 
-   
-    virtual bool RecursiveIterationMCMC();
-    double GenerateMassMCMC() const;
-    void SetMassMCMC() const;
-    double GetProbMCMC() const;
+  double GeneratorFrame::GenerateMassMCMC(double mass_max) const {
+    return 0.;
+  }
+
+  void GeneratorFrame::SetMassMCMC(double mass) {}
+
+  double GeneratorFrame::GetProbMCMC(double mass) const {
+    return 1.;
+  }
+  
+  double GeneratorFrame::GetGenerateProbMCMC(double mass) const {
+    return 1.;
+  }
 
 }

@@ -165,7 +165,7 @@ namespace RestFrames {
     for(int i = 1; i < N; i++)
       SUM += P[i];
     for(int i = 0; i < N-1; i++){
-      prob *= GetProb((P[i]+SUM).M(), P[i].M(), SUM.M());
+      prob *= GetP((P[i]+SUM).M(), P[i].M(), SUM.M());
       SUM -= P[i+1];
     }
     return prob;

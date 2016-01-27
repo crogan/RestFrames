@@ -42,7 +42,8 @@ namespace RestFrames {
     m_PT = 0.;
     m_PL = 0.;
     m_Phi = -1.;
-    m_Theta = -1.;
+
+    m_NBurnInMCMC = 1000;
   }
 
   LabGenFrame::~LabGenFrame() {}
@@ -78,14 +79,9 @@ namespace RestFrames {
     m_Phi = val;
   }
 
-  void LabGenFrame::ResetProductionAngles(){
-     m_Phi = -1.;
-     m_Theta = -1.;
-  }
-
   void LabGenFrame::ResetFrame(){
     SetSpirit(false);
-    ResetProductionAngles();
+    m_Phi = -1.;
   }
 
   bool LabGenFrame::InitializeAnalysis(){
@@ -97,14 +93,41 @@ namespace RestFrames {
     }
 
     if(!InitializeAnalysisRecursive()){
-      m_Log << LogWarning << "Unable to recursively initialize analysis" << m_End;
+      m_Log << LogWarning << "...Unable to recursively initialize analysis" << m_End;
       return SetMind(false);
     }
+
+    for(int i = 0; i < m_NBurnInMCMC; i++)
+      if(!IterateRecursiveMCMC()){
+	m_Log << LogWarning << "...Unable to recursively initialize analysis" << m_End;
+	return SetMind(false);
+      }
 
     m_Log << LogVerbose << "...Done" << m_End;
     return SetMind(true);
   }
   
+  void LabGenFrame::SetN_MCMCBurnIn(int N){
+    m_NBurnInMCMC = max(0,N);
+  }
+
+  bool LabGenFrame::IterateMCMC(){
+    GeneratorFrame& child = GetChildFrame(0);
+    if(child.IsVariableMassMCMC()){
+      double massOld = child.GetMass();
+      double massNew = child.GenerateMassMCMC();
+      double probOld = child.GetProbMCMC(massOld);
+      double probNew = child.GetProbMCMC(massNew);
+      probOld /= GetGenerateProbMCMC(massOld);
+      probNew /= GetGenerateProbMCMC(massNew);
+      
+      if(probNew/max(probOld,probNew) > GetRandom())
+	child.SetMassMCMC(massNew);
+    } 
+
+    return SetMind(true);
+  }
+
   bool LabGenFrame::GenerateFrame(){
     if(!IsSoundBody()) 
       return false;
@@ -114,11 +137,11 @@ namespace RestFrames {
     if(m_Phi < 0.) m_Phi = 2.*acos(-1.)*GetRandom();
 
     P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));
+    m_Phi = -1.;
 
     vector<TLorentzVector> ChildVector;
     ChildVector.push_back(P);
     SetChildren(ChildVector);
-    ResetProductionAngles();
     
     return SetSpirit(true);
   }
@@ -131,8 +154,13 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::AnalyzeEvent(){
-    if(!AnalyzeEventRecursive())
+    if(!IterateRecursiveMCMC())
       return SetSpirit(false);
+
+    if(!AnalyzeEventRecursive()){
+      return SetSpirit(false);
+    }
+
     return SetSpirit(true);
   }
 
