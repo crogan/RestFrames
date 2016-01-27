@@ -50,6 +50,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   DecayGenFrame Gb_G("Gb_G","#tilde{g}_{b}");
   VisibleGenFrame V1a_G("V1a_G","j_{1a}");
   VisibleGenFrame V2a_G("V2a_G","j_{2a}");
+  VisibleGenFrame V3a_G("V3a_G","j_{3a}");
   InvisibleGenFrame Xa_G("Xa_G","#tilde{#chi}_{a}");
   VisibleGenFrame V1b_G("V1b_G","j_{1b}");
   VisibleGenFrame V2b_G("V2b_G","j_{2b}");
@@ -59,6 +60,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   GG_G.AddChildFrame(Gb_G);
   Ga_G.AddChildFrame(V1a_G);
   Ga_G.AddChildFrame(V2a_G);
+  Ga_G.AddChildFrame(V3a_G);
   Ga_G.AddChildFrame(Xa_G);
   Gb_G.AddChildFrame(V1b_G);
   Gb_G.AddChildFrame(V2b_G);
@@ -72,10 +74,12 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // set X masses
   Xa_G.SetMass(mX);
   Xb_G.SetMass(mX);
-  V1a_G.SetMass(100.);
-  V1b_G.SetMass(100.);
-  V2a_G.SetMass(100.);
-  V2b_G.SetMass(100.);
+  V1a_G.SetMass(40.);
+  V3a_G.SetMass(80.);
+  V2a_G.SetMass(120.);
+
+  V1b_G.SetMass(10.);
+  V2b_G.SetMass(10.);
 
   if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl;
   if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl;
@@ -236,8 +240,14 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     LAB_G.AnalyzeEvent();                           // generate a new event
 
    
-    h_M12_v_M13->Fill((V1a_G+Xa_G).GetFourVector().M2()/mG/mG, 
-		      (V2a_G+Xa_G).GetFourVector().M2()/mG/mG);
+    TLorentzVector vj1 = V1a_G.GetFourVector();
+    TLorentzVector vj2 = V2a_G.GetFourVector();
+    TLorentzVector vj3 = V3a_G.GetFourVector();
+    TLorentzVector vX  = Xa_G.GetFourVector();
+    
+
+    h_M12_v_M13->Fill((vj1+vj2).M2()/(vj1+vj2+vj3).M2(), 
+		      (vj3+vj2).M2()/(vj1+vj2+vj3).M2());
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree

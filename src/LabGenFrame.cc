@@ -43,7 +43,7 @@ namespace RestFrames {
     m_PL = 0.;
     m_Phi = -1.;
 
-    m_NBurnInMCMC = 1000;
+    m_NBurnInMCMC = 10000;
   }
 
   LabGenFrame::~LabGenFrame() {}

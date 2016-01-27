@@ -165,7 +165,49 @@ namespace RestFrames {
 
     if(probOld > 0.)
       if(probNew/probOld < GetRandom())
-	m_InterMassFracMCMC = InterMassFracOld;
+    	m_InterMassFracMCMC = InterMassFracOld;
+    
+
+    // accept-reject update to intermediate masses
+    /*
+    double ETOT = GetMass();
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      ETOT -= GetChildFrame(i).GetMass();
+    double Emax = ETOT + GetChildFrame(0).GetMass();
+    double Emin = 0.;
+    double prob_max = 1.;
+    for(int i = 1; i < N; i++){
+      Emin += GetChildFrame(i-1).GetMass();
+      Emax += GetChildFrame(i).GetMass();
+      prob_max *= GetP(Emax, Emin, GetChildFrame(i).GetMass());
+    }
+    
+    double prob = -1.;
+    while(prob/prob_max < GetRandom()){
+      vector<double> InterMassFrac;
+      InterMassFrac.push_back(0.);
+      for(int i = 1; i < N-1; i++) 
+    	InterMassFrac.push_back(GetRandom());
+      qsort((double*)(&InterMassFrac[0])+1,N-2,sizeof(double),DoubleMax);
+      InterMassFrac.push_back(1.);
+      
+      vector<double> InterMass;
+      double Msum = GetMass()-ETOT;
+      for(int i = 0; i < N; i++){
+      	InterMass.push_back(InterMassFrac[N-1-i]*ETOT + Msum);
+      	Msum -= GetChildFrame(i).GetMass();
+      }
+       
+      prob = 1.;
+      for(int i = 0; i < N-1; i++)
+      	prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
+
+      m_InterMassFracMCMC = InterMassFrac;
+      //prob = GetProbMCMC(GetMass());
+      }
+    */
+    
 
     int Nvar = m_VarMassChildren.size();
     for(int v = 0; v < Nvar; v++){
@@ -179,8 +221,8 @@ namespace RestFrames {
 
       double massOld = child.GetMass();
       double massNew = child.GenerateMassMCMC(massMax);
-      probOld = child.GetProbMCMC(massOld);
-      probNew = child.GetProbMCMC(massNew);
+      double probOld = child.GetProbMCMC(massOld);
+      double probNew = child.GetProbMCMC(massNew);
       probOld /= GetGenerateProbMCMC(massOld);
       probNew /= GetGenerateProbMCMC(massNew);
 
@@ -212,7 +254,7 @@ namespace RestFrames {
       SumChildMass -= GetChildFrame(i).GetMass();
     }
 
-    double prob = 1./mass/mass;
+    double prob = 1.;
     for(int i = 0; i < N-1; i++)
       prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
     
