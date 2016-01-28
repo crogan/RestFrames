@@ -111,6 +111,21 @@ namespace RestFrames {
     m_NBurnInMCMC = max(0,N);
   }
 
+  bool LabGenFrame::InitializeGenAnalysis(){
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      return SetMind(false);
+    } 
+
+    GeneratorFrame& child = GetChildFrame(0);
+    if(child.IsVariableMassMCMC()){
+      child.SetMassMCMC(child.GenerateMassMCMC());
+      cout << " here " << child.GetMass() << endl;
+    }
+
+    return SetMind(true);
+  }
+
   bool LabGenFrame::IterateMCMC(){
     GeneratorFrame& child = GetChildFrame(0);
     if(child.IsVariableMassMCMC()){

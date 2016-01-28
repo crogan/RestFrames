@@ -53,7 +53,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 1000.;
+  double mH = 125.;
   double wH = 0.04;
   double mW = 80.;
   double wW = 2.5;

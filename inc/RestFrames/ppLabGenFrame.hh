@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   LabGenFrame.hh
+///  \file   ppLabGenFrame.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,8 +27,8 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef LabGenFrame_HH
-#define LabGenFrame_HH
+#ifndef ppLabGenFrame_HH
+#define ppLabGenFrame_HH
 
 #include "RestFrames/LabFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
@@ -38,41 +38,46 @@ using namespace std;
 namespace RestFrames {
 
   ///////////////////////////////////////////////
-  // LabGenFrame class
+  // ppLabGenFrame class
   ///////////////////////////////////////////////
-  class LabGenFrame : public LabFrame<GeneratorFrame> {
+  class ppLabGenFrame : public LabGenFrame {
   public:
-    LabGenFrame(const string& sname, const string& stitle);
-    virtual ~LabGenFrame();
+    ppLabGenFrame(const string& sname, const string& stitle);
+    virtual ~ppLabGenFrame();
   
     virtual void Clear();
 
-    virtual bool InitializeAnalysis();
-    virtual bool ClearEvent();
-    virtual bool AnalyzeEvent();
-
-    virtual void SetThreeVector(const TVector3& P);
-    virtual void SetTransverseMomenta(double val);
-    virtual void SetLongitudinalMomenta(double val);
-    virtual void SetPhi(double val);
-
-    void SetN_MCMCBurnIn(int N);
+    void SetEnergyP1(double E);
+    void SetEnergyP2(double E);
     
+    double GetEnergyP1() const;
+    double GetEnergyP2() const;
+
+    double SetPDFqqbar();
+    double SetPDFgg();
+    double SetPDFgq();
+    double SetPDFqq();
+
   protected:
-    double m_PT;
-    double m_PL;
-    double m_Phi;
 
     virtual bool InitializeGenAnalysis();
-
-    virtual void ResetFrame();
-    virtual bool GenerateFrame();
-
     virtual bool IterateMCMC();
-    int m_NBurnInMCMC;
+
+    virtual double pPDF_q(double x);
+    virtual double pPDF_qbar(double x);
+    virtual double pPDF_g(double x);
+
+    bool m_PDFqqbar;
+    bool m_PDFgg;
+    bool m_PDFgq;
+    bool m_PDFqq;
 
   private:
-    void Init();
+    double m_Xp1;
+    double m_Xp2;
+    
+    double m_Ep1;
+    double m_Ep2;
     
   };
 

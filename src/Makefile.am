@@ -16,7 +16,7 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h\
 	LabRecoFrame.cc DecayRecoFrame.cc VisibleRecoFrame.cc InvisibleRecoFrame.cc\
 	SelfAssemblingRecoFrame.cc\
 	LabGenFrame.cc DecayGenFrame.cc VisibleGenFrame.cc InvisibleGenFrame.cc\
-	ResonanceGenFrame.cc\
+	ResonanceGenFrame.cc ppLabGenFrame.cc\
 	State.cc VisibleState.cc InvisibleState.cc CombinatoricState.cc\
 	Group.cc InvisibleGroup.cc CombinatoricGroup.cc\
 	Jigsaw.cc InvisibleJigsaw.cc CombinatoricJigsaw.cc\

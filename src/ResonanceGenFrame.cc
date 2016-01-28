@@ -125,7 +125,7 @@ namespace RestFrames {
     for(int i = 0; i < N; i++)
       min += GetChildFrame(i).GetMass();
 
-    if((max < min) && (max < 0))
+    if((max < min) && (max > 0))
       return 0.;
 
     if(m_Width <= 0.)
