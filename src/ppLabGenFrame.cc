@@ -140,7 +140,7 @@ namespace RestFrames {
   }
 
   double ppLabGenFrame::pPDF_q(double x){
-    return (1-x)
+    return (1-x);
   }
 
   double ppLabGenFrame::pPDF_qbar(double x){
@@ -151,4 +151,21 @@ namespace RestFrames {
 
   }
 
+  void ppLabGenFrame::AddX_fL(double x){
+    if(x < 0 || x > 1)
+      return;
+
+     if(m_X_fL.empty())
+       m_X_fL.push_back(x);
+     else {
+       vector<double>::iterator it = m_X_fL.begin();
+      val = *it;
+      while(x > val && it < vec.end()){
+	it++;
+	val = *it;
+      }
+      m_X_fL.insert(it, x);
+     }
+  }
+  
 }

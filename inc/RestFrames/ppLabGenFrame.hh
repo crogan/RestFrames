@@ -72,6 +72,15 @@ namespace RestFrames {
     bool m_PDFgq;
     bool m_PDFqq;
 
+    // support function
+    vector<double> m_X_fL;
+    vector<double> m_P_fL;
+    double GetProb_fL(double x);
+    double Generate_fL();
+    void AddX_fL(double x);
+    void Init_fL();
+    void Clear_fL();
+
   private:
     double m_Xp1;
     double m_Xp2;
