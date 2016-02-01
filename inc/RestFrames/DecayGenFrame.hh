@@ -55,15 +55,20 @@ namespace RestFrames {
     virtual void SetCosDecayAngle(double val);
     virtual void SetDeltaPhiDecayPlane(double val);
 
+    virtual double GetProbMCMC(double mass) const;
+    virtual void GenerateMassMCMC(double& mass, double& prob, 
+				  double max = -1.) const;
+    virtual void SetMassMCMC(double mass);
+
   protected:
     double m_Mass;
 
     double m_CosDecayAngle;
     double m_DeltaPhiDecayPlane;
 
-    vector<int> m_VarMassChildren;
-    vector<double> m_VarMass;
-    vector<double> m_VarProb;
+    vector<int>    m_ChildIndexMCMC;
+    vector<double> m_ChildMassMCMC;
+    vector<double> m_ChildProbMCMC;
     vector<double> m_InterMassFracMCMC;
 
     virtual bool IsSoundBody() const;
@@ -78,12 +83,7 @@ namespace RestFrames {
 				  vector<TLorentzVector>& P_child);
 
     virtual bool InitializeGenAnalysis();
-
     virtual bool IterateMCMC();
-    virtual double GetProbMCMC(double mass) const;
-    virtual void GenerateMassMCMC(double& mass, double& prob, 
-				  double max = -1.) const;
-    virtual void SetMassMCMC(double mass);
 
   private:
     void Init();

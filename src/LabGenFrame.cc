@@ -43,6 +43,8 @@ namespace RestFrames {
     m_PL = 0.;
     m_Phi = -1.;
 
+    m_MaxM = -1.;
+
     m_NBurnInMCMC = 1;
   }
 
@@ -119,9 +121,11 @@ namespace RestFrames {
 
     GeneratorFrame& child = GetChildFrame(0);
     if(child.IsVariableMassMCMC()){
-      double VarMass, VarProb;
-      child.GenerateMassMCMC(VarMass, VarProb)
-      child.SetMassMCMC(VarMass);
+      double ChildMass, ChildProb;
+      child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);
+      m_ChildMassMCMC = ChildMass;
+      m_ChildProbMCMC = ChildProb;
+      child.SetMassMCMC(ChildMass);
     }
 
     return SetMind(true);
@@ -130,20 +134,20 @@ namespace RestFrames {
   bool LabGenFrame::IterateMCMC(){
     GeneratorFrame& child = GetChildFrame(0);
     if(child.IsVariableMassMCMC()){
-      double massOld = child.GetMass();
-      double probOld = child.GetProbMCMC(massOld);
-      double mass 
-      double VarMass, VarProb = 1.;
-      child.GenerateMassMCMC(VarMass, VarProb);
-      probOld = child.GetProbMCMC(m_VarMass)/m_VarProb;
-      double sqrtX1X2Old = m_sqrtX1X2;
-      m_sqrtX1X2 = VarMass/2.*sqrt(m_Ep1*m_Ep2);
-      probNew = GetProbMCMC()*child.GetProbMCMC(VarMass)/VarProb;
+      double ChildMass, ChildProb = 0.;
+      child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);
+
+      double probOld = GetProbMCMC(m_ChildMassMCMC)*
+	child.GetProbMCMC(m_ChildMassMCMC)/m_ChildProbMCMC;
+      double probNew = GetProbMCMC(ChildMass)*
+	child.GetProbMCMC(ChildMass)/ChildProb;
+
       if(probNew/probOld > GetRandom()){
-	m_VarMass = VarMass;
-	m_VarProb = VarProb;
+	m_ChildMassMCMC = ChildMass;
+	m_ChildProbMCMC = ChildProb;
+	child.SetMassMCMC(ChildMass);
       } else {
-	m_sqrtX1X2 = sqrtX1X2Old;
+	child.SetMassMCMC(m_ChildMassMCMC);
       }
     }
 

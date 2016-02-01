@@ -139,6 +139,8 @@ namespace RestFrames {
     } 
 
     double sqrtS = 2.*sqrt(m_Ep1*m_Ep2);
+    m_MaxM = sqrtS;
+    
     double Mmin = GetMinimumMassMCMC();
     if(Mmin > sqrtS){
       m_Log << LogWarning;
@@ -149,25 +151,14 @@ namespace RestFrames {
       return SetMind(false);
     }
 
-    double sqrtShat;
-    double prob = 1.;
-    GeneratorFrame& child = GetChildFrame(0);
-    if(child.IsVariableMassMCMC()){
-      child.GenerateMassMCMC(sqrtShat, prob, sqrtS);
-      child.SetMassMCMC(sqrtShat);
-    } else {
-      sqrtShat = child.GetMass();
-    }
     m_deltaLogX = 0.;
-    m_sqrtX1X2 = sqrtShat/sqrtS;
-    m_VarMass = sqrtShat;
-    m_VarProb = prob;
+   
+    LabGenFrame::InitializeGenAnalysis();
 
     return SetMind(true);
   }
 
   bool ppLabGenFrame::IterateMCMC(){
-    // update m_deltaLogX
     double R = GetRandom();
     double deltaLogX;
     if(R < 0.5)
@@ -184,21 +175,7 @@ namespace RestFrames {
       if(probNew/probOld < GetRandom())
 	m_deltaLogX = deltaLogXOld;
 
-    GeneratorFrame& child = GetChildFrame(0);
-    if(child.IsVariableMassMCMC()){
-      double VarMass, VarProb = 1.;
-      child.GenerateMassMCMC(VarMass, VarProb, 2.*sqrt(m_Ep1*m_Ep2));
-      probOld = GetProbMCMC()*child.GetProbMCMC(m_VarMass)/m_VarProb;
-      double sqrtX1X2Old = m_sqrtX1X2;
-      m_sqrtX1X2 = VarMass/2.*sqrt(m_Ep1*m_Ep2);
-      probNew = GetProbMCMC()*child.GetProbMCMC(VarMass)/VarProb;
-      if(probNew/probOld > GetRandom()){
-	m_VarMass = VarMass;
-	m_VarProb = VarProb;
-      } else {
-	m_sqrtX1X2 = sqrtX1X2Old;
-      }
-    }
+    LabGenFrame::IterateMCMC();
     
     double C = m_sqrtX1X2*m_sqrtX1X2;
     double expo = -m_deltaLogX*log(C);

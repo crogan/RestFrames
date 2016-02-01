@@ -152,9 +152,9 @@ namespace RestFrames {
       return SetMind(false);
     }
 
-    m_ChildMassChildren.clear();
-    m_ChildMass.clear();
-    m_VarProb.clear();
+    m_ChildIndexMCMC.clear();
+    m_ChildMassMCMC.clear();
+    m_ChildProbMCMC.clear();
     double Mass = GetMass();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
@@ -163,9 +163,9 @@ namespace RestFrames {
       if(child.IsVariableMassMCMC()){
 	child.GenerateMassMCMC(cmass, cprob, Mass);
 	child.SetMassMCMC(cmass);
-	m_ChildMassChildren.push_back(i);
-	m_ChildMass.push_back(cmass);
-	m_VarProb.push_back(cprob);
+	m_ChildIndexMCMC.push_back(i);
+	m_ChildMassMCMC.push_back(cmass);
+	m_ChildProbMCMC.push_back(cprob);
       } else {
 	cmass = child.GetMass();
       }
@@ -202,9 +202,9 @@ namespace RestFrames {
       if(probNew/probOld < GetRandom())
     	m_InterMassFracMCMC = InterMassFracOld;
 
-    int Nvar = m_ChildMassChildren.size();
+    int Nvar = m_ChildIndexMCMC.size();
     for(int v = 0; v < Nvar; v++){
-      int index = m_ChildMassChildren[v];
+      int index = m_ChildIndexMCMC[v];
       GeneratorFrame& child = GetChildFrame(index);
       
       double massMax = GetMass();
@@ -213,12 +213,12 @@ namespace RestFrames {
 	  massMax -= GetChildFrame(i).GetMass();
 
       double ChildMass = 0.;
-      double VarProb = 0.;
-      child.GenerateMassMCMC(ChildMass, VarProb, massMax);
+      double ChildProb = 0.;
+      child.GenerateMassMCMC(ChildMass, ChildProb, massMax);
       double probOld = child.GetProbMCMC(m_ChildMass[v]);
       double probNew = child.GetProbMCMC(ChildMass);
-      probOld /= m_VarProb[v];
-      probNew /= VarProb;
+      probOld /= m_ChildProb[v];
+      probNew /= ChildProb;
 
       probOld *= GetProbMCMC(GetMass());
       child.SetMassMCMC(ChildMass);
@@ -229,7 +229,7 @@ namespace RestFrames {
 	  child.SetMassMCMC(m_ChildMass[v]);
 	} else {
 	  m_ChildMass[v] = ChildMass;
-	  m_VarProb[v] = VarProb;
+	  m_ChildProb[v] = ChildProb;
 	}
       }	 
     }
@@ -290,7 +290,7 @@ namespace RestFrames {
     }
     mass = sqrt(2.)*SumChildMass;
     if(mass > max && max > 0)
-      mass = max;
+      mass = max - fabs(max-SumChildMass);
     prob = ProdProb;
   }
 

@@ -63,6 +63,8 @@ namespace RestFrames {
     double m_PL;
     double m_Phi;
 
+    double m_MaxM;
+
     virtual bool InitializeGenAnalysis();
 
     virtual void ResetFrame();
@@ -70,7 +72,9 @@ namespace RestFrames {
 
     double m_ChildMassMCMC;
     double m_ChildProbMCMC;
+
     virtual bool IterateMCMC();
+    
     int m_NBurnInMCMC;
 
   private:
