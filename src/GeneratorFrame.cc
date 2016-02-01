@@ -199,6 +199,14 @@ namespace RestFrames {
      return SetMind(true);
   }
 
+  void GeneratorFrame::SetVariableMassMCMC(bool var){ 
+    m_VarMassMCMC = var; 
+  }
+
+  bool GeneratorFrame::IsVariableMassMCMC() const { 
+    return m_VarMassMCMC; 
+  }
+
   double GeneratorFrame::GetMinimumMassMCMC() const {
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -216,8 +224,10 @@ namespace RestFrames {
     return mass;
   }
 
-  double GeneratorFrame::GenerateMassMCMC(double mass_max) const {
-    return 0.;
+  void GeneratorFrame::GenerateMassMCMC(double& mass, double& prob, 
+					double max) const {
+    mass = 0.;
+    prob = 1.;
   }
 
   void GeneratorFrame::SetMassMCMC(double mass) {}
@@ -226,8 +236,5 @@ namespace RestFrames {
     return 1.;
   }
   
-  double GeneratorFrame::GetGenerateProbMCMC(double mass) const {
-    return 1.;
-  }
 
 }

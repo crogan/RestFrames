@@ -62,6 +62,7 @@
 #include "RestFrames/VisibleGenFrame.hh"
 #include "RestFrames/InvisibleGenFrame.hh"
 #include "RestFrames/ResonanceGenFrame.hh"
+#include "RestFrames/ppLabGenFrame.hh"
 
 #include "RestFrames/Group.hh"
 #include "RestFrames/InvisibleGroup.hh"

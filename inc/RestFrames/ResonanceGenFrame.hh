@@ -54,9 +54,8 @@ namespace RestFrames {
     virtual double GetWidth() const;
    
     virtual double GetProbMCMC(double mass) const;
-    virtual double GenerateMassMCMC(double max) const;
-    virtual double GetGenerateProbMCMC(double mass) const;
-    virtual void SetMassMCMC(double mass);
+    virtual void GenerateMassMCMC(double& mass, double& prob, 
+				  double max = -1.) const;
 
   private:
     static ResonanceGenFrame m_Empty;

@@ -43,7 +43,7 @@ namespace RestFrames {
     m_PL = 0.;
     m_Phi = -1.;
 
-    m_NBurnInMCMC = 10000;
+    m_NBurnInMCMC = 1;
   }
 
   LabGenFrame::~LabGenFrame() {}
@@ -119,8 +119,9 @@ namespace RestFrames {
 
     GeneratorFrame& child = GetChildFrame(0);
     if(child.IsVariableMassMCMC()){
-      child.SetMassMCMC(child.GenerateMassMCMC());
-      cout << " here " << child.GetMass() << endl;
+      double VarMass, VarProb;
+      child.GenerateMassMCMC(VarMass, VarProb)
+      child.SetMassMCMC(VarMass);
     }
 
     return SetMind(true);
@@ -130,15 +131,21 @@ namespace RestFrames {
     GeneratorFrame& child = GetChildFrame(0);
     if(child.IsVariableMassMCMC()){
       double massOld = child.GetMass();
-      double massNew = child.GenerateMassMCMC();
       double probOld = child.GetProbMCMC(massOld);
-      double probNew = child.GetProbMCMC(massNew);
-      probOld /= GetGenerateProbMCMC(massOld);
-      probNew /= GetGenerateProbMCMC(massNew);
-      
-      if(probNew/max(probOld,probNew) > GetRandom())
-	child.SetMassMCMC(massNew);
-    } 
+      double mass 
+      double VarMass, VarProb = 1.;
+      child.GenerateMassMCMC(VarMass, VarProb);
+      probOld = child.GetProbMCMC(m_VarMass)/m_VarProb;
+      double sqrtX1X2Old = m_sqrtX1X2;
+      m_sqrtX1X2 = VarMass/2.*sqrt(m_Ep1*m_Ep2);
+      probNew = GetProbMCMC()*child.GetProbMCMC(VarMass)/VarProb;
+      if(probNew/probOld > GetRandom()){
+	m_VarMass = VarMass;
+	m_VarProb = VarProb;
+      } else {
+	m_sqrtX1X2 = sqrtX1X2Old;
+      }
+    }
 
     return SetMind(true);
   }

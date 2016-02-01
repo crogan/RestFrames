@@ -29,7 +29,6 @@
 
 #include <stdlib.h>
 #include "RestFrames/DecayGenFrame.hh"
-#include "RestFrames/ResonanceGenFrame.hh"
 
 using namespace std;
 
@@ -105,11 +104,43 @@ namespace RestFrames {
     return m_Mass;
   }
 
-  bool DecayGenFrame::InitializeGenAnalysis(){
+  void DecayGenFrame::SetVariableMass(bool varymass) {
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
-      return SetMind(false);
+      return;
     } 
+
+    if(!varymass){
+      SetVariableMassMCMC(false);
+      SetMind(false);
+      return;
+    }
+
+    int N = GetNChildren();
+    bool var = false;
+    for(int i = 0; i < N; i++){
+      if(GetChildFrame(i).IsVariableMassMCMC()){
+	var = true;
+	break;
+      }
+    }
+    if(!var){
+      m_Log << LogWarning;
+      m_Log << "Unable to set to variable mass. ";
+      m_Log << "No children have variable masses and ";
+      m_Log << "DecayGenFrame has no PDF defined ";
+      m_Log << "for its mass." << m_End;
+      SetVariableMassMCMC(false);
+      SetMind(false);
+      return;
+    }
+    SetVariableMassMCMC(true);
+    SetMind(false);
+  }
+
+  bool DecayGenFrame::InitializeGenAnalysis(){
+    if(!IsSoundBody())
+      return SetMind(false);
 
     double min_mass = GetMinimumMassMCMC();
     if(m_Mass < min_mass){
@@ -121,20 +152,24 @@ namespace RestFrames {
       return SetMind(false);
     }
 
-    m_VarMassChildren.clear();
+    m_ChildMassChildren.clear();
+    m_ChildMass.clear();
+    m_VarProb.clear();
     double Mass = GetMass();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      double childMass = 0.;
+      double cmass = 0., double cprob = 1.;
       GeneratorFrame& child = GetChildFrame(i);
       if(child.IsVariableMassMCMC()){
-	childMass = child.GenerateMassMCMC(Mass);
-	child.SetMassMCMC(childMass);
-	m_VarMassChildren.push_back(i);
+	child.GenerateMassMCMC(cmass, cprob, Mass);
+	child.SetMassMCMC(cmass);
+	m_ChildMassChildren.push_back(i);
+	m_ChildMass.push_back(cmass);
+	m_VarProb.push_back(cprob);
       } else {
-	childMass = child.GetMass();
+	cmass = child.GetMass();
       }
-      Mass -= childMass;
+      Mass -= cmass;
     }
 
     m_InterMassFracMCMC.clear();
@@ -166,52 +201,10 @@ namespace RestFrames {
     if(probOld > 0.)
       if(probNew/probOld < GetRandom())
     	m_InterMassFracMCMC = InterMassFracOld;
-    
 
-    // accept-reject update to intermediate masses
-    /*
-    double ETOT = GetMass();
-    int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      ETOT -= GetChildFrame(i).GetMass();
-    double Emax = ETOT + GetChildFrame(0).GetMass();
-    double Emin = 0.;
-    double prob_max = 1.;
-    for(int i = 1; i < N; i++){
-      Emin += GetChildFrame(i-1).GetMass();
-      Emax += GetChildFrame(i).GetMass();
-      prob_max *= GetP(Emax, Emin, GetChildFrame(i).GetMass());
-    }
-    
-    double prob = -1.;
-    while(prob/prob_max < GetRandom()){
-      vector<double> InterMassFrac;
-      InterMassFrac.push_back(0.);
-      for(int i = 1; i < N-1; i++) 
-    	InterMassFrac.push_back(GetRandom());
-      qsort((double*)(&InterMassFrac[0])+1,N-2,sizeof(double),DoubleMax);
-      InterMassFrac.push_back(1.);
-      
-      vector<double> InterMass;
-      double Msum = GetMass()-ETOT;
-      for(int i = 0; i < N; i++){
-      	InterMass.push_back(InterMassFrac[N-1-i]*ETOT + Msum);
-      	Msum -= GetChildFrame(i).GetMass();
-      }
-       
-      prob = 1.;
-      for(int i = 0; i < N-1; i++)
-      	prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
-
-      m_InterMassFracMCMC = InterMassFrac;
-      //prob = GetProbMCMC(GetMass());
-      }
-    */
-    
-
-    int Nvar = m_VarMassChildren.size();
+    int Nvar = m_ChildMassChildren.size();
     for(int v = 0; v < Nvar; v++){
-      int index = m_VarMassChildren[v];
+      int index = m_ChildMassChildren[v];
       GeneratorFrame& child = GetChildFrame(index);
       
       double massMax = GetMass();
@@ -219,20 +212,26 @@ namespace RestFrames {
 	if(i != index)
 	  massMax -= GetChildFrame(i).GetMass();
 
-      double massOld = child.GetMass();
-      double massNew = child.GenerateMassMCMC(massMax);
-      double probOld = child.GetProbMCMC(massOld);
-      double probNew = child.GetProbMCMC(massNew);
-      probOld /= GetGenerateProbMCMC(massOld);
-      probNew /= GetGenerateProbMCMC(massNew);
+      double ChildMass = 0.;
+      double VarProb = 0.;
+      child.GenerateMassMCMC(ChildMass, VarProb, massMax);
+      double probOld = child.GetProbMCMC(m_ChildMass[v]);
+      double probNew = child.GetProbMCMC(ChildMass);
+      probOld /= m_VarProb[v];
+      probNew /= VarProb;
 
       probOld *= GetProbMCMC(GetMass());
-      child.SetMassMCMC(massNew);
+      child.SetMassMCMC(ChildMass);
       probNew *= GetProbMCMC(GetMass());
       
-      if(probOld > 0)
-	if(probNew/probOld < GetRandom())
-	  child.SetMassMCMC(massOld);
+      if(probOld > 0){
+	if(probNew/probOld < GetRandom()){
+	  child.SetMassMCMC(m_ChildMass[v]);
+	} else {
+	  m_ChildMass[v] = ChildMass;
+	  m_VarProb[v] = VarProb;
+	}
+      }	 
     }
     
     return SetMind(true);
@@ -258,7 +257,52 @@ namespace RestFrames {
     for(int i = 0; i < N-1; i++)
       prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
     
+    prob /= mass*mass;
+
     return prob;
+  }
+
+  void ResonanceGenFrame::GenerateMassMCMC(double& mass, double& prob, 
+					   double max) const {
+    int N = GetNChildren();
+    double SumChildMass = 0.;
+    double ProdProb = 1.;
+    for(int i = 0; i < N; i++){
+      GeneratorFrame& child = GetChildFrame(i);
+      if(!child.IsVariableMassMCMC())
+	SumChildMass += child.GetMass();
+      else
+	SumChildMass += child.GetMinimumMassMCMC();
+    }
+
+    if(SumChildMass > max && max > 0)
+      return;
+
+    for(int i = 0; i < N; i++){
+      GeneratorFrame& child = GetChildFrame(i);
+      if(child.IsVariableMassMCMC()){
+	double cmass, cprob, cmax;
+	SumChildMass += child.GetMinimumMassMCMC();
+	child.GetMassMCMC(cmass, cprob, max-SumChildMass);
+	SumChildMass += cmass;
+	ProdProb *= cprob;
+      } 
+    }
+    mass = sqrt(2.)*SumChildMass;
+    if(mass > max && max > 0)
+      mass = max;
+    prob = ProdProb;
+  }
+
+  void ResonanceGenFrame::SetMassMCMC(double val){
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
   }
 
   bool DecayGenFrame::GenerateFrame(){

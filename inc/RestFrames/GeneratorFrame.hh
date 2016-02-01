@@ -82,11 +82,7 @@ namespace RestFrames {
     /// \brief Get the frame of the *i* th child
     virtual GeneratorFrame& GetChildFrame(int i) const;
 
-    bool IsVariableMassMCMC() const { return m_VarMassMCMC; }
-    virtual double GenerateMassMCMC(double max = -1.) const;
-    virtual double GetProbMCMC(double mass) const;
-    virtual double GetGenerateProbMCMC(double mass) const;
-    virtual void SetMassMCMC(double mass);
+    bool IsVariableMassMCMC() const;
 
   protected:
     virtual void ResetFrame() {}
@@ -98,18 +94,20 @@ namespace RestFrames {
     double GetRandom() const;
     double GetGaus(double mu, double sig) const;
 
-    bool m_VarMassMCMC;
-    void SetVariableMassMCMC(bool var = true){ m_VarMassMCMC = var; }
-
     virtual bool IterateMCMC();
     bool IterateRecursiveMCMC();
 
+    void SetVariableMassMCMC(bool var = true);
     virtual double GetMinimumMassMCMC() const;
-    
+    virtual void GenerateMassMCMC(double& mass, double& prob, 
+				  double max = -1.) const;
+    virtual double GetProbMCMC(double mass) const;
+    virtual void SetMassMCMC(double mass);
 
   private:
     void Init();
     TRandom *m_Random;
+    bool m_VarMassMCMC;
    
   };
 

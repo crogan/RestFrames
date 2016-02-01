@@ -72,17 +72,6 @@ namespace RestFrames {
     }
   }
 
-  void ResonanceGenFrame::SetMassMCMC(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
-      m_Mass = 0.;
-    } else {
-      m_Mass = val;
-    }
-  }
-
   void ResonanceGenFrame::SetWidth(double val){
     SetMind(false);
     
@@ -114,12 +103,13 @@ namespace RestFrames {
       + mass*mass*mass*mass*m_Width*m_Width/m_PoleMass/m_PoleMass;
 
     if(den > 0.)
-      return DecayGenFrame::GetProbMCMC(mass)*mass*mass/den;
+      return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)*mass*mass/den;
     else
       return 0.;
   }
 
-  double ResonanceGenFrame::GenerateMassMCMC(double max) const {
+  void ResonanceGenFrame::GenerateMassMCMC(double& mass, double& 
+					   prob, double max) const {
     double min = 0.;
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
@@ -143,17 +133,15 @@ namespace RestFrames {
     else 
       Imax = atan((max*max-M2)/MW);
     
-    return sqrt(M2 + MW*tan(Imin+GetRandom()*(Imax-Imin)));
-  }
+    mass = sqrt(M2 + MW*tan(Imin+GetRandom()*(Imax-Imin)));
 
-  double ResonanceGenFrame::GetGenerateProbMCMC(double mass) const {
     double den = mass*mass-m_PoleMass*m_PoleMass;
     den *= den;
     den += m_PoleMass*m_PoleMass*m_Width*m_Width;
     if(den > 0)
-      return 1./den;
+      prob = 1./den;
     else
-      return 0.;
+      prob =  0.;
   }
 
   ResonanceGenFrame ResonanceGenFrame::m_Empty;

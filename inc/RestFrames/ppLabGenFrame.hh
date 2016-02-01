@@ -30,8 +30,7 @@
 #ifndef ppLabGenFrame_HH
 #define ppLabGenFrame_HH
 
-#include "RestFrames/LabFrame.hh"
-#include "RestFrames/GeneratorFrame.hh"
+#include "RestFrames/LabGenFrame.hh"
 
 using namespace std;
 
@@ -53,40 +52,49 @@ namespace RestFrames {
     double GetEnergyP1() const;
     double GetEnergyP2() const;
 
-    double SetPDFqqbar();
-    double SetPDFgg();
-    double SetPDFgq();
-    double SetPDFqq();
+    double GetMass() const;
+
+    void SetPDFqqbar();
+    void SetPDFgg();
+    void SetPDFgq();
+    void SetPDFqq();
 
   protected:
-
     virtual bool InitializeGenAnalysis();
     virtual bool IterateMCMC();
+    virtual double GetProbMCMC(double mass) const;
 
-    virtual double pPDF_q(double x);
-    virtual double pPDF_qbar(double x);
-    virtual double pPDF_g(double x);
+  private:
+    double m_Ep1;
+    double m_Ep2;
+
+    double m_deltaLogX;
 
     bool m_PDFqqbar;
     bool m_PDFgg;
     bool m_PDFgq;
     bool m_PDFqq;
+    virtual double pPDF_q(double x) const;
+    virtual double pPDF_qbar(double x) const;
+    virtual double pPDF_g(double x) const;
 
-    // support function
-    vector<double> m_X_fL;
-    vector<double> m_P_fL;
-    double GetProb_fL(double x);
-    double Generate_fL();
-    void AddX_fL(double x);
-    void Init_fL();
-    void Clear_fL();
-
-  private:
-    double m_Xp1;
-    double m_Xp2;
-    
-    double m_Ep1;
-    double m_Ep2;
+    // proton PDF parameters
+    static double m_PDF_eta_1;
+    static double m_PDF_eta_2;
+    static double m_PDF_eps_u;
+    static double m_PDF_g_u;
+    static double m_PDF_del_S;
+    static double m_PDF_eta_S;
+    static double m_PDF_eps_S;
+    static double m_PDF_g_S;
+    static double m_PDF_A_g;
+    static double m_PDF_del_g;
+    static double m_PDF_eta_g;
+    static double m_PDF_eps_g;
+    static double m_PDF_g_g;
+    static double m_PDF_A_g1;
+    static double m_PDF_del_g1;
+    static double m_PDF_eta_g1;
     
   };
 

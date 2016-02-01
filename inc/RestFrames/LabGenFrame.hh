@@ -68,6 +68,8 @@ namespace RestFrames {
     virtual void ResetFrame();
     virtual bool GenerateFrame();
 
+    double m_ChildMassMCMC;
+    double m_ChildProbMCMC;
     virtual bool IterateMCMC();
     int m_NBurnInMCMC;
 

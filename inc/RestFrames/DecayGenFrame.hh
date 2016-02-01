@@ -48,6 +48,7 @@ namespace RestFrames {
     virtual ~DecayGenFrame();
 
     virtual void SetMass(double val);
+    virtual void SetVariableMass(bool varymass = true);
     virtual double GetMass() const;
 
     // For two-body decays
@@ -61,6 +62,8 @@ namespace RestFrames {
     double m_DeltaPhiDecayPlane;
 
     vector<int> m_VarMassChildren;
+    vector<double> m_VarMass;
+    vector<double> m_VarProb;
     vector<double> m_InterMassFracMCMC;
 
     virtual bool IsSoundBody() const;
@@ -78,6 +81,9 @@ namespace RestFrames {
 
     virtual bool IterateMCMC();
     virtual double GetProbMCMC(double mass) const;
+    virtual void GenerateMassMCMC(double& mass, double& prob, 
+				  double max = -1.) const;
+    virtual void SetMassMCMC(double mass);
 
   private:
     void Init();

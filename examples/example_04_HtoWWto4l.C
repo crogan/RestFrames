@@ -53,19 +53,20 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 125.;
+  double mH = 1250.;
   double wH = 0.04;
   double mW = 80.;
   double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 100000;
+  int Ngen = 40;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
-  LabGenFrame LAB_G("LAB_G","LAB");
-  ResonanceGenFrame H_G("H_G","H");
+  ppLabGenFrame LAB_G("LAB_G","LAB");
+  //ResonanceGenFrame H_G("H_G","H");
+  DecayGenFrame H_G("H_G","H");
   ResonanceGenFrame Wa_G("Wa_G","W_{a}");
   ResonanceGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame La_G("La_G","#it{l}_{a}");
@@ -89,7 +90,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // set Higgs masses
   H_G.SetMass(mH);
-  H_G.SetWidth(wH);
+  //H_G.SetWidth(wH);
   // set W masses
   Wa_G.SetMass(mW);
   Wb_G.SetMass(mW);
