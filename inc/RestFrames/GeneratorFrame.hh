@@ -83,6 +83,10 @@ namespace RestFrames {
     virtual GeneratorFrame& GetChildFrame(int i) const;
 
     bool IsVariableMassMCMC() const;
+    virtual double GetMinimumMassMCMC() const;
+    virtual void GenerateMassMCMC(double& mass, double& prob, 
+				  double max = -1.) const;
+    virtual double GetProbMCMC(double mass) const;
 
   protected:
     virtual void ResetFrame() {}
@@ -98,11 +102,8 @@ namespace RestFrames {
     bool IterateRecursiveMCMC();
 
     void SetVariableMassMCMC(bool var = true);
-    virtual double GetMinimumMassMCMC() const;
-    virtual void GenerateMassMCMC(double& mass, double& prob, 
-				  double max = -1.) const;
-    virtual double GetProbMCMC(double mass) const;
     virtual void SetMassMCMC(double mass);
+    void SetMassMCMC(double mass, GeneratorFrame& frame) const;
 
   private:
     void Init();

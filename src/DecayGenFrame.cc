@@ -158,11 +158,12 @@ namespace RestFrames {
     double Mass = GetMass();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      double cmass = 0., double cprob = 1.;
+      double cmass = 0.;
+      double cprob = 1.;
       GeneratorFrame& child = GetChildFrame(i);
       if(child.IsVariableMassMCMC()){
 	child.GenerateMassMCMC(cmass, cprob, Mass);
-	child.SetMassMCMC(cmass);
+	SetMassMCMC(cmass, child);
 	m_ChildIndexMCMC.push_back(i);
 	m_ChildMassMCMC.push_back(cmass);
 	m_ChildProbMCMC.push_back(cprob);
@@ -215,21 +216,21 @@ namespace RestFrames {
       double ChildMass = 0.;
       double ChildProb = 0.;
       child.GenerateMassMCMC(ChildMass, ChildProb, massMax);
-      double probOld = child.GetProbMCMC(m_ChildMass[v]);
+      double probOld = child.GetProbMCMC(m_ChildMassMCMC[v]);
       double probNew = child.GetProbMCMC(ChildMass);
-      probOld /= m_ChildProb[v];
+      probOld /= m_ChildProbMCMC[v];
       probNew /= ChildProb;
 
       probOld *= GetProbMCMC(GetMass());
-      child.SetMassMCMC(ChildMass);
+      SetMassMCMC(ChildMass, child);
       probNew *= GetProbMCMC(GetMass());
       
       if(probOld > 0){
 	if(probNew/probOld < GetRandom()){
-	  child.SetMassMCMC(m_ChildMass[v]);
+	  SetMassMCMC(m_ChildMassMCMC[v], child);
 	} else {
-	  m_ChildMass[v] = ChildMass;
-	  m_ChildProb[v] = ChildProb;
+	  m_ChildMassMCMC[v] = ChildMass;
+	  m_ChildProbMCMC[v] = ChildProb;
 	}
       }	 
     }
@@ -262,8 +263,8 @@ namespace RestFrames {
     return prob;
   }
 
-  void ResonanceGenFrame::GenerateMassMCMC(double& mass, double& prob, 
-					   double max) const {
+  void DecayGenFrame::GenerateMassMCMC(double& mass, double& prob, 
+				       double max) const {
     int N = GetNChildren();
     double SumChildMass = 0.;
     double ProdProb = 1.;
@@ -292,17 +293,6 @@ namespace RestFrames {
     if(mass > max && max > 0)
       mass = max - fabs(max-SumChildMass);
     prob = ProdProb;
-  }
-
-  void ResonanceGenFrame::SetMassMCMC(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
-      m_Mass = 0.;
-    } else {
-      m_Mass = val;
-    }
   }
 
   bool DecayGenFrame::GenerateFrame(){

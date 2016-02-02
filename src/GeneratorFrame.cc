@@ -230,11 +230,24 @@ namespace RestFrames {
     prob = 1.;
   }
 
-  void GeneratorFrame::SetMassMCMC(double mass) {}
+  void GeneratorFrame::SetMassMCMC(double val){
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set mass to negative value ";
+      m_Log << val << ". Setting to zero." << m_End;
+      m_Mass = 0.;
+    } else {
+      m_Mass = val;
+    }
+  }
+
+  void GeneratorFrame::SetMassMCMC(double mass, 
+				   GeneratorFrame& frame) const {
+    frame.SetMassMCMC(mass);
+  }
 
   double GeneratorFrame::GetProbMCMC(double mass) const {
     return 1.;
   }
-  
 
 }

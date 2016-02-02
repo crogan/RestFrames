@@ -125,7 +125,7 @@ namespace RestFrames {
       child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);
       m_ChildMassMCMC = ChildMass;
       m_ChildProbMCMC = ChildProb;
-      child.SetMassMCMC(ChildMass);
+      SetMassMCMC(ChildMass, child);
     }
 
     return SetMind(true);
@@ -145,9 +145,9 @@ namespace RestFrames {
       if(probNew/probOld > GetRandom()){
 	m_ChildMassMCMC = ChildMass;
 	m_ChildProbMCMC = ChildProb;
-	child.SetMassMCMC(ChildMass);
+	SetMassMCMC(ChildMass, child);
       } else {
-	child.SetMassMCMC(m_ChildMassMCMC);
+	SetMassMCMC(m_ChildMassMCMC, child);
       }
     }
 

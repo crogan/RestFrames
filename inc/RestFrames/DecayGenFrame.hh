@@ -58,7 +58,6 @@ namespace RestFrames {
     virtual double GetProbMCMC(double mass) const;
     virtual void GenerateMassMCMC(double& mass, double& prob, 
 				  double max = -1.) const;
-    virtual void SetMassMCMC(double mass);
 
   protected:
     double m_Mass;

@@ -59,10 +59,11 @@ namespace RestFrames {
     void SetPDFgq();
     void SetPDFqq();
 
+    virtual double GetProbMCMC(double mass) const;
+
   protected:
     virtual bool InitializeGenAnalysis();
     virtual bool IterateMCMC();
-    virtual double GetProbMCMC(double mass) const;
 
   private:
     double m_Ep1;
