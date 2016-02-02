@@ -97,13 +97,22 @@ namespace RestFrames {
   }
 
   double ResonanceGenFrame::GetProbMCMC(double mass) const {
-    if(mass < 0) return 0.;
+    if(mass < 0)
+      mass = GetMass();
     
-    double den = (mass*mass-m_PoleMass*m_PoleMass)*(mass*mass-m_PoleMass*m_PoleMass)
-      + mass*mass*mass*mass*m_Width*m_Width/m_PoleMass/m_PoleMass;
+    // double den = (mass*mass-m_PoleMass*m_PoleMass)*(mass*mass-m_PoleMass*m_PoleMass)
+    //   + mass*mass*mass*mass*m_Width*m_Width/m_PoleMass/m_PoleMass;
 
-    if(den > 0.)
-      return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)*mass*mass/den;
+    // if(den > 0.)
+    //   return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)*mass*mass/den;
+    // else
+    //   return 0.;
+
+    double den = mass*mass-m_PoleMass*m_PoleMass;
+    den *= den;
+    den += m_PoleMass*m_PoleMass*m_Width*m_Width;
+    if(den > 0)
+      return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)/den;
     else
       return 0.;
   }
@@ -115,11 +124,11 @@ namespace RestFrames {
     for(int i = 0; i < N; i++)
       min += GetChildFrame(i).GetMass();
 
-    if((max < min) && (max > 0))
-      return 0.;
-
-    if(m_Width <= 0.)
-      return 0.;
+    if(((max < min) && (max > 0)) || m_Width <= 0.){
+      mass = 0.;
+      prob = 1.;
+      return;
+    }
     
     if(min <= 0)
       min = 0.;

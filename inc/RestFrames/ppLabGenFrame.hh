@@ -52,14 +52,12 @@ namespace RestFrames {
     double GetEnergyP1() const;
     double GetEnergyP2() const;
 
-    double GetMass() const;
-
     void SetPDFqqbar();
     void SetPDFgg();
     void SetPDFgq();
     void SetPDFqq();
 
-    virtual double GetProbMCMC(double mass) const;
+    virtual double GetProbMCMC(double mass = -1.) const;
 
   protected:
     virtual bool InitializeGenAnalysis();

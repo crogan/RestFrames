@@ -56,6 +56,7 @@ namespace RestFrames {
   void GeneratorFrame::Init(){
     m_Ana = kGenFrame;
     m_VarMassMCMC = false;
+    m_Mass = 0.;
   
     TDatime now;
     int today = now.GetDate();
@@ -74,7 +75,10 @@ namespace RestFrames {
     return VisibleGenFrame::Empty();
   }
 
-  
+  double GeneratorFrame::GetMass() const {
+    return max(m_Mass, 0.);
+  }
+
   void GeneratorFrame::AddChildFrame(RestFrame& frame){
     if(!frame.IsEmpty())
       if(!dynamic_cast<GeneratorFrame*>(&frame))

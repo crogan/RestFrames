@@ -53,7 +53,7 @@ namespace RestFrames {
     virtual double GetPoleMass() const;
     virtual double GetWidth() const;
    
-    virtual double GetProbMCMC(double mass) const;
+    virtual double GetProbMCMC(double mass = -1.) const;
     virtual void GenerateMassMCMC(double& mass, double& prob, 
 				  double max = -1.) const;
 

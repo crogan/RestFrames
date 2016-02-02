@@ -82,13 +82,17 @@ namespace RestFrames {
     /// \brief Get the frame of the *i* th child
     virtual GeneratorFrame& GetChildFrame(int i) const;
 
+    virtual double GetMass() const;
+
     bool IsVariableMassMCMC() const;
     virtual double GetMinimumMassMCMC() const;
     virtual void GenerateMassMCMC(double& mass, double& prob, 
 				  double max = -1.) const;
-    virtual double GetProbMCMC(double mass) const;
+    virtual double GetProbMCMC(double mass = -1.) const;
 
   protected:
+    double m_Mass;
+
     virtual void ResetFrame() {}
     virtual bool GenerateFrame() { return false; }
 

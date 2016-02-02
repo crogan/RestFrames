@@ -45,7 +45,8 @@ namespace RestFrames {
 
     m_MaxM = -1.;
 
-    m_NBurnInMCMC = 1;
+    m_NBurnInMCMC = 10000;
+    m_NDiscardMCMC = 5;
   }
 
   LabGenFrame::~LabGenFrame() {}
@@ -113,6 +114,10 @@ namespace RestFrames {
     m_NBurnInMCMC = max(0,N);
   }
 
+  void LabGenFrame::SetN_MCMCDiscard(int N){
+    m_NDiscardMCMC = max(1,N);
+  }
+
   bool LabGenFrame::InitializeGenAnalysis(){
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -126,6 +131,9 @@ namespace RestFrames {
       m_ChildMassMCMC = ChildMass;
       m_ChildProbMCMC = ChildProb;
       SetMassMCMC(ChildMass, child);
+    } else {
+      m_ChildMassMCMC = child.GetMass();
+      m_ChildProbMCMC = 1.;
     }
 
     return SetMind(true);
@@ -180,8 +188,9 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::AnalyzeEvent(){
-    if(!IterateRecursiveMCMC())
-      return SetSpirit(false);
+    for(int i = 0; i < m_NDiscardMCMC; i++)
+      if(!IterateRecursiveMCMC())
+	return SetSpirit(false);
 
     if(!AnalyzeEventRecursive()){
       return SetSpirit(false);

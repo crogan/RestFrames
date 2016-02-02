@@ -37,10 +37,7 @@ namespace RestFrames {
   // VisibleGenFrame class
   ///////////////////////////////////////////////
   VisibleGenFrame::VisibleGenFrame(const string& sname, const string& stitle) : 
-    VisibleFrame<GeneratorFrame>(sname, stitle)
-  {
-    m_Mass = 0.;
-  }
+    VisibleFrame<GeneratorFrame>(sname, stitle) {}
 
   VisibleGenFrame::VisibleGenFrame() : VisibleFrame<GeneratorFrame>() {}
 
@@ -60,10 +57,6 @@ namespace RestFrames {
     } else {
       m_Mass = val;
     }
-  }
-
-  double VisibleGenFrame::GetMass() const {
-    return m_Mass;
   }
 
   void VisibleGenFrame::ResetFrame() {}

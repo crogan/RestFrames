@@ -49,11 +49,8 @@ namespace RestFrames {
     static VisibleGenFrame& Empty();
 
     virtual void SetMass(double val);
-    virtual double GetMass() const;
 
   protected:
-    double m_Mass;
-
     virtual void ResetFrame();
     virtual bool GenerateFrame();
 

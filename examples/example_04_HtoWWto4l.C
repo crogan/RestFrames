@@ -53,20 +53,20 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 1250.;
-  double wH = 0.04;
+  double mH = 2000.;
+  double wH = 200.;
   double mW = 80.;
   double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 40;
+  int Ngen = 100000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
   ppLabGenFrame LAB_G("LAB_G","LAB");
-  //ResonanceGenFrame H_G("H_G","H");
-  DecayGenFrame H_G("H_G","H");
+  ResonanceGenFrame H_G("H_G","H");
+  //DecayGenFrame H_G("H_G","H");
   ResonanceGenFrame Wa_G("Wa_G","W_{a}");
   ResonanceGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame La_G("La_G","#it{l}_{a}");
@@ -90,7 +90,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
   // set Higgs masses
   H_G.SetMass(mH);
-  //H_G.SetWidth(wH);
+  H_G.SetWidth(wH);
   // set W masses
   Wa_G.SetMass(mW);
   Wb_G.SetMass(mW);
@@ -181,9 +181,10 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   // Now we book some histograms of kinematic variables
   TH1D* h_MH     = new TH1D("h_MH","h_MH",100,0.,2.);
   TH1D* h_mH     = new TH1D("h_mH","h_mH",100,0.,mH*2.);
-  TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,2.);
+  TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,200.);
   TH2D* h_MH_v_MW   = new TH2D("h_MH_v_MW","h_MH_v_MW",50,0.,2.,50,0.,2.);
   TH2D* h_mW_v_mW   = new TH2D("h_mW_v_mW","h_mW_v_mW",50,0.,mH,50,0.,mH);
+  TH1D* h_pzH     = new TH1D("h_pzH","h_pzH",100,-10000., 10000.);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
@@ -191,7 +192,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
 
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
-    double PTH = mH*gRandom->Rndm();
+    double PTH = mH*gRandom->Rndm()*0.0001;
     LAB_G.SetTransverseMomenta(PTH);               // give the Higgs some Pt
     double PzH = mH*(2.*gRandom->Rndm()-1.);
     LAB_G.SetLongitudinalMomenta(PzH);             // give the Higgs some Pz
@@ -220,11 +221,26 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     double MH = H_R.GetMass();
     double MW = Wa_R.GetMass();
 
+    //cout << Wa_R.GetMass() << " " << Wb_R.GetMass() << " " << Wa_G.GetMass() << " " << Wb_G.GetMass() << endl;
+
     h_MH->Fill(MH/H_G.GetMass());		
     h_mH->Fill(H_G.GetMass());
-    h_MW->Fill(MW/mW);
+    h_MW->Fill(MW);
     h_MH_v_MW->Fill(MH/H_G.GetMass(),MW/mW);
     h_mW_v_mW->Fill(Wa_G.GetMass(),Wb_G.GetMass());
+    h_pzH->Fill(H_G.GetFourVector().Pz());
+
+    TLorentzVector l1 = La_G.GetFourVector();
+    TLorentzVector l2 = Lb_G.GetFourVector();
+
+    TVector3 boost = (l1+l2).BoostVector();
+    boost.SetX(0.);
+    boost.SetY(0.);
+    l1.Boost(-boost);
+    l2.Boost(-boost);
+
+    double myMW = sqrt(2.*(l1.E()*l2.E() + l1.Vect().Dot(l2.Vect())));
+    cout << myMW << " " << (La_R+Lb_R+Na_R+Nb_R).GetMass() << " " << H_R.GetMass() << endl;
   }
 
   setstyle();
@@ -234,6 +250,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   TCanvas *c_MW          = Plot_Me("c_MW", h_MW, "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_MH_v_MW     = Plot_Me("c_MH_v_MW", h_MH_v_MW, "M_{H} / m_{H}^{true}", "M_{W} / m_{W}^{true}", plot_title);
   TCanvas *c_mW_v_mW     = Plot_Me("c_mW_v_mW", h_mW_v_mW, "m_{Wa}^{true} [GeV]", "m_{Wb}^{true} [GeV]", plot_title);
+  TCanvas *c_pzH        = Plot_Me("c_pzH", h_pzH, "p_{z, H}^{ lab} [GeV]", plot_title);
 
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  

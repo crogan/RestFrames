@@ -56,8 +56,7 @@ namespace RestFrames {
   ppLabGenFrame::ppLabGenFrame(const string& sname, const string& stitle) : 
     LabGenFrame(sname, stitle)
   {
-    m_Xp1 = 0.;
-    m_Xp2 = 0.;
+    m_deltaLogX = 0;
     
     // default is 13 TeV LHC
     m_Ep1 = 6500.;
@@ -128,10 +127,6 @@ namespace RestFrames {
     return m_Ep2;
   }
 
-  double ppLabGenFrame::GetMass() const {
-    return 2.*sqrt(m_Ep1*m_Ep2*m_Xp1*m_Xp2);
-  }
-
   bool ppLabGenFrame::InitializeGenAnalysis(){
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -153,7 +148,8 @@ namespace RestFrames {
 
     m_deltaLogX = 0.;
    
-    LabGenFrame::InitializeGenAnalysis();
+    if(!LabGenFrame::InitializeGenAnalysis())
+      return SetMind(false);
 
     return SetMind(true);
   }
@@ -161,15 +157,19 @@ namespace RestFrames {
   bool ppLabGenFrame::IterateMCMC(){
     double R = GetRandom();
     double deltaLogX;
-    if(R < 0.5)
-      deltaLogX = -1.+sqrt(2.*R);
-    else
-      deltaLogX = 1.-sqrt(2.*(1.-R));
+    
+    // if(R < 0.5)
+    //   deltaLogX = -1.+sqrt(2.*R);
+    // else
+    //   deltaLogX = 1.-sqrt(2.*(1.-R));
+    deltaLogX = R*2.-1.;
 
     double deltaLogXOld = m_deltaLogX;
-    double probOld = GetProbMCMC()/(1.-fabs(deltaLogXOld));
+    //double probOld = GetProbMCMC()/(1.-fabs(deltaLogXOld));
+    double probOld = GetProbMCMC();
     m_deltaLogX = deltaLogX;
-    double probNew = GetProbMCMC()/(1.-fabs(deltaLogX));
+    //double probNew = GetProbMCMC()/(1.-fabs(deltaLogX));
+    double probNew = GetProbMCMC();
 
     if(probOld > 0)
       if(probNew/probOld < GetRandom())
@@ -177,11 +177,16 @@ namespace RestFrames {
 
     LabGenFrame::IterateMCMC();
     
-    double C = m_sqrtX1X2*m_sqrtX1X2;
-    double expo = -m_deltaLogX*log(C);
-    double Xp1 = sqrt(C*exp(expo));
-    double Xp2 = sqrt(C*exp(-expo));
-    SetLongitudinalMomenta(m_Ep1*Xp1 - m_Ep2*Xp2);
+    double C = m_ChildMassMCMC*m_ChildMassMCMC/4./m_Ep1/m_Ep2;
+    if(C > 0.){
+      double expo = -m_deltaLogX*log(C);
+      double Xp1 = sqrt(C*exp(expo));
+      double Xp2 = sqrt(C*exp(-expo));
+      SetLongitudinalMomenta(m_Ep1*Xp1 - m_Ep2*Xp2);
+    } else
+      SetLongitudinalMomenta(0.);
+
+    SetLongitudinalMomenta(0.);
 
     return SetMind(true);
   }
@@ -189,6 +194,7 @@ namespace RestFrames {
   double ppLabGenFrame::GetProbMCMC(double mass) const {
     if(mass < 0)
       mass = GetChildFrame(0).GetMass();
+    
     double C = mass*mass/(4.*m_Ep1*m_Ep2);
     double expo = -m_deltaLogX*log(C);
     
@@ -228,36 +234,6 @@ namespace RestFrames {
     return fabs((1/x)*(m_PDF_A_g*pow(x,m_PDF_del_g)*pow(1-x,m_PDF_eta_g)*
 		       (1.+m_PDF_eps_g*sqrt(x)+m_PDF_g_g*x)+
 		       m_PDF_A_g1*pow(x,m_PDF_del_g1)*pow(1-x,m_PDF_eta_g1)));
-  }
-
-  void ppLabGenFrame::SetXMCMC(double x) const {
-    if(x < 0 || x > 1) 
-      return;
-
-    if(m_Mode_fL == 0){
-      double X1X2 = GetChildFrame(0).GetMass()/(2.*sqrt(m_Ep1*m_Ep2));
-      X1X2 *= X1X2;
-      m_Xp1 = x;
-      m_Xp2 = X1X2/m_Xp1;
-    }
-
-    if(m_Mode_fL == 1){
-      m_Xp1 = x;
-    }
-
-    if(m_Mode_fL == 2){
-      m_Xp2 = x;
-    }
-  }
-
-  double ppLabGenFrame::GetXMCMC() const {
-    if(m_Mode_fL == 0 || m_Mode_fL == 1)
-      return m_Xp1;
-
-    if(m_Mode_fL == 2)
-      return m_Xp2;
-      
-    return 0.;
   }
   
 }

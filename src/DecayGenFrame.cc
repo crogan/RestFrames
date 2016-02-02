@@ -47,8 +47,6 @@ namespace RestFrames {
   DecayGenFrame::~DecayGenFrame(){ }
 
   void DecayGenFrame::Init(){
-    m_Mass = 0.;
-
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
   }
@@ -98,10 +96,6 @@ namespace RestFrames {
     SetSpirit(false);
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
-  }
-
-  double DecayGenFrame::GetMass() const {
-    return m_Mass;
   }
 
   void DecayGenFrame::SetVariableMass(bool varymass) {
@@ -192,12 +186,12 @@ namespace RestFrames {
     qsort((double*)(&InterMassFrac[0])+1,N-2,sizeof(double),DoubleMax);
     InterMassFrac.push_back(1.);
     
-    double probOld = GetProbMCMC(GetMass());
+    double probOld = GetProbMCMC();
 
     vector<double> InterMassFracOld = m_InterMassFracMCMC;
     m_InterMassFracMCMC = InterMassFrac;
 
-    double probNew = GetProbMCMC(GetMass());
+    double probNew = GetProbMCMC();
 
     if(probOld > 0.)
       if(probNew/probOld < GetRandom())
@@ -221,9 +215,9 @@ namespace RestFrames {
       probOld /= m_ChildProbMCMC[v];
       probNew /= ChildProb;
 
-      probOld *= GetProbMCMC(GetMass());
+      probOld *= GetProbMCMC();
       SetMassMCMC(ChildMass, child);
-      probNew *= GetProbMCMC(GetMass());
+      probNew *= GetProbMCMC();
       
       if(probOld > 0){
 	if(probNew/probOld < GetRandom()){
@@ -239,6 +233,9 @@ namespace RestFrames {
   }
 
   double DecayGenFrame::GetProbMCMC(double mass) const {
+    if(mass < 0.)
+      mass = GetMass();
+
     double SumChildMass = 0.;
     int N = GetNChildren();
     for(int i = 0; i < N; i++)
@@ -256,7 +253,7 @@ namespace RestFrames {
 
     double prob = 1.;
     for(int i = 0; i < N-1; i++)
-      prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass());
+      prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass())/mass;
     
     prob /= mass*mass;
 
@@ -284,7 +281,7 @@ namespace RestFrames {
       if(child.IsVariableMassMCMC()){
 	double cmass, cprob, cmax;
 	SumChildMass += child.GetMinimumMassMCMC();
-	child.GetMassMCMC(cmass, cprob, max-SumChildMass);
+	child.GenerateMassMCMC(cmass, cprob, max-SumChildMass);
 	SumChildMass += cmass;
 	ProdProb *= cprob;
       } 

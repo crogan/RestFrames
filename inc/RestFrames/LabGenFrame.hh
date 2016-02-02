@@ -57,6 +57,7 @@ namespace RestFrames {
     virtual void SetPhi(double val);
 
     void SetN_MCMCBurnIn(int N);
+    void SetN_MCMCDiscard(int N);
     
   protected:
     double m_PT;
@@ -76,6 +77,7 @@ namespace RestFrames {
     virtual bool IterateMCMC();
     
     int m_NBurnInMCMC;
+    int m_NDiscardMCMC;
 
   private:
     void Init();

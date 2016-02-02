@@ -49,19 +49,16 @@ namespace RestFrames {
 
     virtual void SetMass(double val);
     virtual void SetVariableMass(bool varymass = true);
-    virtual double GetMass() const;
 
     // For two-body decays
     virtual void SetCosDecayAngle(double val);
     virtual void SetDeltaPhiDecayPlane(double val);
 
-    virtual double GetProbMCMC(double mass) const;
+    virtual double GetProbMCMC(double mass = -1.) const;
     virtual void GenerateMassMCMC(double& mass, double& prob, 
 				  double max = -1.) const;
 
   protected:
-    double m_Mass;
-
     double m_CosDecayAngle;
     double m_DeltaPhiDecayPlane;
 
