@@ -53,8 +53,8 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 2000.;
-  double wH = 200.;
+  double mH = 125.;
+  double wH = 0.04;
   double mW = 80.;
   double wW = 2.5;
   double mL = 0.501;
@@ -221,26 +221,12 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     double MH = H_R.GetMass();
     double MW = Wa_R.GetMass();
 
-    //cout << Wa_R.GetMass() << " " << Wb_R.GetMass() << " " << Wa_G.GetMass() << " " << Wb_G.GetMass() << endl;
-
     h_MH->Fill(MH/H_G.GetMass());		
     h_mH->Fill(H_G.GetMass());
     h_MW->Fill(MW);
     h_MH_v_MW->Fill(MH/H_G.GetMass(),MW/mW);
     h_mW_v_mW->Fill(Wa_G.GetMass(),Wb_G.GetMass());
     h_pzH->Fill(H_G.GetFourVector().Pz());
-
-    TLorentzVector l1 = La_G.GetFourVector();
-    TLorentzVector l2 = Lb_G.GetFourVector();
-
-    TVector3 boost = (l1+l2).BoostVector();
-    boost.SetX(0.);
-    boost.SetY(0.);
-    l1.Boost(-boost);
-    l2.Boost(-boost);
-
-    double myMW = sqrt(2.*(l1.E()*l2.E() + l1.Vect().Dot(l2.Vect())));
-    cout << myMW << " " << (La_R+Lb_R+Na_R+Nb_R).GetMass() << " " << H_R.GetMass() << endl;
   }
 
   setstyle();

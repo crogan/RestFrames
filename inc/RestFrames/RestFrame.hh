@@ -251,6 +251,13 @@ namespace RestFrames {
     /// Returns a list of RestFrame s containing __frame__ and this
     RestFrames::RFList<RestFrame> operator+(RestFrame& frame); 
 
+    /// \brief Combines RestFrame s into \ref RFList<RestFrames::RestFrame>
+    ///
+    /// \param frames    list of additional RestFrames to add in list
+    ///
+    /// Returns a list of RestFrame s containing __frames__ and this
+    RestFrames::RFList<RestFrame> operator+(const RestFrames::RFList<RestFrame>& frames); 
+
     /// \brief Returns the mass of this frame.
     virtual double GetMass() const;
  

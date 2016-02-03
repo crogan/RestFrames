@@ -30,7 +30,7 @@
 #ifndef HistPlotCategory_HH
 #define HistPlotCategory_HH
 
-#include <string>
+#include "RestFrames/RFBase.hh"
 
 using namespace std;
 
@@ -39,19 +39,39 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   // HistPlotCategory class
   ///////////////////////////////////////////////
-  class HistPlotCategory {
+  class HistPlotCategory : public RFBase {
 
   public:
     HistPlotCategory(const string& name, const string& title);
+    HistPlotCategory();
     ~HistPlotCategory();
 
-    string GetName() const;
+    /// \brief Combines HistPlotCategory into list
+    ///
+    /// \param cat    additional category to add in list
+    ///
+    /// Returns a list of HistPlotCategory containing __cat__ and this
+    RestFrames::RFList<HistPlotCategory> 
+    operator+(HistPlotCategory& cat); 
 
-    string GetTitle() const;
+    /// \brief Combines HistPlotCategory into list
+    ///
+    /// \param cats    list of additional categories to add in list
+    ///
+    /// Returns a list of RestFrame s containing __cats__ and this
+    RestFrames::RFList<HistPlotCategory> 
+    operator+(const RFList<HistPlotCategory>& cats); 
+
+    /// \brief Casts HistPlotCategory into list
+    operator RestFrames::RFList<HistPlotCategory>();
+
+    static HistPlotCategory& Empty();
 
   private:
-    string m_Name;
-    string m_Title;
+    /// \brief HistPlotCategory ID key
+    static int m_class_key;
+
+    static HistPlotCategory m_Empty;
 
   };
 

@@ -31,17 +31,38 @@
 
 namespace RestFrames {
 
+  int HistPlotCategory::m_class_key = 0;
+
+  HistPlotCategory::HistPlotCategory() : RFBase() {}
+
   HistPlotCategory::HistPlotCategory(const string& name, const string& title)
-    : m_Name(name), m_Title(title) {}
+    : RFBase(name, title, HistPlotCategory::m_class_key++) {}
   
   HistPlotCategory::~HistPlotCategory() {}
-  
-  string HistPlotCategory::GetName() const {
-    return m_Name;
+
+  RFList<HistPlotCategory> HistPlotCategory::operator+(HistPlotCategory& cat){
+    RFList<HistPlotCategory> list;
+    list += cat;
+    list += *this;
+    return list;
   }
 
-  string HistPlotCategory::GetTitle() const {
-    return m_Title;
+  RFList<HistPlotCategory> HistPlotCategory::operator+(const RFList<HistPlotCategory>& cats){
+    RFList<HistPlotCategory> list = cats;
+    list += *this;
+    return list;
   }
+
+  HistPlotCategory::operator RFList<HistPlotCategory>() {
+    RFList<HistPlotCategory> list;
+    list += *this;
+    return list;
+  }
+
+  HistPlotCategory& HistPlotCategory::Empty(){
+    return HistPlotCategory::m_Empty;
+  }
+
+  HistPlotCategory HistPlotCategory::m_Empty;
 
 }

@@ -76,6 +76,12 @@ namespace RestFrames {
     return list;
   }
 
+  RFList<RestFrame> RestFrame::operator+(const RFList<RestFrame>& frames){
+    RFList<RestFrame> list = frames;
+    list.Add(*this);
+    return list;
+  }
+
   FrameType RestFrame::GetType() const { 
     return m_Type; 
   }

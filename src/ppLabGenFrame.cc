@@ -186,8 +186,6 @@ namespace RestFrames {
     } else
       SetLongitudinalMomenta(0.);
 
-    SetLongitudinalMomenta(0.);
-
     return SetMind(true);
   }
 
