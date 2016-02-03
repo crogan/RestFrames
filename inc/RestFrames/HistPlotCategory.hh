@@ -51,19 +51,19 @@ namespace RestFrames {
     /// \param cat    additional category to add in list
     ///
     /// Returns a list of HistPlotCategory containing __cat__ and this
-    RestFrames::RFList<HistPlotCategory> 
-    operator+(HistPlotCategory& cat); 
+    RestFrames::RFList<const HistPlotCategory> 
+    operator+(const HistPlotCategory& cat) const; 
 
     /// \brief Combines HistPlotCategory into list
     ///
     /// \param cats    list of additional categories to add in list
     ///
     /// Returns a list of RestFrame s containing __cats__ and this
-    RestFrames::RFList<HistPlotCategory> 
-    operator+(const RFList<HistPlotCategory>& cats); 
+    RestFrames::RFList<const HistPlotCategory> 
+    operator+(const RFList<const HistPlotCategory>& cats) const; 
 
     /// \brief Casts HistPlotCategory into list
-    operator RestFrames::RFList<HistPlotCategory>();
+    operator RestFrames::RFList<const HistPlotCategory>() const;
 
     static HistPlotCategory& Empty();
 

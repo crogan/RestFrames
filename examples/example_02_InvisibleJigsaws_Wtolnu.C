@@ -103,20 +103,20 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   const HistPlotVar& DcosW  = hist_plot->GetNewVar("DcosW","#theta_{W} - #theta_{W}^{true}", -1., 1.);
   const HistPlotVar& DdphiW = hist_plot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{true}", -1., 1.);
   
-  hist_plot->AddHist(MW);
-  // hist_plot->AddHist(cosW);
-  // hist_plot->AddHist(dphiW);
-  hist_plot->AddHist(DcosW);
-  hist_plot->AddHist(DdphiW);
-  hist_plot->AddHist(MW, cosW);
-  hist_plot->AddHist(MW, dphiW);
-  hist_plot->AddHist(MW, pTW);
-  hist_plot->AddHist(cosW, DcosW);
-  hist_plot->AddHist(dphiW, DdphiW);
-  hist_plot->AddHist(cosW, pTW);
-  hist_plot->AddHist(dphiW, pTW);
-  hist_plot->AddHist(DcosW, pTW);
-  hist_plot->AddHist(DdphiW, pTW);
+  hist_plot->AddPlot(MW);
+  // hist_plot->AddPlot(cosW);
+  // hist_plot->AddPlot(dphiW);
+  hist_plot->AddPlot(DcosW);
+  hist_plot->AddPlot(DdphiW);
+  hist_plot->AddPlot(MW, cosW);
+  hist_plot->AddPlot(MW, dphiW);
+  hist_plot->AddPlot(MW, pTW);
+  hist_plot->AddPlot(cosW, DcosW);
+  hist_plot->AddPlot(dphiW, DdphiW);
+  hist_plot->AddPlot(cosW, pTW);
+  hist_plot->AddPlot(dphiW, pTW);
+  hist_plot->AddPlot(DcosW, pTW);
+  hist_plot->AddPlot(DdphiW, pTW);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;

@@ -47,8 +47,7 @@ namespace RestFrames {
   class HistPlot : public RFPlot {
 
   public:
-    HistPlot(const string& sname, const string& stitle,
-	     const string& cat = "");
+    HistPlot(const string& sname, const string& stitle);
     ~HistPlot();
 
     virtual void Clear();
@@ -56,13 +55,19 @@ namespace RestFrames {
     HistPlotVar const& GetNewVar(const string& name, const string& title, 
 				 double minval, double maxval,
 				 const string& unit = "");
-    
-    void AddHist(const HistPlotVar& var);
 
-    void AddHist(const HistPlotVar& varX,
-		 const HistPlotVar& varY);
+    HistPlotCategory const& GetNewCategory(const string& name, const string& title);
+    
+    void AddPlot(const HistPlotVar& var, 
+		 RestFrames::RFList<HistPlotCategory> cats = 
+		 RFList<HistPlotCategory>());
+    void AddPlot(const HistPlotVar& varX,
+		 const HistPlotVar& varY,
+		 RestFrames::RFList<HistPlotCategory> cats =
+		 RFList<HistPlotCategory>());
     
     void Fill(double weight = 1.);
+    void Fill(const HistPlotCategory& cat, double weight = 1.);
 
     void Draw();
 
@@ -74,7 +79,7 @@ namespace RestFrames {
 
     void SetScale(double scale = -1);
 
-    void WriteHist(const string& name);
+    void WriteHist(const string& filename);
 
     static void SetStyle();
 
@@ -87,18 +92,24 @@ namespace RestFrames {
     
     vector<TH1D*> m_1DHists;
     vector<TH2D*> m_2DHists;
-    vector<HistPlotVar*> m_Vars;
-    vector<HistPlotCategory*> m_Categories;
-    
+    vector<HistPlotVar*>      m_Vars;
+    vector<HistPlotCategory*> m_Cats;
+    map<const HistPlotCategory*,vector<TH1D*> > m_CatToHist1D;
+    map<const HistPlotCategory*,vector<TH2D*> > m_CatToHist2D;
+    vector<const HistPlotVar*>                    m_Plot1D_Var;
+    vector<RestFrames::RFList<HistPlotCategory> > m_Plot1D_Cats;
+    vector<pair<const HistPlotVar*,
+		const HistPlotVar*> >             m_Plot2D_Vars;
+    vector<const HistPlotCategory*>               m_Plot2D_Cat;
+
     map<TH1D*,const HistPlotVar*>        m_HistToVar;
     map<TH2D*,pair<const HistPlotVar*,
 		   const HistPlotVar*> > m_HistToVars;
 
-    void DrawHist(TH1D* hist);
-    void DrawHist(TH2D* hist);
-
-    void ClearHist();
-
+    void DrawPlot(const HistPlotVar& var, 
+		  const RFList<HistPlotCategory>& cats);
+    void DrawPlot(const pair<const HistPlotVar*, const HistPlotVar*>& vars,
+		  const HistPlotCategory& cat);
   };
 
 }

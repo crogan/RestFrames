@@ -142,38 +142,35 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   treePlot->SetFrameTree(LAB_Mt);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
-  // Declare observables for histogram booking
-  HistPlot* GenPlot   = new HistPlot("Gen","W #rightarrow #it{l} #nu", 
-				     "Generator Level"); 
-  HistPlot* minMtPlot = new HistPlot("minMt", "W #rightarrow #it{l} #nu",
-				     "min M_{t} reconstruction"); 
-  HistPlot* minMWPlot = new HistPlot("minMW", "W #rightarrow #it{l} #nu",
-				     "min M_{W} reconstruction"); 
+  
+  HistPlot* histPlot   = new HistPlot("HistPlot","W #rightarrow #it{l} #nu");
 
-  const HistPlotVar& Mt     = GenPlot->GetNewVar("Mt", "M_{t}", 0., 190., "[GeV]");
-  const HistPlotVar& MW     = GenPlot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
-  const HistPlotVar& pTt    = GenPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
-  const HistPlotVar& cosT   = GenPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
-  const HistPlotVar& cosW   = GenPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
-  const HistPlotVar& dphiT  = GenPlot->GetNewVar("dphiT", "#Delta #phi_{t}", 0., 2.*acos(-1.));
-  const HistPlotVar& dphiW  = GenPlot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
-  const HistPlotVar& DcosT  = GenPlot->GetNewVar("DcosW","#theta_{t} - #theta_{t}^{gen}", -1., 1.);
-  const HistPlotVar& DcosW  = GenPlot->GetNewVar("DcosW","#theta_{W} - #theta_{W}^{gen}", -1., 1.);
-  const HistPlotVar& DdphiT = GenPlot->GetNewVar("DdphiW","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
-  const HistPlotVar& DdphiW = GenPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
+  const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen", "Generator");
+  const HistPlotCategory& cat_minMt = histPlot->GetNewCategory("minMt", "min M_{t} Reco");
+  const HistPlotCategory& cat_minMW = histPlot->GetNewCategory("minMW", "min M_{W} Reco");
 
-  GenPlot->AddHist(Mt);       GenPlot->AddHist(MW);
-  minMtPlot->AddHist(Mt);     minMWPlot->AddHist(Mt);
-  minMtPlot->AddHist(MW);     minMWPlot->AddHist(MW);
-  minMtPlot->AddHist(pTt);    minMWPlot->AddHist(pTt);
-  minMtPlot->AddHist(cosT);   minMWPlot->AddHist(cosT);
-  minMtPlot->AddHist(cosW);   minMWPlot->AddHist(cosW);
-  minMtPlot->AddHist(dphiT);  minMWPlot->AddHist(dphiT);
-  minMtPlot->AddHist(dphiW);  minMWPlot->AddHist(dphiW);
-  minMtPlot->AddHist(DcosT);  minMWPlot->AddHist(DcosT);
-  minMtPlot->AddHist(DcosW);  minMWPlot->AddHist(DcosW);
-  minMtPlot->AddHist(DdphiT); minMWPlot->AddHist(DdphiT);
-  minMtPlot->AddHist(DdphiW); minMWPlot->AddHist(DdphiW);
+  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 190., "[GeV]");
+  const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
+  const HistPlotVar& pTt    = histPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
+  const HistPlotVar& cosT   = histPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
+  const HistPlotVar& cosW   = histPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
+  const HistPlotVar& dphiT  = histPlot->GetNewVar("dphiT", "#Delta #phi_{t}", 0., 2.*acos(-1.));
+  const HistPlotVar& dphiW  = histPlot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
+  const HistPlotVar& DcosT  = histPlot->GetNewVar("DcosW","#theta_{t} - #theta_{t}^{gen}", -1., 1.);
+  const HistPlotVar& DcosW  = histPlot->GetNewVar("DcosW","#theta_{W} - #theta_{W}^{gen}", -1., 1.);
+  const HistPlotVar& DdphiT = histPlot->GetNewVar("DdphiW","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
+  const HistPlotVar& DdphiW = histPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
+  
+  histPlot->AddPlot(Mt,     cat_Gen+cat_minMt+cat_minMW);
+  histPlot->AddPlot(MW,     cat_Gen+cat_minMt+cat_minMW);
+  histPlot->AddPlot(cosT,   cat_minMt+cat_minMW);
+  histPlot->AddPlot(cosW,   cat_minMt+cat_minMW);
+  histPlot->AddPlot(dphiT,  cat_minMt+cat_minMW);
+  histPlot->AddPlot(dphiW,  cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosT,  cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosW,  cat_minMt+cat_minMW);
+  histPlot->AddPlot(DdphiT, cat_minMt+cat_minMW);
+  histPlot->AddPlot(DdphiW, cat_minMt+cat_minMW);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%((max(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
@@ -217,9 +214,9 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
 
     pTt = PTt / MTgen;
 
-    minMtPlot->Fill();
+    histPlot->Fill();
   }
-  minMtPlot->Draw();
+  histPlot->Draw();
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation

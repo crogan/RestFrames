@@ -258,6 +258,7 @@ namespace RestFrames {
   template class RFList<InvisibleState>;
   template class RFList<CombinatoricState>;
   template class RFList<HistPlotCategory>;
+  template class RFList<const HistPlotCategory>;
 
   template class RFListBase<RFBase,RFList<RFBase> >;
   template class RFListBase<RestFrame,RFList<RestFrame> >; 
@@ -273,5 +274,6 @@ namespace RestFrames {
   template class RFListBase<InvisibleState,RFList<InvisibleState> >;
   template class RFListBase<CombinatoricState,RFList<CombinatoricState> >;
   template class RFListBase<HistPlotCategory,RFList<HistPlotCategory> >;
+  template class RFListBase<const HistPlotCategory,RFList<const HistPlotCategory> >;
 
 }

@@ -40,21 +40,23 @@ namespace RestFrames {
   
   HistPlotCategory::~HistPlotCategory() {}
 
-  RFList<HistPlotCategory> HistPlotCategory::operator+(HistPlotCategory& cat){
-    RFList<HistPlotCategory> list;
+  RFList<const HistPlotCategory> 
+  HistPlotCategory::operator+(const HistPlotCategory& cat) const {
+    RFList<const HistPlotCategory> list;
     list += cat;
     list += *this;
     return list;
   }
 
-  RFList<HistPlotCategory> HistPlotCategory::operator+(const RFList<HistPlotCategory>& cats){
-    RFList<HistPlotCategory> list = cats;
+  RFList<const HistPlotCategory> 
+  HistPlotCategory::operator+(const RFList<const HistPlotCategory>& cats) const {
+    RFList<const HistPlotCategory> list = cats;
     list += *this;
     return list;
   }
 
-  HistPlotCategory::operator RFList<HistPlotCategory>() {
-    RFList<HistPlotCategory> list;
+  HistPlotCategory::operator RFList<const HistPlotCategory>() const {
+    RFList<const HistPlotCategory> list;
     list += *this;
     return list;
   }

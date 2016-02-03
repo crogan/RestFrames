@@ -196,25 +196,25 @@ void example_07(string output_name = "output_example_07.root"){
   const HistPlotVar& DdphiZ = histPlot->GetNewVar("DdphiZ","#Delta #phi_{Z} - #Delta #phi_{Z}^{gen}", -1., 1.);
   const HistPlotVar& DdphiH = histPlot->GetNewVar("DdphiH","#Delta #phi_{H} - #Delta #phi_{H}^{gen}", -1., 1.);
 
-  histPlot->AddHist(HX2X2);      
-  histPlot->AddHist(HX2a);   
-  histPlot->AddHist(HX2b);   
-  histPlot->AddHist(pTX2X2); 
-  histPlot->AddHist(cosZ);  
-  histPlot->AddHist(cosH);  
-  histPlot->AddHist(dphiZ); 
-  histPlot->AddHist(dphiH); 
-  histPlot->AddHist(DcosZ); 
-  histPlot->AddHist(DcosH); 
-  histPlot->AddHist(DdphiZ); 
-  histPlot->AddHist(DdphiH); 
-  histPlot->AddHist(HX2X2, HX2a);
-  histPlot->AddHist(HX2X2, HX2b);
-  histPlot->AddHist(HX2a, HX2b);
-  histPlot->AddHist(HX2a, cosZ);
-  histPlot->AddHist(HX2b, cosH);
-  histPlot->AddHist(cosZ, DcosZ);
-  histPlot->AddHist(cosH, DcosH);
+  histPlot->AddPlot(HX2X2);      
+  histPlot->AddPlot(HX2a);   
+  histPlot->AddPlot(HX2b);   
+  histPlot->AddPlot(pTX2X2); 
+  histPlot->AddPlot(cosZ);  
+  histPlot->AddPlot(cosH);  
+  histPlot->AddPlot(dphiZ); 
+  histPlot->AddPlot(dphiH); 
+  histPlot->AddPlot(DcosZ); 
+  histPlot->AddPlot(DcosH); 
+  histPlot->AddPlot(DdphiZ); 
+  histPlot->AddPlot(DdphiH); 
+  histPlot->AddPlot(HX2X2, HX2a);
+  histPlot->AddPlot(HX2X2, HX2b);
+  histPlot->AddPlot(HX2a, HX2b);
+  histPlot->AddPlot(HX2a, cosZ);
+  histPlot->AddPlot(HX2b, cosH);
+  histPlot->AddPlot(cosZ, DcosZ);
+  histPlot->AddPlot(cosH, DcosH);
 
   // function for randomly determining di-X2 mass 
   // (relative to X2 mass via gamma) - to be replaced

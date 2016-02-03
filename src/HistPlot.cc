@@ -31,12 +31,11 @@
 
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotVar.hh"
+#include "RestFrames/HistPlotCategory.hh"
 
 namespace RestFrames {
 
-  HistPlot::HistPlot(const string& sname, 
-		     const string& stitle,
-		     const string& cat)
+  HistPlot::HistPlot(const string& sname, const string& stitle)
     : RFPlot(sname, stitle)
   {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
@@ -52,15 +51,13 @@ namespace RestFrames {
     int Nv = m_Vars.size();
     for(int i = 0; i < Nv; i++)
       delete m_Vars[i];
-    ClearHist();
+    int Nc = m_Cats.size();
+    for(int i = 0; i < Nc; i++)
+      delete m_Cats[i];
+    Clear();
   }
 
   void HistPlot::Clear(){
-    ClearHist();
-    RFPlot::Clear();
-  }
-
-  void HistPlot::ClearHist(){
     int N = m_1DHists.size();
     for(int i = 0; i < N; i++)
       delete m_1DHists[i];
@@ -69,8 +66,16 @@ namespace RestFrames {
     for(int i = 0; i < N; i++)
       delete m_2DHists[i];
     m_2DHists.clear();
+    
     m_HistToVar.clear();
     m_HistToVars.clear();
+    m_CatToHist1D.clear();
+    m_CatToHist2D.clear();
+    m_Plot1D_Var.clear();
+    m_Plot1D_Cats.clear();
+    m_Plot2D_Vars.clear();
+    m_Plot2D_Cat.clear();
+    RFPlot::Clear();
   }
 
   HistPlotVar const& HistPlot::GetNewVar(const string& name,
@@ -82,59 +87,192 @@ namespace RestFrames {
     return *var;
   }
 
-  // HistPlotCategory const& HistPlot::Get(const string& name,
-  // 					 const string& title, 
-  // 					 double minval, double maxval,
-  // 					 const string& unit){
-  //   HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
-  //   m_Vars.push_back(var);
-  //   return *var;
-  // }
-    
-  void HistPlot::AddHist(const HistPlotVar& var){
-    string name = var.GetName()+"_"+GetName();
-    TH1D* hist = new TH1D(name.c_str(),name.c_str(),
-			  128,var.GetMin(),var.GetMax());
-    m_HistToVar[hist] = &var;
-    m_1DHists.push_back(hist);
+  HistPlotCategory const& HistPlot::GetNewCategory(const string& name, 
+						   const string& title){
+    HistPlotCategory* cat = new HistPlotCategory(name, title);
+    m_Cats.push_back(cat);
+    return *cat;
   }
 
-  void HistPlot::AddHist(const HistPlotVar& varX,
-			 const HistPlotVar& varY){
-    string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
-    TH2D* hist = new TH2D(name.c_str(),name.c_str(),
-			  32,varX.GetMin(),varX.GetMax(),
-			  32,varY.GetMin(),varY.GetMax());
-    m_HistToVars[hist] = 
-      pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
-    m_2DHists.push_back(hist);
+  void HistPlot::AddPlot(const HistPlotVar& var, RFList<HistPlotCategory> cats){
+    int Ncat = cats.GetN();
+    if(Ncat == 0){
+      const HistPlotCategory* empty = &HistPlotCategory::Empty();
+      if(m_CatToHist1D.count(empty) <= 0)
+	m_CatToHist1D[empty] = vector<TH1D*>();
+      
+      int Nhist = m_CatToHist1D[empty].size();
+      bool exists = false;
+      for(int i = 0; i < Nhist; i++){
+	if(*m_HistToVar[m_CatToHist1D[empty][i]] == var){
+	  exists = true;
+	  break;
+	}
+      }
+      if(!exists){
+	string name = var.GetName()+"_"+GetName();
+	TH1D* hist = new TH1D(name.c_str(),name.c_str(),
+			      128,var.GetMin(),var.GetMax());
+	m_HistToVar[hist] = &var;
+	m_CatToHist1D[empty].push_back(hist);
+	m_1DHists.push_back(hist);
+      }
+    } else {
+      for(int c = 0; c < Ncat; c++){
+	if(m_CatToHist1D.count(&cats[c]) <= 0)
+	  m_CatToHist1D[&cats[c]] = vector<TH1D*>();
+	
+	int Nhist = m_CatToHist1D[&cats[c]].size();
+	bool exists = false;
+	for(int i = 0; i < Nhist; i++){
+	  if(*m_HistToVar[m_CatToHist1D[&cats[c]][i]] == var){
+	    exists = true;
+	    break;
+	  }
+	}
+	if(!exists){
+	  string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
+	  TH1D* hist = new TH1D(name.c_str(),name.c_str(),
+				128,var.GetMin(),var.GetMax());
+	  m_HistToVar[hist] = &var;
+	  m_CatToHist1D[&cats[c]].push_back(hist);
+	  m_1DHists.push_back(hist);
+	}
+      }
+    }
+    m_Plot1D_Var.push_back(&var);
+    m_Plot1D_Cats.push_back(cats);
+  }
+
+  void HistPlot::AddPlot(const HistPlotVar& varX, const HistPlotVar& varY, 
+			 RFList<HistPlotCategory> cats){
+    int Ncat = cats.GetN();
+    if(Ncat == 0){
+      const HistPlotCategory* empty = &HistPlotCategory::Empty();
+      if(m_CatToHist2D.count(empty) <= 0)
+	m_CatToHist2D[empty] = vector<TH2D*>();
+      
+      int Nhist = m_CatToHist2D[empty].size();
+      bool exists = false;
+      for(int i = 0; i < Nhist; i++){
+	if(*m_HistToVars[m_CatToHist2D[empty][i]].first == varX &&
+	   *m_HistToVars[m_CatToHist2D[empty][i]].second == varY){
+	  exists = true;
+	  break;
+	}
+      }
+      if(!exists){
+	string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
+	TH2D* hist = new TH2D(name.c_str(),name.c_str(),
+			      32,varX.GetMin(),varX.GetMax(),
+			      32,varY.GetMin(),varY.GetMax());
+	
+	m_HistToVars[hist] = 
+	  pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
+	m_CatToHist2D[empty].push_back(hist);
+	m_2DHists.push_back(hist);
+	m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
+				const HistPlotVar*>(&varX,&varY));
+	m_Plot2D_Cat.push_back(empty);
+      }
+    } else {
+      for(int c = 0; c < Ncat; c++){
+	if(m_CatToHist2D.count(&cats[c]) <= 0)
+	  m_CatToHist2D[&cats[c]] = vector<TH2D*>();
+	
+	int Nhist = m_CatToHist2D[&cats[c]].size();
+	bool exists = false;
+	for(int i = 0; i < Nhist; i++){
+	  if(*m_HistToVars[m_CatToHist2D[&cats[c]][i]].first == varX &&
+	     *m_HistToVars[m_CatToHist2D[&cats[c]][i]].second == varY){
+	    exists = true;
+	    break;
+	  }
+	}
+	if(!exists){
+	  string name = varX.GetName()+"_v_"+varY.GetName()+"_"+
+	    cats[c].GetName()+"_"+GetName();
+	  TH2D* hist = new TH2D(name.c_str(),name.c_str(),
+				32,varX.GetMin(),varX.GetMax(),
+				32,varY.GetMin(),varY.GetMax());
+	  m_HistToVars[hist] = 
+	    pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
+	  m_CatToHist2D[&cats[c]].push_back(hist);
+	  m_2DHists.push_back(hist);
+	  m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
+				  const HistPlotVar*>(&varX,&varY));
+	  m_Plot2D_Cat.push_back(&cats[c]);
+	}
+      }
+    }
   }
     
   void HistPlot::Fill(double weight){
-    int N = m_1DHists.size();
+    const HistPlotCategory* empty = &HistPlotCategory::Empty();
+    int N = m_CatToHist1D[empty].size();
     for(int i = 0; i < N; i++)
-      m_1DHists[i]->Fill(m_HistToVar[m_1DHists[i]]->GetVal(), 
-			 weight*m_Scale);
-    N = m_2DHists.size();
+      m_CatToHist1D[empty][i]->Fill(m_HistToVar[m_CatToHist1D[empty][i]]->GetVal(), 
+				    weight);
+    N = m_CatToHist2D[empty].size();
     for(int i = 0; i < N; i++)
-      m_2DHists[i]->Fill(m_HistToVars[m_2DHists[i]].first->GetVal(), 
-			 m_HistToVars[m_2DHists[i]].second->GetVal(),
-			 weight*m_Scale);
+      m_CatToHist2D[empty][i]->Fill(m_HistToVars[m_CatToHist2D[empty][i]].first->GetVal(), 
+				    m_HistToVars[m_CatToHist2D[empty][i]].second->GetVal(),
+				    weight);
+  }
+
+  void HistPlot::Fill(const HistPlotCategory& cat, double weight){
+    if(!cat){
+      Fill(weight);
+      return;
+    }
+
+    int N = m_CatToHist1D[&cat].size();
+    for(int i = 0; i < N; i++)
+      m_CatToHist1D[&cat][i]->Fill(m_HistToVar[m_CatToHist1D[&cat][i]]->GetVal(), 
+				    weight);
+    N = m_CatToHist2D[&cat].size();
+    for(int i = 0; i < N; i++)
+      m_CatToHist2D[&cat][i]->Fill(m_HistToVars[m_CatToHist2D[&cat][i]].first->GetVal(), 
+				    m_HistToVars[m_CatToHist2D[&cat][i]].second->GetVal(),
+				    weight);    
   }
 
   void HistPlot::Draw(){
-    int N = m_1DHists.size();
+    int N = m_Plot1D_Var.size();
     for(int i = 0; i < N; i++)
-      DrawHist(m_1DHists[i]);
-    N = m_2DHists.size();
+      DrawPlot(*m_Plot1D_Var[i], m_Plot1D_Cats[i]);
+    N = m_Plot2D_Vars.size();
     for(int i = 0; i < N; i++)
-      DrawHist(m_2DHists[i]);
+      DrawPlot(m_Plot2D_Vars[i], *m_Plot2D_Cat[i]);
   }
   
-  void HistPlot::DrawHist(TH1D* hist){
-    const HistPlotVar& var = *m_HistToVar[hist];
+  void HistPlot::DrawPlot(const HistPlotVar& var, const RFList<HistPlotCategory>& cats){
+    vector<TH1D*> hists;
+    int Ncat = cats.GetN();
+    string catname = "";
+    if(Ncat == 0){
+      const HistPlotCategory* empty = &HistPlotCategory::Empty();
+      int Nhist = m_CatToHist1D[empty].size();
+      for(int i = 0; i < Nhist; i++){
+	if(*m_HistToVar[m_CatToHist1D[empty][i]] == var){
+	  hists.push_back(m_CatToHist1D[empty][i]);
+	  break;
+	} 
+      }
+    } else {
+      for(int c = 0; c < Ncat; c++){
+	catname += cats[c].GetName() + "_";
+	int Nhist = m_CatToHist1D[&cats[c]].size();
+	for(int i = 0; i < Nhist; i++){
+	  if(*m_HistToVar[m_CatToHist1D[&cats[c]][i]] == var){
+	    hists.push_back(m_CatToHist1D[&cats[c]][i]);
+	    break;
+	  } 
+	}
+      }
+    }
     
-    string name = "c_"+var.GetName()+"__"+GetName();
+    string name = "c_"+var.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->SetLeftMargin(0.2);
     can->SetRightMargin(0.05);
@@ -146,28 +284,41 @@ namespace RestFrames {
 
     string ScaleLabel;
     if(!m_SetScale){
-      if(hist->Integral() > 0.) 
-	hist->Scale(1./hist->Integral());
       ScaleLabel =  "#frac{1}{N} #frac{dN}{";
       ScaleLabel += "d( "+XLabel+" )}";
     } else {
-      hist->Scale(m_Scale);
       ScaleLabel = m_ScaleLabel;
     }
 
     if(var.GetUnit() != "")
       XLabel += " "+var.GetUnit();
 
-    hist->SetFillColor(kBlue);
-    hist->SetFillStyle(3001);
-    hist->Draw();
-    hist->GetXaxis()->SetTitle(XLabel.c_str());
-    hist->GetXaxis()->SetTitleOffset(1.27);
-    hist->GetXaxis()->CenterTitle();
-    hist->GetYaxis()->SetTitle(ScaleLabel.c_str());
-    hist->GetYaxis()->SetTitleOffset(1.42);
-    hist->GetYaxis()->CenterTitle();
-    hist->GetYaxis()->SetRangeUser(1e-6,1.1*hist->GetMaximum());
+    int N = hists.size();
+    int imax = 0;
+    double hmax = -1.;
+    for(int i = 0; i < N; i++){
+      if(!m_SetScale){
+	if(hists[i]->Integral() > 0.) 
+	  hists[i]->Scale(1./hists[i]->Integral());
+      } else {
+	hists[i]->Scale(m_Scale);
+      }
+      if(hists[i]->Integral() > hmax){
+	hmax = hists[i]->Integral();
+	imax = i;
+      }
+    }
+
+    hists[imax]->SetFillColor(kBlue);
+    hists[imax]->SetFillStyle(3001);
+    hists[imax]->Draw();
+    hists[imax]->GetXaxis()->SetTitle(XLabel.c_str());
+    hists[imax]->GetXaxis()->SetTitleOffset(1.27);
+    hists[imax]->GetXaxis()->CenterTitle();
+    hists[imax]->GetYaxis()->SetTitle(ScaleLabel.c_str());
+    hists[imax]->GetYaxis()->SetTitleOffset(1.42);
+    hists[imax]->GetYaxis()->CenterTitle();
+    hists[imax]->GetYaxis()->SetRangeUser(1e-6,1.1*hists[imax]->GetMaximum());
 
     TLatex l;
     l.SetTextFont(132);	
@@ -185,11 +336,35 @@ namespace RestFrames {
     AddCanvas(can);
   }
   
-  void HistPlot::DrawHist(TH2D* hist){
-    const HistPlotVar& varX = *m_HistToVars[hist].first;
-    const HistPlotVar& varY = *m_HistToVars[hist].second;
+  void HistPlot::DrawPlot(const pair<const HistPlotVar*,const HistPlotVar*>& vars,
+			  const HistPlotCategory& cat){
+    const HistPlotVar& varX = *vars.first;
+    const HistPlotVar& varY = *vars.second;
+    TH2D* hist = nullptr;
+    string catname = "";
+    if(!cat){
+      const HistPlotCategory* empty = &HistPlotCategory::Empty();
+      int Nhist = m_CatToHist2D[empty].size();
+      for(int i = 0; i < Nhist; i++){
+	if(*m_HistToVars[m_CatToHist2D[empty][i]].first  == varX &&
+	   *m_HistToVars[m_CatToHist2D[empty][i]].second == varY){
+	  hist = m_CatToHist2D[empty][i];
+	  break;
+	} 
+      }
+    } else {
+      catname += cat.GetName() + "_";
+      int Nhist = m_CatToHist1D[&cat].size();
+      for(int i = 0; i < Nhist; i++){
+	if(*m_HistToVars[m_CatToHist2D[&cat][i]].first  == varX &&
+	   *m_HistToVars[m_CatToHist2D[&cat][i]].second == varY){
+	  hist = m_CatToHist2D[&cat][i];
+	  break;
+	} 
+      }
+    }
     
-    string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"__"+GetName();
+    string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->Draw();
     can->SetGridx();
