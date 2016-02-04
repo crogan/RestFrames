@@ -47,6 +47,8 @@ namespace RestFrames {
 		const string& unit);
     ~HistPlotVar();
 
+    bool operator==(const HistPlotVar& var) const;
+
     void operator=(double val) const;
 
     operator double() const;
@@ -63,7 +65,12 @@ namespace RestFrames {
 
     string GetUnit() const;
 
+  protected:
+    int m_Key;
+
   private:
+    static int m_class_key;
+
     string m_Name;
     string m_Title;
     string m_Unit;

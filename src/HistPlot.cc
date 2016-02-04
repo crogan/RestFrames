@@ -28,6 +28,10 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include <TFile.h>
+#include <TLatex.h>
+#include <TColor.h>
+#include <TLegend.h>
+#include <TStyle.h>
 
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotVar.hh"
@@ -35,6 +39,14 @@
 
 namespace RestFrames {
 
+  const int HistPlot::m_color[7][2] = {{kBlue+2, kBlue-10},
+				       {kRed+2, kRed-10},
+				       {kGreen+3, kGreen-10},
+				       {kMagenta+3, kMagenta-10},
+				       {kOrange+2, kOrange-9},
+				       {kCyan+3, kCyan-10},
+				       {kBlack, kGray}};
+				       
   HistPlot::HistPlot(const string& sname, const string& stitle)
     : RFPlot(sname, stitle)
   {
@@ -94,7 +106,8 @@ namespace RestFrames {
     return *cat;
   }
 
-  void HistPlot::AddPlot(const HistPlotVar& var, RFList<HistPlotCategory> cats){
+  void HistPlot::AddPlot(const HistPlotVar& var, 
+			 RFList<const HistPlotCategory> cats){
     int Ncat = cats.GetN();
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
@@ -112,7 +125,7 @@ namespace RestFrames {
       if(!exists){
 	string name = var.GetName()+"_"+GetName();
 	TH1D* hist = new TH1D(name.c_str(),name.c_str(),
-			      128,var.GetMin(),var.GetMax());
+			      64,var.GetMin(),var.GetMax());
 	m_HistToVar[hist] = &var;
 	m_CatToHist1D[empty].push_back(hist);
 	m_1DHists.push_back(hist);
@@ -133,7 +146,7 @@ namespace RestFrames {
 	if(!exists){
 	  string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
 	  TH1D* hist = new TH1D(name.c_str(),name.c_str(),
-				128,var.GetMin(),var.GetMax());
+				64,var.GetMin(),var.GetMax());
 	  m_HistToVar[hist] = &var;
 	  m_CatToHist1D[&cats[c]].push_back(hist);
 	  m_1DHists.push_back(hist);
@@ -145,7 +158,7 @@ namespace RestFrames {
   }
 
   void HistPlot::AddPlot(const HistPlotVar& varX, const HistPlotVar& varY, 
-			 RFList<HistPlotCategory> cats){
+			 RFList<const HistPlotCategory> cats){
     int Ncat = cats.GetN();
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
@@ -271,7 +284,7 @@ namespace RestFrames {
 	}
       }
     }
-    
+
     string name = "c_"+var.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->SetLeftMargin(0.2);
@@ -294,8 +307,11 @@ namespace RestFrames {
       XLabel += " "+var.GetUnit();
 
     int N = hists.size();
+    
     int imax = 0;
+    int imin = 0;
     double hmax = -1.;
+    double hmin = 1e16;
     for(int i = 0; i < N; i++){
       if(!m_SetScale){
 	if(hists[i]->Integral() > 0.) 
@@ -303,14 +319,16 @@ namespace RestFrames {
       } else {
 	hists[i]->Scale(m_Scale);
       }
-      if(hists[i]->Integral() > hmax){
-	hmax = hists[i]->Integral();
+      if(hists[i]->GetMaximum() > hmax){
+	hmax = hists[i]->GetMaximum();
 	imax = i;
+      }
+      if(hists[i]->GetMinimum(0.) < hmin){
+	hmin = hists[i]->GetMinimum(0.);
+	imin = i;
       }
     }
 
-    hists[imax]->SetFillColor(kBlue);
-    hists[imax]->SetFillStyle(3001);
     hists[imax]->Draw();
     hists[imax]->GetXaxis()->SetTitle(XLabel.c_str());
     hists[imax]->GetXaxis()->SetTitleOffset(1.27);
@@ -318,20 +336,45 @@ namespace RestFrames {
     hists[imax]->GetYaxis()->SetTitle(ScaleLabel.c_str());
     hists[imax]->GetYaxis()->SetTitleOffset(1.42);
     hists[imax]->GetYaxis()->CenterTitle();
-    hists[imax]->GetYaxis()->SetRangeUser(1e-6,1.1*hists[imax]->GetMaximum());
+    hists[imax]->GetYaxis()->SetRangeUser(0.9*hists[imin]->GetMinimum(0.),1.1*hists[imax]->GetMaximum());
 
-    TLatex l;
-    l.SetTextFont(132);	
+    for(int i = N-1; i >= 0; i--){
+      hists[i]->SetFillColor(m_color[i%7][1]);
+      hists[i]->SetFillStyle(3002);
+      hists[i]->SetLineColor(m_color[i%7][0]);
+      hists[i]->SetLineWidth(3);
+      hists[i]->SetMarkerColor(m_color[i%7][0]);
+      hists[i]->SetMarkerSize(0);
+      hists[i]->Draw("same");
+    }
+
+    TLatex l(0.6,0.943,m_PlotTitle.c_str());
     l.SetNDC();	
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.6,0.943,m_PlotTitle.c_str());
+    l.DrawLatex(0.48+max(0.,0.47-l.GetXsize()),0.947,m_PlotTitle.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
-    l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
-    l.SetTextSize(0.045);
-    l.SetTextFont(132);
-    //l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
+    l.DrawLatex(0.02,0.95,m_PlotLabel.c_str());
+
+    if(N > 1){
+      TLegend* leg = new TLegend(0.225,max(0.5,0.884-double(N)*0.073),0.488,0.884);
+      AddTObject(leg);
+      leg->SetShadowColor(kWhite);
+      leg->SetLineColor(kWhite);
+      leg->SetFillColor(kWhite);
+      leg->SetTextFont(132);
+      leg->SetTextSize(0.045);
+      for(int i = 0; i < N; i++)
+	leg->AddEntry(hists[i],cats[i].GetTitle().c_str());
+      
+      leg->Draw();
+    }
+    if(N == 1){
+      l.SetTextSize(0.05);
+      l.SetTextFont(132);
+      l.DrawLatex(0.23,0.84,cats[0].GetTitle().c_str());
+    }
 
     AddCanvas(can);
   }
@@ -404,19 +447,19 @@ namespace RestFrames {
     hist->GetZaxis()->CenterTitle();
     hist->GetZaxis()->SetRangeUser(0.9*hist->GetMinimum(0.0),1.1*hist->GetMaximum());
     hist->Draw("COLZ");
-  
-    TLatex l;
-    l.SetTextFont(132);	
+    
+    string title = m_PlotTitle;
+    if(!cat.IsEmpty())
+      title = cat.GetTitle();
+
+    TLatex l(0.6,0.943,title.c_str());
     l.SetNDC();	
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.7,0.943,m_PlotTitle.c_str());
+    l.DrawLatex(0.48+max(0.,0.32-l.GetXsize()),0.947,title.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
-    l.DrawLatex(0.15,0.943,m_PlotLabel.c_str());
-    l.SetTextSize(0.045);
-    l.SetTextFont(132);
-    //l.DrawLatex(0.73,0.06,m_PlotCategory.c_str());
+    l.DrawLatex(0.02,0.95,m_PlotLabel.c_str());
     
     AddCanvas(can);
   }
@@ -528,7 +571,7 @@ namespace RestFrames {
     
     TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
     gStyle->SetNumberContours(NCont);
-    
+
     gStyle->cd();
   }
 }

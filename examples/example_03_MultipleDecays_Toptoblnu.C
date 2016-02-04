@@ -125,7 +125,6 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   SetRapidityInvJigsaw NuR_MW("NuR_Mt","#eta_{#nu} = #eta_{#it{l}}");
   INV_MW.AddJigsaw(NuR_MW);
   NuR_MW.AddVisibleFrame(L_MW);
-  NuR_MW.AddVisibleFrame(B_MW);
 
   if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analyses" << endl << g_End;
@@ -143,14 +142,14 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
   
-  HistPlot* histPlot   = new HistPlot("HistPlot","W #rightarrow #it{l} #nu");
+  HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow t #rightarrow W(#it{l} #nu) b");
 
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen", "Generator");
   const HistPlotCategory& cat_minMt = histPlot->GetNewCategory("minMt", "min M_{t} Reco");
   const HistPlotCategory& cat_minMW = histPlot->GetNewCategory("minMW", "min M_{W} Reco");
 
-  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 190., "[GeV]");
-  const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
+  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 210., "[GeV]");
+  const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 110., "[GeV]");
   const HistPlotVar& pTt    = histPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
   const HistPlotVar& cosT   = histPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
   const HistPlotVar& cosW   = histPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
@@ -161,8 +160,6 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   const HistPlotVar& DdphiT = histPlot->GetNewVar("DdphiW","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
   const HistPlotVar& DdphiW = histPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
   
-  histPlot->AddPlot(Mt,     cat_Gen+cat_minMt+cat_minMW);
-  histPlot->AddPlot(MW,     cat_Gen+cat_minMt+cat_minMW);
   histPlot->AddPlot(cosT,   cat_minMt+cat_minMW);
   histPlot->AddPlot(cosW,   cat_minMt+cat_minMW);
   histPlot->AddPlot(dphiT,  cat_minMt+cat_minMW);
@@ -170,7 +167,10 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   histPlot->AddPlot(DcosT,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DcosW,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DdphiT, cat_minMt+cat_minMW);
-  histPlot->AddPlot(DdphiW, cat_minMt+cat_minMW);
+  histPlot->AddPlot(DdphiW, cat_minMt);
+  histPlot->AddPlot(Mt, MW, cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(MW,     cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(Mt,     cat_minMt+cat_minMW+cat_Gen);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%((max(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
@@ -192,30 +192,54 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
     INV_Mt.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
     LAB_Mt.AnalyzeEvent();                          //analyze the event
 
-    // calculate observables
-    Mt    = T_Mt.GetMass();
-    double MTgen = T_Gen.GetMass();
-    cosT     = T_Mt.GetCosDecayAngle();
-    double cosTgen  = T_Gen.GetCosDecayAngle();
-    dphiT    = LAB_Mt.GetDeltaPhiDecayPlanes(T_Mt);
-    double dphiTgen = LAB_Gen.GetDeltaPhiDecayPlanes(T_Gen);
+    // analyze event
+    LAB_MW.ClearEvent();                             // clear the reco tree
+    L_MW.SetLabFrameFourVector(L_Gen.GetFourVector()); // Set lepton 4-vec
+    B_MW.SetLabFrameFourVector(B_Gen.GetFourVector()); // Set b-jet 4-vec
+    INV_MW.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
+    LAB_MW.AnalyzeEvent();                          //analyze the event
 
-    MW    = W_Mt.GetMass();
+    // Generator-level
+    double MTgen = T_Gen.GetMass();
+    double cosTgen  = T_Gen.GetCosDecayAngle();
+    double dphiTgen = LAB_Gen.GetDeltaPhiDecayPlanes(T_Gen);
     double MWgen = W_Gen.GetMass();
-    cosW     = W_Mt.GetCosDecayAngle();
     double cosWgen  = W_Gen.GetCosDecayAngle();
-    dphiW    = T_Mt.GetDeltaPhiDecayPlanes(W_Mt);
     double dphiWgen = T_Gen.GetDeltaPhiDecayPlanes(W_Gen);
-    
-    DcosT = asin(sqrt(1.-cosT*cosT)*cosTgen-sqrt(1.-cosTgen*cosTgen)*cosT);
-    DdphiT = asin(sin(dphiT-dphiTgen));
-    DcosW = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
-    DdphiW = asin(sin(dphiW-dphiWgen));
 
     pTt = PTt / MTgen;
 
-    histPlot->Fill();
+    Mt = MTgen;
+    MW = MWgen;
+    histPlot->Fill(cat_Gen);
+
+    // minMt observables
+    Mt     = T_Mt.GetMass();
+    cosT   = T_Mt.GetCosDecayAngle();
+    dphiT  = LAB_Mt.GetDeltaPhiDecayPlanes(T_Mt);
+    MW     = W_Mt.GetMass();
+    cosW   = W_Mt.GetCosDecayAngle();
+    dphiW  = T_Mt.GetDeltaPhiDecayPlanes(W_Mt);
+    DcosT  = asin(sqrt(1.-cosT*cosT)*cosTgen-sqrt(1.-cosTgen*cosTgen)*cosT);
+    DdphiT = asin(sin(dphiT-dphiTgen));
+    DcosW  = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
+    DdphiW = asin(sin(dphiW-dphiWgen));
+    histPlot->Fill(cat_minMt);
+
+    // minMW observables
+    Mt     = T_MW.GetMass();
+    cosT   = T_MW.GetCosDecayAngle();
+    dphiT  = LAB_MW.GetDeltaPhiDecayPlanes(T_MW);
+    MW     = W_MW.GetMass();
+    cosW   = W_MW.GetCosDecayAngle();
+    dphiW  = T_MW.GetDeltaPhiDecayPlanes(W_MW);
+    DcosT  = asin(sqrt(1.-cosT*cosT)*cosTgen-sqrt(1.-cosTgen*cosTgen)*cosT);
+    DdphiT = asin(sin(dphiT-dphiTgen));
+    DcosW  = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
+    DdphiW = asin(sin(dphiW-dphiWgen));
+    histPlot->Fill(cat_minMW);
   }
+
   histPlot->Draw();
 }
 

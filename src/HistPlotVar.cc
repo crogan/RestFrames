@@ -31,13 +31,19 @@
 
 namespace RestFrames {
 
+  int HistPlotVar::m_class_key = 0;
+
   HistPlotVar::HistPlotVar(const string& name, const string& title, 
 			   double minval, double maxval,
 			   const string& unit = "")
     : m_Name(name), m_Title(title), 
-      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.) {}
+      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.), m_Key(m_class_key++) {}
   
   HistPlotVar::~HistPlotVar() {}
+
+  bool HistPlotVar::operator==(const HistPlotVar& var) const {
+    return var.m_Key == m_Key;
+  }
 
   void HistPlotVar::operator=(double val) const {
     m_Val = val;

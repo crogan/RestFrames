@@ -31,9 +31,6 @@
 #define HistPlot_HH
 
 #include <utility>
-#include <TLatex.h>
-#include <TColor.h>
-#include <TStyle.h>
 #include <TH1D.h>
 #include <TH2D.h>
 
@@ -59,12 +56,12 @@ namespace RestFrames {
     HistPlotCategory const& GetNewCategory(const string& name, const string& title);
     
     void AddPlot(const HistPlotVar& var, 
-		 RestFrames::RFList<HistPlotCategory> cats = 
-		 RFList<HistPlotCategory>());
+		 RestFrames::RFList<const HistPlotCategory> cats = 
+		 RFList<const HistPlotCategory>());
     void AddPlot(const HistPlotVar& varX,
 		 const HistPlotVar& varY,
-		 RestFrames::RFList<HistPlotCategory> cats =
-		 RFList<HistPlotCategory>());
+		 RestFrames::RFList<const HistPlotCategory> cats =
+		 RFList<const HistPlotCategory>());
     
     void Fill(double weight = 1.);
     void Fill(const HistPlotCategory& cat, double weight = 1.);
@@ -81,6 +78,7 @@ namespace RestFrames {
 
     void WriteHist(const string& filename);
 
+    static const int m_color[7][2];
     static void SetStyle();
 
   private:
@@ -110,6 +108,7 @@ namespace RestFrames {
 		  const RFList<HistPlotCategory>& cats);
     void DrawPlot(const pair<const HistPlotVar*, const HistPlotVar*>& vars,
 		  const HistPlotCategory& cat);
+
   };
 
 }
