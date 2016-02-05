@@ -48,9 +48,8 @@ using namespace RestFrames;
 
 void example_05_DiToptoblnu(string output_name = "output_05.root"){
   
-  SetLogPrint(LogVerbose,false);
+  SetLogPrint(LogVerbose,true);
   //SetLogPrint(LogDebug,true);
-  SetLogMaxWidth(90);
 
   double mT = 175.;
   double mW = 80.;
@@ -62,10 +61,10 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   //
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
-  LabGenFrame LAB_G("LAB_G","LAB");
+  ppLabGenFrame LAB_G("LAB_G","LAB");
   DecayGenFrame TT_G("TT_G","t #bar{t}");
-  DecayGenFrame Ta_G("Ta_G","t_{a}");
-  DecayGenFrame Tb_G("Tb_G","t_{b}");
+  ResonanceGenFrame Ta_G("Ta_G","t_{a}");
+  ResonanceGenFrame Tb_G("Tb_G","t_{b}");
   DecayGenFrame Wa_G("Wa_G","W_{a}");
   DecayGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame Ba_G("Ba_G","b_{a}");
@@ -86,7 +85,29 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   Wb_G.AddChildFrame(Lb_G);
   Wb_G.AddChildFrame(Nb_G);
 
-  if(LAB_G.InitializeTree() && LAB_G.InitializeAnalysis()){
+  LAB_G.InitializeTree();
+
+   // set top masses
+  
+  Ta_G.SetMass(mT);
+  Tb_G.SetMass(mT);
+  Ta_G.SetWidth(2.);
+  Tb_G.SetWidth(2.);
+  // set W masses
+  Wa_G.SetMass(mW);
+  Wb_G.SetMass(mW);
+  // set B masses
+  Ba_G.SetMass(mB);
+  Bb_G.SetMass(mB);
+  // set : masses
+  La_G.SetMass(mL);
+  Lb_G.SetMass(mL);
+  // set neutrino masses
+  Na_G.SetMass(mN);
+  Nb_G.SetMass(mN);
+  TT_G.SetVariableMass();
+
+  if(LAB_G.InitializeAnalysis()){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
@@ -190,22 +211,6 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   tree_plot->SetGroupTree(B_R);
   tree_plot->Draw("VisTree", "Visible Jigsaws");
 
-  // set top masses
-  Ta_G.SetMass(mT);
-  Tb_G.SetMass(mT);
-  // set W masses
-  Wa_G.SetMass(mW);
-  Wb_G.SetMass(mW);
-  // set B masses
-  Ba_G.SetMass(mB);
-  Bb_G.SetMass(mB);
-  // set : masses
-  La_G.SetMass(mL);
-  Lb_G.SetMass(mL);
-  // set neutrino masses
-  Na_G.SetMass(mN);
-  Nb_G.SetMass(mN);
-
   DecayRecoFrame *T[2], *W[2];
   VisibleRecoFrame *B[2], *L[2];
   InvisibleRecoFrame *N[2];
@@ -231,21 +236,19 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   TH2D* h_MT_v_MW   = new TH2D("h_MT_v_MW","h_MT_v_MW",50,0.,2.,50,0.,2.);
   TH2D* h_EB_v_MW   = new TH2D("h_EB_v_MW","h_EB_v_MW",50,0.,2.,50,0.,2.);
 
-  // function for randomly determining di-top mass 
-  // (relative to top mass via gamma)
-  TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
+  // // function for randomly determining di-top mass 
+  // // (relative to top mass via gamma)
+  // TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
-    double mTT = 2.*mT*f_gamma.GetRandom();         // get a random di-gluino mass
-    TT_G.SetMass(mTT);
-    double PTTT = mTT*gRandom->Rndm();
+    // get a random di-gluino mass
+ 
+    double PTTT = 2.*mT*gRandom->Rndm();
     LAB_G.SetTransverseMomenta(PTTT);               // give the di-gluinos some Pt
-    double PzTT = mTT*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzTT);             // give the di-gluinos some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
     // analyze event
