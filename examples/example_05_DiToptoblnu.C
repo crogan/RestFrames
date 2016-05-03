@@ -60,7 +60,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
 
   //
   // Set up toy generation tree (not needed for reconstruction)
-  g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
+  g_Log << LogInfo << "Initializing generator frames and tree" << LogEnd;
   ppLabGenFrame LAB_G("LAB_G","LAB");
   DecayGenFrame TT_G("TT_G","t #bar{t}");
   ResonanceGenFrame Ta_G("Ta_G","t_{a}");
@@ -111,11 +111,11 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
-    g_Log << "Ready for event generation" << g_End;
+    g_Log << "Ready for event generation" << LogEnd;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << LogEnd;								    
   // Set up reco analysis tree
-  g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
+  g_Log << LogInfo << "Initializing reconstruction frames and tree" << LogEnd;
   LabRecoFrame LAB_R("LAB_R","LAB");
   DecayRecoFrame TT_R("TT_R","t #bar{t}");
   DecayRecoFrame Ta_R("Ta_R","t_{a}");
@@ -144,9 +144,9 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready for Group and Jigsaw initialization" << g_End;
+    g_Log << "Ready for Group and Jigsaw initialization" << LogEnd;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << g_End;  
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << LogEnd;  
 
   // define groups for the reconstruction trees
   InvisibleGroup INV_R("INV_R","WIMP Jigsaws");
@@ -179,15 +179,15 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   HemiJigsaw_R.AddFrames((Ta_R.GetListVisibleFrames()),0);
   HemiJigsaw_R.AddFrames((Tb_R.GetListVisibleFrames()),1);
 
-  g_Log << LogInfo << "Initializing tree for analysis" << m_End;
+  g_Log << LogInfo << "Initializing tree for analysis" << LogEnd;
   // check reconstruction trees
   if(LAB_R.InitializeAnalysis()){
     g_Log << LogInfo;
     g_Log << "...Successfully initialized tree for analysis from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready event analysis" << g_End;
+    g_Log << "Ready event analysis" << LogEnd;
   } else
-    g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
+    g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << LogEnd;	
 
   //////////////////////////////////////////////////////////////
   // draw some pictures of our trees
@@ -241,7 +241,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   // TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
@@ -335,7 +335,7 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
 
   tree_plot->WriteOutput(output_name);
 
-  g_Log << LogInfo << "Finished" << g_End;
+  g_Log << LogInfo << "Finished" << LogEnd;
 }
 
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title, string label){

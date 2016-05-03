@@ -62,12 +62,12 @@ namespace RestFrames {
     int Nchild = T::GetNChildren();
     if(Nchild != 1){
       T::m_Log << LogWarning << "Number of LabFrame children != 1: ";
-      T::m_Log << Nchild << m_End;
+      T::m_Log << Nchild << LogEnd;
       return T::SetBody(false);
     }
     if(!T::GetParentFrame().IsEmpty()){
       T::m_Log << LogWarning << "Parent frame of LabFrame is not empty: ";
-      T::m_Log << Log(T::GetParentFrame()) << m_End;
+      T::m_Log << Log(T::GetParentFrame()) << LogEnd;
       return T::SetBody(false);
     }
     return T::SetBody(true);;
@@ -82,26 +82,26 @@ namespace RestFrames {
   bool LabFrame<T>::InitializeTree() {
     T::m_Log << LogVerbose;
     T::m_Log << "Initializing tree skeleton...";
-    T::m_Log << m_End;
+    T::m_Log << LogEnd;
 
     vector<RFKey> keys;
     if(T::IsCircularTree(keys)){
       T::m_Log << LogWarning;
       T::m_Log << "   Tree is circular in construction";
-      T::m_Log << m_End;
+      T::m_Log << LogEnd;
       return false;
     }
 
     if(!T::InitializeTreeRecursive()){
       T::m_Log << LogWarning;
       T::m_Log << "   Problem with structure of tree";
-      T::m_Log << m_End;
+      T::m_Log << LogEnd;
       return false;
     }
 
     T::m_Log << LogVerbose;
     T::m_Log << "...Done";
-    T::m_Log << m_End;
+    T::m_Log << LogEnd;
     
     return true;
   }

@@ -44,7 +44,7 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   int Ngen = 100000;
 
   ////////////////////////////////////////////////////////////////////////////////////////
-  g_Log << LogInfo << "Initializing generator frames and tree..." << g_End;
+  g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   LabGenFrame           LAB_Gen("LAB_Gen","LAB");
   ResonanceGenFrame     T_Gen("T_Gen","t");
@@ -62,9 +62,9 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   W_Gen.AddChildFrame(NU_Gen);
 
   if(LAB_Gen.InitializeTree())
-    g_Log << LogInfo << "...Successfully initialized generator tree" << g_End;
+    g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing generator tree" << g_End;
+    g_Log << LogError << "...Failed initializing generator tree" << LogEnd;
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -74,14 +74,14 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   W_Gen.SetWidth(wW);
 
   if(LAB_Gen.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << g_End;
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing generator analysis" << g_End;
+    g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////////////////////////////////////////////////////////////////
-  g_Log << LogInfo << "Initializing reconstruction frames and trees..." << g_End;
+  g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   LabRecoFrame       LAB_Mt("LAB_Mt","LAB"); LabRecoFrame       LAB_MW("LAB_MW","LAB");
   DecayRecoFrame     T_Mt("T_Mt","t");       DecayRecoFrame     T_MW("T_MW","t");
@@ -99,9 +99,9 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   W_Mt.AddChildFrame(NU_Mt);                 W_MW.AddChildFrame(NU_MW);
 
   if(LAB_Mt.InitializeTree() && LAB_MW.InitializeTree())
-    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << g_End;
+    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing reconstruction trees" << g_End;
+    g_Log << LogError << "...Failed initializing reconstruction trees" << LogEnd;
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -127,9 +127,9 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   NuR_MW.AddVisibleFrame(L_MW);
 
   if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analyses" << endl << g_End;
+    g_Log << LogInfo << "...Successfully initialized analyses" << endl << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing analyses" << g_End;
+    g_Log << LogError << "...Failed initializing analyses" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
 

@@ -223,21 +223,21 @@ namespace RestFrames {
     if(Ndep != m_Nvis || Nout != m_Ninv){
       m_Log << LogWarning;
       m_Log << "Incorrect number of input/output frames for jigsaw";
-      m_Log<< m_End;
+      m_Log << LogEnd;
       return SetBody(false);
     }
     for(int i = 0; i < Ndep; i++)
       if(m_DependancyFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of visible frames: " << i;
-	m_Log << m_End;
+	m_Log << LogEnd;
 	return SetBody(false);
       }
     for(int i = 0; i < Nout; i++)
       if(m_ChildFrames[i].GetN() == 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of invisible frames: " << i;
-	m_Log << m_End;
+	m_Log << LogEnd;
 	return SetBody(false);
       }
     return SetBody(true);

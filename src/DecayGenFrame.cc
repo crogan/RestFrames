@@ -67,7 +67,7 @@ namespace RestFrames {
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
+      m_Log << val << ". Setting to zero." << LogEnd;
       m_Mass = 0.;
     } else {
       m_Mass = val;
@@ -79,7 +79,7 @@ namespace RestFrames {
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "CosDecay angle must be in [-1, 1]: ";
-      m_Log << val << ". Setting to random." << m_End;
+      m_Log << val << ". Setting to random." << LogEnd;
       m_CosDecayAngle = -2.;
     } else {
       m_CosDecayAngle = val;
@@ -123,7 +123,7 @@ namespace RestFrames {
       m_Log << "Unable to set to variable mass. ";
       m_Log << "No children have variable masses and ";
       m_Log << "DecayGenFrame has no PDF defined ";
-      m_Log << "for its mass." << m_End;
+      m_Log << "for its mass." << LogEnd;
       SetVariableMassMCMC(false);
       SetMind(false);
       return;
@@ -142,7 +142,7 @@ namespace RestFrames {
       m_Log << "Unable to initialize analysis: ";
       m_Log << "decay frame mass (" << m_Mass << ") ";
       m_Log << "is less than required child masses (";
-      m_Log << min_mass << ")" << m_End;
+      m_Log << min_mass << ")" << LogEnd;
       return SetMind(false);
     }
 
@@ -296,7 +296,7 @@ namespace RestFrames {
     if(!IsSoundMind()){ 
       m_Log << LogWarning;
       m_Log << "Unable to generate event for frame";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetSpirit(false);
     }
 

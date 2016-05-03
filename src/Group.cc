@@ -142,7 +142,7 @@ namespace RestFrames {
   bool Group::InitializeAnalysis(){
     m_Log << LogVerbose;
     m_Log << "Initializing Group for analysis...";
-    m_Log << m_End;
+    m_Log << LogEnd;
 
     if(m_GroupStatePtr) delete m_GroupStatePtr;
     m_GroupStatePtr = &InitializeParentState();
@@ -152,11 +152,11 @@ namespace RestFrames {
       m_Log << LogWarning;
       m_Log << "Unable to resolve unknowns associated with ";
       m_Log << "Frames in this Group with available Jigsaws";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetBody(false);
     }
 
-    m_Log << LogVerbose << "...Done" << m_End;
+    m_Log << LogVerbose << "...Done" << LogEnd;
     SetBody(true);
     return SetMind(true);
   }
@@ -174,7 +174,7 @@ namespace RestFrames {
 	  m_Log << LogWarning;
 	  m_Log << "Cannot find Jigsaw to Resolve State for frames:";
 	  m_Log << endl << "   " << Log(state.GetListFrames());
-	  m_Log << m_End;
+	  m_Log << LogEnd;
 	  return false; 
 	}
 	m_StatesToResolve.Remove(state);
@@ -208,7 +208,7 @@ namespace RestFrames {
     m_Log << " Frames:" << endl << "   ";
     m_Log << Log(state.GetListFrames()) << endl;
     m_Log << " Jigsaw:" << Log(jigsawSolutionPtr);
-    m_Log << m_End;
+    m_Log << LogEnd;
     InitializeJigsaw(*jigsawSolutionPtr);
     m_JigsawsToUse.Remove(*jigsawSolutionPtr);
     return true;
@@ -220,7 +220,7 @@ namespace RestFrames {
     if(!jigsaw.InitializeTree()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw:";
-      m_Log << Log(jigsaw) << m_End;
+      m_Log << Log(jigsaw) << LogEnd;
     }
     m_States += jigsaw.GetChildStates();
     m_StatesToResolve -= state;
@@ -285,7 +285,7 @@ namespace RestFrames {
     if(!(frames == match_frames)){
       m_Log << LogWarning;
       m_Log << "Unable to find States corresponding to Frames: " << endl;
-      m_Log << Log(frames) << m_End;
+      m_Log << Log(frames) << LogEnd;
       SetMind(false);
       return RFList<State>();
     }

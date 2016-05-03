@@ -80,7 +80,7 @@ namespace RestFrames {
   }
 
   bool LabRecoFrame::InitializeTreeGroups(){
-     m_Log << LogVerbose << "Initializing Groups for analysis..." << m_End;
+     m_Log << LogVerbose << "Initializing Groups for analysis..." << LogEnd;
     
     m_TreeGroups.Clear();
     m_TreeGroups += GetListGroups();
@@ -90,16 +90,16 @@ namespace RestFrames {
       if(!m_TreeGroups[i].InitializeAnalysis()){
 	m_Log << LogWarning;
 	m_Log << "Unable to initialize analysis for Group ";
-	m_Log << Log(m_TreeGroups[i]) << m_End;
+	m_Log << Log(m_TreeGroups[i]) << LogEnd;
 	return false;
       }
     }
-    m_Log << LogVerbose << "...Done" << m_End;
+    m_Log << LogVerbose << "...Done" << LogEnd;
     return true;
   }
 
   bool LabRecoFrame::InitializeTreeStates(){
-    m_Log << LogVerbose << "Initializing States for analysis..." << m_End;
+    m_Log << LogVerbose << "Initializing States for analysis..." << LogEnd;
     
     m_TreeStates.Clear();
     int Ng = m_TreeGroups.GetN();
@@ -134,16 +134,16 @@ namespace RestFrames {
       if(!has_group){
 	m_Log << LogWarning;
 	m_Log << "Found InvisibleRecoFrame without an assigned group: " << endl;
-	m_Log << Log(frames[f]) << m_End;
+	m_Log << Log(frames[f]) << LogEnd;
 	return false;
       }
     }
-    m_Log << LogVerbose << "...Done initializing States" << m_End;
+    m_Log << LogVerbose << "...Done initializing States" << LogEnd;
     return true;
   }
 
   bool LabRecoFrame::InitializeTreeJigsaws(){
-    m_Log << LogVerbose << "Initializing Jigsaws for analysis..." << m_End;
+    m_Log << LogVerbose << "Initializing Jigsaws for analysis..." << LogEnd;
     
     m_TreeJigsaws.Clear();
     
@@ -157,7 +157,7 @@ namespace RestFrames {
 	if(!jigsaws[j].InitializeAnalysis()){
 	  m_Log << LogWarning;
 	  m_Log << "Unable to initialize Jigsaw for analysis:" << endl;
-	  m_Log << Log(jigsaws[j]) << m_End;
+	  m_Log << Log(jigsaws[j]) << LogEnd;
 	  return false;
 	}
     }
@@ -170,7 +170,7 @@ namespace RestFrames {
 	if(!jigsaw.InitializeDependancyJigsaws()){
 	  m_Log << LogWarning;
 	  m_Log << "Unable to initialize dependancy Jigsaw list for Jigsaw:" << endl;
-	  m_Log << Log(jigsaw) << m_End;
+	  m_Log << Log(jigsaw) << LogEnd;
 	  return false;
 	}
 	m_TreeJigsaws.Add(jigsaw);
@@ -184,19 +184,19 @@ namespace RestFrames {
 	m_TreeJigsaws.Clear();
 	m_Log << LogWarning;
 	m_Log << "Unable to initialize Jigsaw execution list in Jigsaw:" << endl;
-	m_Log << Log(m_TreeJigsaws[j]) << m_End;
+	m_Log << Log(m_TreeJigsaws[j]) << LogEnd;
 	return false;
       }
     }  
     m_TreeJigsaws.Clear();
     m_TreeJigsaws.Add(exec_jigsaws);
 
-    m_Log << LogVerbose << "...Done initializing Jigsaws" << m_End;
+    m_Log << LogVerbose << "...Done initializing Jigsaws" << LogEnd;
     return true;
   }
 
   bool LabRecoFrame::InitializeAnalysis(){
-    m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
+    m_Log << LogVerbose << "Initializing this tree for analysis..." << LogEnd;
    
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -204,26 +204,26 @@ namespace RestFrames {
     }
 
     if(!InitializeTreeGroups()){
-      m_Log << LogWarning << "Unable to intialize Groups" << m_End;
+      m_Log << LogWarning << "Unable to intialize Groups" << LogEnd;
       return SetMind(false);
     }
     if(!InitializeTreeStates()){
-      m_Log << LogWarning << "Unable to intialize States" << m_End;
+      m_Log << LogWarning << "Unable to intialize States" << LogEnd;
       return SetMind(false);
     }
     
     if(!InitializeTreeJigsaws()){
-      m_Log << LogWarning << "Unable to intialize Jigsaws" << m_End;
+      m_Log << LogWarning << "Unable to intialize Jigsaws" << LogEnd;
       return SetMind(false);
     }
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively initialize tree for analysis";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetMind(false);
     }
 
-    m_Log << LogVerbose << "...Done initializing tree for analysis" << m_End;
+    m_Log << LogVerbose << "...Done initializing tree for analysis" << LogEnd;
     SetMind(true);
     return SetMind(true);
   }
@@ -260,7 +260,7 @@ namespace RestFrames {
       if(!m_TreeGroups[i].AnalyzeEvent()){
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Group: ";
-	m_Log << Log(m_TreeGroups[i]) << m_End;
+	m_Log << Log(m_TreeGroups[i]) << LogEnd;
 	return SetSpirit(false);
       }
     }
@@ -269,13 +269,13 @@ namespace RestFrames {
       if(!m_TreeJigsaws[i].AnalyzeEvent()){
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Jigsaw: ";
-	m_Log << Log(m_TreeJigsaws[i]) << m_End;
+	m_Log << Log(m_TreeJigsaws[i]) << LogEnd;
 	return SetSpirit(false);
       }
     }
     if(!AnalyzeEventRecursive()){
       m_Log << LogWarning;
-      m_Log << "Unable to recursively analyze event" << m_End;
+      m_Log << "Unable to recursively analyze event" << LogEnd;
       return SetSpirit(false);
     }
     return SetSpirit(true);

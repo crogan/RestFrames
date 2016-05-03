@@ -86,7 +86,7 @@ namespace RestFrames {
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem with recursive tree after disassembly";
-      m_Log << m_End;
+      m_Log << LogEnd;
       SetBody(false);
       return;
     } else 
@@ -95,7 +95,7 @@ namespace RestFrames {
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after disassembly";
-      m_Log << m_End;
+      m_Log << LogEnd;
       SetMind(false);
       return;
     } else 
@@ -160,7 +160,7 @@ namespace RestFrames {
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem with recursive tree after assembly";
-      m_Log << m_End;
+      m_Log << LogEnd;
       SetBody(false);
       return;
     }
@@ -171,7 +171,7 @@ namespace RestFrames {
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem connecting states after assembly";
-      m_Log << m_End;
+      m_Log << LogEnd;
       SetMind(false);
       return;
     }
@@ -276,7 +276,7 @@ namespace RestFrames {
     if(!ReconstructionFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively analyze event with ";
-      m_Log << "disassembled SelfAssemblingRecoFrame" << m_End;
+      m_Log << "disassembled SelfAssemblingRecoFrame" << LogEnd;
       return SetSpirit(false);
     }
     // Assemble Frame tree
@@ -284,7 +284,7 @@ namespace RestFrames {
     if(!ReconstructionFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively analyze event with ";
-      m_Log << "assembled SelfAssemblingRecoFrame" << m_End;
+      m_Log << "assembled SelfAssemblingRecoFrame" << LogEnd;
       return SetSpirit(false);
     }
     return SetSpirit(true);

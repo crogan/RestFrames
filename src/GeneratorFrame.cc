@@ -129,7 +129,7 @@ namespace RestFrames {
     if(!GenerateFrame()){
       m_Log << LogWarning;
       m_Log << "Unable to generate event for this frame.";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetSpirit(false);
     }
 
@@ -238,7 +238,7 @@ namespace RestFrames {
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
+      m_Log << val << ". Setting to zero." << LogEnd;
       m_Mass = 0.;
     } else {
       m_Mass = val;

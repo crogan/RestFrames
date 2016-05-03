@@ -227,7 +227,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   //TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(max(Ngen/10,1)) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree

@@ -57,7 +57,7 @@ namespace RestFrames {
 
     if(!InitializeCombinatoric()){
       m_Log << LogWarning;
-      m_Log << "Problem initializing event info" << m_End;
+      m_Log << "Problem initializing event info" << LogEnd;
       return SetSpirit(false);
     }
 

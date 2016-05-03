@@ -188,13 +188,13 @@ namespace RestFrames {
 
     if(!InitializeCombinatoric()){
       m_Log << LogWarning;
-      m_Log << "Problem initializing event info" << m_End;
+      m_Log << "Problem initializing event info" << LogEnd;
       return SetSpirit(false);
     }
 
     if(!LoopCombinatoric()){
       m_Log << LogWarning;
-      m_Log << "Problem looping over combinatorics" << m_End;
+      m_Log << "Problem looping over combinatorics" << LogEnd;
       return SetSpirit(false);
     }
 
@@ -243,7 +243,7 @@ namespace RestFrames {
       m_Log << LogWarning;
       m_Log << "Unable to execute Jigsaw. ";
       m_Log << "Insufficienct number of inputs.";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetSpirit(false);
     }
 
@@ -254,7 +254,7 @@ namespace RestFrames {
       m_Log << "Incorrect number of exclusive inputs: ";
       m_Log << NTOTOT << " (required) != ";
       m_Log << m_InputStates.GetN() << " (provided)";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetSpirit(false);
     }
 
@@ -319,7 +319,7 @@ namespace RestFrames {
     if(c_max < 0){
       m_Log << LogWarning;
       m_Log << "Unable to find combinatoric with positive metric";
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetSpirit(false);
     }
      

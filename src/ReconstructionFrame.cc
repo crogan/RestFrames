@@ -147,7 +147,7 @@ namespace RestFrames {
 	  if(!m_ChildStates[&child].Add(RFList<State>(states).GetFrame(frames[f]))){
 	    m_Log << LogWarning;
 	    m_Log << "Unable to associate State with Group-less Frame:";
-	    m_Log << Log(frames[f]) << m_End;
+	    m_Log << Log(frames[f]) << LogEnd;
 	    return false;
 	  }
     }
@@ -172,7 +172,7 @@ namespace RestFrames {
 	      m_Log << LogWarning;
 	      m_Log << "Unable to get State associated with Group Frame: " << endl;
 	      m_Log << " Frame:" << Log(frames[f]);
-	      m_Log << " Group:" << Log(groups[g]) << m_End;
+	      m_Log << " Group:" << Log(groups[g]) << LogEnd;
 	      return false;
 	    }
 	    m_ChildStates[&GetChildFrame(c)].Add(state);
@@ -199,7 +199,7 @@ namespace RestFrames {
       if(!GetChildFrame(i).InitializeAnalysisRecursive()){
 	m_Log << LogWarning;
 	m_Log << "Unable to recursively initialize analysis for frame:";
-	m_Log << Log(GetChildFrame(i)) << m_End;
+	m_Log << Log(GetChildFrame(i)) << LogEnd;
 	return SetMind(false);
       }
 
@@ -247,7 +247,7 @@ namespace RestFrames {
       if(!child.AnalyzeEventRecursive()){
 	m_Log << LogWarning;
 	m_Log << "Recursive event analysis failed for frame: ";
-	m_Log << Log(child) << m_End;
+	m_Log << Log(child) << LogEnd;
 	return SetSpirit(false);
       } 
      

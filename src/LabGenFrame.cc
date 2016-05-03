@@ -65,7 +65,7 @@ namespace RestFrames {
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set transverse mass to negative value ";
-      m_Log << val << ". Setting to zero." << m_End;
+      m_Log << val << ". Setting to zero." << LogEnd;
       m_PT = 0.;
     } else {
       m_PT = val;
@@ -88,7 +88,7 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::InitializeAnalysis(){
-    m_Log << LogVerbose << "Initializing this tree for analysis..." << m_End;
+    m_Log << LogVerbose << "Initializing this tree for analysis..." << LogEnd;
    
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -96,17 +96,17 @@ namespace RestFrames {
     }
 
     if(!InitializeAnalysisRecursive()){
-      m_Log << LogWarning << "...Unable to recursively initialize analysis" << m_End;
+      m_Log << LogWarning << "...Unable to recursively initialize analysis" << LogEnd;
       return SetMind(false);
     }
 
     for(int i = 0; i < m_NBurnInMCMC; i++)
       if(!IterateRecursiveMCMC()){
-	m_Log << LogWarning << "...Unable to recursively initialize analysis" << m_End;
+	m_Log << LogWarning << "...Unable to recursively initialize analysis" << LogEnd;
 	return SetMind(false);
       }
 
-    m_Log << LogVerbose << "...Done" << m_End;
+    m_Log << LogVerbose << "...Done" << LogEnd;
     return SetMind(true);
   }
   

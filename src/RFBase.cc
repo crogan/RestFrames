@@ -135,7 +135,7 @@ namespace RestFrames {
 
   void RFBase::Print(LogType type) const {
     string output = PrintString(type);
-    m_Log << type << output << m_End;
+    m_Log << type << output << LogEnd;
   }
 
   string RFBase::PrintString(LogType type) const {
@@ -150,7 +150,7 @@ namespace RestFrames {
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"InitializeTree()\" ";
     m_Log << "from the LabFrame associated with this tree.";
-    m_Log << m_End;
+    m_Log << LogEnd;
   }
 
   void RFBase::UnSoundMind(const string& function) const {
@@ -158,7 +158,7 @@ namespace RestFrames {
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"InitializeAnalysis()\" ";
     m_Log << "from the LabFrame associated with this tree.";
-    m_Log << m_End;
+    m_Log << LogEnd;
   }
 
   void RFBase::UnSoundSpirit(const string& function) const {
@@ -166,7 +166,7 @@ namespace RestFrames {
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"AnalyzeEvent()\" ";
     m_Log << "from the LabFrame associated with this tree.";
-    m_Log << m_End;
+    m_Log << LogEnd;
   }
 
   // Initializer.

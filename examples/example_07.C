@@ -50,7 +50,7 @@ void example_07(string output_name = "output_example_07.root"){
   int Ngen = 100000;
 
   ////////////////////////////////////////////////////////////////////////////////////////
-  g_Log << LogInfo << "Initializing generator frames and tree..." << g_End;
+  g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   LabGenFrame       LAB_Gen("LAB_Gen","LAB");
   DecayGenFrame     X2X2_Gen("X2X2_Gen","#tilde{#chi}^{ 0}_{2} #tilde{#chi}^{ 0}_{2}");
@@ -80,9 +80,9 @@ void example_07(string output_name = "output_example_07.root"){
   Hb_Gen.AddChildFrame(G2_Gen);
 
   if(LAB_Gen.InitializeTree())
-    g_Log << LogInfo << "...Successfully initialized generator tree" << g_End;
+    g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing generator tree" << g_End;
+    g_Log << LogError << "...Failed initializing generator tree" << LogEnd;
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -95,14 +95,14 @@ void example_07(string output_name = "output_example_07.root"){
   Hb_Gen.SetWidth(wH);
   
   if(LAB_Gen.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << g_End;
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing generator analysis" << g_End;
+    g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////////////////////////////////////////////////////////////////
-  g_Log << LogInfo << "Initializing reconstruction frames and tree..." << g_End;
+  g_Log << LogInfo << "Initializing reconstruction frames and tree..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   LabRecoFrame       LAB("LAB","LAB");
   DecayRecoFrame     X2X2("X2X2","#tilde{#chi}^{ 0}_{2} #tilde{#chi}^{ 0}_{2}");
@@ -132,9 +132,9 @@ void example_07(string output_name = "output_example_07.root"){
   Hb.AddChildFrame(G2);
 
   if(LAB.InitializeTree())
-    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << g_End;
+    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing reconstruction trees" << g_End;
+    g_Log << LogError << "...Failed initializing reconstruction trees" << LogEnd;
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -159,9 +159,9 @@ void example_07(string output_name = "output_example_07.root"){
   X1X1_contra.AddInvisibleFrame(X1b, 1);
 
   if(LAB.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analysis" << endl << g_End;
+    g_Log << LogInfo << "...Successfully initialized analysis" << endl << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing analysis" << g_End;
+    g_Log << LogError << "...Failed initializing analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
 

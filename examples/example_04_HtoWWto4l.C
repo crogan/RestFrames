@@ -63,7 +63,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
 
   //
   // Set up toy generation tree (not needed for reconstruction)
-  g_Log << LogInfo << "Initializing generator frames and tree" << g_End;
+  g_Log << LogInfo << "Initializing generator frames and tree" << LogEnd;
   ppLabGenFrame LAB_G("LAB_G","LAB");
   ResonanceGenFrame H_G("H_G","H");
   //DecayGenFrame H_G("H_G","H");
@@ -85,9 +85,9 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
-    g_Log << "Ready to set masses etc." << g_End;
+    g_Log << "Ready to set masses etc." << LogEnd;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << g_End;								    
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << LogEnd;								    
   // set Higgs masses
   H_G.SetMass(mH);
   H_G.SetWidth(wH);
@@ -107,13 +107,13 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized analysis from LabFrame ";
     g_Log << LAB_G.GetName() << endl;
-    g_Log << "Ready for event generation" << g_End;
+    g_Log << "Ready for event generation" << LogEnd;
   } else
-    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_G) << g_End;
+    g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_G) << LogEnd;
 
 
   // Set up reco analysis tree
-  g_Log << LogInfo << "Initializing reconstruction frames and tree" << g_End;
+  g_Log << LogInfo << "Initializing reconstruction frames and tree" << LogEnd;
   LabRecoFrame LAB_R("LAB_R","LAB");
   DecayRecoFrame H_R("H_R","H");
   DecayRecoFrame Wa_R("Wa_R","W_{a}");
@@ -134,9 +134,9 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready for Group and Jigsaw initialization" << g_End;
+    g_Log << "Ready for Group and Jigsaw initialization" << LogEnd;
   } else
-    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << g_End;  
+    g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << LogEnd;  
 
   // define groups for the reconstruction trees
   InvisibleGroup INV_R("INV_R","WIMP Jigsaws");
@@ -158,15 +158,15 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   ContraBoostJigsaw_R.AddInvisibleFrames((Wa_R.GetListInvisibleFrames()), 0);
   ContraBoostJigsaw_R.AddInvisibleFrames((Wb_R.GetListInvisibleFrames()), 1);
 
-  g_Log << LogInfo << "Initializing tree for analysis" << m_End;
+  g_Log << LogInfo << "Initializing tree for analysis" << LogEnd;
   // check reconstruction trees
   if(LAB_R.InitializeAnalysis()){
     g_Log << LogInfo;
     g_Log << "...Successfully initialized tree for analysis from LabFrame ";
     g_Log << LAB_R.GetName() << endl;
-    g_Log << "Ready event analysis" << g_End;
+    g_Log << "Ready event analysis" << LogEnd;
   } else
-    g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << g_End;	
+    g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << LogEnd;	
 
   DecayRecoFrame *W[2];
   VisibleRecoFrame *L[2];
@@ -188,7 +188,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << g_End;
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
@@ -254,7 +254,7 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
 
  
 
-  g_Log << LogInfo << "Finished" << g_End;
+  g_Log << LogInfo << "Finished" << LogEnd;
 }
 
 TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title, string label){

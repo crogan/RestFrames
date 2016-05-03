@@ -142,7 +142,7 @@ namespace RestFrames {
       m_Log << "Unable to initialize event generation. ";
       m_Log << "sqrt(S) of " << sqrtS << " ";
       m_Log << "is less than minimum child mass of " << Mmin;
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetMind(false);
     }
 

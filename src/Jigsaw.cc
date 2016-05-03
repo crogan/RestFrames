@@ -194,7 +194,7 @@ namespace RestFrames {
     if(!GetParentState()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw. ";
-      m_Log << "No parent State set." << m_End;
+      m_Log << "No parent State set." << LogEnd;
       return SetMind(false);
     }
 
@@ -203,7 +203,7 @@ namespace RestFrames {
       m_Log << "Unable to resolve input parent State. ";
       m_Log << "  Frames (capable): " << Log(GetParentFrames()) << endl;
       m_Log << "  Frames (requested): " << Log(GetParentState().GetListFrames());
-      m_Log << m_End;
+      m_Log << LogEnd;
       return SetMind(false);
     }
       
@@ -261,13 +261,13 @@ namespace RestFrames {
 	  if(!state){
 	    m_Log << LogWarning;
 	    m_Log << "Cannot find States corresponding to frame: " << endl;
-	    m_Log << Log(frame) << " " << Log(states) << m_End;
+	    m_Log << Log(frame) << " " << Log(states) << LogEnd;
 	    return SetMind(false);
 	  }
 	  m_Log << LogVerbose;
 	  m_Log << "Adding dependancy State for index " << d;
 	  m_Log << " corresponding to frame:";
-	  m_Log << Log(frame) << m_End;
+	  m_Log << Log(frame) << LogEnd;
 	  m_DependancyStates[d] += state;
 	}
       }
@@ -279,7 +279,7 @@ namespace RestFrames {
 	  m_Log << " Frames:" << endl << "   ";
 	  m_Log << Log(group_frames[g]) << endl;
 	  m_Log << " Group:" << endl;
-	  m_Log << Log(groups.Get(g)) << m_End;
+	  m_Log << Log(groups.Get(g)) << LogEnd;
 	  return SetMind(false);
 	}
 	m_Log << LogVerbose;
@@ -292,7 +292,7 @@ namespace RestFrames {
 	  m_Log << "   state " << s << ": ";
 	  m_Log << Log(group_states[s].GetListFrames()) << endl;
 	}
-	m_Log << m_End;
+	m_Log << LogEnd;
 	m_DependancyStates[d].Add(group_states);
       }
     }
@@ -329,7 +329,7 @@ namespace RestFrames {
       m_Log << "    Frame:" << endl;
       m_Log << Log(frame) << endl;
       m_Log << "    Group:" << endl;
-      m_Log << Log(GetGroup()) << m_End;
+      m_Log << Log(GetGroup()) << LogEnd;
       return;
     }
     
@@ -360,13 +360,13 @@ namespace RestFrames {
 	  m_Log << "Child frames are repeated between ";
 	  m_Log << "more than one output index: ";
 	  m_Log << Log(m_ChildFrames[i].Intersection(m_ChildFrames[j]));
-	  m_Log << m_End;
+	  m_Log << LogEnd;
 	  return SetBody(false);
 	}
     for(int i = 0; i < Nout; i++)
       if(m_ChildFrames[i].GetN() == 0){
 	m_Log << "No child frames at index ";
-	m_Log << i << m_End;
+	m_Log << i << LogEnd;
 	return SetBody(false);
       }
     return SetBody(true);
