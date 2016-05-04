@@ -100,6 +100,7 @@ namespace RestFrames {
 
   void InvisibleJigsaw::AddVisibleFrame(RestFrame& frame, int i){
     if(!frame) return;
+    if(!GetGroup()) return;
     RFList<RestFrame> frames = frame.GetListVisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
@@ -114,6 +115,7 @@ namespace RestFrames {
   }
 
   void InvisibleJigsaw::AddInvisibleFrame(RestFrame& frame, int i){
+    if(!frame) return;
     if(!GetGroup()) return;
     RFList<RestFrame> frames = frame.GetListInvisibleFrames();
     int N = frames.GetN();

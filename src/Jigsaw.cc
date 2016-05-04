@@ -297,7 +297,7 @@ namespace RestFrames {
       }
     }
     
-    return SetMind(true);;
+    return SetMind(true);
   } 
 
   bool Jigsaw::InitializeDependancyJigsaws(){
