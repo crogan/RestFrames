@@ -1,11 +1,11 @@
 port: 3000
 baseurl: /RestFrames
-# url: http://RestFrames.com
+url: http://RestFrames.com
 root: /
 lsi: false
 permalink: /:year/:month/:day/:title.html
 # paginate: 50
-markdown: rdiscount
+markdown: kramdown
 # enables SmartyPants (nice curly quotation marks, em/en dashes, elipses, etc):
 rdiscount:
   extensions: [smart]
