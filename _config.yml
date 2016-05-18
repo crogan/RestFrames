@@ -1,14 +1,14 @@
 port: 3000
 baseurl: /RestFrames
-url: http://RestFrames.com
-root: /
+# url: http://RestFrames.com
+# root: /
 lsi: false
 permalink: /:year/:month/:day/:title.html
 # paginate: 50
 markdown: kramdown
 # enables SmartyPants (nice curly quotation marks, em/en dashes, elipses, etc):
-rdiscount:
-  extensions: [smart]
+#rdiscount:
+#  extensions: [smart]
 # Since GH pages override this to "true", we test this value to see if we are running locally
 safe: false
 
