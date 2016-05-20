@@ -29,23 +29,13 @@
 
 #include <TFile.h>
 #include <TLatex.h>
-#include <TColor.h>
 #include <TLegend.h>
-#include <TStyle.h>
 
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotVar.hh"
 #include "RestFrames/HistPlotCategory.hh"
 
 namespace RestFrames {
-
-  const int HistPlot::m_color[7][2] = {{kBlue+2, kBlue-10},
-				       {kRed+2, kRed-10},
-				       {kGreen+3, kGreen-10},
-				       {kMagenta+3, kMagenta-10},
-				       {kOrange+2, kOrange-9},
-				       {kCyan+3, kCyan-10},
-				       {kBlack, kGray}};
 				       
   HistPlot::HistPlot(const string& sname, const string& stitle)
     : RFPlot(sname, stitle)
@@ -339,11 +329,13 @@ namespace RestFrames {
     hists[imax]->GetYaxis()->SetRangeUser(0.9*hists[imin]->GetMinimum(0.),1.1*hists[imax]->GetMaximum());
 
     for(int i = N-1; i >= 0; i--){
-      hists[i]->SetFillColor(m_color[i%7][1]);
+      int icolor0 = 7003 + (i%8)*10;
+      int icolor1 = 7000 + (i%8)*10;
+      hists[i]->SetFillColor(icolor1);
       hists[i]->SetFillStyle(3002);
-      hists[i]->SetLineColor(m_color[i%7][0]);
+      hists[i]->SetLineColor(icolor0);
       hists[i]->SetLineWidth(3);
-      hists[i]->SetMarkerColor(m_color[i%7][0]);
+      hists[i]->SetMarkerColor(icolor0);
       hists[i]->SetMarkerSize(0);
       hists[i]->Draw("same");
     }
@@ -500,78 +492,5 @@ namespace RestFrames {
       m_2DHists[i]->Write("",TObject::kOverwrite);
     file->Close();
     delete file;
-  }
-
-  void HistPlot::SetStyle(){
-    // For the canvas:
-    gStyle->SetCanvasBorderMode(0);
-    gStyle->SetCanvasColor(kWhite);
-    gStyle->SetCanvasDefX(0);
-    gStyle->SetCanvasDefY(0);
-    
-    // For the Pad:
-    gStyle->SetPadBorderMode(0);
-    gStyle->SetPadColor(kWhite);
-    gStyle->SetGridColor(0);
-    gStyle->SetGridStyle(3);
-    gStyle->SetGridWidth(1);
-    
-    // For the frame:
-    gStyle->SetFrameBorderMode(0);
-    gStyle->SetFrameBorderSize(1);
-    gStyle->SetFrameFillColor(0);
-    gStyle->SetFrameFillStyle(0);
-    gStyle->SetFrameLineColor(1);
-    gStyle->SetFrameLineStyle(1);
-    gStyle->SetFrameLineWidth(1);
-    
-    // set the paper & margin sizes
-    gStyle->SetPaperSize(20,26);
-    gStyle->SetPadTopMargin(0.09);
-    gStyle->SetPadRightMargin(0.25);
-    gStyle->SetPadBottomMargin(0.18);
-    gStyle->SetPadLeftMargin(0.15);
-    
-    // use large Times-Roman fonts
-    gStyle->SetTitleFont(132,"xyz");  // set the all 3 axes title font
-    gStyle->SetTitleFont(132," ");    // set the pad title font
-    gStyle->SetTitleSize(0.06,"xyz"); // set the 3 axes title size
-    gStyle->SetTitleSize(0.06," ");   // set the pad title size
-    gStyle->SetLabelFont(132,"xyz");
-    gStyle->SetLabelSize(0.05,"xyz");
-    gStyle->SetLabelColor(1,"xyz");
-    gStyle->SetTextFont(132);
-    gStyle->SetTextSize(0.08);
-    gStyle->SetStatFont(132);
-    
-    // use bold lines and markers
-    gStyle->SetMarkerStyle(8);
-    gStyle->SetHistLineWidth(2);
-    gStyle->SetLineStyleString(2,"[12 12]"); // postscript dashes
-	
-    //..Get rid of X error bars
-    gStyle->SetErrorX(0.001);
-    
-    // do not display any of the standard histogram decorations
-    gStyle->SetOptTitle(0);
-    gStyle->SetOptStat(0);
-    gStyle->SetOptFit(11111111);
-    
-    // put tick marks on top and RHS of plots
-    gStyle->SetPadTickX(1);
-    gStyle->SetPadTickY(1);
-    
-    const Int_t NRGBs = 5;
-    const Int_t NCont = 28;
-
-    Double_t stops[NRGBs] = { 0.00, 0.5, 0.70, 0.82, 1.00 };
-    Double_t red[NRGBs]   = { 0.00, 0.00, 0.74, 1.00, 1. };
-    Double_t green[NRGBs] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
-    Double_t blue[NRGBs]  = { 0.31, 0.73, 0.08, 0.00, 1.00 };
-    
-    TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
-    gStyle->SetNumberContours(NCont);
-
-    gStyle->cd();
   }
 }

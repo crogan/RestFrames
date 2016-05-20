@@ -47,20 +47,6 @@ namespace RestFrames {
   class TreePlotNode;
   class TreePlotLink;
 
-  ///////////////////////////////////////////////
-  // Colors and styles
-  ///////////////////////////////////////////////
-  const int color_Node[4] = {kBlue+3,kGreen+3,kRed+3,kGray+3};
-  const int color_fill_Node[4] = {kBlue-10,kGreen-10,kRed-10,18};
-
-  const int color_Default = kGray+3;
-  const int color_fill_Default = 18;
-  const int style_Default = 1;
-
-  const int color_Leaf[6] = {kCyan-6,kOrange-4,kMagenta-8,
-			     kCyan-7,kOrange+6,kMagenta-2};
-  const int style_Leaf = 7;
-
   enum TreeType { kVanillaTree, kFrameTree, kGroupTree };
 
   class TreePlot : public RFPlot {
@@ -76,7 +62,10 @@ namespace RestFrames {
     
     void SetGroupTree(const Group& group);
 
-    void Draw(const string& name = "", const string& title = "");
+    void Draw(const string& name = "",
+	      const string& title = "",
+	      bool invert_node_color = false,
+	      bool invert_bkg_color  = false);
     
   private:
     TreeType m_Type;
@@ -88,12 +77,23 @@ namespace RestFrames {
     bool m_SelfAssembling;
     map<const Jigsaw*,int> m_JigsawColorMap;
     map<FrameType,int> m_FrameColorMap;
-    map<FrameType,int> m_FrameColorFillMap;
 
     RestFrames::RFList<const RestFrame> m_Frames;
     RestFrames::RFList<const Jigsaw>    m_Jigsaws;
     const Group* m_GroupPtr;
-   
+
+    int m_color_Node_text[4];
+    int m_color_Node_line[4];
+    int m_color_Node_fill[4];
+    int m_color_Default_text;
+    int m_color_Default_line;
+    int m_color_Default_fill;
+    int m_color_Text;
+    int m_color_Bkg;
+    vector<int> m_color_Leaf;
+    int m_style_Default;
+    int m_style_Leaf;
+    
     void ClearTree();
 
     void InitTreeGrid();
@@ -109,6 +109,9 @@ namespace RestFrames {
     void FillGroupTreeMap(int irow, const State& state);
     void FillJigsawLink(const Jigsaw& jigsaw);
 
+    void SetColors(bool invert_node_color,
+		   bool invert_bkg_color);
+    
     vector<TreePlotNode*> m_TreeNodes;
     vector<TreePlotLink*> m_TreeLinks;
     void DrawTreeLinks();

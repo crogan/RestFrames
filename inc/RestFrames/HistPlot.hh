@@ -78,9 +78,6 @@ namespace RestFrames {
 
     void WriteHist(const string& filename);
 
-    static const int m_color[7][2];
-    static void SetStyle();
-
   private:
     string m_PlotLabel;
     string m_PlotTitle;

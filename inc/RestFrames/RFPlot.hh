@@ -31,6 +31,7 @@
 #define RFPlot_HH
 
 #include <TCanvas.h>
+#include <TColor.h>
 
 #include "RestFrames/RFBase.hh"
 
@@ -47,6 +48,48 @@ namespace RestFrames {
 
     void WriteOutput(const string& filename);
 
+    static const TColor rf_blue0;
+    static const TColor rf_blue1;
+    static const TColor rf_blue2;
+    static const TColor rf_blue3;
+    static const TColor rf_blue4;
+    static const TColor rf_green0;
+    static const TColor rf_green1;
+    static const TColor rf_green2;
+    static const TColor rf_green3;
+    static const TColor rf_green4;
+    static const TColor rf_red0;
+    static const TColor rf_red1;
+    static const TColor rf_red2;
+    static const TColor rf_red3;
+    static const TColor rf_red4;
+    static const TColor rf_yellow0;
+    static const TColor rf_yellow1;
+    static const TColor rf_yellow2;
+    static const TColor rf_yellow3;
+    static const TColor rf_yellow4;
+    static const TColor rf_cyan0;
+    static const TColor rf_cyan1;
+    static const TColor rf_cyan2;
+    static const TColor rf_cyan3;
+    static const TColor rf_cyan4;
+    static const TColor rf_lime0;
+    static const TColor rf_lime1;
+    static const TColor rf_lime2;
+    static const TColor rf_lime3;
+    static const TColor rf_lime4;
+    static const TColor rf_purple0;
+    static const TColor rf_purple1;
+    static const TColor rf_purple2;
+    static const TColor rf_purple3;
+    static const TColor rf_purple4;
+    static const TColor rf_orange0;
+    static const TColor rf_orange1;
+    static const TColor rf_orange2;
+    static const TColor rf_orange3;
+    static const TColor rf_orange4;
+    static void SetStyle();
+    
   protected:
     TCanvas* m_CanvasPtr;
     void AddCanvas(TCanvas* can);
