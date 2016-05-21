@@ -241,16 +241,16 @@ void example_04_HtoWWto4l(const string& output_name = "output_04.root"){
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->SetTree(LAB_G);
   tree_plot->Draw("GenTree", "Generator Tree");
 
   // reco tree
-  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->SetTree(LAB_R);
   tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
    // reco tree
-  tree_plot->SetGroupTree(INV_R);
-  tree_plot->Draw("InvTree", "Invisible Jigsaws");
+  tree_plot->SetTree(INV_R);
+  tree_plot->Draw("InvTree", "Invisible Jigsaws",true);
 
  
 

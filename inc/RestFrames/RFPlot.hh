@@ -48,6 +48,9 @@ namespace RestFrames {
 
     void WriteOutput(const string& filename);
 
+    static void SetStyle(bool invert_colors = false);
+    static void SetZPalette(bool invert_colors = false);
+    
     static const TColor rf_blue0;
     static const TColor rf_blue1;
     static const TColor rf_blue2;
@@ -88,7 +91,6 @@ namespace RestFrames {
     static const TColor rf_orange2;
     static const TColor rf_orange3;
     static const TColor rf_orange4;
-    static void SetStyle();
     
   protected:
     TCanvas* m_CanvasPtr;
@@ -99,6 +101,18 @@ namespace RestFrames {
   private:
     vector<TObject*> m_TObjects;
     vector<TCanvas*> m_Canvases;
+
+    static const int rf_NZPalette;
+    static int rf_ZPalette;
+    static int rf_iZPalette;
+    static double rf_zcolor_s[5];
+    static double rf_zcolor_r[5];
+    static double rf_zcolor_g[5];
+    static double rf_zcolor_b[5];
+    static double rf_zcolor_is[5];
+    static double rf_zcolor_ir[5];
+    static double rf_zcolor_ig[5];
+    static double rf_zcolor_ib[5];
 
   };
 

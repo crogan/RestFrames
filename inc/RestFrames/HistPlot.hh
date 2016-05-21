@@ -57,16 +57,18 @@ namespace RestFrames {
     
     void AddPlot(const HistPlotVar& var, 
 		 RestFrames::RFList<const HistPlotCategory> cats = 
-		 RFList<const HistPlotCategory>());
+		 RFList<const HistPlotCategory>(),
+		 bool invert_colors = false);
     void AddPlot(const HistPlotVar& varX,
 		 const HistPlotVar& varY,
 		 RestFrames::RFList<const HistPlotCategory> cats =
-		 RFList<const HistPlotCategory>());
+		 RFList<const HistPlotCategory>(),
+		 bool invert_colors = false);
     
     void Fill(double weight = 1.);
     void Fill(const HistPlotCategory& cat, double weight = 1.);
 
-    void Draw();
+    void Draw(bool invert_colors = false);
 
     void SetPlotLabel(const string& label);
 
@@ -91,20 +93,25 @@ namespace RestFrames {
     vector<HistPlotCategory*> m_Cats;
     map<const HistPlotCategory*,vector<TH1D*> > m_CatToHist1D;
     map<const HistPlotCategory*,vector<TH2D*> > m_CatToHist2D;
+    
     vector<const HistPlotVar*>                    m_Plot1D_Var;
     vector<RestFrames::RFList<HistPlotCategory> > m_Plot1D_Cats;
+    vector<bool>                                  m_Plot1D_Color;
     vector<pair<const HistPlotVar*,
 		const HistPlotVar*> >             m_Plot2D_Vars;
     vector<const HistPlotCategory*>               m_Plot2D_Cat;
+    vector<bool>                                  m_Plot2D_Color;
 
     map<TH1D*,const HistPlotVar*>        m_HistToVar;
     map<TH2D*,pair<const HistPlotVar*,
 		   const HistPlotVar*> > m_HistToVars;
 
     void DrawPlot(const HistPlotVar& var, 
-		  const RFList<HistPlotCategory>& cats);
+		  const RFList<HistPlotCategory>& cats,
+		  bool invert_colors = false);
     void DrawPlot(const pair<const HistPlotVar*, const HistPlotVar*>& vars,
-		  const HistPlotCategory& cat);
+		  const HistPlotCategory& cat,
+		  bool invert_colors = false);
 
   };
 

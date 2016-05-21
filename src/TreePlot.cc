@@ -118,13 +118,13 @@ namespace RestFrames {
   }
   
   void TreePlot::Draw(const string& name, const string& title,
-		      bool invert_node_color,
-		      bool invert_bkg_color){
+		      bool invert_bkg_color,
+		      bool invert_node_color){
     if(m_Type == kVanillaTree) 
       return;
 
-    SetColors(invert_node_color,
-	      invert_bkg_color);
+    SetColors(invert_bkg_color,
+	      invert_node_color);
     
     m_CanvasPtr = GetNewCanvas(name,title);
     
@@ -150,7 +150,7 @@ namespace RestFrames {
     AddCanvas(m_CanvasPtr);
   }
 
-  void TreePlot::SetFrameTree(const RestFrame& frame){
+  void TreePlot::SetTree(const RestFrame& frame){
     if(!frame) return;
     ClearTree();
     m_Type = kFrameTree;
@@ -161,6 +161,8 @@ namespace RestFrames {
   }
 
   void TreePlot::AddJigsaw(const Jigsaw& jigsaw){
+    if(m_Type != kFrameTree) 
+      return;
     if(!jigsaw) 
       return;
     if(m_Jigsaws.Contains(jigsaw))
@@ -181,7 +183,7 @@ namespace RestFrames {
     for(int j = 0; j < N; j++) AddJigsaw(jigsaws[j]);
   }
 
-  void TreePlot::SetGroupTree(const Group& group){
+  void TreePlot::SetTree(const Group& group){
     if(!group) return;
     ClearTree();
     m_GroupPtr = &group;
@@ -412,8 +414,11 @@ namespace RestFrames {
     }
   }
 
-  void TreePlot::SetColors(bool invert_node_color,
-			   bool invert_bkg_color){
+  void TreePlot::SetColors(bool invert_bkg_color,
+			   bool invert_node_color){
+    if(invert_bkg_color)
+      invert_node_color = !invert_node_color;
+    
     m_style_Default = 1;
     m_style_Leaf = 7;
     m_color_Leaf.clear();
@@ -433,9 +438,6 @@ namespace RestFrames {
 	m_color_Node_line[3] = 18;
       else
 	m_color_Node_line[3] = kGray+1;
-      m_color_Default_text = kWhite;
-      m_color_Default_line = kWhite;
-      m_color_Default_fill = kBlack;
     } else {
       for(int i = 0; i < 3; i++){
 	m_color_Node_text[i] = 7004+i*10;
@@ -451,9 +453,6 @@ namespace RestFrames {
 	m_color_Node_line[3] = kGray+2;
       else
 	m_color_Node_line[3] = kGray+3;
-      m_color_Default_text = kBlack;
-      m_color_Default_line = kBlack;
-      m_color_Default_fill = kWhite;
     }
 
     if(invert_bkg_color){
@@ -465,7 +464,9 @@ namespace RestFrames {
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
 	  m_color_Leaf.push_back(7060+j*10+i);
-     
+      m_color_Default_text = kWhite;
+      m_color_Default_line = kWhite;
+      m_color_Default_fill = kBlack;
     } else {
       m_color_Text = kBlack;
       m_color_Bkg  = kWhite;
@@ -475,6 +476,9 @@ namespace RestFrames {
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
 	  m_color_Leaf.push_back(7062+j*10-i);
+      m_color_Default_text = kBlack;
+      m_color_Default_line = kBlack;
+      m_color_Default_fill = kWhite;
     }
   }
   

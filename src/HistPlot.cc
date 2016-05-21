@@ -46,7 +46,7 @@ namespace RestFrames {
     m_Scale = 1.;
     m_SetScale = false;
     m_Log.SetSource("HistPlot "+GetName());
-    HistPlot::SetStyle();
+    RFPlot::SetStyle();
   }
 
   HistPlot::~HistPlot(){
@@ -75,8 +75,10 @@ namespace RestFrames {
     m_CatToHist2D.clear();
     m_Plot1D_Var.clear();
     m_Plot1D_Cats.clear();
+    m_Plot1D_Color.clear();
     m_Plot2D_Vars.clear();
     m_Plot2D_Cat.clear();
+    m_Plot2D_Color.clear();
     RFPlot::Clear();
   }
 
@@ -97,7 +99,8 @@ namespace RestFrames {
   }
 
   void HistPlot::AddPlot(const HistPlotVar& var, 
-			 RFList<const HistPlotCategory> cats){
+			 RFList<const HistPlotCategory> cats,
+			 bool invert_colors){
     int Ncat = cats.GetN();
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
@@ -145,10 +148,12 @@ namespace RestFrames {
     }
     m_Plot1D_Var.push_back(&var);
     m_Plot1D_Cats.push_back(cats);
+    m_Plot1D_Color.push_back(invert_colors);
   }
 
   void HistPlot::AddPlot(const HistPlotVar& varX, const HistPlotVar& varY, 
-			 RFList<const HistPlotCategory> cats){
+			 RFList<const HistPlotCategory> cats,
+			 bool invert_colors){
     int Ncat = cats.GetN();
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
@@ -177,6 +182,7 @@ namespace RestFrames {
 	m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
 				const HistPlotVar*>(&varX,&varY));
 	m_Plot2D_Cat.push_back(empty);
+	m_Plot2D_Color.push_back(invert_colors);
       }
     } else {
       for(int c = 0; c < Ncat; c++){
@@ -205,6 +211,7 @@ namespace RestFrames {
 	  m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
 				  const HistPlotVar*>(&varX,&varY));
 	  m_Plot2D_Cat.push_back(&cats[c]);
+	  m_Plot2D_Color.push_back(invert_colors);
 	}
       }
     }
@@ -240,19 +247,25 @@ namespace RestFrames {
 				    weight);    
   }
 
-  void HistPlot::Draw(){
-    int N = m_Plot1D_Var.size();
-    for(int i = 0; i < N; i++)
-      DrawPlot(*m_Plot1D_Var[i], m_Plot1D_Cats[i]);
-    N = m_Plot2D_Vars.size();
-    for(int i = 0; i < N; i++)
-      DrawPlot(m_Plot2D_Vars[i], *m_Plot2D_Cat[i]);
+  void HistPlot::Draw(bool invert_colors){
+    int N1D = m_Plot1D_Var.size();
+    int N2D = m_Plot2D_Vars.size();
+
+    for(int i = 0; i < N1D; i++)
+      DrawPlot(*m_Plot1D_Var[i], m_Plot1D_Cats[i],
+	       (m_Plot1D_Color[i] || invert_colors));
+    for(int i = 0; i < N2D; i++)
+      DrawPlot(m_Plot2D_Vars[i], *m_Plot2D_Cat[i],
+	       (m_Plot2D_Color[i] || invert_colors));
   }
   
-  void HistPlot::DrawPlot(const HistPlotVar& var, const RFList<HistPlotCategory>& cats){
+  void HistPlot::DrawPlot(const HistPlotVar& var,
+			  const RFList<HistPlotCategory>& cats,
+			  bool invert_colors){
     vector<TH1D*> hists;
     int Ncat = cats.GetN();
     string catname = "";
+    
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       int Nhist = m_CatToHist1D[empty].size();
@@ -280,6 +293,10 @@ namespace RestFrames {
     can->SetLeftMargin(0.2);
     can->SetRightMargin(0.05);
     can->Draw();
+    if(invert_colors){
+      can->SetFillColor(kBlack);
+      can->Modified();
+    }
     can->SetGridx();
     can->SetGridy();
 
@@ -326,11 +343,24 @@ namespace RestFrames {
     hists[imax]->GetYaxis()->SetTitle(ScaleLabel.c_str());
     hists[imax]->GetYaxis()->SetTitleOffset(1.42);
     hists[imax]->GetYaxis()->CenterTitle();
-    hists[imax]->GetYaxis()->SetRangeUser(0.9*hists[imin]->GetMinimum(0.),1.1*hists[imax]->GetMaximum());
+    hists[imax]->GetYaxis()->SetRangeUser(0.9*hists[imin]->GetMinimum(0.),
+					  1.1*hists[imax]->GetMaximum());
+    if(invert_colors){
+      hists[imax]->GetXaxis()->SetTitleColor(kWhite);
+      hists[imax]->GetXaxis()->SetLabelColor(kWhite);
+      hists[imax]->GetXaxis()->SetAxisColor(kWhite);
+      hists[imax]->GetYaxis()->SetTitleColor(kWhite);
+      hists[imax]->GetYaxis()->SetLabelColor(kWhite);
+      hists[imax]->GetYaxis()->SetAxisColor(kWhite);
+    }
 
     for(int i = N-1; i >= 0; i--){
       int icolor0 = 7003 + (i%8)*10;
       int icolor1 = 7000 + (i%8)*10;
+      if(invert_colors){
+	icolor0 = 7000 + (i%8)*10;
+	icolor1 = 7003 + (i%8)*10;
+      }
       hists[i]->SetFillColor(icolor1);
       hists[i]->SetFillStyle(3002);
       hists[i]->SetLineColor(icolor0);
@@ -341,7 +371,9 @@ namespace RestFrames {
     }
 
     TLatex l(0.6,0.943,m_PlotTitle.c_str());
-    l.SetNDC();	
+    l.SetNDC();
+    if(invert_colors)
+      l.SetTextColor(kWhite);
     l.SetTextSize(0.045);
     l.SetTextFont(132);
     l.DrawLatex(0.48+max(0.,0.47-l.GetXsize()),0.947,m_PlotTitle.c_str());
@@ -355,6 +387,12 @@ namespace RestFrames {
       leg->SetShadowColor(kWhite);
       leg->SetLineColor(kWhite);
       leg->SetFillColor(kWhite);
+      if(invert_colors){
+	leg->SetShadowColor(kBlack);
+	leg->SetLineColor(kBlack);
+	leg->SetFillColor(kBlack);
+	leg->SetTextColor(kWhite);
+      }
       leg->SetTextFont(132);
       leg->SetTextSize(0.045);
       for(int i = 0; i < N; i++)
@@ -372,7 +410,8 @@ namespace RestFrames {
   }
   
   void HistPlot::DrawPlot(const pair<const HistPlotVar*,const HistPlotVar*>& vars,
-			  const HistPlotCategory& cat){
+			  const HistPlotCategory& cat,
+			  bool invert_colors){
     const HistPlotVar& varX = *vars.first;
     const HistPlotVar& varY = *vars.second;
     TH2D* hist = nullptr;
@@ -389,7 +428,7 @@ namespace RestFrames {
       }
     } else {
       catname += cat.GetName() + "_";
-      int Nhist = m_CatToHist1D[&cat].size();
+      int Nhist = m_CatToHist2D[&cat].size();
       for(int i = 0; i < Nhist; i++){
 	if(*m_HistToVars[m_CatToHist2D[&cat][i]].first  == varX &&
 	   *m_HistToVars[m_CatToHist2D[&cat][i]].second == varY){
@@ -402,13 +441,17 @@ namespace RestFrames {
     string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->Draw();
+    if(invert_colors){
+      can->SetFillColor(kBlack);
+      can->Modified();
+    }
     can->SetGridx();
     can->SetGridy();
     can->SetLogz();
 
     string XLabel = varX.GetTitle();
     string YLabel = varY.GetTitle();
-
+    
     string ScaleLabel;
     if(!m_SetScale){
       if(hist->Integral() > 0.) 
@@ -426,7 +469,9 @@ namespace RestFrames {
       XLabel += " "+varX.GetUnit();
     if(varY.GetUnit() != "")
       YLabel += " "+varY.GetUnit();
-
+   
+    RFPlot::SetZPalette(invert_colors);
+    
     hist->Draw("COLZ");
     hist->GetXaxis()->SetTitle(XLabel.c_str());
     hist->GetXaxis()->SetTitleOffset(1.24);
@@ -438,6 +483,17 @@ namespace RestFrames {
     hist->GetZaxis()->SetTitleOffset(1.5);
     hist->GetZaxis()->CenterTitle();
     hist->GetZaxis()->SetRangeUser(0.9*hist->GetMinimum(0.0),1.1*hist->GetMaximum());
+    if(invert_colors){
+      hist->GetXaxis()->SetTitleColor(kWhite);
+      hist->GetXaxis()->SetLabelColor(kWhite);
+      hist->GetXaxis()->SetAxisColor(kWhite);
+      hist->GetYaxis()->SetTitleColor(kWhite);
+      hist->GetYaxis()->SetLabelColor(kWhite);
+      hist->GetYaxis()->SetAxisColor(kWhite);
+      hist->GetZaxis()->SetTitleColor(kWhite);
+      hist->GetZaxis()->SetLabelColor(kWhite);
+      hist->GetZaxis()->SetAxisColor(kWhite);
+    }
     hist->Draw("COLZ");
     
     string title = m_PlotTitle;
@@ -445,7 +501,9 @@ namespace RestFrames {
       title = cat.GetTitle();
 
     TLatex l(0.6,0.943,title.c_str());
-    l.SetNDC();	
+    l.SetNDC();
+    if(invert_colors)
+      l.SetTextColor(kWhite);
     l.SetTextSize(0.045);
     l.SetTextFont(132);
     l.DrawLatex(0.48+max(0.,0.32-l.GetXsize()),0.947,title.c_str());

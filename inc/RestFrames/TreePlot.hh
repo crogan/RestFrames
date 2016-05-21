@@ -56,16 +56,16 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    void SetFrameTree(const RestFrame& frame);
+    void SetTree(const RestFrame& frame);
+    void SetTree(const Group& group);
+    
     void AddJigsaws(const RestFrames::RFList<Jigsaw>& jigsaws);
     void AddJigsaw(const Jigsaw& jigsaw);
-    
-    void SetGroupTree(const Group& group);
 
     void Draw(const string& name = "",
 	      const string& title = "",
-	      bool invert_node_color = false,
-	      bool invert_bkg_color  = false);
+	      bool invert_colors  = false,
+	      bool invert_node_colors = false);
     
   private:
     TreeType m_Type;
@@ -109,8 +109,8 @@ namespace RestFrames {
     void FillGroupTreeMap(int irow, const State& state);
     void FillJigsawLink(const Jigsaw& jigsaw);
 
-    void SetColors(bool invert_node_color,
-		   bool invert_bkg_color);
+    void SetColors(bool invert_bkg_color,
+		   bool invert_node_color);
     
     vector<TreePlotNode*> m_TreeNodes;
     vector<TreePlotLink*> m_TreeLinks;

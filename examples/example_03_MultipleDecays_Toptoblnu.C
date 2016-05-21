@@ -34,7 +34,7 @@
 using namespace RestFrames;
 
 void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
-
+  
   // set particle masses and widths
   double mtop = 173.;
   double wtop = 2.5;
@@ -135,10 +135,10 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
 
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
-  treePlot->SetFrameTree(LAB_Gen);
+  treePlot->SetTree(LAB_Gen);
   treePlot->Draw("GenTree", "Generator Tree");
 
-  treePlot->SetFrameTree(LAB_Mt);
+  treePlot->SetTree(LAB_Mt);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
   
@@ -148,8 +148,8 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   const HistPlotCategory& cat_minMt = histPlot->GetNewCategory("minMt", "min M_{t} Reco");
   const HistPlotCategory& cat_minMW = histPlot->GetNewCategory("minMW", "min M_{W} Reco");
 
-  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 210., "[GeV]");
-  const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 110., "[GeV]");
+  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 250., "[GeV]");
+  const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 150., "[GeV]");
   const HistPlotVar& pTt    = histPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
   const HistPlotVar& cosT   = histPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
   const HistPlotVar& cosW   = histPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
@@ -157,18 +157,23 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
   const HistPlotVar& dphiW  = histPlot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
   const HistPlotVar& DcosT  = histPlot->GetNewVar("DcosT","#theta_{t} - #theta_{t}^{gen}", -1., 1.);
   const HistPlotVar& DcosW  = histPlot->GetNewVar("DcosW","#theta_{W} - #theta_{W}^{gen}", -1., 1.);
-  const HistPlotVar& DdphiT = histPlot->GetNewVar("DdphiW","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
+  const HistPlotVar& DdphiT = histPlot->GetNewVar("DdphiT","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
   const HistPlotVar& DdphiW = histPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
-  
-  histPlot->AddPlot(cosT,   cat_minMt+cat_minMW);
+
   histPlot->AddPlot(cosW,   cat_minMt+cat_minMW);
-  histPlot->AddPlot(dphiT,  cat_minMt+cat_minMW);
+  histPlot->AddPlot(cosT,   cat_minMt+cat_minMW, true);
+  histPlot->AddPlot(dphiT,  cat_minMt+cat_minMW, true);
   histPlot->AddPlot(dphiW,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DcosT,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DcosW,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DdphiT, cat_minMt+cat_minMW);
-  histPlot->AddPlot(DdphiW, cat_minMt);
-  histPlot->AddPlot(Mt, MW, cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(DdphiW, cat_minMt+cat_minMW);
+  histPlot->AddPlot(Mt,   MW, cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(MW, cosW, cat_minMt+cat_minMW);
+  histPlot->AddPlot(Mt, cosT, cat_minMt+cat_minMW);
+  histPlot->AddPlot(MW, DcosW, cat_minMt+cat_minMW);
+  histPlot->AddPlot(Mt, DcosT,    cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosT, DcosW, cat_minMt+cat_minMW);
   histPlot->AddPlot(MW,     cat_minMt+cat_minMW+cat_Gen);
   histPlot->AddPlot(Mt,     cat_minMt+cat_minMW+cat_Gen);
 
@@ -179,7 +184,7 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
     LAB_Gen.ClearEvent();                           // clear the gen tree
     double PTt = mtop*gRandom->Rndm();
     LAB_Gen.SetTransverseMomenta(PTt);              // give the Top some Pt
-    double PZt = mtop*(2.*gRandom->Rndm()-1.);
+    double PZt = 100.*mtop*(2.*gRandom->Rndm()-1.);
     LAB_Gen.SetLongitudinalMomenta(PZt);            // give the Top some Pz
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 

@@ -68,11 +68,11 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->SetTree(LAB_G);
   tree_plot->Draw("GenTree", "Generator Tree");
 
   // reco tree
-  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->SetTree(LAB_R);
   tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
 
@@ -90,7 +90,7 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
   if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
 
   // Invisible Jigsaws
-  tree_plot->SetGroupTree(INV);
+  tree_plot->SetTree(INV);
   tree_plot->Draw("InvTree", "InvisibleJigsaws");
   
   // Declare observables for histogram booking

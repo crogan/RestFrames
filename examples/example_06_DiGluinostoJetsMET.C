@@ -197,11 +197,11 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->SetTree(LAB_G);
   tree_plot->Draw("GenTree", "Generator Tree");
 
   // signal reco tree
-  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->SetTree(LAB_R);
   tree_plot->AddJigsaw(ContraBoostJigsaw_R);
   tree_plot->AddJigsaw(HemiJigsaw_R);
   tree_plot->AddJigsaw(CaHemiJigsaw_R);
@@ -209,15 +209,15 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree");
 
   // background reco tree
-  tree_plot->SetFrameTree(LAB_B);
+  tree_plot->SetTree(LAB_B);
   tree_plot->Draw("BkgRecoTree", "Background Reconstruction Tree");
 
   // Invisible Jigsaws
-  tree_plot->SetGroupTree(INV_R);
+  tree_plot->SetTree(INV_R);
   tree_plot->Draw("InvTree", "Invisible Objects Jigsaws");
 
   // Visible Jigsaws
-  tree_plot->SetGroupTree(VIS_R);
+  tree_plot->SetTree(VIS_R);
   tree_plot->Draw("VisTree", "Visible Objects Jigsaws");
 
   TH2D* h_M12_v_M13 = new TH2D("h_M12_v_M13","h_M12_v_M13",50,0.,1.,50,0.,1.);

@@ -82,7 +82,7 @@ namespace RestFrames {
     return m_Canvases.size();
   }
 
-  void RFPlot::SetStyle(){
+  void RFPlot::SetStyle(bool invert_colors){
     // For the canvas:
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetCanvasColor(kWhite);
@@ -140,21 +140,43 @@ namespace RestFrames {
     // put tick marks on top and RHS of plots
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
-    
-    const Int_t NRGBs = 5;
-    const Int_t NCont = 28;
 
-    Double_t stops[NRGBs] = { 0.00, 0.5, 0.70, 0.82, 1.00 };
-    Double_t red[NRGBs]   = { 0.00, 0.00, 0.74, 1.00, 1. };
-    Double_t green[NRGBs] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
-    Double_t blue[NRGBs]  = { 0.31, 0.73, 0.08, 0.00, 1.00 };
-    
-    TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
-    gStyle->SetNumberContours(NCont);
-
+    rf_iZPalette = TColor::CreateGradientColorTable(5, rf_zcolor_is, rf_zcolor_ir,
+						    rf_zcolor_ig, rf_zcolor_ib,
+						    rf_NZPalette);
+    rf_ZPalette = TColor::CreateGradientColorTable(5, rf_zcolor_s, rf_zcolor_r,
+						   rf_zcolor_g, rf_zcolor_b,
+						   rf_NZPalette);
     gStyle->cd();
   }
 
+  void RFPlot::SetZPalette(bool invert_colors){
+    if(rf_ZPalette <= 0)
+      SetStyle();
+    
+    int palette[rf_NZPalette];
+    if(invert_colors){
+      for(int i = 0; i < rf_NZPalette; i++)
+	palette[i] = rf_iZPalette + i;
+    } else {
+      for(int i = 0; i < rf_NZPalette; i++)
+	palette[i] = rf_ZPalette + i;
+    }
+    gStyle->SetPalette(rf_NZPalette, palette);
+  }
+  
+  const int RFPlot::rf_NZPalette = 28;
+  int RFPlot::rf_ZPalette  = 0;
+  int RFPlot::rf_iZPalette = 0;
+  double RFPlot::rf_zcolor_s[5] = { 0.00, 0.50, 0.70, 0.82, 1.00 };
+  double RFPlot::rf_zcolor_r[5] = { 0.00, 0.00, 0.74, 1.00, 1.00 };
+  double RFPlot::rf_zcolor_g[5] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
+  double RFPlot::rf_zcolor_b[5] = { 0.31, 0.73, 0.08, 0.00, 1.00 };
+  double RFPlot::rf_zcolor_is[5] = { 0.00, 0.15, 0.35, 0.60, 1.00 };
+  double RFPlot::rf_zcolor_ir[5] = { 1.00, 1.00, 0.74, 0.00, 0.00 };
+  double RFPlot::rf_zcolor_ig[5] = { 0.90, 0.70, 0.82, 0.61, 0.00 };
+  double RFPlot::rf_zcolor_ib[5] = { 0.70, 0.00, 0.08, 0.73, 0.31 };
+  
   const TColor RFPlot::rf_blue0(7000,0.749,0.78,0.933);
   const TColor RFPlot::rf_blue1(7001,0.424,0.467,0.651);
   const TColor RFPlot::rf_blue2(7002,0.255,0.302,0.522);

@@ -196,19 +196,19 @@ void example_05_DiToptoblnu(string output_name = "output_05.root"){
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot->SetFrameTree(LAB_G);
+  tree_plot->SetTree(LAB_G);
   tree_plot->Draw("GenTree", "Generator Tree");
   
   // reco tree
-  tree_plot->SetFrameTree(LAB_R);
+  tree_plot->SetTree(LAB_R);
   tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
   // Invisible Jigsaw tree
-  tree_plot->SetGroupTree(INV_R);
+  tree_plot->SetTree(INV_R);
   tree_plot->Draw("InvTree", "Invisible Jigsaws");
 
   // Visible Jigsaw tree
-  tree_plot->SetGroupTree(B_R);
+  tree_plot->SetTree(B_R);
   tree_plot->Draw("VisTree", "Visible Jigsaws");
 
   DecayRecoFrame *T[2], *W[2];

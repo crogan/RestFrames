@@ -167,10 +167,10 @@ void example_07(string output_name = "output_example_07.root"){
 
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
-  treePlot->SetFrameTree(LAB_Gen);
+  treePlot->SetTree(LAB_Gen);
   treePlot->Draw("GenTree", "Generator Tree");
 
-  treePlot->SetFrameTree(LAB);
+  treePlot->SetTree(LAB);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
   // Declare observables for histogram booking
