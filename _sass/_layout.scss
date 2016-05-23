@@ -90,10 +90,11 @@
 		@include span-columns(12);
 	}
 	@include media($large) {
-		@include span-columns(7);
+		@include span-columns(12);
 		ul {
-			position: absolute;
+			/*position: absolute;*/  
 			right: 0;
+			padding: (.45 * $masthead-height) 0; // fourth the height to center vertically
 		}
 	}
 	.home,
