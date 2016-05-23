@@ -1,18 +1,34 @@
 ---
-RestFrames: Particle Physics Event Analysis Library {#mainpage}
+RestFrames: HEP Event Analysis Library {#mainpage}
 =================================
 Developed by Christopher Rogan (crogan@cern.ch)
 
-Copyright (c) 2014-2015, Christopher Rogan
+Copyright (c) 2014-2016, Christopher Rogan
 
 Installation 
 ---
 
-To make the shared library _libRestFrames.so_ simply do:
+To build and install **RestFrames** simply cd to the `RestFrames` home
+directory and do:
 
-    >$ make
-	
-which will create _lib/libRestFrames.so_
+	>$ ./configure
+	>$ make
+	>$ make install
+
+Note: the above commands will attempt to install **RestFrames** in
+your `/usr/local` area. If you do not have write permission for this
+area, or would like to install **RestFrames** somewhere else, you can
+replace the `>$ ./configure` step above with:
+
+	>$ ./configure --prefix=your_path_here
+
+For example, you can simply install **RestFrames** in your current
+directory:
+
+	>$ ./configure --prefix=$PWD
+
+See the `RestFrames/INSTALL` file for more details and options about configuring
+and installing **RestFrames**.
 
 Examples 
 ---
@@ -22,8 +38,11 @@ that can be run from the ROOT command line as macros. In order
 to run these example, you must first set the RestFrames environmental
 variables and library path:
 
-    >$ source setup.sh
+    >$ source setup_RestFrames.sh(csh)
 
 Example macros can then be run from the ROOT command line by typing:
 
-    root [0] .x macros/example_macro.C++
+    root [0] .x examples/example_macro.C++
+
+A description of each of the example macros can be found in
+the [examples](/examples/) page.

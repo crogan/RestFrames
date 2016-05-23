@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_03_MultipleDecays_Toptoblnu.C
+///  \file   example_03.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -33,7 +33,7 @@
 
 using namespace RestFrames;
 
-void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
+void example_03(const string& output_name = "output_example_03.root"){
   
   // set particle masses and widths
   double mtop = 173.;
@@ -250,7 +250,7 @@ void example_03_MultipleDecays_Toptoblnu(string output_name = "output_03.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_03_MultipleDecays_Toptoblnu();
+  example_03();
   return 0;
 }
 #endif

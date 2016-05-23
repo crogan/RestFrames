@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2015, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_02_InvisibleJigsaws_Wtolnu.C
+///  \file   example_02.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -33,7 +33,7 @@
 
 using namespace RestFrames;
 
-void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
+void example_02(const string& output_name = "output_example_02.root"){
 
   double mW = 81.;
   int Ngen = 100000;
@@ -159,7 +159,7 @@ void example_02_InvisibleJigsaws_Wtolnu(string output_name = "output_02.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_02_InvisibleJigsaws_Wtolnu();
+  example_02();
   return 0;
 }
 #endif
