@@ -1,42 +1,49 @@
-port: 3000
-#baseurl: /RestFrames
-baseurl: 
-url: www.RestFrames.com
-root: /
-lsi: false
-permalink: /:year/:month/:day/:title.html
-# paginate: 50
-markdown: kramdown
-# enables SmartyPants (nice curly quotation marks, em/en dashes, elipses, etc):
-#rdiscount:
-#  extensions: [smart]
-# Since GH pages override this to "true", we test this value to see if we are running locally
-safe: false
+# Site wide configuration
 
-defaults:
-  -
-    scope:
-      path: "examples"
-      type: "posts"
-    values:
-      layout: example
-      author: "Christopher Rogan"
-      category: "examples"
-  -
-    scope:
-      path: "news"
-      type: "posts"
-    values:
-      layout: post
-      author: "Christopher Rogan"
-      category: "news"
-  -
-    scope:
-      path: "doc"
-      type: "pages"
-    values:
-      layout: page
-      author: "Christopher Rogan"
-      listme: true
 
-# include: [".well-known"]
+title: RestFrames
+description: "HEP Event Analysis Library"
+logo: RestFrames_icon_120x120.png # 120x120 px default image used for Twitter summary card
+teaser: RestFrames_icon_400x250.png # 400x250 px default teaser image used in image archive grid
+locale: en
+url:
+# url: http://RestFrames.com
+
+# Jekyll configuration
+
+sass:
+  sass_dir: _sass
+  style: compressed
+permalink: /:categories/:title/
+kramdown:
+  toc_levels: 1..2
+highlighter: rouge
+gems:
+  - jekyll-sitemap
+  - jekyll-gist
+
+
+# Octopress configuration
+
+# Default extensions
+post_ext: md
+page_ext: md
+
+# Found in _templates/
+post_layout: article
+page_layout: article
+
+# Format titles with titlecase?
+titlecase: true
+
+
+# Site owner
+owner:
+  name: Christopher Rogan
+  web: http://RestFrames.com
+  email: christophersrogan@gmail.com
+  bio: "~physicist"
+  avatar: bio-photo.jpg # 160x160 px image for author byline
+
+
+exclude: ["lib", "config.rb", ".sass-cache", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "*.sublime-project", "*.sublime-workspace", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "node_modules", "Gruntfile.js", "package.json"]

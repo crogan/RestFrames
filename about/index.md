@@ -1,11 +1,12 @@
 ---
-layout: page
-title: About RestFrames
+layout: home
+title: "About RestFrames"
+modified:
+excerpt: ""
+tags: []
+image:
+  feature: about_jigsaw.jpg
+
 ---
 
-The *RestFrames* website/documentation/software package is still under
-contruction but will be up-and-running soon. In the meantime, feel
-free to grab the development branch version from
-[Downloads]({{site.baseurl}}/download), follow the build intructions and start playing.
-
-
+About **RestFrames** under construction.

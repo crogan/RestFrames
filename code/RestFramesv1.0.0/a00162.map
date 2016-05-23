@@ -1,0 +1,9 @@
+<map id="RestFrames::CombinatoricState" name="RestFrames::CombinatoricState">
+<area shape="rect" id="node2" href="$a00043.html" title="RestFrames::State" alt="" coords="738,99,870,124"/>
+<area shape="rect" id="node3" href="$a00032.html" title="Base class for all RestFrame package objects. " alt="" coords="392,43,542,68"/>
+<area shape="rect" id="node4" href="$a00038.html" title="RestFrames::RFLog" alt="" coords="57,43,199,68"/>
+<area shape="rect" id="node5" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrame \&gt;" alt="" coords="397,92,537,131"/>
+<area shape="rect" id="node6" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrame, RFList\&lt; RestFrame \&gt; \&gt;" alt="" coords="5,92,250,131"/>
+<area shape="rect" id="node7" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::VisibleState \&gt;" alt="" coords="707,155,901,193"/>
+<area shape="rect" id="node8" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::VisibleState,\l RFList\&lt; RestFrames::VisibleState \&gt; \&gt;" alt="" coords="343,155,591,207"/>
+</map>

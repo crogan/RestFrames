@@ -1,0 +1,26 @@
+# Site navigation links
+
+- title: About
+  url: /about/
+  excerpt: what's RestFrames?
+  image: about_jigsaw_400x250.jpg
+
+- title: Download
+  url: /downloads/
+  excerpt: get a copy
+  image: blue_jigsaw_400x250.jpg
+
+- title: Examples
+  url: /examples/
+  excerpt: example decay trees and analysis code
+  image: ../examples/trees/examples.gif
+
+- title: Code
+  url: /code/RestFramesv1.0.0/
+  excerpt: browse the source
+  image: examples_jigsaw_400x250.jpg
+
+- title: News
+  url: /news/
+  excerpt: what's happening?
+  image: news_jigsaw_400x250.jpg

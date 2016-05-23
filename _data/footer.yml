@@ -1,0 +1,16 @@
+# Footer navigation links
+
+- title: About
+  url: /about/
+
+- title: Download
+  url: /downloads/
+
+- title: Examples
+  url: /examples/
+
+- title: Code
+  url: /code/RestFramesv1.0.0/
+
+- title: News
+  url: /news/

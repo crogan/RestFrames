@@ -1,13 +1,12 @@
-<header>
-      <h1 class="logo" onclick="document.location.href='/{{site.baseurl}}';"><a
-        href="{{site.baseurl}}/"><img src="{{site.baseurl}}/res/RestFrames_logo.png" width="380"
-        height="75" alt="LOGO"></a></h1>
+ <a href="{{ site.url }}/" class="site-title">
+    <img src="{{ site.url }}/images/RestFrames_logo.png" width="360"
+        height="60" alt="LOGO"></a>
+
+<header id="masthead">
+  <div class="inner-wrap">
     
-      <ul class="navigation">
-        <li><a href="{{site.baseurl}}/about/"{% if page.url contains "/about/" %}class="active"{% endif %}>About</a></li>
-        <li><a href="{{site.baseurl}}/download/"{% if page.url contains "/download/" %}class="active"{% endif %} title="Download">Download</a></li>
-	<li><a href="{{site.baseurl}}/RestFramesv1.0.0/"{% if page.url contains "/RestFramesv1.0.0/" %}class="active"{% endif %} title="Code">Code</a></li>
-	<br><li><a href="{{site.baseurl}}/examples/"{% if page.url contains "/examples/" %}class="active"{% endif %} title="RestFrames examples">Examples</a></li>
-	<li><a href="{{site.baseurl}}/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %}>Archive</a></li>
-      </ul>
-</header>
+    <nav role="navigation" class="menu top-menu">
+        {% include navigation.html %}
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->

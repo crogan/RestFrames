@@ -1,0 +1,12 @@
+<map id="RestFrames::VisibleState" name="RestFrames::VisibleState">
+<area shape="rect" id="node2" href="$a00043.html" title="RestFrames::State" alt="" coords="608,96,740,121"/>
+<area shape="rect" id="node11" href="$a00011.html" title="RestFrames::Group" alt="" coords="896,61,1034,87"/>
+<area shape="rect" id="node3" href="$a00032.html" title="Base class for all RestFrame package objects. " alt="" coords="343,43,492,68"/>
+<area shape="rect" id="node4" href="$a00038.html" title="RestFrames::RFLog" alt="" coords="57,43,199,68"/>
+<area shape="rect" id="node5" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrame \&gt;" alt="" coords="348,97,488,136"/>
+<area shape="rect" id="node6" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrame, RFList\&lt; RestFrame \&gt; \&gt;" alt="" coords="5,97,250,136"/>
+<area shape="rect" id="node7" href="$a00049.html" title="RestFrames::VisibleRecoFrame" alt="" coords="1626,63,1836,88"/>
+<area shape="rect" id="node8" href="$a00047.html" title="RestFrames::VisibleFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="1398,51,1577,89"/>
+<area shape="rect" id="node9" href="$a00028.html" title="RestFrames::Reconstruction\lFrame" alt="" coords="1158,51,1349,89"/>
+<area shape="rect" id="node10" href="$a00030.html" title="Base class for all Frame objects. " alt="" coords="921,12,1009,37"/>
+</map>

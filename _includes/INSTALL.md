@@ -1,7 +1,7 @@
 Installation 
 ---
 
-To build and install **RestFrames** simply cd to the *RestFrames* home
+To build and install **RestFrames** simply cd to the `RestFrames` home
 directory and do:
 
 	>$ ./configure
@@ -9,9 +9,9 @@ directory and do:
 	>$ make install
 
 Note: the above commands will attempt to install **RestFrames** in
-your */usr/local* area. If you do not have write permission for this
+your `/usr/local` area. If you do not have write permission for this
 area, or would like to install **RestFrames** somewhere else, you can
-replace the *./configure* step above with:
+replace the `>$ ./configure` step above with:
 
 	>$ ./configure --prefix=your_path_here
 
@@ -20,7 +20,7 @@ directory:
 
 	>$ ./configure --prefix=$PWD
 
-See the *INSTALL* file for more details and options about configuring
+See the `RestFrames/INSTALL` file for more details and options about configuring
 and installing **RestFrames**.
 
 Examples 
@@ -38,4 +38,4 @@ Example macros can then be run from the ROOT command line by typing:
     root [0] .x examples/example_macro.C++
 
 A description of each of the example macros can be found in
-the [examples section](/examples/).
+the [examples](/examples/) page.
