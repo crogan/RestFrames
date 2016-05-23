@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: examples/example_05_DiToptoblnu.C Source File</title>
+<title>RestFrames: examples/example_05.C Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,6 +23,26 @@
 </script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="extrastyle.css" rel="stylesheet" type="text/css"/>
+<link rel="shortcut icon" href="../../faviconit/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="../../faviconit/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="../../faviconit/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="../../faviconit/favicon-160.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../faviconit/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="../../faviconit/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../faviconit/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../faviconit/favicon-16.png">
+    <link rel="apple-touch-icon" href="../../faviconit/favicon-57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../faviconit/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../faviconit/favicon-72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../../faviconit/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../../faviconit/favicon-60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../../faviconit/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../faviconit/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../../faviconit/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../faviconit/favicon-180.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="../../faviconit/favicon-144.png">
+    <meta name="msapplication-config" content="../../faviconit/browserconfig.xml">
 </head>
 <body>
 <myheader_background>
@@ -102,12 +122,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">example_05_DiToptoblnu.C</div>  </div>
+<div class="title">example_05.C</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00059.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//</span></div>
@@ -141,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00152.html">std</a>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00151.html">RestFrames</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> example_05_DiToptoblnu(<span class="keywordtype">string</span> output_name = <span class="stringliteral">&quot;output_05.root&quot;</span>){</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> example_05(<span class="keywordtype">string</span> output_name = <span class="stringliteral">&quot;output_example_05.root&quot;</span>){</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  SetLogPrint(LogVerbose,<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="comment">//SetLogPrint(LogDebug,true);</span></div>
@@ -577,7 +597,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor"># ifndef __CINT__ // main function for stand-alone compilation</span></div>
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="keywordtype">int</span> main(){</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  example_05_DiToptoblnu();</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  example_05();</div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;}</div>
 <div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="preprocessor">#endif</span></div>
@@ -604,7 +624,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun May 22 2016 22:53:57 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

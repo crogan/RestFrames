@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: examples/example_01_basics_Ztoll.C Source File</title>
+<title>RestFrames: examples/example_01.C Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,6 +23,26 @@
 </script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="extrastyle.css" rel="stylesheet" type="text/css"/>
+<link rel="shortcut icon" href="../../faviconit/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="../../faviconit/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="../../faviconit/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="../../faviconit/favicon-160.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../faviconit/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="../../faviconit/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../faviconit/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../faviconit/favicon-16.png">
+    <link rel="apple-touch-icon" href="../../faviconit/favicon-57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../faviconit/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../faviconit/favicon-72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../../faviconit/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../../faviconit/favicon-60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../../faviconit/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../faviconit/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../../faviconit/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../faviconit/favicon-180.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="../../faviconit/favicon-144.png">
+    <meta name="msapplication-config" content="../../faviconit/browserconfig.xml">
 </head>
 <body>
 <myheader_background>
@@ -102,10 +122,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">example_01_basics_Ztoll.C</div>  </div>
+<div class="title">example_01.C</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00055.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
@@ -129,26 +149,117 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00152.html">std</a>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00151.html">RestFrames</a>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> example_01_basics_Ztoll(){</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> example_01(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output_name = <span class="stringliteral">&quot;output_example_01.root&quot;</span>){</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  cout &lt;&lt; <span class="stringliteral">&quot;We&#39;re analyzing some stuff!&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"># ifndef __CINT__ // main function for stand-alone compilation</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">int</span> main(){</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  example_01_basics_Ztoll();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">double</span> mZ = 90.;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span> Ngen = 100000;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">// Set up toy generation and event analysis trees:</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="a00023.html">LabGenFrame</a> LAB_G(<span class="stringliteral">&quot;LAB_G&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00008.html">DecayGenFrame</a> Z_G(<span class="stringliteral">&quot;Z_G&quot;</span>,<span class="stringliteral">&quot;Z&quot;</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00048.html">VisibleGenFrame</a> Lp_G(<span class="stringliteral">&quot;Lp_G&quot;</span>,<span class="stringliteral">&quot;#it{l}^{+}&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00048.html">VisibleGenFrame</a> Lm_G(<span class="stringliteral">&quot;Lm_G&quot;</span>,<span class="stringliteral">&quot;#it{l}^{-}&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  LAB_G.SetChildFrame(Z_G);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  Z_G.AddChildFrame(Lp_G);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  Z_G.AddChildFrame(Lm_G);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">if</span>(!LAB_G.InitializeTree()) cout &lt;&lt; <span class="stringliteral">&quot;Problem with generator tree&quot;</span> &lt;&lt; endl; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  Z_G.SetMass(mZ);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span>(!LAB_G.InitializeAnalysis()) cout &lt;&lt; <span class="stringliteral">&quot;Problem with generator tree&quot;</span> &lt;&lt; endl; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="a00024.html">LabRecoFrame</a> LAB(<span class="stringliteral">&quot;LAB&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="a00009.html">DecayRecoFrame</a> Z(<span class="stringliteral">&quot;Z&quot;</span>,<span class="stringliteral">&quot;Z&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="a00049.html">VisibleRecoFrame</a> Lp(<span class="stringliteral">&quot;Lp&quot;</span>,<span class="stringliteral">&quot;#it{l}^{+}&quot;</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="a00049.html">VisibleRecoFrame</a> Lm(<span class="stringliteral">&quot;Lm&quot;</span>,<span class="stringliteral">&quot;#it{l}^{-}&quot;</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  LAB.SetChildFrame(Z);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  Z.AddChildFrame(Lp);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  Z.AddChildFrame(Lm);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span>(!LAB.InitializeTree()) cout &lt;&lt; <span class="stringliteral">&quot;Problem with reconstruction tree&quot;</span> &lt;&lt; endl; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="a00044.html">TreePlot</a>* tree_plot = <span class="keyword">new</span> <a class="code" href="a00044.html">TreePlot</a>(<span class="stringliteral">&quot;TreePlot&quot;</span>,<span class="stringliteral">&quot;TreePlot&quot;</span>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">// generator tree</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  tree_plot-&gt;SetTree(LAB_G);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  tree_plot-&gt;Draw(<span class="stringliteral">&quot;GenTree&quot;</span>, <span class="stringliteral">&quot;Generator Tree&quot;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">// reco tree</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  tree_plot-&gt;SetTree(LAB);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  tree_plot-&gt;Draw(<span class="stringliteral">&quot;RecoTree&quot;</span>, <span class="stringliteral">&quot;Reconstruction Tree&quot;</span>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordflow">if</span>(!LAB.InitializeAnalysis()) cout &lt;&lt; <span class="stringliteral">&quot;Problem with jigsaws&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">// Declare observables for histogram booking</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="a00012.html">HistPlot</a>* hist_plot = <span class="keyword">new</span> <a class="code" href="a00012.html">HistPlot</a>(<span class="stringliteral">&quot;HistPlot&quot;</span>,<span class="stringliteral">&quot;Z #rightarrow #it{l}^{+} #it{l}^{-}&quot;</span>); </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00014.html">HistPlotVar</a>&amp; MZ     = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;MZ&quot;</span>, <span class="stringliteral">&quot;M_{Z}&quot;</span>, 85., 90., <span class="stringliteral">&quot;[GeV]&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00014.html">HistPlotVar</a>&amp; cosZ   = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;cosZ&quot;</span>,<span class="stringliteral">&quot;cos #theta_{Z}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00014.html">HistPlotVar</a>&amp; dphiZ  = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;dphiZ&quot;</span>, <span class="stringliteral">&quot;#Delta #phi_{Z}&quot;</span>, 0., 2.*acos(-1.));</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  hist_plot-&gt;AddPlot(MZ);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  hist_plot-&gt;AddPlot(cosZ);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  hist_plot-&gt;AddPlot(dphiZ);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  hist_plot-&gt;AddPlot(cosZ, MZ);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> igen = 0; igen &lt; Ngen; igen++){</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span>(igen%(Ngen/10) == 0) cout &lt;&lt; <span class="stringliteral">&quot;Generating event &quot;</span> &lt;&lt; igen &lt;&lt; <span class="stringliteral">&quot; of &quot;</span> &lt;&lt; Ngen &lt;&lt; endl;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">// generate event</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    LAB_G.ClearEvent();                             <span class="comment">// clear the gen tree</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">double</span> PTZ = mZ*gRandom-&gt;Rndm();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    LAB_G.SetTransverseMomenta(PTZ);                <span class="comment">// give the Z some Pt</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">double</span> PzZ = mZ*(2.*gRandom-&gt;Rndm()-1.);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    LAB_G.SetLongitudinalMomenta(PzZ);              <span class="comment">// give the Z some Pz</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    LAB_G.AnalyzeEvent();                           <span class="comment">// generate a new event</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">// analyze event</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    LAB.ClearEvent();                             <span class="comment">// clear the reco tree</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    Lp.SetLabFrameFourVector(Lp_G.GetFourVector()); <span class="comment">// Set lepton 4-vec</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    Lm.SetLabFrameFourVector(Lm_G.GetFourVector()); <span class="comment">// Set lepton 4-vec</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    LAB.AnalyzeEvent();                           <span class="comment">// analyze the event</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="comment">// calculate observables</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    MZ    = Z.GetMass();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    cosZ  = Z.GetCosDecayAngle();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    dphiZ = LAB.GetDeltaPhiDecayPlanes(Z);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    hist_plot-&gt;Fill();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  hist_plot-&gt;Draw();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  hist_plot-&gt;WriteOutput(output_name);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  hist_plot-&gt;WriteHist(output_name);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  tree_plot-&gt;WriteOutput(output_name);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor"># ifndef __CINT__ // main function for stand-alone compilation</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">int</span> main(){</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  example_01();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00024_html"><div class="ttname"><a href="a00024.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00083_source.html#l00046">LabRecoFrame.hh:46</a></div></div>
+<div class="ttc" id="a00044_html"><div class="ttname"><a href="a00044.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00052">TreePlot.hh:52</a></div></div>
+<div class="ttc" id="a00023_html"><div class="ttname"><a href="a00023.html">RestFrames::LabGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00043">LabGenFrame.hh:43</a></div></div>
+<div class="ttc" id="a00009_html"><div class="ttname"><a href="a00009.html">RestFrames::DecayRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00068_source.html#l00045">DecayRecoFrame.hh:45</a></div></div>
 <div class="ttc" id="a00090_html"><div class="ttname"><a href="a00090.html">RestFrames.hh</a></div></div>
+<div class="ttc" id="a00014_html"><div class="ttname"><a href="a00014.html">RestFrames::HistPlotVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00073_source.html#l00042">HistPlotVar.hh:42</a></div></div>
+<div class="ttc" id="a00012_html"><div class="ttname"><a href="a00012.html">RestFrames::HistPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00071_source.html#l00044">HistPlot.hh:44</a></div></div>
+<div class="ttc" id="a00049_html"><div class="ttname"><a href="a00049.html">RestFrames::VisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00105_source.html#l00043">VisibleRecoFrame.hh:43</a></div></div>
 <div class="ttc" id="a00152_html"><div class="ttname"><a href="a00152.html">std</a></div></div>
+<div class="ttc" id="a00008_html"><div class="ttname"><a href="a00008.html">RestFrames::DecayGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00067_source.html#l00045">DecayGenFrame.hh:45</a></div></div>
 <div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="ttc" id="a00048_html"><div class="ttname"><a href="a00048.html">RestFrames::VisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00043">VisibleGenFrame.hh:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun May 22 2016 22:53:57 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
