@@ -16,6 +16,6 @@ Download the most recent **RestFrames** source code
 Go to the directory where you would like to download **RestFrames**
 and get the latest version from github.com:
 
-	>$ git clone https://github.com/crogan/RestFrames .
+	>$ git clone https://github.com/crogan/RestFrames RestFrames
 
 {% include INSTALL.md %}
