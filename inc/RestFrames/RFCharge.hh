@@ -30,6 +30,8 @@
 #ifndef RFCharge_HH
 #define RFCharge_HH
 
+#include <cstdlib>
+
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -39,22 +41,63 @@ namespace RestFrames {
 
   public:
     RFCharge(const RFCharge& charge);
-    RFCharge(int charge);
+    RFCharge(int charge = 0);
     RFCharge(int charge_num, int charge_den);
     ~RFCharge();
 
-    // void operator=(const RFCharge& charge);
-    // bool operator==(int key) const;
-    // bool operator==(const RFKey& key) const;
-    // int GetKey() const;
-    // bool IsSame(const RFKey& key) const;
+    int GetNumerator() const;
+    int GetDenominator() const;
+
+    bool operator==(const RFCharge& val) const;
+    bool operator==(int val) const;
+
+    bool operator!=(const RFCharge& val) const;
+    bool operator!=(int val) const;
+
+    void operator=(const RFCharge& val);
+    void operator=(int val);
+
+    RFCharge operator+(const RFCharge& val) const;
+    RFCharge operator+(int val) const;
+
+    RFCharge operator-(const RFCharge& val) const;
+    RFCharge operator-(int val) const;
+
+    RFCharge operator*(const RFCharge& val) const;
+    RFCharge operator*(int val) const;
+
+    RFCharge operator/(const RFCharge& val) const;
+    RFCharge operator/(int val) const;
+
+    RFCharge& operator+=(const RFCharge& val);
+    RFCharge& operator+=(int val);
+
+    RFCharge& operator-=(const RFCharge& val);
+    RFCharge& operator-=(int val);
+
+    RFCharge& operator*=(const RFCharge& val);
+    RFCharge& operator*=(int val);
+
+    RFCharge& operator/=(const RFCharge& val);
+    RFCharge& operator/=(int val);
+
+    RFCharge operator-();
+
+    operator double() const;
 
   private:
+    bool m_Sign;
     int m_ChargeNum;
     int m_ChargeDen;
 
+    void Simplify();
+
   };
 
+  RFCharge operator*(int val1, const RFCharge& val2);
+  RFCharge operator/(int val1, const RFCharge& val2);
+
+  int gcd(int x, int y);
 }
 
 #endif
