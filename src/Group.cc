@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   Group.cc
@@ -33,13 +33,12 @@
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/State.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   int Group::m_class_key = 0;
 
-  Group::Group(const string& sname, const string& stitle)
+  Group::Group(const std::string& sname, 
+	       const std::string& stitle)
     : RFBase(sname, stitle, Group::m_class_key++)
   {
     m_Log.SetSource("Group "+GetName());
@@ -173,7 +172,7 @@ namespace RestFrames {
 	if(state.GetNFrames() != 1){
 	  m_Log << LogWarning;
 	  m_Log << "Cannot find Jigsaw to Resolve State for frames:";
-	  m_Log << endl << "   " << Log(state.GetListFrames());
+	  m_Log << std::endl << "   " << Log(state.GetListFrames());
 	  m_Log << LogEnd;
 	  return false; 
 	}
@@ -204,9 +203,9 @@ namespace RestFrames {
       return false;
     
     m_Log << LogVerbose;
-    m_Log << "Found Jigsaw to resolve State:" << endl; 
-    m_Log << " Frames:" << endl << "   ";
-    m_Log << Log(state.GetListFrames()) << endl;
+    m_Log << "Found Jigsaw to resolve State:" << std::endl; 
+    m_Log << " Frames:" << std::endl << "   ";
+    m_Log << Log(state.GetListFrames()) << std::endl;
     m_Log << " Jigsaw:" << Log(jigsawSolutionPtr);
     m_Log << LogEnd;
     InitializeJigsaw(*jigsawSolutionPtr);
@@ -284,7 +283,7 @@ namespace RestFrames {
     
     if(!(frames == match_frames)){
       m_Log << LogWarning;
-      m_Log << "Unable to find States corresponding to Frames: " << endl;
+      m_Log << "Unable to find States corresponding to Frames: " << std::endl;
       m_Log << Log(frames) << LogEnd;
       SetMind(false);
       return RFList<State>();

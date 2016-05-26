@@ -1,7 +1,7 @@
 RestFramesincludedir=$(includedir)/RestFrames
 
 RestFramesinclude_HEADERS = RestFrames_LinkDef.h RestFrames.hh\
-	RFBase.hh RFKey.hh RFList.hh RFLog.hh RFPlot.hh\
+	RFBase.hh RFKey.hh RFList.hh RFLog.hh RFPlot.hh RFCharge.hh\
 	TreePlot.hh TreePlotNode.hh TreePlotLink.hh\
 	HistPlot.hh HistPlotVar.hh HistPlotCategory.hh\
 	RestFrame.hh ReconstructionFrame.hh GeneratorFrame.hh\

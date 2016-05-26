@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   VisibleFrame.cc
@@ -31,14 +31,13 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
   ///////////////////////////////////////////////
   // VisibleFrame class methods
   ///////////////////////////////////////////////
   template <class T> 
-  VisibleFrame<T>::VisibleFrame(const string& sname, const string& stitle) 
+  VisibleFrame<T>::VisibleFrame(const std::string& sname, 
+				const std::string& stitle) 
     : T(sname, stitle)
   {
     T::m_Type = kVisibleFrame;

@@ -31,15 +31,14 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // LabFrame class
   ///////////////////////////////////////////////
   template <class T> 
-  LabFrame<T>::LabFrame(const string& sname, const string& stitle)
+  LabFrame<T>::LabFrame(const std::string& sname, 
+			const std::string& stitle)
     : T(sname, stitle)
   {
     T::m_Type = kLabFrame;
@@ -84,7 +83,7 @@ namespace RestFrames {
     T::m_Log << "Initializing tree skeleton...";
     T::m_Log << LogEnd;
 
-    vector<RFKey> keys;
+    std::vector<RFKey> keys;
     if(T::IsCircularTree(keys)){
       T::m_Log << LogWarning;
       T::m_Log << "   Tree is circular in construction";

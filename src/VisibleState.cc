@@ -31,11 +31,10 @@
 #include "RestFrames/VisibleRecoFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
-  VisibleState::VisibleState(const string& sname, const string& stitle)
+  VisibleState::VisibleState(const std::string& sname, 
+			     const std::string& stitle)
     : State(sname, stitle) 
   {
     Init();

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   SelfAssemblingRecoFrame.cc
@@ -33,14 +33,13 @@
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/CombinatoricState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // SelfAssemblingRecoFrame class
   ///////////////////////////////////////////////
-  SelfAssemblingRecoFrame::SelfAssemblingRecoFrame(const string& sname, const string& stitle)
+  SelfAssemblingRecoFrame::SelfAssemblingRecoFrame(const std::string& sname, 
+						   const std::string& stitle)
     : DecayRecoFrame(sname,stitle)
   {
     m_RType = RDSelfAssembling;
@@ -115,9 +114,9 @@ namespace RestFrames {
     // new Visible States
     m_VisibleStates.Clear();
     // new Frames associated with States
-    vector<RestFrame*> frames;
+    std::vector<RestFrame*> frames;
     // States' four-vector
-    vector<TLorentzVector> Ps; 
+    std::vector<TLorentzVector> Ps; 
 
     // clear unassembled lists
     m_ChildFrames_UnAssembled.Clear();
@@ -180,7 +179,9 @@ namespace RestFrames {
     m_IsAssembled = true;
   }
 
-  void SelfAssemblingRecoFrame::AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps){
+  void SelfAssemblingRecoFrame::AssembleRecursive(RestFrame& frame, 
+						  std::vector<RestFrame*>& frames, 
+						  std::vector<TLorentzVector>& Ps){
     int Ninput = frames.size();
     if(Ninput <= 2){
       for(int i = 0; i < Ninput; i++) frame.AddChildFrame(*frames[i]);
@@ -237,8 +238,8 @@ namespace RestFrames {
 	}
       }
     }
-    vector<RestFrame*> child_frames[2];
-    vector<TLorentzVector> child_Ps[2];
+    std::vector<RestFrame*> child_frames[2];
+    std::vector<TLorentzVector> child_Ps[2];
     TLorentzVector hem[2];
     for(int i = 0; i < 2; i++){
       hem[i].SetPxPyPzE(0.,0.,0.,0.);
@@ -297,15 +298,16 @@ namespace RestFrames {
     for(int i = 0; i < N; i++) m_VisibleFrames[i].Clear();
   }
 
-  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewDecayFrame(const string& sname, const string& stitle){
+  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewDecayFrame(const std::string& sname, 
+								 const std::string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
     }
     char strn[10];
     sprintf(strn,"%d",m_Ndecay+1);
-    string name  = sname+"_"+string(strn);
-    string title = "#left("+stitle+"#right)_{"+string(strn)+"}";
+    std::string name  = sname+"_"+std::string(strn);
+    std::string title = "#left("+stitle+"#right)_{"+std::string(strn)+"}";
     DecayRecoFrame* framePtr = new DecayRecoFrame(name, title);
     
     m_DecayFrames.Add(*framePtr);
@@ -314,15 +316,16 @@ namespace RestFrames {
     return *framePtr;
   }
 
-  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewVisibleFrame(const string& sname, const string& stitle){
+  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewVisibleFrame(const std::string& sname, 
+								   const std::string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
     }
     char strn[10];
     sprintf(strn,"%d",m_Nvisible+1);
-    string name  = sname+"_"+string(strn);
-    string title = "#left("+stitle+"#right)_{"+string(strn)+"}";
+    std::string name  = sname+"_"+std::string(strn);
+    std::string title = "#left("+stitle+"#right)_{"+std::string(strn)+"}";
     VisibleRecoFrame* framePtr = new VisibleRecoFrame(name, title);
     
     m_VisibleFrames.Add(*framePtr);

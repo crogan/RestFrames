@@ -35,7 +35,7 @@
 
 using namespace RestFrames;
 
-void example_07(string output_name = "output_example_07.root"){
+void example_07(std::string output_name = "output_example_07.root"){
 
   // set particle masses and widths [GeV]
   double mX1 = 100.;
@@ -95,7 +95,7 @@ void example_07(string output_name = "output_example_07.root"){
   Hb_Gen.SetWidth(wH);
   
   if(LAB_Gen.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +159,7 @@ void example_07(string output_name = "output_example_07.root"){
   X1X1_contra.AddInvisibleFrame(X1b, 1);
 
   if(LAB.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analysis" << endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized analysis" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +175,7 @@ void example_07(string output_name = "output_example_07.root"){
 
   // Declare observables for histogram booking
   HistPlot* histPlot = new HistPlot("Plots", 
-				    string("#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}") +
+				    std::string("#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}") +
 				    "#rightarrow Z(#it{l}#it{l}) #tilde{#chi}_{1}^{ 0}"+
 				    "H(#gamma #gamma) #tilde{#chi}_{1}^{ 0}"); 
 
@@ -185,7 +185,7 @@ void example_07(string output_name = "output_example_07.root"){
   const HistPlotVar& HX2a   = histPlot->GetNewVar("HX2a", "H_{2, 1}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 800., "[GeV]");
   const HistPlotVar& HX2b   = histPlot->GetNewVar("HX2b", "H_{2, 1}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 800., "[GeV]");
   const HistPlotVar& pTX2X2 = histPlot->GetNewVar("pTX2X2",
-						  string("p_{T #tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}^{ lab}") +
+						  std::string("p_{T #tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}^{ lab}") +
 						  " / m_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 0., 1.);
   const HistPlotVar& cosZ   = histPlot->GetNewVar("cosZ","cos #theta_{Z}", -1., 1.);
   const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H}", -1., 1.);
@@ -220,8 +220,8 @@ void example_07(string output_name = "output_example_07.root"){
   // (relative to X2 mass via gamma) - to be replaced
   TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((max(Ngen,10))/10) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%((std::max(Ngen,10))/10) == 0) 
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << std::endl;
 
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree

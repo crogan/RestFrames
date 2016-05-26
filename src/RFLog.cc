@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFLog.cc
@@ -32,19 +32,17 @@
 #include "RestFrames/RFLog.hh"
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class RFBase;
 
   // default RFLog parameters
-  map<RestFrames::LogType,bool> RFLog::m_PrintMap = InitPrintMap();
-  ostream* RFLog::m_Ostr = &cerr;
+  std::map<RestFrames::LogType,bool> RFLog::m_PrintMap = InitPrintMap();
+  std::ostream* RFLog::m_Ostr = &std::cerr;
   bool RFLog::m_Color = true;
   int RFLog::m_NMAX = 100;
 
-  RFLog::RFLog(const string& source, LogType def_type)
+  RFLog::RFLog(const std::string& source, LogType def_type)
     : m_DefType(def_type)
   {
     Init();
@@ -76,8 +74,8 @@ namespace RestFrames {
     m_ColorMap[LogError]    = "\x1b[31m";
   }
 
-  map<LogType,bool> InitPrintMap(){
-    map<LogType,bool> m;
+  std::map<LogType,bool> InitPrintMap(){
+    std::map<LogType,bool> m;
     m[LogVerbose]  = false;
     m[LogDebug]    = false;
     m[LogInfo]     = true;
@@ -86,8 +84,8 @@ namespace RestFrames {
     return m;
   }
 
-  string RFLog::GetFormattedSource() const {
-    string source_name = m_Source;
+  std::string RFLog::GetFormattedSource() const {
+    std::string source_name = m_Source;
     if (source_name.size() > 22){
       source_name = source_name.substr( 0, 22 - 3 );
       source_name += "...";
@@ -95,17 +93,17 @@ namespace RestFrames {
     return source_name;
   }
   
-  string RFLog::GetFormattedMessage(const string& message) {
-    string output = "";
+  std::string RFLog::GetFormattedMessage(const std::string& message) {
+    std::string output = "";
     int N = message.size();
     double OFF = 18;
     if(N-OFF > m_NMAX){
       int Ncut = (N-OFF)/m_NMAX;
-      string::size_type previous_pos = 0;
+      std::string::size_type previous_pos = 0;
       for(int i = 0; i <= Ncut; i++){
 	int off = m_NMAX;
 	if(i == 0) off += OFF;
-	string line = message.substr(previous_pos, off);
+	std::string line = message.substr(previous_pos, off);
 	if(i > 0){
 	  if(m_Color)
 	    output += m_ColorMap[m_CurType]+"<...>\x1b[0m ...";
@@ -123,11 +121,11 @@ namespace RestFrames {
   }
 
   void RFLog::Send(){
-    string source_name = GetFormattedSource();
-    string message = m_Message.str();
-    string::size_type previous_pos = 0, current_pos = 0;
+    std::string source_name = GetFormattedSource();
+    std::string message = m_Message.str();
+    std::string::size_type previous_pos = 0, current_pos = 0;
     if(m_PrintMap[m_CurType] && m_Ostr){
-      string prefix;
+      std::string prefix;
       if(m_Color)
 	prefix = m_ColorMap[m_CurType]+"<"+m_TypeMap[m_CurType]+">";
       else
@@ -140,12 +138,12 @@ namespace RestFrames {
 	prefix +="\x1b[0m";
       while (true) {
 	current_pos = message.find( '\n', previous_pos );
-	string line = message.substr( previous_pos, current_pos - previous_pos );
+	std::string line = message.substr( previous_pos, current_pos - previous_pos );
 	
-	ostringstream message_to_send;
+	std::ostringstream message_to_send;
 	message_to_send.setf(std::ios::adjustfield, std::ios::left); 
 	line = GetFormattedMessage(prefix+line);
-	message_to_send << line << endl;
+	message_to_send << line << std::endl;
 	
 	*m_Ostr << message_to_send.str();
 	m_Ostr->flush();
@@ -179,16 +177,21 @@ namespace RestFrames {
       m_Message << listPtr->Get(i).GetName() << " ";
   }
 
+  void RFLog::SetSource(const std::string& source){ 
+    m_Source = source; 
+  }
+
   void SetLogPrint(LogType type, bool print){
     RFLog::m_PrintMap[type] = print;
   }
 
   void SetLogPrint(bool print){
-    for (map<LogType, bool>::iterator m = RFLog::m_PrintMap.begin() ; m != RFLog::m_PrintMap.end(); ++m)
+    for (std::map<LogType, bool>::iterator m = RFLog::m_PrintMap.begin(); 
+	 m != RFLog::m_PrintMap.end(); ++m)
       m->second = (m->second && print);
   }
 
-  void SetLogStream(ostream* ostr){
+  void SetLogStream(std::ostream* ostr){
     if(ostr) RFLog::m_Ostr = ostr;
   }
 

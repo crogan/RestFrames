@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   CombinatoricJigsaw.cc
@@ -31,15 +31,14 @@
 #include "RestFrames/MinMassesCombJigsaw.hh"
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // CombinatoricJigsaw class
   ///////////////////////////////////////////////
 
-  CombinatoricJigsaw::CombinatoricJigsaw(const string& sname,const string& stitle)
+  CombinatoricJigsaw::CombinatoricJigsaw(const std::string& sname,
+					 const std::string& stitle)
     : Jigsaw(sname, stitle)
   {
     Init();
@@ -168,7 +167,7 @@ namespace RestFrames {
   CombinatoricState& CombinatoricJigsaw::GetNewChildState(){
     char strn[10];
     sprintf(strn,"%d",GetNChildren());
-    string name = GetName()+"_"+string(strn);
+    std::string name = GetName()+"_"+std::string(strn);
     CombinatoricState* statePtr = new CombinatoricState(name, name);
     AddDependent(statePtr);
     return *statePtr;
@@ -268,7 +267,7 @@ namespace RestFrames {
     int N_comb = 1;
     for(int i = 0; i < Ninput; i++) N_comb *= Nout;
    
-    vector<int> Nhem;
+    std::vector<int> Nhem;
     for(int i = 0; i < Nout; i++)
       Nhem.push_back(0);
     

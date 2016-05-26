@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   VisibleGenFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/VisibleFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class VisibleGenFrame : public VisibleFrame<GeneratorFrame> {
   public:
-    VisibleGenFrame(const string& sname, const string& stitle);
+    VisibleGenFrame(const std::string& sname, const std::string& stitle);
     VisibleGenFrame();
     virtual ~VisibleGenFrame();
 

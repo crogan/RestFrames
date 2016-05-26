@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   DecayRecoFrame.cc
@@ -29,8 +29,6 @@
 
 #include "RestFrames/DecayRecoFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -38,7 +36,8 @@ namespace RestFrames {
   // Class for an intermediate state
   // inheriting from DecayFrame and RFrame
   ///////////////////////////////////////////////
-  DecayRecoFrame::DecayRecoFrame(const string& sname, const string& stitle) 
+  DecayRecoFrame::DecayRecoFrame(const std::string& sname, 
+				 const std::string& stitle) 
     : DecayFrame<ReconstructionFrame>(sname,stitle)
   {
     Init();

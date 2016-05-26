@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   TreePlot.cc
@@ -43,15 +43,20 @@
 #include "RestFrames/VisibleRecoFrame.hh"
 #include "RestFrames/InvisibleRecoFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
+
+  using std::string;
+  using std::vector;
+  using std::map;
+  using std::max;
+  using std::min;
 
   ///////////////////////////////////////////////
   // TreePlot class methods
   // class which can plot RestFrame trees
   ///////////////////////////////////////////////
-  TreePlot::TreePlot(const string& sname, const string& stitle)
+  TreePlot::TreePlot(const std::string& sname, 
+		     const std::string& stitle)
     : RFPlot(sname, stitle){
     m_Type = kVanillaTree;
     m_GroupPtr = nullptr;
@@ -98,12 +103,13 @@ namespace RestFrames {
     m_FrameColorMap.clear();
   }
 
-  TCanvas* TreePlot::GetNewCanvas(const string& name, const string& title){
-    string sname, stitle;
+  TCanvas* TreePlot::GetNewCanvas(const std::string& name, 
+				  const std::string& title){
+    std::string sname, stitle;
     if(name == ""){
       char strn[10];
       sprintf(strn,"%d",GetNCanvases()+1);
-      sname = GetName()+string(strn);
+      sname = GetName()+std::string(strn);
     } else {
       sname = name;
     }
@@ -117,7 +123,7 @@ namespace RestFrames {
     return can;
   }
   
-  void TreePlot::Draw(const string& name, const string& title,
+  void TreePlot::Draw(const std::string& name, const std::string& title,
 		      bool invert_bkg_color,
 		      bool invert_node_color){
     if(m_Type == kVanillaTree) 
@@ -200,7 +206,8 @@ namespace RestFrames {
       if(m_Ncol[irow] > NcolMAX) NcolMAX = m_Ncol[irow];
     }
     m_Node_R = min(min(0.85/double(2*NcolMAX+1),0.85*0.85/double(2*m_Nrow+1)),0.12);
-    if(m_Type == kGroupTree) m_Node_R = min(min(0.65/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
+    if(m_Type == kGroupTree) 
+      m_Node_R = min(min(0.65/double(2*NcolMAX+1),0.85/double(2*m_Nrow+1)),0.12);
   }
 
   void TreePlot::ConvertNodeCoordinates(vector<TreePlotNode*>& nodes){
@@ -578,7 +585,7 @@ namespace RestFrames {
       lat->SetTextFont(132);
       double Xsize = lat->GetXsize();
       double Ysize = lat->GetYsize();
-      double scale = max( Xsize/(6.*m_Node_R), 1.75*Ysize/(fabs(y0-y1)-2.*m_Node_R) );
+      double scale = max(Xsize/(6.*m_Node_R),1.75*Ysize/(fabs(y0-y1)-2.*m_Node_R));
       lat->SetTextSize(1./scale);
       lat->SetTextColor(icolor_text);
       
@@ -675,7 +682,8 @@ namespace RestFrames {
       lat->SetNDC();
       lat->SetTextSize(1.);
       lat->SetTextFont(132);
-      double Rnorm = sqrt(lat->GetXsize()*lat->GetXsize()+lat->GetYsize()*lat->GetYsize());
+      double Rnorm = 
+	sqrt(lat->GetXsize()*lat->GetXsize()+lat->GetYsize()*lat->GetYsize());
       lat->SetTextSize(1.8*m_Node_R/Rnorm);
       lat->SetTextColor(icolor_text);
       m_CanvasPtr->cd();
@@ -685,10 +693,10 @@ namespace RestFrames {
     }
   }
 
-  string TreePlot::GetStateTitle(const State& state){
+  std::string TreePlot::GetStateTitle(const State& state){
     RFList<RestFrame> frames = state.GetListFrames();
     int Nf = frames.GetN();
-    string title = "";
+    std::string title = "";
     if(Nf > 2) title.append("#splitline{");
     title.append(frames.Get(0).GetTitle());
     for(int f = 1; f < Nf; f++){
@@ -701,8 +709,9 @@ namespace RestFrames {
     return title;
   }
 
-  string TreePlot::GetSetTitle(const string& set, const string& index){
-    string title = "#left{#left(";
+  std::string TreePlot::GetSetTitle(const std::string& set, 
+				    const std::string& index){
+    std::string title = "#left{#left(";
     title.append(set);
     title.append("#right)_{");
     title.append(index);
@@ -711,7 +720,7 @@ namespace RestFrames {
   }
 
   void TreePlot::DrawFrameTypeLegend(){
-    vector<string> frame_title;
+    vector<std::string> frame_title;
     frame_title.push_back("Lab State");
     frame_title.push_back("Decay States");
     frame_title.push_back("Visible States");
@@ -765,7 +774,7 @@ namespace RestFrames {
   }
 
   void TreePlot::DrawJigsawLegend(){
-    vector<string> ititle;
+    vector<std::string> ititle;
     vector<int> icolor_line;
     vector<int> icolor_text;
     int Nj = m_Jigsaws.GetN();
@@ -802,7 +811,7 @@ namespace RestFrames {
     leg->Draw();
   }
 
-  void TreePlot::DrawTitle(const string& title){
+  void TreePlot::DrawTitle(const std::string& title){
     TLatex* lat = new TLatex(0.0,0.0,title.c_str());
     lat->SetTextAlign(22);
     lat->SetNDC();

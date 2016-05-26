@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   ReconstructionFrame.cc
@@ -33,14 +33,13 @@
 #include "RestFrames/Group.hh"
 #include "RestFrames/VisibleState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // ReconstructionFrame class methods
   ///////////////////////////////////////////////
-  ReconstructionFrame::ReconstructionFrame(const string& sname, const string& stitle)
+  ReconstructionFrame::ReconstructionFrame(const std::string& sname, 
+					   const std::string& stitle)
     : RestFrame(sname, stitle)
   {
     Init();
@@ -170,7 +169,7 @@ namespace RestFrames {
 	    State& state = groups[g].GetChildState(frames[f]);
 	    if(!state){
 	      m_Log << LogWarning;
-	      m_Log << "Unable to get State associated with Group Frame: " << endl;
+	      m_Log << "Unable to get State associated with Group Frame: " << std::endl;
 	      m_Log << " Frame:" << Log(frames[f]);
 	      m_Log << " Group:" << Log(groups[g]) << LogEnd;
 	      return false;

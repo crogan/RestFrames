@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFBase.hh
@@ -58,8 +58,6 @@
 #include "RestFrames/RFLog.hh"
 #include "RestFrames/RFList.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ////////////////////////////////////////////////////////////////////
@@ -78,7 +76,7 @@ namespace RestFrames {
     /// \param sname    class instance name used for log statements
     /// \param stitle   class instance title used in figures
     ////////////////////////////////////////////////////////////////////
-    RFBase(const string& sname, const string& stitle, int key);
+    RFBase(const std::string& sname, const std::string& stitle, int key);
 
     RFBase();
     
@@ -107,10 +105,10 @@ namespace RestFrames {
     RFKey GetKey() const;
 
     /// \brief Returns object name 
-    string GetName() const;
+    std::string GetName() const;
     
     /// \brief Returns object title 
-    string GetTitle() const;
+    std::string GetTitle() const;
     
     /// \brief Tests whether key is the same as this
     bool IsSame(const RFKey& key) const;
@@ -136,7 +134,7 @@ namespace RestFrames {
     void Print(LogType type = LogVerbose) const;
 
     /// \brief String of information associated with object
-    virtual string PrintString(LogType type = LogVerbose) const;
+    virtual std::string PrintString(LogType type = LogVerbose) const;
 
     /// \brief pointer to RFBase object owned by this one
     void AddDependent(RFBase* dep);
@@ -152,20 +150,20 @@ namespace RestFrames {
     virtual bool IsSoundMind() const;
     virtual bool IsSoundSpirit() const;
 
-    void UnSoundBody(const string& function) const;
-    void UnSoundMind(const string& function) const;
-    void UnSoundSpirit(const string& function) const;
+    void UnSoundBody(const std::string& function) const;
+    void UnSoundMind(const std::string& function) const;
+    void UnSoundSpirit(const std::string& function) const;
 
     RFBase* m_This;
 
   private:
-    string m_Name;
-    string m_Title;
+    std::string m_Name;
+    std::string m_Title;
     RFKey m_Key;
     mutable bool m_Body;       
     mutable bool m_Mind;       
     mutable bool m_Spirit; 
-    vector<RFBase*> m_Owns;
+    std::vector<RFBase*> m_Owns;
 
     static RFBase m_Empty;
 

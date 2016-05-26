@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleGroup.cc
@@ -32,15 +32,14 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // InvisibleGroup class
   ///////////////////////////////////////////////
 
-  InvisibleGroup::InvisibleGroup(const string& sname, const string& stitle) : 
+  InvisibleGroup::InvisibleGroup(const std::string& sname, 
+				 const std::string& stitle) : 
     Group(sname, stitle)
   {
     m_Type = kInvisibleGroup;
@@ -73,7 +72,7 @@ namespace RestFrames {
   }
 
   InvisibleState& InvisibleGroup::InitializeParentState(){
-    string name = GetName()+"_parent";
+    std::string name = GetName()+"_parent";
     return *(new InvisibleState(name, name));
   }
 

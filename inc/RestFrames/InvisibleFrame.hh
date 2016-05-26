@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleFrame.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class RestFrame;
@@ -45,7 +43,7 @@ namespace RestFrames {
   class InvisibleFrame : public T {
   public:
     //constructor and destructor
-    InvisibleFrame(const string& sname, const string& stitle);
+    InvisibleFrame(const std::string& sname, const std::string& stitle);
     virtual ~InvisibleFrame();
 
   protected:

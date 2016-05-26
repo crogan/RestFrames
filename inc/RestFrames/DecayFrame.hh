@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   DecayFrame.hh
@@ -32,14 +32,12 @@
 
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   template <class T>
   class DecayFrame : public T {
   public:
-    DecayFrame(const string& sname, const string& stitle);
+    DecayFrame(const std::string& sname, const std::string& stitle);
     virtual ~DecayFrame();
 
   protected:

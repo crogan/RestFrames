@@ -35,7 +35,8 @@ namespace RestFrames {
 
   HistPlotCategory::HistPlotCategory() : RFBase() {}
 
-  HistPlotCategory::HistPlotCategory(const string& name, const string& title)
+  HistPlotCategory::HistPlotCategory(const std::string& name, 
+				     const std::string& title)
     : RFBase(name, title, HistPlotCategory::m_class_key++) {}
   
   HistPlotCategory::~HistPlotCategory() {}

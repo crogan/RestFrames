@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlotVar.hh
@@ -32,8 +32,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,9 +40,9 @@ namespace RestFrames {
   class HistPlotVar {
 
   public:
-    HistPlotVar(const string& name, const string& title, 
+    HistPlotVar(const std::string& name, const std::string& title, 
 		double minval, double maxval,
-		const string& unit);
+		const std::string& unit);
     ~HistPlotVar();
 
     bool operator==(const HistPlotVar& var) const;
@@ -55,15 +53,15 @@ namespace RestFrames {
 
     double GetVal() const;
 
-    string GetName() const;
+    std::string GetName() const;
 
-    string GetTitle() const;
+    std::string GetTitle() const;
 
     double GetMin() const;
 
     double GetMax() const;
 
-    string GetUnit() const;
+    std::string GetUnit() const;
 
   protected:
     int m_Key;
@@ -71,9 +69,9 @@ namespace RestFrames {
   private:
     static int m_class_key;
 
-    string m_Name;
-    string m_Title;
-    string m_Unit;
+    std::string m_Name;
+    std::string m_Title;
+    std::string m_Unit;
     double m_Min;
     double m_Max;
     mutable double m_Val;

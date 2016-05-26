@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   LabRecoFrame.cc
@@ -33,14 +33,13 @@
 #include "RestFrames/Group.hh"
 #include "RestFrames/VisibleRecoFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // LabRecoFrame class
   ///////////////////////////////////////////////
-  LabRecoFrame::LabRecoFrame(const string& sname, const string& stitle)
+  LabRecoFrame::LabRecoFrame(const std::string& sname, 
+			     const std::string& stitle)
     : LabFrame<ReconstructionFrame>(sname, stitle)
   {
     Init();
@@ -133,7 +132,7 @@ namespace RestFrames {
       }
       if(!has_group){
 	m_Log << LogWarning;
-	m_Log << "Found InvisibleRecoFrame without an assigned group: " << endl;
+	m_Log << "Found InvisibleRecoFrame without an assigned group: " << std::endl;
 	m_Log << Log(frames[f]) << LogEnd;
 	return false;
       }
@@ -156,7 +155,7 @@ namespace RestFrames {
       for(int j = 0; j < Nj; j++)
 	if(!jigsaws[j].InitializeAnalysis()){
 	  m_Log << LogWarning;
-	  m_Log << "Unable to initialize Jigsaw for analysis:" << endl;
+	  m_Log << "Unable to initialize Jigsaw for analysis:" << std::endl;
 	  m_Log << Log(jigsaws[j]) << LogEnd;
 	  return false;
 	}
@@ -169,7 +168,7 @@ namespace RestFrames {
 	Jigsaw& jigsaw = jigsaws[j];
 	if(!jigsaw.InitializeDependancyJigsaws()){
 	  m_Log << LogWarning;
-	  m_Log << "Unable to initialize dependancy Jigsaw list for Jigsaw:" << endl;
+	  m_Log << "Unable to initialize dependancy Jigsaw list for Jigsaw:" << std::endl;
 	  m_Log << Log(jigsaw) << LogEnd;
 	  return false;
 	}
@@ -183,7 +182,7 @@ namespace RestFrames {
       if(!m_TreeJigsaws[j].InitializeJigsawExecutionList(exec_jigsaws)){
 	m_TreeJigsaws.Clear();
 	m_Log << LogWarning;
-	m_Log << "Unable to initialize Jigsaw execution list in Jigsaw:" << endl;
+	m_Log << "Unable to initialize Jigsaw execution list in Jigsaw:" << std::endl;
 	m_Log << Log(m_TreeJigsaws[j]) << LogEnd;
 	return false;
       }
@@ -286,7 +285,7 @@ namespace RestFrames {
       return m_InitStates[m_TreeStates.GetN()];
     char strn[10];
     sprintf(strn,"%d",m_TreeStates.GetN()+1);
-    string name = GetName()+"_"+string(strn);
+    std::string name = GetName()+"_"+std::string(strn);
     VisibleState* statePtr = new VisibleState(name, name);
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);

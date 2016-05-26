@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   GeneratorFrame.cc
@@ -33,14 +33,13 @@
 #include "RestFrames/GeneratorFrame.hh"
 #include "RestFrames/VisibleGenFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // GeneratorFrame class methods
   ///////////////////////////////////////////////
-  GeneratorFrame::GeneratorFrame(const string& sname, const string& stitle) 
+  GeneratorFrame::GeneratorFrame(const std::string& sname, 
+				 const std::string& stitle) 
     : RestFrame(sname, stitle)
   {
     Init();
@@ -76,7 +75,7 @@ namespace RestFrames {
   }
 
   double GeneratorFrame::GetMass() const {
-    return max(m_Mass, 0.);
+    return std::max(m_Mass, 0.);
   }
 
   void GeneratorFrame::AddChildFrame(RestFrame& frame){
@@ -142,7 +141,7 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
-  void GeneratorFrame::SetChildren(const vector<TLorentzVector>& P_children){
+  void GeneratorFrame::SetChildren(const std::vector<TLorentzVector>& P_children){
     int N = P_children.size();
     for(int i = 0; i < N; i++){
       TLorentzVector P = P_children[i];
@@ -223,7 +222,7 @@ namespace RestFrames {
       mass += GetChildFrame(i).GetMinimumMassMCMC();
 
     if(!IsVariableMassMCMC())
-      mass = max(GetMass(),mass);
+      mass = std::max(GetMass(),mass);
 
     return mass;
   }

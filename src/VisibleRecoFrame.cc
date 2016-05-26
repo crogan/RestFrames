@@ -29,28 +29,20 @@
 
 #include "RestFrames/VisibleRecoFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // VisibleRecoFrame class
   ///////////////////////////////////////////////
-  VisibleRecoFrame::VisibleRecoFrame(const string& sname, const string& stitle) 
-    : VisibleFrame<ReconstructionFrame>(sname, stitle)
-  {
-    Init();
-  }
+  VisibleRecoFrame::VisibleRecoFrame(const std::string& sname, 
+				     const std::string& stitle) 
+    : VisibleFrame<ReconstructionFrame>(sname, stitle) {}
 
   VisibleRecoFrame::VisibleRecoFrame() : VisibleFrame<ReconstructionFrame>() {}
  
 
   VisibleRecoFrame::~VisibleRecoFrame(){
    
-  }
-
-  void VisibleRecoFrame::Init(){
-  
   }
 
   VisibleRecoFrame& VisibleRecoFrame::Empty(){

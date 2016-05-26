@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   TreePlotNode.hh
@@ -33,8 +33,6 @@
 #include <string>
 #include "RestFrames/RFList.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class RestFrame;
@@ -48,7 +46,7 @@ namespace RestFrames {
     
     void SetX(double x);
     void SetY(double y);
-    void SetLabel(const string& label);
+    void SetLabel(const std::string& label);
     void SetSquare(bool square);
     void SetFrame(const RestFrame& frame);
     void SetState(const State& state);
@@ -58,7 +56,7 @@ namespace RestFrames {
     double GetY() const;
     bool DoLabel() const;
     bool DoSquare() const;
-    string GetLabel() const;
+    std::string GetLabel() const;
     RestFrame const& GetFrame() const;
     int GetNJigsaws() const;
     RestFrames::RFList<const Jigsaw> GetJigsawList() const;
@@ -67,7 +65,7 @@ namespace RestFrames {
   private:
     double m_X;
     double m_Y;
-    string m_Label;
+    std::string m_Label;
     bool m_DoLabel;
     bool m_DoSquare;
     const RestFrame* m_FramePtr;

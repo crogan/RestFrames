@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   Group.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
  
   class Jigsaw;
@@ -47,7 +45,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class Group : public RFBase {
   public:
-    Group(const string& sname, const string& stitle);
+    Group(const std::string& sname, const std::string& stitle);
     Group();
     virtual ~Group();
 

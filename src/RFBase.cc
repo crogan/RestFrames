@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFBase.cc
@@ -30,10 +30,10 @@
 #include "RestFrames/RestFrames_config.h"
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
+  using std::max;
+  
   ///////////////////////////////////////////////
   // RFBase class methods
   ///////////////////////////////////////////////
@@ -49,7 +49,8 @@ namespace RestFrames {
     m_This = this;
   }
 
-  RFBase::RFBase(const string& sname, const string& stitle, int key)
+  RFBase::RFBase(const std::string& sname, 
+		 const std::string& stitle, int key)
     : m_Log(), m_Key(key) {
     m_Name  = sname;
     m_Title = stitle;
@@ -96,11 +97,11 @@ namespace RestFrames {
     return RFKey(m_Key);
   }
 
-  string RFBase::GetName() const {
+  std::string RFBase::GetName() const {
     return m_Name;
   }
 
-  string RFBase::GetTitle() const {
+  std::string RFBase::GetTitle() const {
     return m_Title;
   }
 
@@ -134,18 +135,18 @@ namespace RestFrames {
   }
 
   void RFBase::Print(LogType type) const {
-    string output = PrintString(type);
+    std::string output = PrintString(type);
     m_Log << type << output << LogEnd;
   }
 
-  string RFBase::PrintString(LogType type) const {
-    string output = "\n";
+  std::string RFBase::PrintString(LogType type) const {
+    std::string output = "\n";
     output += "   Name: "+GetName()+"\n";
     output += "   Title: "+GetTitle()+"\n";
     return output;
   }
 
-  void RFBase::UnSoundBody(const string& function) const {
+  void RFBase::UnSoundBody(const std::string& function) const {
     m_Log << LogWarning;
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"InitializeTree()\" ";
@@ -153,7 +154,7 @@ namespace RestFrames {
     m_Log << LogEnd;
   }
 
-  void RFBase::UnSoundMind(const string& function) const {
+  void RFBase::UnSoundMind(const std::string& function) const {
     m_Log << LogWarning;
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"InitializeAnalysis()\" ";
@@ -161,7 +162,7 @@ namespace RestFrames {
     m_Log << LogEnd;
   }
 
-  void RFBase::UnSoundSpirit(const string& function) const {
+  void RFBase::UnSoundSpirit(const std::string& function) const {
     m_Log << LogWarning;
     m_Log << "Unable to evaluate function \"" << function << "\". ";
     m_Log << "Requires a successful call to \"AnalyzeEvent()\" ";
@@ -188,9 +189,9 @@ namespace RestFrames {
 
   double GetP(double Mp, double Mc1, double Mc2){
     if(Mp <= 0.) return 0.;
-    Mc1 = max(Mc1, 0.);
-    Mc2 = max(Mc2, 0.);
-    return sqrt(max(0., (Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2) )/2./Mp;
+    Mc1 = std::max(Mc1, 0.);
+    Mc2 = std::max(Mc2, 0.);
+    return sqrt(std::max(0., (Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2) )/2./Mp;
   }
 
 }

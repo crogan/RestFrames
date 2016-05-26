@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleRecoFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/InvisibleFrame.hh"
 #include "RestFrames/ReconstructionFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class InvisibleRecoFrame : public InvisibleFrame<ReconstructionFrame> {
   public:
-    InvisibleRecoFrame(const string& sname, const string& stitle);
+    InvisibleRecoFrame(const std::string& sname, const std::string& stitle);
     virtual ~InvisibleRecoFrame();
 
     double GetMinimumMass() const;

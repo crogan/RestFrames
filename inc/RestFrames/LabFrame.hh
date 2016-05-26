@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   LabFrame.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   template <class T>
   class LabFrame : public T {
   public:
-    LabFrame(const string& sname, const string& stitle);
+    LabFrame(const std::string& sname, const std::string& stitle);
     LabFrame();
     virtual ~LabFrame();
 

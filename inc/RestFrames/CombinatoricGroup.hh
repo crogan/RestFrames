@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   CombinatoricGroup.hh
@@ -34,13 +34,11 @@
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/CombinatoricState.hh"
 
-using namespace std;
-
 namespace RestFrames { 
 
   class CombinatoricGroup : public Group {
   public:
-    CombinatoricGroup(const string& sname, const string& stitle);
+    CombinatoricGroup(const std::string& sname, const std::string& stitle);
     CombinatoricGroup();
     virtual ~CombinatoricGroup();
 
@@ -70,8 +68,8 @@ namespace RestFrames {
 	
   protected:
     RestFrames::RFList<VisibleState>    m_Elements;
-    mutable map<const RestFrame*, int>  m_NElementsForFrame;
-    mutable map<const RestFrame*, bool> m_NExclusiveElementsForFrame; 
+    mutable std::map<const RestFrame*, int>  m_NElementsForFrame;
+    mutable std::map<const RestFrame*, bool> m_NExclusiveElementsForFrame; 
 
     virtual CombinatoricState& InitializeParentState();
     virtual CombinatoricState& GetChildState(int i) const;

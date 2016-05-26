@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   CombinatoricState.cc
@@ -32,15 +32,14 @@
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // CombinatoricState class
   ///////////////////////////////////////////////
 
-  CombinatoricState::CombinatoricState(const string& sname, const string& stitle) 
+  CombinatoricState::CombinatoricState(const std::string& sname, 
+				       const std::string& stitle) 
     : State(sname, stitle)
   {
     Init();

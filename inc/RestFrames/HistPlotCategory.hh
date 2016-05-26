@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlotCategory.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   class HistPlotCategory : public RFBase {
 
   public:
-    HistPlotCategory(const string& name, const string& title);
+    HistPlotCategory(const std::string& name, const std::string& title);
     HistPlotCategory();
     ~HistPlotCategory();
 

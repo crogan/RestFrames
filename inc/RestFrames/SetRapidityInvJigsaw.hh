@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   SetRapidityInvJigsaw.hh
@@ -32,17 +32,15 @@
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class SetRapidityInvJigsaw : public InvisibleJigsaw {
   public:
-    SetRapidityInvJigsaw(const string& sname, const string& stitle);
+    SetRapidityInvJigsaw(const std::string& sname, const std::string& stitle);
     SetRapidityInvJigsaw();
     virtual ~SetRapidityInvJigsaw();
 
-    virtual string GetLabel() const { return "Set Invisible Rapidity"; }
+    virtual std::string GetLabel() const { return "Set Invisible Rapidity"; }
 
     virtual void SetAxis(const TVector3& axis);
 

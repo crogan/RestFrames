@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   MinMassesInvJigsaw.cc
@@ -30,15 +30,13 @@
 #include "RestFrames/MinMassesInvJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   //MinMassesInvJigsaw class methods
   ///////////////////////////////////////////////
-  MinMassesInvJigsaw::MinMassesInvJigsaw(const string& sname, 
-					 const string& stitle,
+  MinMassesInvJigsaw::MinMassesInvJigsaw(const std::string& sname, 
+					 const std::string& stitle,
 					 int Npair) : 
     InvisibleJigsaw(sname, stitle, Npair, Npair) {}
 
@@ -72,7 +70,7 @@ namespace RestFrames {
       Mvis += pv.M();
       Pvis += pv;
     }
-    return sqrt(max(0.,Pvis.M2() - Mvis*Mvis + Minv*Minv));
+    return sqrt(std::max(0.,Pvis.M2() - Mvis*Mvis + Minv*Minv));
   }
 
   bool MinMassesInvJigsaw::AnalyzeEvent(){
@@ -82,32 +80,32 @@ namespace RestFrames {
     int N = GetNChildren();
     if(N < 0) SetSpirit(false);
      
-    vector<double> Minv;
-    vector<double> Mvis;
-    vector<TLorentzVector> Pvis;
+    std::vector<double> Minv;
+    std::vector<double> Mvis;
+    std::vector<TLorentzVector> Pvis;
     double MinvTot = 0.;
     double MvisTot = 0.;
     TLorentzVector PvisTot(0.,0.,0.,0.);
     for(int i = 0; i < N; i++){
-      Minv.push_back(max(0., GetChildState(i).GetMinimumMass()));
+      Minv.push_back(std::max(0., GetChildState(i).GetMinimumMass()));
       MinvTot += Minv[i];
       TLorentzVector pv = m_DependancyStates[i].GetFourVector();
-      Mvis.push_back(max(0., pv.M()));
+      Mvis.push_back(std::max(0., pv.M()));
       MvisTot += Mvis[i];
       Pvis.push_back(pv);
       PvisTot += pv;
     }
     TLorentzVector INV = GetParentState().GetFourVector();
-    double Minv2 = max(0.,PvisTot.M2() - 
-		       MvisTot*MvisTot + 
-		       MinvTot*MinvTot);
+    double Minv2 = std::max(0.,PvisTot.M2() - 
+			    MvisTot*MvisTot + 
+			    MinvTot*MinvTot);
     for(int i = 0; i < N-1; i++){
       PvisTot -= Pvis[i];
       MvisTot -= Mvis[i];
       MinvTot -= Minv[i];
-      double Minv2new = max(0.,PvisTot.M2() - 
-			    MvisTot*MvisTot + 
-			    MinvTot*MinvTot);
+      double Minv2new = std::max(0.,PvisTot.M2() - 
+				 MvisTot*MvisTot + 
+				 MinvTot*MinvTot);
       TVector3 Boost = INV.BoostVector();
       INV.Boost(-Boost);
       PvisTot.Boost(-Boost);

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   GeneratorFrame.hh
@@ -33,8 +33,6 @@
 #include <TRandom.h>
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class GeneratorFrame : public RestFrame {
   public:
-    GeneratorFrame(const string& sname, const string& stitle);
+    GeneratorFrame(const std::string& sname, const std::string& stitle);
     GeneratorFrame();
     virtual ~GeneratorFrame();
 
@@ -96,7 +94,7 @@ namespace RestFrames {
     virtual void ResetFrame() {}
     virtual bool GenerateFrame() { return false; }
 
-    void SetChildren(const vector<TLorentzVector>& P_children);
+    void SetChildren(const std::vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();
 
     double GetRandom() const;

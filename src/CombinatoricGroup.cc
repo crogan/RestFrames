@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   CombinatoricGroup.cc
@@ -32,8 +32,6 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -41,7 +39,8 @@ namespace RestFrames {
   // a combinatoric collection of particles
   ///////////////////////////////////////////////
 
-  CombinatoricGroup::CombinatoricGroup(const string& sname,const string& stitle) : 
+  CombinatoricGroup::CombinatoricGroup(const std::string& sname,
+				       const std::string& stitle) : 
     Group(sname, stitle)
   {
     m_Type = kCombinatoricGroup;
@@ -78,7 +77,7 @@ namespace RestFrames {
   void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, 
 					       int N, bool exclusive_N){
     if(!ContainsFrame(frame)) return;
-    m_NElementsForFrame[&frame] = max(0, N);
+    m_NElementsForFrame[&frame] = std::max(0, N);
     m_NExclusiveElementsForFrame[&frame] = exclusive_N;
   }
 
@@ -96,7 +95,7 @@ namespace RestFrames {
   }
 
   CombinatoricState& CombinatoricGroup::InitializeParentState(){
-    string name = GetName()+"_parent";
+    std::string name = GetName()+"_parent";
     return *(new CombinatoricState(name, name));
   }
 
@@ -170,7 +169,7 @@ namespace RestFrames {
       return m_InitStates[m_Elements.GetN()];
     char strn[10];
     sprintf(strn,"%d",m_Elements.GetN()+1);
-    string name = GetName()+"_"+string(strn);
+    std::string name = GetName()+"_"+std::string(strn);
     VisibleState* statePtr = new VisibleState(name,name);
     AddDependent(statePtr);
     m_InitStates.Add(*statePtr);

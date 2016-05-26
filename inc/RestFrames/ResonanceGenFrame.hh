@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   ResonanceGenFrame.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/DecayGenFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -41,7 +39,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class ResonanceGenFrame : public DecayGenFrame {
   public:
-    ResonanceGenFrame(const string& sname, const string& stitle);
+    ResonanceGenFrame(const std::string& sname, const std::string& stitle);
     ResonanceGenFrame();
     virtual ~ResonanceGenFrame();
 
@@ -58,11 +56,11 @@ namespace RestFrames {
 				  double max = -1.) const;
 
   private:
-    static ResonanceGenFrame m_Empty;
     void Init();
     double m_PoleMass;
     double m_Width;
 
+    static ResonanceGenFrame m_Empty;
   };
 
 }

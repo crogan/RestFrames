@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   Jigsaw.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/RFBase.hh"
 #include "RestFrames/Group.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   enum JigsawType { kVanillaJigsaw, kInvisibleJigsaw, 
@@ -45,7 +43,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class Jigsaw : public RFBase {
   public:
-    Jigsaw(const string& sname, const string& stitle);
+    Jigsaw(const std::string& sname, const std::string& stitle);
     Jigsaw();
     
     virtual ~Jigsaw();
@@ -56,10 +54,10 @@ namespace RestFrames {
 
     JigsawType GetType() const { return m_Type; }
 
-    virtual string GetLabel() const { return "Jigsaw"; }
+    virtual std::string GetLabel() const { return "Jigsaw"; }
   
     /// \brief String of information associated with Jigsaw
-    virtual string PrintString(LogType type = LogVerbose) const;
+    virtual std::string PrintString(LogType type = LogVerbose) const;
 
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
@@ -105,10 +103,10 @@ namespace RestFrames {
     void AddChildFrame(RestFrame& frame, int i = 0);
     void AddDependancyFrame(RestFrame& frame, int i = 0);
 
-    vector<RestFrames::RFList<RestFrame> > m_ChildFrames;
+    std::vector<RestFrames::RFList<RestFrame> > m_ChildFrames;
 
-    vector<RestFrames::RFList<State> > m_DependancyStates;
-    vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
+    std::vector<RestFrames::RFList<State> > m_DependancyStates;
+    std::vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
     RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
 
   private:

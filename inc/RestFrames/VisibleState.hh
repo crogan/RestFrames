@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   VisibleState.hh
@@ -32,15 +32,13 @@
 
 #include "RestFrames/State.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class VisibleRecoFrame;
 
   class VisibleState : public State {
   public:
-    VisibleState(const string& sname, const string& stitle);
+    VisibleState(const std::string& sname, const std::string& stitle);
     VisibleState();
     virtual ~VisibleState();
 

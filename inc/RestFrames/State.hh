@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   State.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/RFBase.hh"
 #include "RestFrames/Jigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class RestFrame;
@@ -44,7 +42,7 @@ namespace RestFrames {
 
   class State : public RFBase {
   public:
-    State(const string& sname, const string& stitle);
+    State(const std::string& sname, const std::string& stitle);
     State();
     virtual ~State();
 

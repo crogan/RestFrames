@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   SetMassInvJigsaw.hh
@@ -32,19 +32,17 @@
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class SetMassInvJigsaw : public InvisibleJigsaw {
   public:
-    SetMassInvJigsaw(const string& sname, const string& stitle);
+    SetMassInvJigsaw(const std::string& sname, const std::string& stitle);
     SetMassInvJigsaw();
     virtual ~SetMassInvJigsaw();
 
     virtual void Clear();
     
-    virtual string GetLabel() const { return "Set Invisible Mass"; }
+    virtual std::string GetLabel() const { return "Set Invisible Mass"; }
 
     virtual bool AnalyzeEvent();
 

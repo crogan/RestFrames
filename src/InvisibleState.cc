@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleState.cc
@@ -31,15 +31,14 @@
 #include "RestFrames/InvisibleJigsaw.hh"
 #include "RestFrames/InvisibleRecoFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // InvisibleState class
   ///////////////////////////////////////////////
 
-  InvisibleState::InvisibleState(const string& sname, const string& stitle)
+  InvisibleState::InvisibleState(const std::string& sname, 
+				 const std::string& stitle)
     : State(sname, stitle)
   {
     m_Type = kInvisibleState;

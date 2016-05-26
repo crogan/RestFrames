@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleFrame.cc
@@ -31,17 +31,14 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
-
-  
 
   ///////////////////////////////////////////////
   // InvisibleFrame class
   ///////////////////////////////////////////////
   template <class T>
-  InvisibleFrame<T>::InvisibleFrame(const string& sname, const string& stitle)
+  InvisibleFrame<T>::InvisibleFrame(const std::string& sname, 
+				    const std::string& stitle)
     : T(sname, stitle)
   {
     T::m_Type = kInvisibleFrame;

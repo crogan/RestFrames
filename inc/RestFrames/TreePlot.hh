@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   TreePlot.hh
@@ -35,8 +35,6 @@
 #include "RestFrames/RFPlot.hh"
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class ReconstructionFrame;
@@ -51,7 +49,7 @@ namespace RestFrames {
 
   class TreePlot : public RFPlot {
   public:
-    TreePlot(const string& sname, const string& stitle);
+    TreePlot(const std::string& sname, const std::string& stitle);
     ~TreePlot();
 
     virtual void Clear();
@@ -62,8 +60,8 @@ namespace RestFrames {
     void AddJigsaws(const RestFrames::RFList<Jigsaw>& jigsaws);
     void AddJigsaw(const Jigsaw& jigsaw);
 
-    void Draw(const string& name = "",
-	      const string& title = "",
+    void Draw(const std::string& name = "",
+	      const std::string& title = "",
 	      bool invert_colors  = false,
 	      bool invert_node_colors = false);
     
@@ -71,12 +69,12 @@ namespace RestFrames {
     TreeType m_Type;
   
     int m_Nrow;
-    vector<int> m_Ncol;
+    std::vector<int> m_Ncol;
     double m_Node_R;  
 
     bool m_SelfAssembling;
-    map<const Jigsaw*,int> m_JigsawColorMap;
-    map<FrameType,int> m_FrameColorMap;
+    std::map<const Jigsaw*,int> m_JigsawColorMap;
+    std::map<FrameType,int> m_FrameColorMap;
 
     RestFrames::RFList<const RestFrame> m_Frames;
     RestFrames::RFList<const Jigsaw>    m_Jigsaws;
@@ -90,7 +88,7 @@ namespace RestFrames {
     int m_color_Default_fill;
     int m_color_Text;
     int m_color_Bkg;
-    vector<int> m_color_Leaf;
+    std::vector<int> m_color_Leaf;
     int m_style_Default;
     int m_style_Leaf;
     
@@ -98,8 +96,9 @@ namespace RestFrames {
 
     void InitTreeGrid();
 
-    string GetStateTitle(const State& state);
-    string GetSetTitle(const string& set, const string& index);
+    std::string GetStateTitle(const State& state);
+    std::string GetSetTitle(const std::string& set, 
+			    const std::string& index);
 
     void AddFrame(const RestFrame& frame);
     void FillFrameTree(const RestFrame& frame);
@@ -112,25 +111,26 @@ namespace RestFrames {
     void SetColors(bool invert_bkg_color,
 		   bool invert_node_color);
     
-    vector<TreePlotNode*> m_TreeNodes;
-    vector<TreePlotLink*> m_TreeLinks;
+    std::vector<TreePlotNode*> m_TreeNodes;
+    std::vector<TreePlotLink*> m_TreeLinks;
     void DrawTreeLinks();
     void DrawTreeNodes(bool with_rings = false);
 
-    vector<TreePlotLink*> m_LeafLinks;
+    std::vector<TreePlotLink*> m_LeafLinks;
     void DrawLeafLinks();
 
     void DrawLink(TreePlotLink* linkPtr);
     void DrawNode(TreePlotNode* nodePtr, bool with_rings = false);
 
     void DrawFrameTypeLegend();
-    void DrawTitle(const string& title);
+    void DrawTitle(const std::string& title);
     void DrawJigsawLegend();
 
-    void ConvertNodeCoordinates(vector<TreePlotNode*>& nodesPtr);
+    void ConvertNodeCoordinates(std::vector<TreePlotNode*>& nodesPtr);
 
     int GetJigsawPriority(int Nout, int Ndep) const;
-    TCanvas* GetNewCanvas(const string& name, const string& title);
+    TCanvas* GetNewCanvas(const std::string& name, 
+			  const std::string& title);
   };
 
 }

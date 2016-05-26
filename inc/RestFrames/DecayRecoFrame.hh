@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   DecayRecoFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/DecayFrame.hh"
 #include "RestFrames/ReconstructionFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
    enum RDecayType { RDVanilla, RDSelfAssembling };
@@ -44,7 +42,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class DecayRecoFrame : public DecayFrame<ReconstructionFrame> {
   public:
-    DecayRecoFrame(const string& sname, const string& stitle);
+    DecayRecoFrame(const std::string& sname, const std::string& stitle);
     virtual ~DecayRecoFrame();
 
     bool IsSelfAssemblingFrame() const;

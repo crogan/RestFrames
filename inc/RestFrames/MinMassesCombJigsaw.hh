@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   MinMassesCombJigsaw.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/CombinatoricJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -41,13 +39,13 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class MinMassesCombJigsaw : public CombinatoricJigsaw {
   public:
-    MinMassesCombJigsaw(const string& sname, const string& stitle);
+    MinMassesCombJigsaw(const std::string& sname, const std::string& stitle);
     MinMassesCombJigsaw();
     virtual ~MinMassesCombJigsaw();
 
     virtual void Clear();
 
-    virtual string GetLabel() const { return "Minimize Masses"; }
+    virtual std::string GetLabel() const { return "Minimize Masses"; }
 
     virtual bool AnalyzeEvent();
 
@@ -55,6 +53,7 @@ namespace RestFrames {
 
   protected:
     virtual double EvaluateMetric() const;
+
   private:
     static MinMassesCombJigsaw m_Empty;
 

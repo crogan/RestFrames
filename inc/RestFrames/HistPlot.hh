@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlot.hh
@@ -44,16 +44,16 @@ namespace RestFrames {
   class HistPlot : public RFPlot {
 
   public:
-    HistPlot(const string& sname, const string& stitle);
+    HistPlot(const std::string& sname, const std::string& stitle);
     ~HistPlot();
 
     virtual void Clear();
 
-    HistPlotVar const& GetNewVar(const string& name, const string& title, 
+    HistPlotVar const& GetNewVar(const std::string& name, const std::string& title, 
 				 double minval, double maxval,
-				 const string& unit = "");
+				 const std::string& unit = "");
 
-    HistPlotCategory const& GetNewCategory(const string& name, const string& title);
+    HistPlotCategory const& GetNewCategory(const std::string& name, const std::string& title);
     
     void AddPlot(const HistPlotVar& var, 
 		 RestFrames::RFList<const HistPlotCategory> cats = 
@@ -70,46 +70,47 @@ namespace RestFrames {
 
     void Draw(bool invert_colors = false);
 
-    void SetPlotLabel(const string& label);
+    void SetPlotLabel(const std::string& label);
 
-    void SetPlotTitle(const string& title);
+    void SetPlotTitle(const std::string& title);
 
-    void SetScaleLabel(const string& label);
+    void SetScaleLabel(const std::string& label);
 
     void SetScale(double scale = -1);
 
-    void WriteHist(const string& filename);
+    void WriteHist(const std::string& filename);
 
   private:
-    string m_PlotLabel;
-    string m_PlotTitle;
-    string m_ScaleLabel;
+    std::string m_PlotLabel;
+    std::string m_PlotTitle;
+    std::string m_ScaleLabel;
     double m_Scale;
     bool   m_SetScale;
     
-    vector<TH1D*> m_1DHists;
-    vector<TH2D*> m_2DHists;
-    vector<HistPlotVar*>      m_Vars;
-    vector<HistPlotCategory*> m_Cats;
-    map<const HistPlotCategory*,vector<TH1D*> > m_CatToHist1D;
-    map<const HistPlotCategory*,vector<TH2D*> > m_CatToHist2D;
+    std::vector<TH1D*> m_1DHists;
+    std::vector<TH2D*> m_2DHists;
+    std::vector<HistPlotVar*>      m_Vars;
+    std::vector<HistPlotCategory*> m_Cats;
+    std::map<const HistPlotCategory*,std::vector<TH1D*> > m_CatToHist1D;
+    std::map<const HistPlotCategory*,std::vector<TH2D*> > m_CatToHist2D;
     
-    vector<const HistPlotVar*>                    m_Plot1D_Var;
-    vector<RestFrames::RFList<HistPlotCategory> > m_Plot1D_Cats;
-    vector<bool>                                  m_Plot1D_Color;
-    vector<pair<const HistPlotVar*,
-		const HistPlotVar*> >             m_Plot2D_Vars;
-    vector<const HistPlotCategory*>               m_Plot2D_Cat;
-    vector<bool>                                  m_Plot2D_Color;
+    std::vector<const HistPlotVar*>                    m_Plot1D_Var;
+    std::vector<RestFrames::RFList<HistPlotCategory> > m_Plot1D_Cats;
+    std::vector<bool>                                  m_Plot1D_Color;
+    std::vector<std::pair<const HistPlotVar*,
+			  const HistPlotVar*> >        m_Plot2D_Vars;
+    std::vector<const HistPlotCategory*>               m_Plot2D_Cat;
+    std::vector<bool>                                  m_Plot2D_Color;
 
-    map<TH1D*,const HistPlotVar*>        m_HistToVar;
-    map<TH2D*,pair<const HistPlotVar*,
-		   const HistPlotVar*> > m_HistToVars;
+    std::map<TH1D*,const HistPlotVar*>             m_HistToVar;
+    std::map<TH2D*,std::pair<const HistPlotVar*,
+			     const HistPlotVar*> > m_HistToVars;
 
     void DrawPlot(const HistPlotVar& var, 
 		  const RFList<HistPlotCategory>& cats,
 		  bool invert_colors = false);
-    void DrawPlot(const pair<const HistPlotVar*, const HistPlotVar*>& vars,
+    void DrawPlot(const std::pair<const HistPlotVar*, 
+		  const HistPlotVar*>& vars,
 		  const HistPlotCategory& cat,
 		  bool invert_colors = false);
 

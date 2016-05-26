@@ -32,11 +32,11 @@
 
 #include "RestFrames/RFPlot.hh"
 
-using namespace std;
-
 namespace RestFrames {
   
-  RFPlot::RFPlot(const string& sname, const string& stitle)
+
+  RFPlot::RFPlot(const std::string& sname, 
+		 const std::string& stitle)
     : RFBase(sname, stitle, -1){
     m_Log.SetSource("RFPlot "+GetName());
   }
@@ -57,7 +57,7 @@ namespace RestFrames {
     RFBase::Clear();
   }
 
-  void RFPlot::WriteOutput(const string& filename){
+  void RFPlot::WriteOutput(const std::string& filename){
     int N = m_Canvases.size();
     if(N <= 0) return;
 

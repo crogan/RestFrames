@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   LabGenFrame.cc
@@ -29,14 +29,13 @@
 
 #include "RestFrames/LabGenFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // LabGenFrame class
   ///////////////////////////////////////////////
-  LabGenFrame::LabGenFrame(const string& sname, const string& stitle) : 
+  LabGenFrame::LabGenFrame(const std::string& sname, 
+			   const std::string& stitle) : 
     LabFrame<GeneratorFrame>(sname, stitle)
   {
     m_PT = 0.;
@@ -111,11 +110,11 @@ namespace RestFrames {
   }
   
   void LabGenFrame::SetN_MCMCBurnIn(int N){
-    m_NBurnInMCMC = max(0,N);
+    m_NBurnInMCMC = std::max(0,N);
   }
 
   void LabGenFrame::SetN_MCMCDiscard(int N){
-    m_NDiscardMCMC = max(1,N);
+    m_NDiscardMCMC = std::max(1,N);
   }
 
   bool LabGenFrame::InitializeGenAnalysis(){
@@ -173,7 +172,7 @@ namespace RestFrames {
     P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));
     m_Phi = -1.;
 
-    vector<TLorentzVector> ChildVector;
+    std::vector<TLorentzVector> ChildVector;
     ChildVector.push_back(P);
     SetChildren(ChildVector);
     

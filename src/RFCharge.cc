@@ -1,15 +1,15 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   VisibleGenFrame.cc
+///  \file   RFCharge.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 Jan
+///  \date   2016 May
 ///
 //   This file is part of RestFrames.
 //
@@ -27,43 +27,25 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/VisibleGenFrame.hh"
+#include "RestFrames/RFCharge.hh"
 
 namespace RestFrames {
 
-  ///////////////////////////////////////////////
-  // VisibleGenFrame class
-  ///////////////////////////////////////////////
-  VisibleGenFrame::VisibleGenFrame(const std::string& sname, 
-				   const std::string& stitle) : 
-    VisibleFrame<GeneratorFrame>(sname, stitle) {}
+  RFCharge::RFCharge(const RFCharge& charge) {}
+  RFCharge::RFCharge(int charge) {}
+  RFCharge::RFCharge(int charge_num, int charge_den) {}
+  RFCharge::~RFCharge() {}
 
-  VisibleGenFrame::VisibleGenFrame() : VisibleFrame<GeneratorFrame>() {}
+  // void RFKey::operator=(const RFKey& key){ m_Key = key.GetKey(); }
 
-  VisibleGenFrame::~VisibleGenFrame() {}
+  // bool RFKey::operator==(int key) const { return (m_Key == key); }
 
-  /// \brief Returns empty instance of class
-  VisibleGenFrame& VisibleGenFrame::Empty(){
-    return VisibleGenFrame::m_Empty;
-  }
+  // bool RFKey::operator==(const RFKey& key) const { return (m_Key == key.GetKey()); }
 
-  void VisibleGenFrame::SetMass(double val){
-    if(val < 0.){
-      m_Log << LogWarning;
-      m_Log << "Unable to set mass to negative value ";
-      m_Log << val << ". Setting to zero." << LogEnd;
-      m_Mass = 0.;
-    } else {
-      m_Mass = val;
-    }
-  }
+  // int RFKey::GetKey() const { return m_Key; }
 
-  void VisibleGenFrame::ResetFrame() {}
-
-  bool VisibleGenFrame::GenerateFrame(){ 
-    return true;
-  }
-
-  VisibleGenFrame VisibleGenFrame::m_Empty;
+  // bool RFKey::IsSame(const RFKey& key) const {
+  //   return m_Key == key.GetKey();
+  // }
 
 }

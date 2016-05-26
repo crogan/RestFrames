@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   MinMassesInvJigsaw.hh
@@ -32,19 +32,17 @@
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class MinMassesInvJigsaw : public InvisibleJigsaw {
   public:
-    MinMassesInvJigsaw(const string& sname, 
-		       const string& stitle,
+    MinMassesInvJigsaw(const std::string& sname, 
+		       const std::string& stitle,
 		       int Npair);
     MinMassesInvJigsaw();
     ~MinMassesInvJigsaw();
 
-    virtual string GetLabel() const { return "Min Masses Sq."; }
+    virtual std::string GetLabel() const { return "Min Masses Sq."; }
 
     static MinMassesInvJigsaw& Empty();
 

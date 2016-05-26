@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   MinMassesCombJigsaw.cc
@@ -29,14 +29,13 @@
 
 #include "RestFrames/MinMassesCombJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // MinMassesCombJigsaw class methods
   ///////////////////////////////////////////////
-  MinMassesCombJigsaw::MinMassesCombJigsaw(const string& sname, const string& stitle) : 
+  MinMassesCombJigsaw::MinMassesCombJigsaw(const std::string& sname, 
+					   const std::string& stitle) : 
     CombinatoricJigsaw(sname, stitle) {}
 
   MinMassesCombJigsaw::MinMassesCombJigsaw() : CombinatoricJigsaw() {}
@@ -76,7 +75,7 @@ namespace RestFrames {
       return CombinatoricJigsaw::LoopCombinatoric();
 
     // DO 4 N^3 calculation
-    vector<TLorentzVector> inputs;
+    std::vector<TLorentzVector> inputs;
     for(int i = 0; i < Ninput; i++)
       inputs.push_back(m_InputStates[i].GetFourVector());	
     
@@ -139,7 +138,7 @@ namespace RestFrames {
       GetChildState(ihem).AddElement(m_InputStates[i]);
     }
     if(GetChildState(1).GetFourVector().M() > GetChildState(1).GetFourVector().M()){
-      vector<RFList<VisibleState> > flip;
+      std::vector<RFList<VisibleState> > flip;
       for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
       for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
       for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
@@ -153,7 +152,7 @@ namespace RestFrames {
 
   double MinMassesCombJigsaw::EvaluateMetric() const {
     int N = GetNChildren();
-    vector<TLorentzVector> P;
+    std::vector<TLorentzVector> P;
     for(int i = 0; i < N; i++)
       P.push_back(GetChildState(i).GetFourVector());
     int Nd = m_DependancyStates.size();

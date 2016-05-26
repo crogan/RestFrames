@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   ContraBoostInvJigsaw.hh
@@ -32,17 +32,16 @@
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class ContraBoostInvJigsaw : public InvisibleJigsaw {
   public:
-    ContraBoostInvJigsaw(const string& sname, const string& stitle);
+    ContraBoostInvJigsaw(const std::string& sname, 
+			 const std::string& stitle);
     ContraBoostInvJigsaw();
     ~ContraBoostInvJigsaw();
 
-    virtual string GetLabel() const { return "Contra-boost Invariant"; }
+    virtual std::string GetLabel() const { return "Contra-boost Invariant"; }
 
     static ContraBoostInvJigsaw& Empty();
 

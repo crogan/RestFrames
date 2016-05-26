@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleJigsaw.hh
@@ -34,13 +34,12 @@
 #include "RestFrames/InvisibleGroup.hh"
 #include "RestFrames/InvisibleState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class InvisibleJigsaw : public Jigsaw {
   public:
-    InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis);
+    InvisibleJigsaw(const std::string& sname, const std::string& stitle, 
+		    int Ninv, int Nvis);
     InvisibleJigsaw();
     virtual ~InvisibleJigsaw();
 

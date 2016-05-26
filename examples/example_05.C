@@ -39,14 +39,9 @@
 #include <TF1.h>
 #include "RestFrames/RestFrames.hh"
 
-void setstyle();
-TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title = "", string label = "");
-TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title = "", string label = "");
-
-using namespace std;
 using namespace RestFrames;
 
-void example_05(string output_name = "output_example_05.root"){
+void example_05(std::string output_name = "output_example_05.root"){
   
   SetLogPrint(LogVerbose,true);
   //SetLogPrint(LogDebug,true);
@@ -110,7 +105,7 @@ void example_05(string output_name = "output_example_05.root"){
   if(LAB_G.InitializeAnalysis()){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
-    g_Log << LAB_G.GetName() << endl;
+    g_Log << LAB_G.GetName() << std::endl;
     g_Log << "Ready for event generation" << LogEnd;
   } else
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_G) << LogEnd;								    
@@ -143,7 +138,7 @@ void example_05(string output_name = "output_example_05.root"){
   if(LAB_R.InitializeTree()){
     g_Log << LogInfo;
     g_Log << "Successfully initialized tree from LabFrame ";
-    g_Log << LAB_R.GetName() << endl;
+    g_Log << LAB_R.GetName() << std::endl;
     g_Log << "Ready for Group and Jigsaw initialization" << LogEnd;
   } else
     g_Log << LogError << "Unable to initialize tree from LabFrame: " << Log(LAB_R) << LogEnd;  
@@ -184,7 +179,7 @@ void example_05(string output_name = "output_example_05.root"){
   if(LAB_R.InitializeAnalysis()){
     g_Log << LogInfo;
     g_Log << "...Successfully initialized tree for analysis from LabFrame ";
-    g_Log << LAB_R.GetName() << endl;
+    g_Log << LAB_R.GetName() << std::endl;
     g_Log << "Ready event analysis" << LogEnd;
   } else
     g_Log << LogError << "...Unable to initialize analysis from LabFrame: " << Log(LAB_R) << LogEnd;	
@@ -258,7 +253,7 @@ void example_05(string output_name = "output_example_05.root"){
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    vector<RFKey> B_ID;                      // ID for tracking jets in tree
+    std::vector<RFKey> B_ID;                      // ID for tracking jets in tree
     B_ID.push_back(B_R.AddLabFrameFourVector(Ba_G.GetFourVector()));
     B_ID.push_back(B_R.AddLabFrameFourVector(Bb_G.GetFourVector()));
     La_R.SetLabFrameFourVector(La_G.GetFourVector());
@@ -336,152 +331,6 @@ void example_05(string output_name = "output_example_05.root"){
   tree_plot->WriteOutput(output_name);
 
   g_Log << LogInfo << "Finished" << LogEnd;
-}
-
-TCanvas* Plot_Me(string scan, TH2D* histo, string X, string Y, string title, string label){
-  TCanvas *c1 = new TCanvas(scan.c_str(),scan.c_str(),600,500);
-  c1->Draw();
-  c1->SetGridx();
-  c1->SetGridy();
-  c1->SetLogz();
-
-  if(histo->Integral() > 0.) histo->Scale(1./histo->Integral());
-  
-  histo->Draw("COLZ");
-  histo->GetXaxis()->SetTitle(X.c_str());
-  histo->GetXaxis()->SetTitleOffset(1.24);
-  histo->GetXaxis()->CenterTitle();
-  histo->GetYaxis()->SetTitle(Y.c_str());
-  histo->GetYaxis()->SetTitleOffset(1.11);
-  histo->GetYaxis()->CenterTitle();
-  histo->GetZaxis()->SetTitle("N_{bin} / N_{total}");
-  histo->GetZaxis()->SetTitleOffset(1.5);
-  histo->GetZaxis()->CenterTitle();
-  histo->GetZaxis()->SetRangeUser(0.9*histo->GetMinimum(0.0),1.1*histo->GetMaximum());
-  histo->Draw("COLZ");
-  
-  TLatex l;
-  l.SetTextFont(132);	
-  l.SetNDC();	
-  l.SetTextSize(0.04);
-  l.SetTextFont(132);
-  l.DrawLatex(0.7,0.943,title.c_str());
-  l.SetTextSize(0.04);
-  l.SetTextFont(42);
-  l.DrawLatex(0.15,0.943,"#bf{#it{RestFrames}} Toy Event Generation");
-  l.SetTextSize(0.045);
-  l.SetTextFont(132);
-  l.DrawLatex(0.75,0.06,label.c_str());
-	
-  return c1;
-}
-TCanvas* Plot_Me(string scan, TH1D* histo, string X, string title, string label){
-  TCanvas *c1 = new TCanvas(scan.c_str(),scan.c_str(),700,500);
-  c1->SetRightMargin(0.05);
-  c1->Draw();
-  c1->SetGridx();
-  c1->SetGridy();
-  
-  if(histo->Integral() > 0.) histo->Scale(1./histo->Integral());
-
-  histo->SetFillColor(kBlue);
-  histo->SetFillStyle(3001);
-  histo->Draw();
-  histo->GetXaxis()->SetTitle(X.c_str());
-  histo->GetXaxis()->SetTitleOffset(1.27);
-  histo->GetXaxis()->CenterTitle();
-  histo->GetYaxis()->SetTitle("a. u.");
-  histo->GetYaxis()->SetTitleOffset(1.13);
-  histo->GetYaxis()->CenterTitle();
-  histo->GetYaxis()->SetRangeUser(0.,1.1*histo->GetMaximum());
-
-  TLatex l;
-  l.SetTextFont(132);	
-  l.SetNDC();	
-  l.SetTextSize(0.04);
-  l.SetTextFont(132);
-  l.DrawLatex(0.6,0.943,title.c_str());
-  l.SetTextSize(0.04);
-  l.SetTextFont(42);
-  l.DrawLatex(0.15,0.943,"#bf{#it{RestFrames}} Toy Event Generation");
-
-  l.SetTextSize(0.045);
-  l.SetTextFont(132);
-  l.DrawLatex(0.75,0.06,label.c_str());
-
-  return c1;
-}
-void setstyle() {
-	
-  // For the canvas:
-  gStyle->SetCanvasBorderMode(0);
-  gStyle->SetCanvasColor(kWhite);
-  gStyle->SetCanvasDefX(0);   //Position on screen
-  gStyle->SetCanvasDefY(0);
-	
-  // For the Pad:
-  gStyle->SetPadBorderMode(0);
-  gStyle->SetPadColor(kWhite);
-  gStyle->SetGridColor(0);
-  gStyle->SetGridStyle(3);
-  gStyle->SetGridWidth(1);
-	
-  // For the frame:
-  gStyle->SetFrameBorderMode(0);
-  gStyle->SetFrameBorderSize(1);
-  gStyle->SetFrameFillColor(0);
-  gStyle->SetFrameFillStyle(0);
-  gStyle->SetFrameLineColor(1);
-  gStyle->SetFrameLineStyle(1);
-  gStyle->SetFrameLineWidth(1);
-	
-  // set the paper & margin sizes
-  gStyle->SetPaperSize(20,26);
-  gStyle->SetPadTopMargin(0.09);
-  gStyle->SetPadRightMargin(0.25);
-  gStyle->SetPadBottomMargin(0.18);
-  gStyle->SetPadLeftMargin(0.15);
-	
-  // use large Times-Roman fonts
-  gStyle->SetTitleFont(132,"xyz");  // set the all 3 axes title font
-  gStyle->SetTitleFont(132," ");    // set the pad title font
-  gStyle->SetTitleSize(0.06,"xyz"); // set the 3 axes title size
-  gStyle->SetTitleSize(0.06," ");   // set the pad title size
-  gStyle->SetLabelFont(132,"xyz");
-  gStyle->SetLabelSize(0.05,"xyz");
-  gStyle->SetLabelColor(1,"xyz");
-  gStyle->SetTextFont(132);
-  gStyle->SetTextSize(0.08);
-  gStyle->SetStatFont(132);
-	
-  // use bold lines and markers
-  gStyle->SetMarkerStyle(8);
-  gStyle->SetHistLineWidth(2);
-  gStyle->SetLineStyleString(2,"[12 12]"); // postscript dashes
-	
-  //..Get rid of X error bars
-  gStyle->SetErrorX(0.001);
-	
-  // do not display any of the standard histogram decorations
-  gStyle->SetOptTitle(0);
-  gStyle->SetOptStat(0);
-  gStyle->SetOptFit(11111111);
-	
-  // put tick marks on top and RHS of plots
-  gStyle->SetPadTickX(1);
-  gStyle->SetPadTickY(1);
-	
-  const Int_t NRGBs = 5;
-  const Int_t NCont = 255;
-
-  Double_t stops[NRGBs] = { 0.00, 0.34, 0.61, 0.84, 1.00 };
-  Double_t red[NRGBs]   = { 0.00, 0.00, 0.87, 1.00, 0.51 };
-  Double_t green[NRGBs] = { 0.00, 0.81, 1.00, 0.20, 0.00 };
-  Double_t blue[NRGBs]  = { 0.51, 1.00, 0.12, 0.00, 0.00 };
-  TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
-  gStyle->SetNumberContours(NCont);
-	
-  gStyle->cd();
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation

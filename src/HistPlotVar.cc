@@ -33,9 +33,10 @@ namespace RestFrames {
 
   int HistPlotVar::m_class_key = 0;
 
-  HistPlotVar::HistPlotVar(const string& name, const string& title, 
+  HistPlotVar::HistPlotVar(const std::string& name, 
+			   const std::string& title, 
 			   double minval, double maxval,
-			   const string& unit = "")
+			   const std::string& unit = "")
     : m_Name(name), m_Title(title), 
       m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.), m_Key(m_class_key++) {}
   
@@ -57,15 +58,15 @@ namespace RestFrames {
     return m_Val;
   }
   
-  string HistPlotVar::GetName() const {
+  std::string HistPlotVar::GetName() const {
     return m_Name;
   }
 
-  string HistPlotVar::GetTitle() const {
+  std::string HistPlotVar::GetTitle() const {
     return m_Title;
   }
 
-  string HistPlotVar::GetUnit() const {
+  std::string HistPlotVar::GetUnit() const {
     return m_Unit;
   }
   

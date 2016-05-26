@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RestFrame.cc
@@ -30,8 +30,6 @@
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/ReconstructionFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   int RestFrame::m_class_key = 0;
@@ -40,7 +38,7 @@ namespace RestFrames {
   
   RestFrame::~RestFrame() { m_Type = kVanillaFrame; }
 
-  RestFrame::RestFrame(const string& sname, const string& stitle)
+  RestFrame::RestFrame(const std::string& sname, const std::string& stitle)
     : RFBase(sname, stitle, RestFrame::m_class_key++) 
   {
     m_Log.SetSource("RestFrame "+GetName());
@@ -110,8 +108,8 @@ namespace RestFrames {
     return m_Ana == kGenFrame; 
   }
 
-  string RestFrame::PrintString(LogType type) const {
-    string output = RFBase::PrintString(type);
+  std::string RestFrame::PrintString(LogType type) const {
+    std::string output = RFBase::PrintString(type);
     if(IsLabFrame())
       output += "   Frame Type: Lab \n";
     if(IsDecayFrame())
@@ -339,7 +337,7 @@ namespace RestFrames {
       GetChildFrame(i).FillListFramesRecursive(frames, type);
   }
 
-  bool RestFrame::IsCircularTree(vector<RFKey>& keys) const {
+  bool RestFrame::IsCircularTree(std::vector<RFKey>& keys) const {
     int Nkey = keys.size();
     for(int i = 0; i < Nkey; i++){
       if(keys[i] == GetKey()){
@@ -359,11 +357,11 @@ namespace RestFrames {
   }
 
   bool RestFrame::FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
-				  vector<TVector3>& boosts) const {
+				  std::vector<TVector3>& boosts) const {
     if(IsSame(dest_frame)) return true;
   
-    vector<const RestFrame*> try_frames;
-    vector<TVector3> try_boosts;
+    std::vector<const RestFrame*> try_frames;
+    std::vector<TVector3> try_boosts;
 
     if(!GetParentFrame().IsEmpty()){
       try_frames.push_back(&GetParentFrame());
@@ -434,7 +432,7 @@ namespace RestFrames {
       return TLorentzVector(0.,0.,0.,0.);
     if(frame == GetProductionFrame()) return V;
 
-    vector<TVector3> boosts;
+    std::vector<TVector3> boosts;
     if(!GetProductionFrame().
        FindPathToFrame(frame, RestFrame::Empty(), boosts)){
       m_Log << LogWarning;
@@ -567,7 +565,7 @@ namespace RestFrames {
 
     TLorentzVector Pret = P;
     
-    vector<TVector3> boosts;
+    std::vector<TVector3> boosts;
     if(!def_frame){
       if(!GetLabFrame().
 	 FindPathToFrame(*this, RestFrame::Empty(), boosts)){
@@ -610,7 +608,7 @@ namespace RestFrames {
 
     // move P to axis_frame
     if(!axis_frame.IsLabFrame() && !axis_frame.IsEmpty()){
-      vector<TVector3> boosts;
+      std::vector<TVector3> boosts;
       if(!GetLabFrame().
 	 FindPathToFrame(axis_frame, RestFrame::Empty(), boosts)){
 	m_Log << LogWarning;
@@ -768,7 +766,7 @@ namespace RestFrames {
     }
 
     TVector3 vbeta = GetBoostInParentFrame();
-    double beta = min(1.,vbeta.Mag());
+    double beta = std::min(1.,vbeta.Mag());
     return 1./sqrt(1.-beta*beta);
   }
 

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   LabRecoFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/LabFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class Jigsaw;
@@ -45,7 +43,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class LabRecoFrame : public LabFrame<ReconstructionFrame> {
   public:
-    LabRecoFrame(const string& sname, const string& stitle);
+    LabRecoFrame(const std::string& sname, const std::string& stitle);
     LabRecoFrame();
     virtual ~LabRecoFrame();
     

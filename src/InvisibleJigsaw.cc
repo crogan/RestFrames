@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleJigsaw.cc
@@ -31,15 +31,15 @@
 #include "RestFrames/SetMassInvJigsaw.hh"
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // InvisibleJigsaw class
   ///////////////////////////////////////////////
 
-  InvisibleJigsaw::InvisibleJigsaw(const string& sname, const string& stitle, int Ninv, int Nvis) : 
+  InvisibleJigsaw::InvisibleJigsaw(const std::string& sname, 
+				   const std::string& stitle, 
+				   int Ninv, int Nvis) : 
     Jigsaw(sname, stitle)
   {
     Init(Ninv, Nvis);
@@ -133,7 +133,7 @@ namespace RestFrames {
   InvisibleState& InvisibleJigsaw::GetNewChildState(){
     char strn[10];
     sprintf(strn,"%d",GetNChildren());
-    string name = GetName()+"_"+string(strn);
+    std::string name = GetName()+"_"+std::string(strn);
     InvisibleState* statePtr = new InvisibleState(name, name);
     AddDependent(statePtr);
     return *statePtr;

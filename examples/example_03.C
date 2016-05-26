@@ -33,7 +33,7 @@
 
 using namespace RestFrames;
 
-void example_03(const string& output_name = "output_example_03.root"){
+void example_03(const std::string& output_name = "output_example_03.root"){
   
   // set particle masses and widths
   double mtop = 173.;
@@ -74,7 +74,7 @@ void example_03(const string& output_name = "output_example_03.root"){
   W_Gen.SetWidth(wW);
 
   if(LAB_Gen.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized generator analysis" << endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +127,7 @@ void example_03(const string& output_name = "output_example_03.root"){
   NuR_MW.AddVisibleFrame(L_MW);
 
   if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analyses" << endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized analyses" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analyses" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ void example_03(const string& output_name = "output_example_03.root"){
   histPlot->AddPlot(Mt,     cat_minMt+cat_minMW+cat_Gen);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((max(Ngen,10))/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%((std::max(Ngen,10))/10) == 0) std::cout << "Generating event " << igen << " of " << Ngen << std::endl;
 
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree

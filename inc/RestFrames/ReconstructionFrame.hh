@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   ReconstructionFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/RestFrame.hh"
 #include "RestFrames/Group.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class ReconstructionFrame : public RestFrame {
   public:
-    ReconstructionFrame(const string& sname, const string& stitle);
+    ReconstructionFrame(const std::string& sname, const std::string& stitle);
     ReconstructionFrame();
     virtual ~ReconstructionFrame();
 
@@ -89,7 +87,7 @@ namespace RestFrames {
 
   protected:
     Group* m_GroupPtr;
-    mutable map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
+    mutable std::map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
 
   private:
     void Init();

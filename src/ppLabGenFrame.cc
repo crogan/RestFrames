@@ -29,31 +29,14 @@
 
 #include "RestFrames/ppLabGenFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // ppLabGenFrame class
   ///////////////////////////////////////////////
-  double ppLabGenFrame::m_PDF_eta_1 = 0.27871;
-  double ppLabGenFrame::m_PDF_eta_2 = 3.3627;
-  double ppLabGenFrame::m_PDF_eps_u = 4.4343;
-  double ppLabGenFrame::m_PDF_g_u = 38.599;
-  double ppLabGenFrame::m_PDF_del_S = -0.11912;
-  double ppLabGenFrame::m_PDF_eta_S = 9.4189;
-  double ppLabGenFrame::m_PDF_eps_S = -2.6287;
-  double ppLabGenFrame::m_PDF_g_S = 18.065;
-  double ppLabGenFrame::m_PDF_A_g = 3.4055;
-  double ppLabGenFrame::m_PDF_del_g = -0.12178;
-  double ppLabGenFrame::m_PDF_eta_g = 2.9278;
-  double ppLabGenFrame::m_PDF_eps_g = -2.3210;
-  double ppLabGenFrame::m_PDF_g_g = 1.9233;
-  double ppLabGenFrame::m_PDF_A_g1 = -1.6189;
-  double ppLabGenFrame::m_PDF_del_g1 = -0.23999;
-  double ppLabGenFrame::m_PDF_eta_g1 = 24.792;
 
-  ppLabGenFrame::ppLabGenFrame(const string& sname, const string& stitle) : 
+  ppLabGenFrame::ppLabGenFrame(const std::string& sname, 
+			       const std::string& stitle) : 
     LabGenFrame(sname, stitle)
   {
     m_deltaLogX = 0;
@@ -234,4 +217,21 @@ namespace RestFrames {
 		       m_PDF_A_g1*pow(x,m_PDF_del_g1)*pow(1-x,m_PDF_eta_g1)));
   }
   
+  double ppLabGenFrame::m_PDF_eta_1 = 0.27871;
+  double ppLabGenFrame::m_PDF_eta_2 = 3.3627;
+  double ppLabGenFrame::m_PDF_eps_u = 4.4343;
+  double ppLabGenFrame::m_PDF_g_u = 38.599;
+  double ppLabGenFrame::m_PDF_del_S = -0.11912;
+  double ppLabGenFrame::m_PDF_eta_S = 9.4189;
+  double ppLabGenFrame::m_PDF_eps_S = -2.6287;
+  double ppLabGenFrame::m_PDF_g_S = 18.065;
+  double ppLabGenFrame::m_PDF_A_g = 3.4055;
+  double ppLabGenFrame::m_PDF_del_g = -0.12178;
+  double ppLabGenFrame::m_PDF_eta_g = 2.9278;
+  double ppLabGenFrame::m_PDF_eps_g = -2.3210;
+  double ppLabGenFrame::m_PDF_g_g = 1.9233;
+  double ppLabGenFrame::m_PDF_A_g1 = -1.6189;
+  double ppLabGenFrame::m_PDF_del_g1 = -0.23999;
+  double ppLabGenFrame::m_PDF_eta_g1 = 24.792;
+
 }

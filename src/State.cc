@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   State.cc
@@ -31,8 +31,6 @@
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/RestFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -41,7 +39,8 @@ namespace RestFrames {
   int State::m_class_key = 0;
 
   // constructor 
-  State::State(const string& sname, const string& stitle)
+  State::State(const std::string& sname, 
+	       const std::string& stitle)
     : RFBase(sname, stitle, State::m_class_key++) 
   {
     m_Log.SetSource("State");
@@ -149,7 +148,7 @@ namespace RestFrames {
 
   TLorentzVector State::GetFourVector() const {
     TLorentzVector V;
-    V.SetVectM(m_P.Vect(),max(0.,m_P.M()));
+    V.SetVectM(m_P.Vect(), std::max(0.,m_P.M()));
     return V;
   }
 

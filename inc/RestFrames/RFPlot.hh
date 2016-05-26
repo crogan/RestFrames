@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFPlot.hh
@@ -35,18 +35,16 @@
 
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class RFPlot : public RFBase {
   public:
-    RFPlot(const string& sname, const string& stitle);
+    RFPlot(const std::string& sname, const std::string& stitle);
     ~RFPlot();
 
     virtual void Clear();
 
-    void WriteOutput(const string& filename);
+    void WriteOutput(const std::string& filename);
 
     static void SetStyle(bool invert_colors = false);
     static void SetZPalette(bool invert_colors = false);
@@ -99,8 +97,8 @@ namespace RestFrames {
     int GetNCanvases();
     
   private:
-    vector<TObject*> m_TObjects;
-    vector<TCanvas*> m_Canvases;
+    std::vector<TObject*> m_TObjects;
+    std::vector<TCanvas*> m_Canvases;
 
     static const int rf_NZPalette;
     static int rf_ZPalette;

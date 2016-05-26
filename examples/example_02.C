@@ -33,7 +33,7 @@
 
 using namespace RestFrames;
 
-void example_02(const string& output_name = "output_example_02.root"){
+void example_02(const std::string& output_name = "output_example_02.root"){
 
   double mW = 81.;
   int Ngen = 100000;
@@ -48,11 +48,11 @@ void example_02(const string& output_name = "output_example_02.root"){
   W_G.AddChildFrame(L_G);
   W_G.AddChildFrame(NU_G);
  
-  if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl; 
+  if(!LAB_G.InitializeTree()) std::cout << "Problem with generator tree" << std::endl; 
 
   W_G.SetMass(mW);
 
-  if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl; 
+  if(!LAB_G.InitializeAnalysis()) std::cout << "Problem with generator tree" << std::endl; 
 
   LabRecoFrame LAB_R("LAB_R","LAB");
   DecayRecoFrame W_R("W_R","W");
@@ -63,7 +63,7 @@ void example_02(const string& output_name = "output_example_02.root"){
   W_R.AddChildFrame(L_R);
   W_R.AddChildFrame(NU_R);
 
-  if(!LAB_R.InitializeTree()) cout << "Problem with reconstruction tree" << endl; 
+  if(!LAB_R.InitializeTree()) std::cout << "Problem with reconstruction tree" << std::endl; 
   
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
@@ -87,7 +87,7 @@ void example_02(const string& output_name = "output_example_02.root"){
   INV.AddJigsaw(RapidityJigsaw);
   RapidityJigsaw.AddVisibleFrame(L_R);
 
-  if(!LAB_R.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
+  if(!LAB_R.InitializeAnalysis()) std::cout << "Problem with jigsaws" << std::endl;
 
   // Invisible Jigsaws
   tree_plot->SetTree(INV);
@@ -119,7 +119,7 @@ void example_02(const string& output_name = "output_example_02.root"){
   hist_plot->AddPlot(DdphiW, pTW);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%(Ngen/10) == 0) std::cout << "Generating event " << igen << " of " << Ngen << std::endl;
 
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree

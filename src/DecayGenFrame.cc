@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   DecayGenFrame.cc
@@ -30,15 +30,14 @@
 #include <stdlib.h>
 #include "RestFrames/DecayGenFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // DecayGenFrame class
   ///////////////////////////////////////////////
 
-  DecayGenFrame::DecayGenFrame(const string& sname, const string& stitle) 
+  DecayGenFrame::DecayGenFrame(const std::string& sname, 
+			       const std::string& stitle) 
     : DecayFrame<GeneratorFrame>(sname,stitle)
   {
     Init();
@@ -179,7 +178,7 @@ namespace RestFrames {
 
   bool DecayGenFrame::IterateMCMC(){
     int N = GetNChildren();
-    vector<double> InterMassFrac;
+    std::vector<double> InterMassFrac;
     InterMassFrac.push_back(0.);
     for(int i = 1; i < N-1; i++) 
       InterMassFrac.push_back(GetRandom());
@@ -188,7 +187,7 @@ namespace RestFrames {
     
     double probOld = GetProbMCMC();
 
-    vector<double> InterMassFracOld = m_InterMassFracMCMC;
+    std::vector<double> InterMassFracOld = m_InterMassFracMCMC;
     m_InterMassFracMCMC = InterMassFrac;
 
     double probNew = GetProbMCMC();
@@ -245,7 +244,7 @@ namespace RestFrames {
       return 0.;
 
     double ETOT = mass - SumChildMass;
-    vector<double> InterMass;
+    std::vector<double> InterMass;
     for(int i = 0; i < N; i++){
       InterMass.push_back(m_InterMassFracMCMC[N-1-i]*ETOT + SumChildMass);
       SumChildMass -= GetChildFrame(i).GetMass();
@@ -300,7 +299,7 @@ namespace RestFrames {
       return SetSpirit(false);
     }
 
-    vector<double> ChildMasses;
+    std::vector<double> ChildMasses;
     double SumChildMass = 0.;
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
@@ -309,7 +308,7 @@ namespace RestFrames {
     }
 
     double ETOT = GetMass() - SumChildMass;
-    vector<double> InterMass;
+    std::vector<double> InterMass;
     for(int i = 0; i < N; i++){
       InterMass.push_back(m_InterMassFracMCMC[N-1-i]*ETOT + SumChildMass);
       SumChildMass -= GetChildFrame(i).GetMass();
@@ -317,7 +316,7 @@ namespace RestFrames {
 
     SetSpirit(true);
 
-    vector<TLorentzVector> ChildVectors;
+    std::vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(InterMass, ChildMasses,
 			     GetParentBoostVector(),
 			     GetParentFrame().GetDecayPlaneNormalVector(),
@@ -327,9 +326,11 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
-  void DecayGenFrame::GenerateTwoBodyRecursive(const vector<double>& M_p, const vector<double>& M_c,
-					       const TVector3& axis_par, const TVector3& axis_perp,
-					       vector<TLorentzVector>& P_c) {
+  void DecayGenFrame::GenerateTwoBodyRecursive(const std::vector<double>& M_p, 
+					       const std::vector<double>& M_c,
+					       const TVector3& axis_par, 
+					       const TVector3& axis_perp,
+					       std::vector<TLorentzVector>& P_c) {
     TVector3 n_par = axis_par.Unit();
     TVector3 n_perp = axis_perp.Unit();
 
@@ -364,12 +365,12 @@ namespace RestFrames {
     }
 
     // Recursively generate other two-body decays for N > 2
-    vector<double> M_pR;
-    vector<double> M_cR;
+    std::vector<double> M_pR;
+    std::vector<double> M_cR;
     for(int i = 1; i < N_c; i++) M_pR.push_back(M_p[i]);
     for(int i = 1; i < N_c; i++) M_cR.push_back(M_c[i]);
     TVector3 boost = P_child[1].BoostVector();
-    vector<TLorentzVector> P_cR;
+    std::vector<TLorentzVector> P_cR;
     GenerateTwoBodyRecursive(M_pR, M_cR, boost, V_c[0].Cross(axis_par), P_cR);
     for(int i = 0; i < N_c-1; i++) P_cR[i].Boost(boost);
     for(int i = 0; i < N_c-1; i++) P_c.push_back(P_cR[i]);

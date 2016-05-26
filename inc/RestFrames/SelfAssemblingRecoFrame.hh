@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   SelfAssemblingRecoFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/DecayRecoFrame.hh"
 #include "RestFrames/State.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class SelfAssemblingRecoFrame : public DecayRecoFrame {
   public:
-    SelfAssemblingRecoFrame(const string& sname, const string& stitle);
+    SelfAssemblingRecoFrame(const std::string& sname, 
+			    const std::string& stitle);
     virtual ~SelfAssemblingRecoFrame();
 
     virtual void Clear();
@@ -56,7 +55,7 @@ namespace RestFrames {
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
     RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
-    vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
+    std::vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
 
     RestFrames::RFList<State> m_VisibleStates;
     RestFrames::RFList<ReconstructionFrame> m_VisibleFrames;
@@ -64,15 +63,19 @@ namespace RestFrames {
     int m_Nvisible;
     int m_Ndecay;
 
-    ReconstructionFrame& GetNewDecayFrame(const string& sname, const string& stitle);
-    ReconstructionFrame& GetNewVisibleFrame(const string& sname, const string& stitle);
+    ReconstructionFrame& GetNewDecayFrame(const std::string& sname, 
+					  const std::string& stitle);
+    ReconstructionFrame& GetNewVisibleFrame(const std::string& sname, 
+					    const std::string& stitle);
     void ClearNewFrames();
 
     bool m_IsAssembled;
     bool m_IsBackedUp;
     void Disassemble();
     void Assemble();
-    void AssembleRecursive(RestFrame& frame, vector<RestFrame*>& frames, vector<TLorentzVector>& Ps); 
+    void AssembleRecursive(RestFrame& frame, 
+			   std::vector<RestFrame*>& frames, 
+			   std::vector<TLorentzVector>& Ps); 
   };
 
 }

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFList.cc
@@ -37,9 +37,9 @@
 #include "RestFrames/CombinatoricState.hh"
 #include "RestFrames/HistPlotCategory.hh"
 
-using namespace std;
-
 namespace RestFrames {
+
+  using std::vector;
 
   template <class T, class Derived>
   void RFListBase<T,Derived>::Clear(){

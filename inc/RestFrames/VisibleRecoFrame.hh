@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   VisibleRecoFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/ReconstructionFrame.hh"
 #include "RestFrames/VisibleFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class VisibleRecoFrame : public VisibleFrame<ReconstructionFrame> {
   public:
-    VisibleRecoFrame(const string& sname, const string& stitle);
+    VisibleRecoFrame(const std::string& sname, const std::string& stitle);
     VisibleRecoFrame();
     virtual ~VisibleRecoFrame();
 
@@ -50,7 +48,6 @@ namespace RestFrames {
 
   private:
     static VisibleRecoFrame m_Empty;
-    void Init();
    
   };
 

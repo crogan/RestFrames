@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RestFrame.hh
@@ -32,8 +32,6 @@
 
 #include "RestFrames/RFBase.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   /// Type of RestFrame, with respect to its decays
@@ -50,7 +48,7 @@ namespace RestFrames {
     /// 
     /// \param sname    class instance name used for log statements
     /// \param stitle   class instance title used in figures
-    RestFrame(const string& sname, const string& stitle);
+    RestFrame(const std::string& sname, const std::string& stitle);
     
     /// \brief Empty constructor
     RestFrame();
@@ -104,7 +102,7 @@ namespace RestFrames {
     bool IsGenFrame() const;
 
     /// \brief String of information about RestFrame
-    virtual string PrintString(LogType type = LogVerbose) const;
+    virtual std::string PrintString(LogType type = LogVerbose) const;
     
     ///@}
 
@@ -484,7 +482,7 @@ namespace RestFrames {
     virtual bool InitializeTreeRecursive();
 
     /// \brief Check this RestFrame 's tree for circular connections
-    bool IsCircularTree(vector<RFKey>& keys) const;
+    bool IsCircularTree(std::vector<RFKey>& keys) const;
 
   private:
     /// \brief RestFrame ID key
@@ -501,7 +499,7 @@ namespace RestFrames {
 
     // list of child frames and boosts
     RestFrames::RFList<RestFrame> m_ChildFrames;
-    mutable map<const RestFrame*, TVector3> m_ChildBoosts;
+    mutable std::map<const RestFrame*, TVector3> m_ChildBoosts;
 
     // parent frame and boost
     RestFrame* m_ParentFramePtr;
@@ -511,7 +509,7 @@ namespace RestFrames {
     void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame) const;
 
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
-			 vector<TVector3>& boosts) const;
+			 std::vector<TVector3>& boosts) const;
   };
 
 }

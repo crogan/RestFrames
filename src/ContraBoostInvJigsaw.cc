@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   ContraBoostInvJigsaw.cc
@@ -30,14 +30,13 @@
 #include "RestFrames/ContraBoostInvJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   //ContraBoostInvJigsaw class methods
   ///////////////////////////////////////////////
-  ContraBoostInvJigsaw::ContraBoostInvJigsaw(const string& sname,const string& stitle) : 
+  ContraBoostInvJigsaw::ContraBoostInvJigsaw(const std::string& sname,
+					     const std::string& stitle) : 
     InvisibleJigsaw(sname, stitle, 2, 2) {}
 
   ContraBoostInvJigsaw::ContraBoostInvJigsaw() : InvisibleJigsaw() {}
@@ -65,9 +64,9 @@ namespace RestFrames {
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
     double Mvis1 = fabs(Pvis1.M());
     double Mvis2 = fabs(Pvis2.M());
-    double Minv = max(0.,max(Minv1,Minv2));
-    double Mvismin = min(Mvis1,Mvis2);
-    double Mvismax = max(Mvis1,Mvis2);
+    double Minv = std::max(0.,std::max(Minv1,Minv2));
+    double Mvismin = std::min(Mvis1,Mvis2);
+    double Mvismax = std::max(Mvis1,Mvis2);
 
     if(Mvismin <= 0.0 && Minv > 0.0) return (Pvis1+Pvis2).M();
 
@@ -129,10 +128,10 @@ namespace RestFrames {
     double Minv2 = GetChildState(1).GetMinimumMass();
     TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
     TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
-    double m1 = max(0.,Pvis1.M());
-    double m2 = max(0.,Pvis2.M());
-    double Minv = max(Minv1,Minv2);
-    double Mvis = min(m1,m2);
+    double m1 = std::max(0.,Pvis1.M());
+    double m2 = std::max(0.,Pvis2.M());
+    double Minv = std::max(Minv1,Minv2);
+    double Mvis = std::min(m1,m2);
 
     if(Minv >= Mvis){
       m_C1 = 1.;

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   Jigsaw.cc
@@ -32,8 +32,6 @@
 #include "RestFrames/LabRecoFrame.hh"
 #include "RestFrames/State.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   ///////////////////////////////////////////////
@@ -41,7 +39,8 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   int Jigsaw::m_class_key = 0;
 
-  Jigsaw::Jigsaw(const string& sname, const string& stitle)
+  Jigsaw::Jigsaw(const std::string& sname, 
+		 const std::string& stitle)
     : RFBase(sname, stitle, Jigsaw::m_class_key++) 
   {
     m_Log.SetSource("Jigsaw "+GetName());
@@ -77,8 +76,8 @@ namespace RestFrames {
     return m_Type == kCombinatoricJigsaw;
   }
 
-  string Jigsaw::PrintString(LogType type) const {
-    string output = RFBase::PrintString(type);
+  std::string Jigsaw::PrintString(LogType type) const {
+    std::string output = RFBase::PrintString(type);
     if(IsInvisibleJigsaw())
       output += "   Type: Invisible \n";
     if(IsCombinatoricJigsaw())
@@ -201,7 +200,7 @@ namespace RestFrames {
     if(!CanResolve(GetParentState())){
       m_Log << LogWarning;
       m_Log << "Unable to resolve input parent State. ";
-      m_Log << "  Frames (capable): " << Log(GetParentFrames()) << endl;
+      m_Log << "  Frames (capable): " << Log(GetParentFrames()) << std::endl;
       m_Log << "  Frames (requested): " << Log(GetParentState().GetListFrames());
       m_Log << LogEnd;
       return SetMind(false);
@@ -232,7 +231,7 @@ namespace RestFrames {
     RFList<Group> groups = lab_frame.GetListGroups();
 
     int Ngroup = groups.GetN();
-    vector<RFList<RestFrame> > group_frames;
+    std::vector<RFList<RestFrame> > group_frames;
     for(int i = 0; i < Ngroup; i++)
       group_frames.push_back(RFList<RestFrame>());
 
@@ -260,7 +259,7 @@ namespace RestFrames {
 	  State& state = states.GetFrame(frame);
 	  if(!state){
 	    m_Log << LogWarning;
-	    m_Log << "Cannot find States corresponding to frame: " << endl;
+	    m_Log << "Cannot find States corresponding to frame: " << std::endl;
 	    m_Log << Log(frame) << " " << Log(states) << LogEnd;
 	    return SetMind(false);
 	  }
@@ -275,22 +274,22 @@ namespace RestFrames {
 	if(group_frames[g].GetN() == 0) continue;
 	RFList<State> group_states = groups[g].GetChildStates(group_frames[g]);
 	if(group_states.GetN() == 0){
-	  m_Log << "Cannot find States in Group:" << endl;
-	  m_Log << " Frames:" << endl << "   ";
-	  m_Log << Log(group_frames[g]) << endl;
-	  m_Log << " Group:" << endl;
+	  m_Log << "Cannot find States in Group:" << std::endl;
+	  m_Log << " Frames:" << std::endl << "   ";
+	  m_Log << Log(group_frames[g]) << std::endl;
+	  m_Log << " Group:" << std::endl;
 	  m_Log << Log(groups.Get(g)) << LogEnd;
 	  return SetMind(false);
 	}
 	m_Log << LogVerbose;
-	m_Log << "Sucessfully found dependancy States for index " << d << endl;
+	m_Log << "Sucessfully found dependancy States for index " << d << std::endl;
 	int Ns = group_states.GetN();
-	m_Log << " Frames:" << endl << "   ";
-	m_Log << Log(group_frames[g]) << endl;
-	m_Log << " States:" << endl;
+	m_Log << " Frames:" << std::endl << "   ";
+	m_Log << Log(group_frames[g]) << std::endl;
+	m_Log << " States:" << std::endl;
 	for(int s = 0; s < Ns; s++){
 	  m_Log << "   state " << s << ": ";
-	  m_Log << Log(group_states[s].GetListFrames()) << endl;
+	  m_Log << Log(group_states[s].GetListFrames()) << std::endl;
 	}
 	m_Log << LogEnd;
 	m_DependancyStates[d].Add(group_states);
@@ -325,10 +324,10 @@ namespace RestFrames {
     if(!GetGroup()) return;
     if(!GetGroup().ContainsFrame(frame)){
       m_Log << LogWarning;
-      m_Log << "Unable to add child frame not in same Group:" << endl;
-      m_Log << "    Frame:" << endl;
-      m_Log << Log(frame) << endl;
-      m_Log << "    Group:" << endl;
+      m_Log << "Unable to add child frame not in same Group:" << std::endl;
+      m_Log << "    Frame:" << std::endl;
+      m_Log << Log(frame) << std::endl;
+      m_Log << "    Group:" << std::endl;
       m_Log << Log(GetGroup()) << LogEnd;
       return;
     }

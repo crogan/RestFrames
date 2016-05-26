@@ -37,7 +37,7 @@
 
 namespace RestFrames {
 				       
-  HistPlot::HistPlot(const string& sname, const string& stitle)
+  HistPlot::HistPlot(const std::string& sname, const std::string& stitle)
     : RFPlot(sname, stitle)
   {
     SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
@@ -82,17 +82,17 @@ namespace RestFrames {
     RFPlot::Clear();
   }
 
-  HistPlotVar const& HistPlot::GetNewVar(const string& name,
-					 const string& title, 
+  HistPlotVar const& HistPlot::GetNewVar(const std::string& name,
+					 const std::string& title, 
 					 double minval, double maxval,
-					 const string& unit){
+					 const std::string& unit){
     HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
     m_Vars.push_back(var);
     return *var;
   }
 
-  HistPlotCategory const& HistPlot::GetNewCategory(const string& name, 
-						   const string& title){
+  HistPlotCategory const& HistPlot::GetNewCategory(const std::string& name, 
+						   const std::string& title){
     HistPlotCategory* cat = new HistPlotCategory(name, title);
     m_Cats.push_back(cat);
     return *cat;
@@ -105,7 +105,7 @@ namespace RestFrames {
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       if(m_CatToHist1D.count(empty) <= 0)
-	m_CatToHist1D[empty] = vector<TH1D*>();
+	m_CatToHist1D[empty] = std::vector<TH1D*>();
       
       int Nhist = m_CatToHist1D[empty].size();
       bool exists = false;
@@ -116,7 +116,7 @@ namespace RestFrames {
 	}
       }
       if(!exists){
-	string name = var.GetName()+"_"+GetName();
+	std::string name = var.GetName()+"_"+GetName();
 	TH1D* hist = new TH1D(name.c_str(),name.c_str(),
 			      64,var.GetMin(),var.GetMax());
 	m_HistToVar[hist] = &var;
@@ -126,7 +126,7 @@ namespace RestFrames {
     } else {
       for(int c = 0; c < Ncat; c++){
 	if(m_CatToHist1D.count(&cats[c]) <= 0)
-	  m_CatToHist1D[&cats[c]] = vector<TH1D*>();
+	  m_CatToHist1D[&cats[c]] = std::vector<TH1D*>();
 	
 	int Nhist = m_CatToHist1D[&cats[c]].size();
 	bool exists = false;
@@ -137,7 +137,7 @@ namespace RestFrames {
 	  }
 	}
 	if(!exists){
-	  string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
+	  std::string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
 	  TH1D* hist = new TH1D(name.c_str(),name.c_str(),
 				64,var.GetMin(),var.GetMax());
 	  m_HistToVar[hist] = &var;
@@ -158,7 +158,7 @@ namespace RestFrames {
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       if(m_CatToHist2D.count(empty) <= 0)
-	m_CatToHist2D[empty] = vector<TH2D*>();
+	m_CatToHist2D[empty] = std::vector<TH2D*>();
       
       int Nhist = m_CatToHist2D[empty].size();
       bool exists = false;
@@ -170,16 +170,16 @@ namespace RestFrames {
 	}
       }
       if(!exists){
-	string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
+	std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
 	TH2D* hist = new TH2D(name.c_str(),name.c_str(),
 			      32,varX.GetMin(),varX.GetMax(),
 			      32,varY.GetMin(),varY.GetMax());
 	
 	m_HistToVars[hist] = 
-	  pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
+	  std::pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
 	m_CatToHist2D[empty].push_back(hist);
 	m_2DHists.push_back(hist);
-	m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
+	m_Plot2D_Vars.push_back(std::pair<const HistPlotVar*,
 				const HistPlotVar*>(&varX,&varY));
 	m_Plot2D_Cat.push_back(empty);
 	m_Plot2D_Color.push_back(invert_colors);
@@ -187,7 +187,7 @@ namespace RestFrames {
     } else {
       for(int c = 0; c < Ncat; c++){
 	if(m_CatToHist2D.count(&cats[c]) <= 0)
-	  m_CatToHist2D[&cats[c]] = vector<TH2D*>();
+	  m_CatToHist2D[&cats[c]] = std::vector<TH2D*>();
 	
 	int Nhist = m_CatToHist2D[&cats[c]].size();
 	bool exists = false;
@@ -199,16 +199,16 @@ namespace RestFrames {
 	  }
 	}
 	if(!exists){
-	  string name = varX.GetName()+"_v_"+varY.GetName()+"_"+
+	  std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+
 	    cats[c].GetName()+"_"+GetName();
 	  TH2D* hist = new TH2D(name.c_str(),name.c_str(),
 				32,varX.GetMin(),varX.GetMax(),
 				32,varY.GetMin(),varY.GetMax());
 	  m_HistToVars[hist] = 
-	    pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
+	    std::pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
 	  m_CatToHist2D[&cats[c]].push_back(hist);
 	  m_2DHists.push_back(hist);
-	  m_Plot2D_Vars.push_back(pair<const HistPlotVar*,
+	  m_Plot2D_Vars.push_back(std::pair<const HistPlotVar*,
 				  const HistPlotVar*>(&varX,&varY));
 	  m_Plot2D_Cat.push_back(&cats[c]);
 	  m_Plot2D_Color.push_back(invert_colors);
@@ -262,9 +262,9 @@ namespace RestFrames {
   void HistPlot::DrawPlot(const HistPlotVar& var,
 			  const RFList<HistPlotCategory>& cats,
 			  bool invert_colors){
-    vector<TH1D*> hists;
+    std::vector<TH1D*> hists;
     int Ncat = cats.GetN();
-    string catname = "";
+    std::string catname = "";
     
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
@@ -288,7 +288,7 @@ namespace RestFrames {
       }
     }
 
-    string name = "c_"+var.GetName()+"_"+catname+GetName();
+    std::string name = "c_"+var.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->SetLeftMargin(0.2);
     can->SetRightMargin(0.05);
@@ -300,9 +300,9 @@ namespace RestFrames {
     can->SetGridx();
     can->SetGridy();
 
-    string XLabel = var.GetTitle();
+    std::string XLabel = var.GetTitle();
 
-    string ScaleLabel;
+    std::string ScaleLabel;
     if(!m_SetScale){
       ScaleLabel =  "#frac{1}{N} #frac{dN}{";
       ScaleLabel += "d( "+XLabel+" )}";
@@ -376,13 +376,13 @@ namespace RestFrames {
       l.SetTextColor(kWhite);
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.48+max(0.,0.47-l.GetXsize()),0.947,m_PlotTitle.c_str());
+    l.DrawLatex(0.48+std::max(0.,0.47-l.GetXsize()),0.947,m_PlotTitle.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.02,0.95,m_PlotLabel.c_str());
 
     if(N > 1){
-      TLegend* leg = new TLegend(0.225,max(0.5,0.884-double(N)*0.073),0.488,0.884);
+      TLegend* leg = new TLegend(0.225,std::max(0.5,0.884-double(N)*0.073),0.488,0.884);
       AddTObject(leg);
       leg->SetShadowColor(kWhite);
       leg->SetLineColor(kWhite);
@@ -409,13 +409,14 @@ namespace RestFrames {
     AddCanvas(can);
   }
   
-  void HistPlot::DrawPlot(const pair<const HistPlotVar*,const HistPlotVar*>& vars,
+  void HistPlot::DrawPlot(const std::pair<const HistPlotVar*,
+			  const HistPlotVar*>& vars,
 			  const HistPlotCategory& cat,
 			  bool invert_colors){
     const HistPlotVar& varX = *vars.first;
     const HistPlotVar& varY = *vars.second;
     TH2D* hist = nullptr;
-    string catname = "";
+    std::string catname = "";
     if(!cat){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       int Nhist = m_CatToHist2D[empty].size();
@@ -438,7 +439,7 @@ namespace RestFrames {
       }
     }
     
-    string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName();
+    std::string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName();
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->Draw();
     if(invert_colors){
@@ -449,10 +450,10 @@ namespace RestFrames {
     can->SetGridy();
     can->SetLogz();
 
-    string XLabel = varX.GetTitle();
-    string YLabel = varY.GetTitle();
+    std::string XLabel = varX.GetTitle();
+    std::string YLabel = varY.GetTitle();
     
-    string ScaleLabel;
+    std::string ScaleLabel;
     if(!m_SetScale){
       if(hist->Integral() > 0.) 
 	hist->Scale(1./hist->Integral());
@@ -496,7 +497,7 @@ namespace RestFrames {
     }
     hist->Draw("COLZ");
     
-    string title = m_PlotTitle;
+    std::string title = m_PlotTitle;
     if(!cat.IsEmpty())
       title = cat.GetTitle();
 
@@ -506,7 +507,7 @@ namespace RestFrames {
       l.SetTextColor(kWhite);
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.48+max(0.,0.32-l.GetXsize()),0.947,title.c_str());
+    l.DrawLatex(0.48+std::max(0.,0.32-l.GetXsize()),0.947,title.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.02,0.95,m_PlotLabel.c_str());
@@ -525,19 +526,19 @@ namespace RestFrames {
     }
   }
 
-  void HistPlot::SetScaleLabel(const string& label){
+  void HistPlot::SetScaleLabel(const std::string& label){
     m_ScaleLabel = label;
   }
 
-  void HistPlot::SetPlotLabel(const string& label){
+  void HistPlot::SetPlotLabel(const std::string& label){
     m_PlotLabel = label;
   }
 
-  void HistPlot::SetPlotTitle(const string& title){
+  void HistPlot::SetPlotTitle(const std::string& title){
     m_PlotTitle = title;
   }
 
-  void HistPlot::WriteHist(const string& name){
+  void HistPlot::WriteHist(const std::string& name){
     TFile *file = new TFile(name.c_str(),"UPDATE");
     file->mkdir(GetName().c_str());
     file->mkdir((GetName()+"/hist").c_str());

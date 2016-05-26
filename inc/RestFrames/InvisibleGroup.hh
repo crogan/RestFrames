@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   InvisibleGroup.hh
@@ -33,15 +33,13 @@
 #include "RestFrames/Group.hh"
 #include "RestFrames/InvisibleState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class InvisibleState;
 
   class InvisibleGroup : public Group {
   public:
-    InvisibleGroup(const string& sname, const string& stitle);
+    InvisibleGroup(const std::string& sname, const std::string& stitle);
     InvisibleGroup();
     virtual ~InvisibleGroup();
 	

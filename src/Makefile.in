@@ -133,8 +133,8 @@ libRestFrames_la_LIBADD =
 am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
 	libRestFrames_la-RFBase.lo libRestFrames_la-RFKey.lo \
 	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
-	libRestFrames_la-RFPlot.lo libRestFrames_la-TreePlot.lo \
-	libRestFrames_la-TreePlotNode.lo \
+	libRestFrames_la-RFPlot.lo libRestFrames_la-RFCharge.lo \
+	libRestFrames_la-TreePlot.lo libRestFrames_la-TreePlotNode.lo \
 	libRestFrames_la-TreePlotLink.lo libRestFrames_la-HistPlot.lo \
 	libRestFrames_la-HistPlotVar.lo \
 	libRestFrames_la-HistPlotCategory.lo \
@@ -412,7 +412,7 @@ RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
 libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h\
-	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc\
+	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\
 	RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc\
@@ -536,6 +536,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-MinMassesCombJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-MinMassesInvJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFBase.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFCharge.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RFLog.Plo@am__quote@
@@ -619,6 +620,13 @@ libRestFrames_la-RFPlot.lo: RFPlot.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RFPlot.cc' object='libRestFrames_la-RFPlot.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFPlot.lo `test -f 'RFPlot.cc' || echo '$(srcdir)/'`RFPlot.cc
+
+libRestFrames_la-RFCharge.lo: RFCharge.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFCharge.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFCharge.Tpo -c -o libRestFrames_la-RFCharge.lo `test -f 'RFCharge.cc' || echo '$(srcdir)/'`RFCharge.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RFCharge.Tpo $(DEPDIR)/libRestFrames_la-RFCharge.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RFCharge.cc' object='libRestFrames_la-RFCharge.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RFCharge.lo `test -f 'RFCharge.cc' || echo '$(srcdir)/'`RFCharge.cc
 
 libRestFrames_la-TreePlot.lo: TreePlot.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-TreePlot.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-TreePlot.Tpo -c -o libRestFrames_la-TreePlot.lo `test -f 'TreePlot.cc' || echo '$(srcdir)/'`TreePlot.cc

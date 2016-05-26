@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   CombinatoricJigsaw.hh
@@ -34,14 +34,12 @@
 #include "RestFrames/CombinatoricGroup.hh"
 #include "RestFrames/CombinatoricState.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class CombinatoricJigsaw : public Jigsaw {
   public:
     //constructor and destructor
-    CombinatoricJigsaw(const string& sname, const string& stitle);
+    CombinatoricJigsaw(const std::string& sname, const std::string& stitle);
     CombinatoricJigsaw();
     virtual ~CombinatoricJigsaw();
 
@@ -69,8 +67,8 @@ namespace RestFrames {
     virtual double EvaluateMetric() const = 0;
 
     RestFrames::RFList<VisibleState> m_InputStates;
-    map<const State*, int>  m_NForChild;
-    map<const State*, bool> m_NExclusive;
+    std::map<const State*, int>  m_NForChild;
+    std::map<const State*, bool> m_NExclusive;
 
     virtual CombinatoricState& GetNewChildState();
  

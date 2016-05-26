@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   TreePlotNode.cc
@@ -32,8 +32,6 @@
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/State.hh"
 
-using namespace std;
-
 namespace RestFrames {
   
   TreePlotNode::TreePlotNode(){ 
@@ -56,7 +54,7 @@ namespace RestFrames {
     m_Y = y; 
   }
   
-  void TreePlotNode::SetLabel(const string& label){ 
+  void TreePlotNode::SetLabel(const std::string& label){ 
     m_Label = label; 
     m_DoLabel = true; 
   }
@@ -85,7 +83,7 @@ namespace RestFrames {
     return m_Y; 
   }
 
-  string TreePlotNode::GetLabel() const { 
+  std::string TreePlotNode::GetLabel() const { 
     return m_Label; 
   }
 

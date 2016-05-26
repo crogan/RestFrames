@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   DecayGenFrame.hh
@@ -33,8 +33,6 @@
 #include "RestFrames/DecayFrame.hh"
 #include "RestFrames/GeneratorFrame.hh"
 
-using namespace std;
-
 namespace RestFrames {
 
   class ResonanceGenFrame;
@@ -44,7 +42,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class DecayGenFrame : public DecayFrame<GeneratorFrame> {
   public:
-    DecayGenFrame(const string& sname, const string& stitle);
+    DecayGenFrame(const std::string& sname, const std::string& stitle);
     virtual ~DecayGenFrame();
 
     virtual void SetMass(double val);
@@ -62,21 +60,21 @@ namespace RestFrames {
     double m_CosDecayAngle;
     double m_DeltaPhiDecayPlane;
 
-    vector<int>    m_ChildIndexMCMC;
-    vector<double> m_ChildMassMCMC;
-    vector<double> m_ChildProbMCMC;
-    vector<double> m_InterMassFracMCMC;
+    std::vector<int>    m_ChildIndexMCMC;
+    std::vector<double> m_ChildMassMCMC;
+    std::vector<double> m_ChildProbMCMC;
+    std::vector<double> m_InterMassFracMCMC;
 
     virtual bool IsSoundBody() const;
 
     virtual void ResetFrame();
     virtual bool GenerateFrame();
    
-    void GenerateTwoBodyRecursive(const vector<double>& M_parent, 
-				  const vector<double>& M_child,
+    void GenerateTwoBodyRecursive(const std::vector<double>& M_parent, 
+				  const std::vector<double>& M_child,
 				  const TVector3& axis_par, 
 				  const TVector3& axis_perp,
-				  vector<TLorentzVector>& P_child);
+				  std::vector<TLorentzVector>& P_child);
 
     virtual bool InitializeGenAnalysis();
     virtual bool IterateMCMC();
