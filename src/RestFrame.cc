@@ -403,6 +403,22 @@ namespace RestFrames {
   // User Analysis functions
   //////////////////////////////
 
+  RFCharge RestFrame::GetCharge() const {
+    RFCharge charge;
+    
+    if(!IsSoundBody()){
+      UnSoundBody(RF_FUNCTION);
+      return charge;
+    }
+
+    int Nchild = GetNChildren();
+    if(Nchild == 0) return charge;
+    for(int i = 0; i < Nchild; i++){
+      charge += GetChildFrame(i).GetCharge();
+    }
+    return charge;
+  }
+
   double RestFrame::GetMass() const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);

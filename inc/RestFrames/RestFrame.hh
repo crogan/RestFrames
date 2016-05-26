@@ -31,6 +31,7 @@
 #define RestFrame_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/RFCharge.hh"
 
 namespace RestFrames {
 
@@ -255,6 +256,9 @@ namespace RestFrames {
     ///
     /// Returns a list of RestFrame s containing __frames__ and this
     RestFrames::RFList<RestFrame> operator+(const RestFrames::RFList<RestFrame>& frames); 
+
+    /// \brief Returns the charge of this frame.
+    virtual RFCharge GetCharge() const;
 
     /// \brief Returns the mass of this frame.
     virtual double GetMass() const;

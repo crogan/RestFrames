@@ -47,6 +47,11 @@ namespace RestFrames {
     VisibleFrame();
     virtual ~VisibleFrame();
 
+    virtual void SetCharge(const RFCharge& charge);
+    virtual void SetCharge(int charge = 0);
+    virtual void SetCharge(int charge_num, int charge_den);
+    virtual RFCharge GetCharge() const;
+
     virtual void SetLabFrameFourVector(const TLorentzVector& V);
     virtual TLorentzVector GetLabFrameFourVector() const;
 
@@ -55,6 +60,7 @@ namespace RestFrames {
 
   private:
     TLorentzVector m_Lab_P;
+    RFCharge m_Charge;
 
   };
 
