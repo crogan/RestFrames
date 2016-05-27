@@ -43,15 +43,18 @@ namespace RestFrames {
   class DecayRecoFrame : public DecayFrame<ReconstructionFrame> {
   public:
     DecayRecoFrame(const std::string& sname, const std::string& stitle);
+    DecayRecoFrame();
     virtual ~DecayRecoFrame();
 
     bool IsSelfAssemblingFrame() const;
 
+    static DecayRecoFrame& Empty();
+   
   protected:
     RDecayType m_RType;
 
   private:
-    void Init();
+    static DecayRecoFrame m_Empty;
 
   };
 

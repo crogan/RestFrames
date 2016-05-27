@@ -37,7 +37,9 @@ namespace RestFrames {
   template <class T>
   class DecayFrame : public T {
   public:
-    DecayFrame(const std::string& sname, const std::string& stitle);
+    DecayFrame(const std::string& sname,
+	       const std::string& stitle);
+    DecayFrame();
     virtual ~DecayFrame();
 
   protected:

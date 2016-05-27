@@ -28,7 +28,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/RFList.hh"
-#include "RestFrames/ReconstructionFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
+#include "RestFrames/DecayRecoFrame.hh"
 #include "RestFrames/ResonanceGenFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/Group.hh"
@@ -265,13 +266,17 @@ namespace RestFrames {
   }
 
   template class RFList<RFBase>;
+  template class RFList<RestFrame>; 
   template class RFList<const RestFrame>; 
   template class RFList<ReconstructionFrame>;
   template class RFList<GeneratorFrame>;
+  template class RFList<VisibleRecoFrame>;
+  template class RFList<DecayRecoFrame>;
   template class RFList<ResonanceGenFrame>; 
   template class RFList<Jigsaw>;
   template class RFList<const Jigsaw>;
   template class RFList<Group>;
+  template class RFList<State>;
   template class RFList<VisibleState>;
   template class RFList<InvisibleState>;
   template class RFList<CombinatoricState>;
@@ -283,6 +288,8 @@ namespace RestFrames {
   template class RFListBase<const RestFrame,RFList<const RestFrame> >; 
   template class RFListBase<ReconstructionFrame,RFList<ReconstructionFrame> >; 
   template class RFListBase<GeneratorFrame,RFList<GeneratorFrame> >;
+  template class RFListBase<VisibleRecoFrame,RFList<VisibleRecoFrame> >;
+  template class RFListBase<DecayRecoFrame,RFList<DecayRecoFrame> >; 
   template class RFListBase<ResonanceGenFrame,RFList<ResonanceGenFrame> >; 
   template class RFListBase<Jigsaw,RFList<Jigsaw> >;
   template class RFListBase<const Jigsaw,RFList<const Jigsaw> >;

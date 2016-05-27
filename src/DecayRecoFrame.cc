@@ -40,16 +40,20 @@ namespace RestFrames {
 				 const std::string& stitle) 
     : DecayFrame<ReconstructionFrame>(sname,stitle)
   {
-    Init();
-  }
-  
-  DecayRecoFrame::~DecayRecoFrame(){ }
-
-  void DecayRecoFrame::Init(){
     m_RType = RDVanilla;
   }
+
+  DecayRecoFrame::DecayRecoFrame() : DecayFrame<ReconstructionFrame>() {}
+  
+  DecayRecoFrame::~DecayRecoFrame(){ }
 
   bool DecayRecoFrame::IsSelfAssemblingFrame() const {
     return m_RType == RDSelfAssembling;
   }
+
+  DecayRecoFrame& DecayRecoFrame::Empty(){
+    return DecayRecoFrame::m_Empty;
+  }
+
+  DecayRecoFrame DecayRecoFrame::m_Empty;
 }

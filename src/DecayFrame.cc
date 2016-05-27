@@ -44,6 +44,9 @@ namespace RestFrames {
   }
 
   template <class T> 
+  DecayFrame<T>::DecayFrame() : T() {}
+  
+  template <class T> 
   DecayFrame<T>::~DecayFrame() {}
 
   template <class T> 
