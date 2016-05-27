@@ -123,6 +123,10 @@ namespace RestFrames {
     return RFList<State>(m_Elements).GetFourVector();
   }
 
+  RFCharge CombinatoricState::GetCharge() const {
+    return RFList<State>(m_Elements).GetCharge();
+  }
+
   CombinatoricState CombinatoricState::m_Empty;
 
 }

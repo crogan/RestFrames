@@ -48,6 +48,7 @@ namespace RestFrames {
     m_ParentJigsawPtr = nullptr;
     m_ChildJigsawPtr = nullptr;
     m_P.SetPxPyPzE(0.,0.,0.,0.);
+    m_Charge = 0;
   }
 
   State::State() : RFBase() { m_Type = kVanillaState; }
@@ -150,6 +151,10 @@ namespace RestFrames {
     TLorentzVector V;
     V.SetVectM(m_P.Vect(), std::max(0.,m_P.M()));
     return V;
+  }
+
+  RFCharge State::GetCharge() const {
+    return m_Charge;
   }
 
   void State::FillGroupJigsawDependancies(RFList<Jigsaw>& jigsaws) const {

@@ -131,12 +131,14 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
-  RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V){
+  RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V,
+						 const RFCharge& charge){
     VisibleState& state = GetNewElement();
     
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
     state.SetFourVector(P);
+    state.SetCharge(charge);
     m_Elements.Add(state);
    
     return state.GetKey();
@@ -155,7 +157,7 @@ namespace RestFrames {
     int N = GetNChildStates();
     for(int i = N-1; i >= 0; i--)
       if(GetChildState(i).ContainsElement(key))
-	return GetChildState(i).GetElement(key).GetFourVector();
+  	return GetChildState(i).GetElement(key).GetFourVector();
     return TLorentzVector(0.,0.,0.,0.);
   }
 

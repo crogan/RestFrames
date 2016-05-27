@@ -44,7 +44,6 @@ namespace RestFrames {
   {
     m_RType = RDSelfAssembling;
     m_IsAssembled = false;
-    m_IsBackedUp = false;
     m_Body_UnAssembled = false;
     m_Mind_UnAssembled = false;
     m_Nvisible = 0;
@@ -133,7 +132,9 @@ namespace RestFrames {
 	  int Nelement = elements.GetN();
 	  for(int e = 0; e < Nelement; e++){
 	    VisibleState& element = elements[e];
-	    RestFrame& new_frame = GetNewVisibleFrame(frame.GetName(),frame.GetTitle());
+	    VisibleRecoFrame& new_frame =
+	      GetNewVisibleFrame(frame.GetName(),frame.GetTitle());
+	    new_frame.SetCharge(element.GetCharge());
 	    element.AddFrame(new_frame);
 	    frames.push_back(&new_frame);
 	    TLorentzVector V = element.GetFourVector();
@@ -272,7 +273,7 @@ namespace RestFrames {
   }
 
   bool SelfAssemblingRecoFrame::AnalyzeEventRecursive(){
-    // Disassemble Frame tree if it assembled
+    // Disassemble Frame tree if it is assembled
     if(m_IsAssembled) Disassemble();
     if(!ReconstructionFrame::AnalyzeEventRecursive()){
       m_Log << LogWarning;
@@ -298,8 +299,8 @@ namespace RestFrames {
     for(int i = 0; i < N; i++) m_VisibleFrames[i].Clear();
   }
 
-  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewDecayFrame(const std::string& sname, 
-								 const std::string& stitle){
+  DecayRecoFrame& SelfAssemblingRecoFrame::GetNewDecayFrame(const std::string& sname, 
+							    const std::string& stitle){
     if(m_Ndecay < m_DecayFrames.GetN()){
       m_Ndecay++;
       return m_DecayFrames.Get(m_Ndecay-1);
@@ -316,8 +317,8 @@ namespace RestFrames {
     return *framePtr;
   }
 
-  ReconstructionFrame& SelfAssemblingRecoFrame::GetNewVisibleFrame(const std::string& sname, 
-								   const std::string& stitle){
+  VisibleRecoFrame& SelfAssemblingRecoFrame::GetNewVisibleFrame(const std::string& sname, 
+								const std::string& stitle){
     if(m_Nvisible < m_VisibleFrames.GetN()){
       m_Nvisible++;
       return m_VisibleFrames.Get(m_Nvisible-1);
@@ -337,6 +338,7 @@ namespace RestFrames {
   RestFrame const& SelfAssemblingRecoFrame::GetFrame(const RFKey& key) const {
     if(!m_IsAssembled)
       return RestFrame::Empty();
+    
     int N = m_ChildStates.size();
     for(int i = 0; i < N; i++){
       if(m_ChildStates[&GetChildFrame(i)].Contains(key))

@@ -41,6 +41,7 @@ namespace RestFrames {
     : T(sname, stitle)
   {
     T::m_Type = kVisibleFrame;
+    m_Charge = 0;
   }
 
   template <class T> 
@@ -82,7 +83,7 @@ namespace RestFrames {
 
   template <class T> 
   RFCharge VisibleFrame<T>::GetCharge() const {
-    return RFCharge(m_Charge);
+    return m_Charge;
   }
 
   template <class T> 

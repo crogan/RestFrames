@@ -56,7 +56,8 @@ namespace RestFrames {
     virtual void SetChildJigsaw(Jigsaw& jigsaw);
 
     virtual void Boost(const TVector3& B);
-    virtual TLorentzVector GetFourVector() const; 
+    virtual TLorentzVector GetFourVector() const;
+    virtual RFCharge GetCharge() const;
 
     void ClearElements();
     void AddElement(VisibleState& state);

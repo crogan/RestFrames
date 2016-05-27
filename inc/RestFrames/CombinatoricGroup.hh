@@ -60,14 +60,15 @@ namespace RestFrames {
 				      int& N, bool& exclusive_N) const;
 
     // Event analysis functions
-    RFKey AddLabFrameFourVector(const TLorentzVector& V);
+    RFKey AddLabFrameFourVector(const TLorentzVector& V,
+				const RFCharge& charge = RFCharge());
 
     RestFrame const& GetFrame(const RFKey& key) const;
     TLorentzVector GetLabFrameFourVector(const RFKey& key) const;
     int GetNElementsInFrame(const RestFrame& frame) const;
 	
   protected:
-    RestFrames::RFList<VisibleState>    m_Elements;
+    RestFrames::RFList<VisibleState>         m_Elements;
     mutable std::map<const RestFrame*, int>  m_NElementsForFrame;
     mutable std::map<const RestFrame*, bool> m_NExclusiveElementsForFrame; 
 

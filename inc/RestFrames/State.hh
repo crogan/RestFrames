@@ -31,6 +31,7 @@
 #define State_HH
 
 #include "RestFrames/RFBase.hh"
+#include "RestFrames/RFCharge.hh"
 #include "RestFrames/Jigsaw.hh"
 
 namespace RestFrames {
@@ -78,18 +79,21 @@ namespace RestFrames {
 
     virtual void Boost(const TVector3& B);
     virtual void SetFourVector(const TLorentzVector& V);
-    virtual TLorentzVector GetFourVector() const; 
+    virtual TLorentzVector GetFourVector() const;
+    virtual RFCharge GetCharge() const;
 
     void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
     void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 	
   protected:
     StateType m_Type;
+    RFCharge m_Charge;
 
     RestFrames::RFList<RestFrame> m_Frames;
 
   private:
     TLorentzVector m_P;
+    
     Jigsaw* m_ParentJigsawPtr;
     Jigsaw* m_ChildJigsawPtr;
     

@@ -38,7 +38,8 @@ namespace RestFrames {
 
   class VisibleState : public State {
   public:
-    VisibleState(const std::string& sname, const std::string& stitle);
+    VisibleState(const std::string& sname,
+		 const std::string& stitle);
     VisibleState();
     virtual ~VisibleState();
 
@@ -54,6 +55,9 @@ namespace RestFrames {
     virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
 	
     virtual void SetLabFrameFourVector();
+    virtual void SetCharge(const RFCharge& charge);
+    virtual void SetCharge(int charge = 0);
+    virtual void SetCharge(int charge_num, int charge_den);
 
   protected:
     VisibleRecoFrame* m_FramePtr;

@@ -116,6 +116,7 @@ namespace RestFrames {
       if(!has_group) {
 	VisibleState& state = GetNewVisibleState();
 	state.AddFrame(frames[f]);
+	state.SetCharge(frames[f].GetCharge());
 	m_TreeStates += state;
       }
     }
@@ -251,8 +252,9 @@ namespace RestFrames {
       return SetSpirit(false);
     }
     int Ns = m_TreeStates.GetN();
-    for(int i = 0; i < Ns; i++)
+    for(int i = 0; i < Ns; i++){
       m_TreeStates[i].SetLabFrameFourVector();
+    }
       
     int Ng = m_TreeGroups.GetN();
     for(int i = 0; i < Ng; i++){

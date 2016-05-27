@@ -323,7 +323,7 @@ namespace RestFrames {
     }
      
     // Set outputs to best combinatoric
-    for(int i = 0; i < 2; i++) 
+    for(int i = 0; i < Nout; i++) 
       GetChildState(i).ClearElements();
     int key = c_max;
     for(int i = 0; i < Ninput; i++){

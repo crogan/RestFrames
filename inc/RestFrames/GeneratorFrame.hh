@@ -34,7 +34,7 @@
 #include "RestFrames/RestFrame.hh"
 
 namespace RestFrames {
-
+  
   ///////////////////////////////////////////////
   // GeneratorFrame class
   ///////////////////////////////////////////////
@@ -79,7 +79,7 @@ namespace RestFrames {
 
     /// \brief Get the frame of the *i* th child
     virtual GeneratorFrame& GetChildFrame(int i) const;
-
+    
     virtual double GetMass() const;
 
     bool IsVariableMassMCMC() const;

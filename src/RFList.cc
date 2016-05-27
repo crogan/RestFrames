@@ -220,6 +220,15 @@ namespace RestFrames {
       V += m_Objs[i]->GetFourVector(frame);
     return V.P();
   }
+
+  RFCharge RFList<RestFrame>::GetCharge() const {
+    RFCharge charge;
+    int N = GetN();
+    for(int i = 0; i < N; i++)
+      charge += m_Objs[i]->GetCharge();
+    
+    return charge;
+  }
   
   // State methods
   State& RFList<State>::GetFrame(const RestFrame& frame) const {
@@ -237,6 +246,15 @@ namespace RestFrames {
       V += m_Objs[i]->GetFourVector();
     
     return V;
+  }
+
+  RFCharge RFList<State>::GetCharge() const {
+    RFCharge charge;
+    int N = GetN();
+    for(int i = 0; i < N; i++)
+      charge += m_Objs[i]->GetCharge();
+    
+    return charge;
   }
 
   void RFList<State>::Boost(const TVector3& B) const {

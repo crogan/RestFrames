@@ -86,6 +86,19 @@ namespace RestFrames {
   void VisibleState::SetLabFrameFourVector(){
     if(!m_FramePtr) return;
     SetFourVector(m_FramePtr->GetLabFrameFourVector());
+    SetCharge(m_FramePtr->GetCharge());
+  }
+
+  void VisibleState::SetCharge(const RFCharge& charge){
+    m_Charge = charge;
+  }
+  
+  void VisibleState::SetCharge(int charge){
+    m_Charge = charge;
+  }
+  
+  void VisibleState::SetCharge(int charge_num, int charge_den){
+    m_Charge = RFCharge(charge_num, charge_den);
   }
 
   VisibleState VisibleState::m_Empty;

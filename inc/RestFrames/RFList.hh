@@ -38,6 +38,7 @@ class TVector3;
 namespace RestFrames {
   
   class RFKey;
+  class RFCharge;
   class State;
   class RestFrame;
   template <class T>
@@ -230,6 +231,7 @@ namespace RestFrames {
 
     State& GetFrame(const RestFrame& frame) const;
     TLorentzVector GetFourVector() const;
+    RFCharge GetCharge() const;
     void Boost(const TVector3& B) const;
   };
 
@@ -256,6 +258,7 @@ namespace RestFrames {
     TLorentzVector GetInvisibleFourVector(const RestFrame& frame) const;
     double GetEnergy(const RestFrame& frame) const;
     double GetMomentum(const RestFrame& frame) const;
+    RFCharge GetCharge() const;
   };
 
 }

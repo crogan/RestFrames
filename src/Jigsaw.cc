@@ -259,7 +259,7 @@ namespace RestFrames {
 	  State& state = states.GetFrame(frame);
 	  if(!state){
 	    m_Log << LogWarning;
-	    m_Log << "Cannot find States corresponding to frame: " << std::endl;
+	    m_Log << "Cannot find State corresponding to frame: " << std::endl;
 	    m_Log << Log(frame) << " " << Log(states) << LogEnd;
 	    return SetMind(false);
 	  }

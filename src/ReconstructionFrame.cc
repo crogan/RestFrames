@@ -231,13 +231,18 @@ namespace RestFrames {
     for(int i = 0; i < Nchild; i++){
       ReconstructionFrame& child = GetChildFrame(i);
       TLorentzVector P = m_ChildStates[&child].GetFourVector();
+
       TVector3 B_child = P.BoostVector();
       SetChildBoostVector(child, B_child);
       Ptot += P;
 
       child.SetFourVector(P,*this);
-      bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
 
+      if(child.IsVisibleFrame())
+	static_cast<VisibleRecoFrame&>(child).
+	  SetCharge(m_ChildStates[&child].GetCharge());
+
+      bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
       if(!terminal){ 
 	B_child *= -1.;
 	m_ChildStates[&child].Boost(B_child);

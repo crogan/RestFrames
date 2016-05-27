@@ -362,8 +362,7 @@ namespace RestFrames {
   }
 
   RFCharge RFCharge::operator-() {
-    if(m_ChargeNum > 0)
-      m_Sign = !m_Sign;
+    return (*this)*(-1);
   }
 
   RFCharge::operator double() const {

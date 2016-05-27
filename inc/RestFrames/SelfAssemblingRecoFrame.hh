@@ -35,6 +35,8 @@
 
 namespace RestFrames {
 
+  class VisibleRecoFrame;
+  
   ///////////////////////////////////////////////
   // SelfAssemblingRecoFrame class
   ///////////////////////////////////////////////
@@ -58,19 +60,19 @@ namespace RestFrames {
     std::vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
 
     RestFrames::RFList<State> m_VisibleStates;
-    RestFrames::RFList<ReconstructionFrame> m_VisibleFrames;
-    RestFrames::RFList<ReconstructionFrame> m_DecayFrames;
+    RestFrames::RFList<VisibleRecoFrame> m_VisibleFrames;
+    RestFrames::RFList<DecayRecoFrame>   m_DecayFrames;
     int m_Nvisible;
     int m_Ndecay;
 
-    ReconstructionFrame& GetNewDecayFrame(const std::string& sname, 
-					  const std::string& stitle);
-    ReconstructionFrame& GetNewVisibleFrame(const std::string& sname, 
-					    const std::string& stitle);
+    DecayRecoFrame& GetNewDecayFrame(const std::string& sname, 
+				     const std::string& stitle);
+
+    VisibleRecoFrame& GetNewVisibleFrame(const std::string& sname, 
+					 const std::string& stitle);
     void ClearNewFrames();
 
     bool m_IsAssembled;
-    bool m_IsBackedUp;
     void Disassemble();
     void Assemble();
     void AssembleRecursive(RestFrame& frame, 
