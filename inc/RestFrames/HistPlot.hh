@@ -78,6 +78,8 @@ namespace RestFrames {
 
     void SetScale(double scale = -1);
 
+    void SetRebin(int rebin = 4);
+
     void WriteHist(const std::string& filename);
 
   private:
@@ -86,6 +88,7 @@ namespace RestFrames {
     std::string m_ScaleLabel;
     double m_Scale;
     bool   m_SetScale;
+    int    m_Rebin;
     
     std::vector<TH1D*> m_1DHists;
     std::vector<TH2D*> m_2DHists;

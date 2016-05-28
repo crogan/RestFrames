@@ -224,6 +224,7 @@ void example_05(std::string output_name = "output_example_05.root"){
   double ELtrue = (mW*mW - mN*mN)/mW/2.;
 
   // Now we book some histograms of kinematic variables
+  TH1D* h_MTT     = new TH1D("h_MTT","h_MTT",100,0.,2000.);
   TH1D* h_MT     = new TH1D("h_MT","h_MT",100,0.,2.);
   TH1D* h_MW     = new TH1D("h_MW","h_MW",100,0.,2.);
   TH1D* h_EB     = new TH1D("h_EB","h_EB",100,0.,2.);
@@ -317,6 +318,7 @@ void example_05(std::string output_name = "output_example_05.root"){
       MW[h] = 2.*EL[h];
       MT[h] = EB[h] + sqrt( PB*PB + MW[h]*MW[h] );
 
+      h_MTT->Fill(TT_G.GetMass());
       h_MT->Fill(MT[h]/mT);
       h_MW->Fill(MW[h]/mW);
       h_EB->Fill(EB[h]/EBtrue);
@@ -329,6 +331,7 @@ void example_05(std::string output_name = "output_example_05.root"){
   }
 
   tree_plot->WriteOutput(output_name);
+  h_MTT->Draw();
 
   g_Log << LogInfo << "Finished" << LogEnd;
 }

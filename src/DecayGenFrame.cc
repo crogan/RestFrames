@@ -149,6 +149,7 @@ namespace RestFrames {
     m_ChildMassMCMC.clear();
     m_ChildProbMCMC.clear();
     double Mass = GetMass();
+    m_Log << LogInfo;
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       double cmass = 0.;
@@ -178,6 +179,7 @@ namespace RestFrames {
 
   bool DecayGenFrame::IterateMCMC(){
     int N = GetNChildren();
+
     std::vector<double> InterMassFrac;
     InterMassFrac.push_back(0.);
     for(int i = 1; i < N-1; i++) 
@@ -255,6 +257,7 @@ namespace RestFrames {
       prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass())/mass;
     
     prob /= mass*mass;
+    //prob /= mass*mass*mass*mass;
 
     return prob;
   }
@@ -262,33 +265,51 @@ namespace RestFrames {
   void DecayGenFrame::GenerateMassMCMC(double& mass, double& prob, 
 				       double max) const {
     int N = GetNChildren();
-    double SumChildMass = 0.;
-    double ProdProb = 1.;
+    double SumMinChildMass = 0.;
     for(int i = 0; i < N; i++){
       GeneratorFrame& child = GetChildFrame(i);
       if(!child.IsVariableMassMCMC())
-	SumChildMass += child.GetMass();
-      else
-	SumChildMass += child.GetMinimumMassMCMC();
+	SumMinChildMass += child.GetMass();
+      else 
+	SumMinChildMass += child.GetMinimumMassMCMC();
     }
 
-    if(SumChildMass > max && max > 0)
+    if(SumMinChildMass > max && max > 0){
+      mass = max;
+      prob = 0;
       return;
+    }
 
+    double SumChildMass = 0.;
     for(int i = 0; i < N; i++){
       GeneratorFrame& child = GetChildFrame(i);
-      if(child.IsVariableMassMCMC()){
-	double cmass, cprob, cmax;
-	SumChildMass += child.GetMinimumMassMCMC();
-	child.GenerateMassMCMC(cmass, cprob, max-SumChildMass);
+      if(child.IsVariableMassMCMC()){	double cmass, cprob, cmax;
+	cmass = max-SumMinChildMass+child.GetMinimumMassMCMC();
+	child.GenerateMassMCMC(cmass, cprob, cmass);
 	SumChildMass += cmass;
-	ProdProb *= cprob;
-      } 
+      } else 
+	SumChildMass += child.GetMass();
     }
-    mass = sqrt(2.)*SumChildMass;
-    if(mass > max && max > 0)
-      mass = max - fabs(max-SumChildMass);
-    prob = ProdProb;
+
+    double T = SumChildMass;
+    double min = SumMinChildMass;
+    double SL = (T > 0 ? T/10. : 10.);
+    double SU = (T > 0 ? T : 100.); 
+    SU = (max > 0 ? std::max(max/100.,T) : 100.);
+    double IL = SL*(1.-exp(-(T-min)/SL));
+    double IU = (max > 0 ? SU*(1.-exp(-(max-T)/SU)) : 1.);
+
+    double R = GetRandom();
+    if(R > IL/(IL+IU)){
+      R = R*(IL+IU)/IU - IL/IU;
+      mass = T - log(1-R*IU/SU)*SU;
+      prob = exp(-(mass-T)/SU);
+    } else {
+      R = R*(IL+IU)/IL;
+      mass = T + log(1-R*IL/SL)*SL;
+      prob = exp((mass-T)/SL);
+    }
+    
   }
 
   bool DecayGenFrame::GenerateFrame(){
@@ -306,7 +327,7 @@ namespace RestFrames {
       ChildMasses.push_back(GetChildFrame(i).GetMass());
       SumChildMass += GetChildFrame(i).GetMass();
     }
-
+   
     double ETOT = GetMass() - SumChildMass;
     std::vector<double> InterMass;
     for(int i = 0; i < N; i++){

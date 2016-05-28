@@ -45,6 +45,7 @@ namespace RestFrames {
     SetScaleLabel("a. u.");
     m_Scale = 1.;
     m_SetScale = false;
+    m_Rebin = 4;
     m_Log.SetSource("HistPlot "+GetName());
     RFPlot::SetStyle();
   }
@@ -118,7 +119,7 @@ namespace RestFrames {
       if(!exists){
 	std::string name = var.GetName()+"_"+GetName();
 	TH1D* hist = new TH1D(name.c_str(),name.c_str(),
-			      64,var.GetMin(),var.GetMax());
+			      256,var.GetMin(),var.GetMax());
 	m_HistToVar[hist] = &var;
 	m_CatToHist1D[empty].push_back(hist);
 	m_1DHists.push_back(hist);
@@ -139,7 +140,7 @@ namespace RestFrames {
 	if(!exists){
 	  std::string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
 	  TH1D* hist = new TH1D(name.c_str(),name.c_str(),
-				64,var.GetMin(),var.GetMax());
+				256,var.GetMin(),var.GetMax());
 	  m_HistToVar[hist] = &var;
 	  m_CatToHist1D[&cats[c]].push_back(hist);
 	  m_1DHists.push_back(hist);
@@ -172,8 +173,8 @@ namespace RestFrames {
       if(!exists){
 	std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
 	TH2D* hist = new TH2D(name.c_str(),name.c_str(),
-			      32,varX.GetMin(),varX.GetMax(),
-			      32,varY.GetMin(),varY.GetMax());
+			      128,varX.GetMin(),varX.GetMax(),
+			      128,varY.GetMin(),varY.GetMax());
 	
 	m_HistToVars[hist] = 
 	  std::pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
@@ -202,8 +203,8 @@ namespace RestFrames {
 	  std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+
 	    cats[c].GetName()+"_"+GetName();
 	  TH2D* hist = new TH2D(name.c_str(),name.c_str(),
-				32,varX.GetMin(),varX.GetMax(),
-				32,varY.GetMin(),varY.GetMax());
+				128,varX.GetMin(),varX.GetMax(),
+				128,varY.GetMin(),varY.GetMax());
 	  m_HistToVars[hist] = 
 	    std::pair<const HistPlotVar*,const HistPlotVar*>(&varX,&varY);
 	  m_CatToHist2D[&cats[c]].push_back(hist);
@@ -320,6 +321,7 @@ namespace RestFrames {
     double hmax = -1.;
     double hmin = 1e16;
     for(int i = 0; i < N; i++){
+      hists[i]->Rebin(m_Rebin);
       if(!m_SetScale){
 	if(hists[i]->Integral() > 0.) 
 	  hists[i]->Scale(1./hists[i]->Integral());
@@ -466,6 +468,9 @@ namespace RestFrames {
       ScaleLabel = m_ScaleLabel;
     }
   
+    hist->RebinX(m_Rebin);
+    hist->RebinY(m_Rebin);
+
     if(varX.GetUnit() != "")
       XLabel += " "+varX.GetUnit();
     if(varY.GetUnit() != "")
@@ -536,6 +541,11 @@ namespace RestFrames {
 
   void HistPlot::SetPlotTitle(const std::string& title){
     m_PlotTitle = title;
+  }
+
+  void HistPlot::SetRebin(int rebin){
+    if(rebin > 0)
+      m_Rebin = rebin;
   }
 
   void HistPlot::WriteHist(const std::string& name){

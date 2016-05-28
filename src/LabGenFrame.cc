@@ -44,7 +44,7 @@ namespace RestFrames {
 
     m_MaxM = -1.;
 
-    m_NBurnInMCMC = 10000;
+    m_NBurnInMCMC = 1000;
     m_NDiscardMCMC = 5;
   }
 
@@ -146,6 +146,7 @@ namespace RestFrames {
 
       double probOld = GetProbMCMC(m_ChildMassMCMC)*
 	child.GetProbMCMC(m_ChildMassMCMC)/m_ChildProbMCMC;
+
       double probNew = GetProbMCMC(ChildMass)*
 	child.GetProbMCMC(ChildMass)/ChildProb;
 
