@@ -48,6 +48,8 @@ namespace RestFrames {
     virtual void SetMass(double mass);
     virtual void SetWidth(double w);
 
+    virtual void SetVariableMass(bool varymass = true);
+
     virtual double GetPoleMass() const;
     virtual double GetWidth() const;
    

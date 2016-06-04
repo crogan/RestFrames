@@ -98,37 +98,8 @@ namespace RestFrames {
   }
 
   void DecayGenFrame::SetVariableMass(bool varymass) {
-    if(!IsSoundBody()){
-      UnSoundBody(RF_FUNCTION);
-      return;
-    } 
-
-    if(!varymass){
-      SetVariableMassMCMC(false);
-      SetMind(false);
-      return;
-    }
-
-    int N = GetNChildren();
-    bool var = false;
-    for(int i = 0; i < N; i++){
-      if(GetChildFrame(i).IsVariableMassMCMC()){
-	var = true;
-	break;
-      }
-    }
-    if(!var){
-      m_Log << LogWarning;
-      m_Log << "Unable to set to variable mass. ";
-      m_Log << "No children have variable masses and ";
-      m_Log << "DecayGenFrame has no PDF defined ";
-      m_Log << "for its mass." << LogEnd;
-      SetVariableMassMCMC(false);
-      SetMind(false);
-      return;
-    }
-    SetVariableMassMCMC(true);
     SetMind(false);
+    SetVariableMassMCMC(varymass);
   }
 
   bool DecayGenFrame::InitializeGenAnalysis(){
@@ -257,7 +228,6 @@ namespace RestFrames {
       prob *= GetP(InterMass[i], InterMass[i+1], GetChildFrame(i).GetMass())/mass;
     
     prob /= mass*mass;
-    //prob /= mass*mass*mass*mass;
 
     return prob;
   }

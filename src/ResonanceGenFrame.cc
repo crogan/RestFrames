@@ -61,13 +61,17 @@ namespace RestFrames {
   }
 
   void ResonanceGenFrame::SetMass(double val){
+    SetMind(false);
+
     if(val < 0.){
       m_Log << LogWarning;
       m_Log << "Unable to set mass to negative value ";
       m_Log << val << ". Setting to zero." << LogEnd;
       m_PoleMass = 0.;
+      m_Mass = 0.;
     } else {
       m_PoleMass = val;
+      m_Mass = val;
     }
   }
 
@@ -83,6 +87,24 @@ namespace RestFrames {
     } else {
       m_Width = val;
       SetVariableMassMCMC(true);
+    }
+  }
+
+  void ResonanceGenFrame::SetVariableMass(bool varymass) {
+    SetMind(false);
+
+    if(varymass){
+      if(m_Width > 0.){
+	SetVariableMassMCMC(true);
+      }
+      else {
+	m_Log << LogWarning;
+	m_Log << "Unable to set variable mass. ";
+	m_Log << "Resonance width is set to zero. " << LogEnd;
+      }
+    } else {
+      m_Mass = m_PoleMass;
+      SetVariableMassMCMC(false);
     }
   }
 

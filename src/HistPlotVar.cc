@@ -50,6 +50,22 @@ namespace RestFrames {
     m_Val = val;
   }
 
+  void HistPlotVar::operator+=(double val) const {
+    m_Val += val;
+  }
+  
+  void HistPlotVar::operator-=(double val) const {
+    m_Val -= val;
+  }
+  
+  void HistPlotVar::operator*=(double val) const {
+    m_Val *= val;
+  }
+  
+  void HistPlotVar::operator/=(double val) const {
+    m_Val /= val;
+  }
+
   HistPlotVar::operator double() const {
     return m_Val;
   }

@@ -49,6 +49,14 @@ namespace RestFrames {
 
     void operator=(double val) const;
 
+    void operator+=(double val) const;
+
+    void operator-=(double val) const;
+
+    void operator*=(double val) const;
+
+    void operator/=(double val) const;
+
     operator double() const;
 
     double GetVal() const;
