@@ -181,16 +181,16 @@ void set_axes(){
     g_MAX += g_P[i].Mag()*g_U[i].Mag();
   }
   
-  // if(V.Mag() < 1e-8)
-  //   V.SetXYZ(1.,0.,0.);
+  if(V.Mag() < 1e-8)
+    V.SetXYZ(1.,0.,0.);
 
-  g_Z = V.Unit();
-  g_Y = g_Z.Cross(z).Unit();
-  g_X = g_Y.Cross(g_Z).Unit();
+  // g_Z = V.Unit();
+  // g_Y = g_Z.Cross(z).Unit();
+  // g_X = g_Y.Cross(g_Z).Unit();
 
-  // g_Z.SetXYZ(0.,0.,1.);
-  // g_Y.SetXYZ(0.,1.,0.);
-  // g_X.SetXYZ(1.,0.,0.);
+  g_Z.SetXYZ(0.,0.,1.);
+  g_Y.SetXYZ(0.,1.,0.);
+  g_X.SetXYZ(1.,0.,0.);
   
 }
 
@@ -203,7 +203,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 100000;
+  int Ngen = 1000000;
 
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << LogEnd;
@@ -397,8 +397,10 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     LEPs.push_back(Lc_G.GetFourVector());
 
     TLorentzVector LEP(0.,0.,0.,0.);
-    for(int i = 0; i < g_N; i++)
+    for(int i = 0; i < g_N; i++){
+      LEPs[i].SetPtEtaPhiM(LEPs[i].Pt(),0.,LEPs[i].Phi(),LEPs[i].M());
       LEP += LEPs[i];
+    }
 
     TVector3 boostZ = LEP.BoostVector();
     boostZ.SetX(0.);
@@ -447,7 +449,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
       flip_axes();
       MIN->SetVariableValues(&var[0]);
       MIN->Minimize();
-      cout << "new STATUS = " << MIN->Status() << endl;
+      // cout << "new STATUS = " << MIN->Status() << endl;
       // cout << "STATUS = " << MIN2->Status() << endl;
       // cout << "func2 at min " << dot_funcXYZ(PHIs2) << " " << dot_funcXYZ(&var[0]) << endl;
     }
