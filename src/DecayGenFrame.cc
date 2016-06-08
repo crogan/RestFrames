@@ -292,17 +292,19 @@ namespace RestFrames {
 
     std::vector<double> ChildMasses;
     double SumChildMass = 0.;
+    double cmass;
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      ChildMasses.push_back(GetChildFrame(i).GetMass());
-      SumChildMass += GetChildFrame(i).GetMass();
+      cmass = GetChildFrame(i).GetMass();
+      ChildMasses.push_back(cmass);
+      SumChildMass += cmass;
     }
    
     double ETOT = GetMass() - SumChildMass;
     std::vector<double> InterMass;
     for(int i = 0; i < N; i++){
       InterMass.push_back(m_InterMassFracMCMC[N-1-i]*ETOT + SumChildMass);
-      SumChildMass -= GetChildFrame(i).GetMass();
+      SumChildMass -= ChildMasses[i];
     }
 
     SetSpirit(true);
@@ -310,8 +312,9 @@ namespace RestFrames {
     std::vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(InterMass, ChildMasses,
 			     GetParentBoostVector(),
-			     GetParentFrame().GetDecayPlaneNormalVector(),
+			     GetParentFrame().GetDecayPlaneNormalVector(*this),
 			     ChildVectors);
+   
     SetChildren(ChildVectors);
 
     return SetSpirit(true);

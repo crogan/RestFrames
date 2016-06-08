@@ -807,23 +807,48 @@ namespace RestFrames {
     return V1.Dot(V2);
   }
 
-  TVector3 RestFrame::GetDecayPlaneNormalVector() const {
+  TVector3 RestFrame::GetDecayPlaneNormalVector(const RestFrame& frame) const {
+    TVector3 n = RestFrame::GetAxis();
+
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
-      return TVector3(0.,0.,0.);
+      return n;
     }
 
-    if(GetNChildren() < 1) return TVector3(0.,0.,0.);
+    if(!frame)
+      if(GetNChildren() < 1) 
+	return n;
 
     TVector3 V1, V2;
     if(!IsLabFrame()){
-      V1 = GetChildFrame(0).GetFourVector(GetParentFrame()).Vect();
+      if(!frame)
+	V1 = GetChildFrame(0).GetFourVector(GetParentFrame()).Vect();
+      else
+	V1 = frame.GetFourVector(GetParentFrame()).Vect();
       V2 = GetFourVector(GetParentFrame()).Vect();
     } else {
-      V1 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
-      V2 = RestFrame::GetAxis();
+      if(!frame)
+	V1 = GetChildFrame(0).GetFourVector(*this).Vect().Unit();
+      else
+	V1 = frame.GetFourVector(*this).Vect().Unit();
+      V2 = n;
     }
-    return V1.Cross(V2).Unit();
+    TVector3 ret = V1.Cross(V2);
+    if(ret.Mag() > 0)
+      return ret.Unit();
+
+    std::vector<TVector3> tries;
+    tries.push_back(TVector3(1.,0.,0.));
+    tries.push_back(TVector3(0.,1.,0.));
+    tries.push_back(TVector3(0.,0.,1.));
+    for(int i = 0; i < 3; i++){
+      V2 = tries[i];
+      ret = V1.Cross(V2);
+      if(ret.Mag() > 0)
+	return ret.Unit();
+    }
+
+    return n;		 
   }
 
   double RestFrame::GetDeltaPhiDecayPlanes(const RestFrame& frame) const {

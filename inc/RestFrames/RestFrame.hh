@@ -403,6 +403,8 @@ namespace RestFrames {
 
     /// \brief Returns the vector normal to the decay plane of this frame
     ///
+    /// \param frame    (optional) frame defining child axis
+    ///
     /// Returns the vector normal to the decay plane of this frame. The
     /// normal vector, \f$\hat{n}_{\perp}\f$, is defined as:
     /// \f[ \hat{n}_{\perp}\ = \frac{ 
@@ -419,8 +421,9 @@ namespace RestFrames {
     /// where \f$\vec{p}_{C}^{~F}\f$ is the momentum of the child frame 
     /// evaluated in this frame and \f$\vec{n}_{\parallel}\f$ is the vector
     /// defining the transverse plane as returned by RestFrame::GetAxis().
-    /// If this frame has no children then an empty vector is returned.
-    TVector3 GetDecayPlaneNormalVector() const;
+    /// If this frame has no children then RestFrame::GetAxis() is returned.
+    TVector3 GetDecayPlaneNormalVector(const RestFrame& frame = 
+				       RestFrame::Empty()) const;
 
     /// \brief Returns the azimuthal angle between decay planes
     ///
@@ -433,7 +436,7 @@ namespace RestFrames {
 
     /// \brief Returns the cosine of this frame's decay angle
     ///
-    /// \param frame    frame defining child axis
+    /// \param frame    (optional) frame defining child axis
     ///
     /// Returns the cosine of this frame's decay angle, 
     /// \f$\cos\theta_{F}\f$, which is defined as:

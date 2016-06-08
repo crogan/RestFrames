@@ -252,8 +252,8 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
   Nc_G.SetMass(mN);
-
-  CM_G.SetVariableMass(true);
+  CM_G.SetMass(600.);
+  //CM_G.SetVariableMass(true);
 
   if(LAB_G.InitializeAnalysis()){
     g_Log << LogInfo;
@@ -276,12 +276,16 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   const HistPlotVar& MWc     = histPlot->GetNewVar("MWc", "M_{Wc}", 0., 150., "[GeV]");
   const HistPlotVar& Mab2     = histPlot->GetNewVar("Mab2", "M_{ab}^{2}", 0., 1.);
   const HistPlotVar& Mcb2     = histPlot->GetNewVar("Mcb2", "M_{cb}^{2}", 0., 1.);
+
+  const HistPlotVar& cosWa     = histPlot->GetNewVar("cosWa", "cos #theta_{Wa}", -1., 1.);
+  const HistPlotVar& cosWb     = histPlot->GetNewVar("cosWb", "cos #theta_{Wb}", -1., 1.);
+  const HistPlotVar& cosWc     = histPlot->GetNewVar("cosWc", "cos #theta_{Wc}", -1., 1.);
  
   const HistPlotVar& MCMN     = histPlot->GetNewVar("MCMN", "M_{CM}", 0., 2.);
   const HistPlotVar& MWaN     = histPlot->GetNewVar("MWaN", "M_{Wa}", 0., 2.);
   const HistPlotVar& MWbN     = histPlot->GetNewVar("MWbN", "M_{Wb}", 0., 2.);
   const HistPlotVar& MWcN     = histPlot->GetNewVar("MWcN", "M_{Wc}", 0., 2.);
-  const HistPlotVar& MWTOT    = histPlot->GetNewVar("MWTOT", "#sqrt{#Sigma M_{W}^{ 2} / #Sigma m_{W}^{ 2}}", 0., 2.);
+  const HistPlotVar& MWTOT    = histPlot->GetNewVar("MWTOT", "#sqrt{#Sigma M_{W}^{ 2} / #Sigma m_{W}^{ 2}}", 0., 4.);
   
   histPlot->AddPlot(MCM, cat_Gen);
   histPlot->AddPlot(PzCM, cat_Gen);
@@ -289,6 +293,9 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   histPlot->AddPlot(MWa, MWb, cat_Gen);
   histPlot->AddPlot(MWb, MWc, cat_Gen);
   histPlot->AddPlot(MWa, MWc, cat_Gen);
+  histPlot->AddPlot(cosWa, cosWb, cat_Gen);
+  histPlot->AddPlot(cosWa, cosWc, cat_Gen);
+  histPlot->AddPlot(cosWb, cosWc, cat_Gen);
   histPlot->AddPlot(MCM, MWa, cat_Gen);
   histPlot->AddPlot(Mab2, Mcb2, cat_Gen);
  
@@ -372,8 +379,12 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     MWa = Wa_G.GetMass();
     MWb = Wb_G.GetMass();
     MWc = Wc_G.GetMass();
+    cosWa = Wa_G.GetCosDecayAngle();
+    cosWb = Wb_G.GetCosDecayAngle();
+    cosWc = Wc_G.GetCosDecayAngle();
     Mab2 = (Wa_G.GetFourVector()+Wb_G.GetFourVector()).M2()/MCM/MCM;
     Mcb2 = (Wc_G.GetFourVector()+Wb_G.GetFourVector()).M2()/MCM/MCM;
+    
     histPlot->Fill(cat_Gen);
 
     // minimization 
@@ -388,9 +399,6 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
 
     g_N = 3;
 
-    //vector<TVector3> g_P;
-    //vector<TVector3> g_U;
-
     vector<TLorentzVector> LEPs;
     LEPs.push_back(La_G.GetFourVector());
     LEPs.push_back(Lb_G.GetFourVector());
@@ -398,7 +406,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
 
     TLorentzVector LEP(0.,0.,0.,0.);
     for(int i = 0; i < g_N; i++){
-      LEPs[i].SetPtEtaPhiM(LEPs[i].Pt(),0.,LEPs[i].Phi(),LEPs[i].M());
+      //LEPs[i].SetPtEtaPhiM(LEPs[i].Pt(),0.,LEPs[i].Phi(),LEPs[i].M());
       LEP += LEPs[i];
     }
 
@@ -478,7 +486,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     MWbN = (INVs[1]+LEPs[1]).M()/MWb;
     MWcN = (INVs[2]+LEPs[2]).M()/MWc;
     MWTOT = 0.;
-    double MWgTOT = MWa*double(MWa) + MWb*MWb + MWc*MWc;
+    double MWgTOT = MWa*MWa + MWb*MWb + MWc*MWc;
     for(int i = 0; i < 3; i++){
       MWTOT += (INVs[i]+LEPs[i]).M2()/MWgTOT;
     }
