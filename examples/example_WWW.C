@@ -252,8 +252,8 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
   Nc_G.SetMass(mN);
-  CM_G.SetMass(600.);
-  //CM_G.SetVariableMass(true);
+  //CM_G.SetMass(600.);
+  CM_G.SetVariableMass(true);
 
   if(LAB_G.InitializeAnalysis()){
     g_Log << LogInfo;

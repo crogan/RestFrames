@@ -236,8 +236,10 @@ namespace RestFrames {
 				       double max) const {
     int N = GetNChildren();
     double SumMinChildMass = 0.;
+    double SumChildMass = 0.;
     for(int i = 0; i < N; i++){
       GeneratorFrame& child = GetChildFrame(i);
+      SumChildMass += child.GetMass();
       if(!child.IsVariableMassMCMC())
 	SumMinChildMass += child.GetMass();
       else 
@@ -248,17 +250,6 @@ namespace RestFrames {
       mass = max;
       prob = 0;
       return;
-    }
-
-    double SumChildMass = 0.;
-    for(int i = 0; i < N; i++){
-      GeneratorFrame& child = GetChildFrame(i);
-      if(child.IsVariableMassMCMC()){	double cmass, cprob, cmax;
-	cmass = max-SumMinChildMass+child.GetMinimumMassMCMC();
-	child.GenerateMassMCMC(cmass, cprob, cmass);
-	SumChildMass += cmass;
-      } else 
-	SumChildMass += child.GetMass();
     }
 
     double T = SumChildMass;
