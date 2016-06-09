@@ -120,18 +120,11 @@ namespace RestFrames {
   double ResonanceGenFrame::GetProbMCMC(double mass) const {
     if(mass < 0)
       mass = GetMass();
-    
-    // double den = (mass*mass-m_PoleMass*m_PoleMass)*(mass*mass-m_PoleMass*m_PoleMass)
-    //   + mass*mass*mass*mass*m_Width*m_Width/m_PoleMass/m_PoleMass;
-
-    // if(den > 0.)
-    //   return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)*mass*mass/den;
-    // else
-    //   return 0.;
 
     double den = mass*mass-m_PoleMass*m_PoleMass;
     den *= den;
     den += m_PoleMass*m_PoleMass*m_Width*m_Width;
+
     if(den > 0)
       return (DecayGenFrame::GetProbMCMC(mass)*mass*mass)/den;
     else

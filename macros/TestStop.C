@@ -35,12 +35,12 @@ using namespace RestFrames;
 
 void TestStop(){
   // set particle masses and widths
-  double mstop = 250.;
+  double mstop = 150.;
   double mtop = 173.5;
   double wtop = 1.33313;
   double mW   = 80.399;
   double wW   = 2.085;
-  double mLSP = 130.;
+  double mLSP = 1.;
   // Number of events to generate
   int Ngen = 100000;
 
@@ -130,7 +130,7 @@ void TestStop(){
   const HistPlotCategory& cat_1 = histPlot->GetNewCategory("two", "2-body");
  
 
-  const HistPlotVar& Mt = histPlot->GetNewVar("Mt", "m_{b+W}", mW-10., mstop+10., "[GeV]");
+  const HistPlotVar& Mt = histPlot->GetNewVar("Mt", "m_{b+W}", mW-10., mstop-mLSP+10., "[GeV]");
 
   histPlot->AddPlot(Mt,   cat_0+cat_1);
 

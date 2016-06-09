@@ -138,20 +138,11 @@ namespace RestFrames {
   }
 
   bool ppLabGenFrame::IterateMCMC(){
-    double R = GetRandom();
-    double deltaLogX;
-    
-    // if(R < 0.5)
-    //   deltaLogX = -1.+sqrt(2.*R);
-    // else
-    //   deltaLogX = 1.-sqrt(2.*(1.-R));
-    deltaLogX = R*2.-1.;
-
+    double deltaLogX = GetRandom()*2.-1.;
     double deltaLogXOld = m_deltaLogX;
-    //double probOld = GetProbMCMC()/(1.-fabs(deltaLogXOld));
+    
     double probOld = GetProbMCMC();
     m_deltaLogX = deltaLogX;
-    //double probNew = GetProbMCMC()/(1.-fabs(deltaLogX));
     double probNew = GetProbMCMC();
 
     if(probOld > 0)
