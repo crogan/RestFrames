@@ -66,10 +66,12 @@ namespace RestFrames {
     if(!frame) return;
     if(!frame.IsVisibleFrame()) return;
     if(!frame.IsRecoFrame()) return;
+
     int N = GetNFrames();
     Group::AddFrame(frame);
     if(GetNFrames() == N) 
       return;
+    
     m_NElementsForFrame[&frame] = 1;
     m_NExclusiveElementsForFrame[&frame] = true;
   }
@@ -77,6 +79,9 @@ namespace RestFrames {
   void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, 
 					       int N, bool exclusive_N){
     if(!ContainsFrame(frame)) return;
+
+    SetMind(false);
+
     m_NElementsForFrame[&frame] = std::max(0, N);
     m_NExclusiveElementsForFrame[&frame] = exclusive_N;
   }
@@ -84,6 +89,7 @@ namespace RestFrames {
   void CombinatoricGroup::GetNElementsForFrame(const RestFrame& frame, int& N, 
 					       bool& exclusive_N) const {
     if(!ContainsFrame(frame)) return;
+    
     N = m_NElementsForFrame[&frame];
     exclusive_N = m_NExclusiveElementsForFrame[&frame];
   }
@@ -96,7 +102,9 @@ namespace RestFrames {
 
   CombinatoricState& CombinatoricGroup::InitializeParentState(){
     std::string name = GetName()+"_parent";
-    return *(new CombinatoricState(name, name));
+    CombinatoricState* statePtr = new CombinatoricState(name, name);
+    AddDependent(statePtr);
+    return *statePtr;
   }
 
   CombinatoricState& CombinatoricGroup::GetParentState() const {

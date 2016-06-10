@@ -49,82 +49,82 @@ namespace RestFrames {
   }
 
   void MinMassesInvJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
-    int Nchild = GetNChildren();
-    for(int i = 0 ; i < Nchild; i++){
-      GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
-      int N = m_DependancyStates[i].GetN();
-      for(int j = 0; j < N; j++)
-	m_DependancyStates[i][j].FillGroupJigsawDependancies(jigsaws);
-    }
+    // int Nchild = GetNChildren();
+    // for(int i = 0 ; i < Nchild; i++){
+    //   GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
+    //   int N = m_DependancyStates[i].GetN();
+    //   for(int j = 0; j < N; j++)
+    // 	m_DependancyStates[i][j].FillGroupJigsawDependancies(jigsaws);
+    // }
   }
 
   double MinMassesInvJigsaw::GetMinimumMass() const {
-    int N = GetNChildren();
-    if(N <= 0) return 0.;
-    double Minv = 0.;
-    double Mvis = 0.;
-    TLorentzVector Pvis(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++){
-      Minv += GetChildState(i).GetMinimumMass();
-      TLorentzVector pv = m_DependancyStates[i].GetFourVector();
-      Mvis += pv.M();
-      Pvis += pv;
-    }
-    return sqrt(std::max(0.,Pvis.M2() - Mvis*Mvis + Minv*Minv));
+    // int N = GetNChildren();
+    // if(N <= 0) return 0.;
+    // double Minv = 0.;
+    // double Mvis = 0.;
+    // TLorentzVector Pvis(0.,0.,0.,0.);
+    // for(int i = 0; i < N; i++){
+    //   Minv += GetChildState(i).GetMinimumMass();
+    //   TLorentzVector pv = m_DependancyStates[i].GetFourVector();
+    //   Mvis += pv.M();
+    //   Pvis += pv;
+    // }
+    // return sqrt(std::max(0.,Pvis.M2() - Mvis*Mvis + Minv*Minv));
   }
 
   bool MinMassesInvJigsaw::AnalyzeEvent(){
-    if(!IsSoundMind())
-      return SetSpirit(false);
+    // if(!IsSoundMind())
+    //   return SetSpirit(false);
 
-    int N = GetNChildren();
-    if(N < 0) SetSpirit(false);
+    // int N = GetNChildren();
+    // if(N < 0) SetSpirit(false);
      
-    std::vector<double> Minv;
-    std::vector<double> Mvis;
-    std::vector<TLorentzVector> Pvis;
-    double MinvTot = 0.;
-    double MvisTot = 0.;
-    TLorentzVector PvisTot(0.,0.,0.,0.);
-    for(int i = 0; i < N; i++){
-      Minv.push_back(std::max(0., GetChildState(i).GetMinimumMass()));
-      MinvTot += Minv[i];
-      TLorentzVector pv = m_DependancyStates[i].GetFourVector();
-      Mvis.push_back(std::max(0., pv.M()));
-      MvisTot += Mvis[i];
-      Pvis.push_back(pv);
-      PvisTot += pv;
-    }
-    TLorentzVector INV = GetParentState().GetFourVector();
-    double Minv2 = std::max(0.,PvisTot.M2() - 
-			    MvisTot*MvisTot + 
-			    MinvTot*MinvTot);
-    for(int i = 0; i < N-1; i++){
-      PvisTot -= Pvis[i];
-      MvisTot -= Mvis[i];
-      MinvTot -= Minv[i];
-      double Minv2new = std::max(0.,PvisTot.M2() - 
-				 MvisTot*MvisTot + 
-				 MinvTot*MinvTot);
-      TVector3 Boost = INV.BoostVector();
-      INV.Boost(-Boost);
-      PvisTot.Boost(-Boost);
-      Pvis[i].Boost(-Boost);
-      TVector3 nPinv = Pvis[i].Vect()-PvisTot.Vect();
-      if(nPinv.Mag() > 0.)
-	nPinv = (1./nPinv.Mag())*nPinv;
+    // std::vector<double> Minv;
+    // std::vector<double> Mvis;
+    // std::vector<TLorentzVector> Pvis;
+    // double MinvTot = 0.;
+    // double MvisTot = 0.;
+    // TLorentzVector PvisTot(0.,0.,0.,0.);
+    // for(int i = 0; i < N; i++){
+    //   Minv.push_back(std::max(0., GetChildState(i).GetMinimumMass()));
+    //   MinvTot += Minv[i];
+    //   TLorentzVector pv = m_DependancyStates[i].GetFourVector();
+    //   Mvis.push_back(std::max(0., pv.M()));
+    //   MvisTot += Mvis[i];
+    //   Pvis.push_back(pv);
+    //   PvisTot += pv;
+    // }
+    // TLorentzVector INV = GetParentState().GetFourVector();
+    // double Minv2 = std::max(0.,PvisTot.M2() - 
+    // 			    MvisTot*MvisTot + 
+    // 			    MinvTot*MinvTot);
+    // for(int i = 0; i < N-1; i++){
+    //   PvisTot -= Pvis[i];
+    //   MvisTot -= Mvis[i];
+    //   MinvTot -= Minv[i];
+    //   double Minv2new = std::max(0.,PvisTot.M2() - 
+    // 				 MvisTot*MvisTot + 
+    // 				 MinvTot*MinvTot);
+    //   TVector3 Boost = INV.BoostVector();
+    //   INV.Boost(-Boost);
+    //   PvisTot.Boost(-Boost);
+    //   Pvis[i].Boost(-Boost);
+    //   TVector3 nPinv = Pvis[i].Vect()-PvisTot.Vect();
+    //   if(nPinv.Mag() > 0.)
+    // 	nPinv = (1./nPinv.Mag())*nPinv;
       
-      double Pinv = GetP(sqrt(Minv2), Minv[i], sqrt(Minv2new));
-      TLorentzVector vPinv;
-      vPinv.SetVectM(Pinv*nPinv, Minv[i]);
-      INV -= vPinv;
-      Minv2 = Minv2new;
-      INV.Boost(Boost);
-      PvisTot.Boost(Boost);
-      vPinv.Boost(Boost);
-      GetChildState(i).SetFourVector(vPinv);
-    }
-    GetChildState(N-1).SetFourVector(INV);
+    //   double Pinv = GetP(sqrt(Minv2), Minv[i], sqrt(Minv2new));
+    //   TLorentzVector vPinv;
+    //   vPinv.SetVectM(Pinv*nPinv, Minv[i]);
+    //   INV -= vPinv;
+    //   Minv2 = Minv2new;
+    //   INV.Boost(Boost);
+    //   PvisTot.Boost(Boost);
+    //   vPinv.Boost(Boost);
+    //   GetChildState(i).SetFourVector(vPinv);
+    // }
+    // GetChildState(N-1).SetFourVector(INV);
     
     return SetSpirit(true);
   }

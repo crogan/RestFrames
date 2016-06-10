@@ -117,7 +117,7 @@ namespace RestFrames {
 	}
       }
       if(!exists){
-	std::string name = var.GetName()+"_"+GetName();
+	std::string name = GetUniqueName(var.GetName()+"_"+GetName());
 	TH1D* hist = new TH1D(name.c_str(),name.c_str(),
 			      256,var.GetMin(),var.GetMax());
 	m_HistToVar[hist] = &var;
@@ -138,7 +138,7 @@ namespace RestFrames {
 	  }
 	}
 	if(!exists){
-	  std::string name = var.GetName()+"_"+cats[c].GetName()+"_"+GetName();
+	  std::string name = GetUniqueName(var.GetName()+"_"+cats[c].GetName()+"_"+GetName());
 	  TH1D* hist = new TH1D(name.c_str(),name.c_str(),
 				256,var.GetMin(),var.GetMax());
 	  m_HistToVar[hist] = &var;
@@ -171,7 +171,7 @@ namespace RestFrames {
 	}
       }
       if(!exists){
-	std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+GetName();
+	std::string name = GetUniqueName(varX.GetName()+"_v_"+varY.GetName()+"_"+GetName());
 	TH2D* hist = new TH2D(name.c_str(),name.c_str(),
 			      128,varX.GetMin(),varX.GetMax(),
 			      128,varY.GetMin(),varY.GetMax());
@@ -200,8 +200,8 @@ namespace RestFrames {
 	  }
 	}
 	if(!exists){
-	  std::string name = varX.GetName()+"_v_"+varY.GetName()+"_"+
-	    cats[c].GetName()+"_"+GetName();
+	  std::string name = GetUniqueName(varX.GetName()+"_v_"+varY.GetName()+"_"+
+					   cats[c].GetName()+"_"+GetName());
 	  TH2D* hist = new TH2D(name.c_str(),name.c_str(),
 				128,varX.GetMin(),varX.GetMax(),
 				128,varY.GetMin(),varY.GetMax());
@@ -289,7 +289,7 @@ namespace RestFrames {
       }
     }
 
-    std::string name = "c_"+var.GetName()+"_"+catname+GetName();
+    std::string name = GetUniqueName("c_"+var.GetName()+"_"+catname+GetName());
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->SetLeftMargin(0.2);
     can->SetRightMargin(0.05);
@@ -441,7 +441,7 @@ namespace RestFrames {
       }
     }
     
-    std::string name = "c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName();
+    std::string name = GetUniqueName("c_"+varX.GetName()+"_v_"+varY.GetName()+"_"+catname+GetName());
     TCanvas* can = new TCanvas(name.c_str(),name.c_str(),600,500);
     can->Draw();
     if(invert_colors){
@@ -549,7 +549,7 @@ namespace RestFrames {
   }
 
   void HistPlot::WriteHist(const std::string& name){
-    TFile *file = new TFile(name.c_str(),"UPDATE");
+    TFile* file = new TFile(name.c_str(),"UPDATE");
     file->mkdir(GetName().c_str());
     file->mkdir((GetName()+"/hist").c_str());
     file->cd((GetName()+"/hist").c_str());

@@ -95,6 +95,7 @@ namespace RestFrames {
     void AddCanvas(TCanvas* can);
     void AddTObject(TObject* obj);
     int GetNCanvases();
+    std::string GetUniqueName(const std::string& name);
     
   private:
     std::vector<TObject*> m_TObjects;

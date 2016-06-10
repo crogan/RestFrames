@@ -232,10 +232,13 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   tree_plot->SetTree(LAB_R);
   tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
-   // reco tree
+  // reco tree
   tree_plot->SetTree(INV_R);
   tree_plot->Draw("InvTree", "Invisible Jigsaws",true);
 
+  // reco tree
+  tree_plot->SetTree(RapidityJigsaw_R);
+  tree_plot->Draw("InvTree", "Invisible Jigsaws",true);
  
 
   g_Log << LogInfo << "Finished" << LogEnd;

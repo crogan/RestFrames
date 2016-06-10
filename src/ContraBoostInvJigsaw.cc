@@ -48,20 +48,15 @@ namespace RestFrames {
   }
 
   void ContraBoostInvJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
-    int Nchild = GetNChildren();
-    for(int i = 0 ; i < Nchild; i++){
-      GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
-      int N = m_DependancyStates[i].GetN();
-      for(int j = 0; j < N; j++)
-	m_DependancyStates[i][j].FillGroupJigsawDependancies(jigsaws);
-    }
+    InvisibleJigsaw::FillInvisibleMassJigsawDependancies(jigsaws);
+    FillStateGroupJigsawDependancies(jigsaws);
   }
 
   double ContraBoostInvJigsaw::GetMinimumMass() const {
     double Minv1 = GetChildState(0).GetMinimumMass();
     double Minv2 = GetChildState(1).GetMinimumMass();
-    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
+    TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
+    TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
     double Mvis1 = fabs(Pvis1.M());
     double Mvis2 = fabs(Pvis2.M());
     double Minv = std::max(0.,std::max(Minv1,Minv2));
@@ -86,8 +81,8 @@ namespace RestFrames {
     double c2 = GetC2();
 
 
-    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
+    TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
+    TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
     TLorentzVector INV = GetParentState().GetFourVector();
 
     // go to the rest frame of (Pvis1+Pvis2+INV system)
@@ -126,8 +121,8 @@ namespace RestFrames {
   void ContraBoostInvJigsaw::CalcCoef(){
     double Minv1 = GetChildState(0).GetMinimumMass();
     double Minv2 = GetChildState(1).GetMinimumMass();
-    TLorentzVector Pvis1 = m_DependancyStates[0].GetFourVector();
-    TLorentzVector Pvis2 = m_DependancyStates[1].GetFourVector();
+    TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
+    TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
     double m1 = std::max(0.,Pvis1.M());
     double m2 = std::max(0.,Pvis2.M());
     double Minv = std::max(Minv1,Minv2);

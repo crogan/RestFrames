@@ -125,14 +125,14 @@ namespace RestFrames {
       m_ChildJigsawPtr = &jigsaw;
   }
 
-  Jigsaw const& State::GetParentJigsaw() const { 
+  Jigsaw& State::GetParentJigsaw() const { 
     if(m_ParentJigsawPtr)
       return *m_ParentJigsawPtr;
     else 
       return Jigsaw::Empty();
   }
   
-  Jigsaw const& State::GetChildJigsaw() const { 
+  Jigsaw& State::GetChildJigsaw() const { 
     if(m_ChildJigsawPtr)
       return *m_ChildJigsawPtr;
     else
@@ -155,14 +155,6 @@ namespace RestFrames {
 
   RFCharge State::GetCharge() const {
     return m_Charge;
-  }
-
-  void State::FillGroupJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
-    if(m_ParentJigsawPtr) m_ParentJigsawPtr->FillGroupJigsawDependancies(jigsaws);
-  }
-
-  void State::FillStateJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
-    if(m_ParentJigsawPtr) m_ParentJigsawPtr->FillStateJigsawDependancies(jigsaws);
   }
 
 }

@@ -85,9 +85,5 @@ namespace RestFrames {
       return 0.;
   }
 
-  void InvisibleState::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
-    static_cast<const InvisibleJigsaw&>(GetChildJigsaw()).FillInvisibleMassJigsawDependancies(jigsaws);
-  }
-
   InvisibleState InvisibleState::m_Empty;
 }

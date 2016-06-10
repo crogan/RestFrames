@@ -56,6 +56,7 @@ namespace RestFrames {
 
     void SetTree(const RestFrame& frame);
     void SetTree(const Group& group);
+    void SetTree(const Jigsaw& jigsaw);
     
     void AddJigsaws(const RestFrames::RFList<Jigsaw>& jigsaws);
     void AddJigsaw(const Jigsaw& jigsaw);
@@ -105,7 +106,8 @@ namespace RestFrames {
     void FillFrameTreeMap(int irow, const RestFrame& frame);
     void FillFrameTreeMap(int irow, const DecayRecoFrame& frame);
     void FillGroupTree(const Group& group);
-    void FillGroupTreeMap(int irow, const State& state);
+    void FillJigsawTree(const Jigsaw& jigsaw);
+    void FillStateTreeMap(int irow, const State& state);
     void FillJigsawLink(const Jigsaw& jigsaw);
 
     void SetColors(bool invert_bkg_color,

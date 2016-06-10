@@ -47,8 +47,6 @@ namespace RestFrames {
     /// \brief Clears ReconstructionFrame of all connections to other objects
     virtual void Clear();
 
-    static ReconstructionFrame& Empty();
-
     /// \brief Add a child RestFrame to this frame
     ///
     /// \param frame    RestFrame to be added as child
@@ -81,15 +79,17 @@ namespace RestFrames {
     Group& GetGroup() const;
     RestFrames::RFList<Group> GetListGroups() const;
 
+    static ReconstructionFrame& Empty();
+
+  protected:
+    mutable std::map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
     virtual bool InitializeAnalysisRecursive();
     virtual bool ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
-  protected:
-    Group* m_GroupPtr;
-    mutable std::map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
-
   private:
+    Group* m_GroupPtr;
+
     bool InitializeVisibleStates();
     bool InitializeGroupStates();
     void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;

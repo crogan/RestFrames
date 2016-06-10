@@ -50,30 +50,32 @@ namespace RestFrames {
     virtual void SetGroup(Group& group = Group::Empty());
     virtual CombinatoricGroup& GetGroup() const;
 
-    virtual void SetParentState(State& state = State::Empty());
-    virtual CombinatoricState& GetParentState() const;
-    virtual CombinatoricState& GetChildState(int i) const;
-
     virtual void AddFrame(RestFrame& frame, int i = 0);
     virtual void AddFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
 
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
-
-    virtual bool AnalyzeEvent();
-  
   protected:
     virtual bool InitializeCombinatoric();
     virtual bool LoopCombinatoric();
     virtual double EvaluateMetric() const = 0;
 
+    virtual bool AnalyzeEvent();
+
     RestFrames::RFList<VisibleState> m_InputStates;
     std::map<const State*, int>  m_NForChild;
     std::map<const State*, bool> m_NExclusive;
 
+    virtual void SetParentState(State& state = State::Empty());
+    virtual CombinatoricState& GetParentState() const;
+    virtual CombinatoricState& GetChildState(int i) const;
+
     virtual CombinatoricState& GetNewChildState();
  
+    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
+
     RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
+
+  private:
     
   };
 

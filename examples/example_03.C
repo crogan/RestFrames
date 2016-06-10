@@ -108,7 +108,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   // Invisible Groups
   InvisibleGroup INV_Mt("INV_Mt","#nu Jigsaws");
   INV_Mt.AddFrame(NU_Mt);     
-  InvisibleGroup INV_MW("INV_MW","nu Jigsaws");
+  InvisibleGroup INV_MW("INV_MW","#nu Jigsaws");
   INV_MW.AddFrame(NU_MW);
  
   // Set neutrino masses to zero
@@ -130,6 +130,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     g_Log << LogInfo << "...Successfully initialized analyses" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analyses" << LogEnd;
+
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
 

@@ -33,7 +33,7 @@
 #include "RestFrames/RFBase.hh"
 
 namespace RestFrames {
- 
+
   class Jigsaw;
   class RestFrame;
 
@@ -44,6 +44,7 @@ namespace RestFrames {
   // Group class
   ///////////////////////////////////////////////
   class Group : public RFBase {
+
   public:
     Group(const std::string& sname, const std::string& stitle);
     Group();
@@ -63,8 +64,10 @@ namespace RestFrames {
     virtual void AddFrames(RestFrames::RFList<RestFrame> frames);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
-    void RemoveFrame(const RestFrame& frame);
-    void RemoveJigsaw(const Jigsaw& jigsaw);
+    void RemoveFrame(RestFrame& frame);
+    void RemoveFrames();
+    void RemoveJigsaw(Jigsaw& jigsaw);
+    void RemoveJigsaws();
 
     bool ContainsFrame(const RestFrame& frame) const;
     
@@ -72,28 +75,24 @@ namespace RestFrames {
     const RestFrames::RFList<RestFrame>& GetListFrames() const;
     const RestFrames::RFList<Jigsaw>& GetListJigsaws() const;
 
-    virtual State& GetParentState() const;
-    State& GetChildState(const RestFrame& frame) const;
-    RestFrames::RFList<State> GetChildStates(const RestFrames::RFList<RestFrame>& frames) const;
-
-    RestFrame const& GetLabFrame() const;
+  protected:
+    GroupType m_Type;
+    State* m_GroupStatePtr;
 
     virtual bool InitializeAnalysis();
     virtual bool ClearEvent() = 0;
     virtual bool AnalyzeEvent() = 0;
 
-  protected:
-    GroupType m_Type;
-    State* m_GroupStatePtr;
+    virtual State& InitializeParentState() = 0;
+    virtual State& GetParentState() const;
 
     int GetNChildStates() const;
     virtual State& GetChildState(int i) const;
 
-    virtual State& InitializeParentState() = 0;
+    State& GetChildState(const RestFrame& frame) const;
+    RestFrames::RFList<State> GetChildStates(const RestFrames::RFList<RestFrame>& frames) const;
 
-    bool ResolveUnknowns();
-    bool ResolveState(const State& state);
-    void InitializeJigsaw(Jigsaw& jigsaw);
+    RestFrame const& GetLabFrame() const;
 
   private:
     RestFrames::RFList<RestFrame> m_Frames;
@@ -103,7 +102,16 @@ namespace RestFrames {
     RestFrames::RFList<State> m_StatesToResolve;
     RestFrames::RFList<Jigsaw> m_JigsawsToUse;
 
+    bool ResolveUnknowns();
+    bool ResolveState(const State& state);
+    bool InitializeJigsaw(Jigsaw& jigsaw);
+
     static int m_class_key;
+
+    friend class TreePlot;
+    friend class ReconstructionFrame;
+    friend class LabRecoFrame;
+    friend class Jigsaw;
 
   };
   

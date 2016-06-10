@@ -62,7 +62,7 @@ namespace RestFrames {
 
     int Ninput = m_InputStates.GetN();
     int Nout   = GetNChildren();
-    int Ndeps  = m_DependancyStates.size();
+    int Ndeps  = GetNDependancyStates();
 
     bool DO_N3 = (Nout == 2) && (Ndeps <= 0) && (Ninput >= 2);
     if(DO_N3){
@@ -155,7 +155,7 @@ namespace RestFrames {
     std::vector<TLorentzVector> P;
     for(int i = 0; i < N; i++)
       P.push_back(GetChildState(i).GetFourVector());
-    int Nd = m_DependancyStates.size();
+    int Nd = GetNDependancyStates();
     for(int i = 0; i < Nd && i < N; i++)
       P[i] += GetDependancyStates(i).GetFourVector();
     

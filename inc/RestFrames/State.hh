@@ -54,13 +54,13 @@ namespace RestFrames {
     /// \brief Returns State (*StateType*) type 
     StateType GetType() const;
     
-    /// \brief Is this a VisibleState? (yes/no)
+    /// \brief Is this a VisibleState? (true/false)
     bool IsVisibleState() const;
     
-    /// \brief Is this an InvisibleState? (yes/no)
+    /// \brief Is this an InvisibleState? (true/false)
     bool IsInvisibleState() const;
 
-    /// \brief Is this a CombinatoricState? (yes/no)
+    /// \brief Is this a CombinatoricState? (true/false)
     bool IsCombinatoricState() const;
 
     virtual void AddFrame(RestFrame& frame) = 0;
@@ -74,16 +74,13 @@ namespace RestFrames {
 
     virtual void SetParentJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
     virtual void SetChildJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
-    virtual Jigsaw const& GetParentJigsaw() const;
-    virtual Jigsaw const& GetChildJigsaw() const;
+    virtual Jigsaw& GetParentJigsaw() const;
+    virtual Jigsaw& GetChildJigsaw() const;
 
     virtual void Boost(const TVector3& B);
     virtual void SetFourVector(const TLorentzVector& V);
     virtual TLorentzVector GetFourVector() const;
     virtual RFCharge GetCharge() const;
-
-    void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
-    void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
 	
   protected:
     StateType m_Type;

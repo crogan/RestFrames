@@ -144,10 +144,10 @@ namespace RestFrames {
     return M;
   }
 
-  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const{ 
+  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
-      GetChildState(i).FillInvisibleMassJigsawDependancies(jigsaws);
+      static_cast<const InvisibleJigsaw&>(GetChildState(i).GetChildJigsaw()).FillInvisibleMassJigsawDependancies(jigsaws);
   }
 
   bool InvisibleJigsaw::InitializeDependancyJigsaws(){

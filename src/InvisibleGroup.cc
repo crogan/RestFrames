@@ -73,7 +73,9 @@ namespace RestFrames {
 
   InvisibleState& InvisibleGroup::InitializeParentState(){
     std::string name = GetName()+"_parent";
-    return *(new InvisibleState(name, name));
+    InvisibleState* statePtr = new InvisibleState(name, name);
+    AddDependent(statePtr);
+    return *statePtr;
   }
 
   InvisibleState& InvisibleGroup::GetParentState() const {
@@ -116,7 +118,7 @@ namespace RestFrames {
       return SetSpirit(false);
     }
     m_GroupStatePtr->SetFourVector(m_Lab_P);
-    return SetSpirit(true);;
+    return SetSpirit(true);
   }
   
   InvisibleGroup InvisibleGroup::m_Empty;

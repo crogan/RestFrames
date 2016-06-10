@@ -118,6 +118,7 @@ namespace RestFrames {
     else 
       stitle = title;
     
+    sname = GetUniqueName(sname);
     TCanvas* can = new TCanvas(sname.c_str(),stitle.c_str(),600,600);
     can->Range(0.,0.,1.,1.);
     return can;
@@ -191,11 +192,24 @@ namespace RestFrames {
 
   void TreePlot::SetTree(const Group& group){
     if(!group) return;
+    if(!group.IsSoundMind()) return;
     ClearTree();
     m_GroupPtr = &group;
     m_Type = kGroupTree;
 
     FillGroupTree(group);
+    InitTreeGrid();
+    ConvertNodeCoordinates(m_TreeNodes);
+  }
+
+  void TreePlot::SetTree(const Jigsaw& jigsaw){
+    if(!jigsaw) return;
+    if(!jigsaw.IsSoundMind()) return;
+    ClearTree();
+    m_GroupPtr = &jigsaw.GetGroup();
+    m_Type = kGroupTree;
+
+    FillJigsawTree(jigsaw);
     InitTreeGrid();
     ConvertNodeCoordinates(m_TreeNodes);
   }
@@ -343,12 +357,30 @@ namespace RestFrames {
     top_nodePtr->SetLabel(GetStateTitle(group.GetParentState()));
     m_TreeNodes.push_back(top_nodePtr);
     m_Ncol.push_back(1);
-    FillGroupTreeMap(0, group.GetParentState());
+    FillStateTreeMap(0, group.GetParentState());
 
     m_Nrow = m_Ncol.size();
   }
 
-  void TreePlot::FillGroupTreeMap(int irow, const State& state){
+  void TreePlot::FillJigsawTree(const Jigsaw& jigsaw){
+    m_Nrow = 0;
+    m_Ncol.clear();
+  
+    if(!jigsaw.GetParentState()) return;
+
+    TreePlotNode* top_nodePtr = new TreePlotNode();
+    top_nodePtr->SetX(0.);
+    top_nodePtr->SetY(0.);
+    top_nodePtr->SetState(jigsaw.GetParentState());
+    top_nodePtr->SetLabel(GetStateTitle(jigsaw.GetParentState()));
+    m_TreeNodes.push_back(top_nodePtr);
+    m_Ncol.push_back(1);
+    FillStateTreeMap(0, jigsaw.GetParentState());
+
+    m_Nrow = m_Ncol.size();
+  }
+
+  void TreePlot::FillStateTreeMap(int irow, const State& state){
     const Jigsaw& jigsaw = state.GetChildJigsaw();
     if(!jigsaw) return;
     
@@ -372,7 +404,7 @@ namespace RestFrames {
       linkPtr->SetLabel(jigsaw.GetTitle());
       m_TreeLinks.push_back(linkPtr);
       m_Ncol[irow+1]++;
-      FillGroupTreeMap(irow+1, child);
+      FillStateTreeMap(irow+1, child);
     }
   }
 

@@ -50,7 +50,6 @@ namespace RestFrames {
 
   Group::~Group(){
     Clear();
-    
   }
 
   Group& Group::Empty(){
@@ -59,11 +58,13 @@ namespace RestFrames {
 
   void Group::Clear(){
     SetBody(false);
-    if(m_GroupStatePtr) delete m_GroupStatePtr;
+    
     m_GroupStatePtr = nullptr;
-    m_Frames.Clear();
+    
+    RemoveFrames();
+    RemoveJigsaws();
+
     m_States.Clear();
-    m_Jigsaws.Clear();
     m_StatesToResolve.Clear();
     m_JigsawsToUse.Clear(); 
     RFBase::Clear();
@@ -78,9 +79,10 @@ namespace RestFrames {
   }
 
   void Group::AddFrame(RestFrame& frame){
-    SetBody(false);
     if(!frame) return;
     if(!frame.IsRecoFrame()) return;
+    SetBody(false);
+
     static_cast<ReconstructionFrame&>(frame).SetGroup(*this);
     m_Frames.Add(frame);
   }
@@ -92,28 +94,60 @@ namespace RestFrames {
   }
 
   void Group::AddJigsaw(Jigsaw& jigsaw){
-    SetBody(false);
     if(!jigsaw) return;
 
     if(!jigsaw.GetGroup().IsEmpty()){
-      if(jigsaw.GetGroup() == *this) return;
+      if(jigsaw.GetGroup() == *this) 
+	return;
       Group& group = jigsaw.GetGroup();
       jigsaw.SetGroup();
       group.RemoveJigsaw(jigsaw);
-    }
+    } 
       
+    SetBody(false);
+
     if(m_JigsawsToUse.Add(jigsaw))
       jigsaw.SetGroup(*this);
   }
 
-  void Group::RemoveFrame(const RestFrame& frame){
+  void Group::RemoveFrame(RestFrame& frame){
+    if(!m_Frames.Contains(frame)) 
+      return;
+   
     SetBody(false);
+
+    static_cast<ReconstructionFrame&>(frame).SetGroup();
     m_Frames.Remove(frame);
   }
 
-  void Group::RemoveJigsaw(const Jigsaw& jigsaw){
+  void Group::RemoveFrames(){
+    int N = m_Frames.GetN();
+    for(int i = N-1; i >= 0; i--){
+      m_Frames.Remove(m_Frames[i]);
+    }
+  }
+
+  void Group::RemoveJigsaw(Jigsaw& jigsaw){
+    if(!m_Jigsaws.Contains(jigsaw) &&
+       !m_JigsawsToUse.Contains(jigsaw))
+      return;
+      
     SetBody(false);
+    
+    jigsaw.SetGroup();
     m_Jigsaws.Remove(jigsaw);
+    m_JigsawsToUse.Remove(jigsaw);
+  }
+
+  void Group::RemoveJigsaws(){
+    int N = m_Jigsaws.GetN();
+    for(int i = N-1; i >= 0; i--){
+      m_Jigsaws.Remove(m_Jigsaws[i]);
+    }
+    N = m_JigsawsToUse.GetN();
+    for(int i = N-1; i >= 0; i--){
+      m_JigsawsToUse.Remove(m_JigsawsToUse[i]);
+    }
   }
 
   bool Group::ContainsFrame(const RestFrame& frame) const {
@@ -144,10 +178,9 @@ namespace RestFrames {
     m_Log << "Initializing Group for analysis...";
     m_Log << LogEnd;
 
-    if(m_GroupStatePtr) delete m_GroupStatePtr;
     m_GroupStatePtr = &InitializeParentState();
     m_GroupStatePtr->AddFrames(m_Frames);
- 
+
     if(!ResolveUnknowns()){
       m_Log << LogWarning;
       m_Log << "Unable to resolve unknowns associated with ";
@@ -156,12 +189,16 @@ namespace RestFrames {
       return SetBody(false);
     }
 
-    m_Log << LogVerbose << "...Done" << LogEnd;
+    m_Log << LogVerbose;
+    m_Log << "...Done initializing group for analysis" << LogEnd;
     SetBody(true);
     return SetMind(true);
   }
 
   bool Group::ResolveUnknowns(){
+    m_JigsawsToUse += m_Jigsaws;
+    m_Jigsaws.Clear();
+
     m_States.Clear();
     m_StatesToResolve.Clear();
     m_States.Add(*m_GroupStatePtr);
@@ -209,24 +246,31 @@ namespace RestFrames {
     m_Log << Log(state.GetListFrames()) << std::endl;
     m_Log << " Jigsaw:" << Log(jigsawSolutionPtr);
     m_Log << LogEnd;
-    InitializeJigsaw(*jigsawSolutionPtr);
+    
+    if(!InitializeJigsaw(*jigsawSolutionPtr))
+      return false;
+
     m_JigsawsToUse.Remove(*jigsawSolutionPtr);
     return true;
   }
 
-  void Group::InitializeJigsaw(Jigsaw& jigsaw){
+  bool Group::InitializeJigsaw(Jigsaw& jigsaw){
     State& state = m_StatesToResolve[0];
     jigsaw.SetParentState(state);
+
     if(!jigsaw.InitializeTree()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize Jigsaw:";
       m_Log << Log(jigsaw) << LogEnd;
+      return false;
     }
+
     m_States += jigsaw.GetChildStates();
     m_StatesToResolve -= state;
     m_StatesToResolve += jigsaw.GetChildStates();
     m_Jigsaws += jigsaw;
-    return;
+
+    return true;
   }
  
   int Group::GetNChildStates() const {

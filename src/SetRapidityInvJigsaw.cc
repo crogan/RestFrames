@@ -52,7 +52,7 @@ namespace RestFrames {
       return SetSpirit(false);
     
     TLorentzVector inv_P = GetParentState().GetFourVector();
-    TLorentzVector vis_P = m_DependancyStates[0].GetFourVector();
+    TLorentzVector vis_P = GetDependancyStates(0).GetFourVector();
 
     TVector3 boostZ = vis_P.BoostVector();
     boostZ = boostZ.Dot(m_Axis.Unit())*m_Axis.Unit();

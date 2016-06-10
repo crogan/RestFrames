@@ -29,6 +29,7 @@
 
 #include <TFile.h>
 #include <TStyle.h>
+#include <TROOT.h>
 
 #include "RestFrames/RFPlot.hh"
 
@@ -80,6 +81,18 @@ namespace RestFrames {
 
   int RFPlot::GetNCanvases(){
     return m_Canvases.size();
+  }
+
+  std::string RFPlot::GetUniqueName(const std::string& name){
+    int count = 0;
+    std::string uniq_name = name;
+    while(gROOT->FindObject(uniq_name.c_str())){
+      std::stringstream i;
+      i << count;
+      uniq_name = name+"_"+i.str();
+      count++;
+    }
+    return uniq_name;
   }
 
   void RFPlot::SetStyle(bool invert_colors){

@@ -50,21 +50,27 @@ namespace RestFrames {
 
   Jigsaw::Jigsaw() : RFBase() { m_Type = kVanillaJigsaw; }
 
-  Jigsaw::~Jigsaw() {}
+  Jigsaw::~Jigsaw(){
+    Clear();
+  }
 
   Jigsaw& Jigsaw::Empty(){
     return InvisibleJigsaw::Empty();
   }
 
   void Jigsaw::Clear(){
+    SetBody(false);
     SetGroup();
     m_GroupPtr = nullptr;
     m_ParentStatePtr = nullptr;
+
     m_ChildStates.Clear();
     m_ChildFrames.clear();
+
     m_DependancyStates.clear();
     m_DependancyFrames.clear();
     m_DependancyJigsaws.Clear();
+
     RFBase::Clear();
   }
 
@@ -110,6 +116,9 @@ namespace RestFrames {
   }
 
   bool Jigsaw::CanResolve(const RFList<RestFrame>& frames) const {
+    if(!IsSoundBody())
+      return SetBody(false);
+
     return GetParentFrames() == frames;
   }
 
@@ -205,6 +214,8 @@ namespace RestFrames {
       m_Log << LogEnd;
       return SetMind(false);
     }
+
+    m_ChildStates.Clear();
       
     int N = m_ChildFrames.size();
     for(int i = 0; i < N; i++){
@@ -213,12 +224,13 @@ namespace RestFrames {
       new_state.SetParentJigsaw(*this);
       m_ChildStates += new_state;
     }
-    return SetBody(true);
+ 
+    return SetMind(true);
   }
   
   bool Jigsaw::InitializeAnalysis(){
     m_DependancyStates.clear();
-    if(!IsSoundBody())
+    if(!IsSoundMind())
       return SetMind(false);
 
     if(!GetGroup())
@@ -319,12 +331,11 @@ namespace RestFrames {
   }
 
   void Jigsaw::AddChildFrame(RestFrame& frame, int i){
-    SetBody(false);
     if(!frame) return;
     if(!GetGroup()) return;
     if(!GetGroup().ContainsFrame(frame)){
       m_Log << LogWarning;
-      m_Log << "Unable to add child frame not in same Group:" << std::endl;
+      m_Log << "Unable to add child frame, not assigned Group:" << std::endl;
       m_Log << "    Frame:" << std::endl;
       m_Log << Log(frame) << std::endl;
       m_Log << "    Group:" << std::endl;
@@ -332,6 +343,8 @@ namespace RestFrames {
       return;
     }
     
+    SetBody(false);
+
     while(i >= int(m_ChildFrames.size())){
       m_ChildFrames.push_back(RFList<RestFrame>());
     }
@@ -339,18 +352,33 @@ namespace RestFrames {
   }
 
   void Jigsaw::AddDependancyFrame(RestFrame& frame, int i){
-    SetBody(false);
     if(!frame) return;
-    
+    SetBody(false);
+
     while(i >= int(m_DependancyFrames.size())){
       m_DependancyFrames.push_back(RFList<RestFrame>());
     }
     m_DependancyFrames[i] += frame;
   }
 
+  void Jigsaw::RemoveFrame(const RestFrame& frame){
+    if(!frame) return;
+
+    SetBody(false);
+
+    int N = m_ChildFrames.size();
+    for(int i = 0; i < N; i++)
+      m_ChildFrames[i].Remove(frame);
+    
+    N = m_DependancyFrames.size();
+    for(int i = 0; i < N; i++)
+      m_DependancyFrames[i].Remove(frame);
+  }
+
   bool Jigsaw::IsSoundBody() const {
     if(RFBase::IsSoundBody()) 
       return true;
+
     int Nout = m_ChildFrames.size();
     for(int i = 0; i < Nout-1; i++)
       for(int j = i+1; j < Nout; j++)
@@ -378,7 +406,7 @@ namespace RestFrames {
   void Jigsaw::FillGroupJigsawDependancies(RFList<Jigsaw>& jigsaws){
     if(jigsaws.Contains(*this)) return;
     jigsaws.Add(*this);
-    if(m_ParentStatePtr) m_ParentStatePtr->FillGroupJigsawDependancies(jigsaws);
+    if(m_ParentStatePtr) m_ParentStatePtr->GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
   }
 
   void Jigsaw::FillStateJigsawDependancies(RFList<Jigsaw>& jigsaws){
@@ -389,7 +417,17 @@ namespace RestFrames {
     for(int i = 0; i < N; i++){
       int M = m_DependancyStates[i].GetN();
       for(int j = 0; j < M; j++){
-	m_DependancyStates[i][j].FillStateJigsawDependancies(jigsaws);
+	m_DependancyStates[i][j].GetParentJigsaw().FillStateJigsawDependancies(jigsaws);
+      }
+    } 
+  }
+
+  void Jigsaw::FillStateGroupJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
+    int N = m_DependancyStates.size();
+    for(int i = 0; i < N; i++){
+      int M = m_DependancyStates[i].GetN();
+      for(int j = 0; j < M; j++){
+	m_DependancyStates[i][j].GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
       }
     } 
   }

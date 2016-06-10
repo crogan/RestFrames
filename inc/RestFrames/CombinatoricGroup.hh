@@ -49,11 +49,6 @@ namespace RestFrames {
     virtual void AddFrame(RestFrame& frame);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
-    virtual CombinatoricState& GetParentState() const;
-
-    virtual bool ClearEvent();
-    virtual bool AnalyzeEvent();
-
     virtual void SetNElementsForFrame(const RestFrame& frame, 
 				      int N, bool exclusive_N = false);
     virtual void GetNElementsForFrame(const RestFrame& frame, 
@@ -64,7 +59,9 @@ namespace RestFrames {
 				const RFCharge& charge = RFCharge());
 
     RestFrame const& GetFrame(const RFKey& key) const;
+
     TLorentzVector GetLabFrameFourVector(const RFKey& key) const;
+
     int GetNElementsInFrame(const RestFrame& frame) const;
 	
   protected:
@@ -72,8 +69,13 @@ namespace RestFrames {
     mutable std::map<const RestFrame*, int>  m_NElementsForFrame;
     mutable std::map<const RestFrame*, bool> m_NExclusiveElementsForFrame; 
 
+    virtual bool ClearEvent();
+    virtual bool AnalyzeEvent();
+
     virtual CombinatoricState& InitializeParentState();
     virtual CombinatoricState& GetChildState(int i) const;
+
+    virtual CombinatoricState& GetParentState() const;
 
   private:
     VisibleState& GetNewElement();
