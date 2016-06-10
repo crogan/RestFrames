@@ -144,13 +144,13 @@ namespace RestFrames {
     ///
     /// Method for removing a child RestFrame from the
     /// list of children of this frame (if it is in that list).
-    void RemoveChild(RestFrame& frame);
+    void RemoveChildFrame(RestFrame& frame);
 
     /// \brief Remove all the children of this frame
     ///
     /// Method for removing all the children of this frame. 
     /// No child left behind.
-    void RemoveChildren();
+    void RemoveChildFrames();
   
     ////////////////////////////////////////////////////////////////////
     /// \name RestFrame tree structure methods

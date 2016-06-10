@@ -34,9 +34,9 @@ namespace RestFrames {
 
   int RestFrame::m_class_key = 0;
 
-  RestFrame::RestFrame() : RFBase() {}
+  RestFrame::RestFrame() : RFBase() { m_Type = kVanillaFrame; }
   
-  RestFrame::~RestFrame() { m_Type = kVanillaFrame; }
+  RestFrame::~RestFrame() { Clear(); }
 
   RestFrame::RestFrame(const std::string& sname, const std::string& stitle)
     : RFBase(sname, stitle, RestFrame::m_class_key++) 
@@ -49,7 +49,7 @@ namespace RestFrames {
 
   void RestFrame::Clear(){
     SetParentFrame();
-    RemoveChildren();
+    RemoveChildFrames();
     RFBase::Clear();
   }
   
@@ -151,7 +151,7 @@ namespace RestFrames {
     return true;
   }
 
-  void RestFrame::RemoveChild(RestFrame& frame){
+  void RestFrame::RemoveChildFrame(RestFrame& frame){
     SetBody(false);
     bool contains = m_ChildFrames.Contains(frame);
     m_ChildBoosts.erase(&frame);
@@ -160,10 +160,10 @@ namespace RestFrames {
       frame.SetParentFrame();
   }
 
-  void RestFrame::RemoveChildren(){
+  void RestFrame::RemoveChildFrames(){
     SetBody(false);
     while(GetNChildren() > 0)
-      RemoveChild(m_ChildFrames[0]);
+      RemoveChildFrame(m_ChildFrames[0]);
     m_ChildFrames.Clear();
     m_ChildBoosts.clear();
   }
@@ -175,7 +175,7 @@ namespace RestFrames {
     if(m_ParentFramePtr)
       if(*m_ParentFramePtr != frame){
 	m_ParentFramePtr = nullptr;
-	prevPtr->RemoveChild(*this);
+	prevPtr->RemoveChildFrame(*this);
       }
     if(!frame)
       m_ParentFramePtr = nullptr;
@@ -185,6 +185,7 @@ namespace RestFrames {
   
   void RestFrame::AddChildFrame(RestFrame& frame){
     SetBody(false);
+
     if(!frame){
       m_Log << LogWarning << "Cannot add empty frame as child." << LogEnd;
       return;

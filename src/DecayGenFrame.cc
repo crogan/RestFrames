@@ -107,7 +107,7 @@ namespace RestFrames {
       return SetMind(false);
 
     double min_mass = GetMinimumMassMCMC();
-    if(m_Mass < min_mass){
+    if(m_Mass < min_mass && !IsVariableMassMCMC()){
       m_Log << LogWarning;
       m_Log << "Unable to initialize analysis: ";
       m_Log << "decay frame mass (" << m_Mass << ") ";

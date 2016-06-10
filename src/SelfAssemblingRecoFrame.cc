@@ -77,7 +77,7 @@ namespace RestFrames {
     // replace frames with unassembled ones
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
     lab_frame.RemoveTreeStates(m_VisibleStates);
-    RemoveChildren();
+    RemoveChildFrames();
     ClearNewFrames();
     AddChildFrames(m_ChildFrames_UnAssembled);
 
@@ -140,7 +140,6 @@ namespace RestFrames {
 	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
-	    // states.Add(element);
 	    m_VisibleStates.Add(element);
 	  }
 	  if(Nelement < 1){
@@ -154,7 +153,7 @@ namespace RestFrames {
 	frames.push_back(&frame);
       }
     }
-    RemoveChildren();
+    RemoveChildFrames();
     m_ChildStates.clear();
     AssembleRecursive(*this, frames, Ps); 
     if(!InitializeTreeRecursive()){
@@ -166,7 +165,6 @@ namespace RestFrames {
     }
     SetMind(true);
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
-    //lab_frame.AddTreeStates(states);
     lab_frame.AddTreeStates(m_VisibleStates);
     if(!InitializeAnalysisRecursive()){
       m_Log << LogWarning;
@@ -175,7 +173,6 @@ namespace RestFrames {
       SetMind(false);
       return;
     }
-    //lab_frame.RemoveTreeStates(states);
 
     m_IsAssembled = true;
   }
