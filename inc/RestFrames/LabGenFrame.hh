@@ -66,7 +66,7 @@ namespace RestFrames {
 
     virtual bool InitializeGenAnalysis();
 
-    virtual void ResetFrame();
+    virtual void ResetGenFrame();
     virtual bool GenerateFrame();
 
     double m_ChildMassMCMC;

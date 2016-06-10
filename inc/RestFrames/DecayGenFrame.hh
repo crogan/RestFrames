@@ -67,7 +67,7 @@ namespace RestFrames {
 
     virtual bool IsSoundBody() const;
 
-    virtual void ResetFrame();
+    virtual void ResetGenFrame();
     virtual bool GenerateFrame();
    
     void GenerateTwoBodyRecursive(const std::vector<double>& M_parent, 

@@ -55,6 +55,7 @@ namespace RestFrames {
   ppLabGenFrame::~ppLabGenFrame() {}
 
   void ppLabGenFrame::Clear(){
+    m_deltaLogX = 0;
     LabGenFrame::Clear();
   }
 
@@ -165,7 +166,7 @@ namespace RestFrames {
 
   double ppLabGenFrame::GetProbMCMC(double mass) const {
     if(mass < 0)
-      mass = GetChildFrame(0).GetMass();
+      mass = GetChildFrame().GetMass();
     
     double C = mass*mass/(4.*m_Ep1*m_Ep2);
     double expo = -m_deltaLogX*log(C);

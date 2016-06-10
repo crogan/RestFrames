@@ -105,7 +105,7 @@ namespace RestFrames {
   }
 
   bool GeneratorFrame::ClearEventRecursive(){ 
-    ResetFrame();
+    ResetGenFrame();
     if(!IsSoundMind())
       return false;
     
@@ -113,6 +113,7 @@ namespace RestFrames {
     for(int i = 0; i < Nf; i++)
       if(!GetChildFrame(i).ClearEventRecursive())
 	return false;
+
     return true;
   }
 

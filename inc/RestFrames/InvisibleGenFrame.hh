@@ -46,7 +46,7 @@ namespace RestFrames {
     virtual void SetMass(double val);
 
   protected:
-    virtual void ResetFrame();
+    virtual void ResetGenFrame();
     virtual bool GenerateFrame();
 
   private:

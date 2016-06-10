@@ -75,7 +75,7 @@ namespace RestFrames {
     virtual ReconstructionFrame const& GetParentFrame() const;
 
     /// \brief Get the frame of the *i* th child
-    virtual ReconstructionFrame& GetChildFrame(int i) const;
+    virtual ReconstructionFrame& GetChildFrame(int i = 0) const;
 
     virtual void SetGroup(Group& group = Group::Empty());
     Group& GetGroup() const;

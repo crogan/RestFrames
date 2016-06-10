@@ -87,7 +87,7 @@ namespace RestFrames {
     m_DeltaPhiDecayPlane = val;
   }
 
-  void DecayGenFrame::ResetFrame(){
+  void DecayGenFrame::ResetGenFrame(){
     SetSpirit(false);
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;

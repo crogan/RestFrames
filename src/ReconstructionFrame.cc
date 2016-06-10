@@ -49,7 +49,9 @@ namespace RestFrames {
   ReconstructionFrame::ReconstructionFrame()
     : RestFrame() {}
 
-  ReconstructionFrame::~ReconstructionFrame() {}
+  ReconstructionFrame::~ReconstructionFrame(){ 
+    Clear(); 
+  }
 
   void ReconstructionFrame::Clear(){
     SetGroup();

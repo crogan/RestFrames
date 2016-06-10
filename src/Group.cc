@@ -49,7 +49,8 @@ namespace RestFrames {
   Group::Group() : RFBase() { m_Type = kVanillaGroup; }
 
   Group::~Group(){
-    if(m_GroupStatePtr) delete m_GroupStatePtr;
+    Clear();
+    
   }
 
   Group& Group::Empty(){

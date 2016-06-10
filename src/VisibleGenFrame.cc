@@ -58,7 +58,7 @@ namespace RestFrames {
     }
   }
 
-  void VisibleGenFrame::ResetFrame() {}
+  void VisibleGenFrame::ResetGenFrame() {}
 
   bool VisibleGenFrame::GenerateFrame(){ 
     return true;

@@ -81,7 +81,7 @@ namespace RestFrames {
     m_Phi = val;
   }
 
-  void LabGenFrame::ResetFrame(){
+  void LabGenFrame::ResetGenFrame(){
     SetSpirit(false);
     m_Phi = -1.;
   }
@@ -123,7 +123,7 @@ namespace RestFrames {
       return SetMind(false);
     } 
 
-    GeneratorFrame& child = GetChildFrame(0);
+    GeneratorFrame& child = GetChildFrame();
     if(child.IsVariableMassMCMC()){
       double ChildMass, ChildProb;
       child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);
@@ -139,7 +139,7 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::IterateMCMC(){
-    GeneratorFrame& child = GetChildFrame(0);
+    GeneratorFrame& child = GetChildFrame();
     if(child.IsVariableMassMCMC()){
       double ChildMass, ChildProb = 0.;
       child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);
@@ -167,7 +167,7 @@ namespace RestFrames {
       return false;
 
     TLorentzVector P;
-    double M = GetChildFrame(0).GetMass();
+    double M = GetChildFrame().GetMass();
     if(m_Phi < 0.) m_Phi = 2.*acos(-1.)*GetRandom();
 
     P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));

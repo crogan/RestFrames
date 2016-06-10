@@ -51,7 +51,7 @@ namespace RestFrames {
     }
   }
 
-  void InvisibleGenFrame::ResetFrame() {}
+  void InvisibleGenFrame::ResetGenFrame() {}
 
   bool InvisibleGenFrame::GenerateFrame(){ 
     return true;

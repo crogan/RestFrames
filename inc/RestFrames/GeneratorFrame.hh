@@ -79,7 +79,7 @@ namespace RestFrames {
     virtual GeneratorFrame const& GetParentFrame() const;
 
     /// \brief Get the frame of the *i* th child
-    virtual GeneratorFrame& GetChildFrame(int i) const;
+    virtual GeneratorFrame& GetChildFrame(int i = 0) const;
     
     virtual double GetMass() const;
 
@@ -92,8 +92,8 @@ namespace RestFrames {
   protected:
     double m_Mass;
 
-    virtual void ResetFrame() {}
-    virtual bool GenerateFrame() { return false; }
+    virtual void ResetGenFrame() = 0;
+    virtual bool GenerateFrame() = 0;
 
     void SetChildren(const std::vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();

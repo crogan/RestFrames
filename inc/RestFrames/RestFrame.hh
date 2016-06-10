@@ -174,7 +174,7 @@ namespace RestFrames {
     virtual RestFrame const& GetParentFrame() const;
 
     /// \brief Get the RestFrame of the *i* th child
-    virtual RestFrame& GetChildFrame(int i) const;
+    virtual RestFrame& GetChildFrame(int i = 0) const;
 
     /// \brief Returns a list of this frame's child RestFrame s
     RestFrames::RFList<RestFrame> GetChildren() const;
