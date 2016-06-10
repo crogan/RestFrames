@@ -66,9 +66,6 @@ namespace RestFrames {
     /// \brief Retrieve axis which defines transverse plane
     static TVector3 const& GetAxis();
 
-    /// \brief Returns empty instance of class
-    static RestFrame& Empty();
-
     /// \brief Clears RestFrame of all connections to other objects
     virtual void Clear();
 
@@ -463,18 +460,20 @@ namespace RestFrames {
 			      RestFrame::Empty()) const;
     ///@}
 
+    /// \brief Returns empty instance of class
+    static RestFrame& Empty();
+
   protected:   
     FrameType m_Type;
     AnaType m_Ana;
 
     virtual bool IsSoundBody() const;
 
-    void SetChildBoostVector(RestFrame& frame, const TVector3& boost);
-    void SetParentBoostVector(const TVector3& boost);
     TVector3 GetChildBoostVector(RestFrame& frame) const;
     TVector3 GetParentBoostVector() const;
 
-    void SetFourVector(const TLorentzVector& V, const RestFrame& frame);
+    /// \brief Recursively initialize this frame's tree
+    virtual bool InitializeTreeRecursive();
 
     /// \brief Recursively initialize this frame and its children for analysis
     virtual bool InitializeAnalysisRecursive() = 0;
@@ -484,9 +483,6 @@ namespace RestFrames {
 
     /// \brief Recursively analyze event in this frame and its children
     virtual bool AnalyzeEventRecursive() = 0;
-
-    /// \brief Recursively initialize this frame's tree
-    virtual bool InitializeTreeRecursive();
 
     /// \brief Check this RestFrame 's tree for circular connections
     bool IsCircularTree(std::vector<RFKey>& keys) const;
@@ -512,11 +508,19 @@ namespace RestFrames {
     RestFrame* m_ParentFramePtr;
     TVector3 m_ParentBoost;
 
+    void SetFourVector(const TLorentzVector& V, const RestFrame& frame);
+    void SetChildBoostVector(RestFrame& frame, const TVector3& boost);
+    void SetParentBoostVector(const TVector3& boost);
+
     // Recursively get lists of frames
     void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame) const;
 
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 std::vector<TVector3>& boosts) const;
+
+    friend class ReconstructionFrame;
+    friend class GeneratorFrame;
+
   };
 
 }

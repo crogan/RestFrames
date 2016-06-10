@@ -31,10 +31,11 @@
 #define GeneratorFrame_HH
 
 #include <TRandom.h>
+
 #include "RestFrames/RestFrame.hh"
 
 namespace RestFrames {
-  
+
   ///////////////////////////////////////////////
   // GeneratorFrame class
   ///////////////////////////////////////////////
@@ -44,14 +45,8 @@ namespace RestFrames {
     GeneratorFrame();
     virtual ~GeneratorFrame();
 
+    /// \brief Clears GeneratorFrame of all connections to other objects
     virtual void Clear();
-
-    static GeneratorFrame& Empty();
-
-    virtual bool InitializeAnalysisRecursive();
-
-    virtual bool AnalyzeEventRecursive();
-    virtual bool ClearEventRecursive();
 
     /// \brief Add a child RestFrame to this frame
     ///
@@ -89,8 +84,14 @@ namespace RestFrames {
 				  double max = -1.) const;
     virtual double GetProbMCMC(double mass = -1.) const;
 
+    static GeneratorFrame& Empty();
+
   protected:
     double m_Mass;
+
+    virtual bool InitializeAnalysisRecursive();
+    virtual bool AnalyzeEventRecursive();
+    virtual bool ClearEventRecursive();
 
     virtual void ResetGenFrame() = 0;
     virtual bool GenerateFrame() = 0;
