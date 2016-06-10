@@ -42,16 +42,12 @@ namespace RestFrames {
 				       const std::string& stitle) 
     : State(sname, stitle)
   {
-    Init();
+    m_Type = kCombinatoricState;
   }
 
   CombinatoricState::CombinatoricState() : State() {}
 
   CombinatoricState::~CombinatoricState() {}
-
-  void CombinatoricState::Init(){
-    m_Type = kCombinatoricState;
-  }
 
   CombinatoricState& CombinatoricState::Empty(){
     return CombinatoricState::m_Empty;

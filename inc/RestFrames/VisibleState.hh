@@ -64,7 +64,6 @@ namespace RestFrames {
 
   private:
     static VisibleState m_Empty;
-    void Init();
 
   };
 

@@ -40,16 +40,11 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   LabRecoFrame::LabRecoFrame(const std::string& sname, 
 			     const std::string& stitle)
-    : LabFrame<ReconstructionFrame>(sname, stitle)
-  {
-    Init();
-  }
+    : LabFrame<ReconstructionFrame>(sname, stitle) {}
 
   LabRecoFrame::LabRecoFrame() : LabFrame<ReconstructionFrame>() {}
 
   LabRecoFrame::~LabRecoFrame() {}
-
-  void LabRecoFrame::Init() {}
 
   void LabRecoFrame::Clear(){
     m_TreeGroups.Clear();

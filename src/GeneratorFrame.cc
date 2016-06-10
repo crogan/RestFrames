@@ -42,17 +42,6 @@ namespace RestFrames {
 				 const std::string& stitle) 
     : RestFrame(sname, stitle)
   {
-    Init();
-  }
-
-  GeneratorFrame::GeneratorFrame() 
-    : RestFrame() { }
-
-  GeneratorFrame::~GeneratorFrame(){
-    if(m_Random) delete m_Random;
-  }
-
-  void GeneratorFrame::Init(){
     m_Ana = kGenFrame;
     m_VarMassMCMC = false;
     m_Mass = 0.;
@@ -63,6 +52,13 @@ namespace RestFrames {
     int key   = GetKey().GetKey();
     int seed = today+clock+key;
     m_Random = new TRandom3(seed);
+  }
+
+  GeneratorFrame::GeneratorFrame() 
+    : RestFrame() { }
+
+  GeneratorFrame::~GeneratorFrame(){
+    if(m_Random) delete m_Random;
   }
 
   void GeneratorFrame::Clear(){

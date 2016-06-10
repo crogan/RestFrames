@@ -49,8 +49,9 @@ namespace RestFrames {
     static GeneratorFrame& Empty();
 
     virtual bool InitializeAnalysisRecursive();
-    virtual bool ClearEventRecursive();
+
     virtual bool AnalyzeEventRecursive();
+    virtual bool ClearEventRecursive();
 
     /// \brief Add a child RestFrame to this frame
     ///
@@ -108,7 +109,6 @@ namespace RestFrames {
     void SetMassMCMC(double mass, GeneratorFrame& frame) const;
 
   private:
-    void Init();
     TRandom *m_Random;
     bool m_VarMassMCMC;
    

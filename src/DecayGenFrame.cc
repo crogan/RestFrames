@@ -40,15 +40,11 @@ namespace RestFrames {
 			       const std::string& stitle) 
     : DecayFrame<GeneratorFrame>(sname,stitle)
   {
-    Init();
-  }
-  
-  DecayGenFrame::~DecayGenFrame(){ }
-
-  void DecayGenFrame::Init(){
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
   }
+  
+  DecayGenFrame::~DecayGenFrame(){ }
 
   bool DecayGenFrame::IsSoundBody() const{
     if(RFBase::IsSoundBody())

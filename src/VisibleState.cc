@@ -37,17 +37,13 @@ namespace RestFrames {
 			     const std::string& stitle)
     : State(sname, stitle) 
   {
-    Init();
+    m_Type = kVisibleState;
+    m_FramePtr = nullptr;
   }
 
   VisibleState::VisibleState() : State() {}
 
   VisibleState::~VisibleState() {}
-
-  void VisibleState::Init(){
-    m_Type = kVisibleState;
-    m_FramePtr = nullptr;
-  }
 
   void VisibleState::Clear(){
     m_FramePtr = nullptr;

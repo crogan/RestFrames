@@ -75,8 +75,6 @@ namespace RestFrames {
     RestFrames::RFList<Jigsaw> m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
     
-  private:
-    void Init();
   };
 
 }

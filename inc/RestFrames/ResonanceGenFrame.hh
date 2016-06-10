@@ -58,7 +58,6 @@ namespace RestFrames {
 				  double max = -1.) const;
 
   private:
-    void Init();
     double m_PoleMass;
     double m_Width;
 

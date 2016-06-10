@@ -42,18 +42,14 @@ namespace RestFrames {
 					   const std::string& stitle)
     : RestFrame(sname, stitle)
   {
-    Init();
+    m_Ana = kRecoFrame;
+    m_GroupPtr = nullptr;
   }
 
   ReconstructionFrame::ReconstructionFrame()
     : RestFrame() {}
 
   ReconstructionFrame::~ReconstructionFrame() {}
-
-  void ReconstructionFrame::Init(){
-    m_Ana = kRecoFrame;
-    m_GroupPtr = nullptr;
-  }
 
   void ReconstructionFrame::Clear(){
     SetGroup();

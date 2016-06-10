@@ -70,7 +70,6 @@ namespace RestFrames {
     virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
 
   private:
-    void Init(int Ninv, int Nvis);
     int m_Nvis;
     int m_Ninv;  
   

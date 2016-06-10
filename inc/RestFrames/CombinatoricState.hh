@@ -73,9 +73,8 @@ namespace RestFrames {
     RestFrames::RFList<VisibleState> m_Elements;
   
   private:
-    void Init();
-
     static CombinatoricState m_Empty;
+  
   };
 
 }

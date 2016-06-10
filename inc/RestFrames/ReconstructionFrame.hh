@@ -90,7 +90,6 @@ namespace RestFrames {
     mutable std::map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
 
   private:
-    void Init();
     bool InitializeVisibleStates();
     bool InitializeGroupStates();
     void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;

@@ -71,7 +71,6 @@ namespace RestFrames {
     bool ExecuteJigsaws();
 
   private:
-    void Init();
     VisibleState& GetNewVisibleState();
     RestFrames::RFList<VisibleState> m_InitStates;
 

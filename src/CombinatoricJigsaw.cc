@@ -41,16 +41,12 @@ namespace RestFrames {
 					 const std::string& stitle)
     : Jigsaw(sname, stitle)
   {
-    Init();
+    m_Type = kCombinatoricJigsaw;
   }
 
   CombinatoricJigsaw::CombinatoricJigsaw() : Jigsaw() {}
 
   CombinatoricJigsaw::~CombinatoricJigsaw() {}
-
-  void CombinatoricJigsaw::Init(){
-    m_Type = kCombinatoricJigsaw;
-  }
 
   void CombinatoricJigsaw::Clear(){
     Jigsaw::Clear();

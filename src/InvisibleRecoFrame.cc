@@ -38,15 +38,11 @@ namespace RestFrames {
 					 const std::string& stitle) : 
     InvisibleFrame<ReconstructionFrame>(sname, stitle)
   {
-    Init();
+    m_MassMin = 0.;
   }
 
   InvisibleRecoFrame::~InvisibleRecoFrame(){
     
-  }
-
-  void InvisibleRecoFrame::Init(){
-    m_MassMin = 0.;
   }
 
   double InvisibleRecoFrame::GetMinimumMass() const {

@@ -48,9 +48,6 @@ namespace RestFrames {
 
   protected:
     double m_MassMin;
-
-  private:
-    void Init();
    
   };
 

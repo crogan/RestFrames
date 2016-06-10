@@ -42,7 +42,9 @@ namespace RestFrames {
 				   int Ninv, int Nvis) : 
     Jigsaw(sname, stitle)
   {
-    Init(Ninv, Nvis);
+    m_Type = kInvisibleJigsaw;
+    m_Ninv = Ninv;
+    m_Nvis = Nvis;
   }
 
   InvisibleJigsaw::InvisibleJigsaw() : Jigsaw() {}
@@ -51,12 +53,6 @@ namespace RestFrames {
 
   void InvisibleJigsaw::Clear(){
     Jigsaw::Clear();
-  }
-
-  void InvisibleJigsaw::Init(int Ninv, int Nvis){
-    m_Type = kInvisibleJigsaw;
-    m_Ninv = Ninv;
-    m_Nvis = Nvis;
   }
 
   InvisibleJigsaw& InvisibleJigsaw::Empty(){

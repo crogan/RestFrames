@@ -79,9 +79,6 @@ namespace RestFrames {
     virtual bool InitializeGenAnalysis();
     virtual bool IterateMCMC();
 
-  private:
-    void Init();
-
   };
 
   int DoubleMax(const void *a, const void *b);

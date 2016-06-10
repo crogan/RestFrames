@@ -40,21 +40,18 @@ namespace RestFrames {
 				       const std::string& stitle)
     : DecayGenFrame(sname,stitle)
   {
-    Init();
+    m_PoleMass = 0.;
+    m_Width = 0.;
   }
 
   ResonanceGenFrame::ResonanceGenFrame()
     : DecayGenFrame("Empty","Empty")
   {
-    Init();
-  }
-  
-  ResonanceGenFrame::~ResonanceGenFrame(){ }
-
-  void ResonanceGenFrame::Init(){
     m_PoleMass = 0.;
     m_Width = 0.;
   }
+  
+  ResonanceGenFrame::~ResonanceGenFrame(){ }
 
   ResonanceGenFrame& ResonanceGenFrame::Empty(){
     return ResonanceGenFrame::m_Empty;
