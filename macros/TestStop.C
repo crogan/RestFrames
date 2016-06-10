@@ -139,11 +139,11 @@ void TestStop(){
 
     // generate event
     LAB_0.ClearEvent();    
-    LAB_0.SetTransverseMomenta(1.);
+    //LAB_0.SetTransverseMomenta(1.);
     LAB_0.AnalyzeEvent();     
 
     LAB_1.ClearEvent();      
-    LAB_1.SetTransverseMomenta(1.);
+    //LAB_1.SetTransverseMomenta(1.);
     LAB_1.AnalyzeEvent(); 
 
     Mt = (W_0.GetFourVector()+B_0.GetFourVector()).M();

@@ -298,13 +298,21 @@ namespace RestFrames {
       SumChildMass -= ChildMasses[i];
     }
 
+    
+
     SetSpirit(true);
+
+    TVector3 n_par = GetParentBoostVector();
+    TVector3 n_perp = GetParentFrame().GetDecayPlaneNormalVector(*this);
+
+    if(n_par.Cross(n_perp).Mag() <= 0.){
+      n_par.SetXYZ(1.,0.,0.);
+      n_perp.SetXYZ(0.,1.,0.);
+    }
 
     std::vector<TLorentzVector> ChildVectors;
     GenerateTwoBodyRecursive(InterMass, ChildMasses,
-			     GetParentBoostVector(),
-			     GetParentFrame().GetDecayPlaneNormalVector(*this),
-			     ChildVectors);
+			     n_par, n_perp, ChildVectors);
    
     SetChildren(ChildVectors);
 
@@ -317,7 +325,7 @@ namespace RestFrames {
 					       const TVector3& axis_perp,
 					       std::vector<TLorentzVector>& P_c) {
     TVector3 n_par = axis_par.Unit();
-    TVector3 n_perp = axis_perp.Unit();
+    TVector3 n_perp = n_par.Cross(axis_perp.Cross(n_par)).Unit();
 
     int N_c = M_c.size();
 

@@ -357,7 +357,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
 
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
-    double PTCM = 3*mW*gRandom->Rndm()*1.;
+    double PTCM = 3*mW*gRandom->Rndm()*0.;
     LAB_G.SetTransverseMomenta(PTCM);               // give the CM some Pt
     LAB_G.AnalyzeEvent();                          // generate a new event
 
