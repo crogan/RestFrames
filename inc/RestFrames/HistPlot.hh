@@ -92,25 +92,27 @@ namespace RestFrames {
     
     std::vector<TH1D*> m_1DHists;
     std::vector<TH2D*> m_2DHists;
-    std::vector<HistPlotVar*>      m_Vars;
-    std::vector<HistPlotCategory*> m_Cats;
+    // std::vector<HistPlotVar*>      m_Vars;
+    // std::vector<HistPlotCategory*> m_Cats;
+    HistPlotVarList m_Vars;
+    HistPlotCatList m_Cats;
     std::map<const HistPlotCategory*,std::vector<TH1D*> > m_CatToHist1D;
     std::map<const HistPlotCategory*,std::vector<TH2D*> > m_CatToHist2D;
     
-    std::vector<const HistPlotVar*>                    m_Plot1D_Var;
-    std::vector<RestFrames::RFList<HistPlotCategory> > m_Plot1D_Cats;
-    std::vector<bool>                                  m_Plot1D_Color;
+    std::vector<const HistPlotVar*>             m_Plot1D_Var;
+    std::vector<HistPlotCatList>                m_Plot1D_Cats;
+    std::vector<bool>                           m_Plot1D_Color;
     std::vector<std::pair<const HistPlotVar*,
-			  const HistPlotVar*> >        m_Plot2D_Vars;
-    std::vector<const HistPlotCategory*>               m_Plot2D_Cat;
-    std::vector<bool>                                  m_Plot2D_Color;
+			  const HistPlotVar*> > m_Plot2D_Vars;
+    std::vector<const HistPlotCategory*>        m_Plot2D_Cat;
+    std::vector<bool>                           m_Plot2D_Color;
 
     std::map<TH1D*,const HistPlotVar*>             m_HistToVar;
     std::map<TH2D*,std::pair<const HistPlotVar*,
 			     const HistPlotVar*> > m_HistToVars;
 
     void DrawPlot(const HistPlotVar& var, 
-		  const RFList<HistPlotCategory>& cats,
+		  const HistPlotCatList& cats,
 		  bool invert_colors = false);
     void DrawPlot(const std::pair<const HistPlotVar*, 
 		  const HistPlotVar*>& vars,

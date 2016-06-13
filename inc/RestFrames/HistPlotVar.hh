@@ -30,40 +30,36 @@
 #ifndef HistPlotVar_HH
 #define HistPlotVar_HH
 
-#include <string>
+#include "RestFrames/RFBase.hh"
 
 namespace RestFrames {
 
   ///////////////////////////////////////////////
   // HistPlotVar class
   ///////////////////////////////////////////////
-  class HistPlotVar {
+  class HistPlotVar : public RFBase {
 
   public:
-    HistPlotVar(const std::string& name, const std::string& title, 
+    HistPlotVar(const std::string& name, 
+		const std::string& title, 
 		double minval, double maxval,
 		const std::string& unit);
+    HistPlotVar();
     ~HistPlotVar();
 
-    bool operator==(const HistPlotVar& var) const;
+    void operator = (double val) const;
 
-    void operator=(double val) const;
+    void operator += (double val) const;
 
-    void operator+=(double val) const;
+    void operator -= (double val) const;
 
-    void operator-=(double val) const;
+    void operator *= (double val) const;
 
-    void operator*=(double val) const;
-
-    void operator/=(double val) const;
+    void operator /= (double val) const;
 
     operator double() const;
 
     double GetVal() const;
-
-    std::string GetName() const;
-
-    std::string GetTitle() const;
 
     double GetMin() const;
 
@@ -71,18 +67,18 @@ namespace RestFrames {
 
     std::string GetUnit() const;
 
-  protected:
-    int m_Key;
+    static HistPlotVar& Empty();
 
   private:
+    /// \brief HistPlotCategory ID key
     static int m_class_key;
 
-    std::string m_Name;
-    std::string m_Title;
     std::string m_Unit;
     double m_Min;
     double m_Max;
     mutable double m_Val;
+
+    static HistPlotVar m_Empty;
 
   };
 

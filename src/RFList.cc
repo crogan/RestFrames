@@ -36,6 +36,7 @@
 #include "RestFrames/VisibleState.hh"
 #include "RestFrames/InvisibleState.hh"
 #include "RestFrames/CombinatoricState.hh"
+#include "RestFrames/HistPlotVar.hh"
 #include "RestFrames/HistPlotCategory.hh"
 
 namespace RestFrames {
@@ -280,6 +281,7 @@ namespace RestFrames {
   template class RFList<VisibleState>;
   template class RFList<InvisibleState>;
   template class RFList<CombinatoricState>;
+  template class RFList<HistPlotVar>;
   template class RFList<HistPlotCategory>;
   template class RFList<const HistPlotCategory>;
 
@@ -298,6 +300,7 @@ namespace RestFrames {
   template class RFListBase<VisibleState,RFList<VisibleState> >;
   template class RFListBase<InvisibleState,RFList<InvisibleState> >;
   template class RFListBase<CombinatoricState,RFList<CombinatoricState> >;
+  template class RFListBase<HistPlotVar,RFList<HistPlotVar> >;
   template class RFListBase<HistPlotCategory,RFList<HistPlotCategory> >;
   template class RFListBase<const HistPlotCategory,RFList<const HistPlotCategory> >;
 

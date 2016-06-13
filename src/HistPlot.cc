@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlot.cc
@@ -51,12 +51,12 @@ namespace RestFrames {
   }
 
   HistPlot::~HistPlot(){
-    int Nv = m_Vars.size();
+    int Nv = m_Vars.GetN();
     for(int i = 0; i < Nv; i++)
-      delete m_Vars[i];
-    int Nc = m_Cats.size();
+      delete &m_Vars[i];
+    int Nc = m_Cats.GetN();
     for(int i = 0; i < Nc; i++)
-      delete m_Cats[i];
+      delete &m_Cats[i];
     Clear();
   }
 
@@ -88,21 +88,31 @@ namespace RestFrames {
 					 double minval, double maxval,
 					 const std::string& unit){
     HistPlotVar* var = new HistPlotVar(name,title,minval,maxval,unit);
-    m_Vars.push_back(var);
+    m_Vars += *var;
     return *var;
   }
 
   HistPlotCategory const& HistPlot::GetNewCategory(const std::string& name, 
 						   const std::string& title){
     HistPlotCategory* cat = new HistPlotCategory(name, title);
-    m_Cats.push_back(cat);
+    m_Cats += *cat;
     return *cat;
   }
 
   void HistPlot::AddPlot(const HistPlotVar& var, 
 			 RFList<const HistPlotCategory> cats,
 			 bool invert_colors){
+    if(!m_Vars.Contains(var))
+      return;
+    
     int Ncat = cats.GetN();
+    for(int i = 0; i < Ncat; i++){
+      if(m_Cats.Contains(cats[i]))
+	continue;
+      Ncat--;
+      cats -= cats[i];
+    }
+
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       if(m_CatToHist1D.count(empty) <= 0)
@@ -155,7 +165,18 @@ namespace RestFrames {
   void HistPlot::AddPlot(const HistPlotVar& varX, const HistPlotVar& varY, 
 			 RFList<const HistPlotCategory> cats,
 			 bool invert_colors){
+    if(!m_Vars.Contains(varX) ||
+       !m_Vars.Contains(varY))
+      return;
+    
     int Ncat = cats.GetN();
+    for(int i = 0; i < Ncat; i++){
+      if(m_Cats.Contains(cats[i]))
+	continue;
+      Ncat--;
+      cats -= cats[i];
+    }
+
     if(Ncat == 0){
       const HistPlotCategory* empty = &HistPlotCategory::Empty();
       if(m_CatToHist2D.count(empty) <= 0)
@@ -261,7 +282,7 @@ namespace RestFrames {
   }
   
   void HistPlot::DrawPlot(const HistPlotVar& var,
-			  const RFList<HistPlotCategory>& cats,
+			  const HistPlotCatList& cats,
 			  bool invert_colors){
     std::vector<TH1D*> hists;
     int Ncat = cats.GetN();
@@ -562,4 +583,5 @@ namespace RestFrames {
     file->Close();
     delete file;
   }
+
 }

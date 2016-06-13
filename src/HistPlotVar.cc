@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlotVar.cc
@@ -33,36 +33,38 @@ namespace RestFrames {
 
   int HistPlotVar::m_class_key = 0;
 
+  HistPlotVar::HistPlotVar() : RFBase() {}
+  
   HistPlotVar::HistPlotVar(const std::string& name, 
 			   const std::string& title, 
 			   double minval, double maxval,
 			   const std::string& unit = "")
-    : m_Name(name), m_Title(title), 
-      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.), m_Key(m_class_key++) {}
+    : RFBase(name, title, HistPlotVar::m_class_key++),
+      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.) {}
   
   HistPlotVar::~HistPlotVar() {}
 
-  bool HistPlotVar::operator==(const HistPlotVar& var) const {
-    return var.m_Key == m_Key;
+  HistPlotVar& HistPlotVar::Empty(){
+    return HistPlotVar::m_Empty;
   }
 
-  void HistPlotVar::operator=(double val) const {
+  void HistPlotVar::operator = (double val) const {
     m_Val = val;
   }
 
-  void HistPlotVar::operator+=(double val) const {
+  void HistPlotVar::operator += (double val) const {
     m_Val += val;
   }
   
-  void HistPlotVar::operator-=(double val) const {
+  void HistPlotVar::operator -= (double val) const {
     m_Val -= val;
   }
   
-  void HistPlotVar::operator*=(double val) const {
+  void HistPlotVar::operator *= (double val) const {
     m_Val *= val;
   }
   
-  void HistPlotVar::operator/=(double val) const {
+  void HistPlotVar::operator /= (double val) const {
     m_Val /= val;
   }
 
@@ -74,14 +76,6 @@ namespace RestFrames {
     return m_Val;
   }
   
-  std::string HistPlotVar::GetName() const {
-    return m_Name;
-  }
-
-  std::string HistPlotVar::GetTitle() const {
-    return m_Title;
-  }
-
   std::string HistPlotVar::GetUnit() const {
     return m_Unit;
   }
@@ -93,5 +87,7 @@ namespace RestFrames {
   double HistPlotVar::GetMax() const {
     return m_Max;
   }
+
+  HistPlotVar HistPlotVar::m_Empty;
 
 }

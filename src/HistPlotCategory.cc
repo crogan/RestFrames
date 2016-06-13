@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlotCategory.cc
@@ -42,7 +42,7 @@ namespace RestFrames {
   HistPlotCategory::~HistPlotCategory() {}
 
   RFList<const HistPlotCategory> 
-  HistPlotCategory::operator+(const HistPlotCategory& cat) const {
+  HistPlotCategory::operator + (const HistPlotCategory& cat) const {
     RFList<const HistPlotCategory> list;
     list += *this;
     list += cat;
@@ -50,7 +50,7 @@ namespace RestFrames {
   }
 
   RFList<const HistPlotCategory> 
-  HistPlotCategory::operator+(const RFList<const HistPlotCategory>& cats) const {
+  HistPlotCategory::operator + (const RFList<const HistPlotCategory>& cats) const {
     RFList<const HistPlotCategory> list;
     list += *this;
     list += cats;
