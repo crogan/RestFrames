@@ -1,5 +1,4 @@
 #ifdef __ROOTCLING__
-//#include "RestFrames/RFLog.hh"
 #include "RestFrames/RestFrames.hh"
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
