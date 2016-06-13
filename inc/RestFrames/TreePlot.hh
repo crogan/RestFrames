@@ -58,7 +58,7 @@ namespace RestFrames {
     void SetTree(const Group& group);
     void SetTree(const Jigsaw& jigsaw);
     
-    void AddJigsaws(const RestFrames::RFList<Jigsaw>& jigsaws);
+    void AddJigsaws(const JigsawList& jigsaws);
     void AddJigsaw(const Jigsaw& jigsaw);
 
     void Draw(const std::string& name = "",

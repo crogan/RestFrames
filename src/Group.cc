@@ -87,7 +87,7 @@ namespace RestFrames {
     m_Frames.Add(frame);
   }
 
-  void Group::AddFrames(RestFrames::RFList<RestFrame> frames){
+  void Group::AddFrames(const RestFrameList& frames){
     int N = frames.GetN();
     for(int i = 0; i < N; i++)
       AddFrame(frames[i]);
@@ -158,11 +158,11 @@ namespace RestFrames {
     return m_Frames.GetN();
   }
 
-  const RFList<RestFrame>& Group::GetListFrames() const {
+  const RestFrameList& Group::GetListFrames() const {
     return m_Frames;
   }
 
-  const RFList<Jigsaw>& Group::GetListJigsaws() const {
+  const JigsawList& Group::GetListJigsaws() const {
     return m_Jigsaws;
   }
 
@@ -294,19 +294,19 @@ namespace RestFrames {
     return State::Empty();
   }
   
-  RFList<State> Group::GetChildStates(const RestFrames::RFList<RestFrame>& frames) const {
+  StateList Group::GetChildStates(const RestFrameList& frames) const {
     // Find States that correspond to these frames, giving
     // preference to States that include more frames (less dependancies)
-    RFList<State> states;
+    StateList states;
     int Ns = m_States.GetN();
     for(int i = 0; i < Ns; i++){
-      RFList<RestFrame> iframes = m_States[i].GetListFrames();
+      RestFrameList iframes = m_States[i].GetListFrames();
       if(frames.Contains(iframes)){
 	int Nsol = states.GetN();
 	bool isnew = true;
 	for(int j = 0; j < Nsol; j++){
 	  // if new copy of existing frame list appears, discard old
-	  RFList<RestFrame> jframes = states[j].GetListFrames();
+	  RestFrameList jframes = states[j].GetListFrames();
 	  if(iframes.Contains(jframes)){
 	    states.Remove(states[j]);
 	    break;
@@ -321,17 +321,17 @@ namespace RestFrames {
       }
     }
 
-    RFList<RestFrame> match_frames;
+    RestFrameList match_frames;
     Ns = states.GetN();
     for(int i = 0; i < Ns; i++)
-      match_frames.Add(states[i].GetListFrames());
+      match_frames += states[i].GetListFrames();
     
     if(!(frames == match_frames)){
       m_Log << LogWarning;
       m_Log << "Unable to find States corresponding to Frames: " << std::endl;
       m_Log << Log(frames) << LogEnd;
       SetMind(false);
-      return RFList<State>();
+      return StateList();
     }
     return states;
   }

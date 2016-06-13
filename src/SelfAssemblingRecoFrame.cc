@@ -119,7 +119,7 @@ namespace RestFrames {
 
     // clear unassembled lists
     m_ChildFrames_UnAssembled.Clear();
-    m_ChildFrames_UnAssembled += GetChildren();
+    m_ChildFrames_UnAssembled += GetChildFrames();
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       ReconstructionFrame& frame = GetChildFrame(i);

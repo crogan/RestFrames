@@ -59,7 +59,7 @@ namespace RestFrames {
     GroupType GetType() const { return m_Type; }
 
     virtual void AddFrame(RestFrame& frame);
-    virtual void AddFrames(RestFrames::RFList<RestFrame> frames);
+    virtual void AddFrames(const RestFrameList& frames);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
     void RemoveFrame(RestFrame& frame);
@@ -70,8 +70,8 @@ namespace RestFrames {
     bool ContainsFrame(const RestFrame& frame) const;
     
     int GetNFrames() const;
-    const RestFrames::RFList<RestFrame>& GetListFrames() const;
-    const RestFrames::RFList<Jigsaw>& GetListJigsaws() const;
+    const RestFrameList& GetListFrames() const;
+    const JigsawList& GetListJigsaws() const;
 
     static Group& Empty();
     
@@ -90,17 +90,17 @@ namespace RestFrames {
     virtual State& GetChildState(int i) const;
 
     State& GetChildState(const RestFrame& frame) const;
-    RestFrames::RFList<State> GetChildStates(const RestFrames::RFList<RestFrame>& frames) const;
+    StateList GetChildStates(const RestFrameList& frames) const;
 
     RestFrame const& GetLabFrame() const;
 
   private:
-    RestFrames::RFList<RestFrame> m_Frames;
-    RestFrames::RFList<Jigsaw> m_Jigsaws;
-    RestFrames::RFList<State> m_States;
+    RestFrameList m_Frames;
+    JigsawList    m_Jigsaws;
+    StateList     m_States;
 
-    RestFrames::RFList<State> m_StatesToResolve;
-    RestFrames::RFList<Jigsaw> m_JigsawsToUse;
+    StateList  m_StatesToResolve;
+    JigsawList m_JigsawsToUse;
 
     bool ResolveUnknowns();
     bool ResolveState(const State& state);

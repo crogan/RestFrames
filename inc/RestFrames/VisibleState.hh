@@ -52,7 +52,7 @@ namespace RestFrames {
     virtual RestFrame& GetFrame() const;
 
     virtual bool IsFrame(const RestFrame& frame) const;
-    virtual bool IsFrames(const RestFrames::RFList<RestFrame>& frames) const;
+    virtual bool IsFrames(const RestFrameList& frames) const;
 	
     virtual void SetLabFrameFourVector();
     virtual void SetCharge(const RFCharge& charge);

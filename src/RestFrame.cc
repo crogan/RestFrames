@@ -67,15 +67,15 @@ namespace RestFrames {
     return RestFrame::m_Axis;
   }
 
-  RFList<RestFrame> RestFrame::operator+(RestFrame& frame){
-    RFList<RestFrame> list;
+  RestFrameList RestFrame::operator + (RestFrame& frame){
+    RestFrameList list;
     list.Add(frame);
     list.Add(*this);
     return list;
   }
 
-  RFList<RestFrame> RestFrame::operator+(const RFList<RestFrame>& frames){
-    RFList<RestFrame> list = frames;
+  RestFrameList RestFrame::operator + (const RestFrameList& frames){
+    RestFrameList list = frames;
     list.Add(*this);
     return list;
   }
@@ -200,10 +200,10 @@ namespace RestFrames {
       return;
     }
     frame.SetParentFrame(*this);
-    m_ChildBoosts[&frame] = TVector3(0.,0.,0.);
+    m_ChildBoosts[&frame] = m_Empty3Vector;
   }
 
-  void RestFrame::AddChildFrames(const RestFrames::RFList<RestFrame>& frames){
+  void RestFrame::AddChildFrames(const RestFrameList& frames){
     int N = frames.GetN();
     for(int i = 0; i < N; i++)
       AddChildFrame(frames[i]);
@@ -230,7 +230,7 @@ namespace RestFrames {
       return RestFrame::Empty();
   }
 
-  RestFrames::RFList<RestFrame> RestFrame::GetChildren() const {
+  RestFrameList RestFrame::GetChildFrames() const {
     return m_ChildFrames;
   }
 
@@ -301,36 +301,36 @@ namespace RestFrames {
     m_ParentBoost = boost;
   }
 
-  TVector3 RestFrame::GetChildBoostVector(RestFrame& frame) const {
+  TVector3 const& RestFrame::GetChildBoostVector(RestFrame& frame) const {
     if(!m_ChildFrames.Contains(frame)){
       m_Log << LogWarning;
       m_Log << "Unable to get child's boost vector. ";
       m_Log << "Frame is not among children:";
       m_Log << Log(frame) << LogEnd;
-      return TVector3(0.,0.,0.);
+      return m_Empty3Vector;
     }
     return m_ChildBoosts[&frame];
   }
 
-  TVector3 RestFrame::GetParentBoostVector() const {
+  TVector3 const& RestFrame::GetParentBoostVector() const {
     return m_ParentBoost;
   }
 
-  RFList<RestFrame> RestFrame::GetListFrames(FrameType type) const {
-    RFList<RestFrame> frames;
+  RestFrameList RestFrame::GetListFrames(FrameType type) const {
+    RestFrameList frames;
     FillListFramesRecursive(frames,type);
     return frames;
   }
 
-  RFList<RestFrame> RestFrame::GetListVisibleFrames() const {
+  RestFrameList RestFrame::GetListVisibleFrames() const {
     return GetListFrames(kVisibleFrame);
   }
 
-  RFList<RestFrame> RestFrame::GetListInvisibleFrames() const {
+  RestFrameList RestFrame::GetListInvisibleFrames() const {
     return GetListFrames(kInvisibleFrame);
   }
   
-  void RestFrame::FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type) const {
+  void RestFrame::FillListFramesRecursive(RestFrameList& frames, FrameType type) const {
     if(frames.Contains(*this)) return;
     if(type == GetType() || type == kLabFrame) frames.Add((RestFrame&)(*m_This));
     int Nchild = GetNChildren();
@@ -357,21 +357,22 @@ namespace RestFrames {
     return false;
   }
 
-  bool RestFrame::FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
-				  std::vector<TVector3>& boosts) const {
+  bool RestFrame::FindPathToFrame(const RestFrame& dest_frame,
+				  const RestFrame& prev_frame, 
+				  std::vector<const TVector3*>& boosts) const {
     if(IsSame(dest_frame)) return true;
   
     std::vector<const RestFrame*> try_frames;
-    std::vector<TVector3> try_boosts;
+    std::vector<const TVector3*> try_boosts;
 
     if(!GetParentFrame().IsEmpty()){
       try_frames.push_back(&GetParentFrame());
-      try_boosts.push_back(GetParentBoostVector());
+      try_boosts.push_back(&GetParentBoostVector());
     }
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       try_frames.push_back(&GetChildFrame(i));
-      try_boosts.push_back(GetChildBoostVector(GetChildFrame(i)));
+      try_boosts.push_back(&GetChildBoostVector(GetChildFrame(i)));
     }
 
     int Ntry = try_frames.size();
@@ -431,7 +432,7 @@ namespace RestFrames {
   TLorentzVector RestFrame::GetFourVector(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     }
 
     if(!frame)
@@ -441,39 +442,39 @@ namespace RestFrames {
       m_Log << LogWarning;
       m_Log << "Unable to get four vector. ";
       m_Log << "Production frame is not defined." << LogEnd;
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     }
 
     TLorentzVector V = m_P;
     if(V.E() <= 0.)
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     if(frame == GetProductionFrame()) return V;
 
-    std::vector<TVector3> boosts;
+    std::vector<const TVector3*> boosts;
     if(!GetProductionFrame().
        FindPathToFrame(frame, RestFrame::Empty(), boosts)){
       m_Log << LogWarning;
       m_Log << "Unable to get four vector. ";
       m_Log << "Cannot find a path to frame " << frame.GetName();
       m_Log << " from frame " << GetProductionFrame().GetName() << LogEnd;
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     }
   
     int Nboost = boosts.size();
     for(int i = 0; i < Nboost; i++)
-      V.Boost(-1.*boosts[i]);
+      V.Boost(-1.*(*boosts[i]));
     return V;
   }
 
   TLorentzVector RestFrame::GetVisibleFourVector(const RestFrame& frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     }
 
     if(!frame){
       if(!GetLabFrame())
-	return TLorentzVector(0.,0.,0.,0.);
+	return m_Empty4Vector;
       else
 	return GetVisibleFourVector(GetLabFrame());
     }
@@ -484,7 +485,7 @@ namespace RestFrames {
     TLorentzVector V(0.,0.,0.,0.);
     int Nc = GetNChildren();
     for(int c = 0; c < Nc; c++){
-      RFList<RestFrame> frames = GetChildFrame(c).GetListVisibleFrames();
+      RestFrameList frames = GetChildFrame(c).GetListVisibleFrames();
       int Nf = frames.GetN();
       for(int f = 0; f < Nf; f++) 
 	V += frames[f].GetFourVector(frame);
@@ -495,12 +496,12 @@ namespace RestFrames {
   TLorentzVector RestFrame::GetInvisibleFourVector(const RestFrame& frame) const {
    if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
    }
 
    if(!frame){
      if(!GetLabFrame())
-       return TLorentzVector(0.,0.,0.,0.);
+       return m_Empty4Vector;
      else
        return GetInvisibleFourVector(GetLabFrame());
    }
@@ -511,7 +512,7 @@ namespace RestFrames {
    TLorentzVector V(0.,0.,0.,0.);
    int Nc = GetNChildren();
    for(int c = 0; c < Nc; c++){
-     RFList<RestFrame> frames = GetChildFrame(c).GetListInvisibleFrames();
+     RestFrameList frames = GetChildFrame(c).GetListInvisibleFrames();
      int Nf = frames.GetN();
      for(int f = 0; f < Nf; f++) 
        V += frames[f].GetFourVector(frame);
@@ -574,7 +575,7 @@ namespace RestFrames {
 					   const RestFrame& def_frame) const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
-      return TLorentzVector(0.,0.,0.,0.);
+      return m_Empty4Vector;
     }
 
     if(IsSame(def_frame) || (!def_frame && IsLabFrame()))
@@ -582,7 +583,7 @@ namespace RestFrames {
 
     TLorentzVector Pret = P;
     
-    std::vector<TVector3> boosts;
+    std::vector<const TVector3*> boosts;
     if(!def_frame){
       if(!GetLabFrame().
 	 FindPathToFrame(*this, RestFrame::Empty(), boosts)){
@@ -590,7 +591,7 @@ namespace RestFrames {
 	m_Log << "Unable to get four vector. ";
 	m_Log << "Cannot find a path to frame " << GetName();
 	m_Log << " from frame " << GetLabFrame().GetName() << LogEnd;
-	return TLorentzVector(0.,0.,0.,0.);
+	return m_Empty4Vector;
       }
     } else {
        if(!def_frame.
@@ -599,12 +600,12 @@ namespace RestFrames {
 	m_Log << "Unable to get four vector. ";
 	m_Log << "Cannot find a path to frame " << GetName();
 	m_Log << " from frame " << GetLabFrame().GetName() << LogEnd;
-	return TLorentzVector(0.,0.,0.,0.);
+	return m_Empty4Vector;
        }
     }
     int Nboost = boosts.size();
     for(int i = 0; i < Nboost; i++)
-      Pret.Boost(-1.*boosts[i]);
+      Pret.Boost(-1.*(*boosts[i]));
     return Pret;
   }
 
@@ -625,7 +626,7 @@ namespace RestFrames {
 
     // move P to axis_frame
     if(!axis_frame.IsLabFrame() && !axis_frame.IsEmpty()){
-      std::vector<TVector3> boosts;
+      std::vector<const TVector3*> boosts;
       if(!GetLabFrame().
 	 FindPathToFrame(axis_frame, RestFrame::Empty(), boosts)){
 	m_Log << LogWarning;
@@ -636,7 +637,7 @@ namespace RestFrames {
       }
       int Nboost = boosts.size();
       for(int i = 0; i < Nboost; i++)
-	Pret.Boost(-1.*boosts[i]);
+	Pret.Boost(-1.*(*boosts[i]));
     }
 
     if(*this == axis_frame){

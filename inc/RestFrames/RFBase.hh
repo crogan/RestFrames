@@ -97,16 +97,16 @@ namespace RestFrames {
     bool IsSame(const RFBase& obj) const;
     
     /// \brief Tests whether key is the same as this
-    bool operator==(const RFKey& key) const { return IsSame(key); }
+    bool operator == (const RFKey& key) const { return IsSame(key); }
 
     /// \brief Tests whether *obj* is the same as this
-    bool operator==(const RFBase& obj) const { return IsSame(obj); }
+    bool operator == (const RFBase& obj) const { return IsSame(obj); }
 
     /// \brief Tests whether key is the same as this
-    bool operator!=(const RFKey& key) const { return !IsSame(key); }
+    bool operator != (const RFKey& key) const { return !IsSame(key); }
 
     /// \brief Tests whether *obj* is the same as this
-    bool operator!=(const RFBase& obj) const { return !IsSame(obj); }
+    bool operator != (const RFBase& obj) const { return !IsSame(obj); }
 
     ///@} // end identity/comparison methods
 
@@ -137,6 +137,9 @@ namespace RestFrames {
     void AddDependent(RFBase* dep);
     
     RFBase* m_This;
+
+    static const TVector3       m_Empty3Vector;
+    static const TLorentzVector m_Empty4Vector;
 
   private:
     std::string m_Name;

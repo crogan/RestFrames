@@ -124,7 +124,7 @@ namespace RestFrames {
     /// \brief Add a list of children to this frame
     ///
     /// \param frames    RestFrames to be added as children
-    void AddChildFrames(const RestFrames::RFList<RestFrame>& frames);
+    void AddChildFrames(const RestFrameList& frames);
 
     /// \brief Set the parent frame for this frame
     ///
@@ -174,7 +174,7 @@ namespace RestFrames {
     virtual RestFrame& GetChildFrame(int i = 0) const;
 
     /// \brief Returns a list of this frame's child RestFrame s
-    RestFrames::RFList<RestFrame> GetChildren() const;
+    RestFrameList GetChildFrames() const;
 
     /// \brief Returns the LabFrame that this frame inherits from
     ///
@@ -219,13 +219,13 @@ namespace RestFrames {
     /// filled recursively and including children of children
     /// which are of FrameType **type**. If **type** is LabFrame
     /// (default) then all frames, regardless of type, are included.
-    virtual RestFrames::RFList<RestFrame> GetListFrames(FrameType type = kLabFrame) const;
+    virtual RestFrameList GetListFrames(FrameType type = kLabFrame) const;
 
     /// \brief Returns a list of **VisibleFrame** s inheriting from this
-    virtual RestFrames::RFList<RestFrame> GetListVisibleFrames() const;
+    virtual RestFrameList GetListVisibleFrames() const;
 
     /// \brief Returns a list of **InvisibleFrame** s inheriting from this
-    virtual RestFrames::RFList<RestFrame> GetListInvisibleFrames() const;
+    virtual RestFrameList GetListInvisibleFrames() const;
     
     ///@}
 
@@ -240,19 +240,19 @@ namespace RestFrames {
     ////////////////////////////////////////////////////////////////////
     ///@{
 
-    /// \brief Combines RestFrame s into \ref RFList<RestFrames::RestFrame>
+    /// \brief Combines RestFrame s into RestFrameList
     ///
     /// \param frame    additional RestFrame to add in list
     ///
     /// Returns a list of RestFrame s containing __frame__ and this
-    RestFrames::RFList<RestFrame> operator+(RestFrame& frame); 
+    RestFrameList operator + (RestFrame& frame); 
 
-    /// \brief Combines RestFrame s into \ref RFList<RestFrames::RestFrame>
+    /// \brief Combines RestFrame s into RestFrameList
     ///
     /// \param frames    list of additional RestFrames to add in list
     ///
     /// Returns a list of RestFrame s containing __frames__ and this
-    RestFrames::RFList<RestFrame> operator+(const RestFrames::RFList<RestFrame>& frames); 
+    RestFrameList operator + (const RestFrameList& frames); 
 
     /// \brief Returns the charge of this frame.
     virtual RFCharge GetCharge() const;
@@ -368,7 +368,8 @@ namespace RestFrames {
     ///          \vec{p}_{i}\cdot\vec{p}_{j}\right) } }
     ///          { \sum_{i}^{N}\left|\vec{p}_{i}\right| }~. \f]
     /// If the input vector contains no lists then zero is returned.
-    /// double GetVisibleShape(const vector<RFList<RestFrame> >& frames) const;
+    
+    // double GetVisibleShape(const vector<RFList<RestFrame> >& frames) const;
 
     /// \brief Returns scalar sum of visible child momenta
     ///
@@ -469,8 +470,8 @@ namespace RestFrames {
 
     virtual bool IsSoundBody() const;
 
-    TVector3 GetChildBoostVector(RestFrame& frame) const;
-    TVector3 GetParentBoostVector() const;
+    TVector3 const& GetChildBoostVector(RestFrame& frame) const;
+    TVector3 const& GetParentBoostVector() const;
 
     /// \brief Recursively initialize this frame's tree
     virtual bool InitializeTreeRecursive();
@@ -501,7 +502,7 @@ namespace RestFrames {
     const RestFrame* m_ProdFramePtr;
 
     // list of child frames and boosts
-    RestFrames::RFList<RestFrame> m_ChildFrames;
+    RestFrameList m_ChildFrames;
     mutable std::map<const RestFrame*, TVector3> m_ChildBoosts;
 
     // parent frame and boost
@@ -513,11 +514,11 @@ namespace RestFrames {
     void SetParentBoostVector(const TVector3& boost);
 
     // Recursively get lists of frames
-    void FillListFramesRecursive(RFList<RestFrame>& frames, FrameType type = kLabFrame) const;
+    void FillListFramesRecursive(RestFrameList& frames, FrameType type = kLabFrame) const;
 
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
-			 std::vector<TVector3>& boosts) const;
-
+			 std::vector<const TVector3*>& boosts) const;
+    
     friend class ReconstructionFrame;
     friend class GeneratorFrame;
 

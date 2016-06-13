@@ -187,6 +187,9 @@ namespace RestFrames {
 
   RFBase RFBase::m_Empty;
 
+  const TVector3       RFBase::m_Empty3Vector;
+  const TLorentzVector RFBase::m_Empty4Vector;
+
   double GetP(double Mp, double Mc1, double Mc2){
     if(Mp <= 0.) return 0.;
     Mc1 = std::max(Mc1, 0.);
