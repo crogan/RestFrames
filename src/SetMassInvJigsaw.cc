@@ -63,6 +63,11 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
+  void SetMassInvJigsaw::FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const {
+    Jigsaw::FillStateJigsawDependancies(jigsaws);
+    FillInvisibleMassJigsawDependancies(jigsaws);
+  }
+
   SetMassInvJigsaw SetMassInvJigsaw::m_Empty;
 
 }

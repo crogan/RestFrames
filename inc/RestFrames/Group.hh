@@ -53,8 +53,6 @@ namespace RestFrames {
     /// \brief Clears Group of all connections to other objects
     virtual void Clear();
 
-    static Group& Empty();
-
     bool IsInvisibleGroup() const;
     bool IsCombinatoricGroup() const;
 
@@ -75,6 +73,8 @@ namespace RestFrames {
     const RestFrames::RFList<RestFrame>& GetListFrames() const;
     const RestFrames::RFList<Jigsaw>& GetListJigsaws() const;
 
+    static Group& Empty();
+    
   protected:
     GroupType m_Type;
     State* m_GroupStatePtr;

@@ -49,26 +49,29 @@ namespace RestFrames {
     virtual InvisibleGroup& GetGroup() const;
 
     virtual void AddVisibleFrame(RestFrame& frame, int i = 0);
-    virtual void AddVisibleFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+    virtual void AddVisibleFrames(const RestFrameList& frames, int i = 0);
     virtual void AddInvisibleFrame(RestFrame& frame, int i = 0);
-    virtual void AddInvisibleFrames(const RestFrames::RFList<RestFrame>& frames, int i = 0);
+    virtual void AddInvisibleFrames(const RestFrameList& frames, int i = 0);
 
     virtual double GetMinimumMass() const;
 
     static InvisibleJigsaw& Empty();
 
   protected:
+    bool m_InvMassDependancy;
+    
     virtual bool IsSoundBody() const;
     virtual InvisibleState& GetNewChildState();
 
     virtual void SetParentState(State& state = State::Empty());
     virtual InvisibleState& GetParentState() const;
+    
     virtual InvisibleState& GetChildState(int i) const;
 
-    virtual void FillInvisibleMassJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
+    virtual void FillInvisibleMassJigsawDependancies(JigsawList& jigsaws) const;
 
     virtual bool InitializeDependancyJigsaws();
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws);
+    virtual bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
 
   private:
     int m_Nvis;

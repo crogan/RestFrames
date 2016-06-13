@@ -43,13 +43,12 @@ namespace RestFrames {
 
     virtual std::string GetLabel() const { return "Contra-boost Invariant"; }
 
-    static ContraBoostInvJigsaw& Empty();
-
     virtual double GetMinimumMass() const;
+    
     virtual bool AnalyzeEvent();
 
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const;
-
+    static ContraBoostInvJigsaw& Empty();
+    
   protected:
     void CalcCoef();
     double GetC1(){ return m_C1; }

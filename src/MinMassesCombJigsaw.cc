@@ -144,7 +144,6 @@ namespace RestFrames {
       for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
     }
   
-    // Execute depedancy Jigsaws
     ExecuteDependancyJigsaws();
   
     return SetSpirit(true);

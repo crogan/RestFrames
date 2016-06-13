@@ -48,9 +48,8 @@ namespace RestFrames {
     
     virtual ~Jigsaw();
 
+    /// \brief Clears Jigsaw of all connections to other objects
     virtual void Clear();
-
-    static Jigsaw& Empty();
 
     JigsawType GetType() const { return m_Type; }
 
@@ -67,12 +66,14 @@ namespace RestFrames {
 
     virtual int GetNChildren() const;
 
-    virtual RestFrames::RFList<RestFrame> GetParentFrames() const;
-    virtual RestFrames::RFList<RestFrame> GetChildFrames(int i) const;
-    virtual RestFrames::RFList<RestFrame> GetDependancyFrames(int i) const;
+    virtual RestFrameList GetParentFrames() const;
+    virtual RestFrameList GetChildFrames(int i) const;
+    virtual RestFrameList GetDependancyFrames(int i) const;
 
     void RemoveFrame(const RestFrame& frame);
 
+    static Jigsaw& Empty();
+    
   protected:
     JigsawType m_Type;
     virtual bool IsSoundBody() const;
@@ -80,14 +81,14 @@ namespace RestFrames {
     virtual bool AnalyzeEvent() = 0;
 
     bool CanResolve(const State& state) const;
-    bool CanResolve(const RestFrames::RFList<RestFrame>& frames) const;
+    bool CanResolve(const RestFrameList& frames) const;
     bool DependsOnJigsaw(const Jigsaw& jigsaw) const;
 
     virtual bool InitializeTree();
     virtual bool InitializeAnalysis();
 
     virtual bool InitializeDependancyJigsaws();
-    virtual bool InitializeJigsawExecutionList(RestFrames::RFList<Jigsaw>& exec_jigsaws) = 0;
+    virtual bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws) = 0;
 
     void AddChildFrame(RestFrame& frame, int i = 0);
     void AddDependancyFrame(RestFrame& frame, int i = 0);
@@ -96,28 +97,27 @@ namespace RestFrames {
     virtual State& GetParentState() const;
 
     virtual State& GetChildState(int i) const;
-    virtual RestFrames::RFList<State> GetChildStates() const;
+    virtual StateList const& GetChildStates() const;
 
     int GetNDependancyStates() const;
-    virtual RestFrames::RFList<State> GetDependancyStates(int i) const;
+    virtual StateList const& GetDependancyStates(int i) const;
 
      virtual State& GetNewChildState() = 0;
 
-    virtual void FillGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
-    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws);
-    virtual void FillStateGroupJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
+    virtual void FillGroupJigsawDependancies(JigsawList& jigsaws) const;
+    virtual void FillStateJigsawDependancies(JigsawList& jigsaws) const;
 
   private:
     Group* m_GroupPtr;
     State* m_ParentStatePtr;
 
-    RestFrames::RFList<State> m_ChildStates;
-    std::vector<RestFrames::RFList<State> > m_DependancyStates;
+    StateList     m_ChildStates;
+    StateListList m_DependancyStates;
 
-    std::vector<RestFrames::RFList<RestFrame> > m_ChildFrames;
-    std::vector<RestFrames::RFList<RestFrame> > m_DependancyFrames;
+    RestFrameListList m_ChildFrames;
+    RestFrameListList m_DependancyFrames;
 
-    RestFrames::RFList<Jigsaw> m_DependancyJigsaws;
+    JigsawList m_DependancyJigsaws;
 
     static int m_class_key;
 

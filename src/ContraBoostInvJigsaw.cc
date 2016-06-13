@@ -37,7 +37,10 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   ContraBoostInvJigsaw::ContraBoostInvJigsaw(const std::string& sname,
 					     const std::string& stitle) : 
-    InvisibleJigsaw(sname, stitle, 2, 2) {}
+    InvisibleJigsaw(sname, stitle, 2, 2)
+  {
+    m_InvMassDependancy = true;
+  }
 
   ContraBoostInvJigsaw::ContraBoostInvJigsaw() : InvisibleJigsaw() {}
  
@@ -45,11 +48,6 @@ namespace RestFrames {
 
   ContraBoostInvJigsaw& ContraBoostInvJigsaw::Empty(){
     return ContraBoostInvJigsaw::m_Empty;
-  }
-
-  void ContraBoostInvJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
-    InvisibleJigsaw::FillInvisibleMassJigsawDependancies(jigsaws);
-    FillStateGroupJigsawDependancies(jigsaws);
   }
 
   double ContraBoostInvJigsaw::GetMinimumMass() const {

@@ -47,6 +47,9 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     static SetMassInvJigsaw& Empty();
+
+  protected:
+    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
     
   private:
     static SetMassInvJigsaw m_Empty;

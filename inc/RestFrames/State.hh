@@ -49,8 +49,6 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    static State& Empty();
-
     /// \brief Returns State (*StateType*) type 
     StateType GetType() const;
     
@@ -81,7 +79,10 @@ namespace RestFrames {
     virtual void SetFourVector(const TLorentzVector& V);
     virtual TLorentzVector GetFourVector() const;
     virtual RFCharge GetCharge() const;
-	
+
+    static State& Empty();
+    static RestFrames::RFList<State> const& EmptyList();
+    
   protected:
     StateType m_Type;
     RFCharge m_Charge;
@@ -95,6 +96,8 @@ namespace RestFrames {
     Jigsaw* m_ChildJigsawPtr;
     
     static int m_class_key;
+
+    static const RestFrames::RFList<State> m_EmptyList;
 
   };
 

@@ -67,6 +67,10 @@ namespace RestFrames {
     return VisibleState::Empty();
   }
 
+  RestFrames::RFList<State> const& State::EmptyList(){
+    return m_EmptyList;
+  }
+
   /// \brief Returns State (*StateType*) type 
   StateType State::GetType() const {
     return m_Type;
@@ -156,5 +160,7 @@ namespace RestFrames {
   RFCharge State::GetCharge() const {
     return m_Charge;
   }
+
+  const RestFrames::RFList<State> State::m_EmptyList;
 
 }

@@ -43,6 +43,7 @@ namespace RestFrames {
     Jigsaw(sname, stitle)
   {
     m_Type = kInvisibleJigsaw;
+    m_InvMassDependancy = false;
     m_Ninv = Ninv;
     m_Nvis = Nvis;
   }
@@ -144,7 +145,16 @@ namespace RestFrames {
     return M;
   }
 
-  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const { 
+  void InvisibleJigsaw::FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
+    if(m_InvMassDependancy){
+      int N = GetNDependancyStates();
+      for(int i = 0; i < N; i++){
+	int M = GetDependancyStates(i).GetN();
+	for(int j = 0; j < M; j++){
+	  GetDependancyStates(i)[j].GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
+	}
+      }
+    }
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
       static_cast<const InvisibleJigsaw&>(GetChildState(i).GetChildJigsaw()).FillInvisibleMassJigsawDependancies(jigsaws);

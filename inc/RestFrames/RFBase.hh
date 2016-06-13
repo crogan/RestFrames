@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <TVector3.h>
 #include <TLorentzVector.h>
+
 #include "RestFrames/RFKey.hh"
 #include "RestFrames/RFLog.hh"
 #include "RestFrames/RFList.hh"
@@ -65,8 +66,6 @@ namespace RestFrames {
 
     /// \brief Clears RFBase of all connections to other objects
     virtual void Clear();
-
-    static RFBase& Empty();
 
     /// \brief Checks whether this is default (empty) instance of class
     bool IsEmpty() const;
@@ -117,9 +116,8 @@ namespace RestFrames {
     /// \brief String of information associated with object
     virtual std::string PrintString(LogType type = LogVerbose) const;
 
-    /// \brief pointer to RFBase object owned by this one
-    void AddDependent(RFBase* dep);
-
+    static RFBase& Empty();
+    
   protected:      
     mutable RFLog m_Log;
 
@@ -135,15 +133,20 @@ namespace RestFrames {
     void UnSoundMind(const std::string& function) const;
     void UnSoundSpirit(const std::string& function) const;
 
+    /// \brief pointer to RFBase object owned by this one
+    void AddDependent(RFBase* dep);
+    
     RFBase* m_This;
 
   private:
     std::string m_Name;
     std::string m_Title;
     RFKey m_Key;
+    
     mutable bool m_Body;       
     mutable bool m_Mind;       
-    mutable bool m_Spirit; 
+    mutable bool m_Spirit;
+    
     std::vector<RFBase*> m_Owns;
 
     static RFBase m_Empty;

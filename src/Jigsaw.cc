@@ -165,13 +165,13 @@ namespace RestFrames {
     return m_ChildStates[i];
   }
 
-  RFList<State> Jigsaw::GetChildStates() const {
+  RFList<State> const& Jigsaw::GetChildStates() const {
     return m_ChildStates;
   }
 
-  RFList<State> Jigsaw::GetDependancyStates(int i) const {
+  RFList<State> const& Jigsaw::GetDependancyStates(int i) const {
     if(i < 0 || i >= int(m_DependancyStates.size()))
-      return RFList<State>();
+      return State::EmptyList();
     return m_DependancyStates[i];
   }
 
@@ -403,31 +403,22 @@ namespace RestFrames {
     return m_DependancyJigsaws.Contains(jigsaw);
   }
 
-  void Jigsaw::FillGroupJigsawDependancies(RFList<Jigsaw>& jigsaws){
+  void Jigsaw::FillGroupJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
     if(jigsaws.Contains(*this)) return;
-    jigsaws.Add(*this);
-    if(m_ParentStatePtr) m_ParentStatePtr->GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
+    jigsaws.Add((Jigsaw&)(*m_This));
+    if(m_ParentStatePtr)
+      m_ParentStatePtr->GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
   }
 
-  void Jigsaw::FillStateJigsawDependancies(RFList<Jigsaw>& jigsaws){
+  void Jigsaw::FillStateJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
     if(jigsaws.Contains(*this)) return;
-    jigsaws += *this;
+    jigsaws.Add((Jigsaw&)(*m_This));
 
     int N = m_DependancyStates.size();
     for(int i = 0; i < N; i++){
       int M = m_DependancyStates[i].GetN();
       for(int j = 0; j < M; j++){
 	m_DependancyStates[i][j].GetParentJigsaw().FillStateJigsawDependancies(jigsaws);
-      }
-    } 
-  }
-
-  void Jigsaw::FillStateGroupJigsawDependancies(RFList<Jigsaw>& jigsaws) const {
-    int N = m_DependancyStates.size();
-    for(int i = 0; i < N; i++){
-      int M = m_DependancyStates[i].GetN();
-      for(int j = 0; j < M; j++){
-	m_DependancyStates[i][j].GetParentJigsaw().FillGroupJigsawDependancies(jigsaws);
       }
     } 
   }

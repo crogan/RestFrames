@@ -61,9 +61,9 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     virtual InvisibleState& InitializeParentState();
-    virtual InvisibleState& GetChildState(int i) const;
-
     virtual InvisibleState& GetParentState() const;
+    
+    virtual InvisibleState& GetChildState(int i) const;
 
   private:
     TLorentzVector m_Lab_P;
