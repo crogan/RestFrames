@@ -39,22 +39,12 @@ namespace RestFrames {
   
   class RFKey;
   class RFCharge;
-  
-  class State;
+
   class RestFrame;
-  class Jigsaw;
-  class Group;
+  class State;
   
   template <class T>
   class RFList;
-
-  typedef RestFrames::RFList<RestFrame> RestFrameList;
-  typedef RestFrames::RFList<Group>     GroupList;
-  typedef RestFrames::RFList<Jigsaw>    JigsawList;
-  typedef RestFrames::RFList<State>     StateList;
-
-  typedef std::vector<RestFrames::RFList<RestFrame> > RestFrameListList;
-  typedef std::vector<RestFrames::RFList<State> >     StateListList;
   
   ///////////////////////////////////////////////
   // RFListBase class
@@ -272,6 +262,21 @@ namespace RestFrames {
     double GetMomentum(const RestFrame& frame) const;
     RFCharge GetCharge() const;
   };
+
+  class RFBase;
+  class Jigsaw;
+  class Group;
+  class VisibleState;
+  
+  typedef RestFrames::RFList<RFBase>       RFBaseList;
+  typedef RestFrames::RFList<RestFrame>    RestFrameList;
+  typedef RestFrames::RFList<Group>        GroupList;
+  typedef RestFrames::RFList<Jigsaw>       JigsawList;
+  typedef RestFrames::RFList<State>        StateList;
+  typedef RestFrames::RFList<VisibleState> VisibleStateList;
+
+  typedef std::vector<RestFrames::RFList<RestFrame> > RestFrameListList;
+  typedef std::vector<RestFrames::RFList<State> >     StateListList;
   
 }
 

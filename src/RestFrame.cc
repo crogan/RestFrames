@@ -57,6 +57,10 @@ namespace RestFrames {
     return ReconstructionFrame::Empty();
   }
 
+  RestFrameList const& RestFrame::EmptyList(){
+    return m_EmptyList;
+  }
+
   TVector3 RestFrame::m_Axis = TVector3(0.,0.,1.);
 
   void RestFrame::SetAxis(const TVector3& axis){
@@ -230,7 +234,7 @@ namespace RestFrames {
       return RestFrame::Empty();
   }
 
-  RestFrameList RestFrame::GetChildFrames() const {
+  RestFrameList const& RestFrame::GetChildFrames() const {
     return m_ChildFrames;
   }
 
@@ -989,4 +993,6 @@ namespace RestFrames {
     return V1.Angle(V2);
   }
 
+  const RestFrameList RestFrame::m_EmptyList;
+  
 }

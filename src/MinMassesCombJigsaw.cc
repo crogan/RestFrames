@@ -138,7 +138,7 @@ namespace RestFrames {
       GetChildState(ihem).AddElement(m_InputStates[i]);
     }
     if(GetChildState(1).GetFourVector().M() > GetChildState(1).GetFourVector().M()){
-      std::vector<RFList<VisibleState> > flip;
+      std::vector<VisibleStateList> flip;
       for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
       for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
       for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);

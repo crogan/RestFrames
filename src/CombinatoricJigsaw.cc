@@ -82,7 +82,7 @@ namespace RestFrames {
       return static_cast<CombinatoricState&>(Jigsaw::GetParentState());
   }
 
-  CombinatoricState& CombinatoricJigsaw::GetChildState(int i) const{
+  CombinatoricState& CombinatoricJigsaw::GetChildState(int i) const {
     if(!Jigsaw::GetChildState(i)) 
       return CombinatoricState::Empty();
     else
@@ -93,8 +93,9 @@ namespace RestFrames {
     if(!frame) return;
     if(!GetGroup()) return;
     
-    RFList<RestFrame> frames = 
-      frame.GetListVisibleFrames()+frame.GetListInvisibleFrames();
+    RestFrameList frames = 
+      frame.GetListVisibleFrames()+
+      frame.GetListInvisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++){
       if(GetGroup().ContainsFrame(frames[f]))
@@ -104,20 +105,20 @@ namespace RestFrames {
     }
   }
 
-  void CombinatoricJigsaw::AddFrames(const RFList<RestFrame>& frames, int i){
+  void CombinatoricJigsaw::AddFrames(const RestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
       AddFrame(frames[f],i);
   }
 
-  bool CombinatoricJigsaw::InitializeJigsawExecutionList(RFList<Jigsaw>& exec_jigsaws){
+  bool CombinatoricJigsaw::InitializeJigsawExecutionList(JigsawList& exec_jigsaws){
     if(!IsSoundMind()) return false;
     if(exec_jigsaws.Contains(*this)) return true;
 
     m_ExecuteJigsaws.Clear();
 
     // Add group dependancy jigsaws first
-    RFList<Jigsaw> group_jigsaws; 
+    JigsawList group_jigsaws; 
     FillGroupJigsawDependancies(group_jigsaws);
     group_jigsaws -= *this;
 
@@ -143,7 +144,7 @@ namespace RestFrames {
 	m_DependancyJigsaws -= jigsaw;
 	continue;
       }
-      RFList<Jigsaw> temp_exec_jigsaws = exec_jigsaws;
+      JigsawList temp_exec_jigsaws = exec_jigsaws;
       temp_exec_jigsaws += m_ExecuteJigsaws;
       temp_exec_jigsaws += *this;
       if(!jigsaw.InitializeJigsawExecutionList(temp_exec_jigsaws))
@@ -216,7 +217,7 @@ namespace RestFrames {
     bool exclTOTOT = true;
     int Nc = GetNChildren();
     for(int i = 0; i < Nc; i++){
-      RFList<RestFrame> frames = GetChildState(i).GetListFrames();
+      RestFrameList const& frames = GetChildState(i).GetListFrames();
       int Nf = frames.GetN();
       int NTOT = 0;
       bool exclTOT = true;

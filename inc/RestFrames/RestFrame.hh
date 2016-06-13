@@ -174,7 +174,7 @@ namespace RestFrames {
     virtual RestFrame& GetChildFrame(int i = 0) const;
 
     /// \brief Returns a list of this frame's child RestFrame s
-    RestFrameList GetChildFrames() const;
+    RestFrameList const& GetChildFrames() const;
 
     /// \brief Returns the LabFrame that this frame inherits from
     ///
@@ -464,6 +464,9 @@ namespace RestFrames {
     /// \brief Returns empty instance of class
     static RestFrame& Empty();
 
+    /// \brief Returns empty RestFrameList
+    static RestFrameList const& EmptyList();
+
   protected:   
     FrameType m_Type;
     AnaType m_Ana;
@@ -518,6 +521,8 @@ namespace RestFrames {
 
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 std::vector<const TVector3*>& boosts) const;
+
+    static const RestFrameList m_EmptyList;
     
     friend class ReconstructionFrame;
     friend class GeneratorFrame;

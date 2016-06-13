@@ -124,11 +124,11 @@ namespace RestFrames {
     for(int i = 0; i < N; i++){
       ReconstructionFrame& frame = GetChildFrame(i);
       bool expand_frame = false;
-      if(m_ChildStates[&frame].GetN() == 1 && frame.IsVisibleFrame())
-	if(m_ChildStates[&frame][0].IsCombinatoricState()){
+      if(GetChildStates(frame).GetN() == 1 && frame.IsVisibleFrame())
+	if(GetChildStates(frame)[0].IsCombinatoricState()){
 	  expand_frame = true;
-	  RFList<VisibleState> elements = 
-	    static_cast<CombinatoricState&>(m_ChildStates[&frame][0]).GetElements();
+	  VisibleStateList const& elements = 
+	    static_cast<CombinatoricState&>(GetChildStates(frame)[0]).GetElements();
 	  int Nelement = elements.GetN();
 	  for(int e = 0; e < Nelement; e++){
 	    VisibleState& element = elements[e];
@@ -140,21 +140,21 @@ namespace RestFrames {
 	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
-	    m_VisibleStates.Add(element);
+	    m_VisibleStates += element;
 	  }
 	  if(Nelement < 1){
 	    expand_frame = false;
 	  }
 	}
       if(!expand_frame){
-	TLorentzVector V = m_ChildStates[&frame].GetFourVector();
+	TLorentzVector V = GetChildStates(frame).GetFourVector();
 	if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	Ps.push_back(V);
 	frames.push_back(&frame);
       }
     }
+    
     RemoveChildFrames();
-    m_ChildStates.clear();
     AssembleRecursive(*this, frames, Ps); 
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
@@ -163,6 +163,7 @@ namespace RestFrames {
       SetBody(false);
       return;
     }
+    
     SetMind(true);
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
     lab_frame.AddTreeStates(m_VisibleStates);
@@ -336,10 +337,10 @@ namespace RestFrames {
     if(!m_IsAssembled)
       return RestFrame::Empty();
     
-    int N = m_ChildStates.size();
+    int N = GetNChildren();
     for(int i = 0; i < N; i++){
-      if(m_ChildStates[&GetChildFrame(i)].Contains(key))
-	return m_ChildStates[&GetChildFrame(i)].Get(key).GetListFrames()[0];
+      if(GetChildStates(i).Contains(key))
+	return GetChildStates(i).Get(key).GetListFrames()[0];
     }
 
     return RestFrame::Empty();

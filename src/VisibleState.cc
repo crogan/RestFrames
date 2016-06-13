@@ -68,7 +68,7 @@ namespace RestFrames {
     return *m_FramePtr == frame;
   }
 
-  bool VisibleState::IsFrames(const RFList<RestFrame>& frames) const {
+  bool VisibleState::IsFrames(const RestFrameList& frames) const {
     return IsFrame(frames[0]);
   }
 

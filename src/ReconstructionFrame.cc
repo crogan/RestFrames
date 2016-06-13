@@ -70,6 +70,25 @@ namespace RestFrames {
     RestFrame::AddChildFrame(frame);
   }
 
+  void ReconstructionFrame::RemoveChildFrame(RestFrame& frame){
+    SetBody(false);
+    bool contains = m_ChildFrames.Contains(frame);
+    m_ChildBoosts.erase(&frame);
+    m_ChildStates.erase(&frame);
+    m_ChildFrames.Remove(frame);
+    if(contains)
+      frame.SetParentFrame();
+  }
+
+  void ReconstructionFrame::RemoveChildFrames(){
+    SetBody(false);
+    while(GetNChildren() > 0)
+      RemoveChildFrame(m_ChildFrames[0]);
+    m_ChildFrames.Clear();
+    m_ChildBoosts.clear();
+    m_ChildStates.clear();
+  }
+
   void ReconstructionFrame::SetParentFrame(RestFrame& frame){
     if(!frame) return;
     if(!frame.IsRecoFrame()) return;
@@ -90,6 +109,17 @@ namespace RestFrames {
       return static_cast<ReconstructionFrame&>(frame);
     else 
       return ReconstructionFrame::Empty();
+  }
+
+  StateList const& ReconstructionFrame::GetChildStates(int i) const {
+    return GetChildStates(GetChildFrame(i));
+  }
+  
+  StateList const& ReconstructionFrame::GetChildStates(const RestFrame& child) const {
+    if(m_ChildStates.count(&child) <= 0)
+      return State::EmptyList();
+
+    return m_ChildStates[&child];
   }
 
   void ReconstructionFrame::SetGroup(Group& group){
@@ -114,13 +144,13 @@ namespace RestFrames {
       return Group::Empty();
   }
 
-  RFList<Group> ReconstructionFrame::GetListGroups() const {
-    RFList<Group> groups;
+  GroupList ReconstructionFrame::GetListGroups() const {
+    GroupList groups;
     FillListGroupsRecursive(groups);
     return groups;
   }
 
-  void ReconstructionFrame::FillListGroupsRecursive(RFList<Group>& groups) const {
+  void ReconstructionFrame::FillListGroupsRecursive(GroupList& groups) const {
     if(m_GroupPtr) groups.Add(*m_GroupPtr);
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++)
@@ -132,18 +162,18 @@ namespace RestFrames {
     if(!GetLabFrame())
       return false;
       
-    const RFList<VisibleState>& states = 
+    const VisibleStateList& states = 
       static_cast<const LabRecoFrame&>(GetLabFrame()).GetTreeStates();
    
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       RestFrame& child = GetChildFrame(i);
-      m_ChildStates[&child] = RFList<State>();
+      m_ChildStates[&child] = StateList();
       RFList<ReconstructionFrame> frames = child.GetListVisibleFrames();
       int Nf = frames.GetN();
       for(int f = 0; f < Nf; f++)
 	if(!frames[f].GetGroup())
-	  if(!m_ChildStates[&child].Add(RFList<State>(states).GetFrame(frames[f]))){
+	  if(!m_ChildStates[&child].Add(StateList(states).GetFrame(frames[f]))){
 	    m_Log << LogWarning;
 	    m_Log << "Unable to associate State with Group-less Frame:";
 	    m_Log << Log(frames[f]) << LogEnd;
@@ -154,17 +184,17 @@ namespace RestFrames {
   }
 
   bool ReconstructionFrame::InitializeGroupStates(){
-    RFList<Group> groups = GetListGroups();
+    GroupList groups = GetListGroups();
     int Ngroup = groups.GetN();
     int Nchild = GetNChildren();
 
     for(int c = 0; c < Nchild; c++){
-      RFList<RestFrame> frames = 
+      RestFrameList frames = 
 	GetChildFrame(c).GetListVisibleFrames() +
 	GetChildFrame(c).GetListInvisibleFrames();
       int Nframe = frames.GetN();
-      for(int f = 0; f < Nframe; f++)
-	for(int g = 0; g < Ngroup; g++)
+      for(int f = 0; f < Nframe; f++){
+	for(int g = 0; g < Ngroup; g++){
 	  if(groups[g].ContainsFrame(frames[f])){
 	    State& state = groups[g].GetChildState(frames[f]);
 	    if(!state){
@@ -177,8 +207,9 @@ namespace RestFrames {
 	    m_ChildStates[&GetChildFrame(c)].Add(state);
 	    break;
 	  }
+	}
+      }
     }  
-    
     return true;
   }
   

@@ -174,10 +174,8 @@ namespace RestFrames {
       return;
     if(m_Jigsaws.Contains(jigsaw))
       return;
-    
-    RFList<RestFrame> frames = jigsaw.GetParentFrames();
 
-    if(!m_Frames.Contains(frames))
+    if(!m_Frames.Contains(jigsaw.GetParentFrames()))
       return;
     
     FillJigsawLink(jigsaw);
@@ -185,7 +183,7 @@ namespace RestFrames {
     m_Jigsaws.Add(jigsaw);
   }
 
-  void TreePlot::AddJigsaws(const RFList<Jigsaw>& jigsaws){
+  void TreePlot::AddJigsaws(const JigsawList& jigsaws){
     int N = jigsaws.GetN();
     for(int j = 0; j < N; j++) AddJigsaw(jigsaws[j]);
   }
@@ -416,7 +414,8 @@ namespace RestFrames {
     TreePlotNode* high_new = nullptr;
    
     for(int s = 0; s < Nsplit; s++){
-      RFList<RestFrame> frames = jigsaw.GetChildFrames(s)+
+      RestFrameList frames =
+	jigsaw.GetChildFrames(s)+
 	jigsaw.GetDependancyFrames(s);
       int Nnode = m_TreeNodes.size();
       TreePlotNode* last_nodePtr = nullptr;
@@ -658,7 +657,7 @@ namespace RestFrames {
     }
 
     if(with_rings){
-      RFList<Jigsaw> jigsaws = nodePtr->GetJigsawList();
+      JigsawList jigsaws = nodePtr->GetJigsawList();
       int Njigsaw = jigsaws.GetN();
       for(int i = 0; i < Njigsaw; i++){
 	double R = 1.03 + double(Njigsaw-i)*0.08;
@@ -726,7 +725,7 @@ namespace RestFrames {
   }
 
   std::string TreePlot::GetStateTitle(const State& state){
-    RFList<RestFrame> frames = state.GetListFrames();
+    RestFrameList frames = state.GetListFrames();
     int Nf = frames.GetN();
     std::string title = "";
     if(Nf > 2) title.append("#splitline{");
@@ -734,7 +733,7 @@ namespace RestFrames {
     for(int f = 1; f < Nf; f++){
       if(f%((Nf+1)/2) == 0 && Nf > 2) title.append("}{");
       title.append("+ ");
-      title.append(frames.Get(f).GetTitle());
+      title.append(frames[f].GetTitle());
     }
     if(Nf > 2) title.append("}");
    

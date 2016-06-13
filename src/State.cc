@@ -67,7 +67,7 @@ namespace RestFrames {
     return VisibleState::Empty();
   }
 
-  RestFrames::RFList<State> const& State::EmptyList(){
+  StateList const& State::EmptyList(){
     return m_EmptyList;
   }
 
@@ -91,13 +91,13 @@ namespace RestFrames {
     return m_Type == kCombinatoricState;
   }
 
-  void State::AddFrames(const RFList<RestFrame>& frames){
+  void State::AddFrames(const RestFrameList& frames){
     int N = frames.GetN();
     for(int i = 0; i < N; i++)
       AddFrame(frames[i]);
   }
 
-  RFList<RestFrame> const& State::GetListFrames() const {
+  RestFrameList const& State::GetListFrames() const {
     return m_Frames;
   }
 
@@ -111,7 +111,7 @@ namespace RestFrames {
     return m_Frames[0] == frame;
   }
 
-  bool State::IsFrames(const RFList<RestFrame>& frames) const {
+  bool State::IsFrames(const RestFrameList& frames) const {
     return m_Frames == frames;
   }
 
@@ -161,6 +161,6 @@ namespace RestFrames {
     return m_Charge;
   }
 
-  const RestFrames::RFList<State> State::m_EmptyList;
+  const StateList State::m_EmptyList;
 
 }

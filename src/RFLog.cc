@@ -203,12 +203,12 @@ namespace RestFrames {
     if(NMAX > 0) RFLog::m_NMAX = NMAX;
   }
 
-  template <> RFLog& RFLog::operator<< (const RFBase* arg){
+  template <> RFLog& RFLog::operator << (const RFBase* arg){
     PrintObject(arg);
     return *this;
   }
 
-  template <> RFLog& RFLog::operator<< (const RFList<RFBase>* arg){
+  template <> RFLog& RFLog::operator << (const RFBaseList* arg){
     PrintList(arg);
     return *this;
   }

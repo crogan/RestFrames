@@ -59,7 +59,7 @@ namespace RestFrames {
     m_TreeStates += state;
   }
 
-  void LabRecoFrame::AddTreeStates(const RFList<VisibleState>& states) const {
+  void LabRecoFrame::AddTreeStates(const VisibleStateList& states) const {
     m_TreeStates += states;
   }
 
@@ -67,11 +67,11 @@ namespace RestFrames {
     m_TreeStates -= state;
   }
   
-  void LabRecoFrame::RemoveTreeStates(const RFList<VisibleState>& states) const {
+  void LabRecoFrame::RemoveTreeStates(const VisibleStateList& states) const {
     m_TreeStates -= states;
   }
 
-  RFList<VisibleState> const& LabRecoFrame::GetTreeStates() const {
+  VisibleStateList const& LabRecoFrame::GetTreeStates() const {
     return m_TreeStates;
   }
 
@@ -185,7 +185,7 @@ namespace RestFrames {
     
     // Initialize Dependancy States in Jigsaws
     for(int g = 0; g < Ng; g++){
-      RFList<Jigsaw> jigsaws = m_TreeGroups[g].GetListJigsaws();
+      JigsawList jigsaws = m_TreeGroups[g].GetListJigsaws();
       int Nj = jigsaws.GetN();
       for(int j = 0; j < Nj; j++)
 	if(!jigsaws[j].InitializeAnalysis()){
@@ -197,7 +197,7 @@ namespace RestFrames {
     }
     // Initialize Dependancy Jigsaw lists inside jigsaws
     for(int g = 0; g < Ng; g++){
-      RFList<Jigsaw> jigsaws = m_TreeGroups[g].GetListJigsaws();
+      JigsawList jigsaws = m_TreeGroups[g].GetListJigsaws();
       int Nj = jigsaws.GetN();
       for(int j = 0; j < Nj; j++){
 	Jigsaw& jigsaw = jigsaws[j];
@@ -211,7 +211,7 @@ namespace RestFrames {
       }
     }
     // Initialize Jigsaw execution list
-    RFList<Jigsaw> exec_jigsaws;
+    JigsawList exec_jigsaws;
     int Nj = m_TreeJigsaws.GetN();
     for(int j = 0; j < Nj; j++){
       if(!m_TreeJigsaws[j].InitializeJigsawExecutionList(exec_jigsaws)){
@@ -223,7 +223,7 @@ namespace RestFrames {
       }
     }  
     m_TreeJigsaws.Clear();
-    m_TreeJigsaws.Add(exec_jigsaws);
+    m_TreeJigsaws += exec_jigsaws;
 
     m_Log << LogVerbose << "...Done initializing Jigsaws" << LogEnd;
     return true;

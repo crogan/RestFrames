@@ -74,11 +74,11 @@ namespace RestFrames {
     virtual CombinatoricState& GetChildState(int i) const;
 
   private:
-    RestFrames::RFList<VisibleState>         m_Elements;
+    VisibleStateList m_Elements;
     mutable std::map<const RestFrame*, int>  m_NElementsForFrame;
     mutable std::map<const RestFrame*, bool> m_NExclusiveElementsForFrame;
 
-    RestFrames::RFList<VisibleState> m_InitStates;
+    VisibleStateList m_InitStates;
     VisibleState& GetNewElement();
     
 

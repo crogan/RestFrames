@@ -67,8 +67,9 @@ namespace RestFrames {
     virtual int GetNChildren() const;
 
     virtual RestFrameList GetParentFrames() const;
-    virtual RestFrameList GetChildFrames(int i) const;
-    virtual RestFrameList GetDependancyFrames(int i) const;
+    
+    virtual RestFrameList const& GetChildFrames(int i) const;
+    virtual RestFrameList const& GetDependancyFrames(int i) const;
 
     void RemoveFrame(const RestFrame& frame);
 

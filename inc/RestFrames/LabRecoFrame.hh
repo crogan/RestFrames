@@ -54,15 +54,15 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     void AddTreeState(VisibleState& state) const;
-    void AddTreeStates(const RestFrames::RFList<VisibleState>& states) const;
+    void AddTreeStates(const VisibleStateList& states) const;
     void RemoveTreeState(const VisibleState& state) const;
-    void RemoveTreeStates(const RestFrames::RFList<VisibleState>& states) const;
-    RestFrames::RFList<VisibleState> const& GetTreeStates() const;
+    void RemoveTreeStates(const VisibleStateList& states) const;
+    VisibleStateList const& GetTreeStates() const;
 
   protected:
-    RestFrames::RFList<Group>  m_TreeGroups;
-    RestFrames::RFList<Jigsaw> m_TreeJigsaws;
-    mutable RestFrames::RFList<VisibleState>  m_TreeStates;
+    GroupList  m_TreeGroups;
+    JigsawList m_TreeJigsaws;
+    mutable VisibleStateList m_TreeStates;
   
     bool InitializeTreeStates();
     bool InitializeTreeGroups();
@@ -72,7 +72,7 @@ namespace RestFrames {
 
   private:
     VisibleState& GetNewVisibleState();
-    RestFrames::RFList<VisibleState> m_InitStates;
+    VisibleStateList m_InitStates;
 
   };
 

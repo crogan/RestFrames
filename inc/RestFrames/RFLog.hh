@@ -100,7 +100,7 @@ namespace RestFrames {
   };
 
   template <> RFLog& RFLog::operator<< (const RFBase* arg);
-  template <> RFLog& RFLog::operator<< (const RestFrames::RFList<RFBase>* arg);
+  template <> RFLog& RFLog::operator<< (const RFBaseList* arg);
 
   inline RFLog& RFLog::operator<< (RFLog& (*_f)(RFLog&)){
     return (_f)(*this);
@@ -126,9 +126,9 @@ namespace RestFrames {
   const RFBase* Log(const RFBase& obj);
   const RFBase* Log(const RFBase* ptr);
   template <class T> 
-  const RFList<RFBase>* Log(const RFList<T>& list){ return (const RFList<RFBase>*)&list; }
+  const RFList<RFBase>* Log(const RFList<T>& list){ return (const RFBaseList*)&list; }
   template <class T> 
-  const RFList<RFBase>* Log(const RFList<T>* ptr){ return (const RFList<RFBase>*)ptr; }
+  const RFList<RFBase>* Log(const RFList<T>* ptr){ return (const RFBaseList*)ptr; }
 
 #ifndef __MAKECINT__
   #define LogEnd RFLog::EndMessage

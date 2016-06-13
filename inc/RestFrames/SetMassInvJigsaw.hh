@@ -49,7 +49,7 @@ namespace RestFrames {
     static SetMassInvJigsaw& Empty();
 
   protected:
-    virtual void FillStateJigsawDependancies(RestFrames::RFList<Jigsaw>& jigsaws) const;
+    virtual void FillStateJigsawDependancies(JigsawList& jigsaws) const;
     
   private:
     static SetMassInvJigsaw m_Empty;

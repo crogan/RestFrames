@@ -86,11 +86,11 @@ namespace RestFrames {
     m_Elements += state;
   }
 
-  void CombinatoricState::AddElements(const RFList<VisibleState>& states){
+  void CombinatoricState::AddElements(const VisibleStateList& states){
     m_Elements += states;
   }
 
-  RFList<VisibleState> CombinatoricState::GetElements() const {
+  VisibleStateList const& CombinatoricState::GetElements() const {
     return m_Elements;
   }
 
@@ -111,16 +111,16 @@ namespace RestFrames {
   }
 
   void CombinatoricState::Boost(const TVector3& B){
-    RFList<State>(m_Elements).Boost(B);
+    StateList(m_Elements).Boost(B);
     State::Boost(B);
   }
 
   TLorentzVector CombinatoricState::GetFourVector() const {
-    return RFList<State>(m_Elements).GetFourVector();
+    return StateList(m_Elements).GetFourVector();
   }
 
   RFCharge CombinatoricState::GetCharge() const {
-    return RFList<State>(m_Elements).GetCharge();
+    return StateList(m_Elements).GetCharge();
   }
 
   CombinatoricState CombinatoricState::m_Empty;

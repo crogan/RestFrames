@@ -56,6 +56,20 @@ namespace RestFrames {
     /// if it is already listed as a child.
     virtual void AddChildFrame(RestFrame& frame);
 
+    /// \brief Remove a child of this frame 
+    ///
+    /// \param frame     child frame to be removed
+    ///
+    /// Method for removing a child RestFrame from the
+    /// list of children of this frame (if it is in that list).
+    void RemoveChildFrame(RestFrame& frame);
+
+    /// \brief Remove all the children of this frame
+    ///
+    /// Method for removing all the children of this frame. 
+    /// No child left behind.
+    void RemoveChildFrames();
+    
     /// \brief Set the parent frame for this frame
     ///
     /// \param frame     parent frame
@@ -77,22 +91,25 @@ namespace RestFrames {
 
     virtual void SetGroup(Group& group = Group::Empty());
     Group& GetGroup() const;
-    RestFrames::RFList<Group> GetListGroups() const;
+    GroupList GetListGroups() const;
 
     static ReconstructionFrame& Empty();
 
   protected:
-    mutable std::map<const RestFrame*, RestFrames::RFList<State> > m_ChildStates;
+    virtual StateList const& GetChildStates(int i = 0) const;
+    virtual StateList const& GetChildStates(const RestFrame& child) const;
+    
     virtual bool InitializeAnalysisRecursive();
     virtual bool ClearEventRecursive();
     virtual bool AnalyzeEventRecursive();
 
   private:
     Group* m_GroupPtr;
-
+    mutable std::map<const RestFrame*, StateList > m_ChildStates;
+    
     bool InitializeVisibleStates();
     bool InitializeGroupStates();
-    void FillListGroupsRecursive(RestFrames::RFList<Group>& groups) const;
+    void FillListGroupsRecursive(GroupList& groups) const;
 
   };
 

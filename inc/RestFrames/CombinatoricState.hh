@@ -61,16 +61,16 @@ namespace RestFrames {
 
     void ClearElements();
     void AddElement(VisibleState& state);
-    void AddElements(const RestFrames::RFList<VisibleState>& states);
-    RestFrames::RFList<VisibleState> GetElements() const;
+    void AddElements(const VisibleStateList& states);
+    VisibleStateList const& GetElements() const;
     int GetNElements() const;
 
     bool ContainsElement(const State& state) const;
     bool ContainsElement(const RFKey& key) const;
-    const VisibleState& GetElement(const RFKey& key) const;
+    VisibleState const& GetElement(const RFKey& key) const;
 
   protected:
-    RestFrames::RFList<VisibleState> m_Elements;
+    VisibleStateList m_Elements;
   
   private:
     static CombinatoricState m_Empty;

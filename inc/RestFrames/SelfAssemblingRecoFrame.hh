@@ -56,10 +56,10 @@ namespace RestFrames {
   private:
     bool m_Body_UnAssembled;
     bool m_Mind_UnAssembled; 
-    RestFrames::RFList<RestFrame> m_ChildFrames_UnAssembled;
-    std::vector<RestFrames::RFList<State> > m_ChildStates_UnAssembled;
+    RestFrameList m_ChildFrames_UnAssembled;
+    StateListList m_ChildStates_UnAssembled;
 
-    RestFrames::RFList<State> m_VisibleStates;
+    StateList m_VisibleStates;
     RestFrames::RFList<VisibleRecoFrame> m_VisibleFrames;
     RestFrames::RFList<DecayRecoFrame>   m_DecayFrames;
     int m_Nvisible;
