@@ -40,7 +40,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 2;
+  int Ngen = 10000;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -178,8 +178,6 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);
   CbHemiJigsaw_R.AddFrame(Xb_R,1);
-  CbHemiJigsaw_R.SetCombCharge(0, 1);
-  CbHemiJigsaw_R.SetObjectCharge(0, 0);
 
   // background tree jigsaws
   SetMassInvJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");

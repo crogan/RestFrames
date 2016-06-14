@@ -156,6 +156,10 @@ namespace RestFrames {
     m_Log << "Requires a successful call to \"InitializeTree()\" ";
     m_Log << "from the LabFrame associated with this tree.";
     m_Log << LogEnd;
+
+    RFBase::m_BodyCount++;
+    if(RFBase::m_BodyCount > m_WarningTolerance && 
+       m_WarningTolerance > 0) TooManyBodies(*this);
   }
 
   void RFBase::UnSoundMind(const std::string& function) const {
@@ -164,6 +168,10 @@ namespace RestFrames {
     m_Log << "Requires a successful call to \"InitializeAnalysis()\" ";
     m_Log << "from the LabFrame associated with this tree.";
     m_Log << LogEnd;
+
+    RFBase::m_MindCount++;
+    if(RFBase::m_MindCount > m_WarningTolerance && 
+       m_WarningTolerance > 0) TooManyMinds(*this);
   }
 
   void RFBase::UnSoundSpirit(const std::string& function) const {
@@ -172,6 +180,10 @@ namespace RestFrames {
     m_Log << "Requires a successful call to \"AnalyzeEvent()\" ";
     m_Log << "from the LabFrame associated with this tree.";
     m_Log << LogEnd;
+
+    RFBase::m_SpiritCount++;
+    if(RFBase::m_SpiritCount > m_WarningTolerance && 
+       m_WarningTolerance > 0) TooManySpirits(*this);
   }
 
   // Initializer.
@@ -189,6 +201,12 @@ namespace RestFrames {
     printf("\x1b[0m" "\n");
   }
 
+  int RFBase::m_BodyCount = 0;
+  int RFBase::m_MindCount = 0;
+  int RFBase::m_SpiritCount = 0;
+
+  int RFBase::m_WarningTolerance = 100;
+
   RFBase RFBase::m_Empty;
 
   const TVector3       RFBase::m_Empty3Vector;
@@ -199,6 +217,40 @@ namespace RestFrames {
     Mc1 = std::max(Mc1, 0.);
     Mc2 = std::max(Mc2, 0.);
     return sqrt(std::max(0., (Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2) )/2./Mp;
+  }
+
+  void SetWarningTolerance(int NMAX){
+    RFBase::m_WarningTolerance = NMAX;
+  }
+
+  void TooManyBodies(const RFBase& obj){
+    g_Log << LogError;
+    g_Log << "Too many warnings. ";
+    g_Log << "Need a successful call to \"InitializeTree()\" ";
+    g_Log << "from the LabFrame associated with the offending/";
+    g_Log << "unsuccessful function calls. The last call came from:";
+    g_Log << Log(obj);
+    g_Log << "Please edit your code and try again." << LogEnd;
+  }
+
+  void TooManyMinds(const RFBase& obj){
+    g_Log << LogError;
+    g_Log << "Too many warnings. ";
+    g_Log << "Need a successful call to \"InitializeAnalysis()\" ";
+    g_Log << "from the LabFrame associated with the offending/";
+    g_Log << "unsuccessful function calls. The last call came from:";
+    g_Log << Log(obj);
+    g_Log << "Please edit your code and try again." << LogEnd;
+  }
+
+  void TooManySpirits(const RFBase& obj){
+    g_Log << LogError;
+    g_Log << "Too many warnings. ";
+    g_Log << "Need a successful call to \"AnalyzeEvent()\" ";
+    g_Log << "from the LabFrame associated with the offending/";
+    g_Log << "unsuccessful function calls. The last call came from:";
+    g_Log << Log(obj);
+    g_Log << "Please edit your code and try again." << LogEnd;
   }
 
 }

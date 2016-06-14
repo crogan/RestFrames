@@ -64,6 +64,8 @@ namespace RestFrames {
     
     virtual ~RFBase();
 
+    friend void SetWarningTolerance(int NMAX);
+
     /// \brief Clears RFBase of all connections to other objects
     virtual void Clear();
 
@@ -153,7 +155,12 @@ namespace RestFrames {
     std::vector<RFBase*> m_Owns;
 
     static RFBase m_Empty;
+    
+    static int m_BodyCount;
+    static int m_MindCount;
+    static int m_SpiritCount;
 
+    static int m_WarningTolerance;
   };
 
   double GetP(double Mp, double Mc1, double Mc2);
@@ -176,6 +183,20 @@ namespace RestFrames {
   #else
   # define RF_FUNCTION "(unknown)"
   #endif
+
+  ////////////////////////////////////////////////////////////////////
+  /// \brief Set the tolerance for number of RestFrames warnings
+  /// 
+  /// \param NMAX  Number of allowed warnings of a given type
+  ///
+  /// Function sets the tolerance for the number of RestFrames 
+  /// warnings. Numbers less than 1 indicate infinite tolerance.
+  ////////////////////////////////////////////////////////////////////
+  void SetWarningTolerance(int NMAX = -1);
+  void TooManyBodies(const RFBase& obj);
+  void TooManyMinds(const RFBase& obj);
+  void TooManySpirits(const RFBase& obj);
+
 }
 
 #endif
