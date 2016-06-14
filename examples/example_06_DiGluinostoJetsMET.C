@@ -207,6 +207,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   tree_plot->AddJigsaw(CaHemiJigsaw_R);
   tree_plot->AddJigsaw(CbHemiJigsaw_R);
   tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree");
+  tree_plot->Draw("SigRecoTree", "Signal Reconstruction Tree", true);
 
   // background reco tree
   tree_plot->SetTree(LAB_B);

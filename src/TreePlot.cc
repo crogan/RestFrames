@@ -492,10 +492,10 @@ namespace RestFrames {
       m_color_Bkg  = kBlack;
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
-	  m_color_Leaf.push_back(7040+j*10+i);
+	  m_color_Leaf.push_back(7040+j*10+i*2);
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
-	  m_color_Leaf.push_back(7060+j*10+i);
+	  m_color_Leaf.push_back(7060+j*10+i*2);
       m_color_Default_text = kWhite;
       m_color_Default_line = kWhite;
       m_color_Default_fill = kBlack;
@@ -504,10 +504,10 @@ namespace RestFrames {
       m_color_Bkg  = kWhite;
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
-	  m_color_Leaf.push_back(7042+j*10-i);
+	  m_color_Leaf.push_back(7043+j*10-i*2);
       for(int i = 0; i < 2; i++)
 	for(int j = 0; j < 2; j++)
-	  m_color_Leaf.push_back(7062+j*10-i);
+	  m_color_Leaf.push_back(7063+j*10-i*2);
       m_color_Default_text = kBlack;
       m_color_Default_line = kBlack;
       m_color_Default_fill = kWhite;

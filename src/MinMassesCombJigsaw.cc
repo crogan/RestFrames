@@ -85,8 +85,8 @@ namespace RestFrames {
     int Ninput = m_InputStates.GetN();
 
     bool DO_N3 = (Ninput >= 2) &&
-      GetDependancyStates(0).GetN() == 1 &&
-      GetDependancyStates(1).GetN() == 1;
+      GetDependancyFrames(0) == GetChildFrames(0) &&
+      GetDependancyFrames(1) == GetChildFrames(1);
     if(DO_N3){
       DO_N3 = (m_NForChild[&GetChildState(0)] <= 1) && 
 	(m_NForChild[&GetChildState(1)] <= 1) && 
@@ -96,7 +96,7 @@ namespace RestFrames {
     if(!DO_N3)
       return CombinatoricJigsaw::LoopCombinatoric();
 
-    // DO 4 N^3 calculation
+    // DO N^3 calculation
     std::vector<TLorentzVector> inputs;
     for(int i = 0; i < Ninput; i++)
       inputs.push_back(m_InputStates[i].GetFourVector());	
