@@ -34,9 +34,14 @@ namespace RestFrames {
 
   int RestFrame::m_class_key = 0;
 
-  RestFrame::RestFrame() : RFBase() { m_Type = kVanillaFrame; }
+  RestFrame::RestFrame() : RFBase() { 
+    m_Type = kVanillaFrame; 
+    m_Log.SetSource("RestFrame "+GetName());
+  }
   
-  RestFrame::~RestFrame() { Clear(); }
+  RestFrame::~RestFrame(){ 
+    Clear(); 
+  }
 
   RestFrame::RestFrame(const std::string& sname, const std::string& stitle)
     : RFBase(sname, stitle, RestFrame::m_class_key++) 
@@ -50,7 +55,6 @@ namespace RestFrames {
   void RestFrame::Clear(){
     SetParentFrame();
     RemoveChildFrames();
-    RFBase::Clear();
   }
   
   RestFrame& RestFrame::Empty(){

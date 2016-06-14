@@ -43,7 +43,7 @@ namespace RestFrames {
 	       const std::string& stitle)
     : RFBase(sname, stitle, State::m_class_key++) 
   {
-    m_Log.SetSource("State");
+    m_Log.SetSource("State "+GetName());
     m_Type = kVanillaState;
     m_ParentJigsawPtr = nullptr;
     m_ChildJigsawPtr = nullptr;
@@ -51,7 +51,10 @@ namespace RestFrames {
     m_Charge = 0;
   }
 
-  State::State() : RFBase() { m_Type = kVanillaState; }
+  State::State() : RFBase() { 
+    m_Type = kVanillaState; 
+    m_Log.SetSource("State "+GetName());
+  }
 
   State::~State() {}
 
@@ -60,7 +63,6 @@ namespace RestFrames {
     m_ChildJigsawPtr = nullptr;
     m_P.SetPxPyPzE(0.,0.,0.,0.);
     m_Frames.Clear();
-    RFBase::Clear();
   }
 
   State& State::Empty(){

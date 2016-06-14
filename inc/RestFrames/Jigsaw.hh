@@ -78,7 +78,7 @@ namespace RestFrames {
     virtual bool AnalyzeEvent() = 0;
 
     bool CanResolve(const State& state) const;
-    virtual bool CanResolve(const ConstRestFrameList& frames) const;
+    bool CanResolve(const ConstRestFrameList& frames) const;
     bool DependsOnJigsaw(const Jigsaw& jigsaw) const;
 
     virtual bool InitializeTree();

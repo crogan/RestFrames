@@ -48,38 +48,38 @@ namespace RestFrames {
     int GetNumerator() const;
     int GetDenominator() const;
 
-    bool operator==(const RFCharge& val) const;
-    bool operator==(int val) const;
+    bool operator == (const RFCharge& val) const;
+    bool operator == (int val) const;
 
-    bool operator!=(const RFCharge& val) const;
-    bool operator!=(int val) const;
+    bool operator != (const RFCharge& val) const;
+    bool operator != (int val) const;
 
-    void operator=(const RFCharge& val);
-    void operator=(int val);
+    void operator = (const RFCharge& val);
+    void operator = (int val);
 
-    RFCharge operator+(const RFCharge& val) const;
-    RFCharge operator+(int val) const;
+    RFCharge operator + (const RFCharge& val) const;
+    RFCharge operator + (int val) const;
 
-    RFCharge operator-(const RFCharge& val) const;
-    RFCharge operator-(int val) const;
+    RFCharge operator - (const RFCharge& val) const;
+    RFCharge operator - (int val) const;
 
-    RFCharge operator*(const RFCharge& val) const;
-    RFCharge operator*(int val) const;
+    RFCharge operator * (const RFCharge& val) const;
+    RFCharge operator * (int val) const;
 
-    RFCharge operator/(const RFCharge& val) const;
-    RFCharge operator/(int val) const;
+    RFCharge operator / (const RFCharge& val) const;
+    RFCharge operator / (int val) const;
 
-    RFCharge& operator+=(const RFCharge& val);
-    RFCharge& operator+=(int val);
+    RFCharge& operator += (const RFCharge& val);
+    RFCharge& operator += (int val);
 
-    RFCharge& operator-=(const RFCharge& val);
-    RFCharge& operator-=(int val);
+    RFCharge& operator -= (const RFCharge& val);
+    RFCharge& operator -= (int val);
 
-    RFCharge& operator*=(const RFCharge& val);
-    RFCharge& operator*=(int val);
+    RFCharge& operator *= (const RFCharge& val);
+    RFCharge& operator *= (int val);
 
-    RFCharge& operator/=(const RFCharge& val);
-    RFCharge& operator/=(int val);
+    RFCharge& operator /= (const RFCharge& val);
+    RFCharge& operator /= (int val);
 
     RFCharge operator-();
 
@@ -94,8 +94,8 @@ namespace RestFrames {
 
   };
 
-  RFCharge operator*(int val1, const RFCharge& val2);
-  RFCharge operator/(int val1, const RFCharge& val2);
+  RFCharge operator * (int val1, const RFCharge& val2);
+  RFCharge operator / (int val1, const RFCharge& val2);
 
   int gcd(int x, int y);
 }

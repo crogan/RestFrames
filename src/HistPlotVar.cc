@@ -33,14 +33,20 @@ namespace RestFrames {
 
   int HistPlotVar::m_class_key = 0;
 
-  HistPlotVar::HistPlotVar() : RFBase() {}
+  HistPlotVar::HistPlotVar() : RFBase() 
+  {
+    m_Log.SetSource("HistPlotVar "+GetName());
+  }
   
   HistPlotVar::HistPlotVar(const std::string& name, 
 			   const std::string& title, 
 			   double minval, double maxval,
 			   const std::string& unit = "")
     : RFBase(name, title, HistPlotVar::m_class_key++),
-      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.) {}
+      m_Min(minval), m_Max(maxval), m_Unit(unit), m_Val(0.) 
+  {
+    m_Log.SetSource("HistPlotVar "+GetName());
+  }
   
   HistPlotVar::~HistPlotVar() {}
 

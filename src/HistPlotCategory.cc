@@ -33,11 +33,17 @@ namespace RestFrames {
 
   int HistPlotCategory::m_class_key = 0;
 
-  HistPlotCategory::HistPlotCategory() : RFBase() {}
+  HistPlotCategory::HistPlotCategory() : RFBase() 
+  {
+    m_Log.SetSource("HistPlotCategory "+GetName());
+  }
 
   HistPlotCategory::HistPlotCategory(const std::string& name, 
 				     const std::string& title)
-    : RFBase(name, title, HistPlotCategory::m_class_key++) {}
+    : RFBase(name, title, HistPlotCategory::m_class_key++) 
+  {
+    m_Log.SetSource("HistPlotCategory "+GetName());
+  }
   
   HistPlotCategory::~HistPlotCategory() {}
 

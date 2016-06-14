@@ -277,6 +277,7 @@ namespace RestFrames {
   template class RFList<Jigsaw>;
   template class RFList<const Jigsaw>;
   template class RFList<Group>;
+  template class RFList<const Group>;
   template class RFList<State>;
   template class RFList<VisibleState>;
   template class RFList<InvisibleState>;
@@ -296,6 +297,7 @@ namespace RestFrames {
   template class RFListBase<Jigsaw,RFList<Jigsaw> >;
   template class RFListBase<const Jigsaw,RFList<const Jigsaw> >;
   template class RFListBase<Group,RFList<Group> >;
+  template class RFListBase<const Group,RFList<const Group> >;
   template class RFListBase<State,RFList<State> >;
   template class RFListBase<VisibleState,RFList<VisibleState> >;
   template class RFListBase<InvisibleState,RFList<InvisibleState> >;

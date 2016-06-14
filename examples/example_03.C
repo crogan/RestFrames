@@ -42,7 +42,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   double wW   = 2.5;
   // Number of events to generate
   int Ngen = 100000;
-
+  
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   INV_Mt.AddFrame(NU_Mt);     
   InvisibleGroup INV_MW("INV_MW","#nu Jigsaws");
   INV_MW.AddFrame(NU_MW);
- 
+
   // Set neutrino masses to zero
   SetMassInvJigsaw NuM_Mt("NuM_Mt","M_{#nu} = 0"); 
   INV_Mt.AddJigsaw(NuM_Mt);                        
@@ -122,7 +122,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   INV_Mt.AddJigsaw(NuR_Mt);
   NuR_Mt.AddVisibleFrame(L_Mt);
   NuR_Mt.AddVisibleFrame(B_Mt);
-  SetRapidityInvJigsaw NuR_MW("NuR_Mt","#eta_{#nu} = #eta_{#it{l}}");
+  SetRapidityInvJigsaw NuR_MW("NuR_MW","#eta_{#nu} = #eta_{#it{l}}");
   INV_MW.AddJigsaw(NuR_MW);
   NuR_MW.AddVisibleFrame(L_MW);
 
@@ -254,6 +254,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   histPlot->Draw();
 
   g_Log << LogInfo << "Finished" << LogEnd;
+
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation

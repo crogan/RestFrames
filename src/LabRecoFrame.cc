@@ -264,7 +264,6 @@ namespace RestFrames {
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Group: ";
 	m_Log << Log(m_TreeGroups[i]) << LogEnd;
-	UnSoundMind(RF_FUNCTION);
 	return SetSpirit(false);
       }
     }
@@ -274,14 +273,12 @@ namespace RestFrames {
 	m_Log << LogWarning;
 	m_Log << "Unable to analyze event for Jigsaw: ";
 	m_Log << Log(m_TreeJigsaws[i]) << LogEnd;
-	UnSoundMind(RF_FUNCTION);
 	return SetSpirit(false);
       }
     }
     if(!AnalyzeEventRecursive()){
       m_Log << LogWarning;
       m_Log << "Unable to recursively analyze event" << LogEnd;
-      UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
     }
     return SetSpirit(true);

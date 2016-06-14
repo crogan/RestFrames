@@ -47,6 +47,8 @@ namespace RestFrames {
     virtual void AddFrame(RestFrame& frame);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
+    virtual void RemoveFrame(RestFrame& frame);
+
     virtual void SetNElementsForFrame(const RestFrame& frame, 
 				      int N, bool exclusive_N = false);
     virtual void GetNElementsForFrame(const RestFrame& frame, 
@@ -55,6 +57,10 @@ namespace RestFrames {
     // Event analysis functions
     RFKey AddLabFrameFourVector(const TLorentzVector& V,
 				const RFCharge& charge = RFCharge());
+    RFKey AddLabFrameFourVector(const TLorentzVector& V,
+				int charge);
+    RFKey AddLabFrameFourVector(const TLorentzVector& V,
+				int charge_num, int charge_den);
 
     RestFrame const& GetFrame(const RFKey& key) const;
 

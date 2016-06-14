@@ -62,7 +62,7 @@ namespace RestFrames {
     virtual void AddFrames(const RestFrameList& frames);
     virtual void AddJigsaw(Jigsaw& jigsaw);
 
-    void RemoveFrame(RestFrame& frame);
+    virtual void RemoveFrame(RestFrame& frame);
     void RemoveFrames();
     void RemoveJigsaw(Jigsaw& jigsaw);
     void RemoveJigsaws();

@@ -46,7 +46,10 @@ namespace RestFrames {
     m_GroupStatePtr = nullptr;
   }
 
-  Group::Group() : RFBase() { m_Type = kVanillaGroup; }
+  Group::Group() : RFBase() { 
+    m_Type = kVanillaGroup; 
+    m_Log.SetSource("Group "+GetName());
+  }
 
   Group::~Group(){
     Clear();
@@ -67,7 +70,6 @@ namespace RestFrames {
     m_States.Clear();
     m_StatesToResolve.Clear();
     m_JigsawsToUse.Clear(); 
-    RFBase::Clear();
   }
 
   bool Group::IsInvisibleGroup() const{
@@ -123,7 +125,7 @@ namespace RestFrames {
   void Group::RemoveFrames(){
     int N = m_Frames.GetN();
     for(int i = N-1; i >= 0; i--){
-      m_Frames.Remove(m_Frames[i]);
+      RemoveFrame(m_Frames[i]);
     }
   }
 
@@ -142,11 +144,11 @@ namespace RestFrames {
   void Group::RemoveJigsaws(){
     int N = m_Jigsaws.GetN();
     for(int i = N-1; i >= 0; i--){
-      m_Jigsaws.Remove(m_Jigsaws[i]);
+      RemoveJigsaw(m_Jigsaws[i]);
     }
     N = m_JigsawsToUse.GetN();
     for(int i = N-1; i >= 0; i--){
-      m_JigsawsToUse.Remove(m_JigsawsToUse[i]);
+      RemoveJigsaw(m_JigsawsToUse[i]);
     }
   }
 

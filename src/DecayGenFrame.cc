@@ -43,8 +43,10 @@ namespace RestFrames {
     m_CosDecayAngle = -2.;
     m_DeltaPhiDecayPlane = -2.;
   }
+
+  DecayGenFrame::DecayGenFrame() : DecayFrame<GeneratorFrame>() {}
   
-  DecayGenFrame::~DecayGenFrame(){ }
+  DecayGenFrame::~DecayGenFrame() {}
 
   bool DecayGenFrame::IsSoundBody() const{
     if(RFBase::IsSoundBody())

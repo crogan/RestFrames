@@ -60,6 +60,7 @@ namespace RestFrames {
 
   Jigsaw::Jigsaw() : RFBase(), m_Nchild(0), m_Ndeps(0){ 
     m_Type = kVanillaJigsaw; 
+    m_Log.SetSource("Jigsaw "+GetName());
   }
 
   Jigsaw::~Jigsaw(){
@@ -87,8 +88,6 @@ namespace RestFrames {
     }
 
     m_DependancyJigsaws.Clear();
-
-    RFBase::Clear();
   }
 
   bool Jigsaw::IsInvisibleJigsaw() const {

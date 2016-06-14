@@ -43,6 +43,7 @@ namespace RestFrames {
   class DecayGenFrame : public DecayFrame<GeneratorFrame> {
   public:
     DecayGenFrame(const std::string& sname, const std::string& stitle);
+    DecayGenFrame();
     virtual ~DecayGenFrame();
 
     virtual void SetMass(double val);

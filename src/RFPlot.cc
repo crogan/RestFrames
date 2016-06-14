@@ -55,7 +55,6 @@ namespace RestFrames {
     for(int i = 0; i < Nobj; i++)
       delete m_TObjects[i];
     m_TObjects.clear();
-    RFBase::Clear();
   }
 
   void RFPlot::WriteOutput(const std::string& filename){

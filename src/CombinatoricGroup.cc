@@ -72,13 +72,25 @@ namespace RestFrames {
     if(GetNFrames() == N) 
       return;
     
-    m_NElementsForFrame[&frame] = 1;
+    m_NElementsForFrame[&frame] = 0;
     m_NExclusiveElementsForFrame[&frame] = true;
+  }
+
+  void CombinatoricGroup::RemoveFrame(RestFrame& frame){
+    if(!ContainsFrame(frame)) 
+      return;
+    m_NElementsForFrame.erase(&frame);
+    m_NExclusiveElementsForFrame.erase(&frame);
+    Group::RemoveFrame(frame);
   }
   
   void CombinatoricGroup::SetNElementsForFrame(const RestFrame& frame, 
 					       int N, bool exclusive_N){
-    if(!ContainsFrame(frame)) return;
+    if(!ContainsFrame(frame)){ 
+      N = 0;
+      exclusive_N = true;
+      return;
+    }
 
     SetMind(false);
 
@@ -150,6 +162,16 @@ namespace RestFrames {
     m_Elements.Add(state);
    
     return state.GetKey();
+  }
+
+  RFKey AddLabFrameFourVector(const TLorentzVector& V,
+			      int charge){
+    return AddLabFrameFourVector(V, RFCharge(charge));
+  }
+  
+  RFKey AddLabFrameFourVector(const TLorentzVector& V,
+			      int charge_num, int charge_den){
+    return AddLabFrameFourVector(V, RFCharge(charge_num,charge_den));
   }
 
   RestFrame const& CombinatoricGroup::GetFrame(const RFKey& key) const {

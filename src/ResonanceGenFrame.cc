@@ -44,14 +44,13 @@ namespace RestFrames {
     m_Width = 0.;
   }
 
-  ResonanceGenFrame::ResonanceGenFrame()
-    : DecayGenFrame("Empty","Empty")
+  ResonanceGenFrame::ResonanceGenFrame() : DecayGenFrame()
   {
     m_PoleMass = 0.;
     m_Width = 0.;
   }
-  
-  ResonanceGenFrame::~ResonanceGenFrame(){ }
+
+  ResonanceGenFrame::~ResonanceGenFrame() {}
 
   ResonanceGenFrame& ResonanceGenFrame::Empty(){
     return ResonanceGenFrame::m_Empty;

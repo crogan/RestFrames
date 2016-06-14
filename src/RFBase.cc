@@ -47,6 +47,8 @@ namespace RestFrames {
     m_Mind   = false;
     m_Spirit = false;
     m_This = this;
+    m_Owns.clear();
+    m_Log.SetSource("RFBase "+GetName());
   }
 
   RFBase::RFBase(const std::string& sname, 
@@ -58,6 +60,8 @@ namespace RestFrames {
     m_Mind   = false;
     m_Spirit = false;
     m_This = this;
+    m_Owns.clear();
+    m_Log.SetSource("RFBase "+GetName());
   }
 
   RFBase::~RFBase(){

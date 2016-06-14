@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   example_06_DiGluinostoJetsMET.C
@@ -40,7 +40,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
   double mG = 1000.;
   double mX = 100.;
-  int Ngen = 100000;
+  int Ngen = 2;
 
   //
   // Set up toy generation tree (not needed for reconstruction)
@@ -74,9 +74,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   // set X masses
   Xa_G.SetMass(mX);
   Xb_G.SetMass(mX);
-  V1a_G.SetMass(40.);
-  V3a_G.SetMass(80.);
-  V2a_G.SetMass(120.);
+  // V1a_G.SetMass(40.);
+  // V3a_G.SetMass(80.);
+  // V2a_G.SetMass(120.);
 
   V1b_G.SetMass(10.);
   V2b_G.SetMass(10.);
@@ -178,6 +178,8 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
   CbHemiJigsaw_R.AddFrame(V1b_R,0);
   CbHemiJigsaw_R.AddFrame(V2b_R,1);
   CbHemiJigsaw_R.AddFrame(Xb_R,1);
+  CbHemiJigsaw_R.SetCombCharge(0, 1);
+  CbHemiJigsaw_R.SetObjectCharge(0, 0);
 
   // background tree jigsaws
   SetMassInvJigsaw MinMassJigsaw_B("MINMASS_B","Zero Mass for invisible system");
@@ -252,21 +254,19 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
-    // MET.SetZ(0.);
-    // vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
-    // JETS.push_back(V1a_G.GetFourVector());
-    // JETS.push_back(V2a_G.GetFourVector());
-    // JETS.push_back(V1b_G.GetFourVector());
-    // JETS.push_back(V2b_G.GetFourVector());
+    MET.SetZ(0.);
+    vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
+    JETS.push_back(V1a_G.GetFourVector());
+    JETS.push_back(V2a_G.GetFourVector());
+    JETS.push_back(V1b_G.GetFourVector());
+    JETS.push_back(V2b_G.GetFourVector());
 
-    vector<TLorentzVector> JETS;
-    TLorentzVector j1, j2;
-    j1.SetPtEtaPhiM(4.20836e6,-0.240686,2.52994,0.);
-    j2.SetPtEtaPhiM(4.20552e6,0.02966,-0.607627,134116.);
-    JETS.push_back(j1);
-    JETS.push_back(j2);
-
-    MET.SetXYZ(0.,0.,0.);
+    // vector<TLorentzVector> JETS;
+    // TLorentzVector j1, j2;
+    // j1.SetPtEtaPhiM(4.20836e6,-0.240686,2.52994,0.);
+    // j2.SetPtEtaPhiM(4.20552e6,0.02966,-0.607627,134116.);
+    // JETS.push_back(j1);
+    // JETS.push_back(j2);
 
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree

@@ -96,9 +96,11 @@ namespace RestFrames {
   std::string RFLog::GetFormattedMessage(const std::string& message) {
     std::string output = "";
     int N = message.size();
-    double OFF = 18;
+    int OFF = 18;
     if(N-OFF > m_NMAX){
       int Ncut = (N-OFF)/m_NMAX;
+      if((N-OFF)%m_NMAX == 0)
+	Ncut--;
       std::string::size_type previous_pos = 0;
       for(int i = 0; i <= Ncut; i++){
 	int off = m_NMAX;

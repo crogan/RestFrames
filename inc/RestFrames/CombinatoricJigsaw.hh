@@ -54,22 +54,42 @@ namespace RestFrames {
 
     virtual void AddCombFrame(const RestFrame& frame, int i = 0);
     void AddCombFrames(const ConstRestFrameList& frames, int i = 0);
+
     virtual void AddObjectFrame(const RestFrame& frame, int i = 0);
     void AddObjectFrames(const ConstRestFrameList& frames, int i = 0);
+
+    void SetCombCharge(const RFCharge& charge, int i);
+    void SetCombCharge(int charge, int i);
+    void SetCombCharge(int charge_num, int charge_den, int i);
+    void UnsetCombCharge(int i);
+
+    void SetObjectCharge(const RFCharge& charge, int i);
+    void SetObjectCharge(int charge, int i);
+    void SetObjectCharge(int charge_num, int charge_den, int i);
+    void UnsetObjectCharge(int i);
 
   protected:
     CombinatoricState& GetNewChildState();
     
+    virtual bool InitializeAnalysis();
+
     virtual bool InitializeCombinatoric();
     virtual bool LoopCombinatoric();
 
-    virtual double EvaluateMetric() const = 0;
+    virtual bool EvaluateMetric(double& metric) const = 0;
 
     virtual bool AnalyzeEvent();
+    
+    int GetNInputStates() const; 
+    VisibleState& GetInputState(int i = 0) const;
 
-    VisibleStateList m_InputStates;
-    std::map<const State*, int>  m_NForChild;
-    std::map<const State*, bool> m_NExclusive;
+    int GetNinputForChild(int i = 0) const;
+    bool IsNinputExclForChild(int i = 0) const;
+
+    bool IsChargeSetForChild(int i = 0) const;
+    RFCharge GetChargeForChild(int i = 0) const;
+    bool IsChargeSetForObject(int i = 0) const;
+    RFCharge GetChargeForObject(int i = 0) const;
 
     void SetParentState(State& state = State::Empty());
     CombinatoricState const& GetParentState() const;
@@ -84,6 +104,16 @@ namespace RestFrames {
   private:
     const int m_Ncomb;
     const int m_Nobj;
+
+    VisibleStateList m_InputStates;
+
+    int m_NinputTOT;
+    bool m_NExclusiveTOT;
+    std::vector<int> m_NForChild;
+    std::vector<int> m_NExclusive;
+    mutable std::map<int, RFCharge> m_ChargeForChild;
+    mutable std::map<int, RFCharge> m_ChargeForObject;
+    
     
   };
 
