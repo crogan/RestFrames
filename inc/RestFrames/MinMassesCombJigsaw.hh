@@ -46,13 +46,15 @@ namespace RestFrames {
     virtual void Clear();
 
     virtual std::string GetLabel() const { return "Minimize Masses"; }
-
-    virtual bool AnalyzeEvent();
+    
+    virtual void AddFrame(const RestFrame& frame, int i = 0);
+    virtual void AddFrames(const ConstRestFrameList& frames, int i = 0);
 
     static MinMassesCombJigsaw& Empty();
 
   protected:
     virtual double EvaluateMetric() const;
+    virtual bool AnalyzeEvent();
 
   private:
     static MinMassesCombJigsaw m_Empty;

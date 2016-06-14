@@ -38,20 +38,21 @@ namespace RestFrames {
 
   class InvisibleJigsaw : public Jigsaw {
   public:
-    InvisibleJigsaw(const std::string& sname, const std::string& stitle, 
-		    int Ninv, int Nvis);
+    InvisibleJigsaw(const std::string& sname, 
+		    const std::string& stitle, 
+		    int Ninvisible, int Nvisible);
     InvisibleJigsaw();
     virtual ~InvisibleJigsaw();
 
     virtual void Clear();
 
-    virtual void SetGroup(Group& group = Group::Empty());
-    virtual InvisibleGroup& GetGroup() const;
+    void SetGroup(Group& group = Group::Empty());
+    InvisibleGroup& GetGroup() const;
 
-    virtual void AddVisibleFrame(RestFrame& frame, int i = 0);
-    virtual void AddVisibleFrames(const RestFrameList& frames, int i = 0);
-    virtual void AddInvisibleFrame(RestFrame& frame, int i = 0);
-    virtual void AddInvisibleFrames(const RestFrameList& frames, int i = 0);
+    virtual void AddVisibleFrame(const RestFrame& frame, int i = 0);
+    void AddVisibleFrames(const ConstRestFrameList& frames, int i = 0);
+    virtual void AddInvisibleFrame(const RestFrame& frame, int i = 0);
+    void AddInvisibleFrames(const ConstRestFrameList& frames, int i = 0);
 
     virtual double GetMinimumMass() const;
 
@@ -59,23 +60,23 @@ namespace RestFrames {
 
   protected:
     bool m_InvMassDependancy;
-    
-    virtual bool IsSoundBody() const;
-    virtual InvisibleState& GetNewChildState();
 
-    virtual void SetParentState(State& state = State::Empty());
-    virtual InvisibleState& GetParentState() const;
+    virtual bool IsSoundBody() const;
+    InvisibleState& GetNewChildState();
+
+    void SetParentState(State& state = State::Empty());
+    InvisibleState const& GetParentState() const;
     
-    virtual InvisibleState& GetChildState(int i) const;
+    InvisibleState& GetChildState(int i) const;
 
     virtual void FillInvisibleMassJigsawDependancies(JigsawList& jigsaws) const;
 
-    virtual bool InitializeDependancyJigsaws();
-    virtual bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
+    bool InitializeDependancyJigsaws();
+    bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
 
   private:
-    int m_Nvis;
-    int m_Ninv;  
+    const int m_Nvis;
+    const int m_Ninv;  
   
   };
 

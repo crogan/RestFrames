@@ -43,7 +43,9 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   class Jigsaw : public RFBase {
   public:
-    Jigsaw(const std::string& sname, const std::string& stitle);
+    Jigsaw(const std::string& sname, 
+	   const std::string& stitle,
+	   int Nchild, int Ndependancy);
     Jigsaw();
     
     virtual ~Jigsaw();
@@ -64,14 +66,8 @@ namespace RestFrames {
     virtual void SetGroup(Group& group = Group::Empty());
     virtual Group& GetGroup() const;
 
-    virtual int GetNChildren() const;
-
-    virtual RestFrameList GetParentFrames() const;
-    
-    virtual RestFrameList const& GetChildFrames(int i) const;
-    virtual RestFrameList const& GetDependancyFrames(int i) const;
-
     void RemoveFrame(const RestFrame& frame);
+    void RemoveFrames(const ConstRestFrameList& frames);
 
     static Jigsaw& Empty();
     
@@ -82,7 +78,7 @@ namespace RestFrames {
     virtual bool AnalyzeEvent() = 0;
 
     bool CanResolve(const State& state) const;
-    bool CanResolve(const RestFrameList& frames) const;
+    virtual bool CanResolve(const ConstRestFrameList& frames) const;
     bool DependsOnJigsaw(const Jigsaw& jigsaw) const;
 
     virtual bool InitializeTree();
@@ -90,20 +86,24 @@ namespace RestFrames {
 
     virtual bool InitializeDependancyJigsaws();
     virtual bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws) = 0;
+    
+    void AddChildFrame(const RestFrame& frame, int i = 0);
+    void AddDependancyFrame(const RestFrame& frame, int i = 0);
 
-    void AddChildFrame(RestFrame& frame, int i = 0);
-    void AddDependancyFrame(RestFrame& frame, int i = 0);
-
-    virtual void SetParentState(State& state);
-    virtual State& GetParentState() const;
-
+    virtual int GetNChildren() const;
     virtual State& GetChildState(int i) const;
     virtual StateList const& GetChildStates() const;
+    virtual ConstRestFrameList const& GetChildFrames(int i) const;
 
     int GetNDependancyStates() const;
     virtual StateList const& GetDependancyStates(int i) const;
+    virtual ConstRestFrameList const& GetDependancyFrames(int i) const;
 
-     virtual State& GetNewChildState() = 0;
+    virtual void SetParentState(State& state);
+    virtual State const& GetParentState() const;
+    virtual ConstRestFrameList GetParentFrames() const;
+
+    virtual State& GetNewChildState() = 0;
 
     virtual void FillGroupJigsawDependancies(JigsawList& jigsaws) const;
     virtual void FillStateJigsawDependancies(JigsawList& jigsaws) const;
@@ -112,11 +112,14 @@ namespace RestFrames {
     Group* m_GroupPtr;
     State* m_ParentStatePtr;
 
+    const int m_Nchild; 
+    const int m_Ndeps;
+
     StateList     m_ChildStates;
     StateListList m_DependancyStates;
 
-    RestFrameListList m_ChildFrames;
-    RestFrameListList m_DependancyFrames;
+    std::vector<ConstRestFrameList> m_ChildFrames;
+    std::vector<ConstRestFrameList> m_DependancyFrames;
 
     JigsawList m_DependancyJigsaws;
 

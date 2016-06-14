@@ -39,16 +39,19 @@ namespace RestFrames {
 
   InvisibleJigsaw::InvisibleJigsaw(const std::string& sname, 
 				   const std::string& stitle, 
-				   int Ninv, int Nvis) : 
-    Jigsaw(sname, stitle)
+				   int Ninvisible, int Nvisible) : 
+    Jigsaw(sname, stitle, Ninvisible, Nvisible),
+    m_Ninv(Ninvisible), m_Nvis(Nvisible)
   {
     m_Type = kInvisibleJigsaw;
     m_InvMassDependancy = false;
-    m_Ninv = Ninv;
-    m_Nvis = Nvis;
+    for(int i = 0; i < m_Ninv; i++){
+      m_ChildStates += GetNewChildState();
+    }
   }
 
-  InvisibleJigsaw::InvisibleJigsaw() : Jigsaw() {}
+  InvisibleJigsaw::InvisibleJigsaw() 
+    : Jigsaw(), m_Ninv(0), m_Nvis(0) {}
 
   InvisibleJigsaw::~InvisibleJigsaw() {}
 
@@ -64,8 +67,6 @@ namespace RestFrames {
     if(!group) return;
     if(!group.IsInvisibleGroup()) return;
     Jigsaw::SetGroup(group);
-    if(m_Ninv == 1)
-      AddInvisibleFrames(group.GetListFrames());
   }
 
   InvisibleGroup& InvisibleJigsaw::GetGroup() const {
@@ -81,11 +82,11 @@ namespace RestFrames {
     Jigsaw::SetParentState(state);
   }
 
-  InvisibleState& InvisibleJigsaw::GetParentState() const {
+  InvisibleState const& InvisibleJigsaw::GetParentState() const {
     if(!Jigsaw::GetParentState())
       return InvisibleState::Empty();
     else
-      return static_cast<InvisibleState&>(Jigsaw::GetParentState());
+      return static_cast<const InvisibleState&>(Jigsaw::GetParentState());
   }
 
   InvisibleState& InvisibleJigsaw::GetChildState(int i) const{
@@ -95,33 +96,31 @@ namespace RestFrames {
       return static_cast<InvisibleState&>(Jigsaw::GetChildState(i));
   }
 
-  void InvisibleJigsaw::AddVisibleFrame(RestFrame& frame, int i){
+  void InvisibleJigsaw::AddVisibleFrame(const RestFrame& frame, int i){
     if(!frame) return;
-    if(!GetGroup()) return;
-    RestFrameList frames = frame.GetListVisibleFrames();
+   
+    ConstRestFrameList frames = frame.GetListVisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      if(frames[f].IsRecoFrame())
-	AddDependancyFrame(frames[f], i);
+      AddDependancyFrame(frames[f], i);
   }
 
-  void InvisibleJigsaw::AddVisibleFrames(const RestFrameList& frames, int i){
+  void InvisibleJigsaw::AddVisibleFrames(const ConstRestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
       AddVisibleFrame(frames[f], i);
   }
 
-  void InvisibleJigsaw::AddInvisibleFrame(RestFrame& frame, int i){
+  void InvisibleJigsaw::AddInvisibleFrame(const RestFrame& frame, int i){
     if(!frame) return;
-    if(!GetGroup()) return;
-    RestFrameList frames = frame.GetListInvisibleFrames();
+   
+    ConstRestFrameList frames = frame.GetListInvisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      if(GetGroup().ContainsFrame(frames[f]))
-	AddChildFrame(frames[f], i);
+      AddChildFrame(frames[f], i);
   }
 
-  void InvisibleJigsaw::AddInvisibleFrames(const RestFrameList& frames, int i){
+  void InvisibleJigsaw::AddInvisibleFrames(const ConstRestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
       AddInvisibleFrame(frames[f], i);
@@ -227,29 +226,15 @@ namespace RestFrames {
     if(!Jigsaw::IsSoundBody())
       return SetBody(false);
     
-    int Ndep = m_DependancyFrames.size();
-    int Nout = m_ChildFrames.size();
-
-    if(Ndep != m_Nvis || Nout != m_Ninv){
-      m_Log << LogWarning;
-      m_Log << "Incorrect number of input/output frames for jigsaw";
-      m_Log << LogEnd;
-      return SetBody(false);
-    }
-    for(int i = 0; i < Ndep; i++)
-      if(m_DependancyFrames[i].GetN() == 0){
+    for(int i = 0; i < m_Nvis; i++){
+      if(GetDependancyFrames(i).GetN() <= 0){
 	m_Log << LogWarning;
 	m_Log << "Empty collection of visible frames: " << i;
 	m_Log << LogEnd;
 	return SetBody(false);
       }
-    for(int i = 0; i < Nout; i++)
-      if(m_ChildFrames[i].GetN() == 0){
-	m_Log << LogWarning;
-	m_Log << "Empty collection of invisible frames: " << i;
-	m_Log << LogEnd;
-	return SetBody(false);
-      }
+    }
+
     return SetBody(true);
   }
 

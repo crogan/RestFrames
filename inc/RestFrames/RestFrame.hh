@@ -465,7 +465,7 @@ namespace RestFrames {
     static RestFrame& Empty();
 
     /// \brief Returns empty RestFrameList
-    static RestFrameList const& EmptyList();
+    static ConstRestFrameList const& EmptyList();
 
   protected:   
     FrameType m_Type;
@@ -522,7 +522,7 @@ namespace RestFrames {
     bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
 			 std::vector<const TVector3*>& boosts) const;
 
-    static const RestFrameList m_EmptyList;
+    static const ConstRestFrameList m_EmptyList;
     
     friend class ReconstructionFrame;
     friend class GeneratorFrame;

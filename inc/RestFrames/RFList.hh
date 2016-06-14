@@ -272,8 +272,11 @@ namespace RestFrames {
   
   typedef RestFrames::RFList<RFBase>            RFBaseList;
   typedef RestFrames::RFList<RestFrame>         RestFrameList;
+  typedef RestFrames::RFList<const RestFrame>   ConstRestFrameList;
   typedef RestFrames::RFList<Group>             GroupList;
+  typedef RestFrames::RFList<const Group>       ConstGroupList;
   typedef RestFrames::RFList<Jigsaw>            JigsawList;
+  typedef RestFrames::RFList<const Jigsaw>      ConstJigsawList;
   typedef RestFrames::RFList<State>             StateList;
   typedef RestFrames::RFList<VisibleState>      VisibleStateList;
   typedef RestFrames::RFList<HistPlotVar>       HistPlotVarList;

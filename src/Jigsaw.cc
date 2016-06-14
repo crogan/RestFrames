@@ -40,15 +40,27 @@ namespace RestFrames {
   int Jigsaw::m_class_key = 0;
 
   Jigsaw::Jigsaw(const std::string& sname, 
-		 const std::string& stitle)
-    : RFBase(sname, stitle, Jigsaw::m_class_key++) 
+		 const std::string& stitle,
+		 int Nchild, int Ndependancy)
+    : RFBase(sname, stitle, Jigsaw::m_class_key++),
+      m_Nchild(Nchild), m_Ndeps(Ndependancy)
   {
     m_Log.SetSource("Jigsaw "+GetName());
     m_GroupPtr = nullptr;
     m_ParentStatePtr = nullptr;
+    for(int i = 0; i < m_Nchild; i++){
+      m_ChildFrames.push_back(ConstRestFrameList());
+    }
+    
+    for(int i = 0; i < m_Ndeps; i++){
+      m_DependancyFrames.push_back(ConstRestFrameList());
+      m_DependancyStates.push_back(StateList());
+    }
   }
 
-  Jigsaw::Jigsaw() : RFBase() { m_Type = kVanillaJigsaw; }
+  Jigsaw::Jigsaw() : RFBase(), m_Nchild(0), m_Ndeps(0){ 
+    m_Type = kVanillaJigsaw; 
+  }
 
   Jigsaw::~Jigsaw(){
     Clear();
@@ -64,11 +76,16 @@ namespace RestFrames {
     m_GroupPtr = nullptr;
     m_ParentStatePtr = nullptr;
 
-    m_ChildStates.Clear();
-    m_ChildFrames.clear();
+    for(int i = 0; i < m_Nchild; i++){
+      m_ChildFrames[i].Clear();
+      m_ChildStates[i].Clear();
+    }
 
-    m_DependancyStates.clear();
-    m_DependancyFrames.clear();
+    for(int i = 0; i < m_Ndeps; i++){
+      m_DependancyStates[i].Clear();
+      m_DependancyFrames[i].Clear();
+    }
+
     m_DependancyJigsaws.Clear();
 
     RFBase::Clear();
@@ -115,7 +132,7 @@ namespace RestFrames {
       return Group::Empty();
   }
 
-  bool Jigsaw::CanResolve(const RestFrameList& frames) const {
+  bool Jigsaw::CanResolve(const ConstRestFrameList& frames) const {
     if(!IsSoundBody())
       return SetBody(false);
 
@@ -146,7 +163,7 @@ namespace RestFrames {
     } 
   }
 
-  State& Jigsaw::GetParentState() const {
+  State const& Jigsaw::GetParentState() const {
     if(m_ParentStatePtr)
       return *m_ParentStatePtr;
     else
@@ -154,11 +171,11 @@ namespace RestFrames {
   }
 
   int Jigsaw::GetNChildren() const {
-    return m_ChildStates.GetN();
+    return m_Nchild;
   }
 
   int Jigsaw::GetNDependancyStates() const {
-    return m_DependancyFrames.size();
+    return m_Ndeps;
   }
 
   State& Jigsaw::GetChildState(int i) const {
@@ -170,27 +187,26 @@ namespace RestFrames {
   }
 
   StateList const& Jigsaw::GetDependancyStates(int i) const {
-    if(i < 0 || i >= int(m_DependancyStates.size()))
+    if(i < 0 || i >= m_Ndeps)
       return State::EmptyList();
     return m_DependancyStates[i];
   }
 
-  RestFrameList Jigsaw::GetParentFrames() const {
-    RestFrameList frames;
-    int N = m_ChildFrames.size();
-    for(int i = 0; i < N; i++)
+  ConstRestFrameList Jigsaw::GetParentFrames() const {
+    ConstRestFrameList frames;
+    for(int i = 0; i < m_Nchild; i++)
       frames += GetChildFrames(i);
     return frames;
   }
 
-  RestFrameList const& Jigsaw::GetChildFrames(int i) const {
-    if(i < 0 || i >= int(m_ChildFrames.size())) 
+  ConstRestFrameList const& Jigsaw::GetChildFrames(int i) const {
+    if(i < 0 || i >= m_Nchild) 
       return RestFrame::EmptyList();
     return m_ChildFrames[i];
   }
 
-  RestFrameList const& Jigsaw::GetDependancyFrames(int i) const {
-    if((i < 0) || (i >= int(m_DependancyFrames.size()))) 
+  ConstRestFrameList const& Jigsaw::GetDependancyFrames(int i) const {
+    if(i < 0 || i >= m_Ndeps) 
       return RestFrame::EmptyList();
     return m_DependancyFrames[i];
   }
@@ -214,22 +230,17 @@ namespace RestFrames {
       m_Log << LogEnd;
       return SetMind(false);
     }
-
-    m_ChildStates.Clear();
-      
-    int N = m_ChildFrames.size();
-    for(int i = 0; i < N; i++){
-      State& new_state = GetNewChildState();
-      new_state.AddFrames(m_ChildFrames[i]);
-      new_state.SetParentJigsaw(*this);
-      m_ChildStates += new_state;
+    
+    for(int i = 0; i < m_Nchild; i++){
+      m_ChildStates[i].Clear();
+      m_ChildStates[i].SetParentJigsaw(*this);
+      m_ChildStates[i].AddFrames(GetChildFrames(i));
     }
  
     return SetMind(true);
   }
   
   bool Jigsaw::InitializeAnalysis(){
-    m_DependancyStates.clear();
     if(!IsSoundMind())
       return SetMind(false);
 
@@ -243,20 +254,19 @@ namespace RestFrames {
     GroupList groups = lab_frame.GetListGroups();
 
     int Ngroup = groups.GetN();
-    RestFrameListList group_frames;
+    std::vector<ConstRestFrameList> group_frames;
     for(int i = 0; i < Ngroup; i++)
-      group_frames.push_back(RestFrameList());
+      group_frames.push_back(ConstRestFrameList());
 
-    int Ndep = m_DependancyFrames.size();
-    for(int d = 0; d < Ndep; d++){
+    for(int d = 0; d < m_Ndeps; d++){
+      m_DependancyStates[d].Clear();
 
-      m_DependancyStates.push_back(StateList());
       for(int i = 0; i < Ngroup; i++)
 	group_frames[i].Clear();
      
       int Nf = m_DependancyFrames[d].GetN();
       for(int f = 0; f < Nf; f++){
-	RestFrame& frame = m_DependancyFrames[d][f];
+	const RestFrame& frame = m_DependancyFrames[d][f];
 
 	bool no_group = true;
 	for(int g = 0; g < Ngroup; g++){
@@ -304,7 +314,7 @@ namespace RestFrames {
 	  m_Log << Log(group_states[s].GetListFrames()) << std::endl;
 	}
 	m_Log << LogEnd;
-	m_DependancyStates[d].Add(group_states);
+	m_DependancyStates[d] += group_states;
       }
     }
     
@@ -330,34 +340,23 @@ namespace RestFrames {
     return true;
   }
 
-  void Jigsaw::AddChildFrame(RestFrame& frame, int i){
+  void Jigsaw::AddChildFrame(const RestFrame& frame, int i){
     if(!frame) return;
-    if(!GetGroup()) return;
-    if(!GetGroup().ContainsFrame(frame)){
-      m_Log << LogWarning;
-      m_Log << "Unable to add child frame, not assigned Group:" << std::endl;
-      m_Log << "    Frame:" << std::endl;
-      m_Log << Log(frame) << std::endl;
-      m_Log << "    Group:" << std::endl;
-      m_Log << Log(GetGroup()) << LogEnd;
-      return;
-    }
+    if(!frame.IsRecoFrame()) return;
+    if(i < 0 || i >= m_Nchild) return;
     
     SetBody(false);
-
-    while(i >= int(m_ChildFrames.size())){
-      m_ChildFrames.push_back(RestFrameList());
-    }
+   
     m_ChildFrames[i] += frame;
   }
 
-  void Jigsaw::AddDependancyFrame(RestFrame& frame, int i){
+  void Jigsaw::AddDependancyFrame(const RestFrame& frame, int i){
     if(!frame) return;
+    if(!frame.IsRecoFrame()) return;
+    if(i < 0 || i >= m_Ndeps) return;
+
     SetBody(false);
 
-    while(i >= int(m_DependancyFrames.size())){
-      m_DependancyFrames.push_back(RestFrameList());
-    }
     m_DependancyFrames[i] += frame;
   }
 
@@ -366,22 +365,25 @@ namespace RestFrames {
 
     SetBody(false);
 
-    int N = m_ChildFrames.size();
-    for(int i = 0; i < N; i++)
+    for(int i = 0; i < m_Nchild; i++)
       m_ChildFrames[i].Remove(frame);
     
-    N = m_DependancyFrames.size();
-    for(int i = 0; i < N; i++)
+    for(int i = 0; i < m_Ndeps; i++)
       m_DependancyFrames[i].Remove(frame);
+  }
+
+  void Jigsaw::RemoveFrames(const ConstRestFrameList& frames){
+    int N = frames.GetN();
+    for(int i = 0; i < N; i++)
+      RemoveFrame(frames[i]);
   }
 
   bool Jigsaw::IsSoundBody() const {
     if(RFBase::IsSoundBody()) 
       return true;
 
-    int Nout = m_ChildFrames.size();
-    for(int i = 0; i < Nout-1; i++)
-      for(int j = i+1; j < Nout; j++)
+    for(int i = 0; i < m_Nchild-1; i++){
+      for(int j = i+1; j < m_Nchild; j++){
 	if(m_ChildFrames[i].Intersection(m_ChildFrames[j]).GetN() > 0){
 	  m_Log << LogWarning;
 	  m_Log << "Child frames are repeated between ";
@@ -390,12 +392,29 @@ namespace RestFrames {
 	  m_Log << LogEnd;
 	  return SetBody(false);
 	}
-    for(int i = 0; i < Nout; i++)
+      }
+    }
+    for(int i = 0; i < m_Nchild; i++){
       if(m_ChildFrames[i].GetN() == 0){
+	m_Log << LogWarning;
 	m_Log << "No child frames at index ";
 	m_Log << i << LogEnd;
 	return SetBody(false);
       }
+    }
+
+    int Nframes_dep = 0;
+    for(int i = 0; i < m_Ndeps; i++)
+      Nframes_dep += GetDependancyFrames(i).GetN();
+
+    if(m_Ndeps > 0 && Nframes_dep <= 0){
+       m_Log << LogWarning;
+       m_Log << "No dependancy frames listed with";
+       m_Log << "non-zero number of dependancies.";
+       m_Log << LogEnd;
+      return SetBody(false);
+    }
+
     return SetBody(true);
   }
 
@@ -414,11 +433,11 @@ namespace RestFrames {
     if(jigsaws.Contains(*this)) return;
     jigsaws.Add((Jigsaw&)(*m_This));
 
-    int N = m_DependancyStates.size();
-    for(int i = 0; i < N; i++){
+    for(int i = 0; i < m_Ndeps; i++){
       int M = m_DependancyStates[i].GetN();
       for(int j = 0; j < M; j++){
-	m_DependancyStates[i][j].GetParentJigsaw().FillStateJigsawDependancies(jigsaws);
+	m_DependancyStates[i][j].GetParentJigsaw().
+	  FillStateJigsawDependancies(jigsaws);
       }
     } 
   }

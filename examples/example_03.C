@@ -34,7 +34,7 @@
 using namespace RestFrames;
 
 void example_03(const std::string& output_name = "output_example_03.root"){
-  
+  SetLogPrint(LogVerbose,true);
   // set particle masses and widths
   double mtop = 173.;
   double wtop = 2.5;
@@ -43,9 +43,9 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   // Number of events to generate
   int Ngen = 100000;
 
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   LabGenFrame           LAB_Gen("LAB_Gen","LAB");
   ResonanceGenFrame     T_Gen("T_Gen","t");
   ResonanceGenFrame     W_Gen("W_Gen","W");
@@ -53,7 +53,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   VisibleGenFrame       L_Gen("L_Gen","#it{l}");
   InvisibleGenFrame     NU_Gen("NU_Gen","#nu");
 
-  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   LAB_Gen.SetChildFrame(T_Gen);
   T_Gen.AddChildFrame(B_Gen);
@@ -66,7 +66,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   else
     g_Log << LogError << "...Failed initializing generator tree" << LogEnd;
 
-  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   T_Gen.SetMass(mtop);
   T_Gen.SetWidth(wtop);
@@ -77,12 +77,12 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
-  ////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
 
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   LabRecoFrame       LAB_Mt("LAB_Mt","LAB"); LabRecoFrame       LAB_MW("LAB_MW","LAB");
   DecayRecoFrame     T_Mt("T_Mt","t");       DecayRecoFrame     T_MW("T_MW","t");
   DecayRecoFrame     W_Mt("W_Mt","W");       DecayRecoFrame     W_MW("W_MW","W");
@@ -90,7 +90,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   VisibleRecoFrame   L_Mt("L_Mt","#it{l}");  VisibleRecoFrame   L_MW("L_MW","#it{l}");
   InvisibleRecoFrame NU_Mt("NU_Mt","#nu");   InvisibleRecoFrame NU_MW("NU_MW","#nu");
 
-  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   LAB_Mt.SetChildFrame(T_Mt);                LAB_MW.SetChildFrame(T_MW);
   T_Mt.AddChildFrame(B_Mt);                  T_MW.AddChildFrame(B_MW);
@@ -103,7 +103,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   else
     g_Log << LogError << "...Failed initializing reconstruction trees" << LogEnd;
 
-  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   // Invisible Groups
   InvisibleGroup INV_Mt("INV_Mt","#nu Jigsaws");
@@ -127,12 +127,12 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   NuR_MW.AddVisibleFrame(L_MW);
 
   if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analyses" << std::endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized analyses" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analyses" << LogEnd;
 
-  ////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
 
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
@@ -142,6 +142,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   treePlot->SetTree(LAB_Mt);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
   
   HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow t #rightarrow W(#it{l} #nu) b");
 
@@ -178,8 +179,12 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   histPlot->AddPlot(MW,     cat_minMt+cat_minMW+cat_Gen);
   histPlot->AddPlot(Mt,     cat_minMt+cat_minMW+cat_Gen);
 
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((std::max(Ngen,10))/10) == 0) std::cout << "Generating event " << igen << " of " << Ngen << std::endl;
+    if(igen%((std::max(Ngen,10))/10) == 0)
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree
@@ -205,7 +210,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     INV_MW.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
     LAB_MW.AnalyzeEvent();                          //analyze the event
 
-    // Generator-level
+    // Generator-level observables
     double MTgen = T_Gen.GetMass();
     double cosTgen  = T_Gen.GetCosDecayAngle();
     double dphiTgen = LAB_Gen.GetDeltaPhiDecayPlanes(T_Gen);
@@ -247,6 +252,8 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   }
 
   histPlot->Draw();
+
+  g_Log << LogInfo << "Finished" << LogEnd;
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation

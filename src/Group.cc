@@ -199,6 +199,16 @@ namespace RestFrames {
     m_JigsawsToUse += m_Jigsaws;
     m_Jigsaws.Clear();
 
+    int Njigsaw = m_JigsawsToUse.GetN();
+    for(int i = 0; i < Njigsaw; i++){
+      if(m_JigsawsToUse[i].GetNChildren() == 1){
+	m_JigsawsToUse[i].RemoveFrames(m_Frames);
+	int N = GetNFrames();
+	for(int j = 0; j < N; j++)
+	  m_JigsawsToUse[i].AddChildFrame(m_Frames[j]);
+      }
+    }
+
     m_States.Clear();
     m_StatesToResolve.Clear();
     m_States.Add(*m_GroupStatePtr);

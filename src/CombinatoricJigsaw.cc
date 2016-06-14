@@ -38,13 +38,19 @@ namespace RestFrames {
   ///////////////////////////////////////////////
 
   CombinatoricJigsaw::CombinatoricJigsaw(const std::string& sname,
-					 const std::string& stitle)
-    : Jigsaw(sname, stitle)
+					 const std::string& stitle,
+					 int Ncomb, int Nobject)
+    : Jigsaw(sname, stitle, Ncomb, Nobject), 
+      m_Ncomb(Ncomb), m_Nobj(Nobject)
   {
     m_Type = kCombinatoricJigsaw;
+    for(int i = 0; i < m_Ncomb; i++){
+      m_ChildStates += GetNewChildState();
+    }
   }
 
-  CombinatoricJigsaw::CombinatoricJigsaw() : Jigsaw() {}
+  CombinatoricJigsaw::CombinatoricJigsaw()
+    : Jigsaw(), m_Ncomb(0), m_Nobj(0) {}
 
   CombinatoricJigsaw::~CombinatoricJigsaw() {}
 
@@ -75,11 +81,11 @@ namespace RestFrames {
     Jigsaw::SetParentState(state);
   }
 
-  CombinatoricState& CombinatoricJigsaw::GetParentState() const {
+  CombinatoricState const& CombinatoricJigsaw::GetParentState() const {
     if(!Jigsaw::GetParentState())
       return CombinatoricState::Empty();
     else
-      return static_cast<CombinatoricState&>(Jigsaw::GetParentState());
+      return static_cast<const CombinatoricState&>(Jigsaw::GetParentState());
   }
 
   CombinatoricState& CombinatoricJigsaw::GetChildState(int i) const {
@@ -89,26 +95,37 @@ namespace RestFrames {
       return static_cast<CombinatoricState&>(Jigsaw::GetChildState(i));
   }
 
-  void CombinatoricJigsaw::AddFrame(RestFrame& frame, int i){
+  void CombinatoricJigsaw::AddCombFrame(const RestFrame& frame, int i){
     if(!frame) return;
-    if(!GetGroup()) return;
-    
-    RestFrameList frames = 
+
+    ConstRestFrameList frames = 
+      frame.GetListVisibleFrames();
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddChildFrame(frames[f]);
+  }
+
+  void CombinatoricJigsaw::AddCombFrames(const ConstRestFrameList& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddCombFrame(frames[f],i);
+  }
+  
+  void CombinatoricJigsaw::AddObjectFrame(const RestFrame& frame, int i){
+    if(!frame) return;
+
+    ConstRestFrameList frames = 
       frame.GetListVisibleFrames()+
       frame.GetListInvisibleFrames();
     int N = frames.GetN();
-    for(int f = 0; f < N; f++){
-      if(GetGroup().ContainsFrame(frames[f]))
-	AddChildFrame(frames[f], i);
-      else 
-	AddDependancyFrame(frames[f], i);
-    }
+    for(int f = 0; f < N; f++)
+      AddDependancyFrame(frames[f]);
   }
-
-  void CombinatoricJigsaw::AddFrames(const RestFrameList& frames, int i){
+  
+  void CombinatoricJigsaw::AddObjectFrames(const ConstRestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddFrame(frames[f],i);
+      AddObjectFrame(frames[f],i);
   }
 
   bool CombinatoricJigsaw::InitializeJigsawExecutionList(JigsawList& exec_jigsaws){
@@ -258,14 +275,13 @@ namespace RestFrames {
   }
 
   bool CombinatoricJigsaw::LoopCombinatoric(){
-    int Ninput = m_InputStates.GetN();
-    int Nout   = GetNChildren();	
+    int Ninput = m_InputStates.GetN();	
 
     int N_comb = 1;
-    for(int i = 0; i < Ninput; i++) N_comb *= Nout;
+    for(int i = 0; i < Ninput; i++) N_comb *= m_Ncomb;
    
     std::vector<int> Nhem;
-    for(int i = 0; i < Nout; i++)
+    for(int i = 0; i < m_Ncomb; i++)
       Nhem.push_back(0);
     
     int c_max = -1;
@@ -273,22 +289,22 @@ namespace RestFrames {
    
     for(int c = 0; c < N_comb; c++){
       int key = c;
-      for(int i = 0; i < Nout; i++){
+      for(int i = 0; i < m_Ncomb; i++){
 	Nhem[i] = 0;
 	GetChildState(i).ClearElements();
       } 
 
       // set output states for combinatoric;
       for(int i = 0; i < Ninput; i++){
-	int ihem = key%Nout;
-	key /= Nout;
+	int ihem = key%m_Ncomb;
+	key /= m_Ncomb;
 	Nhem[ihem]++;
 	GetChildState(ihem).AddElement(m_InputStates[i]);
       }
       
       // check validity of combinatoric
       bool valid = true;
-      for(int i = 0; i < Nout; i++){
+      for(int i = 0; i < m_Ncomb; i++){
 	if(m_NExclusive[&GetChildState(i)]){
 	  if(Nhem[i] != m_NForChild[&GetChildState(i)]) 
 	    valid = false;
@@ -320,12 +336,12 @@ namespace RestFrames {
     }
      
     // Set outputs to best combinatoric
-    for(int i = 0; i < Nout; i++) 
+    for(int i = 0; i < m_Ncomb; i++) 
       GetChildState(i).ClearElements();
     int key = c_max;
     for(int i = 0; i < Ninput; i++){
-      int ihem = key%Nout;
-      key /= Nout;
+      int ihem = key%m_Ncomb;
+      key /= m_Ncomb;
       GetChildState(ihem).AddElement(m_InputStates[i]);
     }
   

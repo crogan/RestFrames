@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#include "RestFrames/RestFrame.hh"
 #include "RestFrames/MinMassesCombJigsaw.hh"
 
 namespace RestFrames {
@@ -36,7 +37,7 @@ namespace RestFrames {
   ///////////////////////////////////////////////
   MinMassesCombJigsaw::MinMassesCombJigsaw(const std::string& sname, 
 					   const std::string& stitle) : 
-    CombinatoricJigsaw(sname, stitle) {}
+    CombinatoricJigsaw(sname, stitle, 2, 2) {}
 
   MinMassesCombJigsaw::MinMassesCombJigsaw() : CombinatoricJigsaw() {}
   
@@ -50,6 +51,27 @@ namespace RestFrames {
     return MinMassesCombJigsaw::m_Empty;
   }
 
+  void MinMassesCombJigsaw::AddFrame(const RestFrame& frame, int i){
+    if(!frame) return;
+    if(!GetGroup()) return;
+    
+    ConstRestFrameList frames = 
+      frame.GetListVisibleFrames()+
+      frame.GetListInvisibleFrames();
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++){
+      if(GetGroup().ContainsFrame(frames[f]))
+	AddChildFrame(frames[f], i);
+      AddDependancyFrame(frames[f], i);
+    }
+  }
+
+  void MinMassesCombJigsaw::AddFrames(const ConstRestFrameList& frames, int i){
+    int N = frames.GetN();
+    for(int f = 0; f < N; f++)
+      AddFrame(frames[f],i);
+  }
+
   bool MinMassesCombJigsaw::AnalyzeEvent(){
     if(!IsSoundMind() || !GetGroup())
       return SetSpirit(false);
@@ -61,10 +83,10 @@ namespace RestFrames {
     }
 
     int Ninput = m_InputStates.GetN();
-    int Nout   = GetNChildren();
-    int Ndeps  = GetNDependancyStates();
 
-    bool DO_N3 = (Nout == 2) && (Ndeps <= 0) && (Ninput >= 2);
+    bool DO_N3 = (Ninput >= 2) &&
+      GetDependancyStates(0).GetN() == 1 &&
+      GetDependancyStates(1).GetN() == 1;
     if(DO_N3){
       DO_N3 = (m_NForChild[&GetChildState(0)] <= 1) && 
 	(m_NForChild[&GetChildState(1)] <= 1) && 
@@ -150,23 +172,10 @@ namespace RestFrames {
   }
 
   double MinMassesCombJigsaw::EvaluateMetric() const {
-    int N = GetNChildren();
-    std::vector<TLorentzVector> P;
-    for(int i = 0; i < N; i++)
-      P.push_back(GetChildState(i).GetFourVector());
-    int Nd = GetNDependancyStates();
-    for(int i = 0; i < Nd && i < N; i++)
-      P[i] += GetDependancyStates(i).GetFourVector();
-    
-    double prob = 1.;
-    TLorentzVector SUM(0.,0.,0.,0.);
-    for(int i = 1; i < N; i++)
-      SUM += P[i];
-    for(int i = 0; i < N-1; i++){
-      prob *= GetP((P[i]+SUM).M(), P[i].M(), SUM.M());
-      SUM -= P[i+1];
-    }
-    return prob;
+    TLorentzVector P1 = GetDependancyStates(0).GetFourVector();
+    TLorentzVector P2 = GetDependancyStates(1).GetFourVector();
+   
+    return GetP((P1+P2).M(), P1.M(), P2.M());
   }
 
   MinMassesCombJigsaw MinMassesCombJigsaw::m_Empty;

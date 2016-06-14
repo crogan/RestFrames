@@ -57,7 +57,7 @@ namespace RestFrames {
     return ReconstructionFrame::Empty();
   }
 
-  RestFrameList const& RestFrame::EmptyList(){
+  ConstRestFrameList const& RestFrame::EmptyList(){
     return m_EmptyList;
   }
 
@@ -993,6 +993,6 @@ namespace RestFrames {
     return V1.Angle(V2);
   }
 
-  const RestFrameList RestFrame::m_EmptyList;
+  const ConstRestFrameList RestFrame::m_EmptyList;
   
 }

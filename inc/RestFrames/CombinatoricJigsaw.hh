@@ -39,7 +39,9 @@ namespace RestFrames {
   class CombinatoricJigsaw : public Jigsaw {
   public:
     //constructor and destructor
-    CombinatoricJigsaw(const std::string& sname, const std::string& stitle);
+    CombinatoricJigsaw(const std::string& sname, 
+		       const std::string& stitle,
+		       int Ncomb, int Nobject);
     CombinatoricJigsaw();
     virtual ~CombinatoricJigsaw();
 
@@ -50,12 +52,17 @@ namespace RestFrames {
     virtual void SetGroup(Group& group = Group::Empty());
     virtual CombinatoricGroup& GetGroup() const;
 
-    virtual void AddFrame(RestFrame& frame, int i = 0);
-    virtual void AddFrames(const RestFrameList& frames, int i = 0);
+    virtual void AddCombFrame(const RestFrame& frame, int i = 0);
+    void AddCombFrames(const ConstRestFrameList& frames, int i = 0);
+    virtual void AddObjectFrame(const RestFrame& frame, int i = 0);
+    void AddObjectFrames(const ConstRestFrameList& frames, int i = 0);
 
   protected:
+    CombinatoricState& GetNewChildState();
+    
     virtual bool InitializeCombinatoric();
     virtual bool LoopCombinatoric();
+
     virtual double EvaluateMetric() const = 0;
 
     virtual bool AnalyzeEvent();
@@ -64,17 +71,19 @@ namespace RestFrames {
     std::map<const State*, int>  m_NForChild;
     std::map<const State*, bool> m_NExclusive;
 
-    virtual void SetParentState(State& state = State::Empty());
-    virtual CombinatoricState& GetParentState() const;
+    void SetParentState(State& state = State::Empty());
+    CombinatoricState const& GetParentState() const;
     
-    virtual CombinatoricState& GetChildState(int i) const;
-
-    virtual CombinatoricState& GetNewChildState();
+    CombinatoricState& GetChildState(int i) const;
  
-    virtual bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
+    bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
 
     JigsawList m_ExecuteJigsaws;
     bool ExecuteDependancyJigsaws();
+
+  private:
+    const int m_Ncomb;
+    const int m_Nobj;
     
   };
 

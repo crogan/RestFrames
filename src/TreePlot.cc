@@ -174,18 +174,12 @@ namespace RestFrames {
       return;
     if(m_Jigsaws.Contains(jigsaw))
       return;
-
     if(!m_Frames.Contains(jigsaw.GetParentFrames()))
       return;
     
     FillJigsawLink(jigsaw);
     m_JigsawColorMap[&jigsaw] = int(m_JigsawColorMap.size());
     m_Jigsaws.Add(jigsaw);
-  }
-
-  void TreePlot::AddJigsaws(const JigsawList& jigsaws){
-    int N = jigsaws.GetN();
-    for(int j = 0; j < N; j++) AddJigsaw(jigsaws[j]);
   }
 
   void TreePlot::SetTree(const Group& group){
