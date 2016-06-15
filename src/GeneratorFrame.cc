@@ -302,7 +302,7 @@ namespace RestFrames {
 	m_Log << "   |Eta| < " << m_EtaCut << std::endl; 
       }
       m_Log << "Acceptance efficiency = ";
-      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " %";
+      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " % " << m_Npass << " " << m_Ngen;
       m_Log << std::endl << LogEnd;
     }
 
@@ -338,18 +338,21 @@ namespace RestFrames {
     }
 
     bool evt_pass = pass;
+    bool pass_c;
     int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      evt_pass = evt_pass && GetChildFrame(i).EventInAcceptance();
+    for(int i = 0; i < N; i++){
+      pass_c = GetChildFrame(i).EventInAcceptance();
+      evt_pass = evt_pass && pass_c;
+    }
 
     if(IsLabFrame())
       pass = evt_pass;
-    
+
     m_Ngen++;
     if(pass)
       m_Npass++;
     
-    return pass;
+    return evt_pass;
   }
   
   void GeneratorFrame::SetPCut(double cut){
