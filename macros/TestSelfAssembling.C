@@ -70,8 +70,8 @@ void TestSelfAssembling(){
     for(int ijet = 0; ijet < Njet; ijet++){
       float Px = gRandom->Rndm();
       float Py = gRandom->Rndm();
-      float Pz = gRandom->Rndm();
-      float M = gRandom->Rndm();
+      float Pz = 0.;
+      float M = 0.;
       float E = sqrt(Px*Px + Py*Py + Pz*Pz + M*M);
       TLorentzVector jet;
       jet.SetPxPyPzE(Px,Py,Pz,E);
@@ -96,10 +96,14 @@ void TestSelfAssembling(){
 
     const RestFrame& depth2 = S1.GetFrameAtDepth(2, I1);
     if(!depth2.IsEmpty()) cout << "Invis (2) " << depth2.GetName().c_str() << endl;
+
+    cout << "Total Charge V1: " << V1.GetCharge() << endl;
+    cout << "Total Charge I1 parent: " << prod.GetCharge() << endl;
   }
+
   treePlot->SetTree(S1);
   //TreePlot->AddJigsaw(RapidityJigsaw);
-  treePlot->Draw();
+  treePlot->Draw(true);
   
 }
 

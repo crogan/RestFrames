@@ -482,11 +482,11 @@ namespace RestFrames {
     /// \brief Recursively initialize this frame and its children for analysis
     virtual bool InitializeAnalysisRecursive() = 0;
 
-    /// \brief Recursively clear event information from this frame and its children
-    virtual bool ClearEventRecursive() = 0;
-
     /// \brief Recursively analyze event in this frame and its children
     virtual bool AnalyzeEventRecursive() = 0;
+
+    /// \brief Recursively clear event information from this frame and its children
+    virtual bool ClearEventRecursive() = 0;
 
     /// \brief Check this RestFrame 's tree for circular connections
     bool IsCircularTree(std::vector<RFKey>& keys) const;

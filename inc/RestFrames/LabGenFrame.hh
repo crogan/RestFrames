@@ -56,6 +56,8 @@ namespace RestFrames {
 
     void SetN_MCMCBurnIn(int N);
     void SetN_MCMCDiscard(int N);
+
+    void SetFailTolerance(int N);
     
   protected:
     double m_PT;
@@ -76,6 +78,11 @@ namespace RestFrames {
     
     int m_NBurnInMCMC;
     int m_NDiscardMCMC;
+
+    int m_FailTolerance;
+    
+    long m_Ngenerated;
+    long m_Npassed;
 
   private:
     void Init();

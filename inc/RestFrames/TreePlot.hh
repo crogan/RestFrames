@@ -60,7 +60,10 @@ namespace RestFrames {
     
     void AddJigsaw(const Jigsaw& jigsaw);
 
-    void Draw(const std::string& name = "",
+    void Draw(bool invert_colors  = false,
+	      bool invert_node_colors = false);
+
+    void Draw(const std::string& name,
 	      const std::string& title = "",
 	      bool invert_colors  = false,
 	      bool invert_node_colors = false);

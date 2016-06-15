@@ -89,9 +89,9 @@ namespace RestFrames {
   protected:
     double m_Mass;
 
-    virtual bool InitializeAnalysisRecursive();
-    virtual bool AnalyzeEventRecursive();
-    virtual bool ClearEventRecursive();
+    bool InitializeAnalysisRecursive();
+    bool AnalyzeEventRecursive();
+    bool ClearEventRecursive();
 
     virtual void ResetGenFrame() = 0;
     virtual bool GenerateFrame() = 0;
@@ -109,9 +109,14 @@ namespace RestFrames {
     virtual void SetMassMCMC(double mass);
     void SetMassMCMC(double mass, GeneratorFrame& frame) const;
 
+    bool EventInAcceptance() const;
+
   private:
     TRandom *m_Random;
     bool m_VarMassMCMC;
+
+    mutable long m_Ngen;
+    mutable long m_Npass;
    
   };
 

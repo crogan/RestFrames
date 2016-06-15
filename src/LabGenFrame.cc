@@ -46,6 +46,8 @@ namespace RestFrames {
 
     m_NBurnInMCMC = 1000;
     m_NDiscardMCMC = 5;
+
+    m_FailTolerance = 1000;
   }
 
   LabGenFrame::~LabGenFrame() {}
@@ -110,11 +112,17 @@ namespace RestFrames {
   }
   
   void LabGenFrame::SetN_MCMCBurnIn(int N){
+    SetMind(false);
     m_NBurnInMCMC = std::max(0,N);
   }
 
   void LabGenFrame::SetN_MCMCDiscard(int N){
+    SetMind(false);
     m_NDiscardMCMC = std::max(1,N);
+  }
+
+  void LabGenFrame::SetFailTolerance(int Nfail){
+    m_FailTolerance = Nfail;
   }
 
   bool LabGenFrame::InitializeGenAnalysis(){
@@ -188,12 +196,31 @@ namespace RestFrames {
   }
 
   bool LabGenFrame::AnalyzeEvent(){
-    for(int i = 0; i < m_NDiscardMCMC; i++)
-      if(!IterateRecursiveMCMC())
-	return SetSpirit(false);
+    bool pass = false;
+    int tries = 0;
 
-    if(!AnalyzeEventRecursive()){
-      return SetSpirit(false);
+    while(!pass){
+      for(int i = 0; i < m_NDiscardMCMC; i++)
+	if(!IterateRecursiveMCMC())
+	  return SetSpirit(false);
+      
+      if(!AnalyzeEventRecursive()){
+	return SetSpirit(false);
+      }
+      
+      pass = EventInAcceptance();
+
+      if(!pass){
+	tries++;
+	if(tries > m_FailTolerance &&
+	   m_FailTolerance > 0){
+	  m_Log << LogWarning;
+	  m_Log << "Failed to generate event in ";
+	  m_Log << "acceptance in " << tries;
+	  m_Log << " tries. Giving up." << LogEnd;
+	  return SetSpirit(false);
+	}
+      }
     }
 
     return SetSpirit(true);

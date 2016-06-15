@@ -62,7 +62,7 @@ namespace RestFrames {
     ///
     /// Method for removing a child RestFrame from the
     /// list of children of this frame (if it is in that list).
-    void RemoveChildFrame(RestFrame& frame);
+    virtual void RemoveChildFrame(RestFrame& frame);
 
     /// \brief Remove all the children of this frame
     ///
@@ -96,13 +96,16 @@ namespace RestFrames {
     static ReconstructionFrame& Empty();
 
   protected:
+    bool InitializeAnalysisRecursive();
+    bool ClearEventRecursive();
+    bool AnalyzeEventRecursive();
+
+    virtual bool ResetRecoFrame();
+    virtual bool ReconstructFrame();
+
     virtual StateList const& GetChildStates(int i = 0) const;
     virtual StateList const& GetChildStates(const RestFrame& child) const;
     
-    virtual bool InitializeAnalysisRecursive();
-    virtual bool ClearEventRecursive();
-    virtual bool AnalyzeEventRecursive();
-
   private:
     Group* m_GroupPtr;
     mutable std::map<const RestFrame*, StateList > m_ChildStates;

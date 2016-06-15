@@ -46,6 +46,9 @@ namespace RestFrames {
     m_VarMassMCMC = false;
     m_Mass = 0.;
   
+    m_Ngen = 0;
+    m_Npass = 0;
+
     TDatime now;
     int today = now.GetDate();
     int clock = now.GetTime();
@@ -129,8 +132,8 @@ namespace RestFrames {
       return SetSpirit(false);
     }
 
-    int Nf =  GetNChildren();
-    for(int i = 0; i < Nf; i++)
+    int Nchild = GetNChildren();
+    for(int i = 0; i < Nchild; i++)
       if(!GetChildFrame(i).AnalyzeEventRecursive()){
 	return SetSpirit(false);
       }
@@ -162,10 +165,17 @@ namespace RestFrames {
     if(!InitializeGenAnalysis())
       return SetMind(false);
 
-    int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      if(!GetChildFrame(i).InitializeAnalysisRecursive())
+    m_Ngen = 0;
+    m_Npass = 0;
+
+    int Nchild = GetNChildren();
+    for(int i = 0; i < Nchild; i++)
+      if(!GetChildFrame(i).InitializeAnalysisRecursive()){
+	m_Log << LogWarning;
+	m_Log << "Unable to recursively initialize analysis for frame:";
+	m_Log << Log(GetChildFrame(i)) << LogEnd;
 	return SetMind(false);
+      }
 
     return SetMind(true);
   }
@@ -248,6 +258,25 @@ namespace RestFrames {
 
   double GeneratorFrame::GetProbMCMC(double mass) const {
     return 1.;
+  }
+
+  bool GeneratorFrame::EventInAcceptance() const {
+    if(!IsSoundSpirit()){
+      UnSoundSpirit(RF_FUNCTION);
+      return SetSpirit(false);
+    }
+    
+    bool pass = true;
+
+    m_Ngen++;
+    if(pass)
+      m_Npass++;
+
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      pass = pass && GetChildFrame(i).EventInAcceptance();
+
+    return pass;
   }
 
 }

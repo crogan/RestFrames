@@ -290,7 +290,7 @@ namespace RestFrames {
     if(!m_ChildFrames.Contains(frame)){
       m_Log << LogWarning;
       m_Log << "Unable to set child's boost vector. ";
-      m_Log << "Frame is not among childrend:";
+      m_Log << "Frame is not among children:";
       m_Log << Log(frame) << LogEnd;
       return;
     }

@@ -48,16 +48,24 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    virtual bool ClearEventRecursive();
-    virtual bool AnalyzeEventRecursive();
+    //virtual bool ClearEventRecursive();
+    //virtual bool AnalyzeEventRecursive();
+
+    void RemoveChildFrame(RestFrame& frame);
 
     const RestFrame& GetFrame(const RFKey& key) const;
 
+  protected:
+    virtual bool ResetRecoFrame();
+    virtual bool ReconstructFrame();
+
   private:
-    bool m_Body_UnAssembled;
-    bool m_Mind_UnAssembled; 
+    // bool m_Body_UnAssembled;
+    // bool m_Mind_UnAssembled; 
+    bool m_NewEvent;
+
     RestFrameList m_ChildFrames_UnAssembled;
-    StateListList m_ChildStates_UnAssembled;
+    //StateListList m_ChildStates_UnAssembled;
 
     StateList m_VisibleStates;
     RestFrames::RFList<VisibleRecoFrame> m_VisibleFrames;

@@ -212,7 +212,7 @@ namespace RestFrames {
     }  
     return true;
   }
-  
+
   bool ReconstructionFrame::InitializeAnalysisRecursive(){
     if(!IsSoundBody()){
       UnSoundBody(RF_FUNCTION);
@@ -236,12 +236,19 @@ namespace RestFrames {
     return SetMind(true);
   }
 
+  bool ReconstructionFrame::ResetRecoFrame(){
+    return true;
+  }
+
   bool ReconstructionFrame::ClearEventRecursive(){ 
     if(!IsSoundMind()){
       UnSoundMind(RF_FUNCTION);
       return false;
     }
    
+    if(!ResetRecoFrame())
+      return false;
+
     int Nf =  GetNChildren();
     for(int i = 0; i < Nf; i++)
       if(!GetChildFrame(i).ClearEventRecursive())
@@ -250,51 +257,114 @@ namespace RestFrames {
     return true;
   }
 
-  bool ReconstructionFrame::AnalyzeEventRecursive(){
+  bool ReconstructionFrame::ReconstructFrame(){
     if(!IsSoundMind()){
       UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
     }
-    
-    TLorentzVector Ptot(0,0,0,0);
 
+    TLorentzVector Ptot(0,0,0,0);
+    
     int Nchild = GetNChildren();
     for(int i = 0; i < Nchild; i++){
       ReconstructionFrame& child = GetChildFrame(i);
+      
       TLorentzVector P = m_ChildStates[&child].GetFourVector();
-
-      TVector3 B_child = P.BoostVector();
-      SetChildBoostVector(child, B_child);
+      SetChildBoostVector(child, P.BoostVector());
       Ptot += P;
-
+      
       child.SetFourVector(P,*this);
 
       if(child.IsVisibleFrame())
 	static_cast<VisibleRecoFrame&>(child).
 	  SetCharge(m_ChildStates[&child].GetCharge());
-
-      bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
-      if(!terminal){ 
-	B_child *= -1.;
-	m_ChildStates[&child].Boost(B_child);
-      }
-    
-      if(!child.AnalyzeEventRecursive()){
-	m_Log << LogWarning;
-	m_Log << "Recursive event analysis failed for frame: ";
-	m_Log << Log(child) << LogEnd;
-	return SetSpirit(false);
-      } 
-     
-      if(!terminal){ 
-	B_child *= -1.;
-	m_ChildStates[&child].Boost(B_child);
-      }
     }
-   
+
     if(IsLabFrame()) SetFourVector(Ptot,*this);
 
     return SetSpirit(true);
   }
+
+  bool ReconstructionFrame::AnalyzeEventRecursive(){
+    if(!IsSoundMind()){
+      UnSoundMind(RF_FUNCTION);
+      return SetSpirit(false);
+    }
+    if(!ReconstructFrame()){
+      m_Log << LogWarning;
+      m_Log << "Unable to reconstruct event for this frame.";
+      m_Log << LogEnd;
+      return SetSpirit(false);
+    }
+
+    int Nchild = GetNChildren();
+    for(int i = 0; i < Nchild; i++){
+      ReconstructionFrame& child = GetChildFrame(i);
+      TVector3 boost = GetChildBoostVector(child);
+
+      bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
+      if(!terminal){ 
+	boost *= -1.;
+	m_ChildStates[&child].Boost(boost);
+      }
+    
+      if(!child.AnalyzeEventRecursive())
+	return SetSpirit(false);
+     
+      if(!terminal){ 
+	boost *= -1.;
+	m_ChildStates[&child].Boost(boost);
+      }
+    }
+
+    return SetSpirit(true);
+  }
+
+  // bool ReconstructionFrame::AnalyzeEventRecursive(){
+  //   if(!IsSoundMind()){
+  //     UnSoundMind(RF_FUNCTION);
+  //     return SetSpirit(false);
+  //   }
+    
+  //   TLorentzVector Ptot(0,0,0,0);
+
+  //   int Nchild = GetNChildren();
+  //   for(int i = 0; i < Nchild; i++){
+  //     ReconstructionFrame& child = GetChildFrame(i);
+  //     TLorentzVector P = m_ChildStates[&child].GetFourVector();
+
+  //     TVector3 B_child = P.BoostVector();
+  //     SetChildBoostVector(child, B_child);
+  //     Ptot += P;
+
+  //     child.SetFourVector(P,*this);
+
+  //     if(child.IsVisibleFrame())
+  // 	static_cast<VisibleRecoFrame&>(child).
+  // 	  SetCharge(m_ChildStates[&child].GetCharge());
+
+  //     bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
+  //     if(!terminal){ 
+  // 	B_child *= -1.;
+  // 	m_ChildStates[&child].Boost(B_child);
+  //     }
+    
+  //     if(!child.AnalyzeEventRecursive()){
+  // 	m_Log << LogWarning;
+  // 	m_Log << "Recursive event analysis failed for frame: ";
+  // 	m_Log << Log(child) << LogEnd;
+  // 	return SetSpirit(false);
+  //     } 
+     
+  //     if(!terminal){ 
+  // 	B_child *= -1.;
+  // 	m_ChildStates[&child].Boost(B_child);
+  //     }
+  //   }
+   
+  //   if(IsLabFrame()) SetFourVector(Ptot,*this);
+
+  //   return SetSpirit(true);
+  // }
 
 }

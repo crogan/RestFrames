@@ -124,6 +124,11 @@ namespace RestFrames {
     return can;
   }
   
+  void TreePlot::Draw(bool invert_colors, bool invert_node_colors){
+    Draw("","",invert_colors, invert_node_colors);
+  }
+
+
   void TreePlot::Draw(const std::string& name, const std::string& title,
 		      bool invert_bkg_color,
 		      bool invert_node_color){
