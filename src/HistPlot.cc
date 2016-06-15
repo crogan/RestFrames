@@ -337,10 +337,12 @@ namespace RestFrames {
 
     int N = hists.size();
     
-    int imax = 0;
-    int imin = 0;
-    double hmax = -1.;
-    double hmin = 1e16;
+    int imax  = -1;
+    int imin  = -1;
+    int imin0 = -1;
+    double hmax  = -1.;
+    double hmin  = -1.;
+    double hmin0 = -1.;
     for(int i = 0; i < N; i++){
       hists[i]->Rebin(m_Rebin);
       if(!m_SetScale){
@@ -349,13 +351,17 @@ namespace RestFrames {
       } else {
 	hists[i]->Scale(m_Scale);
       }
-      if(hists[i]->GetMaximum() > hmax){
+      if(hists[i]->GetMaximum() > hmax || imax < 0){
 	hmax = hists[i]->GetMaximum();
 	imax = i;
       }
-      if(hists[i]->GetMinimum(0.) < hmin){
+      if(hists[i]->GetMinimum(0.) < hmin || imin < 0){
 	hmin = hists[i]->GetMinimum(0.);
 	imin = i;
+      }
+      if(hists[i]->GetMinimum() < hmin0 || imin0 < 0){
+	hmin0 = hists[i]->GetMinimum();
+	imin0 = i;
       }
     }
 
@@ -366,8 +372,11 @@ namespace RestFrames {
     hists[imax]->GetYaxis()->SetTitle(ScaleLabel.c_str());
     hists[imax]->GetYaxis()->SetTitleOffset(1.42);
     hists[imax]->GetYaxis()->CenterTitle();
-    hists[imax]->GetYaxis()->SetRangeUser(0.9*hists[imin]->GetMinimum(0.),
-					  1.1*hists[imax]->GetMaximum());
+    if(hmin0 > 0.)
+      hists[imax]->GetYaxis()->SetRangeUser(0., 1.1*hmax);
+    else
+      hists[imax]->GetYaxis()->SetRangeUser(0.9*hmin, 1.1*hmax);
+    
     if(invert_colors){
       hists[imax]->GetXaxis()->SetTitleColor(kWhite);
       hists[imax]->GetXaxis()->SetLabelColor(kWhite);

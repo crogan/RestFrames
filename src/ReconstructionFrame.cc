@@ -59,7 +59,6 @@ namespace RestFrames {
     RestFrame::Clear();
   }
 
-  /// \brief Returns empty instance of class
   ReconstructionFrame& ReconstructionFrame::Empty(){
     return VisibleRecoFrame::Empty();
   }
@@ -321,52 +320,5 @@ namespace RestFrames {
 
     return SetSpirit(true);
   }
-
-  // bool ReconstructionFrame::AnalyzeEventRecursive(){
-  //   if(!IsSoundMind()){
-  //     UnSoundMind(RF_FUNCTION);
-  //     return SetSpirit(false);
-  //   }
-    
-  //   TLorentzVector Ptot(0,0,0,0);
-
-  //   int Nchild = GetNChildren();
-  //   for(int i = 0; i < Nchild; i++){
-  //     ReconstructionFrame& child = GetChildFrame(i);
-  //     TLorentzVector P = m_ChildStates[&child].GetFourVector();
-
-  //     TVector3 B_child = P.BoostVector();
-  //     SetChildBoostVector(child, B_child);
-  //     Ptot += P;
-
-  //     child.SetFourVector(P,*this);
-
-  //     if(child.IsVisibleFrame())
-  // 	static_cast<VisibleRecoFrame&>(child).
-  // 	  SetCharge(m_ChildStates[&child].GetCharge());
-
-  //     bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
-  //     if(!terminal){ 
-  // 	B_child *= -1.;
-  // 	m_ChildStates[&child].Boost(B_child);
-  //     }
-    
-  //     if(!child.AnalyzeEventRecursive()){
-  // 	m_Log << LogWarning;
-  // 	m_Log << "Recursive event analysis failed for frame: ";
-  // 	m_Log << Log(child) << LogEnd;
-  // 	return SetSpirit(false);
-  //     } 
-     
-  //     if(!terminal){ 
-  // 	B_child *= -1.;
-  // 	m_ChildStates[&child].Boost(B_child);
-  //     }
-  //   }
-   
-  //   if(IsLabFrame()) SetFourVector(Ptot,*this);
-
-  //   return SetSpirit(true);
-  // }
 
 }

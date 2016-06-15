@@ -46,7 +46,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 500.;
+  double mH = 125.;
   double wH = 0.004;
   double mW = 80.;
   double wW = 2.;
@@ -95,6 +95,10 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   // set lepton masses
   La_G.SetMass(mL);
   Lb_G.SetMass(mL);
+  La_G.SetPtCut(10.);
+  Lb_G.SetPtCut(10.);
+  La_G.SetEtaCut(3.);
+  Lb_G.SetEtaCut(3.);
   // set neutrino masses
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
@@ -175,7 +179,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   treePlot->Draw("InvTree", "Invisible Jigsaws");
 
   treePlot->SetTree(NuNuR_R);
-  treePlot->Draw("InvTree", "Invisible Jigsaws",true);
+  treePlot->Draw("InvTree", "Invisible Jigsaws", true);
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -251,7 +255,9 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   }
 
   histPlot->Draw();
-
+  
+  LAB_G.PrintGeneratorEfficiency();
+  
   g_Log << LogInfo << "Finished" << LogEnd;
 }
 

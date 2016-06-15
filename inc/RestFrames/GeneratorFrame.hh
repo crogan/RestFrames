@@ -75,10 +75,26 @@ namespace RestFrames {
 
     /// \brief Get the frame of the *i* th child
     virtual GeneratorFrame& GetChildFrame(int i = 0) const;
+
+    void SetPCut(double cut);
+    void SetPtCut(double cut);
+    void SetEtaCut(double cut);
+    void SetMassWindowCut(double min, double max);
+
+    void RemovePCut();
+    void RemovePtCut();
+    void RemoveEtaCut();
+    void RemoveMassWindowCut();
+
+    /// \brief Print generator efficiency information
+    void PrintGeneratorEfficiency() const;
     
+    /// \brief Get the mass of this frame
     virtual double GetMass() const;
 
+    /// \brief Frame is capable having a variable mass? (true/false)
     bool IsVariableMassMCMC() const;
+
     virtual double GetMinimumMassMCMC() const;
     virtual void GenerateMassMCMC(double& mass, double& prob, 
 				  double max = -1.) const;
@@ -117,6 +133,19 @@ namespace RestFrames {
 
     mutable long m_Ngen;
     mutable long m_Npass;
+
+    double m_PCut;
+    double m_PtCut;
+    double m_EtaCut;
+    double m_minMassCut;
+    double m_maxMassCut;
+
+    bool m_doCuts;
+    bool m_doPCut;
+    bool m_doPtCut;
+    bool m_doEtaCut;
+    bool m_dominMassCut;
+    bool m_domaxMassCut;
    
   };
 

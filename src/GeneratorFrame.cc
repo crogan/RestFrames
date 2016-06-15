@@ -49,6 +49,18 @@ namespace RestFrames {
     m_Ngen = 0;
     m_Npass = 0;
 
+    m_PCut = -1.;
+    m_PtCut = -1.;
+    m_EtaCut = -1.;
+    m_minMassCut = -1.;
+    m_maxMassCut = -1.;
+    m_doCuts = false;
+    m_doPCut = false;
+    m_doPtCut = false;
+    m_doEtaCut = false;
+    m_dominMassCut = false;
+    m_domaxMassCut = false;
+    
     TDatime now;
     int today = now.GetDate();
     int clock = now.GetTime();
@@ -258,6 +270,47 @@ namespace RestFrames {
     return 1.;
   }
 
+  void GeneratorFrame::PrintGeneratorEfficiency() const {
+    if(IsLabFrame()){
+      m_Log << LogInfo << std::endl;
+      m_Log << "Total events generated: " << m_Ngen << std::endl;
+      m_Log << "Events in acceptance:   " << m_Npass << std::endl;
+      m_Log << "Generator efficiency:   ";
+      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " %";
+      m_Log << std::endl << LogEnd;
+    } 
+
+    if(m_doCuts){
+      m_Log << LogInfo;
+      m_Log << "Acceptance cuts for frame:" << std::endl;
+      if(m_dominMassCut || m_domaxMassCut){
+	m_Log << "   ";
+	if(m_dominMassCut)
+	  m_Log << m_minMassCut << " < ";
+	m_Log << "mass";
+	if(m_domaxMassCut)
+	  m_Log << " < " << m_maxMassCut;
+	m_Log << std::endl;
+      }
+      if(m_doPCut){
+	m_Log << "   P > " << m_PCut << std::endl; 
+      }
+      if(m_doPtCut){
+	m_Log << "   Pt > " << m_PtCut << std::endl; 
+      }
+      if(m_doEtaCut){
+	m_Log << "   |Eta| < " << m_EtaCut << std::endl; 
+      }
+      m_Log << "Acceptance efficiency = ";
+      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " %";
+      m_Log << std::endl << LogEnd;
+    }
+
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      GetChildFrame(i).PrintGeneratorEfficiency();
+  }
+  
   bool GeneratorFrame::EventInAcceptance() const {
     if(!IsSoundSpirit()){
       UnSoundSpirit(RF_FUNCTION);
@@ -265,16 +318,100 @@ namespace RestFrames {
     }
     
     bool pass = true;
+    if(m_doCuts){
+      TLorentzVector P = GetFourVector();
+      if(m_doPCut)
+	if(P.P() < (1.-1e-10)*m_PCut)
+	  pass = false;
+      if(m_doPtCut)
+	if(P.Pt() < (1.-1e-10)*m_PtCut)
+	  pass = false;
+      if(m_doEtaCut)
+	if(fabs(P.Eta()) > (1.+1e-10)*m_EtaCut)
+	  pass = false;
+      if(m_dominMassCut)
+	if(m_Mass < (1.-1e-10)*m_minMassCut)
+	  pass = false;
+      if(m_domaxMassCut)
+	if(m_Mass > (1.+1e-10)*m_maxMassCut)
+	  pass = false;
+    }
 
+    bool evt_pass = pass;
+    int N = GetNChildren();
+    for(int i = 0; i < N; i++)
+      evt_pass = evt_pass && GetChildFrame(i).EventInAcceptance();
+
+    if(IsLabFrame())
+      pass = evt_pass;
+    
     m_Ngen++;
     if(pass)
       m_Npass++;
-
-    int N = GetNChildren();
-    for(int i = 0; i < N; i++)
-      pass = pass && GetChildFrame(i).EventInAcceptance();
-
+    
     return pass;
+  }
+  
+  void GeneratorFrame::SetPCut(double cut){
+    if(cut <= 0.) return;
+    m_PCut = cut;
+    m_doPCut = true;
+    m_doCuts = true;
+  }
+  
+  void GeneratorFrame::SetPtCut(double cut){
+    if(cut <= 0.) return;
+    m_PtCut = cut;
+    m_doPtCut = true;
+    m_doCuts = true;
+  }
+  
+  void GeneratorFrame::SetEtaCut(double cut){
+    m_EtaCut = fabs(cut);
+    m_doEtaCut = true;
+    m_doCuts = true;
+  }
+  
+  void GeneratorFrame::SetMassWindowCut(double min, double max){
+    if(min > 0 || max > 0)
+      m_doCuts = true;
+    else
+      return;
+
+    if(min > 0){
+      m_dominMassCut = true;
+      m_minMassCut = min;
+    }
+
+    if(max > 0){
+      m_domaxMassCut = true;
+      m_maxMassCut = max;
+    }  
+  }
+
+  void GeneratorFrame::RemovePCut(){
+    m_doPCut = false;
+    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||
+      m_dominMassCut || m_domaxMassCut;
+  }
+  
+  void GeneratorFrame::RemovePtCut(){
+    m_doPtCut = false;
+    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||
+      m_dominMassCut || m_domaxMassCut;
+  }
+  
+  void GeneratorFrame::RemoveEtaCut(){
+    m_doEtaCut = false;
+    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||
+      m_dominMassCut || m_domaxMassCut;
+  }
+
+  void GeneratorFrame::RemoveMassWindowCut(){
+    m_dominMassCut = false;
+    m_domaxMassCut = false;
+    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||
+      m_dominMassCut || m_domaxMassCut;
   }
 
 }

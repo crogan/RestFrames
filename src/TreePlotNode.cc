@@ -113,7 +113,7 @@ namespace RestFrames {
     return m_Jigsaws.GetN(); 
   }
   
-  RFList<const Jigsaw> TreePlotNode::GetJigsawList() const {
+  ConstJigsawList TreePlotNode::GetJigsawList() const {
     return m_Jigsaws;
   }
 

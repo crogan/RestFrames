@@ -59,7 +59,7 @@ namespace RestFrames {
     std::string GetLabel() const;
     RestFrame const& GetFrame() const;
     int GetNJigsaws() const;
-    RestFrames::RFList<const Jigsaw> GetJigsawList() const;
+    ConstJigsawList GetJigsawList() const;
     State const& GetState() const;
 
   private:
@@ -69,7 +69,7 @@ namespace RestFrames {
     bool m_DoLabel;
     bool m_DoSquare;
     const RestFrame* m_FramePtr;
-    RestFrames::RFList<const Jigsaw> m_Jigsaws;
+    ConstJigsawList m_Jigsaws;
     const State* m_StatePtr;
     void Init();
   };

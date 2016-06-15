@@ -60,11 +60,8 @@ namespace RestFrames {
     
     void AddJigsaw(const Jigsaw& jigsaw);
 
-    void Draw(bool invert_colors  = false,
-	      bool invert_node_colors = false);
-
     void Draw(const std::string& name,
-	      const std::string& title = "",
+	      const std::string& title,
 	      bool invert_colors  = false,
 	      bool invert_node_colors = false);
     
@@ -79,8 +76,8 @@ namespace RestFrames {
     std::map<const Jigsaw*,int> m_JigsawColorMap;
     std::map<FrameType,int> m_FrameColorMap;
 
-    RestFrames::RFList<const RestFrame> m_Frames;
-    RestFrames::RFList<const Jigsaw>    m_Jigsaws;
+    ConstRestFrameList m_Frames;
+    ConstJigsawList    m_Jigsaws;
     const Group* m_GroupPtr;
 
     int m_color_Node_text[4];
