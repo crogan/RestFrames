@@ -60,12 +60,9 @@ namespace RestFrames {
     virtual bool ReconstructFrame();
 
   private:
-    // bool m_Body_UnAssembled;
-    // bool m_Mind_UnAssembled; 
     bool m_NewEvent;
 
     RestFrameList m_ChildFrames_UnAssembled;
-    //StateListList m_ChildStates_UnAssembled;
 
     StateList m_VisibleStates;
     RestFrames::RFList<VisibleRecoFrame> m_VisibleFrames;
@@ -73,11 +70,6 @@ namespace RestFrames {
     int m_Nvisible;
     int m_Ndecay;
 
-    DecayRecoFrame& GetNewDecayFrame(const std::string& sname, 
-				     const std::string& stitle);
-
-    VisibleRecoFrame& GetNewVisibleFrame(const std::string& sname, 
-					 const std::string& stitle);
     void ClearNewFrames();
 
     bool m_IsAssembled;
@@ -85,7 +77,13 @@ namespace RestFrames {
     void Assemble();
     void AssembleRecursive(RestFrame& frame, 
 			   std::vector<RestFrame*>& frames, 
-			   std::vector<TLorentzVector>& Ps); 
+			   std::vector<TLorentzVector>& Ps);
+    
+    DecayRecoFrame& GetNewDecayFrame(const std::string& sname, 
+				     const std::string& stitle);
+    
+    VisibleRecoFrame& GetNewVisibleFrame(const std::string& sname, 
+					 const std::string& stitle);
   };
 
 }

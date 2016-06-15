@@ -41,9 +41,9 @@ namespace RestFrames {
 	       const std::string& stitle)
     : RFBase(sname, stitle, Group::m_class_key++)
   {
-    m_Log.SetSource("Group "+GetName());
     m_Type = kVanillaGroup;
     m_GroupStatePtr = nullptr;
+    m_Log.SetSource("Group "+GetName());
   }
 
   Group::Group() : RFBase() { 
@@ -81,6 +81,7 @@ namespace RestFrames {
   }
 
   void Group::AddFrame(RestFrame& frame){
+    if(IsEmpty()) return;
     if(!frame) return;
     if(!frame.IsRecoFrame()) return;
     SetBody(false);
@@ -96,6 +97,7 @@ namespace RestFrames {
   }
 
   void Group::AddJigsaw(Jigsaw& jigsaw){
+    if(IsEmpty()) return;
     if(!jigsaw) return;
 
     if(!jigsaw.GetGroup().IsEmpty()){

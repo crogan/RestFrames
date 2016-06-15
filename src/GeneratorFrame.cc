@@ -78,16 +78,14 @@ namespace RestFrames {
   }
 
   void GeneratorFrame::AddChildFrame(RestFrame& frame){
-    if(!frame.IsEmpty())
-      if(!dynamic_cast<GeneratorFrame*>(&frame))
-	return;
+    if(!frame) return;
+    if(!frame.IsGenFrame()) return;
     RestFrame::AddChildFrame(frame);
   }
 
   void GeneratorFrame::SetParentFrame(RestFrame& frame){
-    if(!frame.IsEmpty())
-      if(!dynamic_cast<GeneratorFrame*>(&frame))
-	return;
+    if(!frame) return;
+    if(!frame.IsGenFrame()) return;
     RestFrame::SetParentFrame(frame);
   }
 

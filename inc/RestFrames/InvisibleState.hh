@@ -47,7 +47,7 @@ namespace RestFrames {
 
     virtual void Clear();
 
-    virtual void AddFrame(RestFrame& frame);
+    virtual void AddFrame(const RestFrame& frame);
 
     virtual void SetParentJigsaw(Jigsaw& jigsaw);
     virtual void SetChildJigsaw(Jigsaw& jigsaw);

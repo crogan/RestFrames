@@ -153,10 +153,12 @@ namespace RestFrames {
 
   RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V,
 						 const RFCharge& charge){
-    VisibleState& state = GetNewElement();
+    if(IsEmpty()) return RFKey(-1);
     
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
+
+    VisibleState& state = GetNewElement();
     state.SetFourVector(P);
     state.SetCharge(charge);
     m_Elements.Add(state);

@@ -70,16 +70,6 @@ namespace RestFrames {
     return SetMind(true);
   }
 
-  // bool SelfAssemblingRecoFrame::ClearEventRecursive(){
-  //   if(!IsSoundMind()){
-  //     UnSoundMind(RF_FUNCTION);
-  //     return SetSpirit(false);
-  //   }
-  //   //ReconstructionFrame::ClearEventRecursive();
-  //   Disassemble();
-  //   return ReconstructionFrame::ClearEventRecursive();
-  // }
-
   void SelfAssemblingRecoFrame::RemoveChildFrame(RestFrame& frame){
     m_ChildFrames_UnAssembled.Remove(frame);
     ReconstructionFrame::RemoveChildFrame(frame);
@@ -302,26 +292,6 @@ namespace RestFrames {
 
     return ReconstructionFrame::ReconstructFrame();
   }
-
-  // bool SelfAssemblingRecoFrame::AnalyzeEventRecursive(){
-  //   // Disassemble Frame tree if it is assembled
-  //   if(m_IsAssembled) Disassemble();
-  //   if(!ReconstructionFrame::AnalyzeEventRecursive()){
-  //     m_Log << LogWarning;
-  //     m_Log << "Unable to recursively analyze event with ";
-  //     m_Log << "disassembled SelfAssemblingRecoFrame" << LogEnd;
-  //     return SetSpirit(false);
-  //   }
-  //   // Assemble Frame tree
-  //   Assemble();
-  //   if(!ReconstructionFrame::AnalyzeEventRecursive()){
-  //     m_Log << LogWarning;
-  //     m_Log << "Unable to recursively analyze event with ";
-  //     m_Log << "assembled SelfAssemblingRecoFrame" << LogEnd;
-  //     return SetSpirit(false);
-  //   }
-  //   return SetSpirit(true);
-  // }
 
   void SelfAssemblingRecoFrame::ClearNewFrames(){
     int N = m_DecayFrames.GetN();

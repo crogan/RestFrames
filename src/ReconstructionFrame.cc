@@ -123,6 +123,8 @@ namespace RestFrames {
   }
 
   void ReconstructionFrame::SetGroup(Group& group){
+    if(IsEmpty()) return;
+    
     SetMind(false);
 
     if(m_GroupPtr)

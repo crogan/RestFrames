@@ -517,9 +517,11 @@ namespace RestFrames {
     void SetParentBoostVector(const TVector3& boost);
 
     // Recursively get lists of frames
-    void FillListFramesRecursive(RestFrameList& frames, FrameType type = kLabFrame) const;
+    void FillListFramesRecursive(RestFrameList& frames,
+				 FrameType type = kLabFrame) const;
 
-    bool FindPathToFrame(const RestFrame& dest_frame, const RestFrame& prev_frame, 
+    bool FindPathToFrame(const RestFrame& dest_frame,
+			 const RestFrame& prev_frame, 
 			 std::vector<const TVector3*>& boosts) const;
 
     static const ConstRestFrameList m_EmptyList;

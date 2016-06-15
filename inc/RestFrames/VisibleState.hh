@@ -47,12 +47,12 @@ namespace RestFrames {
 
     static VisibleState& Empty();
 
-    virtual void AddFrame(RestFrame& frame);
+    virtual void AddFrame(const RestFrame& frame);
 
-    virtual RestFrame& GetFrame() const;
+    virtual RestFrame const& GetFrame() const;
 
     virtual bool IsFrame(const RestFrame& frame) const;
-    virtual bool IsFrames(const RestFrameList& frames) const;
+    virtual bool IsFrames(const ConstRestFrameList& frames) const;
 	
     virtual void SetLabFrameFourVector();
     virtual void SetCharge(const RFCharge& charge);
@@ -60,7 +60,7 @@ namespace RestFrames {
     virtual void SetCharge(int charge_num, int charge_den);
 
   protected:
-    VisibleRecoFrame* m_FramePtr;
+    const VisibleRecoFrame* m_FramePtr;
 
   private:
     static VisibleState m_Empty;

@@ -58,7 +58,9 @@ namespace RestFrames {
     State::Clear();
   }
 
-  void CombinatoricState::AddFrame(RestFrame& frame){
+  void CombinatoricState::AddFrame(const RestFrame& frame){
+    if(IsEmpty()) return;
+    
     if(!frame) return;
     if(frame.IsVisibleFrame() &&
        frame.IsRecoFrame())
@@ -83,10 +85,12 @@ namespace RestFrames {
   }
 
   void CombinatoricState::AddElement(VisibleState& state){
+    if(IsEmpty()) return;
     m_Elements += state;
   }
 
   void CombinatoricState::AddElements(const VisibleStateList& states){
+    if(IsEmpty()) return;
     m_Elements += states;
   }
 

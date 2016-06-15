@@ -93,13 +93,13 @@ namespace RestFrames {
     return m_Type == kCombinatoricState;
   }
 
-  void State::AddFrames(const RestFrameList& frames){
+  void State::AddFrames(const ConstRestFrameList& frames){
     int N = frames.GetN();
     for(int i = 0; i < N; i++)
       AddFrame(frames[i]);
   }
 
-  RestFrameList const& State::GetListFrames() const {
+  ConstRestFrameList const& State::GetListFrames() const {
     return m_Frames;
   }
 
@@ -113,11 +113,13 @@ namespace RestFrames {
     return m_Frames[0] == frame;
   }
 
-  bool State::IsFrames(const RestFrameList& frames) const {
+  bool State::IsFrames(const ConstRestFrameList& frames) const {
     return m_Frames == frames;
   }
 
   void State::SetParentJigsaw(Jigsaw& jigsaw){
+    if(IsEmpty()) return;
+    
     if(!jigsaw)
       m_ParentJigsawPtr = nullptr;
     else
@@ -125,6 +127,8 @@ namespace RestFrames {
   }
 
   void State::SetChildJigsaw(Jigsaw& jigsaw){
+    if(IsEmpty()) return;
+    
     if(!jigsaw)
       m_ChildJigsawPtr = nullptr;
     else
@@ -150,13 +154,11 @@ namespace RestFrames {
   }
 
   void State::SetFourVector(const TLorentzVector& V){
-    m_P.SetVectM(V.Vect(),V.M());
+    m_P = V;
   }
 
   TLorentzVector State::GetFourVector() const {
-    TLorentzVector V;
-    V.SetVectM(m_P.Vect(), std::max(0.,m_P.M()));
-    return V;
+    return m_P;
   }
 
   RFCharge State::GetCharge() const {

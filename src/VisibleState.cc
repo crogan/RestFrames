@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   VisibleState.cc
@@ -54,10 +54,12 @@ namespace RestFrames {
     return VisibleState::m_Empty;
   }
 
-  void VisibleState::AddFrame(RestFrame& frame){
+  void VisibleState::AddFrame(const RestFrame& frame){
+    if(IsEmpty()) return;
+    
     if(!frame) return;
     if(!frame.IsVisibleFrame() || !frame.IsRecoFrame()) return;
-    m_FramePtr = static_cast<VisibleRecoFrame*>(&frame);
+    m_FramePtr = static_cast<const VisibleRecoFrame*>(&frame);
     m_Frames.Clear();
     m_Frames += frame;
   }
@@ -68,11 +70,11 @@ namespace RestFrames {
     return *m_FramePtr == frame;
   }
 
-  bool VisibleState::IsFrames(const RestFrameList& frames) const {
+  bool VisibleState::IsFrames(const ConstRestFrameList& frames) const {
     return IsFrame(frames[0]);
   }
 
-  RestFrame& VisibleState::GetFrame() const {
+  RestFrame const& VisibleState::GetFrame() const {
     if(m_FramePtr) 
       return *m_FramePtr;
     else

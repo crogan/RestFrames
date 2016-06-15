@@ -74,8 +74,7 @@ namespace RestFrames {
   void Jigsaw::Clear(){
     SetBody(false);
     SetGroup();
-    m_GroupPtr = nullptr;
-    m_ParentStatePtr = nullptr;
+    SetParentState();
 
     for(int i = 0; i < m_Nchild; i++){
       m_ChildFrames[i].Clear();
@@ -108,6 +107,8 @@ namespace RestFrames {
   }
 
   void Jigsaw::SetGroup(Group& group){
+    if(IsEmpty()) return;
+    
     SetBody(false);
     if(m_GroupPtr){
       if(*m_GroupPtr == group){
@@ -143,7 +144,13 @@ namespace RestFrames {
     return CanResolve(state.GetListFrames());
   }
 
+  void Jigsaw::SetParentState(){
+    SetParentState(State::Empty());
+  }
+  
   void Jigsaw::SetParentState(State& state){
+    if(IsEmpty()) return;
+    
     SetBody(false);
     if(m_ParentStatePtr){
       if(*m_ParentStatePtr == state)

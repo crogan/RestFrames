@@ -56,7 +56,9 @@ namespace RestFrames {
     State::Clear();
   }
 
-  void InvisibleState::AddFrame(RestFrame& frame){
+  void InvisibleState::AddFrame(const RestFrame& frame){
+    if(IsEmpty()) return;
+    
     if(!frame) return;
     if(frame.IsInvisibleFrame() &&
        frame.IsRecoFrame())
@@ -80,7 +82,7 @@ namespace RestFrames {
     if(!GetChildJigsaw().IsEmpty())
       return static_cast<const InvisibleJigsaw&>(GetChildJigsaw()).GetMinimumMass();
     if(GetNFrames() == 1)
-      return static_cast<InvisibleRecoFrame&>(m_Frames[0]).GetMinimumMass();
+      return static_cast<const InvisibleRecoFrame&>(m_Frames[0]).GetMinimumMass();
     else
       return 0.;
   }

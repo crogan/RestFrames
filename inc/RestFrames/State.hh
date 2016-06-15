@@ -61,14 +61,14 @@ namespace RestFrames {
     /// \brief Is this a CombinatoricState? (true/false)
     bool IsCombinatoricState() const;
 
-    virtual void AddFrame(RestFrame& frame) = 0;
-    virtual void AddFrames(const RestFrameList& frames);
+    virtual void AddFrame(const RestFrame& frame) = 0;
+    virtual void AddFrames(const ConstRestFrameList& frames);
 
-    RestFrameList const& GetListFrames() const;
+    ConstRestFrameList const& GetListFrames() const;
     int GetNFrames() const;
 
     virtual bool IsFrame(const RestFrame& frame) const;
-    virtual bool IsFrames(const RestFrameList& frames) const;
+    virtual bool IsFrames(const ConstRestFrameList& frames) const;
 
     virtual void SetParentJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
     virtual void SetChildJigsaw(Jigsaw& jigsaw = Jigsaw::Empty());
@@ -87,7 +87,7 @@ namespace RestFrames {
     StateType m_Type;
     RFCharge m_Charge;
 
-    RestFrameList m_Frames;
+    ConstRestFrameList m_Frames;
 
   private:
     TLorentzVector m_P;

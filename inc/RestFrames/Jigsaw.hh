@@ -99,6 +99,7 @@ namespace RestFrames {
     virtual StateList const& GetDependancyStates(int i) const;
     virtual ConstRestFrameList const& GetDependancyFrames(int i) const;
 
+    void SetParentState();
     virtual void SetParentState(State& state);
     virtual State const& GetParentState() const;
     virtual ConstRestFrameList GetParentFrames() const;

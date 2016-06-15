@@ -177,6 +177,8 @@ namespace RestFrames {
   }
 
   void RestFrame::SetParentFrame(RestFrame& frame){
+    if(IsEmpty()) return;
+    
     SetBody(false);
     
     RestFrame* prevPtr = m_ParentFramePtr;
@@ -192,18 +194,25 @@ namespace RestFrames {
   }
   
   void RestFrame::AddChildFrame(RestFrame& frame){
+    if(IsEmpty()) return;
+    
     SetBody(false);
 
     if(!frame){
-      m_Log << LogWarning << "Cannot add empty frame as child." << LogEnd;
+      m_Log << LogWarning;
+      m_Log << "Cannot add empty frame as child.";
+      m_Log << LogEnd;
       return;
     }
     if(frame.IsLabFrame()){
-      m_Log << LogWarning << "Cannot add LabFrame frame as child: " << Log(frame) << LogEnd;
+      m_Log << LogWarning;
+      m_Log << "Cannot add LabFrame frame as child:";
+      m_Log << Log(frame) << LogEnd;
       return;
     }
     if(!m_ChildFrames.Add(frame)){
-      m_Log << LogWarning << "Unable to add child frame:";
+      m_Log << LogWarning;
+      m_Log << "Unable to add child frame:";
       m_Log << Log(frame) << LogEnd;
       return;
     }
