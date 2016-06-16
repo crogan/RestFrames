@@ -29,14 +29,6 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TFile.h>
-#include <TCanvas.h>
-#include <TLatex.h>
-#include <TColor.h>
-#include <TStyle.h>
-#include <TH1D.h>
-#include <TH2D.h>
-#include <TF1.h>
 #include "RestFrames/RestFrames.hh"
 
 using namespace RestFrames;
@@ -140,19 +132,19 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   // Invisible Group
-  InvisibleGroup INV_R("INV_R","#nu#nu Jigsaws");
+  InvisibleGroup INV_R("INV_R","#nu #nu Jigsaws");
   INV_R.AddFrame(Na_R);
   INV_R.AddFrame(Nb_R);
 
   // Set nu nu mass equal to l l mass
-  SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu} = M_{#it{l}#it{l}}");
+  SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu} = m_{#it{l}#it{l}}");
   INV_R.AddJigsaw(NuNuM_R);
 
   SetRapidityInvJigsaw NuNuR_R("NuNuR_R", "#eta_{#nu#nu} = #eta_{#it{l}#it{l}}");
   INV_R.AddJigsaw(NuNuR_R);
   NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
 
-  ContraBoostInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}=M_{Wb}");
+  ContraBoostInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}");
   INV_R.AddJigsaw(MinMW_R);
   MinMW_R.AddVisibleFrames(Wa_R.GetListVisibleFrames(), 0);
   MinMW_R.AddVisibleFrames(Wb_R.GetListVisibleFrames(), 1);
@@ -160,7 +152,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   MinMW_R.AddInvisibleFrames(Wb_R.GetListInvisibleFrames(), 1);
 
   if(LAB_R.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized analysis" << std::endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analysis" << LogEnd;	
 
@@ -183,7 +175,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  HistPlot* histPlot   = new HistPlot("HistPlot", "H #rightarrow W(#it{l} #nu) W(#it{l} #nu)");
+  HistPlot* histPlot = new HistPlot("HistPlot", "H #rightarrow W(#it{l} #nu) W(#it{l} #nu)");
 
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
   const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");

@@ -140,7 +140,7 @@ namespace RestFrames {
     int N = GetNChildren();
     double M = 0.;
     for(int i = 0; i < N; i++)
-      M += GetChildState(i).GetMinimumMass();
+      M += std::max(0., GetChildState(i).GetMinimumMass());
     return M;
   }
 

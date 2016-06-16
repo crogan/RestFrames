@@ -273,12 +273,12 @@ namespace RestFrames {
     int N1D = m_Plot1D_Var.size();
     int N2D = m_Plot2D_Vars.size();
 
-    for(int i = 0; i < N1D; i++)
-      DrawPlot(*m_Plot1D_Var[i], m_Plot1D_Cats[i],
-	       (m_Plot1D_Color[i] || invert_colors));
     for(int i = 0; i < N2D; i++)
       DrawPlot(m_Plot2D_Vars[i], *m_Plot2D_Cat[i],
 	       (m_Plot2D_Color[i] || invert_colors));
+    for(int i = 0; i < N1D; i++)
+      DrawPlot(*m_Plot1D_Var[i], m_Plot1D_Cats[i],
+	       (m_Plot1D_Color[i] || invert_colors));
   }
   
   void HistPlot::DrawPlot(const HistPlotVar& var,

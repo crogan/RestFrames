@@ -50,7 +50,10 @@ namespace RestFrames {
   }
 
   void InvisibleRecoFrame::SetMinimumMass(double M){
-    m_MassMin = std::max(M, 0.);
+    if(M < 0.)
+      m_MassMin = -1.; // tachyonic
+    else
+      m_MassMin = std::max(M, 0.);
   }
 
 }

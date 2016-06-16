@@ -48,17 +48,10 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     static ContraBoostInvJigsaw& Empty();
-    
-  protected:
-    void CalcCoef();
-    double GetC1(){ return m_C1; }
-    double GetC2(){ return m_C2; }
 
   private:
-    double m_C1;
-    double m_C2;
-
     static ContraBoostInvJigsaw m_Empty;
+
   };
 
 }

@@ -415,7 +415,7 @@ namespace RestFrames {
     else 
       m_ProdFramePtr = &frame; 
 
-    m_P.SetVectM(V.Vect(),V.M()); 
+    m_P = V; 
   }
 
   //////////////////////////////

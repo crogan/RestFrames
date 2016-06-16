@@ -42,6 +42,8 @@
 
 namespace RestFrames {
 
+  static const double RF_tol = 1e-6;
+
   ////////////////////////////////////////////////////////////////////
   /// \brief Base class for all RestFrame package objects
   ///

@@ -302,7 +302,7 @@ namespace RestFrames {
 	m_Log << "   |Eta| < " << m_EtaCut << std::endl; 
       }
       m_Log << "Acceptance efficiency = ";
-      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " % " << m_Npass << " " << m_Ngen;
+      m_Log << 100.*double(m_Npass)/double(m_Ngen) << " %";
       m_Log << std::endl << LogEnd;
     }
 

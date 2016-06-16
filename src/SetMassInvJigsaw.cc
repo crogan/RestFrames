@@ -55,7 +55,7 @@ namespace RestFrames {
       return SetSpirit(false);
     
     TLorentzVector inv_P = GetParentState().GetFourVector();
-    double M = GetChildState(0).GetMinimumMass();
+    double M = std::max(0.,GetChildState(0).GetMinimumMass());
     
     inv_P.SetVectM(inv_P.Vect(),M);
     GetChildState(0).SetFourVector(inv_P);
