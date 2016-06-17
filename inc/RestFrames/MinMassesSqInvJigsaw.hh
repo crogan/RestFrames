@@ -54,6 +54,7 @@ namespace RestFrames {
   private:
     const int m_Npair;
     std::vector<TLorentzVector> m_Pinv;
+    std::vector<double >        m_Minv;
 
     double GetPScale(double Minv);
 

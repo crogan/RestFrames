@@ -203,7 +203,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 1000000;
+  int Ngen = 100000;
 
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << LogEnd;
@@ -263,6 +263,67 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   } else
     g_Log << LogError << "Unable to initialize analysis from LabFrame: " << Log(LAB_G) << LogEnd;
 
+
+  LabRecoFrame         LAB_R("LAB_R","LAB");
+  DecayRecoFrame       CM_R("CM_R","CM");
+  DecayRecoFrame       Wa_R("Wa_R","W_{a}");
+  DecayRecoFrame       Wb_R("Wb_R","W_{b}");
+  DecayRecoFrame       Wc_R("Wc_R","W_{c}");
+  VisibleRecoFrame     La_R("La_R","#it{l}_{a}");
+  InvisibleRecoFrame   Na_R("Na_R","#nu_{a}");
+  VisibleRecoFrame     Lb_R("Lb_R","#it{l}_{b}");
+  InvisibleRecoFrame   Nb_R("Nb_R","#nu_{b}");
+  VisibleRecoFrame     Lc_R("Lc_R","#it{l}_{c}");
+  InvisibleRecoFrame   Nc_R("Nc_R","#nu_{c}");
+
+  // Na_R.SetMinimumMass(10.);
+  // Nb_R.SetMinimumMass(15.);
+  // Nb_R.SetMinimumMass(5.);
+  
+  LAB_R.SetChildFrame(CM_R);
+  CM_R.AddChildFrame(Wa_R);
+  CM_R.AddChildFrame(Wb_R);
+  CM_R.AddChildFrame(Wc_R);
+  Wa_R.AddChildFrame(La_R);
+  Wa_R.AddChildFrame(Na_R);
+  Wb_R.AddChildFrame(Lb_R);
+  Wb_R.AddChildFrame(Nb_R);
+  Wc_R.AddChildFrame(Lc_R);
+  Wc_R.AddChildFrame(Nc_R);
+
+  if(LAB_R.InitializeTree())
+    g_Log << LogInfo << "...Successfully initialized reconstruction tree" << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing reconstruction tree" << LogEnd;
+
+  // Invisible Group
+  InvisibleGroup INV_R("INV_R","#nu #nu #nu Jigsaws");
+  INV_R.AddFrame(Na_R);
+  INV_R.AddFrame(Nb_R);
+  INV_R.AddFrame(Nc_R);
+
+  // Set nu nu mass equal to l l mass
+  // SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu#nu} ~ m_{#it{l}#it{l}#it{l}}");
+  // INV_R.AddJigsaw(NuNuM_R);
+
+  SetRapidityInvJigsaw NuNuR_R("NuNuR_R", "#eta_{#nu#nu#nu} = #eta_{#it{l}#it{l}#it{l}}");
+  INV_R.AddJigsaw(NuNuR_R);
+  NuNuR_R.AddVisibleFrames(La_R+Lb_R+Lc_R);
+
+  MinMassesSqInvJigsaw MinMW_R("MinMW_R","min #Sigma M_{W}^{ 2}", 3);
+  INV_R.AddJigsaw(MinMW_R);
+  MinMW_R.AddVisibleFrame(La_R, 0);
+  MinMW_R.AddVisibleFrame(Lb_R, 1);
+  MinMW_R.AddVisibleFrame(Lc_R, 2);
+  MinMW_R.AddInvisibleFrame(Na_R, 0);
+  MinMW_R.AddInvisibleFrame(Nb_R, 1);
+  MinMW_R.AddInvisibleFrame(Nc_R, 2);
+
+  if(LAB_R.InitializeAnalysis())
+    g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing analysis" << LogEnd;
+  
   HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow W(#it{l} #nu) W(#it{l} #nu) W(#it{l} #nu)");
   //histPlot->SetRebin(1);
 
@@ -364,6 +425,18 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
     MET.SetZ(0.);
+
+    // analyze event
+    LAB_R.ClearEvent();                               // clear the reco tree
+    
+    INV_R.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
+    INV_R.SetMass((La_G+Lb_G+Lc_G).GetMass());  
+
+    La_R.SetLabFrameFourVector(La_G.GetFourVector());
+    Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
+    Lc_R.SetLabFrameFourVector(Lc_G.GetFourVector());
+
+    LAB_R.AnalyzeEvent();                             // analyze the event
 
     //////////////////////////////////////
     // Observable Calculations
@@ -485,14 +558,28 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     MWaN = (INVs[0]+LEPs[0]).M()/MWa;
     MWbN = (INVs[1]+LEPs[1]).M()/MWb;
     MWcN = (INVs[2]+LEPs[2]).M()/MWc;
+    // MWaN = Wa_R.GetMass()/MWa;
+    // MWbN = Wb_R.GetMass()/MWb;
+    // MWcN = Wc_R.GetMass()/MWc;
+    // MWaN = (INVs[0]+LEPs[0]).M()/MWa;
+    // MWbN = (INVs[1]+LEPs[1]).M()/MWb;
+    // MWcN = (INVs[2]+LEPs[2]).M()/MWc;
     MWTOT = 0.;
     double MWgTOT = MWa*MWa + MWb*MWb + MWc*MWc;
     for(int i = 0; i < 3; i++){
       MWTOT += (INVs[i]+LEPs[i]).M2()/MWgTOT;
+      //MWTOT += (INVs[i]+LEPs[i]).M2();
     }
     MWTOT = sqrt(MWTOT);
 
     histPlot->Fill(cat_Reco);
+
+    // g_Log << LogInfo;
+    // g_Log << (INVs[0]+LEPs[0]).M() << " " << (INVs[1]+LEPs[1]).M()  << " " << (INVs[2]+LEPs[2]).M() << " " << sqrt(MWTOT) << std::endl;
+    // g_Log << Wa_R.GetMass() << " " << Wb_R.GetMass() << " " << Wc_R.GetMass() << " ";
+    // g_Log << sqrt(Wa_R.GetMass()*Wa_R.GetMass()+Wb_R.GetMass()*Wb_R.GetMass()+Wc_R.GetMass()*Wc_R.GetMass()) << std::endl;
+    // g_Log << LogEnd;
+    
   }
 
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");

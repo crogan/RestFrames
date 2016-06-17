@@ -64,11 +64,12 @@ namespace RestFrames {
     }
 
     double ECM = 0.;
+    double Minv;
     TVector3 Boost = PvisTOT.BoostVector();
     for(int i = 0; i < m_Npair; i++){
       Pvis[i].Boost(-Boost);
-      ECM += sqrt(Pvis[i].P()*Pvis[i].P() + 
-		  pow(std::max(0.,GetChildState(i).GetMinimumMass()),2.));
+      Minv = std::max(0.,GetChildState(i).GetMinimumMass());
+      ECM += sqrt(Pvis[i].P()*Pvis[i].P() + Minv*Minv);
     }
 
     return ECM;
@@ -82,6 +83,7 @@ namespace RestFrames {
       return false;
 
     TLorentzVector INV = GetParentState().GetFourVector();
+    double Minv = INV.M();
 
     TLorentzVector VIS(0.,0.,0.,0.);
     std::vector<TLorentzVector> Pvis;
@@ -100,11 +102,12 @@ namespace RestFrames {
     // INV states defined in the VIS frame
     TVector3 BoostVIS = VIS.BoostVector();
     m_Pinv.clear();
+    m_Minv.clear();
     for(int i = 0; i < m_Npair; i++){
+      m_Minv.push_back(std::max(0.,GetChildState(i).GetMinimumMass()));
       m_Pinv.push_back(Pvis[i]);
       m_Pinv[i].Boost(-BoostVIS);
-      m_Pinv[i].SetVectM(m_Pinv[i].Vect(),
-			 std::max(0.,GetChildState(i).GetMinimumMass()));
+      m_Pinv[i].SetVectM(m_Pinv[i].Vect(), m_Minv[i]);
     }
 
     // VIS states in INV frame
@@ -114,11 +117,10 @@ namespace RestFrames {
 
     if(m_Npair == 2){
       TVector3 Vdiff = (Pvis[0].Vect()-Pvis[1].Vect()).Unit();
-      double pinv = GetP(INV.M(),m_Pinv[0].M(),m_Pinv[1].M());
-      m_Pinv[0].SetVectM(pinv*Vdiff,m_Pinv[0].M());
-      m_Pinv[1].SetVectM(-pinv*Vdiff,m_Pinv[1].M());
+      double pinv = GetP(Minv, m_Minv[0], m_Minv[1]);
+      m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);
+      m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);
     } else {
-
       TVector3 Z = BoostINV.Unit();
       TVector3 vDelta(0.,0.,0.);
       std::vector<double> delta;
@@ -147,9 +149,9 @@ namespace RestFrames {
 	
       } // non-zero vDelta
       
-      double k = GetPScale(INV.M());
+      double k = GetPScale(Minv);
       for(int i = 0; i < m_Npair; i++)
-	m_Pinv[i].SetVectM(k*m_Pinv[i].Vect(),m_Pinv[i].M());
+	m_Pinv[i].SetVectM(k*m_Pinv[i].Vect(), m_Minv[i]);
 
     }
     
@@ -164,7 +166,35 @@ namespace RestFrames {
   }
 
   double MinMassesSqInvJigsaw::GetPScale(double Minv){
-    return 1.;
+    std::vector<double> Pinv2;
+    double Ek  = 0.;
+    double fk  = 0.;
+    double dfk = 0.;
+    for(int i = 0; i < m_Npair; i++){
+      Pinv2.push_back(m_Pinv[i].P()*m_Pinv[i].P());
+      Ek += sqrt(m_Minv[i]*m_Minv[i]+Pinv2[i]);
+      fk += m_Minv[i];
+    }
+    if(fk > Minv || Ek <= 0.) return 0.;
+    
+    double k2 = Minv/Ek;
+    k2 *= k2;
+    double dk2 = k2;
+    int count = 0;
+    while(fabs(dk2) >= 1e-10 && count < 100){
+      fk = -Minv;
+      dfk = 0.;
+      for(int i = 0; i < m_Npair; i++){
+	Ek = sqrt(m_Minv[i]*m_Minv[i]+k2*Pinv2[i]);
+	fk  += Ek;
+	dfk += Ek > 0 ? Pinv2[i]/Ek : 0.;
+      }
+      dk2 = 2.*fk/dfk;
+      k2 -= dk2;
+      count++;
+    }
+    
+    return sqrt(std::max(0.,k2));
   }
 
   MinMassesSqInvJigsaw MinMassesSqInvJigsaw::m_Empty;
