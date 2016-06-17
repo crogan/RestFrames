@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   MinMassesInvJigsaw.hh
+///  \file   MinMassesInvSqJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -27,33 +27,37 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef MinMassesInvJigsaw_HH
-#define MinMassesInvJigsaw_HH
+#ifndef MinMassesSqInvJigsaw_HH
+#define MinMassesSqInvJigsaw_HH
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
 namespace RestFrames {
 
-  class MinMassesInvJigsaw : public InvisibleJigsaw {
+  class MinMassesSqInvJigsaw : public InvisibleJigsaw {
   public:
-    MinMassesInvJigsaw(const std::string& sname, 
+    MinMassesSqInvJigsaw(const std::string& sname, 
 		       const std::string& stitle,
-		       int Npair);
-    MinMassesInvJigsaw();
-    ~MinMassesInvJigsaw();
+		       int N_vis_inv_pair);
+    MinMassesSqInvJigsaw();
+    ~MinMassesSqInvJigsaw();
 
     virtual std::string GetLabel() const { return "Min Masses Sq."; }
 
-    static MinMassesInvJigsaw& Empty();
-
     virtual double GetMinimumMass() const;
+    
     virtual bool AnalyzeEvent();
 
-    virtual void FillInvisibleMassJigsawDependancies(RFList<Jigsaw>& jigsaws) const;
+    static MinMassesSqInvJigsaw& Empty();
+
 
   private:
+    const int m_Npair;
+    std::vector<TLorentzVector> m_Pinv;
 
-    static MinMassesInvJigsaw m_Empty;
+    double GetPScale(double Minv);
+
+    static MinMassesSqInvJigsaw m_Empty;
   };
 
 }

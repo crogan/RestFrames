@@ -100,12 +100,16 @@ namespace RestFrames {
     return true;
   }
   
+  void InvisibleGroup::SetMass(double M){
+    m_Lab_P.SetVectM(m_Lab_P.Vect(), std::max(0., M));
+  }
+
   void InvisibleGroup::SetLabFrameFourVector(const TLorentzVector& V){
-    m_Lab_P.SetVectM(V.Vect(),V.M());
+    m_Lab_P.SetVectM(V.Vect(), std::max(0., V.M()));
   }
 
   void InvisibleGroup::SetLabFrameThreeVector(const TVector3& V){
-    m_Lab_P.SetVectM(V,0.0);
+    m_Lab_P.SetVectM(V, m_Lab_P.M());
   }
 
   TLorentzVector InvisibleGroup::GetLabFrameFourVector() const {

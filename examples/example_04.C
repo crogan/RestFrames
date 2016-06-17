@@ -38,8 +38,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
 
-  double mH = 125.;
-  double wH = 0.004;
+  double mH = 500.;
   double mW = 80.;
   double wW = 2.;
   double mL = 0.501;
@@ -49,9 +48,8 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  ppLabGenFrame    LAB_G("LAB_G","LAB");
-  ResonanceGenFrame H_G("H_G","H");
-  //DecayGenFrame     H_G("H_G","H");
+  ppLabGenFrame     LAB_G("LAB_G","LAB");
+  DecayGenFrame     H_G("H_G","H");
   ResonanceGenFrame Wa_G("Wa_G","W_{a}");
   ResonanceGenFrame Wb_G("Wb_G","W_{b}");
   VisibleGenFrame   La_G("La_G","#it{l}_{a}");
@@ -78,19 +76,18 @@ void example_04(const std::string& output_name = "output_example_04.root"){
 
   // set Higgs masses
   H_G.SetMass(mH);
-  H_G.SetWidth(wH);
-  // set W masses
+  // set W masses and widths
   Wa_G.SetMass(mW);
   Wb_G.SetMass(mW);
-  Wa_G.SetWidth(wW);
-  Wb_G.SetWidth(wW);
+  // Wa_G.SetWidth(wW);
+  // Wb_G.SetWidth(wW);
   // set lepton masses
   La_G.SetMass(mL);
   Lb_G.SetMass(mL);
   La_G.SetPtCut(10.);
   Lb_G.SetPtCut(10.);
-  La_G.SetEtaCut(3.);
-  Lb_G.SetEtaCut(3.);
+  La_G.SetEtaCut(2.5);
+  Lb_G.SetEtaCut(2.5);
   // set neutrino masses
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
@@ -144,7 +141,8 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   INV_R.AddJigsaw(NuNuR_R);
   NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
 
-  ContraBoostInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}");
+  MinMassesSqInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}",2);
+  //ContraBoostInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}");
   INV_R.AddJigsaw(MinMW_R);
   MinMW_R.AddVisibleFrames(Wa_R.GetListVisibleFrames(), 0);
   MinMW_R.AddVisibleFrames(Wb_R.GetListVisibleFrames(), 1);
@@ -190,7 +188,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   const HistPlotVar& DdphiH = histPlot->GetNewVar("DdphiH","#Delta #phi_{H} - #Delta #phi_{H}^{gen}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
 
-  histPlot->AddPlot(MWa, MWb, cat_Gen);
+  histPlot->AddPlot(MWa, MWb, cat_Gen+cat_Reco);
   histPlot->AddPlot(MH, cat_Reco);
   histPlot->AddPlot(MH, MWa, cat_Reco);
   histPlot->AddPlot(cosH,  cat_Gen+cat_Reco);
@@ -239,11 +237,14 @@ void example_04(const std::string& output_name = "output_example_04.root"){
     cosH  = H_R.GetCosDecayAngle();
     dphiH = LAB_R.GetDeltaPhiDecayPlanes(H_R);
     MWa = Wa_R.GetMass();
-    MWb = Wa_R.GetMass();
+    MWb = Wb_R.GetMass();
     DcosH = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
     DdphiH = asin(sin(dphiH-dphiHgen));
 
     histPlot->Fill(cat_Reco);
+
+    // g_Log << LogInfo << "MW1= " << Wa_R.GetMass() << " MW2=" << Wb_R.GetMass();
+    // g_Log << LogEnd;
   }
 
   histPlot->Draw();

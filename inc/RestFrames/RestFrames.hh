@@ -78,7 +78,7 @@
 #include "RestFrames/SetMassInvJigsaw.hh"
 #include "RestFrames/SetRapidityInvJigsaw.hh"
 #include "RestFrames/ContraBoostInvJigsaw.hh"
-#include "RestFrames/MinMassesInvJigsaw.hh"
+#include "RestFrames/MinMassesSqInvJigsaw.hh"
 
 #include "RestFrames/CombinatoricJigsaw.hh"
 #include "RestFrames/MinMassesCombJigsaw.hh"

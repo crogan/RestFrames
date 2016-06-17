@@ -49,6 +49,7 @@ namespace RestFrames {
     virtual void AddJigsaw(Jigsaw& jigsaw);
     
     // Event analysis functions
+    virtual void SetMass(double M);
     virtual void SetLabFrameFourVector(const TLorentzVector& V);
     virtual void SetLabFrameThreeVector(const TVector3& V);
 
