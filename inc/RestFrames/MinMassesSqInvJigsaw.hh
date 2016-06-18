@@ -53,10 +53,12 @@ namespace RestFrames {
 
   private:
     const int m_Npair;
-    std::vector<TLorentzVector> m_Pinv;
-    std::vector<double >        m_Minv;
+    mutable std::vector<TLorentzVector> m_Pvis;
+    mutable std::vector<TLorentzVector> m_Pinv;
+    std::vector<double>        m_Minv;
 
     double GetPScale(double Minv);
+    void ApplyOptimalRotation();
 
     static MinMassesSqInvJigsaw m_Empty;
   };

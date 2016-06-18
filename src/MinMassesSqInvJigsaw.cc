@@ -27,6 +27,8 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#include <TMatrixD.h>
+
 #include "RestFrames/MinMassesSqInvJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
 
@@ -57,19 +59,19 @@ namespace RestFrames {
       return std::max(0.,GetChildState(0).GetMinimumMass());
     
     TLorentzVector PvisTOT(0.,0.,0.,0.);
-    std::vector<TLorentzVector> Pvis;
+    m_Pvis.clear();
     for(int i = 0; i < m_Npair; i++){
-      Pvis.push_back(GetDependancyStates(i).GetFourVector());
-      PvisTOT += Pvis[i];
+      m_Pvis.push_back(GetDependancyStates(i).GetFourVector());
+      PvisTOT += m_Pvis[i];
     }
 
     double ECM = 0.;
     double Minv;
     TVector3 Boost = PvisTOT.BoostVector();
     for(int i = 0; i < m_Npair; i++){
-      Pvis[i].Boost(-Boost);
+      m_Pvis[i].Boost(-Boost);
       Minv = std::max(0.,GetChildState(i).GetMinimumMass());
-      ECM += sqrt(Pvis[i].P()*Pvis[i].P() + Minv*Minv);
+      ECM += sqrt(m_Pvis[i].P()*m_Pvis[i].P() + Minv*Minv);
     }
 
     return ECM;
@@ -86,10 +88,10 @@ namespace RestFrames {
     double Minv = INV.M();
 
     TLorentzVector VIS(0.,0.,0.,0.);
-    std::vector<TLorentzVector> Pvis;
+    m_Pvis.clear();
     for(int i = 0; i < m_Npair; i++){
-      Pvis.push_back(GetDependancyStates(i).GetFourVector());
-      VIS += Pvis[i];
+      m_Pvis.push_back(GetDependancyStates(i).GetFourVector());
+      VIS += m_Pvis[i];
     }
 
     // go to INV+VIS CM frame
@@ -97,7 +99,7 @@ namespace RestFrames {
     INV.Boost(-BoostCM);
     VIS.Boost(-BoostCM);
     for(int i = 0; i < m_Npair; i++)
-      Pvis[i].Boost(-BoostCM);
+      m_Pvis[i].Boost(-BoostCM);
 
     // INV states defined in the VIS frame
     TVector3 BoostVIS = VIS.BoostVector();
@@ -105,7 +107,7 @@ namespace RestFrames {
     m_Minv.clear();
     for(int i = 0; i < m_Npair; i++){
       m_Minv.push_back(std::max(0.,GetChildState(i).GetMinimumMass()));
-      m_Pinv.push_back(Pvis[i]);
+      m_Pinv.push_back(m_Pvis[i]);
       m_Pinv[i].Boost(-BoostVIS);
       m_Pinv[i].SetVectM(m_Pinv[i].Vect(), m_Minv[i]);
     }
@@ -113,46 +115,23 @@ namespace RestFrames {
     // VIS states in INV frame
     TVector3 BoostINV = INV.BoostVector();
     for(int i = 0; i < m_Npair; i++)
-      Pvis[i].Boost(-BoostINV);
+      m_Pvis[i].Boost(-BoostINV);
 
     if(m_Npair == 2){
-      TVector3 Vdiff = (Pvis[0].Vect()-Pvis[1].Vect()).Unit();
+      TVector3 Vdiff = (m_Pvis[0].Vect()-m_Pvis[1].Vect()).Unit();
       double pinv = GetP(Minv, m_Minv[0], m_Minv[1]);
-      m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);
-      m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);
-    } else {
-      TVector3 Z = BoostINV.Unit();
-      TVector3 vDelta(0.,0.,0.);
-      std::vector<double> delta;
-      for(int i = 0; i < m_Npair; i++){
-	delta.push_back(Pvis[i].Vect().Dot(Z)-
-			m_Pinv[i].Vect().Dot(Z));
-	vDelta += delta[i]*m_Pinv[i].Vect();
-      }
-      
-      if(vDelta.Mag() > 0.){
-	
-	TVector3 Y = Z.Cross(vDelta).Unit();
-	TVector3 X = Y.Cross(Z).Unit();
-	
-	double num = 0.;
-	double den = 0.;
-	for(int i = 0; i < m_Npair; i++){
-	  num += delta[i]*m_Pinv[i].Vect().Dot(X);
-	  den += m_Pinv[i].Vect().Dot(X)*Pvis[i].Vect().Dot(X) +
-	    m_Pinv[i].Vect().Dot(Z)*Pvis[i].Vect().Dot(Z);
-	}
-	
-	double theta = atan2(num,den);
-	for(int i = 0; i < m_Npair; i++)
-	  m_Pinv[i].Rotate(theta, -Y);
-	
-      } // non-zero vDelta
+      // m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);
+      // m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);
+      std::cout << (pinv*Vdiff).X() << " " << (pinv*Vdiff).Y() << " " << (pinv*Vdiff).Z() << std::endl;
+    }// else {
+    {
+      ApplyOptimalRotation();
       
       double k = GetPScale(Minv);
       for(int i = 0; i < m_Npair; i++)
 	m_Pinv[i].SetVectM(k*m_Pinv[i].Vect(), m_Minv[i]);
 
+      std::cout << m_Pinv[0].Px() << " " << m_Pinv[0].Py() << " " << m_Pinv[0].Pz() << std::endl << std::endl;
     }
     
     // return to original frame
@@ -165,6 +144,7 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
+  // Based on Newton-Raphson root finding
   double MinMassesSqInvJigsaw::GetPScale(double Minv){
     std::vector<double> Pinv2;
     double Ek  = 0.;
@@ -195,6 +175,71 @@ namespace RestFrames {
     }
     
     return sqrt(std::max(0.,k2));
+  }
+
+  // Optimal rotation found using Singular Value Decomposition
+  void MinMassesSqInvJigsaw::ApplyOptimalRotation(){
+    // first, check dimensionality of points
+    TVector3 Z(0.,0.,0.);
+    int index = 0;
+
+    while(Z.Mag() <= 0. && index < m_Npair){
+      Z = m_Pinv[index].Vect().Cross(m_Pvis[index].Vect());
+      index++;
+    }
+    if(Z.Mag() <= 0.) return; // already aligned
+    Z = Z.Unit();
+
+    bool b_2D = true;
+    for(int i = 0; i < m_Npair; i++){
+      if(Z.Dot(m_Pvis[i].Vect().Unit()) > 1e-8){
+	b_2D = false;
+	break;
+      }
+      if(Z.Dot(m_Pinv[i].Vect().Unit()) > 1e-8){
+	b_2D = false;
+	break;
+      }
+    }
+    
+    // two dimensional problem, one rotation
+    if(b_2D){
+      TVector3 X(0.,0.,0.);
+      for(int i = 0; i < m_Npair; i++)
+	X += m_Pvis[i].Vect() - m_Pinv[i].Vect();
+      if(X.Mag() <= 0) return; // can't improve
+
+      X = X.Unit();
+      TVector3 Y = Z.Cross(X).Unit();
+
+      double num = 0.;
+      double den = 0.;
+      for(int i = 0; i < m_Npair; i++){
+	num += m_Pvis[i].Vect().Dot(Y)*
+	  (m_Pvis[i].Vect().Dot(X)-m_Pinv[i].Vect().Dot(X));
+	den += m_Pvis[i].Vect().Dot(m_Pinv[i].Vect());
+      }
+     
+      double theta = atan2(num,den);
+	for(int i = 0; i < m_Npair; i++)
+	  m_Pinv[i].Rotate(theta, -Z);
+
+      return;
+    }
+    
+    // three dimensional problem - R from SVD
+    TMatrixD H(3,3);
+    double val;
+    for(int i = 0; i < 3; i++)
+      for(int j = 0; j < 3; j++)
+	H(i,j) = 0.;
+    
+    for(int p = 0; p < m_Npair; p++){
+      H(0,0) += m_Pinv[p].Px()*m_Pvis[p].Px();
+      H(1,0) += m_Pinv[p].Px()*m_Pvis[p].Py();
+    }
+
+    return;
   }
 
   MinMassesSqInvJigsaw MinMassesSqInvJigsaw::m_Empty;
