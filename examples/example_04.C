@@ -212,13 +212,14 @@ void example_04(const std::string& output_name = "output_example_04.root"){
 
     // analyze event
     LAB_R.ClearEvent();                               // clear the reco tree
-    La_R.SetLabFrameFourVector(La_G.GetFourVector());
-    Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
+
     TVector3 MET = LAB_G.GetInvisibleMomentum();      // Get the MET from gen tree
     MET.SetZ(0.);
     INV_R.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
+
     La_R.SetLabFrameFourVector(La_G.GetFourVector());
     Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
+
     LAB_R.AnalyzeEvent();                             // analyze the event
 
     // Generator-level observables

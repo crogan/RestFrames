@@ -203,7 +203,7 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   double wW = 2.5;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 100000;
+  int Ngen = 1000000;
 
   // Set up toy generation tree (not needed for reconstruction)
   g_Log << LogInfo << "Initializing generator frames and tree" << LogEnd;
@@ -245,9 +245,9 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   Wb_G.SetWidth(wW);
   Wc_G.SetWidth(wW);
   // set lepton masses
-  La_G.SetMass(mL);
-  Lb_G.SetMass(mL);
-  Lc_G.SetMass(mL);
+  // La_G.SetMass(mL);
+  // Lb_G.SetMass(mL);
+  // Lc_G.SetMass(mL);
   // set neutrino masses
   Na_G.SetMass(mN);
   Nb_G.SetMass(mN);
@@ -303,8 +303,8 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
   INV_R.AddFrame(Nc_R);
 
   // Set nu nu mass equal to l l mass
-  // SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu#nu} ~ m_{#it{l}#it{l}#it{l}}");
-  // INV_R.AddJigsaw(NuNuM_R);
+  SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu#nu} ~ m_{#it{l}#it{l}#it{l}}");
+  INV_R.AddJigsaw(NuNuM_R);
 
   SetRapidityInvJigsaw NuNuR_R("NuNuR_R", "#eta_{#nu#nu#nu} = #eta_{#it{l}#it{l}#it{l}}");
   INV_R.AddJigsaw(NuNuR_R);
@@ -430,14 +430,14 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     LAB_R.ClearEvent();                               // clear the reco tree
     
     INV_R.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
-    INV_R.SetMass((La_G+Lb_G+Lc_G).GetMass());  
+    //INV_R.SetMass((La_G+Lb_G+Lc_G).GetMass());  
 
     La_R.SetLabFrameFourVector(La_G.GetFourVector());
     Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
     Lc_R.SetLabFrameFourVector(Lc_G.GetFourVector());
 
     LAB_R.AnalyzeEvent();                             // analyze the event
-
+    
     //////////////////////////////////////
     // Observable Calculations
     //////////////////////////////////////
@@ -555,29 +555,29 @@ void example_WWW(const std::string& output_name = "output_example_04.root"){
     // cout << INVcheck.M() << " " << INVcheck.Px() << " " << INVcheck.Py() << " " << INVcheck.Pz() << endl << endl;
 
     MCMN = (INV+LEP).M()/MCM;
-    MWaN = (INVs[0]+LEPs[0]).M()/MWa;
-    MWbN = (INVs[1]+LEPs[1]).M()/MWb;
-    MWcN = (INVs[2]+LEPs[2]).M()/MWc;
-    // MWaN = Wa_R.GetMass()/MWa;
-    // MWbN = Wb_R.GetMass()/MWb;
-    // MWcN = Wc_R.GetMass()/MWc;
     // MWaN = (INVs[0]+LEPs[0]).M()/MWa;
     // MWbN = (INVs[1]+LEPs[1]).M()/MWb;
     // MWcN = (INVs[2]+LEPs[2]).M()/MWc;
-    MWTOT = 0.;
+    MWaN = Wa_R.GetMass()/MWa;
+    MWbN = Wb_R.GetMass()/MWb;
+    MWcN = Wc_R.GetMass()/MWc;
+    // MWaN = (INVs[0]+LEPs[0]).M()/MWa;
+    // MWbN = (INVs[1]+LEPs[1]).M()/MWb;
+    // MWcN = (INVs[2]+LEPs[2]).M()/MWc;
+    
     double MWgTOT = MWa*MWa + MWb*MWb + MWc*MWc;
-    for(int i = 0; i < 3; i++){
-      MWTOT += (INVs[i]+LEPs[i]).M2()/MWgTOT;
-      //MWTOT += (INVs[i]+LEPs[i]).M2();
-    }
+    MWTOT =
+      Wa_R.GetMass()*Wa_R.GetMass() +
+      Wb_R.GetMass()*Wb_R.GetMass() +
+      Wc_R.GetMass()*Wc_R.GetMass();
+    MWTOT /= MWgTOT;
     MWTOT = sqrt(MWTOT);
 
     histPlot->Fill(cat_Reco);
 
     // g_Log << LogInfo;
-    // g_Log << (INVs[0]+LEPs[0]).M() << " " << (INVs[1]+LEPs[1]).M()  << " " << (INVs[2]+LEPs[2]).M() << " " << sqrt(MWTOT) << std::endl;
-    // g_Log << Wa_R.GetMass() << " " << Wb_R.GetMass() << " " << Wc_R.GetMass() << " ";
-    // g_Log << sqrt(Wa_R.GetMass()*Wa_R.GetMass()+Wb_R.GetMass()*Wb_R.GetMass()+Wc_R.GetMass()*Wc_R.GetMass()) << std::endl;
+    // g_Log << (INVs[0]+LEPs[0]).M() << " " << (INVs[1]+LEPs[1]).M()  << " " << (INVs[2]+LEPs[2]).M() << std::endl;
+    // g_Log << Wa_R.GetMass() << " " << Wb_R.GetMass() << " " << Wc_R.GetMass() << std::endl;
     // g_Log << LogEnd;
     
   }

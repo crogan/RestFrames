@@ -9,7 +9,7 @@
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2016 Feb
+///  \date   2016 Jun
 ///
 //   This file is part of RestFrames.
 //
@@ -28,6 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include <TMatrixD.h>
+#include <TDecompSVD.h>
 
 #include "RestFrames/MinMassesSqInvJigsaw.hh"
 #include "RestFrames/InvisibleState.hh"
@@ -83,7 +84,7 @@ namespace RestFrames {
 
     if(m_Npair <= 1) 
       return false;
-
+    
     TLorentzVector INV = GetParentState().GetFourVector();
     double Minv = INV.M();
 
@@ -120,18 +121,14 @@ namespace RestFrames {
     if(m_Npair == 2){
       TVector3 Vdiff = (m_Pvis[0].Vect()-m_Pvis[1].Vect()).Unit();
       double pinv = GetP(Minv, m_Minv[0], m_Minv[1]);
-      // m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);
-      // m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);
-      std::cout << (pinv*Vdiff).X() << " " << (pinv*Vdiff).Y() << " " << (pinv*Vdiff).Z() << std::endl;
-    }// else {
-    {
+      m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);
+      m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);
+    } else {
       ApplyOptimalRotation();
       
       double k = GetPScale(Minv);
       for(int i = 0; i < m_Npair; i++)
 	m_Pinv[i].SetVectM(k*m_Pinv[i].Vect(), m_Minv[i]);
-
-      std::cout << m_Pinv[0].Px() << " " << m_Pinv[0].Py() << " " << m_Pinv[0].Pz() << std::endl << std::endl;
     }
     
     // return to original frame
@@ -237,6 +234,27 @@ namespace RestFrames {
     for(int p = 0; p < m_Npair; p++){
       H(0,0) += m_Pinv[p].Px()*m_Pvis[p].Px();
       H(1,0) += m_Pinv[p].Px()*m_Pvis[p].Py();
+      H(2,0) += m_Pinv[p].Px()*m_Pvis[p].Pz();
+      H(0,1) += m_Pinv[p].Py()*m_Pvis[p].Px();
+      H(1,1) += m_Pinv[p].Py()*m_Pvis[p].Py();
+      H(2,1) += m_Pinv[p].Py()*m_Pvis[p].Pz();
+      H(0,2) += m_Pinv[p].Pz()*m_Pvis[p].Px();
+      H(1,2) += m_Pinv[p].Pz()*m_Pvis[p].Py();
+      H(2,2) += m_Pinv[p].Pz()*m_Pvis[p].Pz();
+    }
+
+    TDecompSVD SVD(H);
+    SVD.Decompose();
+    TMatrixD UT(TMatrixD::kTransposed,SVD.GetU());
+    TMatrixD R(SVD.GetV(),TMatrixD::kMult,UT);
+
+    TVector3 V;
+    for(int p = 0; p < m_Npair; p++){
+      V = m_Pinv[p].Vect();
+      V.SetXYZ(R(0,0)*V.Px()+R(1,0)*V.Py()+R(2,0)*V.Pz(),
+      	       R(0,1)*V.Px()+R(1,1)*V.Py()+R(2,1)*V.Pz(),
+      	       R(0,2)*V.Px()+R(1,2)*V.Py()+R(2,2)*V.Pz());
+      m_Pinv[p].SetVectM(V, m_Pinv[p].M());
     }
 
     return;
