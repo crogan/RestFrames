@@ -66,6 +66,10 @@ namespace RestFrames {
     virtual void SetGroup(Group& group = Group::Empty());
     virtual Group& GetGroup() const;
 
+    virtual ConstRestFrameList GetParentFrames() const;
+    virtual ConstRestFrameList const& GetChildFrames(int i) const;
+    virtual ConstRestFrameList const& GetDependancyFrames(int i) const;
+    
     void RemoveFrame(const RestFrame& frame);
     void RemoveFrames(const ConstRestFrameList& frames);
 
@@ -93,16 +97,13 @@ namespace RestFrames {
     virtual int GetNChildren() const;
     virtual State& GetChildState(int i) const;
     virtual StateList const& GetChildStates() const;
-    virtual ConstRestFrameList const& GetChildFrames(int i) const;
 
     int GetNDependancyStates() const;
     virtual StateList const& GetDependancyStates(int i) const;
-    virtual ConstRestFrameList const& GetDependancyFrames(int i) const;
 
     void SetParentState();
     virtual void SetParentState(State& state);
     virtual State const& GetParentState() const;
-    virtual ConstRestFrameList GetParentFrames() const;
 
     virtual State& GetNewChildState() = 0;
 

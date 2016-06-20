@@ -4,12 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   ContraBoostInvJigsaw.cc
+///  \file   CombinedCBInvJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 Jan
+///  \date   2016 Jun
 ///
 //   This file is part of RestFrames.
 //
@@ -27,40 +27,103 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/ContraBoostInvJigsaw.hh"
+#include "RestFrames/CombinedCBInvJigsaw.hh"
 //#include "RestFrames/InvisibleState.hh"
 
 namespace RestFrames {
 
-  ContraBoostInvJigsaw::ContraBoostInvJigsaw(const std::string& sname,
-					     const std::string& stitle) : 
-    InvisibleJigsaw(sname, stitle, 2, 2)
+  CombinedCBInvJigsaw::CombinedCBInvJigsaw(const std::string& sname,
+					     const std::string& stitle,
+					     int N_CBjigsaw)
+    : InvisibleJigsaw(sname, stitle, 2*N_CBjigsaw, 2*N_CBjigsaw),
+      m_NCB(N_CBjigsaw)
   {
     m_InvMassDependancy = true;
   }
 
-  ContraBoostInvJigsaw::ContraBoostInvJigsaw() : InvisibleJigsaw() {}
+  CombinedCBInvJigsaw::CombinedCBInvJigsaw() : InvisibleJigsaw() {}
  
-  ContraBoostInvJigsaw::~ContraBoostInvJigsaw() {}
+  CombinedCBInvJigsaw::~CombinedCBInvJigsaw() {}
 
-  ContraBoostInvJigsaw& ContraBoostInvJigsaw::Empty(){
-    return ContraBoostInvJigsaw::m_Empty;
+  void CombinedCBInvJigsaw::AddVisibleFrame(const RestFrame& frame,
+					    int ijigsaw, int j){
+    AddVisibleFrame(frame, 2*ijigsaw+j);
   }
+  
+  void CombinedCBInvJigsaw::AddVisibleFrames(const ConstRestFrameList& frames,
+					     int ijigsaw, int j){
+    AddVisibleFrames(frames, 2*ijigsaw+j);
+  }
+  
+  void CombinedCBInvJigsaw::AddInvisibleFrame(const RestFrame& frame,
+					      int ijigsaw, int j){
+    AddInvisibleFrame(frame, 2*ijigsaw+j);
+  }
+  
+  void CombinedCBInvJigsaw::AddInvisibleFrames(const ConstRestFrameList& frames,
+					       int ijigsaw, int j){
+    AddInvisibleFrame(frames, 2*ijigsaw+j);
+  }
+  
+  void CombinedCBInvJigsaw::AddJigsaw(const ContraBoostInvJigsaw& jigsaw, int ijigsaw){
+    if(!jigsaw) return;
+    if(ijigsaw < 0 || ijigsaw >= m_NCB) return;
+    
+    AddInvisibleFrames(jigsaw.GetChildFrames(0), ijigsaw, 0);
+    AddInvisibleFrames(jigsaw.GetChildFrames(1), ijigsaw, 1);
+    AddVisibleFrames(jigsaw.GetDependancyFrames(0), ijigsaw, 0);
+    AddVisibleFrames(jigsaw.GetDependancyFrames(1), ijigsaw, 1);
+  }
+  
+  double CombinedCBInvJigsaw::GetMinimumMass() const {
+    if(m_NCB < 1) return 0.;
+    if(m_NCB == 1) return GetCBMinimumMass(0);
+    
+    double Mmin2 = 0.;
+    
+    std::vector<double> Minv2;
+    for(int i = 0; i < m_NCB; i++){
+      Minv2.push_back(GetCBMinimumMass(i));
+      Minv2[i] *= Minv2[i];
+      Mmin2 += Minv2[i];
+    }
 
-  double ContraBoostInvJigsaw::GetMinimumMass() const {
+    std::vector<TLorentzVector> Pvis;
+    std::vector<double> Mvis2;
+    for(int i = 0; i < m_NCB; i++){
+      Pvis.push_back(GetDependancyStates(2*i+0).GetFourVector()+
+		     GetDependancyStates(2*i+1).GetFourVector());
+      Mvis2.push_back(Pvis[i].M2());
+    }
+
+    for(int i = 0; i < m_NCB-1; i++){
+      for(int j = i+1; j < m_NCB; j++){
+	if(Minv2[i] > Mvis2[i] || Minv2[j] > Mvis2[j]){
+	  Mmin2 += std::max(0.,(Pvis[i]+Pvis[j]).M2()-Mvis2[i]-Mvis2[j])*
+	    std::max(((Minv2[i] > 0. && Mvis2[i] <= 0.) ? 1. : Minv2[i]/Mvis2[i]),
+		     ((Minv2[j] > 0. && Mvis2[j] <= 0.) ? 1. : Minv2[j]/Mvis2[j]));
+	    
+	} else {
+	  Mmin2 += std::max(0.,(Pvis[i]+Pvis[j]).M2()-Mvis2[i]-Mvis2[j]);
+	  Mmin2 += std::max(Minv2[i] - Mvis2[i], Minv2[j] - Mvis2[j])*2.;
+	}
+      }
+    }
+    
+    return sqrt(std::max(0., Mmin2));
+  }
+  
+  double CombinedCBInvJigsaw::GetCBMinimumMass(int i) const {
     if(!IsSoundMind())
       return 0.;
 
-    double Minv1 = GetChildState(0).GetMinimumMass();
-    double Minv2 = GetChildState(1).GetMinimumMass();
-    TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
-    TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
+    double Minv1 = GetChildState(2*i+0).GetMinimumMass();
+    double Minv2 = GetChildState(2*i+1).GetMinimumMass();
+    TLorentzVector Pvis1 = GetDependancyStates(2*i+0).GetFourVector();
+    TLorentzVector Pvis2 = GetDependancyStates(2*i+1).GetFourVector();
     double M12 = (Pvis1+Pvis2).M();
     double Mvis1 = std::max(Pvis1.M(), 0.);
     double Mvis2 = std::max(Pvis2.M(), 0.);
-
-    if(Minv1 < -0.5 && Minv2 < -0.5) // children can go tachyonic
-      return 2.*GetP(M12,Mvis1,Mvis2);
 
     Minv1 = std::max(Minv1,0.);
     Minv2 = std::max(Minv2,0.);
@@ -84,7 +147,7 @@ namespace RestFrames {
     return sqrt(2.*Minv*Minv + v1v2*Minv*Minv/Mvismin/Mvismin);
   }
 
-  bool ContraBoostInvJigsaw::AnalyzeEvent(){
+  bool CombinedCBInvJigsaw::AnalyzeEvent(){
     if(!IsSoundMind())
       return SetSpirit(false);
 
@@ -148,7 +211,5 @@ namespace RestFrames {
     
     return SetSpirit(true);
   }
-
-  ContraBoostInvJigsaw ContraBoostInvJigsaw::m_Empty;
 
 }

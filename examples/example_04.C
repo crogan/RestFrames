@@ -79,8 +79,8 @@ void example_04(const std::string& output_name = "output_example_04.root"){
   // set W masses and widths
   Wa_G.SetMass(mW);
   Wb_G.SetMass(mW);
-  // Wa_G.SetWidth(wW);
-  // Wb_G.SetWidth(wW);
+  Wa_G.SetWidth(wW);
+  Wb_G.SetWidth(wW);
   // set lepton masses
   La_G.SetMass(mL);
   Lb_G.SetMass(mL);

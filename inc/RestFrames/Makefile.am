@@ -14,4 +14,5 @@ RestFramesinclude_HEADERS = RestFrames_LinkDef.h RestFrames.hh\
 	Group.hh InvisibleGroup.hh CombinatoricGroup.hh\
 	Jigsaw.hh InvisibleJigsaw.hh CombinatoricJigsaw.hh\
 	SetMassInvJigsaw.hh SetRapidityInvJigsaw.hh ContraBoostInvJigsaw.hh\
-	MinMassesCombJigsaw.hh MinMassesSqInvJigsaw.hh
+	CombinedCBInvJigsaw.hh MinMassesSqInvJigsaw.hh\
+	MinMassesCombJigsaw.hh
