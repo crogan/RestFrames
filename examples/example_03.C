@@ -189,9 +189,9 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree
     double PTt = mtop*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomenta(PTt);              // give the Top some Pt
+    LAB_Gen.SetTransverseMomentum(PTt);              // give the Top some Pt
     double PZt = 100.*mtop*(2.*gRandom->Rndm()-1.);
-    LAB_Gen.SetLongitudinalMomenta(PZt);            // give the Top some Pz
+    LAB_Gen.SetLongitudinalMomentum(PZt);            // give the Top some Pz
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 
     // analyze event

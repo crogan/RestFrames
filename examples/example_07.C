@@ -225,7 +225,7 @@ void example_07(std::string output_name = "output_example_07.root"){
     LAB_Gen.ClearEvent();                           // clear the gen tree
     
     double PTCM = 2.*mX2*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomenta(PTCM);             // give X2X2 some Pt
+    LAB_Gen.SetTransverseMomentum(PTCM);             // give X2X2 some Pt
     
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 

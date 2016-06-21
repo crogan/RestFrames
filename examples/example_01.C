@@ -96,9 +96,9 @@ void example_01(const string& output_name = "output_example_01.root"){
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
     double PTZ = mZ*gRandom->Rndm();
-    LAB_G.SetTransverseMomenta(PTZ);                // give the Z some Pt
+    LAB_G.SetTransverseMomentum(PTZ);                // give the Z some Pt
     double PzZ = mZ*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzZ);              // give the Z some Pz
+    LAB_G.SetLongitudinalMomentum(PzZ);              // give the Z some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
     // analyze event

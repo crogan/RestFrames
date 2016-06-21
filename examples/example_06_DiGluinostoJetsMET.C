@@ -235,9 +235,9 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
     //double mGG = 2.*mG*f_gamma.GetRandom();  
  
     double PTGG = mGG*gRandom->Rndm();
-    LAB_G.SetTransverseMomenta(PTGG);               // give the di-gluinos some Pt
+    LAB_G.SetTransverseMomentum(PTGG);               // give the di-gluinos some Pt
     double PzGG = mGG*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzGG);             // give the di-gluinos some Pz
+    LAB_G.SetLongitudinalMomentum(PzGG);             // give the di-gluinos some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
    

@@ -50,9 +50,11 @@ namespace RestFrames {
     virtual bool AnalyzeEvent();
 
     virtual void SetThreeVector(const TVector3& P);
-    virtual void SetTransverseMomenta(double val);
-    virtual void SetLongitudinalMomenta(double val);
+    virtual void SetTransverseMomentum(double val);
+    virtual void SetLongitudinalMomentum(double val);
     virtual void SetPhi(double val);
+
+    virtual void SetPToverM(double val);
 
     void SetN_MCMCBurnIn(int N);
     void SetN_MCMCDiscard(int N);
@@ -63,6 +65,7 @@ namespace RestFrames {
     double m_PT;
     double m_PL;
     double m_Phi;
+    double m_PToM;
 
     double m_MaxM;
 

@@ -206,7 +206,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
     double PTH = mH*gRandom->Rndm()*0.1;
-    LAB_G.SetTransverseMomenta(PTH);               // give the Higgs some Pt
+    LAB_G.SetTransverseMomentum(PTH);               // give the Higgs some Pt
     LAB_G.AnalyzeEvent();                          // generate a new event
 
     // analyze event

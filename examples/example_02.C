@@ -128,9 +128,9 @@ void example_02(const std::string& output_name = "output_example_02.root"){
     // generate event
     LAB_G.ClearEvent();                             // clear the gen tree
     double PTW = mW*gRandom->Rndm();
-    LAB_G.SetTransverseMomenta(PTW);                // give the W some Pt
+    LAB_G.SetTransverseMomentum(PTW);                // give the W some Pt
     double PzW = mW*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
+    LAB_G.SetLongitudinalMomentum(PzW);              // give the W some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
     // analyze event

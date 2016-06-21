@@ -420,7 +420,7 @@ void example_05(std::string output_name = "output_example_05.root"){
     // generate event
     LAB_Gen.ClearEvent();                             // clear the gen tree
     double PTtt = 1.*mT*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomenta(PTtt);               // give the di-tops some Pt
+    LAB_Gen.SetTransverseMomentum(PTtt);               // give the di-tops some Pt
     LAB_Gen.AnalyzeEvent();                           // generate a new event
 
     // analyze event three different ways

@@ -157,9 +157,9 @@ namespace RestFrames {
       double expo = -m_deltaLogX*log(C);
       double Xp1 = sqrt(C*exp(expo));
       double Xp2 = sqrt(C*exp(-expo));
-      SetLongitudinalMomenta(m_Ep1*Xp1 - m_Ep2*Xp2);
+      SetLongitudinalMomentum(m_Ep1*Xp1 - m_Ep2*Xp2);
     } else
-      SetLongitudinalMomenta(0.);
+      SetLongitudinalMomentum(0.);
 
     return SetMind(true);
   }

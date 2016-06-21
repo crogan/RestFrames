@@ -185,8 +185,8 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   INV_R.AddJigsaw(NuNuR_R);
   NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
 
-  MinMassDiffInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
-  //MinMassesSqInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
+  //MinMassDiffInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
+  MinMassesSqInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
   //ContraBoostInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}");
   INV_R.AddJigsaw(MinMh_R);
   MinMh_R.AddVisibleFrames(ha_R.GetListVisibleFrames(), 0);
@@ -423,12 +423,12 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
     histPlot->Fill(cat_Gen);
 
     // Reconstruction-level observables
-    MH = H_R.GetMass()/MHgen;
-    //MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
-    Mha = ha_R.GetMass()/Mhagen;
-    Mhb = hb_R.GetMass()/Mhbgen;
-    // Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
-    // Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
+    //MH = H_R.GetMass()/MHgen;
+    MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
+    //Mha = ha_R.GetMass()/Mhagen;
+    //Mhb = hb_R.GetMass()/Mhbgen;
+    Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
+    Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
     cosH = H_R.GetCosDecayAngle();
     cosha = ha_R.GetCosDecayAngle();
     coshb = hb_R.GetCosDecayAngle();

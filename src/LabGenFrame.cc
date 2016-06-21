@@ -39,6 +39,7 @@ namespace RestFrames {
     LabFrame<GeneratorFrame>(sname, stitle)
   {
     m_PT = 0.;
+    m_PToM = -1.;
     m_PL = 0.;
     m_Phi = -1.;
 
@@ -62,18 +63,31 @@ namespace RestFrames {
     SetPhi(P.Phi());
   }
 
-  void LabGenFrame::SetTransverseMomenta(double val){
+  void LabGenFrame::SetPToverM(double val){
     if(val < 0.){
       m_Log << LogWarning;
-      m_Log << "Unable to set transverse mass to negative value ";
-      m_Log << val << ". Setting to zero." << LogEnd;
-      m_PT = 0.;
+      m_Log << "Unable to set transverse momentum ";
+      m_Log << "to negative value: " << val << "*mass";
+      m_Log << LogEnd;
     } else {
-      m_PT = val;
+      m_PToM = val;
+      m_PT = 0.;
     }
   }
 
-  void LabGenFrame::SetLongitudinalMomenta(double val){
+  void LabGenFrame::SetTransverseMomentum(double val){
+    if(val < 0.){
+      m_Log << LogWarning;
+      m_Log << "Unable to set transverse momentum ";
+      m_Log << "to negative value: " << val;
+      m_Log << LogEnd;
+    } else {
+      m_PT = val;
+      m_PToM = -1.;
+    }
+  }
+
+  void LabGenFrame::SetLongitudinalMomentum(double val){
     m_PL = val;
   }
 
@@ -178,7 +192,12 @@ namespace RestFrames {
     double M = GetChildFrame().GetMass();
     if(m_Phi < 0.) m_Phi = 2.*acos(-1.)*GetRandom();
 
-    P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, sqrt(m_PT*m_PT+m_PL*m_PL+M*M));
+    if(m_PToM > 0.)
+      P.SetPxPyPzE(m_PToM*M*cos(m_Phi), m_PToM*M*sin(m_Phi), m_PL, 
+		   sqrt(m_PL*m_PL + M*M*(1. + m_PToM*m_PToM)));
+    else 
+      P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, 
+		   sqrt(m_PT*m_PT + m_PL*m_PL + M*M));
     m_Phi = -1.;
 
     std::vector<TLorentzVector> ChildVector;
