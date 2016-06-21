@@ -36,12 +36,13 @@ using namespace RestFrames;
 void example_02(const std::string& output_name = "output_example_02.root"){
 
   double mW = 81.;
+  double wW = 2.;
   int Ngen = 100000;
 
   // Set up toy generation and event analysis trees:
-  LabGenFrame LAB_G("LAB_G","LAB");
-  DecayGenFrame W_G("W_G","W");
-  VisibleGenFrame L_G("L_G","#it{l}");
+  ppLabGenFrame     LAB_G("LAB_G","LAB");
+  ResonanceGenFrame W_G("W_G","W");
+  VisibleGenFrame   L_G("L_G","#it{l}");
   InvisibleGenFrame NU_G("NU_G","#nu");
 
   LAB_G.SetChildFrame(W_G);
@@ -51,12 +52,13 @@ void example_02(const std::string& output_name = "output_example_02.root"){
   if(!LAB_G.InitializeTree()) std::cout << "Problem with generator tree" << std::endl; 
 
   W_G.SetMass(mW);
+  W_G.SetWidth(wW);
 
   if(!LAB_G.InitializeAnalysis()) std::cout << "Problem with generator tree" << std::endl; 
 
-  LabRecoFrame LAB_R("LAB_R","LAB");
-  DecayRecoFrame W_R("W_R","W");
-  VisibleRecoFrame L_R("L_R","#it{l}");
+  LabRecoFrame       LAB_R("LAB_R","LAB");
+  DecayRecoFrame     W_R("W_R","W");
+  VisibleRecoFrame   L_R("L_R","#it{l}");
   InvisibleRecoFrame NU_R("NU_R","#nu");
   
   LAB_R.SetChildFrame(W_R);
@@ -96,7 +98,7 @@ void example_02(const std::string& output_name = "output_example_02.root"){
   // Declare observables for histogram booking
   HistPlot* hist_plot = new HistPlot("HistPlot","W #rightarrow #it{l} #nu"); 
 
-  const HistPlotVar& MW     = hist_plot->GetNewVar("MW", "M_{W}", 0., 90., "[GeV]");
+  const HistPlotVar& MW     = hist_plot->GetNewVar("MW", "M_{W}", 0., 120., "[GeV]");
   const HistPlotVar& pTW    = hist_plot->GetNewVar("pTW","p_{T}^{W} / m_{W}",0.,1.);
   const HistPlotVar& cosW   = hist_plot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
   const HistPlotVar& dphiW  = hist_plot->GetNewVar("dphiW", "#Delta #phi_{W}", 0., 2.*acos(-1.));
@@ -125,8 +127,8 @@ void example_02(const std::string& output_name = "output_example_02.root"){
     LAB_G.ClearEvent();                             // clear the gen tree
     double PTW = mW*gRandom->Rndm();
     LAB_G.SetTransverseMomenta(PTW);                // give the W some Pt
-    double PzW = mW*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
+    // double PzW = mW*(2.*gRandom->Rndm()-1.);
+    // LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
     // analyze event
