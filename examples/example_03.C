@@ -150,7 +150,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
   const HistPlotCategory& cat_minMt = histPlot->GetNewCategory("minMt", "min M_{t} Reco");
   const HistPlotCategory& cat_minMW = histPlot->GetNewCategory("minMW", "min M_{W} Reco");
 
-  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 250., "[GeV]");
+  const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 280., "[GeV]");
   const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 150., "[GeV]");
   const HistPlotVar& pTt    = histPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
   const HistPlotVar& cosT   = histPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
@@ -235,6 +235,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     DdphiT = asin(sin(dphiT-dphiTgen));
     DcosW  = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
     DdphiW = asin(sin(dphiW-dphiWgen));
+
     histPlot->Fill(cat_minMt);
 
     // minMW observables
@@ -248,6 +249,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
     DdphiT = asin(sin(dphiT-dphiTgen));
     DcosW  = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);
     DdphiW = asin(sin(dphiW-dphiWgen));
+
     histPlot->Fill(cat_minMW);
   }
 

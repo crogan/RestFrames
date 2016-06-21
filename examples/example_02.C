@@ -36,11 +36,11 @@ using namespace RestFrames;
 void example_02(const std::string& output_name = "output_example_02.root"){
 
   double mW = 81.;
-  double wW = 2.;
+  double wW = 2;
   int Ngen = 100000;
 
   // Set up toy generation and event analysis trees:
-  ppLabGenFrame     LAB_G("LAB_G","LAB");
+  LabGenFrame       LAB_G("LAB_G","LAB");
   ResonanceGenFrame W_G("W_G","W");
   VisibleGenFrame   L_G("L_G","#it{l}");
   InvisibleGenFrame NU_G("NU_G","#nu");
@@ -119,6 +119,8 @@ void example_02(const std::string& output_name = "output_example_02.root"){
   hist_plot->AddPlot(dphiW, pTW);
   hist_plot->AddPlot(DcosW, pTW);
   hist_plot->AddPlot(DdphiW, pTW);
+  hist_plot->AddPlot(DcosW, MW);
+  hist_plot->AddPlot(DdphiW, MW);
 
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%(Ngen/10) == 0) std::cout << "Generating event " << igen << " of " << Ngen << std::endl;
@@ -127,8 +129,8 @@ void example_02(const std::string& output_name = "output_example_02.root"){
     LAB_G.ClearEvent();                             // clear the gen tree
     double PTW = mW*gRandom->Rndm();
     LAB_G.SetTransverseMomenta(PTW);                // give the W some Pt
-    // double PzW = mW*(2.*gRandom->Rndm()-1.);
-    // LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
+    double PzW = mW*(2.*gRandom->Rndm()-1.);
+    LAB_G.SetLongitudinalMomenta(PzW);              // give the W some Pz
     LAB_G.AnalyzeEvent();                           // generate a new event
 
     // analyze event

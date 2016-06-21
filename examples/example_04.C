@@ -71,7 +71,6 @@ void example_04(const std::string& output_name = "output_example_04.root"){
     g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator tree" << LogEnd;								    
-  
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   // set Higgs masses

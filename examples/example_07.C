@@ -52,7 +52,7 @@ void example_07(std::string output_name = "output_example_07.root"){
   ////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
-  LabGenFrame       LAB_Gen("LAB_Gen","LAB");
+  ppLabGenFrame       LAB_Gen("LAB_Gen","LAB");
   DecayGenFrame     X2X2_Gen("X2X2_Gen","#tilde{#chi}^{ 0}_{2} #tilde{#chi}^{ 0}_{2}");
   DecayGenFrame     X2a_Gen("X2a_Gen","#tilde{#chi}^{ 0}_{2 a}");
   DecayGenFrame     X2b_Gen("X2b_Gen","#tilde{#chi}^{ 0}_{2 b}");
@@ -86,6 +86,7 @@ void example_07(std::string output_name = "output_example_07.root"){
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
+  X2X2_Gen.SetVariableMass();
   X2a_Gen.SetMass(mX2);
   X2b_Gen.SetMass(mX2);
   X1a_Gen.SetMass(mX1);  X1b_Gen.SetMass(mX1);
@@ -216,21 +217,16 @@ void example_07(std::string output_name = "output_example_07.root"){
   histPlot->AddPlot(cosZ, DcosZ);
   histPlot->AddPlot(cosH, DcosH);
 
-  // function for randomly determining di-X2 mass 
-  // (relative to X2 mass via gamma) - to be replaced
-  TF1 f_gamma("f_gamma","(x-1)*exp(-2.*x)",1.,10.);
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%((std::max(Ngen,10))/10) == 0) 
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << std::endl;
 
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree
-    double mX2X2 = 2.*mX2*f_gamma.GetRandom();      // get a random di-X2 mass
-    X2X2_Gen.SetMass(mX2X2);
-    double PTCM = mX2X2*gRandom->Rndm();
+    
+    double PTCM = 2.*mX2*gRandom->Rndm();
     LAB_Gen.SetTransverseMomenta(PTCM);             // give X2X2 some Pt
-    double PZCM = mX2X2*(2.*gRandom->Rndm()-1.);
-    LAB_Gen.SetLongitudinalMomenta(PZCM);           // give X2X2 some Pz
+    
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 
     // analyze event
@@ -266,7 +262,7 @@ void example_07(std::string output_name = "output_example_07.root"){
     DcosH  = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
     DdphiH = asin(sin(dphiH-dphiHgen));
 
-    pTX2X2 = PTCM / mX2X2;
+    pTX2X2 = PTCM / mX2 / 2.;
 
     histPlot->Fill();
   }

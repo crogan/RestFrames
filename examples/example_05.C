@@ -82,8 +82,8 @@ void example_05(std::string output_name = "output_example_05.root"){
   
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  //TT_Gen.SetMass(1000.);
-  TT_Gen.SetVariableMass();
+  TT_Gen.SetMass(1000.);
+  //TT_Gen.SetVariableMass();
   // set top masses
   Ta_Gen.SetMass(mT);
   Tb_Gen.SetMass(mT);
