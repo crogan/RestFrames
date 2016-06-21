@@ -78,10 +78,17 @@
 #include "RestFrames/SetMassInvJigsaw.hh"
 #include "RestFrames/SetRapidityInvJigsaw.hh"
 #include "RestFrames/ContraBoostInvJigsaw.hh"
+#include "RestFrames/CombinedCBInvJigsaw.hh"
 #include "RestFrames/MinMassesSqInvJigsaw.hh"
+#include "RestFrames/MinMassDiffInvJigsaw.hh"
+#include "RestFrames/MaxProbBreitWignerInvJigsaw.hh"
 
 #include "RestFrames/CombinatoricJigsaw.hh"
+#include "RestFrames/MinMassesSqCombJigsaw.hh"
 #include "RestFrames/MinMassesCombJigsaw.hh"
+#include "RestFrames/MinMassChi2CombJigsaw.hh"
+#include "RestFrames/MinMassDiffCombJigsaw.hh"
+#include "RestFrames/MaxProbBreitWignerCombJigsaw.hh"
 
 
 #endif

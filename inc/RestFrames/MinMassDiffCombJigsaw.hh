@@ -4,12 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   CombinedCBInvJigsaw.hh
+///  \file   MinMassDiffCombJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 Jan
+///  \date   2016 Jun
 ///
 //   This file is part of RestFrames.
 //
@@ -27,35 +27,28 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef CombinedCBInvJigsaw_HH
-#define CombinedCBInvJigsaw_HH
+#ifndef MinMassDiffCombJigsaw_HH
+#define MinMassDiffCombJigsaw_HH
 
-#include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/CombinatoricJigsaw.hh"
 
 namespace RestFrames {
 
-  class ContraBoostInvJigsaw;
-
-  class CombinedCBInvJigsaw : public InvisibleJigsaw {
+  class MinMassDiffCombJigsaw : public CombinatoricJigsaw {
   public:
-    CombinedCBInvJigsaw(const std::string& sname, 
-			const std::string& stitle,
-			int N_CBjigsaw);
-    ~CombinedCBInvJigsaw();
+    MinMassDiffCombJigsaw(const std::string& sname, 
+			  const std::string& stitle,
+			  int N_comb, int N_mass);
+    virtual ~MinMassDiffCombJigsaw();
 
-    virtual std::string GetLabel() const {
-      return "Combined Contra-boost Inv.";
-    }
+    virtual std::string GetLabel() const { return "Min #Sigma (m_{i} - m_{j})^{2}"; }
 
-    void AddJigsaw(const ContraBoostInvJigsaw& jigsaw, int ijigsaw);
-    
-    virtual double GetMinimumMass() const;
-    
-    virtual bool AnalyzeEvent();
+  protected:
+    virtual bool EvaluateMetric(double& metric) const;
 
   private:
-    const int m_NCB;
-    double GetCBMinimumMass(int i) const;
+    const int m_Ncomb;
+    const int m_Nmass;
 
   };
 

@@ -53,7 +53,13 @@ namespace RestFrames {
     virtual void SetCharge(int charge_num, int charge_den);
     virtual RFCharge GetCharge() const;
 
-    virtual void SetLabFrameFourVector(const TLorentzVector& V);
+    virtual void SetLabFrameFourVector(const TLorentzVector& V,
+				       const RFCharge& charge = RFCharge());
+    void SetLabFrameFourVector(const TLorentzVector& V, int charge);
+    void SetLabFrameFourVector(const TLorentzVector& V,
+			       int charge_num, int charge_den);
+    
+    
     virtual TLorentzVector GetLabFrameFourVector() const;
 
   protected:

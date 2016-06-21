@@ -21,8 +21,10 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h\
 	Group.cc InvisibleGroup.cc CombinatoricGroup.cc\
 	Jigsaw.cc InvisibleJigsaw.cc CombinatoricJigsaw.cc\
 	SetMassInvJigsaw.cc SetRapidityInvJigsaw.cc ContraBoostInvJigsaw.cc\
-	CombinedCBInvJigsaw.cc MinMassesSqInvJigsaw.cc\
-	MinMassesCombJigsaw.cc
+	CombinedCBInvJigsaw.cc MinMassDiffInvJigsaw.cc MinMassesSqInvJigsaw.cc\
+	MaxProbBreitWignerInvJigsaw.cc\
+	MinMassesCombJigsaw.cc MinMassChi2CombJigsaw.cc MaxProbBreitWignerCombJigsaw.cc\
+	MinMassDiffCombJigsaw.cc MinMassesSqCombJigsaw.cc
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap

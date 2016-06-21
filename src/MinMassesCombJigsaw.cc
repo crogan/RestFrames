@@ -155,7 +155,6 @@ namespace RestFrames {
       }
     }
     if(metric_max < 0){
-      std::cout << "HERE...." << std::endl;
       return false;
     }
     

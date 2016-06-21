@@ -166,13 +166,14 @@ namespace RestFrames {
     return state.GetKey();
   }
 
-  RFKey AddLabFrameFourVector(const TLorentzVector& V,
-			      int charge){
+  RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V,
+						 int charge){
     return AddLabFrameFourVector(V, RFCharge(charge));
   }
   
-  RFKey AddLabFrameFourVector(const TLorentzVector& V,
-			      int charge_num, int charge_den){
+  RFKey CombinatoricGroup::AddLabFrameFourVector(const TLorentzVector& V,
+						 int charge_num, 
+						 int charge_den){
     return AddLabFrameFourVector(V, RFCharge(charge_num,charge_den));
   }
 

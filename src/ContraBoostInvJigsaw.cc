@@ -28,7 +28,6 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/ContraBoostInvJigsaw.hh"
-//#include "RestFrames/InvisibleState.hh"
 
 namespace RestFrames {
 

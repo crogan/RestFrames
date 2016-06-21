@@ -85,12 +85,27 @@ namespace RestFrames {
   RFCharge VisibleFrame<T>::GetCharge() const {
     return m_Charge;
   }
-
+  
   template <class T> 
-  void VisibleFrame<T>::SetLabFrameFourVector(const TLorentzVector& V){
+  void VisibleFrame<T>::SetLabFrameFourVector(const TLorentzVector& V,
+					      const RFCharge& charge){
     m_Lab_P.SetVectM(V.Vect(),V.M());
+    SetCharge(charge);
   }
-
+  
+  template <class T> 
+  void VisibleFrame<T>::SetLabFrameFourVector(const TLorentzVector& V,
+					      int charge){
+    SetLabFrameFourVector(V, RFCharge(charge));
+  }
+  
+  template <class T> 
+  void VisibleFrame<T>::SetLabFrameFourVector(const TLorentzVector& V,
+					      int charge_num, 
+					      int charge_den){
+    SetLabFrameFourVector(V, RFCharge(charge_num,charge_den));
+  }
+  
   template <class T> 
   TLorentzVector VisibleFrame<T>::GetLabFrameFourVector() const {
     TLorentzVector V;

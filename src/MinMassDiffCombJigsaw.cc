@@ -4,12 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   CombinedCBInvJigsaw.hh
+///  \file   MinMassDiffCombJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 Jan
+///  \date   2016 Jun
 ///
 //   This file is part of RestFrames.
 //
@@ -27,38 +27,33 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef CombinedCBInvJigsaw_HH
-#define CombinedCBInvJigsaw_HH
-
-#include "RestFrames/InvisibleJigsaw.hh"
+#include "RestFrames/RestFrame.hh"
+#include "RestFrames/MinMassDiffCombJigsaw.hh"
 
 namespace RestFrames {
 
-  class ContraBoostInvJigsaw;
+  MinMassDiffCombJigsaw::MinMassDiffCombJigsaw(const std::string& sname, 
+					       const std::string& stitle,
+					       int N_comb, int N_mass) 
+    : CombinatoricJigsaw(sname, stitle, N_comb, N_mass),
+      m_Ncomb(N_comb), m_Nmass(N_mass) {}
+  
+  MinMassDiffCombJigsaw::~MinMassDiffCombJigsaw() {}
 
-  class CombinedCBInvJigsaw : public InvisibleJigsaw {
-  public:
-    CombinedCBInvJigsaw(const std::string& sname, 
-			const std::string& stitle,
-			int N_CBjigsaw);
-    ~CombinedCBInvJigsaw();
-
-    virtual std::string GetLabel() const {
-      return "Combined Contra-boost Inv.";
+  bool MinMassDiffCombJigsaw::EvaluateMetric(double& metric) const {
+    double diff = 0.;
+    double m1, m2;
+    for(int i = 0; i < m_Nmass-1; i++){
+      m1 = GetDependancyStates(i).GetFourVector().M();
+      for(int j = i+1; i < m_Nmass; j++){
+	m2 = GetDependancyStates(j).GetFourVector().M();
+	diff += (m1-m2)*(m1-m2);
+      }
     }
-
-    void AddJigsaw(const ContraBoostInvJigsaw& jigsaw, int ijigsaw);
     
-    virtual double GetMinimumMass() const;
-    
-    virtual bool AnalyzeEvent();
-
-  private:
-    const int m_NCB;
-    double GetCBMinimumMass(int i) const;
-
-  };
+    metric = diff;
+    return true;
+  }
 
 }
 
-#endif

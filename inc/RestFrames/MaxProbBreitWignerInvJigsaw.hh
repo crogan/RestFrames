@@ -4,12 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   CombinedCBInvJigsaw.hh
+///  \file   MaxProbBreitWignerInvJigsaw.hh
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 Jan
+///  \date   2016 Jun
 ///
 //   This file is part of RestFrames.
 //
@@ -27,35 +27,53 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef CombinedCBInvJigsaw_HH
-#define CombinedCBInvJigsaw_HH
+#ifndef MaxProbBreitWignerInvJigsaw_HH
+#define MaxProbBreitWignerInvJigsaw_HH
+
+#include "Minuit2/Minuit2Minimizer.h"
+#include "Math/Functor.h"
 
 #include "RestFrames/InvisibleJigsaw.hh"
 
 namespace RestFrames {
 
-  class ContraBoostInvJigsaw;
-
-  class CombinedCBInvJigsaw : public InvisibleJigsaw {
+  class MaxProbBreitWignerInvJigsaw : public InvisibleJigsaw {
   public:
-    CombinedCBInvJigsaw(const std::string& sname, 
-			const std::string& stitle,
-			int N_CBjigsaw);
-    ~CombinedCBInvJigsaw();
+    MaxProbBreitWignerInvJigsaw(const std::string& sname, 
+				const std::string& stitle,
+				int N_vis_inv_pair);
+    ~MaxProbBreitWignerInvJigsaw();
 
-    virtual std::string GetLabel() const {
-      return "Combined Contra-boost Inv.";
-    }
+    virtual std::string GetLabel() const { return "Max Prob Breit-Wigner"; }
 
-    void AddJigsaw(const ContraBoostInvJigsaw& jigsaw, int ijigsaw);
-    
+    virtual void SetPoleMass(double mass, int i = 0);
+    virtual void SetWidth(double width, int i = 0);
+
     virtual double GetMinimumMass() const;
     
     virtual bool AnalyzeEvent();
 
   private:
-    const int m_NCB;
-    double GetCBMinimumMass(int i) const;
+    const int m_Npair;
+    mutable std::vector<TLorentzVector> m_Pvis;
+    mutable std::vector<TLorentzVector> m_Pinv;
+    std::vector<double> m_Minv;
+    
+    std::vector<double> m_Mass;
+    std::vector<double> m_Width;
+
+    bool m_2D;
+    TVector3 m_X;
+    TVector3 m_Y;
+    TVector3 m_Z;
+
+    double GetPScale(double Minv);
+    void ApplyOptimalRotation();
+
+    ROOT::Minuit2::Minuit2Minimizer* m_minimizer;
+    ROOT::Math::Functor* m_functor;
+
+    double EvaluateMetric(const double* param);
 
   };
 

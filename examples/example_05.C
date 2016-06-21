@@ -43,22 +43,22 @@ void example_05(std::string output_name = "output_example_05.root"){
   double mB = 2.;
   double mL = 0.501;
   double mN = 0.;
-  int Ngen = 10000;
+  int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  ppLabGenFrame LAB_Gen("LAB_Gen","LAB");
-  DecayGenFrame TT_Gen("TT_Gen","t #bar{t}");
-  ResonanceGenFrame Ta_Gen("Ta_Gen","t_{a}");
-  ResonanceGenFrame Tb_Gen("Tb_Gen","t_{b}");
-  DecayGenFrame Wa_Gen("Wa_Gen","W_{a}");
-  DecayGenFrame Wb_Gen("Wb_Gen","W_{b}");
-  VisibleGenFrame Ba_Gen("Ba_Gen","b_{a}");
-  VisibleGenFrame La_Gen("La_Gen","#it{l}_{a}");
+  ppLabGenFrame     LAB_Gen("LAB_Gen","LAB");
+  DecayGenFrame     TT_Gen("TT_Gen","t #bar{t}");
+  DecayGenFrame     Ta_Gen("Ta_Gen","t_{a}");
+  DecayGenFrame     Tb_Gen("Tb_Gen","t_{b}");
+  DecayGenFrame     Wa_Gen("Wa_Gen","W_{a}");
+  DecayGenFrame     Wb_Gen("Wb_Gen","W_{b}");
+  VisibleGenFrame   Ba_Gen("Ba_Gen","b_{a}");
+  VisibleGenFrame   La_Gen("La_Gen","#it{l}_{a}");
   InvisibleGenFrame Na_Gen("Na_Gen","#nu_{a}");
-  VisibleGenFrame Bb_Gen("Bb_Gen","b_{b}");
-  VisibleGenFrame Lb_Gen("Lb_Gen","#it{l}_{b}");
+  VisibleGenFrame   Bb_Gen("Bb_Gen","b_{b}");
+  VisibleGenFrame   Lb_Gen("Lb_Gen","#it{l}_{b}");
   InvisibleGenFrame Nb_Gen("Nb_Gen","#nu_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
@@ -78,17 +78,15 @@ void example_05(std::string output_name = "output_example_05.root"){
   if(LAB_Gen.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing generator tree" << LogEnd;								    
+    g_Log << LogError << "...Failed initializing generator tree" << LogEnd;							        
   
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  TT_Gen.SetMass(1000.);
-  //TT_Gen.SetVariableMass();
+  //TT_Gen.SetMass(1000.);
+  TT_Gen.SetVariableMass();
   // set top masses
   Ta_Gen.SetMass(mT);
   Tb_Gen.SetMass(mT);
-  Ta_Gen.SetWidth(1.);
-  Tb_Gen.SetWidth(1.);
   // set W masses
   Wa_Gen.SetMass(mW);
   Wb_Gen.SetMass(mW);
@@ -107,8 +105,8 @@ void example_05(std::string output_name = "output_example_05.root"){
   Ba_Gen.SetEtaCut(2.5);
   Bb_Gen.SetEtaCut(2.5);
 
-  La_Gen.SetPtCut(20.);
-  Lb_Gen.SetPtCut(20.);
+  La_Gen.SetPtCut(15.);
+  Lb_Gen.SetPtCut(15.);
   La_Gen.SetEtaCut(2.5);
   Lb_Gen.SetEtaCut(2.5);
 
@@ -121,62 +119,63 @@ void example_05(std::string output_name = "output_example_05.root"){
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  LabRecoFrame       LAB_Mt("LAB_Mt","LAB");      LabRecoFrame       LAB_MW("LAB_MW","LAB");
-  DecayRecoFrame     TT_Mt("TT_Mt","t #bar{t}");  DecayRecoFrame     TT_MW("TT_MW","t #bar{t}");
-  DecayRecoFrame     Ta_Mt("Ta_Mt","t_{a}");      DecayRecoFrame     Ta_MW("Ta_MW","t_{a}");
-  DecayRecoFrame     Tb_Mt("Tb_Mt","t_{b}");      DecayRecoFrame     Tb_MW("Tb_MW","t_{b}");
-  DecayRecoFrame     Wa_Mt("Wa_Mt","W_{a}");      DecayRecoFrame     Wa_MW("Wa_MW","W_{a}");
-  DecayRecoFrame     Wb_Mt("Wb_Mt","W_{b}");      DecayRecoFrame     Wb_MW("Wb_MW","W_{b}");
-  VisibleRecoFrame   Ba_Mt("Ba_Mt","b_{a}");      VisibleRecoFrame   Ba_MW("Ba_MW","b_{a}");
-  VisibleRecoFrame   La_Mt("La_Mt","#it{l}_{a}"); VisibleRecoFrame   La_MW("La_MW","#it{l}_{a}");
-  InvisibleRecoFrame Na_Mt("Na_Mt","#nu_{a}");    InvisibleRecoFrame Na_MW("Na_MW","#nu_{a}");
-  VisibleRecoFrame   Bb_Mt("Bb_Mt","b_{b}");      VisibleRecoFrame   Bb_MW("Bb_MW","b_{b}");
-  VisibleRecoFrame   Lb_Mt("Lb_Mt","#it{l}_{b}"); VisibleRecoFrame   Lb_MW("Lb_MW","#it{l}_{b}");
-  InvisibleRecoFrame Nb_Mt("Nb_Mt","#nu_{b}");    InvisibleRecoFrame Nb_MW("Nb_MW","#nu_{b}");
+  LabRecoFrame       LAB_R1("LAB_R1","LAB");      LabRecoFrame       LAB_R2("LAB_R2","LAB");
+  DecayRecoFrame     TT_R1("TT_R1","t #bar{t}");  DecayRecoFrame     TT_R2("TT_R2","t #bar{t}");
+  DecayRecoFrame     Ta_R1("Ta_R1","t_{a}");      DecayRecoFrame     Ta_R2("Ta_R2","t_{a}");
+  DecayRecoFrame     Tb_R1("Tb_R1","t_{b}");      DecayRecoFrame     Tb_R2("Tb_R2","t_{b}");
+  DecayRecoFrame     Wa_R1("Wa_R1","W_{a}");      DecayRecoFrame     Wa_R2("Wa_R2","W_{a}");
+  DecayRecoFrame     Wb_R1("Wb_R1","W_{b}");      DecayRecoFrame     Wb_R2("Wb_R2","W_{b}");
+  VisibleRecoFrame   Ba_R1("Ba_R1","b_{a}");      VisibleRecoFrame   Ba_R2("Ba_R2","b_{a}");
+  VisibleRecoFrame   La_R1("La_R1","#it{l}_{a}"); VisibleRecoFrame   La_R2("La_R2","#it{l}_{a}");
+  InvisibleRecoFrame Na_R1("Na_R1","#nu_{a}");    InvisibleRecoFrame Na_R2("Na_R2","#nu_{a}");
+  VisibleRecoFrame   Bb_R1("Bb_R1","b_{b}");      VisibleRecoFrame   Bb_R2("Bb_R2","b_{b}");
+  VisibleRecoFrame   Lb_R1("Lb_R1","#it{l}_{b}"); VisibleRecoFrame   Lb_R2("Lb_R2","#it{l}_{b}");
+  InvisibleRecoFrame Nb_R1("Nb_R1","#nu_{b}");    InvisibleRecoFrame Nb_R2("Nb_R2","#nu_{b}");
 
-  LabRecoFrame       LAB_minMt2("LAB_minMt2","LAB");
-  DecayRecoFrame     TT_minMt2("TT_minMt2","t #bar{t}");
-  DecayRecoFrame     Ta_minMt2("Ta_minMt2","t_{a}");
-  DecayRecoFrame     Tb_minMt2("Tb_minMt2","t_{b}");
-  DecayRecoFrame     Wa_minMt2("Wa_minMt2","W_{a}");
-  DecayRecoFrame     Wb_minMt2("Wb_minMt2","W_{b}");
-  VisibleRecoFrame   Ba_minMt2("Ba_minMt2","b_{a}");
-  VisibleRecoFrame   La_minMt2("La_minMt2","#it{l}_{a}");
-  InvisibleRecoFrame Na_minMt2("Na_minMt2","#nu_{a}");
-  VisibleRecoFrame   Bb_minMt2("Bb_minMt2","b_{b}");
-  VisibleRecoFrame   Lb_minMt2("Lb_minMt2","#it{l}_{b}");
-  InvisibleRecoFrame Nb_minMt2("Nb_minMt2","#nu_{b}");
+  LabRecoFrame       LAB_R3("LAB_R3","LAB");      LabRecoFrame       LAB_R4("LAB_R4","LAB");
+  DecayRecoFrame     TT_R3("TT_R3","t #bar{t}");  DecayRecoFrame     TT_R4("TT_R4","t #bar{t}");
+  DecayRecoFrame     Ta_R3("Ta_R3","t_{a}");      DecayRecoFrame     Ta_R4("Ta_R4","t_{a}");
+  DecayRecoFrame     Tb_R3("Tb_R3","t_{b}");      DecayRecoFrame     Tb_R4("Tb_R4","t_{b}");
+  DecayRecoFrame     Wa_R3("Wa_R3","W_{a}");      DecayRecoFrame     Wa_R4("Wa_R4","W_{a}");
+  DecayRecoFrame     Wb_R3("Wb_R3","W_{b}");      DecayRecoFrame     Wb_R4("Wb_R4","W_{b}");
+  VisibleRecoFrame   Ba_R3("Ba_R3","b_{a}");      VisibleRecoFrame   Ba_R4("Ba_R4","b_{a}");
+  VisibleRecoFrame   La_R3("La_R3","#it{l}_{a}"); VisibleRecoFrame   La_R4("La_R4","#it{l}_{a}");
+  InvisibleRecoFrame Na_R3("Na_R3","#nu_{a}");    InvisibleRecoFrame Na_R4("Na_R4","#nu_{a}");
+  VisibleRecoFrame   Bb_R3("Bb_R3","b_{b}");      VisibleRecoFrame   Bb_R4("Bb_R4","b_{b}");
+  VisibleRecoFrame   Lb_R3("Lb_R3","#it{l}_{b}"); VisibleRecoFrame   Lb_R4("Lb_R4","#it{l}_{b}");
+  InvisibleRecoFrame Nb_R3("Nb_R3","#nu_{b}");    InvisibleRecoFrame Nb_R4("Nb_R4","#nu_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB_Mt.SetChildFrame(TT_Mt);                    LAB_MW.SetChildFrame(TT_MW);
-  TT_Mt.AddChildFrame(Ta_Mt);                     TT_MW.AddChildFrame(Ta_MW);
-  TT_Mt.AddChildFrame(Tb_Mt);                     TT_MW.AddChildFrame(Tb_MW);
-  Ta_Mt.AddChildFrame(Ba_Mt);                     Ta_MW.AddChildFrame(Ba_MW);
-  Ta_Mt.AddChildFrame(Wa_Mt);                     Ta_MW.AddChildFrame(Wa_MW);
-  Tb_Mt.AddChildFrame(Bb_Mt);                     Tb_MW.AddChildFrame(Bb_MW);
-  Tb_Mt.AddChildFrame(Wb_Mt);                     Tb_MW.AddChildFrame(Wb_MW);
-  Wa_Mt.AddChildFrame(La_Mt);                     Wa_MW.AddChildFrame(La_MW);
-  Wa_Mt.AddChildFrame(Na_Mt);                     Wa_MW.AddChildFrame(Na_MW);
-  Wb_Mt.AddChildFrame(Lb_Mt);                     Wb_MW.AddChildFrame(Lb_MW);
-  Wb_Mt.AddChildFrame(Nb_Mt);                     Wb_MW.AddChildFrame(Nb_MW);
+  LAB_R1.SetChildFrame(TT_R1);                    LAB_R2.SetChildFrame(TT_R2);
+  TT_R1.AddChildFrame(Ta_R1);                     TT_R2.AddChildFrame(Ta_R2);
+  TT_R1.AddChildFrame(Tb_R1);                     TT_R2.AddChildFrame(Tb_R2);
+  Ta_R1.AddChildFrame(Ba_R1);                     Ta_R2.AddChildFrame(Ba_R2);
+  Ta_R1.AddChildFrame(Wa_R1);                     Ta_R2.AddChildFrame(Wa_R2);
+  Tb_R1.AddChildFrame(Bb_R1);                     Tb_R2.AddChildFrame(Bb_R2);
+  Tb_R1.AddChildFrame(Wb_R1);                     Tb_R2.AddChildFrame(Wb_R2);
+  Wa_R1.AddChildFrame(La_R1);                     Wa_R2.AddChildFrame(La_R2);
+  Wa_R1.AddChildFrame(Na_R1);                     Wa_R2.AddChildFrame(Na_R2);
+  Wb_R1.AddChildFrame(Lb_R1);                     Wb_R2.AddChildFrame(Lb_R2);
+  Wb_R1.AddChildFrame(Nb_R1);                     Wb_R2.AddChildFrame(Nb_R2);
 
-  LAB_minMt2.SetChildFrame(TT_minMt2);
-  TT_minMt2.AddChildFrame(Ta_minMt2);
-  TT_minMt2.AddChildFrame(Tb_minMt2);
-  Ta_minMt2.AddChildFrame(Ba_minMt2);
-  Ta_minMt2.AddChildFrame(Wa_minMt2);
-  Tb_minMt2.AddChildFrame(Bb_minMt2);
-  Tb_minMt2.AddChildFrame(Wb_minMt2);
-  Wa_minMt2.AddChildFrame(La_minMt2);
-  Wa_minMt2.AddChildFrame(Na_minMt2);
-  Wb_minMt2.AddChildFrame(Lb_minMt2);
-  Wb_minMt2.AddChildFrame(Nb_minMt2);
+  LAB_R3.SetChildFrame(TT_R3);                    LAB_R4.SetChildFrame(TT_R4);
+  TT_R3.AddChildFrame(Ta_R3);                     TT_R4.AddChildFrame(Ta_R4);
+  TT_R3.AddChildFrame(Tb_R3);                     TT_R4.AddChildFrame(Tb_R4);
+  Ta_R3.AddChildFrame(Ba_R3);                     Ta_R4.AddChildFrame(Ba_R4);
+  Ta_R3.AddChildFrame(Wa_R3);                     Ta_R4.AddChildFrame(Wa_R4);
+  Tb_R3.AddChildFrame(Bb_R3);                     Tb_R4.AddChildFrame(Bb_R4);
+  Tb_R3.AddChildFrame(Wb_R3);                     Tb_R4.AddChildFrame(Wb_R4);
+  Wa_R3.AddChildFrame(La_R3);                     Wa_R4.AddChildFrame(La_R4);
+  Wa_R3.AddChildFrame(Na_R3);                     Wa_R4.AddChildFrame(Na_R4);
+  Wb_R3.AddChildFrame(Lb_R3);                     Wb_R4.AddChildFrame(Lb_R4);
+  Wb_R3.AddChildFrame(Nb_R3);                     Wb_R4.AddChildFrame(Nb_R4);
 
-  if(LAB_Mt.InitializeTree() && LAB_MW.InitializeTree() && LAB_minMt2.InitializeTree())
+  if(LAB_R1.InitializeTree() && LAB_R2.InitializeTree() && 
+     LAB_R3.InitializeTree() && LAB_R4.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized reconstruction trees" << LogEnd;
   else
-    g_Log << LogError << "...Failed initializing reconstruction tree" << LogEnd;
+    g_Log << LogError << "...Failed initializing reconstruction trees" << LogEnd;
  
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -185,110 +184,139 @@ void example_05(std::string output_name = "output_example_05.root"){
 
   // Invisible Group
   group_name = "#splitline{#nu #nu Jigsaws for}{min M_{top} , M_{top}^{ a} = M_{top}^{ b}}";
-  InvisibleGroup INV_Mt("INV_Mt", group_name);
-  INV_Mt.AddFrame(Na_Mt);
-  INV_Mt.AddFrame(Nb_Mt);
+  InvisibleGroup INV_R1("INV_R1", group_name);
+  INV_R1.AddFrame(Na_R1);
+  INV_R1.AddFrame(Nb_R1);
   // Combinatoric Group for b's
-  CombinatoricGroup B_Mt("VIS_Mt","b-jet Jigsaws");
-  B_Mt.AddFrame(Ba_Mt);
-  B_Mt.AddFrame(Bb_Mt);
+  CombinatoricGroup B_R1("VIS_R1","b-jet Jigsaws");
+  B_R1.AddFrame(Ba_R1);
+  B_R1.AddFrame(Bb_R1);
   // b-jet frames must have at least one element
-  B_Mt.SetNElementsForFrame(Ba_Mt,1,true);
-  B_Mt.SetNElementsForFrame(Bb_Mt,1,true);
+  B_R1.SetNElementsForFrame(Ba_R1, 1);
+  B_R1.SetNElementsForFrame(Bb_R1, 1);
 
   group_name = "#splitline{#nu #nu Jigsaws for}{min M_{W}, M_{W}^{ a} = M_{W}^{ b}}";
-  InvisibleGroup INV_MW("INV_MW", group_name);
-  INV_MW.AddFrame(Na_MW);
-  INV_MW.AddFrame(Nb_MW);
-  CombinatoricGroup B_MW("VIS_MW","b-jet Jigsaws");
-  B_MW.AddFrame(Ba_MW);
-  B_MW.AddFrame(Bb_MW);
-  B_MW.SetNElementsForFrame(Ba_MW,1,true);
-  B_MW.SetNElementsForFrame(Bb_MW,1,true);
+  InvisibleGroup INV_R2("INV_R2", group_name);
+  INV_R2.AddFrame(Na_R2);
+  INV_R2.AddFrame(Nb_R2);
+  CombinatoricGroup B_R2("VIS_R2","b-jet Jigsaws");
+  B_R2.AddFrame(Ba_R2);
+  B_R2.AddFrame(Bb_R2);
+  B_R2.SetNElementsForFrame(Ba_R2, 1);
+  B_R2.SetNElementsForFrame(Bb_R2, 1);
 
-  group_name = "#splitline{#nu #nu Jigsaws for}{min #Sigma M_{top}^{2}}";
-  InvisibleGroup INV_minMt2("INV_minMt2", group_name);
-  INV_minMt2.AddFrame(Na_minMt2);
-  INV_minMt2.AddFrame(Nb_minMt2);
-  CombinatoricGroup B_minMt2("VIS_minMt2","b-jet Jigsaws");
-  B_minMt2.AddFrame(Ba_minMt2);
-  B_minMt2.AddFrame(Bb_minMt2);
-  B_minMt2.SetNElementsForFrame(Ba_minMt2,1,true);
-  B_minMt2.SetNElementsForFrame(Bb_minMt2,1,true);
+  group_name = "#splitline{#nu #nu Jigsaws for}{min M_{top a}^{2}+ M_{top b}^{2}}";
+  InvisibleGroup INV_R3("INV_R3", group_name);
+  INV_R3.AddFrame(Na_R3);
+  INV_R3.AddFrame(Nb_R3);
+  CombinatoricGroup B_R3("VIS_R3","b-jet Jigsaws");
+  B_R3.AddFrame(Ba_R3);
+  B_R3.AddFrame(Bb_R3);
+  B_R3.SetNElementsForFrame(Ba_R3, 1);
+  B_R3.SetNElementsForFrame(Bb_R3, 1);
+
+  group_name = "#splitline{#nu #nu Jigsaws for}{min (M_{top a}- M_{top b})^{2}}";
+  InvisibleGroup INV_R4("INV_R4", group_name);
+  INV_R4.AddFrame(Na_R4);
+  INV_R4.AddFrame(Nb_R4);
+  CombinatoricGroup B_R4("VIS_R4","b-jet Jigsaws");
+  B_R4.AddFrame(Ba_R4);
+  B_R4.AddFrame(Bb_R4);
+  B_R4.SetNElementsForFrame(Ba_R4, 1);
+  B_R4.SetNElementsForFrame(Bb_R4, 1);
 
   //////////////////////// define Jigsaws for reconstruction trees ////////////////////////
   std::string jigsaw_name;
 
   // Minimize equal top masses neutrino jigsaws
   jigsaw_name = "M_{#nu#nu} = f(m_{b#it{l}b#it{l}} , m_{b#it{l}}^{ a} , m_{b#it{l}}^{ b})";
-  SetMassInvJigsaw NuNuM_Mt("NuNuM_Mt", jigsaw_name);
-  INV_Mt.AddJigsaw(NuNuM_Mt);
+  SetMassInvJigsaw NuNuM_R1("NuNuM_R1", jigsaw_name);
+  INV_R1.AddJigsaw(NuNuM_R1);
 
   jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
-  SetRapidityInvJigsaw NuNuR_Mt("NuNuR_Mt", jigsaw_name);
-  INV_Mt.AddJigsaw(NuNuR_Mt);
-  NuNuR_Mt.AddVisibleFrames(La_Mt+Ba_Mt+Lb_Mt+Bb_Mt);
+  SetRapidityInvJigsaw NuNuR_R1("NuNuR_R1", jigsaw_name);
+  INV_R1.AddJigsaw(NuNuR_R1);
+  NuNuR_R1.AddVisibleFrames(La_R1+Ba_R1+Lb_R1+Bb_R1);
 
   jigsaw_name = "min M_{top}, M_{top}^{ a} = M_{top}^{ b}";
-  ContraBoostInvJigsaw MinMt_Mt("MinMt_Mt", jigsaw_name);
-  INV_Mt.AddJigsaw(MinMt_Mt);
-  MinMt_Mt.AddVisibleFrames(La_Mt+Ba_Mt, 0);
-  MinMt_Mt.AddVisibleFrames(Lb_Mt+Bb_Mt, 1);
-  MinMt_Mt.AddInvisibleFrame(Na_Mt, 0);
-  MinMt_Mt.AddInvisibleFrame(Nb_Mt, 1);
+  ContraBoostInvJigsaw MinMt_R1("MinMt_R1", jigsaw_name);
+  INV_R1.AddJigsaw(MinMt_R1);
+  MinMt_R1.AddVisibleFrames(La_R1+Ba_R1, 0);
+  MinMt_R1.AddVisibleFrames(Lb_R1+Bb_R1, 1);
+  MinMt_R1.AddInvisibleFrame(Na_R1, 0);
+  MinMt_R1.AddInvisibleFrame(Nb_R1, 1);
 
   // Minimize equal W masses neutrino jigsaws
   jigsaw_name = "M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})";
-  SetMassInvJigsaw NuNuM_MW("NuNuM_MW", jigsaw_name);
-  INV_MW.AddJigsaw(NuNuM_MW);
+  SetMassInvJigsaw NuNuM_R2("NuNuM_R2", jigsaw_name);
+  INV_R2.AddJigsaw(NuNuM_R2);
 
   jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
-  SetRapidityInvJigsaw NuNuR_MW("NuNuR_MW", jigsaw_name);
-  INV_MW.AddJigsaw(NuNuR_MW);
-  NuNuR_MW.AddVisibleFrames(La_MW+Ba_MW+Lb_MW+Bb_MW);
+  SetRapidityInvJigsaw NuNuR_R2("NuNuR_R2", jigsaw_name);
+  INV_R2.AddJigsaw(NuNuR_R2);
+  NuNuR_R2.AddVisibleFrames(La_R2+Ba_R2+Lb_R2+Bb_R2);
 
   jigsaw_name = "min M_{W}, M_{W}^{ a} = M_{W}^{ b}";
-  ContraBoostInvJigsaw MinMW_MW("MinMW_MW", jigsaw_name);
-  INV_MW.AddJigsaw(MinMW_MW);
-  MinMW_MW.AddVisibleFrame(La_MW, 0);
-  MinMW_MW.AddVisibleFrame(Lb_MW, 1);
-  MinMW_MW.AddInvisibleFrame(Na_MW, 0);
-  MinMW_MW.AddInvisibleFrame(Nb_MW, 1);
+  ContraBoostInvJigsaw MinMW_R2("MinMW_R2", jigsaw_name);
+  INV_R2.AddJigsaw(MinMW_R2);
+  MinMW_R2.AddVisibleFrame(La_R2, 0);
+  MinMW_R2.AddVisibleFrame(Lb_R2, 1);
+  MinMW_R2.AddInvisibleFrame(Na_R2, 0);
+  MinMW_R2.AddInvisibleFrame(Nb_R2, 1);
 
   // Minimize sum Mt^2 jigsaws
   jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
-  SetRapidityInvJigsaw NuNuR_minMt2("NuNuR_minMt2", jigsaw_name);
-  INV_minMt2.AddJigsaw(NuNuR_minMt2);
-  NuNuR_minMt2.AddVisibleFrames(LAB_minMt2.GetListVisibleFrames());
+  SetRapidityInvJigsaw NuNuR_R3("NuNuR_R3", jigsaw_name);
+  INV_R3.AddJigsaw(NuNuR_R3);
+  NuNuR_R3.AddVisibleFrames(LAB_R3.GetListVisibleFrames());
 
   jigsaw_name = "min #Sigma M_{top}^{2}";
-  MinMassesSqInvJigsaw MinMt_minMt2("MinM_minMt2", jigsaw_name, 2);
-  INV_minMt2.AddJigsaw(MinMt_minMt2);
-  MinMt_minMt2.AddVisibleFrames(La_minMt2+Ba_minMt2, 0);
-  MinMt_minMt2.AddVisibleFrames(Lb_minMt2+Bb_minMt2, 1);
-  MinMt_minMt2.AddInvisibleFrame(Na_minMt2, 0);
-  MinMt_minMt2.AddInvisibleFrame(Nb_minMt2, 1);
+  MinMassesSqInvJigsaw MinMt_R3("MinMt_R3", jigsaw_name, 2);
+  INV_R3.AddJigsaw(MinMt_R3);
+  MinMt_R3.AddVisibleFrames(La_R3+Ba_R3, 0);
+  MinMt_R3.AddVisibleFrames(Lb_R3+Bb_R3, 1);
+  MinMt_R3.AddInvisibleFrame(Na_R3, 0);
+  MinMt_R3.AddInvisibleFrame(Nb_R3, 1);
+
+  // Minimize difference Mt jigsaws
+  jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
+  SetRapidityInvJigsaw NuNuR_R4("NuNuR_R4", jigsaw_name);
+  INV_R4.AddJigsaw(NuNuR_R4);
+  NuNuR_R4.AddVisibleFrames(LAB_R4.GetListVisibleFrames());
+
+  jigsaw_name = "min ( M_{top a}- M_{top b} )^{2}";
+  MinMassDiffInvJigsaw MinDeltaMt_R4("MinDeltaMt_R4", jigsaw_name, 2);
+  INV_R4.AddJigsaw(MinDeltaMt_R4);
+  MinDeltaMt_R4.AddVisibleFrames(La_R4+Ba_R4, 0);
+  MinDeltaMt_R4.AddVisibleFrames(Lb_R4+Bb_R4, 1);
+  MinDeltaMt_R4.AddInvisibleFrame(Na_R4, 0);
+  MinDeltaMt_R4.AddInvisibleFrame(Nb_R4, 1);
 
   // b-jet combinatoric jigsaws for all trees
   jigsaw_name = "Minimize M(b #it{l} )_{a} , M(b #it{l} )_{b}";
 
-  MinMassesCombJigsaw MinBL_Mt("MinBL_Mt", jigsaw_name);
-  B_Mt.AddJigsaw(MinBL_Mt);
-  MinBL_Mt.AddFrames(La_Mt+Ba_Mt,0);
-  MinBL_Mt.AddFrames(Lb_Mt+Bb_Mt,1);
+  MinMassesCombJigsaw MinBL_R1("MinBL_R1", jigsaw_name);
+  B_R1.AddJigsaw(MinBL_R1);
+  MinBL_R1.AddFrames(La_R1+Ba_R1,0);
+  MinBL_R1.AddFrames(Lb_R1+Bb_R1,1);
 
-  MinMassesCombJigsaw MinBL_MW("MinBL_MW", jigsaw_name);
-  B_MW.AddJigsaw(MinBL_MW);
-  MinBL_MW.AddFrames(La_MW+Ba_MW,0);
-  MinBL_MW.AddFrames(Lb_MW+Bb_MW,1);
+  MinMassesCombJigsaw MinBL_R2("MinBL_R2", jigsaw_name);
+  B_R2.AddJigsaw(MinBL_R2);
+  MinBL_R2.AddFrames(La_R2+Ba_R2,0);
+  MinBL_R2.AddFrames(Lb_R2+Bb_R2,1);
 
-  MinMassesCombJigsaw MinBL_minMt2("MinBL_minMt2", jigsaw_name);
-  B_minMt2.AddJigsaw(MinBL_minMt2);
-  MinBL_minMt2.AddFrames(La_minMt2+Ba_minMt2,0);
-  MinBL_minMt2.AddFrames(Lb_minMt2+Bb_minMt2,1);
+  MinMassesCombJigsaw MinBL_R3("MinBL_R3", jigsaw_name);
+  B_R3.AddJigsaw(MinBL_R3);
+  MinBL_R3.AddFrames(La_R3+Ba_R3,0);
+  MinBL_R3.AddFrames(Lb_R3+Bb_R3,1);
 
-  if(LAB_Mt.InitializeAnalysis() && LAB_MW.InitializeAnalysis() && 
-     LAB_minMt2.InitializeAnalysis())
+  MinMassesCombJigsaw MinBL_R4("MinBL_R4", jigsaw_name);
+  B_R4.AddJigsaw(MinBL_R4);
+  MinBL_R4.AddFrames(La_R4+Ba_R4,0);
+  MinBL_R4.AddFrames(Lb_R4+Bb_R4,1);
+
+  if(LAB_R1.InitializeAnalysis() && LAB_R2.InitializeAnalysis() && 
+     LAB_R3.InitializeAnalysis() && LAB_R4.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analysis" << LogEnd;	
@@ -301,29 +329,33 @@ void example_05(std::string output_name = "output_example_05.root"){
   treePlot->SetTree(LAB_Gen);
   treePlot->Draw("GenTree", "Generator Tree", true);
   
-  treePlot->SetTree(LAB_Mt);
+  treePlot->SetTree(LAB_R1);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
-  treePlot->SetTree(B_Mt);
+  treePlot->SetTree(B_R1);
   treePlot->Draw("VisTree", "b-jet Jigsaws", true);
 
-  treePlot->SetTree(INV_Mt);
-  treePlot->Draw("InvTree_Mt", "Inivisibl Jigsaws", true);
+  treePlot->SetTree(INV_R1);
+  treePlot->Draw("InvTree_R1", "Inivisibl Jigsaws", true);
 
-  treePlot->SetTree(INV_MW);
-  treePlot->Draw("InvTree_MW", "Inivisibl Jigsaws", true);
+  treePlot->SetTree(INV_R2);
+  treePlot->Draw("InvTree_R2", "Inivisibl Jigsaws", true);
 
-  treePlot->SetTree(INV_minMt2);
-  treePlot->Draw("InvTree_minMt2", "Inivisibl Jigsaws", true);
+  treePlot->SetTree(INV_R3);
+  treePlot->Draw("InvTree_R3", "Inivisibl Jigsaws", true);
+
+  treePlot->SetTree(INV_R4);
+  treePlot->Draw("InvTree_R4", "Inivisibl Jigsaws", true);
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   HistPlot* histPlot = new HistPlot("HistPlot", "t #bar{t} #rightarrow b W(#it{l} #nu) b W(#it{l} #nu)");
 
-  const HistPlotCategory& cat_Gen    = histPlot->GetNewCategory("Gen",  "Generator");
-  const HistPlotCategory& cat_Mt     = histPlot->GetNewCategory("Reco", "M_{top}^{ a} = M_{top}^{ b} Reco");
-  const HistPlotCategory& cat_MW     = histPlot->GetNewCategory("Reco", "M_{W}^{ a} = M_{W}^{ b} Reco");
-  const HistPlotCategory& cat_minMt2 = histPlot->GetNewCategory("Reco", "min #Sigma M_{top}^{ 2} Reco");
+  const HistPlotCategory& cat_Gen = histPlot->GetNewCategory("Gen",  "Generator");
+  const HistPlotCategory& cat_R1  = histPlot->GetNewCategory("Reco1", "M_{top}^{ a} = M_{top}^{ b} Reco");
+  const HistPlotCategory& cat_R2  = histPlot->GetNewCategory("Reco2", "M_{W}^{ a} = M_{W}^{ b} Reco");
+  const HistPlotCategory& cat_R3  = histPlot->GetNewCategory("Reco3", "min #Sigma M_{top}^{ 2} Reco");
+  const HistPlotCategory& cat_R4  = histPlot->GetNewCategory("Reco4", "min #Delta M_{top}");
 
   const HistPlotVar& Mtt    = histPlot->GetNewVar("Mtt", "M_{t #bar{t}} / m_{t #bar{t}}", 0., 2.);
   const HistPlotVar& Pt_tt  = histPlot->GetNewVar("Pt_tt", "p_{t}^{t #bar{t}} / p_{t}^{t #bar{t} gen}", 0., 2.);
@@ -351,32 +383,32 @@ void example_05(std::string output_name = "output_example_05.root"){
   const HistPlotVar& DcosWb = histPlot->GetNewVar("DcosWb","#theta_{W b} - #theta_{W b}^{gen}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
 
-  histPlot->AddPlot(Mtt, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Pt_tt, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Mta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(MWa, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Eb_ta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(El_Wa, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(costt, cat_Mt+cat_MW+cat_minMt2+cat_Gen);
-  histPlot->AddPlot(costa, cat_Mt+cat_MW+cat_minMt2+cat_Gen);
-  histPlot->AddPlot(cosWa, cat_Mt+cat_MW+cat_minMt2+cat_Gen);
-  histPlot->AddPlot(Dcostt, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcosta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(DcosWa, cat_Mt+cat_MW+cat_minMt2);
+  histPlot->AddPlot(Mtt, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Pt_tt, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Mta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(MWa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(costt, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
+  histPlot->AddPlot(costa, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
+  histPlot->AddPlot(cosWa, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
+  histPlot->AddPlot(Dcostt, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcosta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(DcosWa, cat_R1+cat_R2+cat_R3+cat_R4);
 
-  histPlot->AddPlot(Mtt, Eb_ta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Mtt, El_Wa, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Eb_ta, Eb_tb, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(El_Wa, El_Wb, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Eb_ta, El_Wa, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Eb_ta, El_Wb, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcostt, Mtt, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcosta, Eb_ta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(DcosWa, El_Wa, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcostt, Dcosta, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcosta, Dcostb, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(DcosWa, DcosWb, cat_Mt+cat_MW+cat_minMt2);
-  histPlot->AddPlot(Dcosta, DcosWa, cat_Mt+cat_MW+cat_minMt2);
+  histPlot->AddPlot(Mtt, Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Mtt, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Eb_ta, Eb_tb, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(El_Wa, El_Wb, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Eb_ta, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Eb_ta, El_Wb, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcostt, Mtt, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcosta, Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(DcosWa, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcostt, Dcosta, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcosta, Dcostb, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(DcosWa, DcosWb, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Dcosta, DcosWa, cat_R1+cat_R2+cat_R3+cat_R4);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -395,35 +427,44 @@ void example_05(std::string output_name = "output_example_05.root"){
     TVector3 MET = LAB_Gen.GetInvisibleMomentum();    // Get the MET from gen tree
     MET.SetZ(0.);
 
-    LAB_Mt.ClearEvent();   
-    LAB_MW.ClearEvent(); 
-    LAB_minMt2.ClearEvent(); 
+    LAB_R1.ClearEvent();   
+    LAB_R2.ClearEvent(); 
+    LAB_R3.ClearEvent(); 
+    LAB_R4.ClearEvent(); 
              
-    INV_Mt.SetLabFrameThreeVector(MET); 
-    INV_MW.SetLabFrameThreeVector(MET); 
-    INV_minMt2.SetLabFrameThreeVector(MET);
+    INV_R1.SetLabFrameThreeVector(MET); 
+    INV_R2.SetLabFrameThreeVector(MET); 
+    INV_R3.SetLabFrameThreeVector(MET);
+    INV_R4.SetLabFrameThreeVector(MET);
 
-    INV_minMt2.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(), // set invisible system mass by hand
-			       La_Gen.GetMass(),Lb_Gen.GetMass()));                  
+    INV_R3.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),     // set invisible system mass by hand
+			   La_Gen.GetMass(),Lb_Gen.GetMass()));       
+    INV_R4.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),    
+			   La_Gen.GetMass(),Lb_Gen.GetMass())); 
 
-    La_Mt.SetLabFrameFourVector(La_Gen.GetFourVector());
-    Lb_Mt.SetLabFrameFourVector(Lb_Gen.GetFourVector());
-    La_MW.SetLabFrameFourVector(La_Gen.GetFourVector());
-    Lb_MW.SetLabFrameFourVector(Lb_Gen.GetFourVector());
-    La_minMt2.SetLabFrameFourVector(La_Gen.GetFourVector());
-    Lb_minMt2.SetLabFrameFourVector(Lb_Gen.GetFourVector());
+    La_R1.SetLabFrameFourVector(La_Gen.GetFourVector());
+    Lb_R1.SetLabFrameFourVector(Lb_Gen.GetFourVector());
+    La_R2.SetLabFrameFourVector(La_Gen.GetFourVector());
+    Lb_R2.SetLabFrameFourVector(Lb_Gen.GetFourVector());
+    La_R3.SetLabFrameFourVector(La_Gen.GetFourVector());
+    Lb_R3.SetLabFrameFourVector(Lb_Gen.GetFourVector());
+    La_R4.SetLabFrameFourVector(La_Gen.GetFourVector());
+    Lb_R4.SetLabFrameFourVector(Lb_Gen.GetFourVector());
 
-    std::vector<RFKey> B_Mt_ID; // ID for tracking jets in tree
-    B_Mt_ID.push_back(B_Mt.AddLabFrameFourVector(Ba_Gen.GetFourVector()));
-    B_Mt_ID.push_back(B_Mt.AddLabFrameFourVector(Bb_Gen.GetFourVector()));
-    B_MW.AddLabFrameFourVector(Ba_Gen.GetFourVector());
-    B_MW.AddLabFrameFourVector(Bb_Gen.GetFourVector());
-    B_minMt2.AddLabFrameFourVector(Ba_Gen.GetFourVector());
-    B_minMt2.AddLabFrameFourVector(Bb_Gen.GetFourVector());
-    
-    LAB_Mt.AnalyzeEvent(); // analyze the event
-    LAB_MW.AnalyzeEvent();     
-    LAB_minMt2.AnalyzeEvent(); 
+    std::vector<RFKey> B_R1_ID; // ID for tracking jets in tree
+    B_R1_ID.push_back(B_R1.AddLabFrameFourVector(Ba_Gen.GetFourVector()));
+    B_R1_ID.push_back(B_R1.AddLabFrameFourVector(Bb_Gen.GetFourVector()));
+    B_R2.AddLabFrameFourVector(Ba_Gen.GetFourVector());
+    B_R2.AddLabFrameFourVector(Bb_Gen.GetFourVector());
+    B_R3.AddLabFrameFourVector(Ba_Gen.GetFourVector());
+    B_R3.AddLabFrameFourVector(Bb_Gen.GetFourVector());
+    B_R4.AddLabFrameFourVector(Ba_Gen.GetFourVector());
+    B_R4.AddLabFrameFourVector(Bb_Gen.GetFourVector());
+   
+    LAB_R1.AnalyzeEvent(); // analyze the event
+    LAB_R2.AnalyzeEvent();     
+    LAB_R3.AnalyzeEvent(); 
+    LAB_R4.AnalyzeEvent(); 
 
     //////////////////////////////////////
     // Observable Calculations
@@ -441,74 +482,97 @@ void example_05(std::string output_name = "output_example_05.root"){
     double cosWagen = Wa_Gen.GetCosDecayAngle();
     double cosWbgen = Wb_Gen.GetCosDecayAngle();
 
-    Mtt = TT_Mt.GetMass()/Mttgen;
-    Pt_tt = Ta_Mt.GetFourVector(TT_Mt).P()/Pt_ttgen;
-    Mta = Ta_Mt.GetMass();
-    Mtb = Tb_Mt.GetMass();
-    MWa = Wa_Mt.GetMass();
-    MWb = Wb_Mt.GetMass();
-    Eb_ta = Ba_Mt.GetFourVector(Ta_Mt).E()/Eb_tagen;
-    Eb_tb = Bb_Mt.GetFourVector(Tb_Mt).E()/Eb_tbgen;
-    El_Wa = La_Mt.GetFourVector(Wa_Mt).E()/El_Wagen;
-    El_Wb = Lb_Mt.GetFourVector(Wb_Mt).E()/El_Wbgen;
-    costt = TT_Mt.GetCosDecayAngle();
-    costa = Ta_Mt.GetCosDecayAngle();
-    costb = Tb_Mt.GetCosDecayAngle();
-    cosWa = Wa_Mt.GetCosDecayAngle();
-    cosWb = Wb_Mt.GetCosDecayAngle();
+    Mtt = TT_R1.GetMass()/Mttgen;
+    Pt_tt = Ta_R1.GetFourVector(TT_R1).P()/Pt_ttgen;
+    Mta = Ta_R1.GetMass();
+    Mtb = Tb_R1.GetMass();
+    MWa = Wa_R1.GetMass();
+    MWb = Wb_R1.GetMass();
+    Eb_ta = Ba_R1.GetFourVector(Ta_R1).E()/Eb_tagen;
+    Eb_tb = Bb_R1.GetFourVector(Tb_R1).E()/Eb_tbgen;
+    El_Wa = La_R1.GetFourVector(Wa_R1).E()/El_Wagen;
+    El_Wb = Lb_R1.GetFourVector(Wb_R1).E()/El_Wbgen;
+    costt = TT_R1.GetCosDecayAngle();
+    costa = Ta_R1.GetCosDecayAngle();
+    costb = Tb_R1.GetCosDecayAngle();
+    cosWa = Wa_R1.GetCosDecayAngle();
+    cosWb = Wb_R1.GetCosDecayAngle();
     Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);
     Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);
     Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);
     DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
     DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);
 
-    histPlot->Fill(cat_Mt);
+    histPlot->Fill(cat_R1);
 
-    Mtt = TT_MW.GetMass()/Mttgen;
-    Pt_tt = Ta_MW.GetFourVector(TT_MW).P()/Pt_ttgen;
-    Mta = Ta_MW.GetMass();
-    Mtb = Tb_MW.GetMass();
-    MWa = Wa_MW.GetMass();
-    MWb = Wb_MW.GetMass();
-    Eb_ta = Ba_MW.GetFourVector(Ta_MW).E()/Eb_tagen;
-    Eb_tb = Bb_MW.GetFourVector(Tb_MW).E()/Eb_tbgen;
-    El_Wa = La_MW.GetFourVector(Wa_MW).E()/El_Wagen;
-    El_Wb = Lb_MW.GetFourVector(Wb_MW).E()/El_Wbgen;
-    costt = TT_MW.GetCosDecayAngle();
-    costa = Ta_MW.GetCosDecayAngle();
-    costb = Tb_MW.GetCosDecayAngle();
-    cosWa = Wa_MW.GetCosDecayAngle();
-    cosWb = Wb_MW.GetCosDecayAngle();
+    Mtt = TT_R2.GetMass()/Mttgen;
+    Pt_tt = Ta_R2.GetFourVector(TT_R2).P()/Pt_ttgen;
+    Mta = Ta_R2.GetMass();
+    Mtb = Tb_R2.GetMass();
+    MWa = Wa_R2.GetMass();
+    MWb = Wb_R2.GetMass();
+    Eb_ta = Ba_R2.GetFourVector(Ta_R2).E()/Eb_tagen;
+    Eb_tb = Bb_R2.GetFourVector(Tb_R2).E()/Eb_tbgen;
+    El_Wa = La_R2.GetFourVector(Wa_R2).E()/El_Wagen;
+    El_Wb = Lb_R2.GetFourVector(Wb_R2).E()/El_Wbgen;
+    costt = TT_R2.GetCosDecayAngle();
+    costa = Ta_R2.GetCosDecayAngle();
+    costb = Tb_R2.GetCosDecayAngle();
+    cosWa = Wa_R2.GetCosDecayAngle();
+    cosWb = Wb_R2.GetCosDecayAngle();
     Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);
     Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);
     Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);
     DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
     DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);
 
-    histPlot->Fill(cat_MW);
+    histPlot->Fill(cat_R2);
 
-    Mtt = TT_minMt2.GetMass()/Mttgen;
-    Pt_tt = Ta_minMt2.GetFourVector(TT_minMt2).P()/Pt_ttgen;
-    Mta = Ta_minMt2.GetMass();
-    Mtb = Tb_minMt2.GetMass();
-    MWa = Wa_minMt2.GetMass();
-    MWb = Wb_minMt2.GetMass();
-    Eb_ta = Ba_minMt2.GetFourVector(Ta_minMt2).E()/Eb_tagen;
-    Eb_tb = Bb_minMt2.GetFourVector(Tb_minMt2).E()/Eb_tbgen;
-    El_Wa = La_minMt2.GetFourVector(Wa_minMt2).E()/El_Wagen;
-    El_Wb = Lb_minMt2.GetFourVector(Wb_minMt2).E()/El_Wbgen;
-    costt = TT_minMt2.GetCosDecayAngle();
-    costa = Ta_minMt2.GetCosDecayAngle();
-    costb = Tb_minMt2.GetCosDecayAngle();
-    cosWa = Wa_minMt2.GetCosDecayAngle();
-    cosWb = Wb_minMt2.GetCosDecayAngle();
+    Mtt = TT_R3.GetMass()/Mttgen;
+    Pt_tt = Ta_R3.GetFourVector(TT_R3).P()/Pt_ttgen;
+    Mta = Ta_R3.GetMass();
+    Mtb = Tb_R3.GetMass();
+    MWa = Wa_R3.GetMass();
+    MWb = Wb_R3.GetMass();
+    Eb_ta = Ba_R3.GetFourVector(Ta_R3).E()/Eb_tagen;
+    Eb_tb = Bb_R3.GetFourVector(Tb_R3).E()/Eb_tbgen;
+    El_Wa = La_R3.GetFourVector(Wa_R3).E()/El_Wagen;
+    El_Wb = Lb_R3.GetFourVector(Wb_R3).E()/El_Wbgen;
+    costt = TT_R3.GetCosDecayAngle();
+    costa = Ta_R3.GetCosDecayAngle();
+    costb = Tb_R3.GetCosDecayAngle();
+    cosWa = Wa_R3.GetCosDecayAngle();
+    cosWb = Wb_R3.GetCosDecayAngle();
     Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);
     Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);
     Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);
     DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
     DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);
 
-    histPlot->Fill(cat_minMt2);
+    histPlot->Fill(cat_R3);
+
+    Mtt = TT_R4.GetMass()/Mttgen;
+    Pt_tt = Ta_R4.GetFourVector(TT_R4).P()/Pt_ttgen;
+    Mta = Ta_R4.GetMass();
+    Mtb = Tb_R4.GetMass();
+    MWa = Wa_R4.GetMass();
+    MWb = Wb_R4.GetMass();
+    Eb_ta = Ba_R4.GetFourVector(Ta_R4).E()/Eb_tagen;
+    Eb_tb = Bb_R4.GetFourVector(Tb_R4).E()/Eb_tbgen;
+    El_Wa = La_R4.GetFourVector(Wa_R4).E()/El_Wagen;
+    El_Wb = Lb_R4.GetFourVector(Wb_R4).E()/El_Wbgen;
+    costt = TT_R4.GetCosDecayAngle();
+    costa = Ta_R4.GetCosDecayAngle();
+    costb = Tb_R4.GetCosDecayAngle();
+    cosWa = Wa_R4.GetCosDecayAngle();
+    cosWb = Wb_R4.GetCosDecayAngle();
+    Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);
+    Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);
+    Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);
+    DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
+    DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);
+
+    histPlot->Fill(cat_R4);
 
   }
 

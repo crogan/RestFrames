@@ -102,13 +102,13 @@ namespace RestFrames {
       frame.GetListVisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddChildFrame(frames[f]);
+      AddChildFrame(frames[f], i);
   }
 
   void CombinatoricJigsaw::AddCombFrames(const ConstRestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddCombFrame(frames[f],i);
+      AddCombFrame(frames[f], i);
   }
   
   void CombinatoricJigsaw::AddObjectFrame(const RestFrame& frame, int i){
@@ -119,13 +119,13 @@ namespace RestFrames {
       frame.GetListInvisibleFrames();
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddDependancyFrame(frames[f]);
+      AddDependancyFrame(frames[f], i);
   }
   
   void CombinatoricJigsaw::AddObjectFrames(const ConstRestFrameList& frames, int i){
     int N = frames.GetN();
     for(int f = 0; f < N; f++)
-      AddObjectFrame(frames[f],i);
+      AddObjectFrame(frames[f], i);
   }
 
   void CombinatoricJigsaw::SetCombCharge(const RFCharge& charge, int i){

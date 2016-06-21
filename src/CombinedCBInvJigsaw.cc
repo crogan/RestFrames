@@ -28,7 +28,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "RestFrames/CombinedCBInvJigsaw.hh"
-//#include "RestFrames/InvisibleState.hh"
+#include "RestFrames/ContraBoostInvJigsaw.hh"
 
 namespace RestFrames {
 
@@ -40,39 +40,17 @@ namespace RestFrames {
   {
     m_InvMassDependancy = true;
   }
-
-  CombinedCBInvJigsaw::CombinedCBInvJigsaw() : InvisibleJigsaw() {}
  
   CombinedCBInvJigsaw::~CombinedCBInvJigsaw() {}
-
-  void CombinedCBInvJigsaw::AddVisibleFrame(const RestFrame& frame,
-					    int ijigsaw, int j){
-    AddVisibleFrame(frame, 2*ijigsaw+j);
-  }
-  
-  void CombinedCBInvJigsaw::AddVisibleFrames(const ConstRestFrameList& frames,
-					     int ijigsaw, int j){
-    AddVisibleFrames(frames, 2*ijigsaw+j);
-  }
-  
-  void CombinedCBInvJigsaw::AddInvisibleFrame(const RestFrame& frame,
-					      int ijigsaw, int j){
-    AddInvisibleFrame(frame, 2*ijigsaw+j);
-  }
-  
-  void CombinedCBInvJigsaw::AddInvisibleFrames(const ConstRestFrameList& frames,
-					       int ijigsaw, int j){
-    AddInvisibleFrame(frames, 2*ijigsaw+j);
-  }
   
   void CombinedCBInvJigsaw::AddJigsaw(const ContraBoostInvJigsaw& jigsaw, int ijigsaw){
     if(!jigsaw) return;
     if(ijigsaw < 0 || ijigsaw >= m_NCB) return;
     
-    AddInvisibleFrames(jigsaw.GetChildFrames(0), ijigsaw, 0);
-    AddInvisibleFrames(jigsaw.GetChildFrames(1), ijigsaw, 1);
-    AddVisibleFrames(jigsaw.GetDependancyFrames(0), ijigsaw, 0);
-    AddVisibleFrames(jigsaw.GetDependancyFrames(1), ijigsaw, 1);
+    AddInvisibleFrames(jigsaw.GetChildFrames(0), 2*ijigsaw+0);
+    AddInvisibleFrames(jigsaw.GetChildFrames(1), 2*ijigsaw+1);
+    AddVisibleFrames(jigsaw.GetDependancyFrames(0), 2*ijigsaw+0);
+    AddVisibleFrames(jigsaw.GetDependancyFrames(1), 2*ijigsaw+1);
   }
   
   double CombinedCBInvJigsaw::GetMinimumMass() const {
@@ -125,6 +103,9 @@ namespace RestFrames {
     double Mvis1 = std::max(Pvis1.M(), 0.);
     double Mvis2 = std::max(Pvis2.M(), 0.);
 
+    if(Minv1 < -0.5 && Minv2 < -0.5) // children can go tachyonic
+      return 2.*GetP(M12,Mvis1,Mvis2);
+
     Minv1 = std::max(Minv1,0.);
     Minv2 = std::max(Minv2,0.);
 
@@ -151,63 +132,100 @@ namespace RestFrames {
     if(!IsSoundMind())
       return SetSpirit(false);
 
-    TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
-    TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
+    if(m_NCB < 1) 
+      return SetSpirit(false);
+
     TLorentzVector INV = GetParentState().GetFourVector();
-
-    // go to the rest frame of (Pvis1+Pvis2+INV system)
-    TVector3 Boost = (Pvis1+Pvis2+INV).BoostVector();
-    Pvis1.Boost(-Boost);
-    Pvis2.Boost(-Boost);
-    INV.Boost(-Boost);
-
-    double E1 = Pvis1.E();
-    double E2 = Pvis2.E();
-    double m1 = std::max(0.,Pvis1.M());
-    double m2 = std::max(0.,Pvis2.M());
-    TVector3 P1 = Pvis1.Vect();
-    TVector3 P2 = Pvis2.Vect();
-
-    double Minv1 = GetChildState(0).GetMinimumMass();
-    double Minv2 = GetChildState(1).GetMinimumMass();
-    double Minv = std::max(0.,std::max(Minv1,Minv2));
-    double Mvis = std::min(m1,m2);
-
-    double k1 = 1.;
-    double k2 = 1.;
-    if(Minv < Mvis){
-      double MC2 = 2.*(E1*E2 + P1.Dot(P2));
-      k1 =  (m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
-      k2 = -(m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
+    TLorentzVector VIS(0.,0.,0.,0.);
+    
+    std::vector<TLorentzVector> Pvis[2];
+    for(int i = 0; i < m_NCB; i++){
+      Pvis[0].push_back( GetDependancyStates(2*i+0).GetFourVector() );
+      Pvis[1].push_back( GetDependancyStates(2*i+1).GetFourVector() );
+      VIS += Pvis[0][i]+Pvis[1][i];
     }
 
-    double sumE  = E1+E2;
-    double sumkE = k1*E1+k2*E2;
+    // go to the rest frame of (VIS+INV system)
+    TVector3 Boost = (VIS+INV).BoostVector();
+    for(int i = 0; i < m_NCB; i++){
+      Pvis[0][i].Boost(-Boost);
+      Pvis[1][i].Boost(-Boost);
+    }
 
-    double N = sumkE > 0. ? sqrt(std::max(INV.M2()-(Pvis1+Pvis2).M2()+sumE*sumE,0.))/sumkE : 0.;
+    std::vector<double> k[2];
+    std::vector<double> E[2];
+    std::vector<double> mvis[2];
+    std::vector<double> minv[2];
+    std::vector<double> Minv2;
+    double mvismin, minvmax;
+    double sumE, sumkE, MC2, N;
+    for(int i = 0; i < m_NCB; i++){
+      E[0].push_back(Pvis[0][i].E());
+      E[1].push_back(Pvis[1][i].E());
+      mvis[0].push_back(std::max(0.,Pvis[0][i].M()));
+      mvis[1].push_back(std::max(0.,Pvis[1][i].M()));
+      minv[0].push_back( GetChildState(2*i+0).GetMinimumMass() );
+      minv[1].push_back( GetChildState(2*i+1).GetMinimumMass() );
+      Minv2.push_back( GetCBMinimumMass(i) );
+      Minv2[i] *= Minv2[i];
 
-    k1 = 0.5*(1.+N*k1);
-    k2 = 0.5*(1.+N*k2);
+      minvmax = std::max(0.,std::max(minv[0][i],minv[1][i]));
+      mvismin = std::min(mvis[0][i],mvis[1][i]);
 
-    TLorentzVector INV1,INV2;
-    double Einv1 = (k1-1.)*E1 + k2*E2;
-    double Einv2 = k1*E1 + (k2-1.)*E2;
-    TVector3 Pinv1 = (k1-1.)*P1 - k2*P2;
-    TVector3 Pinv2 = (k2-1.)*P2 - k1*P1;
+      k[0].push_back(1.);
+      k[1].push_back(1.);
+      if(minvmax < mvismin){
+	MC2 = 2.*(E[0][i]*E[1][i] + Pvis[0][i].Vect().Dot(Pvis[1][i].Vect()));
+	k[0][i] =  (mvis[0][i]+mvis[1][i])*(mvis[0][i]-mvis[1][i])*(1.-minvmax/mvismin) + 
+	  MC2-2.*mvis[0][i]*mvis[1][i] + (mvis[0][i]+mvis[1][i])*fabs(mvis[0][i]-mvis[1][i])*minvmax/mvismin;
+	k[1][i] = -(mvis[0][i]+mvis[1][i])*(mvis[0][i]-mvis[1][i])*(1.-minvmax/mvismin) + 
+	  MC2-2.*mvis[0][i]*mvis[1][i] + (mvis[0][i]+mvis[1][i])*fabs(mvis[0][i]-mvis[1][i])*minvmax/mvismin;
+      }
 
-    INV1.SetPxPyPzE(Pinv1.X(),Pinv1.Y(),Pinv1.Z(),Einv1);
-    INV2.SetPxPyPzE(Pinv2.X(),Pinv2.Y(),Pinv2.Z(),Einv2);
+      sumE  = E[0][i] + E[1][i];
+      sumkE = k[0][i]*E[0][i] + k[1][i]*E[1][i];
 
-    if(Minv1 >= 0. && INV1.M() < Minv1)
-      INV1.SetVectM(Pinv1,Minv1);
-    if(Minv2 >= 0. && INV2.M() < Minv2)
-      INV2.SetVectM(Pinv2,Minv2);
+      N = sumkE > 0. ? sqrt(std::max(0.,Minv2[i]-(Pvis[0][i]+Pvis[1][i]).M2()+sumE*sumE))/sumkE : 0.;
 
-    INV1.Boost(Boost);
-    INV2.Boost(Boost);
+      k[0][i] *= N;
+      k[1][i] *= N;
+    }
 
-    GetChildState(0).SetFourVector(INV1);
-    GetChildState(1).SetFourVector(INV2);
+    sumE  = 0.;
+    sumkE = 0.;
+    for(int i = 0; i < m_NCB; i++){
+      sumE  += E[0][i] + E[1][i];
+      sumkE += k[0][i]*E[0][i] + k[1][i]*E[1][i];
+    }
+
+    N = sumkE > 0. ? sqrt(std::max(0.,INV.M2()-VIS.M2()+sumE*sumE))/sumkE : 0.;
+
+    TLorentzVector INV1, INV2;
+    double Einv1, Einv2;
+    TVector3 Pinv1, Pinv2;
+    for(int i = 0; i < m_NCB; i++){
+      k[0][i] = 0.5*(1.+N*k[0][i]);
+      k[1][i] = 0.5*(1.+N*k[1][i]);
+
+      Einv1 = (k[0][i]-1.)*E[0][i] + k[1][i]*E[1][i];
+      Einv2 = (k[1][i]-1.)*E[1][i] + k[0][i]*E[0][i];
+      Pinv1 = (k[0][i]-1.)*Pvis[0][i].Vect() - k[1][i]*Pvis[1][i].Vect();
+      Pinv2 = (k[1][i]-1.)*Pvis[1][i].Vect() - k[0][i]*Pvis[0][i].Vect();
+
+      INV1.SetPxPyPzE(Pinv1.X(),Pinv1.Y(),Pinv1.Z(),Einv1);
+      INV2.SetPxPyPzE(Pinv2.X(),Pinv2.Y(),Pinv2.Z(),Einv2);
+
+      if(minv[0][i] >= 0. && INV1.M() < minv[0][i])
+	INV1.SetVectM(Pinv1, minv[0][i]);
+      if(minv[1][i] >= 0. && INV2.M() < minv[1][i])
+	INV2.SetVectM(Pinv2, minv[1][i]);
+
+      INV1.Boost(Boost);
+      INV2.Boost(Boost);
+
+      GetChildState(2*i+0).SetFourVector(INV1);
+      GetChildState(2*i+1).SetFourVector(INV2);
+    }
     
     return SetSpirit(true);
   }
