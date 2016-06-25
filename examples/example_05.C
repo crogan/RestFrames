@@ -265,6 +265,10 @@ void example_05(std::string output_name = "output_example_05.root"){
   MinMW_R2.AddInvisibleFrame(Nb_R2, 1);
 
   // Minimize sum Mt^2 jigsaws
+  jigsaw_name = "M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})";
+  SetMassInvJigsaw NuNuM_R3("NuNuM_R3", jigsaw_name);
+  INV_R3.AddJigsaw(NuNuM_R3);
+
   jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
   SetRapidityInvJigsaw NuNuR_R3("NuNuR_R3", jigsaw_name);
   INV_R3.AddJigsaw(NuNuR_R3);
@@ -273,12 +277,18 @@ void example_05(std::string output_name = "output_example_05.root"){
   jigsaw_name = "min #Sigma M_{top}^{2}";
   MinMassesSqInvJigsaw MinMt_R3("MinMt_R3", jigsaw_name, 2);
   INV_R3.AddJigsaw(MinMt_R3);
-  MinMt_R3.AddVisibleFrames(La_R3+Ba_R3, 0);
-  MinMt_R3.AddVisibleFrames(Lb_R3+Bb_R3, 1);
   MinMt_R3.AddInvisibleFrame(Na_R3, 0);
   MinMt_R3.AddInvisibleFrame(Nb_R3, 1);
+  MinMt_R3.AddVisibleFrames(La_R3+Ba_R3, 0);
+  MinMt_R3.AddVisibleFrames(Lb_R3+Bb_R3, 1);
+  MinMt_R3.AddMassFrame(La_R3, 0);
+  MinMt_R3.AddMassFrame(Lb_R3, 1);
 
   // Minimize difference Mt jigsaws
+  jigsaw_name = "M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})";
+  SetMassInvJigsaw NuNuM_R4("NuNuM_R4", jigsaw_name);
+  INV_R4.AddJigsaw(NuNuM_R4);
+
   jigsaw_name = "#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}";
   SetRapidityInvJigsaw NuNuR_R4("NuNuR_R4", jigsaw_name);
   INV_R4.AddJigsaw(NuNuR_R4);
@@ -287,10 +297,12 @@ void example_05(std::string output_name = "output_example_05.root"){
   jigsaw_name = "min ( M_{top a}- M_{top b} )^{2}";
   MinMassDiffInvJigsaw MinDeltaMt_R4("MinDeltaMt_R4", jigsaw_name, 2);
   INV_R4.AddJigsaw(MinDeltaMt_R4);
-  MinDeltaMt_R4.AddVisibleFrames(La_R4+Ba_R4, 0);
-  MinDeltaMt_R4.AddVisibleFrames(Lb_R4+Bb_R4, 1);
   MinDeltaMt_R4.AddInvisibleFrame(Na_R4, 0);
   MinDeltaMt_R4.AddInvisibleFrame(Nb_R4, 1);
+  MinDeltaMt_R4.AddVisibleFrames(La_R4+Ba_R4, 0);
+  MinDeltaMt_R4.AddVisibleFrames(Lb_R4+Bb_R4, 1);
+  MinDeltaMt_R4.AddMassFrame(La_R4, 0);
+  MinDeltaMt_R4.AddMassFrame(Lb_R4, 1);
 
   // b-jet combinatoric jigsaws for all trees
   jigsaw_name = "Minimize M(b #it{l} )_{a} , M(b #it{l} )_{b}";
@@ -437,10 +449,8 @@ void example_05(std::string output_name = "output_example_05.root"){
     INV_R3.SetLabFrameThreeVector(MET);
     INV_R4.SetLabFrameThreeVector(MET);
 
-    INV_R3.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),     // set invisible system mass by hand
-			   La_Gen.GetMass(),Lb_Gen.GetMass()));       
-    INV_R4.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),    
-			   La_Gen.GetMass(),Lb_Gen.GetMass())); 
+    // INV_R1.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),    
+    // 			   La_Gen.GetMass(),Lb_Gen.GetMass())); 
 
     La_R1.SetLabFrameFourVector(La_Gen.GetFourVector());
     Lb_R1.SetLabFrameFourVector(Lb_Gen.GetFourVector());

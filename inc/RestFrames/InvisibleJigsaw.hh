@@ -49,10 +49,14 @@ namespace RestFrames {
     void SetGroup(Group& group = Group::Empty());
     InvisibleGroup& GetGroup() const;
 
-    virtual void AddVisibleFrame(const RestFrame& frame, int i = 0);
+    void AddVisibleFrame(const RestFrame& frame, int i = 0);
     void AddVisibleFrames(const ConstRestFrameList& frames, int i = 0);
-    virtual void AddInvisibleFrame(const RestFrame& frame, int i = 0);
+    
+    void AddInvisibleFrame(const RestFrame& frame, int i = 0);
     void AddInvisibleFrames(const ConstRestFrameList& frames, int i = 0);
+    
+    void AddMassFrame(const RestFrame& frame, int i = 0);
+    void AddMassFrames(const ConstRestFrameList& frames, int i = 0);
 
     virtual double GetMinimumMass() const;
 
@@ -69,10 +73,11 @@ namespace RestFrames {
     
     InvisibleState& GetChildState(int i) const;
 
-    virtual void FillInvisibleMassJigsawDependancies(JigsawList& jigsaws) const;
-
+    virtual bool InitializeAnalysis();
     bool InitializeDependancyJigsaws();
     bool InitializeJigsawExecutionList(JigsawList& exec_jigsaws);
+
+    virtual void FillInvisibleMassJigsawDependancies(JigsawList& jigsaws) const;
 
   private:
     const int m_Nvis;

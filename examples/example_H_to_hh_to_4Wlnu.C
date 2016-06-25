@@ -186,22 +186,24 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
 
   //MinMassDiffInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
-  MinMassesSqInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
-  //ContraBoostInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}");
+  //MinMassesSqInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
+  ContraBoostInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}");
   INV_R.AddJigsaw(MinMh_R);
-  MinMh_R.AddVisibleFrames(ha_R.GetListVisibleFrames(), 0);
-  MinMh_R.AddVisibleFrames(hb_R.GetListVisibleFrames(), 1);
   MinMh_R.AddInvisibleFrames(ha_R.GetListInvisibleFrames(), 0);
   MinMh_R.AddInvisibleFrames(hb_R.GetListInvisibleFrames(), 1);
+  MinMh_R.AddVisibleFrames(ha_R.GetListVisibleFrames(), 0);
+  MinMh_R.AddVisibleFrames(hb_R.GetListVisibleFrames(), 1);
 
   //ContraBoostInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}");
   MinMassesSqInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
   //MaxProbBreitWignerInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
   INV_R.AddJigsaw(MinMWa_R);
-  MinMWa_R.AddVisibleFrames(Waa_R.GetListVisibleFrames(), 0);
-  MinMWa_R.AddVisibleFrames(Wab_R.GetListVisibleFrames(), 1);
   MinMWa_R.AddInvisibleFrames(Waa_R.GetListInvisibleFrames(), 0);
   MinMWa_R.AddInvisibleFrames(Wab_R.GetListInvisibleFrames(), 1);
+  MinMWa_R.AddVisibleFrames(Waa_R.GetListVisibleFrames(), 0);
+  MinMWa_R.AddVisibleFrames(Wab_R.GetListVisibleFrames(), 1);
+  MinMWa_R.AddMassFrame(Lba_R, 0);
+  MinMWa_R.AddMassFrame(Lbb_R, 1);
 
   // MinMWa_R.SetPoleMass(mW, 0);
   // MinMWa_R.SetPoleMass(mW, 1);
@@ -212,10 +214,12 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMassesSqInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
   //MaxProbBreitWignerInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
   INV_R.AddJigsaw(MinMWb_R);
-  MinMWb_R.AddVisibleFrames(Wba_R.GetListVisibleFrames(), 0);
-  MinMWb_R.AddVisibleFrames(Wbb_R.GetListVisibleFrames(), 1);
   MinMWb_R.AddInvisibleFrames(Wba_R.GetListInvisibleFrames(), 0);
   MinMWb_R.AddInvisibleFrames(Wbb_R.GetListInvisibleFrames(), 1);
+  MinMWb_R.AddVisibleFrames(Wba_R.GetListVisibleFrames(), 0);
+  MinMWb_R.AddVisibleFrames(Wbb_R.GetListVisibleFrames(), 1);
+  MinMWb_R.AddMassFrame(Laa_R, 0);
+  MinMWb_R.AddMassFrame(Lab_R, 1);
 
   // MinMWb_R.SetPoleMass(mW, 0);
   // MinMWb_R.SetPoleMass(mW, 1);
@@ -376,7 +380,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
     double PTH = mH*gRandom->Rndm()*0.1;
-    LAB_G.SetTransverseMomenta(PTH);               // give the Higgs some Pt
+    LAB_G.SetTransverseMomentum(PTH);               // give the Higgs some Pt
     LAB_G.AnalyzeEvent();                          // generate a new event
 
     // analyze event
@@ -423,12 +427,12 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
     histPlot->Fill(cat_Gen);
 
     // Reconstruction-level observables
-    //MH = H_R.GetMass()/MHgen;
-    MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
-    //Mha = ha_R.GetMass()/Mhagen;
-    //Mhb = hb_R.GetMass()/Mhbgen;
-    Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
-    Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
+    MH = H_R.GetMass()/MHgen;
+    //MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
+    Mha = ha_R.GetMass()/Mhagen;
+    Mhb = hb_R.GetMass()/Mhbgen;
+    // Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
+    // Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
     cosH = H_R.GetCosDecayAngle();
     cosha = ha_R.GetCosDecayAngle();
     coshb = hb_R.GetCosDecayAngle();

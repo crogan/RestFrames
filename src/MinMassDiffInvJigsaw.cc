@@ -69,7 +69,7 @@ namespace RestFrames {
     TLorentzVector PvisTOT(0.,0.,0.,0.);
     m_Pvis.clear();
     for(int i = 0; i < m_Npair; i++){
-      m_Pvis.push_back(GetDependancyStates(i).GetFourVector());
+      m_Pvis.push_back(GetDependancyStates(i+m_Npair).GetFourVector());
       PvisTOT += m_Pvis[i];
     }
 

@@ -409,18 +409,6 @@ namespace RestFrames {
       }
     }
 
-    int Nframes_dep = 0;
-    for(int i = 0; i < m_Ndeps; i++)
-      Nframes_dep += GetDependancyFrames(i).GetN();
-
-    if(m_Ndeps > 0 && Nframes_dep <= 0){
-       m_Log << LogWarning;
-       m_Log << "No dependancy frames listed with";
-       m_Log << "non-zero number of dependancies.";
-       m_Log << LogEnd;
-      return SetBody(false);
-    }
-
     return SetBody(true);
   }
 

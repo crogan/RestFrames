@@ -69,6 +69,7 @@ namespace RestFrames {
     void UnsetObjectCharge(int i);
 
   protected:
+    virtual bool IsSoundBody() const;
     CombinatoricState& GetNewChildState();
     
     virtual bool InitializeAnalysis();

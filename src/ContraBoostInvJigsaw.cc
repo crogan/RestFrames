@@ -109,6 +109,8 @@ namespace RestFrames {
     double Minv = std::max(0.,std::max(Minv1,Minv2));
     double Mvis = std::min(m1,m2);
 
+    std::cout << INV.M() << " " << (Pvis1+Pvis2).M() << std::endl;
+
     double k1 = 1.;
     double k2 = 1.;
     if(Minv < Mvis){

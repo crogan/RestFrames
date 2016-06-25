@@ -463,4 +463,23 @@ namespace RestFrames {
     return SetSpirit(true);
   }
 
+  bool CombinatoricJigsaw::IsSoundBody() const {
+    if(RFBase::IsSoundBody())
+      return true;
+
+    if(!Jigsaw::IsSoundBody())
+      return SetBody(false);
+    
+    for(int i = 0; i < m_Nobj; i++){
+      if(GetDependancyFrames(i).GetN() <= 0){
+	m_Log << LogWarning;
+	m_Log << "Empty collection of object frames: " << i;
+	m_Log << LogEnd;
+	return SetBody(false);
+      }
+    }
+
+    return SetBody(true);
+  }
+
 }
