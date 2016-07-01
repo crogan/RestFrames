@@ -1,0 +1,24 @@
+/** \file example_01.C
+
+\brief Z boson decaying to di-leptons
+
+Z to ll example                 {#example_Zll}
+=====================
+<img src="example_Zll.gif" alt="Drawing" style="width: 200px;"/>
+
+| I am text to the left and there is a lot of me and I keep going bla | <img src="/examples/trees/RestFrames.gif" alt="Drawing" style="width: 200px;"/> |
+
+![decay tree](example_Zll.gif)
+
+[Recursive Jigsaw Reconstruction](@ref RJR)
+
+<table width="300">
+  <tr>
+    <td> This is some text This is some very long block of text repeated to make it even longer. This is some very long block of text repeated to make it even longer. This is some very long block of text repeated to make it even longer.  </td>
+    <td> <img src="example_Zll.gif" alt="Drawing" style="width: 200px;"/> </td>
+  </tr>
+</table>
+
+*/
+
+

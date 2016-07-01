@@ -10,8 +10,6 @@
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 March
-///
-///  \brief A simple example analyzing a Z to ll events
 //
 //   This file is part of RestFrames.
 //
