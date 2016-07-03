@@ -4,7 +4,7 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   MinMassChi2CombJigsaw.cc
+///  \file   MaxProbBreitWignerCombJigsaw.cc
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)

@@ -1,14 +1,9 @@
 namespace RestFrames {
 /** \class RestFrames::RestFrame "RestFrames/RestFrame.hh"
 
-\brief Base class for all Frame objects
-
-bla bla bla
-
-[Recursive Jigsaw Reconstruction](@ref RJR)
+\brief abstract base class for all Frame objects
 
 
-bla bla
 
 */
 }

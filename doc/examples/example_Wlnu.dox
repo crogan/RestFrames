@@ -1,28 +1,28 @@
-/** \file example_Zll.C
+/** \file example_Wlnu.C
 
-\brief Z boson decaying to di-leptons
+\brief W boson decaying to a lepton and neutrino
 
-Z to ll example                 {#example_Zll}
+W to l nu example                 {#example_Wlnu}
 =====================
 
 The example can be found in the **RestFrames** package at
 
-    examples/example_Zll.C
+    examples/example_Wlnu.C
 
 You can run the compiled example executable:
 
-    ./examples/example_Zll.x
+    ./examples/example_Wlnu.x
 
 or run the example from the ROOT interactive command line:
 
-   root [0] .x examples/example_Zll.C++
+   root [0] .x examples/example_Wlnu.C++
 
 For the latter, if **RestFrames** is not installed in an area in the default `PATH` then you must first load the **RestFrames** environmental variables with `source setup_RestFrames.(c)sh`.
 
 <table width="800px">
   <tr>
-    <td> Decay tree for a Z boson decaying to two leptons. </td>
-    <td> <img src="example_Zll.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> Decay tree for a W boson decaying to a lepton and neutrino </td>
+    <td> <img src="example_Wlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
   </tr>
 </table>
 

@@ -4,14 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_WWW.C
+///  \file   example_N_Wlnu.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2016 May
-///
-///  \brief An example generating and analyzing pp -> WWW to 3l 3nu events
 //
 //   This file is part of RestFrames.
 //
@@ -213,7 +211,7 @@ void example_WWW(const std::string& output_name = "output_example_WWW.root"){
     // generate event
     LAB_G.ClearEvent();                            // clear the gen tree
     double PTCM = 3*mW*gRandom->Rndm()*0.;
-    LAB_G.SetTransverseMomenta(PTCM);               // give the CM some Pt
+    LAB_G.SetTransverseMomentum(PTCM);               // give the CM some Pt
     LAB_G.AnalyzeEvent();                          // generate a new event
 
     // analyze event

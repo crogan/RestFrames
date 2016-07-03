@@ -1,17 +1,17 @@
-/** \file example_Zll.C
+/** \file example_Hp_to_HggWlnu.C
 
-\brief Z boson decaying to di-leptons
+\brief Charged Higgs decaying to H(gamma gamma) and W(l nu)
 
-Z to ll example                 {#example_Zll}
+H+ to H(gg) W(l nu) example                 {#example_Hp_to_HggWlnu}
 =====================
 
 The example can be found in the **RestFrames** package at
 
-    examples/example_Zll.C
+    examples/example_Hp_to_HggWlnu.C
 
 You can run the compiled example executable:
 
-    ./examples/example_Zll.x
+    ./examples/example_Hp_to_HggWlnu.x
 
 or run the example from the ROOT interactive command line:
 
@@ -21,8 +21,8 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 
 <table width="800px">
   <tr>
-    <td> Decay tree for a Z boson decaying to two leptons. </td>
-    <td> <img src="example_Zll.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> Decay tree for a charged Higgs decaying to H(gamma gamma) and W(l nu). </td>
+    <td> <img src="example_Hp_to_HggWlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
   </tr>
 </table>
 

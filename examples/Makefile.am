@@ -1,7 +1,7 @@
 # make RestFrames examples
 SUBDIRS = .
 
-noinst_PROGRAMS = example_Zll.x example_Wlnu.x example_top_to_bWlnu.x example_Hp_to_HggWlnu.x example_H_to_WlnuWlnu.x example_ttbar_to_bWlnubWlnu.x example_DiGluino_to_bbXbbX.x example_X2X2_to_ZllXHggX.x
+noinst_PROGRAMS = example_Zll.x example_Wlnu.x example_top_to_bWlnu.x example_Hp_to_HggWlnu.x example_H_to_WlnuWlnu.x example_ttbar_to_bWlnubWlnu.x example_DiGluino_to_bbXbbX.x example_X2X2_to_ZllXHggX.x example_H_to_hh_to_4Wlnu.x example_N_Wlnu.x
 
 includestuff = $(top_srcdir)/inc
 LDADD = ../src/libRestFrames.la
@@ -37,5 +37,13 @@ example_DiGluino_to_bbXbbX_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFL
 example_X2X2_to_ZllXHggX_x_SOURCES = example_X2X2_to_ZllXHggX.C
 example_X2X2_to_ZllXHggX_x_SHORTNAME = X2X2_to_ZllXHggX
 example_X2X2_to_ZllXHggX_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+
+example_H_to_hh_to_4Wlnu_x_SOURCES = example_H_to_hh_to_4Wlnu.C
+example_H_to_hh_to_4Wlnu_x_SHORTNAME = H_to_hh_to_4Wlnu
+example_H_to_hh_to_4Wlnu_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+
+example_N_Wlnu_x_SOURCES = example_N_Wlnu.C
+example_N_Wlnu_x_SHORTNAME = N_Wlnu
+example_N_Wlnu_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 
 include $(top_srcdir)/config/rootconfig.mk

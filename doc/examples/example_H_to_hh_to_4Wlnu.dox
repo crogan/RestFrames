@@ -1,0 +1,31 @@
+/** \file example_H_to_hh_to_4Wlnu.C
+
+\brief Heavy neutral Higgs decaying to two lighter neutral Higgs, each decaying W(lnu)W(lnu)
+
+Z to ll example                 {#example_H_to_hh_to_4Wlnu}
+=====================
+
+The example can be found in the **RestFrames** package at
+
+    examples/example_H_to_hh_to_4Wlnu.C
+
+You can run the compiled example executable:
+
+    ./examples/example_H_to_hh_to_4Wlnu.x
+
+or run the example from the ROOT interactive command line:
+
+   root [0] .x examples/example_H_to_hh_to_4Wlnu.C++
+
+For the latter, if **RestFrames** is not installed in an area in the default `PATH` then you must first load the **RestFrames** environmental variables with `source setup_RestFrames.(c)sh`.
+
+<table width="800px">
+  <tr>
+    <td> Decay tree for a heavy neutral Higgs decaying to two lighter neutral Higgs, each decaying W(lnu)W(lnu). </td>
+    <td> <img src="example_H_to_hh_to_4Wlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+  </tr>
+</table>
+
+*/
+
+

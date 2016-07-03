@@ -1,0 +1,10 @@
+namespace RestFrames {
+/** \class RestFrames::Jigsaw "RestFrames/Jigsaw.hh"
+
+\brief abstract base class for all Jigsaw objects
+
+
+
+*/
+}
+

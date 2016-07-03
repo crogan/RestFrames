@@ -10,8 +10,6 @@
 ///          (crogan@cern.ch)
 ///
 ///  \date   2016 June
-///
-///  \brief An example generating and analyzing Higgs to 4W to 4l 4nu
 //
 //   This file is part of RestFrames.
 //

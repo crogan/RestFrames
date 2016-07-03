@@ -1,0 +1,31 @@
+/** \file example_top_to_bWlnu.C
+
+\brief single top decaying to a b-quark and leptonic W
+
+top to b W(l nu) example                 {#example_top_to_bWlnu}
+=====================
+
+The example can be found in the **RestFrames** package at
+
+    examples/example_top_to_bWlnu.C
+
+You can run the compiled example executable:
+
+    ./examples/example_top_to_bWlnu.x
+
+or run the example from the ROOT interactive command line:
+
+   root [0] .x examples/example_top_to_bWlnu.C++
+
+For the latter, if **RestFrames** is not installed in an area in the default `PATH` then you must first load the **RestFrames** environmental variables with `source setup_RestFrames.(c)sh`.
+
+<table width="800px">
+  <tr>
+    <td> Decay tree for single top decaying to a b-quark and leptonic W. </td>
+    <td> <img src="example_top_to_bWlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+  </tr>
+</table>
+
+*/
+
+

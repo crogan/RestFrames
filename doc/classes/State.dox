@@ -1,0 +1,10 @@
+namespace RestFrames {
+/** \class RestFrames::State "RestFrames/State.hh"
+
+\brief abstract base class for all State objects
+
+
+
+*/
+}
+

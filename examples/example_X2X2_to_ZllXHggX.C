@@ -10,9 +10,6 @@
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 Nov
-///
-///  \brief An example generating and analyzing di-neutralinos decaying 
-///         through Z and H to LSP's
 //
 //   This file is part of RestFrames.
 //
@@ -209,7 +206,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   const HistPlotVar& DcosX2a  = histPlot->GetNewVar("DcosX2a","#theta_{X2a} - #theta_{X2a}^{gen}", -1., 1.);
   const HistPlotVar& DcosX2b  = histPlot->GetNewVar("DcosX2b","#theta_{X2b} - #theta_{X2b}^{gen}", -1., 1.);
 
-  const HistPlotVar& RISR   = histPlot->GetNewVar("RISR","R_{ISR}", 0., 1.);
+  const HistPlotVar& RISR   = histPlot->GetNewVar("RISR","R_{ISR}", 0., 1.5);
 
   histPlot->AddPlot(MCM, cat_Reco);      
   histPlot->AddPlot(EZX2a, cat_Reco);
@@ -239,7 +236,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
     LAB_Gen.ClearEvent();                           // clear the gen tree
     
     double PTCM = 0.5*mX2*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomentum(400.);             // give X2X2 some Pt
+    LAB_Gen.SetTransverseMomentum(800.);             // give X2X2 some Pt
     
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 
