@@ -1,17 +1,15 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_04.C
+///  \file   example_H_to_WlnuWlnu.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 June
-///
-///  \brief An example generating and analyzing Higgs to WW to 2l 2nu events
 //
 //   This file is part of RestFrames.
 //
@@ -33,7 +31,8 @@
 
 using namespace RestFrames;
 
-void example_04(const std::string& output_name = "output_example_04.root"){
+void example_H_to_WlnuWlnu(const std::string& output_name =
+			   "output_H_to_WlnuWlnu.root"){
   SetLogPrint(LogVerbose,true);
   SetLogPrint(LogDebug,true);
   SetLogMaxWidth(120);
@@ -256,7 +255,7 @@ void example_04(const std::string& output_name = "output_example_04.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_04();
+  example_H_to_WlnuWlnu();
   return 0;
 }
 #endif

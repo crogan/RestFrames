@@ -54,9 +54,9 @@ namespace RestFrames {
     double Minv2 = GetChildState(1).GetMinimumMass();
     TLorentzVector Pvis1 = GetDependancyStates(0).GetFourVector();
     TLorentzVector Pvis2 = GetDependancyStates(1).GetFourVector();
-    double M12 = (Pvis1+Pvis2).M();
     double Mvis1 = std::max(Pvis1.M(), 0.);
     double Mvis2 = std::max(Pvis2.M(), 0.);
+    double M12 = (Pvis1+Pvis2).M();
 
     if(Minv1 < -0.5 && Minv2 < -0.5) // children can go tachyonic
       return 2.*GetP(M12,Mvis1,Mvis2);
@@ -64,23 +64,22 @@ namespace RestFrames {
     Minv1 = std::max(Minv1,0.);
     Minv2 = std::max(Minv2,0.);
 
-    double Minv = std::max(0.,std::max(Minv1,Minv2));
+    double Minvmax = std::max(0.,std::max(Minv1,Minv2));
     
     double Mvismin = std::min(Mvis1,Mvis2);
     double Mvismax = std::max(Mvis1,Mvis2);
-		     
-    if(Mvismin <= 0.0 && Minv > 0.) return M12;
-
-    if(Minv <= Mvismin)
-      return sqrt( M12*M12 + 4.*(Minv-Mvismin)*(Minv+Mvismax) );
     
-    double v1v2 = M12*M12 - Mvis1*Mvis1 - Mvis2*Mvis2;
+    if(Minv1 < Mvis2 && Minv2 < Mvis1){
+      if(Minvmax <= Mvismin)
+	return sqrt( M12*M12 + 4.*(Minvmax-Mvismin)*(Minvmax+Mvismax) );
+      return M12;
+    } 
 
-    if((Mvis1 >= Mvis2 && Mvis1-Mvis2 > Minv2-Minv1) ||
-       (Mvis2 >  Mvis1 && Mvis1-Mvis1 > Minv1-Minv2))
-      return sqrt(Minv*Minv + v1v2*Minv*Minv/Mvismin/Mvismin +
-		  (Minv+Mvismax-Mvismin)*(Minv+Mvismax-Mvismin));
-    return sqrt(2.*Minv*Minv + v1v2*Minv*Minv/Mvismin/Mvismin);
+    if(Mvismin <= 0.0 && Minvmax > 0.)
+      return M12;
+
+    return M12*(1.+sqrt(std::max(Minv1*Minv1-Mvis2*Mvis2,
+				 Minv2*Minv2-Mvis1*Mvis1))/Mvismin); 
   }
 
   bool ContraBoostInvJigsaw::AnalyzeEvent(){
@@ -109,29 +108,33 @@ namespace RestFrames {
     double Minv = std::max(0.,std::max(Minv1,Minv2));
     double Mvis = std::min(m1,m2);
 
-    std::cout << INV.M() << " " << (Pvis1+Pvis2).M() << std::endl;
-
-    double k1 = 1.;
-    double k2 = 1.;
+    double c1 = 1.;
+    double c2 = 1.;
     if(Minv < Mvis){
       double MC2 = 2.*(E1*E2 + P1.Dot(P2));
-      k1 =  (m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
-      k2 = -(m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
+      double k1 =  (m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
+      double k2 = -(m1+m2)*(m1-m2)*(1.-Minv/Mvis) + MC2-2*m1*m2 + (m1+m2)*fabs(m1-m2)*Minv/Mvis;
+      double Xbar = sqrt( (k1+k2)*(k1+k2)*(MC2*MC2-4*m1*m1*m2*m2) +
+			  16.*Minv*Minv*(k1*k1*m1*m1 + k2*k2*m2*m2 + k1*k2*MC2) );
+      double K = ( fabs(k1*m1*m1-k2*m2*m2) - 0.5*fabs(k2-k1)*MC2 + 0.5*Xbar )/
+	(k1*k1*m1*m1 + k2*k2*m2*m2 + k1*k2*MC2);
+      c1 = 0.5*(1.+K*k1);
+      c2 = 0.5*(1.+K*k2);
     }
 
     double sumE  = E1+E2;
-    double sumkE = k1*E1+k2*E2;
+    double sumcE = c1*E1+c2*E2;
 
-    double N = sumkE > 0. ? sqrt(std::max(INV.M2()-(Pvis1+Pvis2).M2()+sumE*sumE,0.))/sumkE : 0.;
+    double N = (sqrt(sumE*sumE-(Pvis1+Pvis2).M2()+INV.M2())+sumE)/sumcE/2.;
 
-    k1 = 0.5*(1.+N*k1);
-    k2 = 0.5*(1.+N*k2);
+    c1 *= N;
+    c2 *= N;
 
     TLorentzVector INV1,INV2;
-    double Einv1 = (k1-1.)*E1 + k2*E2;
-    double Einv2 = k1*E1 + (k2-1.)*E2;
-    TVector3 Pinv1 = (k1-1.)*P1 - k2*P2;
-    TVector3 Pinv2 = (k2-1.)*P2 - k1*P1;
+    double Einv1 = (c1-1.)*E1 + c2*E2;
+    double Einv2 = c1*E1 + (c2-1.)*E2;
+    TVector3 Pinv1 = (c1-1.)*P1 - c2*P2;
+    TVector3 Pinv2 = (c2-1.)*P2 - c1*P1;
 
     INV1.SetPxPyPzE(Pinv1.X(),Pinv1.Y(),Pinv1.Z(),Einv1);
     INV2.SetPxPyPzE(Pinv2.X(),Pinv2.Y(),Pinv2.Z(),Einv2);

@@ -196,6 +196,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
 
   //ContraBoostInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}");
   MinMassesSqInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
+  //MinMassDiffInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
   //MaxProbBreitWignerInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
   INV_R.AddJigsaw(MinMWa_R);
   MinMWa_R.AddInvisibleFrames(Waa_R.GetListInvisibleFrames(), 0);
@@ -205,13 +206,9 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMWa_R.AddMassFrame(Lba_R, 0);
   MinMWa_R.AddMassFrame(Lbb_R, 1);
 
-  // MinMWa_R.SetPoleMass(mW, 0);
-  // MinMWa_R.SetPoleMass(mW, 1);
-  // MinMWa_R.SetWidth(wW, 0);
-  // MinMWa_R.SetWidth(wW, 1);
-
   //ContraBoostInvJigsaw MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}");
   MinMassesSqInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
+  //MinMassDiffInvJigsaw MinMWb_R("MinMWb_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
   //MaxProbBreitWignerInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
   INV_R.AddJigsaw(MinMWb_R);
   MinMWb_R.AddInvisibleFrames(Wba_R.GetListInvisibleFrames(), 0);
@@ -220,11 +217,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMWb_R.AddVisibleFrames(Wbb_R.GetListVisibleFrames(), 1);
   MinMWb_R.AddMassFrame(Laa_R, 0);
   MinMWb_R.AddMassFrame(Lab_R, 1);
-
-  // MinMWb_R.SetPoleMass(mW, 0);
-  // MinMWb_R.SetPoleMass(mW, 1);
-  // MinMWb_R.SetWidth(wW, 0);
-  // MinMWb_R.SetWidth(wW, 1);
 
   // Combinatoric Group for leptons
   CombinatoricGroup VIS_R("VIS_R","Lepton Combinatoric Jigsaws");
@@ -352,6 +344,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   						  -acos(-1.)/2., acos(-1.)/2.);
   
   histPlot->AddPlot(MWaa, MWab, cat_Gen+cat_Reco);
+  histPlot->AddPlot(MWaa, MWbb, cat_Gen+cat_Reco);
   histPlot->AddPlot(MH, cat_Reco);
   histPlot->AddPlot(Mha, cat_Reco);
   histPlot->AddPlot(Mha, Mhb, cat_Reco);
@@ -423,16 +416,18 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
     double cosWabgen = Wab_G.GetCosDecayAngle();
     MWaa = Waa_G.GetMass();
     MWab = Wab_G.GetMass();
+    MWba = Wba_G.GetMass();
+    MWbb = Wbb_G.GetMass();
    
     histPlot->Fill(cat_Gen);
 
     // Reconstruction-level observables
     MH = H_R.GetMass()/MHgen;
     //MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
-    Mha = ha_R.GetMass()/Mhagen;
-    Mhb = hb_R.GetMass()/Mhbgen;
-    // Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
-    // Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
+    //Mha = ha_R.GetMass()/Mhagen;
+    //Mhb = hb_R.GetMass()/Mhbgen;
+    Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
+    Mhb = 2.*hb_R.GetListVisibleFrames().GetEnergy(hb_R)/Mhbgen;
     cosH = H_R.GetCosDecayAngle();
     cosha = ha_R.GetCosDecayAngle();
     coshb = hb_R.GetCosDecayAngle();

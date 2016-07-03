@@ -4,14 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_05.C
+///  \file   example_ttbar_to_bWlnubWlnu.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 June
-///
-///  \brief An example generating and analyzing di-leptonic ttbar events
 //
 //   This file is part of RestFrames.
 //
@@ -33,7 +31,8 @@
 
 using namespace RestFrames;
 
-void example_05(std::string output_name = "output_example_05.root"){
+void example_ttbar_to_bWlnubWlnu(std::string output_name =
+				 "output_ttbar_to_bWlnubWlnu.root"){
   
   SetLogPrint(LogVerbose,true);
   SetLogPrint(LogDebug,true);
@@ -597,7 +596,7 @@ void example_05(std::string output_name = "output_example_05.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_05();
+  example_ttbar_to_bWlnubWlnu();
   return 0;
 }
 #endif

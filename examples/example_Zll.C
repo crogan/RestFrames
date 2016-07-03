@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_01_basics_Ztoll.C
+///  \file   example_01_Zll.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -32,7 +32,7 @@
 using namespace std;
 using namespace RestFrames;
 
-void example_01(const string& output_name = "output_example_01.root"){
+void example_Zll(const string& output_name = "output_Zll.root"){
 
   double mZ = 90.;
   int Ngen = 100000;
@@ -122,7 +122,7 @@ void example_01(const string& output_name = "output_example_01.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_01();
+  example_Zll();
   return 0;
 }
 #endif

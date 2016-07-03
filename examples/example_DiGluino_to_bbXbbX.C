@@ -4,14 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_06_DiGluinostoJetsMET.C
+///  \file   example_DiGluino_to_bbXbbX.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 April
-///
-///  \brief An example generating and analyzing di-gluino events
 //
 //   This file is part of RestFrames.
 //
@@ -34,7 +32,8 @@
 using namespace std;
 using namespace RestFrames;
 
-void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
+void example_DiGluino_to_bbXbbX(string output_name =
+				"output_DiGluino_to_bbXbbX.root"){
   SetLogPrint(LogVerbose,true);
   SetLogPrint(LogDebug,true);
 
@@ -431,7 +430,7 @@ void example_06_DiGluinostoJetsMET(string output_name = "output_06.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_06_DiGluinostoJetsMET();
+  example_DiGluino_to_bbXbbX();
   return 0;
 }
 #endif

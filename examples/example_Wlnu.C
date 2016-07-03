@@ -1,17 +1,15 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_02.C
+///  \file   example_Wlnu.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 March
-///
-///  \brief A simple example generating and analyzing W(l nu) events
 //
 //   This file is part of RestFrames.
 //
@@ -33,7 +31,7 @@
 
 using namespace RestFrames;
 
-void example_02(const std::string& output_name = "output_example_02.root"){
+void example_Wlnu(const std::string& output_name = "output_Wlnu.root"){
 
   double mW = 81.;
   double wW = 2;
@@ -163,7 +161,7 @@ void example_02(const std::string& output_name = "output_example_02.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_02();
+  example_Wlnu();
   return 0;
 }
 #endif

@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_07.C
+///  \file   example_X2X2_to_ZllXHggX.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
@@ -35,12 +35,12 @@
 
 using namespace RestFrames;
 
-void example_07(std::string output_name = "output_example_07.root"){
+void example_X2X2_to_ZllXHggX(std::string output_name =
+			      "output_X2X2_to_ZllXHggX.root"){
 
   // set particle masses and widths [GeV]
-  double mX1 = 100.;
+  double mX1 = 400.;
   double mX2 = 500.;
-  double wtop = 2.5;
   double mZ   = 91.;
   double wZ   = 2.5;
   double mH   = 125.;
@@ -52,7 +52,7 @@ void example_07(std::string output_name = "output_example_07.root"){
   ////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
-  ppLabGenFrame       LAB_Gen("LAB_Gen","LAB");
+  ppLabGenFrame     LAB_Gen("LAB_Gen","LAB");
   DecayGenFrame     X2X2_Gen("X2X2_Gen","#tilde{#chi}^{ 0}_{2} #tilde{#chi}^{ 0}_{2}");
   DecayGenFrame     X2a_Gen("X2a_Gen","#tilde{#chi}^{ 0}_{2 a}");
   DecayGenFrame     X2b_Gen("X2b_Gen","#tilde{#chi}^{ 0}_{2 b}");
@@ -94,9 +94,17 @@ void example_07(std::string output_name = "output_example_07.root"){
   Za_Gen.SetWidth(wZ);
   Hb_Gen.SetMass(mH);
   Hb_Gen.SetWidth(wH);
+  L1_Gen.SetPtCut(10.);
+  L2_Gen.SetPtCut(10.);
+  G1_Gen.SetPtCut(25.);
+  G2_Gen.SetPtCut(25.);
+  L1_Gen.SetEtaCut(2.5);
+  L2_Gen.SetEtaCut(2.5);
+  G1_Gen.SetEtaCut(3.0);
+  G2_Gen.SetEtaCut(3.0);
   
   if(LAB_Gen.InitializeAnalysis())
-    g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +161,8 @@ void example_07(std::string output_name = "output_example_07.root"){
   X1_eta.AddVisibleFrames(X2X2.GetListVisibleFrames());
 
   ContraBoostInvJigsaw X1X1_contra("X1X1_contra","Contraboost invariant Jigsaw");
+  //MinMassDiffInvJigsaw X1X1_contra("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
+  //MinMassesSqInvJigsaw X1X1_contra("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
   INV.AddJigsaw(X1X1_contra);
   X1X1_contra.AddVisibleFrames(X2a.GetListVisibleFrames(), 0);
   X1X1_contra.AddVisibleFrames(X2b.GetListVisibleFrames(), 1);
@@ -180,52 +190,56 @@ void example_07(std::string output_name = "output_example_07.root"){
 				    "#rightarrow Z(#it{l}#it{l}) #tilde{#chi}_{1}^{ 0}"+
 				    "H(#gamma #gamma) #tilde{#chi}_{1}^{ 0}"); 
 
-  const HistPlotVar& HX2X2  = histPlot->GetNewVar("HX2X2", 
-						  "H_{4, 2}^{ #tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 
-						  0., 2000., "[GeV]");
-  const HistPlotVar& HX2a   = histPlot->GetNewVar("HX2a", "H_{2, 1}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 800., "[GeV]");
-  const HistPlotVar& HX2b   = histPlot->GetNewVar("HX2b", "H_{2, 1}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 800., "[GeV]");
-  const HistPlotVar& pTX2X2 = histPlot->GetNewVar("pTX2X2",
-						  std::string("p_{T #tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}^{ lab}") +
-						  " / m_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 0., 1.);
+  const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
+  const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");
+  
+  const HistPlotVar& MCM  = histPlot->GetNewVar("MCM", 
+						"M_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 
+						0., 2.5);
+  const HistPlotVar& MX2a   = histPlot->GetNewVar("MX2a", "M_{#tilde{#chi}_{2 a}^{ 0}}", 0., 2.5);
+  const HistPlotVar& MX2b   = histPlot->GetNewVar("MX2b", "M_{#tilde{#chi}_{2 b}^{ 0}}", 0., 2.5);
+  const HistPlotVar& EZX2a  = histPlot->GetNewVar("EZX2a", "E_{Z}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 2.5);
+  const HistPlotVar& EHX2b  = histPlot->GetNewVar("EHX2b", "E_{H}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 2.5);
+  const HistPlotVar& cosX2a = histPlot->GetNewVar("cosX2a","cos #theta_{#tilde{#chi}_{2 a}^{ 0}}", -1., 1.);
+  const HistPlotVar& cosX2b = histPlot->GetNewVar("cosX2b","cos #theta_{#tilde{#chi}_{2 b}^{ 0}}", -1., 1.);
   const HistPlotVar& cosZ   = histPlot->GetNewVar("cosZ","cos #theta_{Z}", -1., 1.);
   const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H}", -1., 1.);
-  const HistPlotVar& dphiZ  = histPlot->GetNewVar("dphiZ", "#Delta #phi_{Z}", 0., 2.*acos(-1.));
-  const HistPlotVar& dphiH  = histPlot->GetNewVar("dphiH", "#Delta #phi_{H}", 0., 2.*acos(-1.));
-  const HistPlotVar& DcosZ  = histPlot->GetNewVar("DcosZ","#theta_{Z} - #theta_{t}^{gen}", -1., 1.);
-  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{W}^{gen}", -1., 1.);
-  const HistPlotVar& DdphiZ = histPlot->GetNewVar("DdphiZ","#Delta #phi_{Z} - #Delta #phi_{Z}^{gen}", -1., 1.);
-  const HistPlotVar& DdphiH = histPlot->GetNewVar("DdphiH","#Delta #phi_{H} - #Delta #phi_{H}^{gen}", -1., 1.);
+  const HistPlotVar& DcosZ  = histPlot->GetNewVar("DcosZ","#theta_{Z} - #theta_{Z}^{gen}", -1., 1.);
+  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{gen}", -1., 1.);
+  const HistPlotVar& DcosX2a  = histPlot->GetNewVar("DcosX2a","#theta_{X2a} - #theta_{X2a}^{gen}", -1., 1.);
+  const HistPlotVar& DcosX2b  = histPlot->GetNewVar("DcosX2b","#theta_{X2b} - #theta_{X2b}^{gen}", -1., 1.);
 
-  histPlot->AddPlot(HX2X2);      
-  histPlot->AddPlot(HX2a);   
-  histPlot->AddPlot(HX2b);   
-  histPlot->AddPlot(pTX2X2); 
-  histPlot->AddPlot(cosZ);  
-  histPlot->AddPlot(cosH);  
-  histPlot->AddPlot(dphiZ); 
-  histPlot->AddPlot(dphiH); 
-  histPlot->AddPlot(DcosZ); 
-  histPlot->AddPlot(DcosH); 
-  histPlot->AddPlot(DdphiZ); 
-  histPlot->AddPlot(DdphiH); 
-  histPlot->AddPlot(HX2X2, HX2a);
-  histPlot->AddPlot(HX2X2, HX2b);
-  histPlot->AddPlot(HX2a, HX2b);
-  histPlot->AddPlot(HX2a, cosZ);
-  histPlot->AddPlot(HX2b, cosH);
-  histPlot->AddPlot(cosZ, DcosZ);
-  histPlot->AddPlot(cosH, DcosH);
+  const HistPlotVar& RISR   = histPlot->GetNewVar("RISR","R_{ISR}", 0., 1.);
+
+  histPlot->AddPlot(MCM, cat_Reco);      
+  histPlot->AddPlot(EZX2a, cat_Reco);
+  histPlot->AddPlot(EHX2b, cat_Reco);   
+  histPlot->AddPlot(cosZ, cat_Reco);  
+  histPlot->AddPlot(cosH, cat_Reco);  
+  histPlot->AddPlot(DcosZ, cat_Reco); 
+  histPlot->AddPlot(DcosH, cat_Reco);
+  histPlot->AddPlot(DcosX2a, cat_Reco);
+  histPlot->AddPlot(DcosX2b, cat_Reco); 
+  histPlot->AddPlot(MCM, EZX2a, cat_Reco);
+  histPlot->AddPlot(MCM, EHX2b, cat_Reco);
+  histPlot->AddPlot(EZX2a, EHX2b, cat_Reco);
+  histPlot->AddPlot(EZX2a, DcosX2a, cat_Reco);
+  histPlot->AddPlot(EHX2b, DcosX2b, cat_Reco);
+  histPlot->AddPlot(cosZ, DcosZ, cat_Reco);
+  histPlot->AddPlot(cosH, DcosH, cat_Reco);
+
+  histPlot->AddPlot(RISR, cat_Reco);
+  histPlot->AddPlot(RISR, EZX2a, cat_Reco);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((std::max(Ngen,10))/10) == 0) 
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << std::endl;
+    if(igen%((std::max(Ngen,10))/10) == 0)
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree
     
-    double PTCM = 2.*mX2*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomentum(PTCM);             // give X2X2 some Pt
+    double PTCM = 0.5*mX2*gRandom->Rndm();
+    LAB_Gen.SetTransverseMomentum(400.);             // give X2X2 some Pt
     
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 
@@ -241,38 +255,47 @@ void example_07(std::string output_name = "output_example_07.root"){
     LAB.AnalyzeEvent();                               //analyze the event
 
     // calculate observables
-    HX2X2 = X1a.GetMomentum(X2X2) + X1b.GetMomentum(X2X2) +
-            L1.GetMomentum(X2X2)  + L2.GetMomentum(X2X2)  +
-            G1.GetMomentum(X2X2)  + G2.GetMomentum(X2X2);
-    HX2a  = X1a.GetMomentum(X2a) + L1.GetMomentum(X2a) + L2.GetMomentum(X2a);
-    HX2b  = X1b.GetMomentum(X2b) + G1.GetMomentum(X2b) + G2.GetMomentum(X2b);
-   
+    MCM = X2X2.GetMass() / X2X2_Gen.GetMass();
+    MX2a  = X2a.GetMass() / X2a_Gen.GetMass();
+    MX2b  = X2b.GetMass() / X2b_Gen.GetMass();
+
+    EZX2a = Za.GetEnergy(X2a) / Za_Gen.GetEnergy(X2a_Gen);
+    EHX2b = Hb.GetEnergy(X2b) / Hb_Gen.GetEnergy(X2b_Gen);
+
+    cosX2a  = X2a.GetCosDecayAngle();
+    double cosX2agen  = X2a_Gen.GetCosDecayAngle();
+    cosX2b  = X2b.GetCosDecayAngle();
+    double cosX2bgen  = X2b_Gen.GetCosDecayAngle();
     cosZ  = Za.GetCosDecayAngle();
     double cosZgen  = Za_Gen.GetCosDecayAngle();
-    dphiZ = X2a.GetDeltaPhiDecayPlanes(Za);
-    double dphiZgen = X2a_Gen.GetDeltaPhiDecayPlanes(Za_Gen);
-
     cosH  = Hb.GetCosDecayAngle();
     double cosHgen  = Hb_Gen.GetCosDecayAngle();
-    dphiH = X2b.GetDeltaPhiDecayPlanes(Hb);
-    double dphiHgen = X2b_Gen.GetDeltaPhiDecayPlanes(Hb_Gen);
+
+    DcosX2a = asin(sqrt(1.-cosX2a*cosX2a)*cosX2agen-sqrt(1.-cosX2agen*cosX2agen)*cosX2a);
+    DcosX2b = asin(sqrt(1.-cosX2b*cosX2b)*cosX2bgen-sqrt(1.-cosX2bgen*cosX2bgen)*cosX2b);
+    DcosZ   = asin(sqrt(1.-cosZ*cosZ)*cosZgen-sqrt(1.-cosZgen*cosZgen)*cosZ);
+    DcosH   = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
+
+    TVector3 vP_ISR = X2X2.GetFourVector(LAB).Vect();
+    TVector3 vP_I   = X2X2.GetListInvisibleFrames().GetFourVector(LAB).Vect();
+    vP_ISR.SetZ(0.);
+    vP_I.SetZ(0.);
     
-    DcosZ  = asin(sqrt(1.-cosZ*cosZ)*cosZgen-sqrt(1.-cosZgen*cosZgen)*cosZ);
-    DdphiZ = asin(sin(dphiZ-dphiZgen));
-    DcosH  = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
-    DdphiH = asin(sin(dphiH-dphiHgen));
-
-    pTX2X2 = PTCM / mX2 / 2.;
-
-    histPlot->Fill();
+    RISR = fabs(vP_I.Dot(vP_ISR.Unit())) / vP_ISR.Mag();
+    
+    histPlot->Fill(cat_Reco);
   }
   
   histPlot->Draw();
+
+  LAB_Gen.PrintGeneratorEfficiency();
+  
+  g_Log << LogInfo << "Finished" << LogEnd;
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_07();
+  example_X2X2_to_ZllXHggX();
   return 0;
 }
 #endif

@@ -1,17 +1,15 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_03.C
+///  \file   example_top_to_bWlnu.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
 ///  \date   2015 March
-///
-///  \brief A simple example generating and analyzing top to b W(l nu) events
 //
 //   This file is part of RestFrames.
 //
@@ -33,7 +31,8 @@
 
 using namespace RestFrames;
 
-void example_03(const std::string& output_name = "output_example_03.root"){
+void example_top_to_bWlnu(const std::string& output_name =
+			 "output_top_to_bWlnu.root"){
   SetLogPrint(LogVerbose,true);
   // set particle masses and widths
   double mtop = 173.;
@@ -261,7 +260,7 @@ void example_03(const std::string& output_name = "output_example_03.root"){
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_03();
+  example_top_to_bWlnu();
   return 0;
 }
 #endif
