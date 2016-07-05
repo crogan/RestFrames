@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: inc/RestFrames/ReconstructionFrame.hh Source File</title>
+<title>RestFrames: examples/example_Wlnu.C Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -117,18 +117,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">ReconstructionFrame.hh</div>  </div>
+<div class="title">example_Wlnu.C</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00087.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//   it under the terms of the GNU General Public License as published by</span></div>
@@ -143,72 +144,207 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef ReconstructionFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define ReconstructionFrame_HH</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00089.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00070.html">RestFrames/Group.hh</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00125.html">RestFrames/RestFrames.hh</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00195.html">RestFrames</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> example_Wlnu(<span class="keyword">const</span> std::string&amp; output_name = <span class="stringliteral">&quot;output_Wlnu.root&quot;</span>){</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00152.html">std</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00151.html">RestFrames</a> {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">// ReconstructionFrame class</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00028.html">   43</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00028.html">ReconstructionFrame</a> : <span class="keyword">public</span> <a class="code" href="a00030.html">RestFrame</a> {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00028.html">ReconstructionFrame</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00028.html">ReconstructionFrame</a>();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00028.html">ReconstructionFrame</a>();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Clear();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00028.html">ReconstructionFrame</a>&amp; Empty();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddChildFrame(<a class="code" href="a00030.html">RestFrame</a>&amp; frame);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetParentFrame(<a class="code" href="a00030.html">RestFrame</a>&amp; frame = </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                RestFrame::Empty());</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00028.html">ReconstructionFrame</a> <span class="keyword">const</span>&amp; GetParentFrame() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00028.html">ReconstructionFrame</a>&amp; GetChildFrame(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetGroup(<a class="code" href="a00011.html">Group</a>&amp; group = Group::Empty());</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="a00011.html">Group</a>&amp; GetGroup() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="a00034.html">RestFrames::RFList&lt;Group&gt;</a> GetListGroups() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeAnalysisRecursive();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> ClearEventRecursive();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEventRecursive();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">double</span> mW = 80.385; <span class="comment">// GeV, PDG 2016</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">double</span> wW = 2.085;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// Number of events to generate</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span> Ngen = 100000;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Initializing generator frames and tree...&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00024.html">LabGenFrame</a>       LAB_Gen(<span class="stringliteral">&quot;LAB_Gen&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00036.html">ResonanceGenFrame</a> W_Gen(<span class="stringliteral">&quot;W_Gen&quot;</span>,<span class="stringliteral">&quot;W&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00056.html">VisibleGenFrame</a>   L_Gen(<span class="stringliteral">&quot;L_Gen&quot;</span>,<span class="stringliteral">&quot;#it{l}&quot;</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00017.html">InvisibleGenFrame</a> NU_Gen(<span class="stringliteral">&quot;NU_Gen&quot;</span>,<span class="stringliteral">&quot;#nu&quot;</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  LAB_Gen.SetChildFrame(W_Gen);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  W_Gen.AddChildFrame(L_Gen);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  W_Gen.AddChildFrame(NU_Gen);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span>(LAB_Gen.InitializeTree())</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized generator tree&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing generator tree&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="comment">// set W pole mass and width</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  W_Gen.SetMass(mW);                   W_Gen.SetWidth(wW);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">// set lepton pT and eta cuts</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  L_Gen.SetPtCut(20.);                 L_Gen.SetEtaCut(2.5);  </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">if</span>(LAB_Gen.InitializeAnalysis())</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized generator analysis&quot;</span> &lt;&lt; std::endl &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing generator analysis&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Initializing reconstruction frames and trees...&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="a00025.html">LabRecoFrame</a>       LAB(<span class="stringliteral">&quot;LAB&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <a class="code" href="a00010.html">DecayRecoFrame</a>     W(<span class="stringliteral">&quot;W&quot;</span>,<span class="stringliteral">&quot;W&quot;</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <a class="code" href="a00057.html">VisibleRecoFrame</a>   L(<span class="stringliteral">&quot;L&quot;</span>,<span class="stringliteral">&quot;#it{l}&quot;</span>);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="a00020.html">InvisibleRecoFrame</a> NU(<span class="stringliteral">&quot;NU&quot;</span>,<span class="stringliteral">&quot;#nu&quot;</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  LAB.SetChildFrame(W);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  W.AddChildFrame(L);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  W.AddChildFrame(NU);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="a00011.html">Group</a>* m_GroupPtr;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">mutable</span> map&lt;const RestFrame*, RestFrames::RFList&lt;State&gt; &gt; m_ChildStates;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">bool</span> InitializeVisibleStates();</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">bool</span> InitializeGroupStates();</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> FillListGroupsRecursive(<a class="code" href="a00034.html">RestFrames::RFList&lt;Group&gt;</a>&amp; groups) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  };</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00030_html"><div class="ttname"><a href="a00030.html">RestFrame</a></div><div class="ttdoc">Base class for all Frame objects. </div></div>
-<div class="ttc" id="a00070_html"><div class="ttname"><a href="a00070.html">Group.hh</a></div></div>
-<div class="ttc" id="a00034_html"><div class="ttname"><a href="a00034.html">RestFrames::RFList</a></div><div class="ttdef"><b>Definition:</b> <a href="a00093_source.html#l00046">RFList.hh:46</a></div></div>
-<div class="ttc" id="a00152_html"><div class="ttname"><a href="a00152.html">std</a></div></div>
-<div class="ttc" id="a00011_html"><div class="ttname"><a href="a00011.html">RestFrames::Group</a></div><div class="ttdef"><b>Definition:</b> <a href="a00070_source.html#l00048">Group.hh:48</a></div></div>
-<div class="ttc" id="a00089_html"><div class="ttname"><a href="a00089.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="a00028_html"><div class="ttname"><a href="a00028.html">RestFrames::ReconstructionFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00087_source.html#l00043">ReconstructionFrame.hh:43</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordflow">if</span>(LAB.InitializeTree())</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized reconstruction trees&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing reconstruction trees&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="comment">// Now we add invisible jigsaws</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <a class="code" href="a00018.html">InvisibleGroup</a> INV(<span class="stringliteral">&quot;INV&quot;</span>,<span class="stringliteral">&quot;Neutrino Jigsaws&quot;</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  INV.AddFrame(NU);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="comment">// Set the neutrino mass</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <a class="code" href="a00049.html">SetMassInvJigsaw</a> MassJigsaw(<span class="stringliteral">&quot;MassJigsaw&quot;</span>,<span class="stringliteral">&quot;m_{#nu} = 0&quot;</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  INV.AddJigsaw(MassJigsaw);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="comment">// Set the neutrino rapidity</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <a class="code" href="a00050.html">SetRapidityInvJigsaw</a> RapidityJigsaw(<span class="stringliteral">&quot;RapidityJigsaw&quot;</span>,<span class="stringliteral">&quot;#eta_{#nu} = #eta_{#it{l}}&quot;</span>);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  INV.AddJigsaw(RapidityJigsaw);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  RapidityJigsaw.AddVisibleFrame(L);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordflow">if</span>(LAB.InitializeAnalysis())</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized analyses&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing analyses&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="a00052.html">TreePlot</a>* tree_plot = <span class="keyword">new</span> <a class="code" href="a00052.html">TreePlot</a>(<span class="stringliteral">&quot;TreePlot&quot;</span>,<span class="stringliteral">&quot;TreePlot&quot;</span>);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// generator tree</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  tree_plot-&gt;SetTree(LAB_Gen);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  tree_plot-&gt;Draw(<span class="stringliteral">&quot;GenTree&quot;</span>, <span class="stringliteral">&quot;Generator Tree&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="comment">// reconstruction tree</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  tree_plot-&gt;SetTree(LAB);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  tree_plot-&gt;Draw(<span class="stringliteral">&quot;RecoTree&quot;</span>, <span class="stringliteral">&quot;Reconstruction Tree&quot;</span>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="comment">// Invisible Jigsaws tree </span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  tree_plot-&gt;SetTree(INV);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  tree_plot-&gt;Draw(<span class="stringliteral">&quot;InvTree&quot;</span>, <span class="stringliteral">&quot;InvisibleJigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="comment">// Declare observables for histogram booking</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <a class="code" href="a00013.html">HistPlot</a>* hist_plot = <span class="keyword">new</span> <a class="code" href="a00013.html">HistPlot</a>(<span class="stringliteral">&quot;HistPlot&quot;</span>,<span class="stringliteral">&quot;W #rightarrow #it{l} #nu&quot;</span>);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; MW     = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;MW&quot;</span>, <span class="stringliteral">&quot;M_{W}&quot;</span>, 30., 120., <span class="stringliteral">&quot;[GeV]&quot;</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; cosW   = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;cosW&quot;</span>,<span class="stringliteral">&quot;cos #phi_{W}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; dphiW  = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;dphiW&quot;</span>, <span class="stringliteral">&quot;#Delta #phi_{W}&quot;</span>, 0., 2.*acos(-1.));</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; DcosW  = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;DcosW&quot;</span>,<span class="stringliteral">&quot;#phi_{W} - #phi_{W}^{true}&quot;</span>, -0.5, 0.5);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; DdphiW = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;DdphiW&quot;</span>,<span class="stringliteral">&quot;#Delta #phi_{W} - #Delta #phi_{W}^{true}&quot;</span>, -0.5, 0.5);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00015.html">HistPlotVar</a>&amp; pTWoMW = hist_plot-&gt;GetNewVar(<span class="stringliteral">&quot;pTW&quot;</span>,<span class="stringliteral">&quot;p_{T}^{W} / m_{W}&quot;</span>,0.,1.);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00014.html">HistPlotCategory</a>&amp; cat_Gen  = hist_plot-&gt;GetNewCategory(<span class="stringliteral">&quot;Reco&quot;</span>, <span class="stringliteral">&quot;Generator&quot;</span>);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00014.html">HistPlotCategory</a>&amp; cat_Reco = hist_plot-&gt;GetNewCategory(<span class="stringliteral">&quot;Reco&quot;</span>, <span class="stringliteral">&quot;Reconstruction&quot;</span>);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  hist_plot-&gt;AddPlot(DcosW,  cat_Reco);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  hist_plot-&gt;AddPlot(DdphiW, cat_Reco);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  hist_plot-&gt;AddPlot(MW,     cat_Gen+cat_Reco);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  hist_plot-&gt;AddPlot(DcosW,  MW, cat_Reco);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  hist_plot-&gt;AddPlot(DdphiW, MW, cat_Reco);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  hist_plot-&gt;AddPlot(MW,     pTWoMW, cat_Reco);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  hist_plot-&gt;AddPlot(DcosW,  pTWoMW, cat_Reco);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  hist_plot-&gt;AddPlot(DdphiW, pTWoMW, cat_Reco);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> igen = 0; igen &lt; Ngen; igen++){</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">if</span>(igen%((std::max(Ngen,10))/10) == 0)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Generating event &quot;</span> &lt;&lt; igen &lt;&lt; <span class="stringliteral">&quot; of &quot;</span> &lt;&lt; Ngen &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="comment">// generate event</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    LAB_Gen.ClearEvent();                                <span class="comment">// clear the gen tree</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    pTWoMW = gRandom-&gt;Rndm();</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    LAB_Gen.SetPToverM(pTWoMW);                          <span class="comment">// give the W some Pt</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">double</span> PzW = mW*(2.*gRandom-&gt;Rndm()-1.);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    LAB_Gen.SetLongitudinalMomentum(PzW);                <span class="comment">// give the W some Pz</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;     </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    LAB_Gen.AnalyzeEvent();                              <span class="comment">// generate a new event</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="comment">// analyze event</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    LAB.ClearEvent();                               <span class="comment">// clear the reco tree</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    L.SetLabFrameFourVector(L_Gen.GetFourVector()); <span class="comment">// Set lepton 4-vec</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    TVector3 MET = LAB_Gen.GetInvisibleMomentum();       <span class="comment">// Get the MET from gen tree</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    MET.SetZ(0.);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    INV.SetLabFrameThreeVector(MET);                     <span class="comment">// Set the MET in reco tree</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    LAB.AnalyzeEvent();                             <span class="comment">// analyze the event</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">// generator-level observables</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    MW    = W_Gen.GetMass();</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    cosW  = cos(W_Gen.GetDeltaPhiDecayAngle());</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    dphiW = LAB_Gen.GetDeltaPhiDecayPlanes(W_Gen);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    hist_plot-&gt;Fill(cat_Gen);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="comment">// calculate observables</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    MW    = W.GetMass();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    cosW  = cos(W.GetDeltaPhiDecayAngle());</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    dphiW = LAB.GetDeltaPhiDecayPlanes(W);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">double</span> cosWgen  = cos(W_Gen.GetDeltaPhiDecayAngle());</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">double</span> dphiWgen = LAB_Gen.GetDeltaPhiDecayPlanes(W_Gen);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    DcosW  = asin(sqrt(1.-cosW*cosW)*cosWgen-sqrt(1.-cosWgen*cosWgen)*cosW);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    DdphiW = asin(sin(dphiW-dphiWgen));</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    hist_plot-&gt;Fill(cat_Reco);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  hist_plot-&gt;Draw();</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  TFile fout(output_name.c_str(),<span class="stringliteral">&quot;RECREATE&quot;</span>);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  fout.Close();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  hist_plot-&gt;WriteOutput(output_name);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  hist_plot-&gt;WriteHist(output_name);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  tree_plot-&gt;WriteOutput(output_name);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor"># ifndef __CINT__ // main function for stand-alone compilation</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="keywordtype">int</span> main(){</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  example_Wlnu();</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00024_html"><div class="ttname"><a href="a00024.html">RestFrames::LabGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00111_source.html#l00041">LabGenFrame.hh:41</a></div></div>
+<div class="ttc" id="a00010_html"><div class="ttname"><a href="a00010.html">RestFrames::DecayRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00043">DecayRecoFrame.hh:43</a></div></div>
+<div class="ttc" id="a00056_html"><div class="ttname"><a href="a00056.html">RestFrames::VisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00140_source.html#l00041">VisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="a00015_html"><div class="ttname"><a href="a00015.html">RestFrames::HistPlotVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00040">HistPlotVar.hh:40</a></div></div>
+<div class="ttc" id="a00050_html"><div class="ttname"><a href="a00050.html">RestFrames::SetRapidityInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00134_source.html#l00037">SetRapidityInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="a00018_html"><div class="ttname"><a href="a00018.html">RestFrames::InvisibleGroup</a></div><div class="ttdef"><b>Definition:</b> <a href="a00105_source.html#l00040">InvisibleGroup.hh:40</a></div></div>
+<div class="ttc" id="a00014_html"><div class="ttname"><a href="a00014.html">RestFrames::HistPlotCategory</a></div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00040">HistPlotCategory.hh:40</a></div></div>
+<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00017_html"><div class="ttname"><a href="a00017.html">RestFrames::InvisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00041">InvisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="a00020_html"><div class="ttname"><a href="a00020.html">RestFrames::InvisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00041">InvisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="a00049_html"><div class="ttname"><a href="a00049.html">RestFrames::SetMassInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00133_source.html#l00037">SetMassInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="a00025_html"><div class="ttname"><a href="a00025.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00112_source.html#l00044">LabRecoFrame.hh:44</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">RestFrames.hh</a></div></div>
+<div class="ttc" id="a00052_html"><div class="ttname"><a href="a00052.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00136_source.html#l00050">TreePlot.hh:50</a></div></div>
+<div class="ttc" id="a00013_html"><div class="ttname"><a href="a00013.html">RestFrames::HistPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00044">HistPlot.hh:44</a></div></div>
+<div class="ttc" id="a00057_html"><div class="ttname"><a href="a00057.html">RestFrames::VisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00141_source.html#l00041">VisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="a00036_html"><div class="ttname"><a href="a00036.html">RestFrames::ResonanceGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00123_source.html#l00040">ResonanceGenFrame.hh:40</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: inc/RestFrames/State.hh Source File</title>
+<title>RestFrames: inc/RestFrames/Group.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -122,12 +122,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">State.hh</div>  </div>
+<div class="title">Group.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00099.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -143,91 +143,111 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef State_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define State_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef Group_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define Group_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00091.html">RestFrames/RFBase.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00080.html">RestFrames/Jigsaw.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00152.html">std</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00151.html">RestFrames</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00126.html">RestFrames/RFBase.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>Jigsaw;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">class </span>RestFrame;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">class </span><a class="code" href="a00030.html">RestFrame</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">enum</span> StateType { kVanillaState,   kVisibleState,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;           kInvisibleState, kCombinatoricState };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a00043.html">   45</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00043.html">State</a> : <span class="keyword">public</span> <a class="code" href="a00032.html">RFBase</a> {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00043.html">State</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00043.html">State</a>();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00043.html">State</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Clear();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">enum</span> GroupType { kVanillaGroup, kInvisibleGroup, </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;           kCombinatoricGroup };</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">// Group class</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a00012.html">   46</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00012.html">Group</a> : <span class="keyword">public</span> <a class="code" href="a00039.html">RFBase</a> {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00012.html">Group</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00012.html">Group</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00012.html">Group</a>();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00043.html">State</a>&amp; Empty();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    StateType GetType() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> IsVisibleState() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> IsInvisibleState() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> IsCombinatoricState() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddFrame(<a class="code" href="a00030.html">RestFrame</a>&amp; frame) = 0;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddFrames(<span class="keyword">const</span> <a class="code" href="a00034.html">RestFrames::RFList&lt;RestFrame&gt;</a>&amp; frames);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00012.html#ae93b9b3cedd0e0abf205f3a421d6a69d">Clear</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> IsInvisibleGroup() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">bool</span> IsCombinatoricGroup() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    GroupType GetType()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Type; }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddFrame(<a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddFrames(<span class="keyword">const</span> <a class="code" href="a00042.html">RestFrameList</a>&amp; frames);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddJigsaw(<a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> RemoveFrame(<a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> RemoveFrames();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> RemoveJigsaw(<a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> RemoveJigsaws();</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="a00034.html">RestFrames::RFList&lt;RestFrame&gt;</a> <span class="keyword">const</span>&amp; GetListFrames() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">int</span> GetNFrames() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsFrame(<span class="keyword">const</span> <a class="code" href="a00030.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsFrames(<span class="keyword">const</span> <a class="code" href="a00034.html">RestFrames::RFList&lt;RestFrame&gt;</a>&amp; frames) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">bool</span> ContainsFrame(<span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> GetNFrames() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00042.html">RestFrameList</a>&amp; GetListFrames() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00042.html">JigsawList</a>&amp; GetListJigsaws() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetParentJigsaw(<a class="code" href="a00021.html">Jigsaw</a>&amp; jigsaw = Jigsaw::Empty());</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetChildJigsaw(<a class="code" href="a00021.html">Jigsaw</a>&amp; jigsaw = Jigsaw::Empty());</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00021.html">Jigsaw</a> <span class="keyword">const</span>&amp; GetParentJigsaw() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00021.html">Jigsaw</a> <span class="keyword">const</span>&amp; GetChildJigsaw() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Boost(<span class="keyword">const</span> TVector3&amp; B);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetFourVector(<span class="keyword">const</span> TLorentzVector&amp; V);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> TLorentzVector GetFourVector() <span class="keyword">const</span>; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> FillGroupJigsawDependancies(<a class="code" href="a00034.html">RestFrames::RFList&lt;Jigsaw&gt;</a>&amp; jigsaws) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> FillStateJigsawDependancies(<a class="code" href="a00034.html">RestFrames::RFList&lt;Jigsaw&gt;</a>&amp; jigsaws) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    StateType m_Type;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="a00034.html">RestFrames::RFList&lt;RestFrame&gt;</a> m_Frames;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    TLorentzVector m_P;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="a00021.html">Jigsaw</a>* m_ParentJigsawPtr;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="a00021.html">Jigsaw</a>* m_ChildJigsawPtr;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> m_class_key;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00012.html">Group</a>&amp; Empty();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    GroupType m_Type;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="a00051.html">State</a>* m_GroupStatePtr;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeAnalysis();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> ClearEvent() = 0;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEvent() = 0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00051.html">State</a>&amp; InitializeParentState() = 0;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00051.html">State</a>&amp; GetParentState() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">int</span> GetNChildStates() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00051.html">State</a>&amp; GetChildState(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="a00051.html">State</a>&amp; GetChildState(<span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <a class="code" href="a00042.html">StateList</a> GetChildStates(<span class="keyword">const</span> <a class="code" href="a00042.html">RestFrameList</a>&amp; frames) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="a00037.html">RestFrame</a> <span class="keyword">const</span>&amp; GetLabFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="a00042.html">RestFrameList</a> m_Frames;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="a00042.html">JigsawList</a>    m_Jigsaws;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <a class="code" href="a00042.html">StateList</a>     m_States;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00091_html"><div class="ttname"><a href="a00091.html">RFBase.hh</a></div></div>
-<div class="ttc" id="a00030_html"><div class="ttname"><a href="a00030.html">RestFrame</a></div><div class="ttdoc">Base class for all Frame objects. </div></div>
-<div class="ttc" id="a00021_html"><div class="ttname"><a href="a00021.html">RestFrames::Jigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00080_source.html#l00046">Jigsaw.hh:46</a></div></div>
-<div class="ttc" id="a00043_html"><div class="ttname"><a href="a00043.html">RestFrames::State</a></div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00045">State.hh:45</a></div></div>
-<div class="ttc" id="a00034_html"><div class="ttname"><a href="a00034.html">RestFrames::RFList&lt; RestFrame &gt;</a></div></div>
-<div class="ttc" id="a00032_html"><div class="ttname"><a href="a00032.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00091_source.html#l00071">RFBase.hh:71</a></div></div>
-<div class="ttc" id="a00152_html"><div class="ttname"><a href="a00152.html">std</a></div></div>
-<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">Jigsaw.hh</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="a00042.html">StateList</a>  m_StatesToResolve;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="a00042.html">JigsawList</a> m_JigsawsToUse;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">bool</span> ResolveUnknowns();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">bool</span> ResolveState(<span class="keyword">const</span> <a class="code" href="a00051.html">State</a>&amp; state);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">bool</span> InitializeJigsaw(<a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> m_class_key;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00052.html">TreePlot</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00035.html">ReconstructionFrame</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00025.html">LabRecoFrame</a>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00022.html">Jigsaw</a>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  };</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00022_html"><div class="ttname"><a href="a00022.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00044">Jigsaw.hh:44</a></div></div>
+<div class="ttc" id="a00039_html"><div class="ttname"><a href="a00039.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00126_source.html#l00053">RFBase.hh:53</a></div></div>
+<div class="ttc" id="a00042_html"><div class="ttname"><a href="a00042.html">RestFrames::RFList&lt; RestFrame &gt;</a></div></div>
+<div class="ttc" id="a00035_html"><div class="ttname"><a href="a00035.html">RestFrames::ReconstructionFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00041">ReconstructionFrame.hh:41</a></div></div>
+<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">RFBase.hh</a></div></div>
+<div class="ttc" id="a00012_html"><div class="ttname"><a href="a00012.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects </div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00046">Group.hh:46</a></div></div>
+<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00012_html_ae93b9b3cedd0e0abf205f3a421d6a69d"><div class="ttname"><a href="a00012.html#ae93b9b3cedd0e0abf205f3a421d6a69d">RestFrames::Group::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears Group of all connections to other objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00062">Group.cc:62</a></div></div>
+<div class="ttc" id="a00037_html"><div class="ttname"><a href="a00037.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects </div></div>
+<div class="ttc" id="a00025_html"><div class="ttname"><a href="a00025.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00112_source.html#l00044">LabRecoFrame.hh:44</a></div></div>
+<div class="ttc" id="a00052_html"><div class="ttname"><a href="a00052.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00136_source.html#l00050">TreePlot.hh:50</a></div></div>
+<div class="ttc" id="a00051_html"><div class="ttname"><a href="a00051.html">RestFrames::State</a></div><div class="ttdoc">abstract base class for all State objects </div><div class="ttdef"><b>Definition:</b> <a href="a00135_source.html#l00044">State.hh:44</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

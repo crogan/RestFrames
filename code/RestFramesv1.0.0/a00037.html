@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: RestFrames::RFListBase&lt; T, Derived &gt; Class Template Reference</title>
+<title>RestFrames: RestFrames::RestFrame Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -120,154 +120,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>RestFrames</b></li><li class="navelem"><a class="el" href="a00037.html">RFListBase</a></li>  </ul>
+<li class="navelem"><b>RestFrames</b></li><li class="navelem"><a class="el" href="a00037.html">RestFrame</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="a00249.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">RestFrames::RFListBase&lt; T, Derived &gt; Class Template Reference</div>  </div>
+<div class="title">RestFrames::RestFrame Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class T, class Derived&gt;<br />
-class RestFrames::RFListBase&lt; T, Derived &gt;</h3>
+<div class="textblock"><p>abstract base class for all Frame objects </p>
+</div><div class="dynheader">
+Inheritance diagram for RestFrames::RestFrame:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00299.png" border="0" usemap="#_rest_frames_1_1_rest_frame_inherit__map" alt="Inheritance graph"/></div>
+<map name="_rest_frames_1_1_rest_frame_inherit__map" id="_rest_frames_1_1_rest_frame_inherit__map">
+<area shape="rect" id="node2" href="a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="221,137,421,163"/><area shape="rect" id="node13" href="a00035.html" title="RestFrames::Reconstruction\lFrame" alt="" coords="225,319,416,357"/><area shape="rect" id="node3" href="a00008.html" title="RestFrames::DecayFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="474,5,651,44"/><area shape="rect" id="node6" href="a00016.html" title="RestFrames::InvisibleFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="469,68,657,107"/><area shape="rect" id="node8" href="a00023.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="481,131,644,169"/><area shape="rect" id="node11" href="a00055.html" title="RestFrames::VisibleFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="473,193,652,232"/><area shape="rect" id="node4" href="a00009.html" title="RestFrames::DecayGenFrame" alt="" coords="708,12,911,37"/><area shape="rect" id="node5" href="a00036.html" title="RestFrames::ResonanceGen\lFrame" alt="" coords="967,5,1161,44"/><area shape="rect" id="node7" href="a00017.html" title="RestFrames::InvisibleGen\lFrame" alt="" coords="722,68,897,107"/><area shape="rect" id="node9" href="a00024.html" title="RestFrames::LabGenFrame" alt="" coords="716,137,903,163"/><area shape="rect" id="node10" href="a00034.html" title="RestFrames::ppLabGenFrame" alt="" coords="963,137,1165,163"/><area shape="rect" id="node12" href="a00056.html" title="RestFrames::VisibleGenFrame" alt="" coords="708,200,912,225"/><area shape="rect" id="node14" href="a00008.html" title="RestFrames::DecayFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="474,256,651,295"/><area shape="rect" id="node17" href="a00016.html" title="RestFrames::InvisibleFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="469,319,657,357"/><area shape="rect" id="node19" href="a00023.html" title="RestFrames::LabFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="477,381,648,420"/><area shape="rect" id="node21" href="a00055.html" title="RestFrames::VisibleFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="473,444,652,483"/><area shape="rect" id="node15" href="a00010.html" title="RestFrames::DecayRecoFrame" alt="" coords="705,263,914,288"/><area shape="rect" id="node16" href="a00048.html" title="RestFrames::SelfAssembling\lRecoFrame" alt="" coords="967,256,1160,295"/><area shape="rect" id="node18" href="a00020.html" title="RestFrames::InvisibleReco\lFrame" alt="" coords="719,319,900,357"/><area shape="rect" id="node20" href="a00025.html" title="RestFrames::LabRecoFrame" alt="" coords="713,388,906,413"/><area shape="rect" id="node22" href="a00057.html" title="RestFrames::VisibleRecoFrame" alt="" coords="705,451,915,476"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
-
-<p>Definition at line <a class="el" href="a00093_source.html#l00052">52</a> of file <a class="el" href="a00093_source.html">RFList.hh</a>.</p>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a73bd0ce24e24bf5cf718eb735223f730"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73bd0ce24e24bf5cf718eb735223f730"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> ()</td></tr>
-<tr class="separator:a73bd0ce24e24bf5cf718eb735223f730"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab06ad62e07a67f5f66e7f382ed5cb2f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab06ad62e07a67f5f66e7f382ed5cb2f4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Add</b> (T &amp;obj)</td></tr>
-<tr class="separator:ab06ad62e07a67f5f66e7f382ed5cb2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab68f3e2725ef1274520eb5faefd6b54a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ab68f3e2725ef1274520eb5faefd6b54a"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:ab68f3e2725ef1274520eb5faefd6b54a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs)</td></tr>
-<tr class="separator:ab68f3e2725ef1274520eb5faefd6b54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3c6ea98629463ef6e242782cd18e115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3c6ea98629463ef6e242782cd18e115"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Remove</b> (const T &amp;obj)</td></tr>
-<tr class="separator:ab3c6ea98629463ef6e242782cd18e115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32db1c0e071f76aaf523d6198c2bc594"><td class="memTemplParams" colspan="2"><a class="anchor" id="a32db1c0e071f76aaf523d6198c2bc594"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a32db1c0e071f76aaf523d6198c2bc594"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Remove</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs)</td></tr>
-<tr class="separator:a32db1c0e071f76aaf523d6198c2bc594"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad27f78786b87fad1b1fdc07c96ad4903"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad27f78786b87fad1b1fdc07c96ad4903"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetN</b> () const </td></tr>
-<tr class="separator:ad27f78786b87fad1b1fdc07c96ad4903"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a321e1be9fb2b62c49bc853ce69892e94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a321e1be9fb2b62c49bc853ce69892e94"></a>
-T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Get</b> (int i) const </td></tr>
-<tr class="separator:a321e1be9fb2b62c49bc853ce69892e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f2a9eaec3a247975e612b8a82c20b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f2a9eaec3a247975e612b8a82c20b9c"></a>
-T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Get</b> (const <a class="el" href="a00033.html">RFKey</a> &amp;key) const </td></tr>
-<tr class="separator:a4f2a9eaec3a247975e612b8a82c20b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60e75373b966c04acd952e242ad5bc12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60e75373b966c04acd952e242ad5bc12"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetIndex</b> (const <a class="el" href="a00033.html">RFKey</a> &amp;key) const </td></tr>
-<tr class="separator:a60e75373b966c04acd952e242ad5bc12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e5c518579ac9c1f34910313e1c94842"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e5c518579ac9c1f34910313e1c94842"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetIndex</b> (const T &amp;obj) const </td></tr>
-<tr class="separator:a4e5c518579ac9c1f34910313e1c94842"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a061b09b072b7af2d5d3c762db75aa448"><td class="memTemplParams" colspan="2"><a class="anchor" id="a061b09b072b7af2d5d3c762db75aa448"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a061b09b072b7af2d5d3c762db75aa448"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Contains</b> (const U &amp;obj) const </td></tr>
-<tr class="separator:a061b09b072b7af2d5d3c762db75aa448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7da82dfd808805fee721cfdcaf41d8b"><td class="memTemplParams" colspan="2"><a class="anchor" id="af7da82dfd808805fee721cfdcaf41d8b"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:af7da82dfd808805fee721cfdcaf41d8b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Contains</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:af7da82dfd808805fee721cfdcaf41d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2bd26cf7789ba701cc6640922b809c0"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac2bd26cf7789ba701cc6640922b809c0"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:ac2bd26cf7789ba701cc6640922b809c0"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>IsSame</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:ac2bd26cf7789ba701cc6640922b809c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34602f9699fd60f903ea82f5c82e3508"><td class="memTemplParams" colspan="2"><a class="anchor" id="a34602f9699fd60f903ea82f5c82e3508"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a34602f9699fd60f903ea82f5c82e3508"><td class="memTemplItemLeft" align="right" valign="top">Derived&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Union</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:a34602f9699fd60f903ea82f5c82e3508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad570552e8f02c1861a41db240b94a20e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad570552e8f02c1861a41db240b94a20e"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:ad570552e8f02c1861a41db240b94a20e"><td class="memTemplItemLeft" align="right" valign="top">Derived&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Intersection</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:ad570552e8f02c1861a41db240b94a20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa692fff9a63ee57f2b43630c87ec1e42"><td class="memTemplParams" colspan="2"><a class="anchor" id="aa692fff9a63ee57f2b43630c87ec1e42"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:aa692fff9a63ee57f2b43630c87ec1e42"><td class="memTemplItemLeft" align="right" valign="top">Derived&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Complement</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:aa692fff9a63ee57f2b43630c87ec1e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80ef701d7be0029af69fd20817e8eab3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80ef701d7be0029af69fd20817e8eab3"></a>
-Derived &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (T &amp;obj)</td></tr>
-<tr class="separator:a80ef701d7be0029af69fd20817e8eab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c1e958ebcc73619a902c02bd601240d"><td class="memTemplParams" colspan="2"><a class="anchor" id="a2c1e958ebcc73619a902c02bd601240d"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a2c1e958ebcc73619a902c02bd601240d"><td class="memTemplItemLeft" align="right" valign="top">Derived &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs)</td></tr>
-<tr class="separator:a2c1e958ebcc73619a902c02bd601240d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e5cc9b5d8e7ae7aad7968798b229d2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e5cc9b5d8e7ae7aad7968798b229d2b"></a>
-T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (int i) const </td></tr>
-<tr class="separator:a0e5cc9b5d8e7ae7aad7968798b229d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bb460ee05eb4e9f9c4e4de90bbd6f6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bb460ee05eb4e9f9c4e4de90bbd6f6b"></a>
-T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const <a class="el" href="a00033.html">RFKey</a> &amp;key) const </td></tr>
-<tr class="separator:a6bb460ee05eb4e9f9c4e4de90bbd6f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26092e0ddd38c5c1aa983a91b55dcd96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26092e0ddd38c5c1aa983a91b55dcd96"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const T &amp;obj) const </td></tr>
-<tr class="separator:a26092e0ddd38c5c1aa983a91b55dcd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63835928bf64d96b348edd19120c5ab1"><td class="memTemplParams" colspan="2"><a class="anchor" id="a63835928bf64d96b348edd19120c5ab1"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a63835928bf64d96b348edd19120c5ab1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:a63835928bf64d96b348edd19120c5ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab51b7f20e3a29ed1001b61aa18319f4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab51b7f20e3a29ed1001b61aa18319f4c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const T &amp;obj) const </td></tr>
-<tr class="separator:ab51b7f20e3a29ed1001b61aa18319f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19c27885ccf7adbedecd7d6e6fcd31df"><td class="memTemplParams" colspan="2"><a class="anchor" id="a19c27885ccf7adbedecd7d6e6fcd31df"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a19c27885ccf7adbedecd7d6e6fcd31df"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:a19c27885ccf7adbedecd7d6e6fcd31df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a230cbbf022df0aa27d506c18751dd746"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a230cbbf022df0aa27d506c18751dd746"></a>
-Derived&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (T &amp;obj) const </td></tr>
-<tr class="separator:a230cbbf022df0aa27d506c18751dd746"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a064467c26dd7501ba2dfe23559cb5129"><td class="memTemplParams" colspan="2"><a class="anchor" id="a064467c26dd7501ba2dfe23559cb5129"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a064467c26dd7501ba2dfe23559cb5129"><td class="memTemplItemLeft" align="right" valign="top">Derived&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:a064467c26dd7501ba2dfe23559cb5129"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae44b2ffd065551c98adb4b0cc92cd6df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae44b2ffd065551c98adb4b0cc92cd6df"></a>
-Derived&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const T &amp;obj) const </td></tr>
-<tr class="separator:ae44b2ffd065551c98adb4b0cc92cd6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43347edee167c4f8abfe121079e16977"><td class="memTemplParams" colspan="2"><a class="anchor" id="a43347edee167c4f8abfe121079e16977"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a43347edee167c4f8abfe121079e16977"><td class="memTemplItemLeft" align="right" valign="top">Derived&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs) const </td></tr>
-<tr class="separator:a43347edee167c4f8abfe121079e16977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a1be0bb67d951d541336ef02ab83402"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a1be0bb67d951d541336ef02ab83402"></a>
-Derived &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (T &amp;obj)</td></tr>
-<tr class="separator:a2a1be0bb67d951d541336ef02ab83402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a819d1b36bf3a61d69d48f643da249b75"><td class="memTemplParams" colspan="2"><a class="anchor" id="a819d1b36bf3a61d69d48f643da249b75"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a819d1b36bf3a61d69d48f643da249b75"><td class="memTemplItemLeft" align="right" valign="top">Derived &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs)</td></tr>
-<tr class="separator:a819d1b36bf3a61d69d48f643da249b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3c9f86a36f54453f2d41479d766b7f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3c9f86a36f54453f2d41479d766b7f7"></a>
-Derived &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (const T &amp;obj)</td></tr>
-<tr class="separator:ac3c9f86a36f54453f2d41479d766b7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5be53cc25690ab7be7a24fe7cd917f04"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5be53cc25690ab7be7a24fe7cd917f04"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a5be53cc25690ab7be7a24fe7cd917f04"><td class="memTemplItemLeft" align="right" valign="top">Derived &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-=</b> (const <a class="el" href="a00034.html">RFList</a>&lt; U &gt; &amp;objs)</td></tr>
-<tr class="separator:a5be53cc25690ab7be7a24fe7cd917f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a310047d79b7baa998320b8e9f3e18a8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a310047d79b7baa998320b8e9f3e18a8e"></a>
-vector&lt; T * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_Objs</b></td></tr>
-<tr class="separator:a310047d79b7baa998320b8e9f3e18a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>inc/RestFrames/<a class="el" href="a00093_source.html">RFList.hh</a></li>
-<li>src/<a class="el" href="a00137_source.html">RFList.cc</a></li>
+<p><code>#include &quot;<a class="el" href="a00124_source.html">RestFrames/RestFrame.hh</a>&quot;</code></p>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>doc/classes/RestFrame.dox</li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:35 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:29 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

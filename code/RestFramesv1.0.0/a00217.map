@@ -1,17 +1,5 @@
-<map id="RestFrames::LabRecoFrame" name="RestFrames::LabRecoFrame">
-<area shape="rect" id="node2" href="$a00022.html" title="RestFrames::LabFrame\l\&lt; ReconstructionFrame \&gt;" alt="" coords="1467,55,1639,93"/>
-<area shape="rect" id="node3" href="$a00028.html" title="RestFrames::Reconstruction\lFrame" alt="" coords="1187,45,1378,84"/>
-<area shape="rect" id="node4" href="$a00030.html" title="Base class for all Frame objects. " alt="" coords="921,35,1009,60"/>
-<area shape="rect" id="node5" href="$a00011.html" title="RestFrames::Group" alt="" coords="896,84,1034,109"/>
-<area shape="rect" id="node6" href="$a00032.html" title="Base class for all RestFrame package objects. " alt="" coords="343,105,492,131"/>
-<area shape="rect" id="node8" href="$a00043.html" title="RestFrames::State" alt="" coords="608,55,740,80"/>
-<area shape="rect" id="node7" href="$a00038.html" title="RestFrames::RFLog" alt="" coords="57,105,199,131"/>
-<area shape="rect" id="node9" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrame \&gt;" alt="" coords="348,5,488,44"/>
-<area shape="rect" id="node10" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrame, RFList\&lt; RestFrame \&gt; \&gt;" alt="" coords="5,5,250,44"/>
-<area shape="rect" id="node11" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::Group \&gt;" alt="" coords="1473,119,1634,157"/>
-<area shape="rect" id="node12" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::Group, RFList\l\&lt; RestFrames::Group \&gt; \&gt;" alt="" coords="1185,108,1381,160"/>
-<area shape="rect" id="node13" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::Jigsaw \&gt;" alt="" coords="1471,184,1636,223"/>
-<area shape="rect" id="node14" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::Jigsaw,\l RFList\&lt; RestFrames::Jigsaw \&gt; \&gt;" alt="" coords="1173,184,1392,236"/>
-<area shape="rect" id="node15" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::VisibleState \&gt;" alt="" coords="1456,256,1651,295"/>
-<area shape="rect" id="node16" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::VisibleState,\l RFList\&lt; RestFrames::VisibleState \&gt; \&gt;" alt="" coords="1158,260,1407,312"/>
+<map id="RestFrames::DecayGenFrame" name="RestFrames::DecayGenFrame">
+<area shape="rect" id="node2" href="$a00008.html" title="RestFrames::DecayFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="18,152,196,191"/>
+<area shape="rect" id="node3" href="$a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="7,79,207,104"/>
+<area shape="rect" id="node4" href="$a00037.html" title="abstract base class for all Frame objects " alt="" coords="23,5,190,31"/>
 </map>

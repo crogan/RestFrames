@@ -1,9 +1,0 @@
-<map id="RestFrames::CombinatoricJigsaw" name="RestFrames::CombinatoricJigsaw">
-<area shape="rect" id="node2" href="$a00021.html" title="RestFrames::Jigsaw" alt="" coords="784,69,926,95"/>
-<area shape="rect" id="node3" href="$a00032.html" title="Base class for all RestFrame package objects. " alt="" coords="366,43,515,68"/>
-<area shape="rect" id="node4" href="$a00038.html" title="RestFrames::RFLog" alt="" coords="44,43,185,68"/>
-<area shape="rect" id="node5" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::Jigsaw \&gt;" alt="" coords="358,105,523,144"/>
-<area shape="rect" id="node6" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::Jigsaw,\l RFList\&lt; RestFrames::Jigsaw \&gt; \&gt;" alt="" coords="5,99,224,151"/>
-<area shape="rect" id="node7" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrames::VisibleState \&gt;" alt="" coords="757,181,952,220"/>
-<area shape="rect" id="node8" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrames::VisibleState,\l RFList\&lt; RestFrames::VisibleState \&gt; \&gt;" alt="" coords="317,175,565,227"/>
-</map>

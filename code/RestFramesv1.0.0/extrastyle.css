@@ -88,3 +88,6 @@ footer {
     color:#5B61B5;
   }
 
+  div.image img{ 
+    width:350px; 
+  }

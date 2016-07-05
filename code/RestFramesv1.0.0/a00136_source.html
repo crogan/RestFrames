@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/RFKey.cc Source File</title>
+<title>RestFrames: inc/RestFrames/TreePlot.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -117,17 +117,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RFKey.cc</div>  </div>
+<div class="title">TreePlot.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00136.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -143,34 +143,135 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00092.html">RestFrames/RFKey.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00151.html">RestFrames</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  RFKey::RFKey(<span class="keywordtype">int</span> key){ m_Key = key; }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  RFKey::RFKey(<span class="keyword">const</span> RFKey&amp; key){ m_Key = key.GetKey(); }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  RFKey::~RFKey(){ }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef TreePlot_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define TreePlot_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;TCanvas.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00131.html">RestFrames/RFPlot.hh</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00124.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">void</span> RFKey::operator=(<span class="keyword">const</span> RFKey&amp; key){ m_Key = key.GetKey(); }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">bool</span> RFKey::operator==(<span class="keywordtype">int</span> key)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (m_Key == key); }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">bool</span> RFKey::operator==(<span class="keyword">const</span> RFKey&amp; key)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (m_Key == key.GetKey()); }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">int</span> RFKey::GetKey()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Key; }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">bool</span> RFKey::IsSame(<span class="keyword">const</span> RFKey&amp; key)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">return</span> m_Key == key.GetKey();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">class </span>ReconstructionFrame;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">class </span>DecayRecoFrame;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">class </span>Jigsaw;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">class </span>Group;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">class </span>State;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">class </span>TreePlotNode;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">class </span>TreePlotLink;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">enum</span> TreeType { kVanillaTree, kFrameTree, kGroupTree };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
-<div class="ttc" id="a00092_html"><div class="ttname"><a href="a00092.html">RFKey.hh</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a00052.html">   50</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00052.html">TreePlot</a> : <span class="keyword">public</span> <a class="code" href="a00047.html">RFPlot</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="a00052.html">TreePlot</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    ~<a class="code" href="a00052.html">TreePlot</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00052.html#ac9ce7bf6c54034b28f5550d45f13807b">Clear</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> SetTree(<span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> SetTree(<span class="keyword">const</span> <a class="code" href="a00012.html">Group</a>&amp; group);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> SetTree(<span class="keyword">const</span> <a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> AddJigsaw(<span class="keyword">const</span> <a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> Draw(<span class="keyword">const</span> std::string&amp; name = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          <span class="keyword">const</span> std::string&amp; title = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;          <span class="keywordtype">bool</span> invert_colors  = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;          <span class="keywordtype">bool</span> invert_node_colors = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    TreeType m_Type;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">int</span> m_Nrow;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    std::vector&lt;int&gt; m_Ncol;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">double</span> m_Node_R;  </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">bool</span> m_SelfAssembling;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    std::map&lt;const Jigsaw*,int&gt; m_JigsawColorMap;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::map&lt;FrameType,int&gt; m_FrameColorMap;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="a00042.html">ConstRestFrameList</a> m_Frames;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="a00042.html">ConstJigsawList</a>    m_Jigsaws;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00012.html">Group</a>* m_GroupPtr;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">int</span> m_color_Node_text[4];</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">int</span> m_color_Node_line[4];</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">int</span> m_color_Node_fill[4];</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">int</span> m_color_Default_text;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">int</span> m_color_Default_line;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">int</span> m_color_Default_fill;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">int</span> m_color_Text;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">int</span> m_color_Bkg;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::vector&lt;int&gt; m_color_Leaf;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">int</span> m_style_Default;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">int</span> m_style_Leaf;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> ClearTree();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">void</span> InitTreeGrid();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    std::string GetStateTitle(<span class="keyword">const</span> <a class="code" href="a00051.html">State</a>&amp; state);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    std::string GetSetTitle(<span class="keyword">const</span> std::string&amp; set, </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                <span class="keyword">const</span> std::string&amp; index);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">void</span> AddFrame(<span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">void</span> FillFrameTree(<span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">void</span> FillFrameTreeMap(<span class="keywordtype">int</span> irow, <span class="keyword">const</span> <a class="code" href="a00037.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> FillFrameTreeMap(<span class="keywordtype">int</span> irow, <span class="keyword">const</span> <a class="code" href="a00010.html">DecayRecoFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">void</span> FillGroupTree(<span class="keyword">const</span> <a class="code" href="a00012.html">Group</a>&amp; group);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">void</span> FillJigsawTree(<span class="keyword">const</span> <a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">void</span> FillStateTreeMap(<span class="keywordtype">int</span> irow, <span class="keyword">const</span> <a class="code" href="a00051.html">State</a>&amp; state);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">void</span> FillJigsawLink(<span class="keyword">const</span> <a class="code" href="a00022.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">void</span> SetColors(<span class="keywordtype">bool</span> invert_bkg_color,</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;           <span class="keywordtype">bool</span> invert_node_color);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    std::vector&lt;TreePlotNode*&gt; m_TreeNodes;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    std::vector&lt;TreePlotLink*&gt; m_TreeLinks;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">void</span> DrawTreeLinks();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">void</span> DrawTreeNodes(<span class="keywordtype">bool</span> with_rings = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    std::vector&lt;TreePlotLink*&gt; m_LeafLinks;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordtype">void</span> DrawLeafLinks();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordtype">void</span> DrawLink(<a class="code" href="a00053.html">TreePlotLink</a>* linkPtr);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">void</span> DrawNode(<a class="code" href="a00054.html">TreePlotNode</a>* nodePtr, <span class="keywordtype">bool</span> with_rings = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordtype">void</span> DrawFrameTypeLegend();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">void</span> DrawTitle(<span class="keyword">const</span> std::string&amp; title);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> DrawJigsawLegend();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">void</span> ConvertNodeCoordinates(std::vector&lt;TreePlotNode*&gt;&amp; nodesPtr);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">int</span> GetJigsawPriority(<span class="keywordtype">int</span> Nout, <span class="keywordtype">int</span> Ndep) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    TCanvas* GetNewCanvas(<span class="keyword">const</span> std::string&amp; name, </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;              <span class="keyword">const</span> std::string&amp; title);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  };</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00124_html"><div class="ttname"><a href="a00124.html">RestFrame.hh</a></div></div>
+<div class="ttc" id="a00022_html"><div class="ttname"><a href="a00022.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00044">Jigsaw.hh:44</a></div></div>
+<div class="ttc" id="a00010_html"><div class="ttname"><a href="a00010.html">RestFrames::DecayRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00043">DecayRecoFrame.hh:43</a></div></div>
+<div class="ttc" id="a00042_html"><div class="ttname"><a href="a00042.html">RestFrames::RFList&lt; const RestFrame &gt;</a></div></div>
+<div class="ttc" id="a00047_html"><div class="ttname"><a href="a00047.html">RestFrames::RFPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00041">RFPlot.hh:41</a></div></div>
+<div class="ttc" id="a00012_html"><div class="ttname"><a href="a00012.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects </div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00046">Group.hh:46</a></div></div>
+<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00037_html"><div class="ttname"><a href="a00037.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects </div></div>
+<div class="ttc" id="a00054_html"><div class="ttname"><a href="a00054.html">RestFrames::TreePlotNode</a></div><div class="ttdef"><b>Definition:</b> <a href="a00138_source.html#l00042">TreePlotNode.hh:42</a></div></div>
+<div class="ttc" id="a00052_html"><div class="ttname"><a href="a00052.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00136_source.html#l00050">TreePlot.hh:50</a></div></div>
+<div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">RFPlot.hh</a></div></div>
+<div class="ttc" id="a00053_html"><div class="ttname"><a href="a00053.html">RestFrames::TreePlotLink</a></div><div class="ttdef"><b>Definition:</b> <a href="a00137_source.html#l00040">TreePlotLink.hh:40</a></div></div>
+<div class="ttc" id="a00051_html"><div class="ttname"><a href="a00051.html">RestFrames::State</a></div><div class="ttdoc">abstract base class for all State objects </div><div class="ttdef"><b>Definition:</b> <a href="a00135_source.html#l00044">State.hh:44</a></div></div>
+<div class="ttc" id="a00052_html_ac9ce7bf6c54034b28f5550d45f13807b"><div class="ttname"><a href="a00052.html#ac9ce7bf6c54034b28f5550d45f13807b">RestFrames::TreePlot::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RFBase of all connections to other objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00188_source.html#l00071">TreePlot.cc:71</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:35 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

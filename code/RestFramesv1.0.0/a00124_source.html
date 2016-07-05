@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/InvisibleState.cc Source File</title>
+<title>RestFrames: inc/RestFrames/RestFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -117,17 +117,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">InvisibleState.cc</div>  </div>
+<div class="title">RestFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00124.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -143,83 +143,242 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00079.html">RestFrames/InvisibleState.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00077.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00078.html">RestFrames/InvisibleRecoFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">using namespace </span><a class="code" href="a00152.html">std</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef RestFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define RestFrame_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00126.html">RestFrames/RFBase.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00127.html">RestFrames/RFCharge.hh</a>&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00151.html">RestFrames</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// InvisibleState class</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  InvisibleState::InvisibleState(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; sname, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stitle)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    : State(sname, stitle)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    m_Type = kInvisibleState;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  InvisibleState::InvisibleState() : State() {}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  InvisibleState::~InvisibleState() {}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  InvisibleState&amp; InvisibleState::Empty(){</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> InvisibleState::m_Empty;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00020.html#a08db09f5bbb90a7d417b5d974f620063">   56</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00020.html#a08db09f5bbb90a7d417b5d974f620063">InvisibleState::Clear</a>(){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00043.html#a2cc03b7da283f1a6790ba2ed37cd3e26">State::Clear</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">void</span> InvisibleState::AddFrame(<a class="code" href="a00030.html">RestFrame</a>&amp; frame){</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(frame.IsInvisibleFrame() &amp;&amp;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;       frame.IsRecoFrame())</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      m_Frames += frame;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">enum</span> FrameType { kVanillaFrame, kVisibleFrame, kInvisibleFrame,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;           kDecayFrame,   kLabFrame};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">enum</span> AnaType { kRecoFrame, kGenFrame };</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">class </span>RestFrame : <span class="keyword">public</span> RFBase {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    RestFrame(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    RestFrame();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">virtual</span> ~RestFrame();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> SetAxis(<span class="keyword">const</span> TVector3&amp; axis);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">void</span> InvisibleState::SetParentJigsaw(Jigsaw&amp; jigsaw){</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">if</span>(!jigsaw) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">if</span>(jigsaw.IsInvisibleJigsaw())</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      State::SetParentJigsaw(jigsaw);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">void</span> InvisibleState::SetChildJigsaw(Jigsaw&amp; jigsaw){</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span>(!jigsaw) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">if</span>(jigsaw.IsInvisibleJigsaw())</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      State::SetChildJigsaw(jigsaw);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">double</span> InvisibleState::GetMinimumMass()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">if</span>(!GetChildJigsaw().<a class="code" href="a00032.html#a9885f415a552975f40fe4ced22244736">IsEmpty</a>())</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>InvisibleJigsaw&amp;<span class="keyword">&gt;</span>(GetChildJigsaw()).GetMinimumMass();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span>(GetNFrames() == 1)</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <span class="keywordflow">return</span> static_cast&lt;InvisibleRecoFrame&amp;&gt;(m_Frames[0]).GetMinimumMass();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordflow">return</span> 0.;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">void</span> InvisibleState::FillInvisibleMassJigsawDependancies(RFList&lt;Jigsaw&gt;&amp; jigsaws)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>InvisibleJigsaw&amp;<span class="keyword">&gt;</span>(GetChildJigsaw()).FillInvisibleMassJigsawDependancies(jigsaws);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  InvisibleState InvisibleState::m_Empty;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
-<div class="ttc" id="a00030_html"><div class="ttname"><a href="a00030.html">RestFrame</a></div><div class="ttdoc">Base class for all Frame objects. </div></div>
-<div class="ttc" id="a00032_html_a9885f415a552975f40fe4ced22244736"><div class="ttname"><a href="a00032.html#a9885f415a552975f40fe4ced22244736">RestFrames::RFBase::IsEmpty</a></div><div class="ttdeci">bool IsEmpty() const </div><div class="ttdoc">Checks whether this is default (empty) instance of class. </div><div class="ttdef"><b>Definition:</b> <a href="a00135_source.html#l00079">RFBase.cc:79</a></div></div>
-<div class="ttc" id="a00079_html"><div class="ttname"><a href="a00079.html">InvisibleState.hh</a></div></div>
-<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">InvisibleRecoFrame.hh</a></div></div>
-<div class="ttc" id="a00152_html"><div class="ttname"><a href="a00152.html">std</a></div></div>
-<div class="ttc" id="a00077_html"><div class="ttname"><a href="a00077.html">InvisibleJigsaw.hh</a></div></div>
-<div class="ttc" id="a00020_html_a08db09f5bbb90a7d417b5d974f620063"><div class="ttname"><a href="a00020.html#a08db09f5bbb90a7d417b5d974f620063">RestFrames::InvisibleState::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RFBase of all connections to other objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00124_source.html#l00056">InvisibleState.cc:56</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
-<div class="ttc" id="a00043_html_a2cc03b7da283f1a6790ba2ed37cd3e26"><div class="ttname"><a href="a00043.html#a2cc03b7da283f1a6790ba2ed37cd3e26">RestFrames::State::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RFBase of all connections to other objects. </div><div class="ttdef"><b>Definition:</b> <a href="a00143_source.html#l00058">State.cc:58</a></div></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">static</span> TVector3 <span class="keyword">const</span>&amp; GetAxis();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Clear();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    FrameType GetType() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">bool</span> IsVisibleFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">bool</span> IsInvisibleFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">bool</span> IsDecayFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">bool</span> IsLabFrame() <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">bool</span> IsRecoFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">bool</span> IsGenFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> std::string PrintString(LogType type = LogVerbose) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddChildFrame(RestFrame&amp; frame);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">void</span> AddChildFrames(<span class="keyword">const</span> RestFrameList&amp; frames);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetParentFrame(RestFrame&amp; frame = </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                RestFrame::Empty());</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">void</span> RemoveChildFrame(RestFrame&amp; frame);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordtype">void</span> RemoveChildFrames();</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordtype">int</span> GetNChildren() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">int</span> GetNDescendants() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">virtual</span> RestFrame <span class="keyword">const</span>&amp; GetParentFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keyword">virtual</span> RestFrame&amp; GetChildFrame(<span class="keywordtype">int</span> i = 0) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    RestFrameList <span class="keyword">const</span>&amp; GetChildFrames() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keyword">virtual</span> RestFrame <span class="keyword">const</span>&amp; GetLabFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keyword">virtual</span> RestFrame <span class="keyword">const</span>&amp; GetProductionFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keyword">virtual</span> RestFrame <span class="keyword">const</span>&amp; GetSiblingFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordtype">int</span> GetFrameDepth(<span class="keyword">const</span> RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keyword">virtual</span> RestFrame <span class="keyword">const</span>&amp; GetFrameAtDepth(<span class="keywordtype">int</span> depth, <span class="keyword">const</span> RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keyword">virtual</span> RestFrameList GetListFrames(FrameType type = kLabFrame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">virtual</span> RestFrameList GetListVisibleFrames() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keyword">virtual</span> RestFrameList GetListInvisibleFrames() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    RestFrameList operator + (RestFrame&amp; frame); </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    RestFrameList operator + (<span class="keyword">const</span> RestFrameList&amp; frames); </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keyword">virtual</span> RFCharge GetCharge() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> GetMass() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    TLorentzVector GetFourVector(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;                 RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    TLorentzVector GetVisibleFourVector(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                    RestFrame::Empty()) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    TLorentzVector GetInvisibleFourVector(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                      RestFrame::Empty()) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordtype">double</span> GetEnergy(<span class="keyword">const</span> RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordtype">double</span> GetMomentum(<span class="keyword">const</span> RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    TLorentzVector GetFourVector(<span class="keyword">const</span> TLorentzVector&amp; P,</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                 <span class="keyword">const</span> RestFrame&amp; def_frame = </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                 RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordtype">double</span> GetTransverseMomentum(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                 RestFrame::Empty(),</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                 <span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                 RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                 <span class="keyword">const</span> RestFrame&amp; axis_frame = </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                 RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordtype">double</span> GetTransverseMomentum(<span class="keyword">const</span> TLorentzVector&amp; P,</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                 <span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                 RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                 <span class="keyword">const</span> RestFrame&amp; axis_frame = </div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                 RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keywordtype">double</span> GetVisibleShape() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    </div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="comment">// double GetVisibleShape(const vector&lt;RFList&lt;RestFrame&gt; &gt;&amp; frames) const;</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="keywordtype">double</span> GetSumVisibleMomentum() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordtype">double</span> GetSumInvisibleMomentum() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    TVector3 GetBoostInParentFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordtype">double</span> GetGammaInParentFrame() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    TVector3 GetDecayPlaneNormalVector(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;                       RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keywordtype">double</span> GetDeltaPhiDecayPlanes(<span class="keyword">const</span> RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keywordtype">double</span> GetCosDecayAngle(<span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;                RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    <span class="keywordtype">double</span> GetDeltaPhiDecayAngle(<span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;                 RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;                 <span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;                 RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordtype">double</span> GetDeltaPhiBoostVisible(<span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;                   RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;                   <span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;                   RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keywordtype">double</span> GetDeltaPhiDecayVisible(<span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                   RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;                   <span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                   RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    <span class="keywordtype">double</span> GetDeltaPhiVisible(<span class="keyword">const</span> TVector3&amp; axis = </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                  RestFrame::GetAxis(), </div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                  <span class="keyword">const</span> RestFrame&amp; frame = </div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                  RestFrame::Empty()) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keyword">static</span> RestFrame&amp; Empty();</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keyword">static</span> ConstRestFrameList <span class="keyword">const</span>&amp; EmptyList();</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;  <span class="keyword">protected</span>:   </div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    FrameType m_Type;</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    AnaType m_Ana;</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsSoundBody() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    TVector3 <span class="keyword">const</span>&amp; GetChildBoostVector(RestFrame&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    TVector3 <span class="keyword">const</span>&amp; GetParentBoostVector() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeTreeRecursive();</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeAnalysisRecursive() = 0;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEventRecursive() = 0;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> ClearEventRecursive() = 0;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    <span class="keywordtype">bool</span> IsCircularTree(std::vector&lt;RFKey&gt;&amp; keys) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> m_class_key;</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    <span class="keyword">static</span> TVector3 m_Axis;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="comment">// 4-vector of this state in the frame it&#39;s initialized</span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    TLorentzVector m_P;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    </div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="comment">// the reference frame where this four-vector is initialized</span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    <span class="keyword">const</span> RestFrame* m_ProdFramePtr;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <span class="comment">// list of child frames and boosts</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    RestFrameList m_ChildFrames;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    <span class="keyword">mutable</span> std::map&lt;const RestFrame*, TVector3&gt; m_ChildBoosts;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    <span class="comment">// parent frame and boost</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    RestFrame* m_ParentFramePtr;</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    TVector3 m_ParentBoost;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;    <span class="keywordtype">void</span> SetFourVector(<span class="keyword">const</span> TLorentzVector&amp; V, <span class="keyword">const</span> RestFrame&amp; frame);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;    <span class="keywordtype">void</span> SetChildBoostVector(RestFrame&amp; frame, <span class="keyword">const</span> TVector3&amp; boost);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    <span class="keywordtype">void</span> SetParentBoostVector(<span class="keyword">const</span> TVector3&amp; boost);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    <span class="comment">// Recursively get lists of frames</span></div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;    <span class="keywordtype">void</span> FillListFramesRecursive(RestFrameList&amp; frames,</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;                 FrameType type = kLabFrame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="keywordtype">bool</span> FindPathToFrame(<span class="keyword">const</span> RestFrame&amp; dest_frame,</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;             <span class="keyword">const</span> RestFrame&amp; prev_frame, </div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;             std::vector&lt;const TVector3*&gt;&amp; boosts) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> ConstRestFrameList m_EmptyList;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    </div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>ReconstructionFrame;</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>GeneratorFrame;</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;  };</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;}</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00127_html"><div class="ttname"><a href="a00127.html">RFCharge.hh</a></div></div>
+<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">RFBase.hh</a></div></div>
+<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

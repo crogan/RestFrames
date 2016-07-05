@@ -1,7 +1,10 @@
-<map id="RestFrames::InvisibleState" name="RestFrames::InvisibleState">
-<area shape="rect" id="node2" href="$a00043.html" title="RestFrames::State" alt="" coords="158,205,290,231"/>
-<area shape="rect" id="node3" href="$a00032.html" title="Base class for all RestFrame package objects. " alt="" coords="5,112,155,137"/>
-<area shape="rect" id="node4" href="$a00038.html" title="RestFrames::RFLog" alt="" coords="9,12,151,37"/>
-<area shape="rect" id="node5" href="$a00034.html" title="RestFrames::RFList\l\&lt; RestFrame \&gt;" alt="" coords="250,105,390,144"/>
-<area shape="rect" id="node6" href="$a00037.html" title="RestFrames::RFListBase\l\&lt; RestFrame, RFList\&lt; RestFrame \&gt; \&gt;" alt="" coords="198,5,443,44"/>
+<map id="RestFrames::CombinatoricState" name="RestFrames::CombinatoricState">
+<area shape="rect" id="node2" href="$a00051.html" title="abstract base class for all State objects " alt="" coords="567,115,700,140"/>
+<area shape="rect" id="node3" href="$a00039.html" title="Base class for all RestFrame package objects. " alt="" coords="288,43,438,68"/>
+<area shape="rect" id="node4" href="$a00046.html" title="RestFrames::RFLog" alt="" coords="25,43,166,68"/>
+<area shape="rect" id="node5" href="$a00040.html" title="RestFrames::RFCharge" alt="" coords="282,92,445,117"/>
+<area shape="rect" id="node6" href="$a00042.html" title="RestFrames::RFList\l\&lt; const RestFrame \&gt;" alt="" coords="290,141,436,180"/>
+<area shape="rect" id="node7" href="$a00045.html" title="RestFrames::RFListBase\l\&lt; const RestFrame, RFList\l\&lt; const RestFrame \&gt; \&gt;" alt="" coords="5,135,186,187"/>
+<area shape="rect" id="node8" href="$a00042.html" title="RestFrames::RFList\l\&lt; VisibleState \&gt;" alt="" coords="564,187,704,225"/>
+<area shape="rect" id="node9" href="$a00045.html" title="RestFrames::RFListBase\l\&lt; VisibleState, RFList\l\&lt; VisibleState \&gt; \&gt;" alt="" coords="278,204,448,256"/>
 </map>

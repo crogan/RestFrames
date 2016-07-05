@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/HistPlotCategory.cc Source File</title>
+<title>RestFrames: inc/RestFrames/MinMassDiffInvJigsaw.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@
    <div id="projectname">RestFrames
    &#160;<span id="projectnumber">v1.0.0</span>
    </div>
-   <div id="projectbrief">RestFrames HEP Event Analysis Library</div>
+   <div id="projectbrief">RestFrames HEP Event Analysis Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -117,17 +117,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">HistPlotCategory.cc</div>  </div>
+<div class="title">MinMassDiffInvJigsaw.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00117.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -143,58 +143,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00072.html">RestFrames/HistPlotCategory.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00151.html">RestFrames</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">int</span> HistPlotCategory::m_class_key = 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef MinMassDiffInvJigsaw_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define MinMassDiffInvJigsaw_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;Minuit2/Minuit2Minimizer.h&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;Math/Functor.h&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  HistPlotCategory::HistPlotCategory() : RFBase() {}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00106.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  HistPlotCategory::HistPlotCategory(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; title)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    : RFBase(name, title, HistPlotCategory::m_class_key++) {}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  HistPlotCategory::~HistPlotCategory() {}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  RFList&lt;const HistPlotCategory&gt; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a00013.html#a06a7e2c698d64b4deee5bb2824ab05b9">   44</a></span>&#160;  <a class="code" href="a00013.html#a06a7e2c698d64b4deee5bb2824ab05b9">HistPlotCategory::operator+</a>(<span class="keyword">const</span> <a class="code" href="a00013.html">HistPlotCategory</a>&amp; cat)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a> list;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    list += cat;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a> </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a00013.html#a4df91a7b6be29dace55bb72eb320b6d1">   52</a></span>&#160;  <a class="code" href="a00013.html#a06a7e2c698d64b4deee5bb2824ab05b9">HistPlotCategory::operator+</a>(<span class="keyword">const</span> <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a>&amp; cats)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a> list;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    list += cats;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  HistPlotCategory::operator <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a>() <span class="keyword">const</span> {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="a00034.html">RFList&lt;const HistPlotCategory&gt;</a> list;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  HistPlotCategory&amp; HistPlotCategory::Empty(){</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> HistPlotCategory::m_Empty;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  HistPlotCategory HistPlotCategory::m_Empty;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="ttc" id="a00013_html_a06a7e2c698d64b4deee5bb2824ab05b9"><div class="ttname"><a href="a00013.html#a06a7e2c698d64b4deee5bb2824ab05b9">RestFrames::HistPlotCategory::operator+</a></div><div class="ttdeci">RestFrames::RFList&lt; const HistPlotCategory &gt; operator+(const HistPlotCategory &amp;cat) const </div><div class="ttdoc">Combines HistPlotCategory into list. </div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00044">HistPlotCategory.cc:44</a></div></div>
-<div class="ttc" id="a00034_html"><div class="ttname"><a href="a00034.html">RestFrames::RFList</a></div><div class="ttdef"><b>Definition:</b> <a href="a00093_source.html#l00046">RFList.hh:46</a></div></div>
-<div class="ttc" id="a00013_html"><div class="ttname"><a href="a00013.html">RestFrames::HistPlotCategory</a></div><div class="ttdef"><b>Definition:</b> <a href="a00072_source.html#l00042">HistPlotCategory.hh:42</a></div></div>
-<div class="ttc" id="a00072_html"><div class="ttname"><a href="a00072.html">HistPlotCategory.hh</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00062_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00030.html">   40</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00030.html">MinMassDiffInvJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00019.html">InvisibleJigsaw</a> {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="a00030.html">MinMassDiffInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;             <span class="keyword">const</span> std::string&amp; stitle,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;             <span class="keywordtype">int</span> N_vis_inv_pair);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    ~<a class="code" href="a00030.html">MinMassDiffInvJigsaw</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> std::string GetLabel()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Min #Sigma M(vis , inv)_{i}^{2}&quot;</span>; }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> GetMinimumMass() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEvent();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Npair;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pvis;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pinv;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::vector&lt;double&gt; m_Minv;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> m_2D;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    TVector3 m_X;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    TVector3 m_Y;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    TVector3 m_Z;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">double</span> GetPScale(<span class="keywordtype">double</span> Minv);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> ApplyOptimalRotation();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    ROOT::Minuit2::Minuit2Minimizer* m_minimizer;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    ROOT::Math::Functor* m_functor;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">double</span> EvaluateMetric(<span class="keyword">const</span> <span class="keywordtype">double</span>* param);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  };</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00030_html"><div class="ttname"><a href="a00030.html">RestFrames::MinMassDiffInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00040">MinMassDiffInvJigsaw.hh:40</a></div></div>
+<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">InvisibleJigsaw.hh</a></div></div>
+<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00019_html"><div class="ttname"><a href="a00019.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 23 2016 04:11:34 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
