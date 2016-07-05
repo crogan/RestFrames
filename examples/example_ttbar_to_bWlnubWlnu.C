@@ -33,15 +33,14 @@ using namespace RestFrames;
 
 void example_ttbar_to_bWlnubWlnu(std::string output_name =
 				 "output_ttbar_to_bWlnubWlnu.root"){
-  
-  SetLogPrint(LogVerbose,true);
-  SetLogPrint(LogDebug,true);
 
-  double mT = 175.;
-  double mW = 80.;
-  double mB = 2.;
-  double mL = 0.501;
+  double mT = 173.21; // GeV, PDG 2016
+  double mW = 80.385;
+  double mB = 4.18;
+  double mL = 0.106;
   double mN = 0.;
+
+  // number of events to generate
   int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -81,33 +80,24 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
   
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  TT_Gen.SetMass(1000.);
-  //TT_Gen.SetVariableMass();
+  // non-resonant ttbar production
+  TT_Gen.SetVariableMass();
   // set top masses
-  Ta_Gen.SetMass(mT);
-  Tb_Gen.SetMass(mT);
+  Ta_Gen.SetMass(mT);            Tb_Gen.SetMass(mT);
   // set W masses
-  Wa_Gen.SetMass(mW);
-  Wb_Gen.SetMass(mW);
+  Wa_Gen.SetMass(mW);            Wb_Gen.SetMass(mW);
   // set B masses
-  Ba_Gen.SetMass(mB);
-  Bb_Gen.SetMass(mB);
+  Ba_Gen.SetMass(mB);            Bb_Gen.SetMass(mB);
   // set : masses
-  La_Gen.SetMass(mL);
-  Lb_Gen.SetMass(mL);
+  La_Gen.SetMass(mL);            Lb_Gen.SetMass(mL);
   // set neutrino masses
-  Na_Gen.SetMass(mN);
-  Nb_Gen.SetMass(mN);
+  Na_Gen.SetMass(mN);            Nb_Gen.SetMass(mN);
 
-  Ba_Gen.SetPtCut(20.);
-  Bb_Gen.SetPtCut(20.);
-  Ba_Gen.SetEtaCut(2.5);
-  Bb_Gen.SetEtaCut(2.5);
-
-  La_Gen.SetPtCut(15.);
-  Lb_Gen.SetPtCut(15.);
-  La_Gen.SetEtaCut(2.5);
-  Lb_Gen.SetEtaCut(2.5);
+  // set b-jet/lepton pT/eta cuts
+  Ba_Gen.SetPtCut(20.);          Bb_Gen.SetPtCut(20.);
+  Ba_Gen.SetEtaCut(2.5);         Bb_Gen.SetEtaCut(2.5);
+  La_Gen.SetPtCut(15.);          Lb_Gen.SetPtCut(15.);
+  La_Gen.SetEtaCut(2.5);         Lb_Gen.SetEtaCut(2.5);
 
   if(LAB_Gen.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analysis" << LogEnd;
@@ -366,14 +356,9 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
   const HistPlotCategory& cat_R1  = histPlot->GetNewCategory("Reco1", "M_{top}^{ a} = M_{top}^{ b} Reco");
   const HistPlotCategory& cat_R2  = histPlot->GetNewCategory("Reco2", "M_{W}^{ a} = M_{W}^{ b} Reco");
   const HistPlotCategory& cat_R3  = histPlot->GetNewCategory("Reco3", "min #Sigma M_{top}^{ 2} Reco");
-  const HistPlotCategory& cat_R4  = histPlot->GetNewCategory("Reco4", "min #Delta M_{top}");
+  const HistPlotCategory& cat_R4  = histPlot->GetNewCategory("Reco4", "min #Delta M_{top} Reco");
 
   const HistPlotVar& Mtt    = histPlot->GetNewVar("Mtt", "M_{t #bar{t}} / m_{t #bar{t}}", 0., 2.);
-  const HistPlotVar& Pt_tt  = histPlot->GetNewVar("Pt_tt", "p_{t}^{t #bar{t}} / p_{t}^{t #bar{t} gen}", 0., 2.);
-  const HistPlotVar& Mta    = histPlot->GetNewVar("Mta", "M_{top}^{ a}", 0., mT*2., "[GeV]");
-  const HistPlotVar& Mtb    = histPlot->GetNewVar("Mtb", "M_{top}^{ b}", 0., mT*2., "[GeV]");
-  const HistPlotVar& MWa    = histPlot->GetNewVar("MWa", "M_{W}^{ a}", 0., mW*2.5, "[GeV]");
-  const HistPlotVar& MWb    = histPlot->GetNewVar("MWb", "M_{W}^{ b}", 0., mW*2.5, "[GeV]");
   const HistPlotVar& Eb_ta  = histPlot->GetNewVar("Eb_ta", "E_{b a}^{top a} / E_{b a}^{top a gen}", 0., 2.);
   const HistPlotVar& Eb_tb  = histPlot->GetNewVar("Eb_tb", "E_{b b}^{top b} / E_{b b}^{top b gen}", 0., 2.);
   const HistPlotVar& El_Wa  = histPlot->GetNewVar("El_Wa", "E_{#it{l} a}^{W a} / E_{#it{l} a}^{W a gen}", 0., 2.);
@@ -394,32 +379,26 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
   const HistPlotVar& DcosWb = histPlot->GetNewVar("DcosWb","#theta_{W b} - #theta_{W b}^{gen}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
 
-  histPlot->AddPlot(Mtt, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Pt_tt, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Mta, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(MWa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Mtt,   cat_R1+cat_R2+cat_R3+cat_R4);
   histPlot->AddPlot(Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
   histPlot->AddPlot(El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(costt, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
-  histPlot->AddPlot(costa, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
-  histPlot->AddPlot(cosWa, cat_R1+cat_R2+cat_R3+cat_Gen+cat_R4);
   histPlot->AddPlot(Dcostt, cat_R1+cat_R2+cat_R3+cat_R4);
   histPlot->AddPlot(Dcosta, cat_R1+cat_R2+cat_R3+cat_R4);
   histPlot->AddPlot(DcosWa, cat_R1+cat_R2+cat_R3+cat_R4);
 
-  histPlot->AddPlot(Mtt, Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Mtt, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Eb_ta, Eb_tb, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(El_Wa, El_Wb, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Eb_ta, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Eb_ta, El_Wb, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Dcostt, Mtt, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Dcosta, Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(DcosWa, El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Dcostt, Dcosta, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Dcosta, Dcostb, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(DcosWa, DcosWb, cat_R1+cat_R2+cat_R3+cat_R4);
-  histPlot->AddPlot(Dcosta, DcosWa, cat_R1+cat_R2+cat_R3+cat_R4);
+  histPlot->AddPlot(Mtt, Eb_ta, cat_R4);
+  histPlot->AddPlot(Mtt, El_Wa, cat_R4);
+  histPlot->AddPlot(Eb_ta, Eb_tb, cat_R4);
+  histPlot->AddPlot(El_Wa, El_Wb, cat_R4);
+  histPlot->AddPlot(Eb_ta, El_Wa, cat_R4);
+  histPlot->AddPlot(Eb_ta, El_Wb, cat_R4);
+  histPlot->AddPlot(Dcostt, Mtt,  cat_R4);
+  histPlot->AddPlot(Dcosta, Eb_ta, cat_R4);
+  histPlot->AddPlot(DcosWa, El_Wa, cat_R4);
+  histPlot->AddPlot(Dcostt, Dcosta, cat_R4);
+  histPlot->AddPlot(Dcosta, Dcostb, cat_R4);
+  histPlot->AddPlot(DcosWa, DcosWb, cat_R4);
+  histPlot->AddPlot(Dcosta, DcosWa, cat_R4);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -430,8 +409,7 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
 
     // generate event
     LAB_Gen.ClearEvent();                             // clear the gen tree
-    double PTtt = 1.*mT*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomentum(PTtt);               // give the di-tops some Pt
+  
     LAB_Gen.AnalyzeEvent();                           // generate a new event
 
     // analyze event three different ways
@@ -447,9 +425,6 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     INV_R2.SetLabFrameThreeVector(MET); 
     INV_R3.SetLabFrameThreeVector(MET);
     INV_R4.SetLabFrameThreeVector(MET);
-
-    // INV_R1.SetMass(2.*GetP((La_Gen+Lb_Gen).GetMass(),    
-    // 			   La_Gen.GetMass(),Lb_Gen.GetMass())); 
 
     La_R1.SetLabFrameFourVector(La_Gen.GetFourVector());
     Lb_R1.SetLabFrameFourVector(Lb_Gen.GetFourVector());
@@ -480,7 +455,6 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     //////////////////////////////////////
 
     double Mttgen   = TT_Gen.GetMass();
-    double Pt_ttgen = Ta_Gen.GetFourVector(TT_Gen).P();
     double Eb_tagen = Ba_Gen.GetFourVector(Ta_Gen).E();
     double Eb_tbgen = Bb_Gen.GetFourVector(Tb_Gen).E();
     double El_Wagen = La_Gen.GetFourVector(Wa_Gen).E();
@@ -492,11 +466,10 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     double cosWbgen = Wb_Gen.GetCosDecayAngle();
 
     Mtt = TT_R1.GetMass()/Mttgen;
-    Pt_tt = Ta_R1.GetFourVector(TT_R1).P()/Pt_ttgen;
-    Mta = Ta_R1.GetMass();
-    Mtb = Tb_R1.GetMass();
-    MWa = Wa_R1.GetMass();
-    MWb = Wb_R1.GetMass();
+    // Mta = Ta_R1.GetMass();
+    // Mtb = Tb_R1.GetMass();
+    // MWa = Wa_R1.GetMass();
+    // MWb = Wb_R1.GetMass();
     Eb_ta = Ba_R1.GetFourVector(Ta_R1).E()/Eb_tagen;
     Eb_tb = Bb_R1.GetFourVector(Tb_R1).E()/Eb_tbgen;
     El_Wa = La_R1.GetFourVector(Wa_R1).E()/El_Wagen;
@@ -515,11 +488,10 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     histPlot->Fill(cat_R1);
 
     Mtt = TT_R2.GetMass()/Mttgen;
-    Pt_tt = Ta_R2.GetFourVector(TT_R2).P()/Pt_ttgen;
-    Mta = Ta_R2.GetMass();
-    Mtb = Tb_R2.GetMass();
-    MWa = Wa_R2.GetMass();
-    MWb = Wb_R2.GetMass();
+    // Mta = Ta_R2.GetMass();
+    // Mtb = Tb_R2.GetMass();
+    // MWa = Wa_R2.GetMass();
+    // MWb = Wb_R2.GetMass();
     Eb_ta = Ba_R2.GetFourVector(Ta_R2).E()/Eb_tagen;
     Eb_tb = Bb_R2.GetFourVector(Tb_R2).E()/Eb_tbgen;
     El_Wa = La_R2.GetFourVector(Wa_R2).E()/El_Wagen;
@@ -538,11 +510,10 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     histPlot->Fill(cat_R2);
 
     Mtt = TT_R3.GetMass()/Mttgen;
-    Pt_tt = Ta_R3.GetFourVector(TT_R3).P()/Pt_ttgen;
-    Mta = Ta_R3.GetMass();
-    Mtb = Tb_R3.GetMass();
-    MWa = Wa_R3.GetMass();
-    MWb = Wb_R3.GetMass();
+    // Mta = Ta_R3.GetMass();
+    // Mtb = Tb_R3.GetMass();
+    // MWa = Wa_R3.GetMass();
+    // MWb = Wb_R3.GetMass();
     Eb_ta = Ba_R3.GetFourVector(Ta_R3).E()/Eb_tagen;
     Eb_tb = Bb_R3.GetFourVector(Tb_R3).E()/Eb_tbgen;
     El_Wa = La_R3.GetFourVector(Wa_R3).E()/El_Wagen;
@@ -561,11 +532,10 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
     histPlot->Fill(cat_R3);
 
     Mtt = TT_R4.GetMass()/Mttgen;
-    Pt_tt = Ta_R4.GetFourVector(TT_R4).P()/Pt_ttgen;
-    Mta = Ta_R4.GetMass();
-    Mtb = Tb_R4.GetMass();
-    MWa = Wa_R4.GetMass();
-    MWb = Wb_R4.GetMass();
+    // Mta = Ta_R4.GetMass();
+    // Mtb = Tb_R4.GetMass();
+    // MWa = Wa_R4.GetMass();
+    // MWb = Wb_R4.GetMass();
     Eb_ta = Ba_R4.GetFourVector(Ta_R4).E()/Eb_tagen;
     Eb_tb = Bb_R4.GetFourVector(Tb_R4).E()/Eb_tbgen;
     El_Wa = La_R4.GetFourVector(Wa_R4).E()/El_Wagen;
@@ -585,11 +555,15 @@ void example_ttbar_to_bWlnubWlnu(std::string output_name =
 
   }
 
-  //treePlot->WriteOutput(output_name);
-
   histPlot->Draw();
 
   LAB_Gen.PrintGeneratorEfficiency();
+
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
+  histPlot->WriteOutput(output_name);
+  histPlot->WriteHist(output_name);
+  treePlot->WriteOutput(output_name);
 
   g_Log << LogInfo << "Finished" << LogEnd;
 }

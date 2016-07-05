@@ -32,16 +32,15 @@
 using namespace RestFrames;
 
 void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_04.root"){
-  SetLogPrint(LogVerbose,true);
-  SetLogPrint(LogDebug,true);
-  SetLogMaxWidth(120);
 
-  double mH = 1000.;
+  double mH = 750.;
   double mh = 125.;
-  double mW = 80.;
-  double wW = 2.;
-  double mL = 0.501;
+  double mW = 80.385; // GeV, PDG 2016
+  double wW = 2.085;
+  double mL = 0.106;
   double mN = 0.;
+
+  // number of events to generate
   int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -183,8 +182,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   INV_R.AddJigsaw(NuNuR_R);
   NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
 
-  //MinMassDiffInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
-  //MinMassesSqInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}",2);
   ContraBoostInvJigsaw MinMh_R("MinMh_R","min M_{h}, M_{h}^{ a}= M_{h}^{ b}");
   INV_R.AddJigsaw(MinMh_R);
   MinMh_R.AddInvisibleFrames(ha_R.GetListInvisibleFrames(), 0);
@@ -231,67 +228,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMll_R.AddObjectFrames(Laa_R+Lab_R, 0);
   MinMll_R.AddObjectFrames(Lba_R+Lbb_R, 1);
 
-  
-  // ContraBoostInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{b,a}");
-  // MinMWa_R.AddVisibleFrames(Waa_R.GetListVisibleFrames(), 0);
-  // MinMWa_R.AddVisibleFrames(Wba_R.GetListVisibleFrames(), 1);
-  // MinMWa_R.AddInvisibleFrames(Waa_R.GetListInvisibleFrames(), 0);
-  // MinMWa_R.AddInvisibleFrames(Wba_R.GetListInvisibleFrames(), 1);
-
-  // ContraBoostInvJigsaw MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{a,b}= M_{W}^{b,b}");
-  // MinMWb_R.AddVisibleFrames(Wab_R.GetListVisibleFrames(), 0);
-  // MinMWb_R.AddVisibleFrames(Wbb_R.GetListVisibleFrames(), 1);
-  // MinMWb_R.AddInvisibleFrames(Wab_R.GetListInvisibleFrames(), 0);
-  // MinMWb_R.AddInvisibleFrames(Wbb_R.GetListInvisibleFrames(), 1);
-
-  // CombinedCBInvJigsaw combCB_R("combCB_R", "min M_{W} , M_{W}^{a,i}= M_{W}^{b,i}", 2);
-  // INV_R.AddJigsaw(combCB_R);
-  // combCB_R.AddJigsaw(MinMWa_R, 0);
-  // combCB_R.AddJigsaw(MinMWb_R, 1);
-
-  // // Combinatoric Group for leptons
-  // CombinatoricGroup VIS_R("VIS_R","Lepton Combinatoric Jigsaws");
-  // VIS_R.AddFrame(Laa_R);
-  // VIS_R.AddFrame(Lab_R);
-  // VIS_R.AddFrame(Lba_R);
-  // VIS_R.AddFrame(Lbb_R);
-  // // lepton frames must have at least one element
-  // VIS_R.SetNElementsForFrame(Laa_R, 1);
-  // VIS_R.SetNElementsForFrame(Lab_R, 1);
-  // VIS_R.SetNElementsForFrame(Lba_R, 1);
-  // VIS_R.SetNElementsForFrame(Lbb_R, 1);
-
-  // MinMassesCombJigsaw MinMll_R("MinMll_R", "min Mll");
-  // VIS_R.AddJigsaw(MinMll_R);
-  // MinMll_R.AddCombFrames(Laa_R+Lab_R, 0);
-  // MinMll_R.AddCombFrames(Lba_R+Lbb_R, 1);
-  // MinMll_R.AddObjectFrames(Laa_R+Lab_R, 0);
-  // MinMll_R.AddObjectFrames(Lba_R+Lbb_R, 1);
-  // MinMll_R.SetCombCharge(0, 0);
-  // MinMll_R.SetCombCharge(0, 1);
-
-  // MaxProbBreitWignerCombJigsaw MinMWchi2a_R("MinMWchi2a_R", "MW chi2 a", 2, 1);
-  // VIS_R.AddJigsaw(MinMWchi2a_R);
-  // MinMWchi2a_R.AddCombFrame(Laa_R, 0);
-  // MinMWchi2a_R.AddCombFrame(Lab_R, 1);
-  // MinMWchi2a_R.AddObjectFrame(Waa_R, 0);
-  // MinMWchi2a_R.AddObjectFrame(Wab_R, 1);
-  // MinMWchi2a_R.SetPoleMass(mW, 0);
-  // MinMWchi2a_R.SetPoleMass(mW, 1);
-  // MinMWchi2a_R.SetWidth(wW, 0);
-  // MinMWchi2a_R.SetWidth(wW, 1);
-
-  // MaxProbBreitWignerCombJigsaw MinMWchi2b_R("MinMWchi2b_R", "MW chi2 b", 2, 1);
-  // VIS_R.AddJigsaw(MinMWchi2b_R);
-  // MinMWchi2b_R.AddCombFrame(Lba_R, 0);
-  // MinMWchi2b_R.AddCombFrame(Lbb_R, 1);
-  // MinMWchi2b_R.AddObjectFrame(Wba_R, 0);
-  // MinMWchi2b_R.AddObjectFrame(Wbb_R, 1);
-  // MinMWchi2b_R.SetPoleMass(mW, 0);
-  // MinMWchi2b_R.SetPoleMass(mW, 1);
-  // MinMWchi2b_R.SetWidth(wW, 0);
-  // MinMWchi2b_R.SetWidth(wW, 1);
-
   if(LAB_R.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
   else
@@ -313,14 +249,15 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  HistPlot* histPlot = new HistPlot("HistPlot", "H #rightarrow W(#it{l} #nu) W(#it{l} #nu)");
-
+  std::plot_title = "H #rightarrow hh #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
+  HistPlot* histPlot = new HistPlot("HistPlot", plot_title);
+  
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
   const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");
 
-  const HistPlotVar& MH    = histPlot->GetNewVar("MH", "M_{H} / m_{H}", 0., 2.);
-  const HistPlotVar& Mha   = histPlot->GetNewVar("Mha", "M_{h}^{ a} / m_{h}^{ a}", 0., 2.);
-  const HistPlotVar& Mhb   = histPlot->GetNewVar("Mhb", "M_{h}^{ b} / m_{h}^{ b}", 0., 2.);
+  const HistPlotVar& MH    = histPlot->GetNewVar("MH", "M_{H} / m_{H}^{ true}", 0., 2.);
+  const HistPlotVar& Mha   = histPlot->GetNewVar("Mha", "M_{h}^{ a} / m_{h}^{ true}", 0., 2.);
+  const HistPlotVar& Mhb   = histPlot->GetNewVar("Mhb", "M_{h}^{ b} / m_{h}^{ true}", 0., 2.);
   const HistPlotVar& MWaa  = histPlot->GetNewVar("MWaa", "M_{W a,a}", 0., mW*2., "[GeV]");
   const HistPlotVar& MWab  = histPlot->GetNewVar("MWab", "M_{W a,b}", 0., mW*2., "[GeV]");
   const HistPlotVar& MWba  = histPlot->GetNewVar("MWba", "M_{W b,a}", 0., mW*2., "[GeV]");
@@ -330,15 +267,15 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   const HistPlotVar& coshb = histPlot->GetNewVar("coshb","cos #theta_{h b}", -1., 1.);
   const HistPlotVar& cosWaa = histPlot->GetNewVar("cosWaa","cos #theta_{Waa}", -1., 1.);
   const HistPlotVar& cosWab = histPlot->GetNewVar("cosWab","cos #theta_{Wab}", -1., 1.);
-  const HistPlotVar& DcosH = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{gen}", 
+  const HistPlotVar& DcosH = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{ true}", 
 						 -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& Dcosha = histPlot->GetNewVar("Dcosha","#theta_{h a} - #theta_{h a}^{gen}", 
+  const HistPlotVar& Dcosha = histPlot->GetNewVar("Dcosha","#theta_{h a} - #theta_{h a}^{ true}", 
   						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& Dcoshb = histPlot->GetNewVar("Dcoshb","#theta_{h b} - #theta_{h b}^{gen}", 
+  const HistPlotVar& Dcoshb = histPlot->GetNewVar("Dcoshb","#theta_{h b} - #theta_{h b}^{ true}", 
   						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& DcosWaa = histPlot->GetNewVar("DcosWaa","#theta_{W a,a} - #theta_{W a,a}^{gen}", 
+  const HistPlotVar& DcosWaa = histPlot->GetNewVar("DcosWaa","#theta_{W a,a} - #theta_{W a,a}^{ true}", 
   						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& DcosWab = histPlot->GetNewVar("DcosWab","#theta_{W a,b} - #theta_{W a,b}^{gen}", 
+  const HistPlotVar& DcosWab = histPlot->GetNewVar("DcosWab","#theta_{W a,b} - #theta_{W a,b}^{ true}", 
   						  -acos(-1.)/2., acos(-1.)/2.);
   
   histPlot->AddPlot(MWaa, MWab, cat_Gen+cat_Reco);
@@ -348,8 +285,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   histPlot->AddPlot(Mha, Mhb, cat_Reco);
   histPlot->AddPlot(MH, Mha, cat_Reco);
   histPlot->AddPlot(Mha, MWaa, cat_Reco);
-  histPlot->AddPlot(cosH, cat_Gen+cat_Reco);
-  histPlot->AddPlot(cosha, cat_Gen+cat_Reco);
   histPlot->AddPlot(DcosH, cat_Reco);
   histPlot->AddPlot(Dcosha, cat_Reco);
   histPlot->AddPlot(MH, DcosH, cat_Reco);
@@ -358,7 +293,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   histPlot->AddPlot(Dcosha, Dcoshb, cat_Reco);
 
   histPlot->AddPlot(DcosWaa, cat_Reco);
-  histPlot->AddPlot(cosWaa, cosWab, cat_Reco);
   histPlot->AddPlot(DcosWaa, DcosWab, cat_Reco);
 
   /////////////////////////////////////////////////////////////////////////////////////////

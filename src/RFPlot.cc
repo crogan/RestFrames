@@ -27,7 +27,6 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TFile.h>
 #include <TStyle.h>
 #include <TROOT.h>
 

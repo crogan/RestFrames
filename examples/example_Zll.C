@@ -34,52 +34,90 @@ using namespace RestFrames;
 
 void example_Zll(const string& output_name = "output_Zll.root"){
 
-  double mZ = 90.;
-  int Ngen = 100000;
+  double mZ = 91.188; // GeV, PDG 2016
+  double wZ = 2.495;
 
-  // Set up toy generation and event analysis trees:
-  LabGenFrame LAB_G("LAB_G","LAB");
-  DecayGenFrame Z_G("Z_G","Z");
-  VisibleGenFrame Lp_G("Lp_G","#it{l}^{+}");
-  VisibleGenFrame Lm_G("Lm_G","#it{l}^{-}");
+  // Number of events to generate
+  int Ngen = 1000000;
 
-  LAB_G.SetChildFrame(Z_G);
-  Z_G.AddChildFrame(Lp_G);
-  Z_G.AddChildFrame(Lm_G);
+  /////////////////////////////////////////////////////////////////////////////////////////
+  g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
+  /////////////////////////////////////////////////////////////////////////////////////////
+  LabGenFrame       LAB_Gen("LAB_Gen","LAB");
+  ResonanceGenFrame Z_Gen("Z_Gen","Z");
+  VisibleGenFrame   Lp_Gen("Lp_Gen","#it{l}^{+}");
+  VisibleGenFrame   Lm_Gen("Lm_Gen","#it{l}^{-}");
+
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  
+  LAB_Gen.SetChildFrame(Z_Gen);
+  Z_Gen.AddChildFrame(Lp_Gen);
+  Z_Gen.AddChildFrame(Lm_Gen);
  
-  if(!LAB_G.InitializeTree()) cout << "Problem with generator tree" << endl; 
+  if(LAB_Gen.InitializeTree())
+    g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing generator tree" << LogEnd;
 
-  Z_G.SetMass(mZ);
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  if(!LAB_G.InitializeAnalysis()) cout << "Problem with generator tree" << endl; 
+  // Set Z pole mass and width
+  Z_Gen.SetMass(mZ);                   Z_Gen.SetWidth(wZ);
 
-  LabRecoFrame LAB("LAB","LAB");
-  DecayRecoFrame Z("Z","Z");
+  // set lepton pT and eta cuts
+  Lp_Gen.SetPtCut(15.);                 Lp_Gen.SetEtaCut(2.5);
+  Lm_Gen.SetPtCut(15.);                 Lm_Gen.SetEtaCut(2.5); 
+
+  if(LAB_Gen.InitializeAnalysis())
+    g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
+  /////////////////////////////////////////////////////////////////////////////////////////
+  LabRecoFrame     LAB("LAB","LAB");
+  DecayRecoFrame   Z("Z","Z");
   VisibleRecoFrame Lp("Lp","#it{l}^{+}");
   VisibleRecoFrame Lm("Lm","#it{l}^{-}");
+
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
   
   LAB.SetChildFrame(Z);
   Z.AddChildFrame(Lp);
   Z.AddChildFrame(Lm);
 
-  if(!LAB.InitializeTree()) cout << "Problem with reconstruction tree" << endl; 
+  if(LAB.InitializeTree())
+    g_Log << LogInfo << "...Successfully initialized reconstruction trees" << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing reconstruction trees" << LogEnd;
+  
+  if(LAB.InitializeAnalysis())
+    g_Log << LogInfo << "...Successfully initialized analyses" << LogEnd;
+  else
+    g_Log << LogError << "...Failed initializing analyses" << LogEnd;
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   
   TreePlot* tree_plot = new TreePlot("TreePlot","TreePlot");
  
   // generator tree
-  tree_plot->SetTree(LAB_G);
-  tree_plot->Draw("GenTree", "Generator Tree");
+  tree_plot->SetTree(LAB_Gen);
+  tree_plot->Draw("GenTree", "Generator Tree", true);
 
   // reco tree
   tree_plot->SetTree(LAB);
   tree_plot->Draw("RecoTree", "Reconstruction Tree");
 
-  if(!LAB.InitializeAnalysis()) cout << "Problem with jigsaws" << endl;
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
   
   // Declare observables for histogram booking
   HistPlot* hist_plot = new HistPlot("HistPlot","Z #rightarrow #it{l}^{+} #it{l}^{-}"); 
 
-  const HistPlotVar& MZ     = hist_plot->GetNewVar("MZ", "M_{Z}", 85., 90., "[GeV]");
+  const HistPlotVar& MZ     = hist_plot->GetNewVar("MZ", "M_{Z}", 70., 110., "[GeV]");
   const HistPlotVar& cosZ   = hist_plot->GetNewVar("cosZ","cos #theta_{Z}", -1., 1.);
   const HistPlotVar& dphiZ  = hist_plot->GetNewVar("dphiZ", "#Delta #phi_{Z}", 0., 2.*acos(-1.));
   
@@ -89,21 +127,26 @@ void example_Zll(const string& output_name = "output_Zll.root"){
   hist_plot->AddPlot(cosZ, MZ);
 
   for(int igen = 0; igen < Ngen; igen++){
-    if(igen%(Ngen/10) == 0) cout << "Generating event " << igen << " of " << Ngen << endl;
+    if(igen%((std::max(Ngen,10))/10) == 0)
+      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
-    LAB_G.ClearEvent();                             // clear the gen tree
+    LAB_Gen.ClearEvent();                             // clear the gen tree
+    
     double PTZ = mZ*gRandom->Rndm();
-    LAB_G.SetTransverseMomentum(PTZ);                // give the Z some Pt
+    LAB_Gen.SetTransverseMomentum(PTZ);               // give the Z some Pt
     double PzZ = mZ*(2.*gRandom->Rndm()-1.);
-    LAB_G.SetLongitudinalMomentum(PzZ);              // give the Z some Pz
-    LAB_G.AnalyzeEvent();                           // generate a new event
+    LAB_Gen.SetLongitudinalMomentum(PzZ);             // give the Z some Pz
+    
+    LAB_Gen.AnalyzeEvent();                           // generate a new event
 
     // analyze event
-    LAB.ClearEvent();                             // clear the reco tree
-    Lp.SetLabFrameFourVector(Lp_G.GetFourVector()); // Set lepton 4-vec
-    Lm.SetLabFrameFourVector(Lm_G.GetFourVector()); // Set lepton 4-vec
-    LAB.AnalyzeEvent();                           // analyze the event
+    LAB.ClearEvent();                                 // clear the reco tree
+    
+    Lp.SetLabFrameFourVector(Lp_Gen.GetFourVector(), 1); // Set lepton 4-vec and charge
+    Lm.SetLabFrameFourVector(Lm_Gen.GetFourVector(),-1); // Set lepton 4-vec and charge
+    
+    LAB.AnalyzeEvent();                               // analyze the event
 
     // calculate observables
     MZ    = Z.GetMass();
@@ -114,6 +157,9 @@ void example_Zll(const string& output_name = "output_Zll.root"){
   }
  
   hist_plot->Draw();
+
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
   hist_plot->WriteOutput(output_name);
   hist_plot->WriteHist(output_name);
   tree_plot->WriteOutput(output_name);

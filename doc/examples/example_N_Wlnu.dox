@@ -21,8 +21,9 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 
 <table width="800px">
   <tr>
-    <td> Decay tree for non-resonant production of N W bosons, each decaying W(l nu) </td>
-    <td> <img src="example_N_Wlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![2 W(l nu)](N_Wlnu_2W_tree.gif) </td>
+    <td> ![3 W(l nu)](N_Wlnu_3W_tree.gif) </td>
+    <td> ![4 W(l nu)](N_Wlnu_4W_tree.gif) </td>
   </tr>
 </table>
 

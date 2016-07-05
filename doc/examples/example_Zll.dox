@@ -22,7 +22,7 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 <table width="800px">
   <tr>
     <td> Decay tree for a Z boson decaying to two leptons. </td>
-    <td> <img src="example_Zll.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![Decay tree](Zll_tree.gif) </td>
   </tr>
 </table>
 

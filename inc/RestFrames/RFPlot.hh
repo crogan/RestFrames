@@ -32,6 +32,7 @@
 
 #include <TCanvas.h>
 #include <TColor.h>
+#include <TFile.h>
 
 #include "RestFrames/RFBase.hh"
 

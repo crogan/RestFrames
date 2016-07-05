@@ -19,13 +19,6 @@ or run the example from the ROOT interactive command line:
 
 For the latter, if **RestFrames** is not installed in an area in the default `PATH` then you must first load the **RestFrames** environmental variables with `source setup_RestFrames.(c)sh`.
 
-<table width="800px">
-  <tr>
-    <td> Decay tree for di-gluinos decaying to four b-quarks and two neutralinos. </td>
-    <td> <img src="example_DiGluino_to_bbXbbX.gif" alt="Drawing" style="width: 300px;"/> </td>
-  </tr>
-</table>
-
 */
 
 

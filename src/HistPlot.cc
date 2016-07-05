@@ -40,7 +40,7 @@ namespace RestFrames {
   HistPlot::HistPlot(const std::string& sname, const std::string& stitle)
     : RFPlot(sname, stitle)
   {
-    SetPlotLabel("#bf{#it{RestFrames}} Toy Event Generation");
+    SetPlotLabel("#bf{#it{RestFrames}} Event Generation");
     SetPlotTitle(GetTitle());
     SetScaleLabel("a. u.");
     m_Scale = 1.;
@@ -432,7 +432,7 @@ namespace RestFrames {
       
       leg->Draw();
     }
-    if(N == 1){
+    if(N == 1 && !cats[0].IsEmpty()){
       l.SetTextSize(0.05);
       l.SetTextFont(132);
       l.DrawLatex(0.23,0.84,cats[0].GetTitle().c_str());
@@ -580,7 +580,6 @@ namespace RestFrames {
 
   void HistPlot::WriteHist(const std::string& name){
     TFile* file = new TFile(name.c_str(),"UPDATE");
-    file->mkdir(GetName().c_str());
     file->mkdir((GetName()+"/hist").c_str());
     file->cd((GetName()+"/hist").c_str());
     int N = m_1DHists.size();

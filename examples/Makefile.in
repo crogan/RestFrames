@@ -93,6 +93,8 @@ noinst_PROGRAMS = example_Zll.x$(EXEEXT) example_Wlnu.x$(EXEEXT) \
 	example_Hp_to_HggWlnu.x$(EXEEXT) \
 	example_H_to_WlnuWlnu.x$(EXEEXT) \
 	example_ttbar_to_bWlnubWlnu.x$(EXEEXT) \
+	example_H_to_ttbar_to_bWlnubWlnu.x$(EXEEXT) \
+	example_DiStop_to_bXp_bXm_to_blNblN.x$(EXEEXT) \
 	example_DiGluino_to_bbXbbX.x$(EXEEXT) \
 	example_X2X2_to_ZllXHggX.x$(EXEEXT) \
 	example_H_to_hh_to_4Wlnu.x$(EXEEXT) example_N_Wlnu.x$(EXEEXT)
@@ -121,6 +123,16 @@ example_DiGluino_to_bbXbbX_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(example_DiGluino_to_bbXbbX_x_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_DiStop_to_bXp_bXm_to_blNblN_x_OBJECTS = DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.$(OBJEXT)
+example_DiStop_to_bXp_bXm_to_blNblN_x_OBJECTS =  \
+	$(am_example_DiStop_to_bXp_bXm_to_blNblN_x_OBJECTS)
+example_DiStop_to_bXp_bXm_to_blNblN_x_LDADD = $(LDADD)
+example_DiStop_to_bXp_bXm_to_blNblN_x_DEPENDENCIES =  \
+	../src/libRestFrames.la
+example_DiStop_to_bXp_bXm_to_blNblN_x_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CXXLD) $(example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_example_H_to_WlnuWlnu_x_OBJECTS =  \
 	H_to_WlnuWlnu-example_H_to_WlnuWlnu.$(OBJEXT)
 example_H_to_WlnuWlnu_x_OBJECTS =  \
@@ -141,6 +153,16 @@ example_H_to_hh_to_4Wlnu_x_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(example_H_to_hh_to_4Wlnu_x_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_example_H_to_ttbar_to_bWlnubWlnu_x_OBJECTS = H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.$(OBJEXT)
+example_H_to_ttbar_to_bWlnubWlnu_x_OBJECTS =  \
+	$(am_example_H_to_ttbar_to_bWlnubWlnu_x_OBJECTS)
+example_H_to_ttbar_to_bWlnubWlnu_x_LDADD = $(LDADD)
+example_H_to_ttbar_to_bWlnubWlnu_x_DEPENDENCIES =  \
+	../src/libRestFrames.la
+example_H_to_ttbar_to_bWlnubWlnu_x_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CXXLD) $(example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_example_Hp_to_HggWlnu_x_OBJECTS =  \
 	Hp_to_HggWlnu-example_Hp_to_HggWlnu.$(OBJEXT)
 example_Hp_to_HggWlnu_x_OBJECTS =  \
@@ -239,16 +261,20 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(example_DiGluino_to_bbXbbX_x_SOURCES) \
+	$(example_DiStop_to_bXp_bXm_to_blNblN_x_SOURCES) \
 	$(example_H_to_WlnuWlnu_x_SOURCES) \
 	$(example_H_to_hh_to_4Wlnu_x_SOURCES) \
+	$(example_H_to_ttbar_to_bWlnubWlnu_x_SOURCES) \
 	$(example_Hp_to_HggWlnu_x_SOURCES) $(example_N_Wlnu_x_SOURCES) \
 	$(example_Wlnu_x_SOURCES) \
 	$(example_X2X2_to_ZllXHggX_x_SOURCES) $(example_Zll_x_SOURCES) \
 	$(example_top_to_bWlnu_x_SOURCES) \
 	$(example_ttbar_to_bWlnubWlnu_x_SOURCES)
 DIST_SOURCES = $(example_DiGluino_to_bbXbbX_x_SOURCES) \
+	$(example_DiStop_to_bXp_bXm_to_blNblN_x_SOURCES) \
 	$(example_H_to_WlnuWlnu_x_SOURCES) \
 	$(example_H_to_hh_to_4Wlnu_x_SOURCES) \
+	$(example_H_to_ttbar_to_bWlnubWlnu_x_SOURCES) \
 	$(example_Hp_to_HggWlnu_x_SOURCES) $(example_N_Wlnu_x_SOURCES) \
 	$(example_Wlnu_x_SOURCES) \
 	$(example_X2X2_to_ZllXHggX_x_SOURCES) $(example_Zll_x_SOURCES) \
@@ -490,6 +516,12 @@ example_H_to_WlnuWlnu_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(R
 example_ttbar_to_bWlnubWlnu_x_SOURCES = example_ttbar_to_bWlnubWlnu.C
 example_ttbar_to_bWlnubWlnu_x_SHORTNAME = ttbar_to_bWlnubWlnu
 example_ttbar_to_bWlnubWlnu_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_H_to_ttbar_to_bWlnubWlnu_x_SOURCES = example_H_to_ttbar_to_bWlnubWlnu.C
+example_H_to_ttbar_to_bWlnubWlnu_x_SHORTNAME = H_to_ttbar_to_bWlnubWlnu
+example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
+example_DiStop_to_bXp_bXm_to_blNblN_x_SOURCES = example_DiStop_to_bXp_bXm_to_blNblN.C
+example_DiStop_to_bXp_bXm_to_blNblN_x_SHORTNAME = DiStop_to_bXp_bXm_to_blNblN
+example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 example_DiGluino_to_bbXbbX_x_SOURCES = example_DiGluino_to_bbXbbX.C
 example_DiGluino_to_bbXbbX_x_SHORTNAME = DiGluino_to_bbXbbX
 example_DiGluino_to_bbXbbX_x_CXXFLAGS = -I../inc -g -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
@@ -553,6 +585,10 @@ example_DiGluino_to_bbXbbX.x$(EXEEXT): $(example_DiGluino_to_bbXbbX_x_OBJECTS) $
 	@rm -f example_DiGluino_to_bbXbbX.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_DiGluino_to_bbXbbX_x_LINK) $(example_DiGluino_to_bbXbbX_x_OBJECTS) $(example_DiGluino_to_bbXbbX_x_LDADD) $(LIBS)
 
+example_DiStop_to_bXp_bXm_to_blNblN.x$(EXEEXT): $(example_DiStop_to_bXp_bXm_to_blNblN_x_OBJECTS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_DEPENDENCIES) $(EXTRA_example_DiStop_to_bXp_bXm_to_blNblN_x_DEPENDENCIES) 
+	@rm -f example_DiStop_to_bXp_bXm_to_blNblN.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_DiStop_to_bXp_bXm_to_blNblN_x_LINK) $(example_DiStop_to_bXp_bXm_to_blNblN_x_OBJECTS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_LDADD) $(LIBS)
+
 example_H_to_WlnuWlnu.x$(EXEEXT): $(example_H_to_WlnuWlnu_x_OBJECTS) $(example_H_to_WlnuWlnu_x_DEPENDENCIES) $(EXTRA_example_H_to_WlnuWlnu_x_DEPENDENCIES) 
 	@rm -f example_H_to_WlnuWlnu.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_H_to_WlnuWlnu_x_LINK) $(example_H_to_WlnuWlnu_x_OBJECTS) $(example_H_to_WlnuWlnu_x_LDADD) $(LIBS)
@@ -560,6 +596,10 @@ example_H_to_WlnuWlnu.x$(EXEEXT): $(example_H_to_WlnuWlnu_x_OBJECTS) $(example_H
 example_H_to_hh_to_4Wlnu.x$(EXEEXT): $(example_H_to_hh_to_4Wlnu_x_OBJECTS) $(example_H_to_hh_to_4Wlnu_x_DEPENDENCIES) $(EXTRA_example_H_to_hh_to_4Wlnu_x_DEPENDENCIES) 
 	@rm -f example_H_to_hh_to_4Wlnu.x$(EXEEXT)
 	$(AM_V_CXXLD)$(example_H_to_hh_to_4Wlnu_x_LINK) $(example_H_to_hh_to_4Wlnu_x_OBJECTS) $(example_H_to_hh_to_4Wlnu_x_LDADD) $(LIBS)
+
+example_H_to_ttbar_to_bWlnubWlnu.x$(EXEEXT): $(example_H_to_ttbar_to_bWlnubWlnu_x_OBJECTS) $(example_H_to_ttbar_to_bWlnubWlnu_x_DEPENDENCIES) $(EXTRA_example_H_to_ttbar_to_bWlnubWlnu_x_DEPENDENCIES) 
+	@rm -f example_H_to_ttbar_to_bWlnubWlnu.x$(EXEEXT)
+	$(AM_V_CXXLD)$(example_H_to_ttbar_to_bWlnubWlnu_x_LINK) $(example_H_to_ttbar_to_bWlnubWlnu_x_OBJECTS) $(example_H_to_ttbar_to_bWlnubWlnu_x_LDADD) $(LIBS)
 
 example_Hp_to_HggWlnu.x$(EXEEXT): $(example_Hp_to_HggWlnu_x_OBJECTS) $(example_Hp_to_HggWlnu_x_DEPENDENCIES) $(EXTRA_example_Hp_to_HggWlnu_x_DEPENDENCIES) 
 	@rm -f example_Hp_to_HggWlnu.x$(EXEEXT)
@@ -596,8 +636,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DiGluino_to_bbXbbX-example_DiGluino_to_bbXbbX.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/H_to_WlnuWlnu-example_H_to_WlnuWlnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/H_to_hh_to_4Wlnu-example_H_to_hh_to_4Wlnu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Hp_to_HggWlnu-example_Hp_to_HggWlnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/N_Wlnu-example_N_Wlnu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Wlnu-example_Wlnu.Po@am__quote@
@@ -641,6 +683,20 @@ DiGluino_to_bbXbbX-example_DiGluino_to_bbXbbX.obj: example_DiGluino_to_bbXbbX.C
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_DiGluino_to_bbXbbX_x_CXXFLAGS) $(CXXFLAGS) -c -o DiGluino_to_bbXbbX-example_DiGluino_to_bbXbbX.obj `if test -f 'example_DiGluino_to_bbXbbX.C'; then $(CYGPATH_W) 'example_DiGluino_to_bbXbbX.C'; else $(CYGPATH_W) '$(srcdir)/example_DiGluino_to_bbXbbX.C'; fi`
 
+DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.o: example_DiStop_to_bXp_bXm_to_blNblN.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS) $(CXXFLAGS) -MT DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.o -MD -MP -MF $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Tpo -c -o DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.o `test -f 'example_DiStop_to_bXp_bXm_to_blNblN.C' || echo '$(srcdir)/'`example_DiStop_to_bXp_bXm_to_blNblN.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Tpo $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_DiStop_to_bXp_bXm_to_blNblN.C' object='DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS) $(CXXFLAGS) -c -o DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.o `test -f 'example_DiStop_to_bXp_bXm_to_blNblN.C' || echo '$(srcdir)/'`example_DiStop_to_bXp_bXm_to_blNblN.C
+
+DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.obj: example_DiStop_to_bXp_bXm_to_blNblN.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS) $(CXXFLAGS) -MT DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.obj -MD -MP -MF $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Tpo -c -o DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.obj `if test -f 'example_DiStop_to_bXp_bXm_to_blNblN.C'; then $(CYGPATH_W) 'example_DiStop_to_bXp_bXm_to_blNblN.C'; else $(CYGPATH_W) '$(srcdir)/example_DiStop_to_bXp_bXm_to_blNblN.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Tpo $(DEPDIR)/DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_DiStop_to_bXp_bXm_to_blNblN.C' object='DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_DiStop_to_bXp_bXm_to_blNblN_x_CXXFLAGS) $(CXXFLAGS) -c -o DiStop_to_bXp_bXm_to_blNblN-example_DiStop_to_bXp_bXm_to_blNblN.obj `if test -f 'example_DiStop_to_bXp_bXm_to_blNblN.C'; then $(CYGPATH_W) 'example_DiStop_to_bXp_bXm_to_blNblN.C'; else $(CYGPATH_W) '$(srcdir)/example_DiStop_to_bXp_bXm_to_blNblN.C'; fi`
+
 H_to_WlnuWlnu-example_H_to_WlnuWlnu.o: example_H_to_WlnuWlnu.C
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_WlnuWlnu_x_CXXFLAGS) $(CXXFLAGS) -MT H_to_WlnuWlnu-example_H_to_WlnuWlnu.o -MD -MP -MF $(DEPDIR)/H_to_WlnuWlnu-example_H_to_WlnuWlnu.Tpo -c -o H_to_WlnuWlnu-example_H_to_WlnuWlnu.o `test -f 'example_H_to_WlnuWlnu.C' || echo '$(srcdir)/'`example_H_to_WlnuWlnu.C
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/H_to_WlnuWlnu-example_H_to_WlnuWlnu.Tpo $(DEPDIR)/H_to_WlnuWlnu-example_H_to_WlnuWlnu.Po
@@ -668,6 +724,20 @@ H_to_hh_to_4Wlnu-example_H_to_hh_to_4Wlnu.obj: example_H_to_hh_to_4Wlnu.C
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_H_to_hh_to_4Wlnu.C' object='H_to_hh_to_4Wlnu-example_H_to_hh_to_4Wlnu.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_hh_to_4Wlnu_x_CXXFLAGS) $(CXXFLAGS) -c -o H_to_hh_to_4Wlnu-example_H_to_hh_to_4Wlnu.obj `if test -f 'example_H_to_hh_to_4Wlnu.C'; then $(CYGPATH_W) 'example_H_to_hh_to_4Wlnu.C'; else $(CYGPATH_W) '$(srcdir)/example_H_to_hh_to_4Wlnu.C'; fi`
+
+H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.o: example_H_to_ttbar_to_bWlnubWlnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS) $(CXXFLAGS) -MT H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.o -MD -MP -MF $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Tpo -c -o H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.o `test -f 'example_H_to_ttbar_to_bWlnubWlnu.C' || echo '$(srcdir)/'`example_H_to_ttbar_to_bWlnubWlnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Tpo $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_H_to_ttbar_to_bWlnubWlnu.C' object='H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS) $(CXXFLAGS) -c -o H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.o `test -f 'example_H_to_ttbar_to_bWlnubWlnu.C' || echo '$(srcdir)/'`example_H_to_ttbar_to_bWlnubWlnu.C
+
+H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.obj: example_H_to_ttbar_to_bWlnubWlnu.C
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS) $(CXXFLAGS) -MT H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.obj -MD -MP -MF $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Tpo -c -o H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.obj `if test -f 'example_H_to_ttbar_to_bWlnubWlnu.C'; then $(CYGPATH_W) 'example_H_to_ttbar_to_bWlnubWlnu.C'; else $(CYGPATH_W) '$(srcdir)/example_H_to_ttbar_to_bWlnubWlnu.C'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Tpo $(DEPDIR)/H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='example_H_to_ttbar_to_bWlnubWlnu.C' object='H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_H_to_ttbar_to_bWlnubWlnu_x_CXXFLAGS) $(CXXFLAGS) -c -o H_to_ttbar_to_bWlnubWlnu-example_H_to_ttbar_to_bWlnubWlnu.obj `if test -f 'example_H_to_ttbar_to_bWlnubWlnu.C'; then $(CYGPATH_W) 'example_H_to_ttbar_to_bWlnubWlnu.C'; else $(CYGPATH_W) '$(srcdir)/example_H_to_ttbar_to_bWlnubWlnu.C'; fi`
 
 Hp_to_HggWlnu-example_Hp_to_HggWlnu.o: example_Hp_to_HggWlnu.C
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(example_Hp_to_HggWlnu_x_CXXFLAGS) $(CXXFLAGS) -MT Hp_to_HggWlnu-example_Hp_to_HggWlnu.o -MD -MP -MF $(DEPDIR)/Hp_to_HggWlnu-example_Hp_to_HggWlnu.Tpo -c -o Hp_to_HggWlnu-example_Hp_to_HggWlnu.o `test -f 'example_Hp_to_HggWlnu.C' || echo '$(srcdir)/'`example_Hp_to_HggWlnu.C

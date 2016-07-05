@@ -22,7 +22,7 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 <table width="800px">
   <tr>
     <td> Decay tree for a heavy neutral Higgs decaying to two lighter neutral Higgs, each decaying W(lnu)W(lnu). </td>
-    <td> <img src="example_H_to_hh_to_4Wlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![Decay Tree](H_to_hh_to_4Wlnu_tree.gif) </td>
   </tr>
 </table>
 

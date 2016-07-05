@@ -22,7 +22,7 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 <table width="800px">
   <tr>
     <td> Decay tree for fully leptonic t tbar. </td>
-    <td> <img src="example_ttbar_to_bWlnubWlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![Decay Tree](ttbar_to_bWlnubWlnu_tree.gif) </td>
   </tr>
 </table>
 

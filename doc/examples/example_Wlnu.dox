@@ -22,7 +22,7 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 <table width="800px">
   <tr>
     <td> Decay tree for a W boson decaying to a lepton and neutrino </td>
-    <td> <img src="example_Wlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![Decay tree](Wlnu_tree.gif) </td>
   </tr>
 </table>
 

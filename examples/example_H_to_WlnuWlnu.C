@@ -33,64 +33,66 @@ using namespace RestFrames;
 
 void example_H_to_WlnuWlnu(const std::string& output_name =
 			   "output_H_to_WlnuWlnu.root"){
-  SetLogPrint(LogVerbose,true);
-  SetLogPrint(LogDebug,true);
-  SetLogMaxWidth(120);
 
-  double mH = 500.;
-  double mW = 80.;
-  double wW = 2.;
-  double mL = 0.501;
-  double mN = 0.;
-  int Ngen = 100000;
+  // set particle masses and widths
+  double mW   = 80.385;  // GeV, PDG 2016
+  double wW   = 2.085;
+  double mL   = 0.106;   // muons
+  double mN   = 0.;
+
+  std::vector<double> mH; // vary neutral Higgs mass
+  mH.push_back(125.);
+  mH.push_back(400.);
+  mH.push_back(750.);
+  mH.push_back(1000.);
+  mH.push_back(1500.);
+
+  // Number of events to generate (per H mass)
+  int Ngen = 10000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  ppLabGenFrame     LAB_G("LAB_G","LAB");
-  DecayGenFrame     H_G("H_G","H");
-  ResonanceGenFrame Wa_G("Wa_G","W_{a}");
-  ResonanceGenFrame Wb_G("Wb_G","W_{b}");
-  VisibleGenFrame   La_G("La_G","#it{l}_{a}");
-  InvisibleGenFrame Na_G("Na_G","#nu_{a}");
-  VisibleGenFrame   Lb_G("Lb_G","#it{l}_{b}");
-  InvisibleGenFrame Nb_G("Nb_G","#nu_{b}");
+  ppLabGenFrame     LAB_Gen("LAB_Gen","LAB");
+  DecayGenFrame     H_Gen("H_Gen","H^{0}");
+  ResonanceGenFrame Wa_Gen("Wa_Gen","W_{a}");
+  ResonanceGenFrame Wb_Gen("Wb_Gen","W_{b}");
+  VisibleGenFrame   La_Gen("La_Gen","#it{l}_{a}");
+  InvisibleGenFrame Na_Gen("Na_Gen","#nu_{a}");
+  VisibleGenFrame   Lb_Gen("Lb_Gen","#it{l}_{b}");
+  InvisibleGenFrame Nb_Gen("Nb_Gen","#nu_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB_G.SetChildFrame(H_G);
-  H_G.AddChildFrame(Wa_G);
-  H_G.AddChildFrame(Wb_G);
-  Wa_G.AddChildFrame(La_G);
-  Wa_G.AddChildFrame(Na_G);
-  Wb_G.AddChildFrame(Lb_G);
-  Wb_G.AddChildFrame(Nb_G);
+  LAB_Gen.SetChildFrame(H_Gen);
+  H_Gen.AddChildFrame(Wa_Gen);
+  H_Gen.AddChildFrame(Wb_Gen);
+  Wa_Gen.AddChildFrame(La_Gen);
+  Wa_Gen.AddChildFrame(Na_Gen);
+  Wb_Gen.AddChildFrame(Lb_Gen);
+  Wb_Gen.AddChildFrame(Nb_Gen);
 
-  if(LAB_G.InitializeTree())
+  if(LAB_Gen.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator tree" << LogEnd;								    
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
+  if(mH.size() < 1) return;
+  
   // set Higgs masses
-  H_G.SetMass(mH);
+  H_Gen.SetMass(mH[0]);
   // set W masses and widths
-  Wa_G.SetMass(mW);
-  Wb_G.SetMass(mW);
-  Wa_G.SetWidth(wW);
-  Wb_G.SetWidth(wW);
-  // set lepton masses
-  La_G.SetMass(mL);
-  Lb_G.SetMass(mL);
-  La_G.SetPtCut(10.);
-  Lb_G.SetPtCut(10.);
-  La_G.SetEtaCut(2.5);
-  Lb_G.SetEtaCut(2.5);
-  // set neutrino masses
-  Na_G.SetMass(mN);
-  Nb_G.SetMass(mN);
+  Wa_Gen.SetMass(mW);                    Wa_Gen.SetWidth(wW);
+  Wb_Gen.SetMass(mW);                    Wb_Gen.SetWidth(wW);
+  // set lepton and neutrino masses
+  La_Gen.SetMass(mL);                    Lb_Gen.SetMass(mL);
 
-  if(LAB_G.InitializeAnalysis())
+  // set lepton pT and eta cuts
+  La_Gen.SetPtCut(10.);                  Lb_Gen.SetPtCut(10.);
+  La_Gen.SetEtaCut(2.5);                 Lb_Gen.SetEtaCut(2.5);
+
+  if(LAB_Gen.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analysis" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analysis" << LogEnd;
@@ -100,26 +102,26 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  LabRecoFrame         LAB_R("LAB_R","LAB");
-  DecayRecoFrame       H_R("H_R","H");
-  DecayRecoFrame       Wa_R("Wa_R","W_{a}");
-  DecayRecoFrame       Wb_R("Wb_R","W_{b}");
-  VisibleRecoFrame     La_R("La_R","#it{l}_{a}");
-  InvisibleRecoFrame   Na_R("Na_R","#nu_{a}");
-  VisibleRecoFrame     Lb_R("Lb_R","#it{l}_{b}");
-  InvisibleRecoFrame   Nb_R("Nb_R","#nu_{b}");
+  LabRecoFrame         LAB("LAB","LAB");
+  DecayRecoFrame       H("H","H^{ 0}");
+  DecayRecoFrame       Wa("Wa","W_{a}");
+  DecayRecoFrame       Wb("Wb","W_{b}");
+  VisibleRecoFrame     La("La","#it{l}_{a}");
+  InvisibleRecoFrame   Na("Na","#nu_{a}");
+  VisibleRecoFrame     Lb("Lb","#it{l}_{b}");
+  InvisibleRecoFrame   Nb("Nb","#nu_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB_R.SetChildFrame(H_R);
-  H_R.AddChildFrame(Wa_R);
-  H_R.AddChildFrame(Wb_R);
-  Wa_R.AddChildFrame(La_R);
-  Wa_R.AddChildFrame(Na_R);
-  Wb_R.AddChildFrame(Lb_R);
-  Wb_R.AddChildFrame(Nb_R);
+  LAB.SetChildFrame(H);
+  H.AddChildFrame(Wa);
+  H.AddChildFrame(Wb);
+  Wa.AddChildFrame(La);
+  Wa.AddChildFrame(Na);
+  Wb.AddChildFrame(Lb);
+  Wb.AddChildFrame(Nb);
 
-  if(LAB_R.InitializeTree())
+  if(LAB.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized reconstruction tree" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing reconstruction tree" << LogEnd;
@@ -127,27 +129,27 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   // Invisible Group
-  InvisibleGroup INV_R("INV_R","#nu #nu Jigsaws");
-  INV_R.AddFrame(Na_R);
-  INV_R.AddFrame(Nb_R);
+  InvisibleGroup INV("INV","#nu #nu Jigsaws");
+  INV.AddFrame(Na);
+  INV.AddFrame(Nb);
 
   // Set nu nu mass equal to l l mass
-  SetMassInvJigsaw NuNuM_R("NuNuM_R", "M_{#nu#nu} = m_{#it{l}#it{l}}");
-  INV_R.AddJigsaw(NuNuM_R);
+  SetMassInvJigsaw NuNuM("NuNuM", "M_{#nu#nu} = m_{#it{l}#it{l}}");
+  INV.AddJigsaw(NuNuM);
 
-  SetRapidityInvJigsaw NuNuR_R("NuNuR_R", "#eta_{#nu#nu} = #eta_{#it{l}#it{l}}");
-  INV_R.AddJigsaw(NuNuR_R);
-  NuNuR_R.AddVisibleFrames(LAB_R.GetListVisibleFrames());
+  SetRapidityInvJigsaw NuNuR("NuNuR", "#eta_{#nu#nu} = #eta_{#it{l}#it{l}}");
+  INV.AddJigsaw(NuNuR);
+  NuNuR.AddVisibleFrames(LAB.GetListVisibleFrames());
 
-  MinMassesSqInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}",2);
-  //ContraBoostInvJigsaw MinMW_R("MinMW_R","min M_{W}, M_{Wa}= M_{Wb}");
-  INV_R.AddJigsaw(MinMW_R);
-  MinMW_R.AddVisibleFrames(Wa_R.GetListVisibleFrames(), 0);
-  MinMW_R.AddVisibleFrames(Wb_R.GetListVisibleFrames(), 1);
-  MinMW_R.AddInvisibleFrames(Wa_R.GetListInvisibleFrames(), 0);
-  MinMW_R.AddInvisibleFrames(Wb_R.GetListInvisibleFrames(), 1);
+  //MinMassesSqInvJigsaw MinMW("MinMW","min M_{W}, M_{Wa}= M_{Wb}",2);
+  ContraBoostInvJigsaw MinMW("MinMW","min M_{W}, M_{Wa}= M_{Wb}");
+  INV.AddJigsaw(MinMW);
+  MinMW.AddVisibleFrame(La, 0);
+  MinMW.AddVisibleFrame(Lb, 1);
+  MinMW.AddInvisibleFrame(Na, 0);
+  MinMW.AddInvisibleFrame(Nb, 1);
 
-  if(LAB_R.InitializeAnalysis())
+  if(LAB.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing analysis" << LogEnd;	
@@ -157,98 +159,112 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
 
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
-  treePlot->SetTree(LAB_G);
+  treePlot->SetTree(LAB_Gen);
   treePlot->Draw("GenTree", "Generator Tree", true);
 
-  treePlot->SetTree(LAB_R);
+  treePlot->SetTree(LAB);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
-  treePlot->SetTree(INV_R);
-  treePlot->Draw("InvTree", "Invisible Jigsaws");
-
-  treePlot->SetTree(NuNuR_R);
+  treePlot->SetTree(INV);
   treePlot->Draw("InvTree", "Invisible Jigsaws", true);
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  HistPlot* histPlot = new HistPlot("HistPlot", "H #rightarrow W(#it{l} #nu) W(#it{l} #nu)");
+  std::string plot_title = "H^{ 0} #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
+  HistPlot* histPlot = new HistPlot("HistPlot", plot_title);
 
+  RFList<const HistPlotCategory> cat_list;
+  int Nmass = mH.size();
+  for(int m = 0; m < Nmass; m++){
+    char smass[50], scat[50];
+    sprintf(scat, "MH%.0f", mH[m]);
+    sprintf(smass, "m_{H^{ 0}} = %.0f", mH[m]);
+    cat_list += histPlot->GetNewCategory(scat, smass);
+  }
+  
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
-  const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");
 
-  const HistPlotVar& MH     = histPlot->GetNewVar("MH", "M_{H} / m_{H}", 0., 2.);
-  const HistPlotVar& MWa    = histPlot->GetNewVar("MWa", "M_{Wa}", 0., mW*2., "[GeV]");
-  const HistPlotVar& MWb    = histPlot->GetNewVar("MWb", "M_{Wb}", 0., mW*2., "[GeV]");
-  const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H}", -1., 1.);
-  const HistPlotVar& dphiH  = histPlot->GetNewVar("dphiH", "#Delta #phi_{H}", 0., 2.*acos(-1.));
-  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{gen}", 
+  const HistPlotVar& MH     = histPlot->GetNewVar("MH", "M_{H^{ 0}}", 0., 3000., "[GeV]");
+  const HistPlotVar& MHN    = histPlot->GetNewVar("MHN", "M_{H^{ 0}} / m_{H^{ 0}}^{ true}", 0., 2.);
+  const HistPlotVar& MWaN   = histPlot->GetNewVar("MWaN", "M_{Wa} / m_{Wa}^{ true}", 0., 3.);
+  const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H^{ 0}}", -1., 1.);
+  const HistPlotVar& cosWa  = histPlot->GetNewVar("cosWa","cos #theta_{W_{a}}", -1., 1.);
+  const HistPlotVar& dphiH  = histPlot->GetNewVar("dphiH", "#Delta #phi_{H^{ 0}}", 0., 2.*acos(-1.));
+  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H^{ 0}} - #theta_{H^{ 0}}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& DdphiH = histPlot->GetNewVar("DdphiH","#Delta #phi_{H} - #Delta #phi_{H}^{gen}", 
+  const HistPlotVar& DcosWa = histPlot->GetNewVar("DcosWa","#theta_{W_{a}} - #theta_{W_{a}}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-
-  histPlot->AddPlot(MWa, MWb, cat_Gen+cat_Reco);
-  histPlot->AddPlot(MH, cat_Reco);
-  histPlot->AddPlot(MH, MWa, cat_Reco);
-  histPlot->AddPlot(cosH,  cat_Gen+cat_Reco);
-  histPlot->AddPlot(dphiH, cat_Gen+cat_Reco);
-  histPlot->AddPlot(DcosH,  cat_Reco);
-  histPlot->AddPlot(DdphiH, cat_Reco);
-  histPlot->AddPlot(MH, DcosH,  cat_Reco);
+ 
+  histPlot->AddPlot(MH,     cat_list);
+  histPlot->AddPlot(MHN,    cat_list);
+  histPlot->AddPlot(MWaN,   cat_list);
+  histPlot->AddPlot(DcosH,  cat_list);
+  histPlot->AddPlot(DcosWa, cat_list);
+  histPlot->AddPlot(MHN, MWaN,    cat_list[1]);
+  histPlot->AddPlot(MHN, DcosH,   cat_list[0]);
+  histPlot->AddPlot(MWaN, DcosWa, cat_list[1]);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((std::max(Ngen,10))/10) == 0)
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
+  for(int m = 0; m < Nmass; m++){
+    g_Log << LogInfo << "Generating events for H^{0} mass = " << mH[m] << LogEnd;
 
-    // generate event
-    LAB_G.ClearEvent();                            // clear the gen tree
-    double PTH = mH*gRandom->Rndm()*0.1;
-    LAB_G.SetTransverseMomentum(PTH);               // give the Higgs some Pt
-    LAB_G.AnalyzeEvent();                          // generate a new event
+    H_Gen.SetMass(mH[m]);
+    LAB_Gen.InitializeAnalysis();
+  
+    for(int igen = 0; igen < Ngen; igen++){
+      if(igen%((std::max(Ngen,10))/10) == 0)
+	g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
-    // analyze event
-    LAB_R.ClearEvent();                               // clear the reco tree
+      // generate event
+      LAB_Gen.ClearEvent();                            // clear the gen tree
+      
+      LAB_Gen.AnalyzeEvent();                          // generate a new event
 
-    TVector3 MET = LAB_G.GetInvisibleMomentum();      // Get the MET from gen tree
-    MET.SetZ(0.);
-    INV_R.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
+      // analyze event
+      LAB.ClearEvent();                                  // clear the reco tree
 
-    La_R.SetLabFrameFourVector(La_G.GetFourVector());
-    Lb_R.SetLabFrameFourVector(Lb_G.GetFourVector());
+      TVector3 MET = LAB_Gen.GetInvisibleMomentum();     // Get the MET from gen tree
+      MET.SetZ(0.);
+      INV.SetLabFrameThreeVector(MET);                   // Set the MET in reco tree
 
-    LAB_R.AnalyzeEvent();                             // analyze the event
+      La.SetLabFrameFourVector(La_Gen.GetFourVector());  // set lepton 4-vectors
+      Lb.SetLabFrameFourVector(Lb_Gen.GetFourVector());
 
-    // Generator-level observables
-    double MHgen    = H_G.GetMass();
-    double cosHgen  = H_G.GetCosDecayAngle();
-    cosH = cosHgen;
-    double dphiHgen = LAB_G.GetDeltaPhiDecayPlanes(H_G);
-    dphiH = dphiHgen;
-    MWa = Wa_G.GetMass();
-    MWb = Wb_G.GetMass();
-   
-    histPlot->Fill(cat_Gen);
+      LAB.AnalyzeEvent();                                // analyze the event
 
-    // Reconstruction-level observables
-    MH = H_R.GetMass()/MHgen;
-    cosH  = H_R.GetCosDecayAngle();
-    dphiH = LAB_R.GetDeltaPhiDecayPlanes(H_R);
-    MWa = Wa_R.GetMass();
-    MWb = Wb_R.GetMass();
-    DcosH = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
-    DdphiH = asin(sin(dphiH-dphiHgen));
+      // Generator-level observables
+      double cosHgen  = H_Gen.GetCosDecayAngle();
+      cosH = cosHgen;
+      double cosWagen  = Wa_Gen.GetCosDecayAngle();
+      cosWa = cosWagen;
 
-    histPlot->Fill(cat_Reco);
+      if(m == 0)
+	histPlot->Fill(cat_Gen);
 
-    // g_Log << LogInfo << "MW1= " << Wa_R.GetMass() << " MW2=" << Wb_R.GetMass();
-    // g_Log << LogEnd;
+      // Reconstruction-level observables
+      MH   = H.GetMass();
+      MHN  = H.GetMass()/H_Gen.GetMass();
+      MWaN = Wa.GetMass()/Wa_Gen.GetMass();
+      cosH  = H.GetCosDecayAngle();
+      cosWa = Wa.GetCosDecayAngle();
+      DcosH  = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
+      DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
+
+      histPlot->Fill(cat_list[m]);
+    }
+
+    LAB_Gen.PrintGeneratorEfficiency();
   }
 
   histPlot->Draw();
-  
-  LAB_G.PrintGeneratorEfficiency();
+
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
+  histPlot->WriteOutput(output_name);
+  histPlot->WriteHist(output_name);
+  treePlot->WriteOutput(output_name);
   
   g_Log << LogInfo << "Finished" << LogEnd;
 }

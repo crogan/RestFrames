@@ -22,7 +22,7 @@ For the latter, if **RestFrames** is not installed in an area in the default `PA
 <table width="800px">
   <tr>
     <td> Decay tree for single top decaying to a b-quark and leptonic W. </td>
-    <td> <img src="example_top_to_bWlnu.gif" alt="Drawing" style="width: 300px;"/> </td>
+    <td> ![Decay Tree](top_to_bWlnu_tree.gif) </td>
   </tr>
 </table>
 

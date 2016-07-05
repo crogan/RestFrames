@@ -84,9 +84,8 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
   X2X2_Gen.SetVariableMass();
-  X2a_Gen.SetMass(mX2);
-  X2b_Gen.SetMass(mX2);
-  X1a_Gen.SetMass(mX1);  X1b_Gen.SetMass(mX1);
+  X2a_Gen.SetMass(mX2);    X2b_Gen.SetMass(mX2);
+  X1a_Gen.SetMass(mX1);    X1b_Gen.SetMass(mX1);
   Za_Gen.SetMass(mZ);
   Za_Gen.SetWidth(wZ);
   Hb_Gen.SetMass(mH);
@@ -192,11 +191,9 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   
   const HistPlotVar& MCM  = histPlot->GetNewVar("MCM", 
 						"M_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 
-						0., 2.5);
-  const HistPlotVar& MX2a   = histPlot->GetNewVar("MX2a", "M_{#tilde{#chi}_{2 a}^{ 0}}", 0., 2.5);
-  const HistPlotVar& MX2b   = histPlot->GetNewVar("MX2b", "M_{#tilde{#chi}_{2 b}^{ 0}}", 0., 2.5);
-  const HistPlotVar& EZX2a  = histPlot->GetNewVar("EZX2a", "E_{Z}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 2.5);
-  const HistPlotVar& EHX2b  = histPlot->GetNewVar("EHX2b", "E_{H}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 2.5);
+						0., 2.);
+  const HistPlotVar& EZX2a  = histPlot->GetNewVar("EZX2a", "E_{Z}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 2.);
+  const HistPlotVar& EHX2b  = histPlot->GetNewVar("EHX2b", "E_{H}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 2.);
   const HistPlotVar& cosX2a = histPlot->GetNewVar("cosX2a","cos #theta_{#tilde{#chi}_{2 a}^{ 0}}", -1., 1.);
   const HistPlotVar& cosX2b = histPlot->GetNewVar("cosX2b","cos #theta_{#tilde{#chi}_{2 b}^{ 0}}", -1., 1.);
   const HistPlotVar& cosZ   = histPlot->GetNewVar("cosZ","cos #theta_{Z}", -1., 1.);
@@ -235,8 +232,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
     // generate event
     LAB_Gen.ClearEvent();                           // clear the gen tree
     
-    double PTCM = 0.5*mX2*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomentum(800.);             // give X2X2 some Pt
+    //LAB_Gen.SetTransverseMomentum(800.);             // give X2X2 some Pt
     
     LAB_Gen.AnalyzeEvent();                         // generate a new event
 
@@ -253,8 +249,6 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 
     // calculate observables
     MCM = X2X2.GetMass() / X2X2_Gen.GetMass();
-    MX2a  = X2a.GetMass() / X2a_Gen.GetMass();
-    MX2b  = X2b.GetMass() / X2b_Gen.GetMass();
 
     EZX2a = Za.GetEnergy(X2a) / Za_Gen.GetEnergy(X2a_Gen);
     EHX2b = Hb.GetEnergy(X2b) / Hb_Gen.GetEnergy(X2b_Gen);

@@ -33,19 +33,20 @@ using namespace RestFrames;
 
 void example_top_to_bWlnu(const std::string& output_name =
 			 "output_top_to_bWlnu.root"){
-  SetLogPrint(LogVerbose,true);
+ 
   // set particle masses and widths
-  double mtop = 173.;
-  double wtop = 2.5;
-  double mW   = 81.;
-  double wW   = 2.5;
+  double mtop = 173.21; // GeV, PDG 2016
+  double wtop = 1.41;
+  double mW   = 80.385;
+  double wW   = 2.085;
+  
   // Number of events to generate
   int Ngen = 100000;
   
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  LabGenFrame           LAB_Gen("LAB_Gen","LAB");
+  ppLabGenFrame         LAB_Gen("LAB_Gen","LAB");
   ResonanceGenFrame     T_Gen("T_Gen","t");
   ResonanceGenFrame     W_Gen("W_Gen","W");
   VisibleGenFrame       B_Gen("B_Gen","b");
@@ -67,10 +68,14 @@ void example_top_to_bWlnu(const std::string& output_name =
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  T_Gen.SetMass(mtop);
-  T_Gen.SetWidth(wtop);
-  W_Gen.SetMass(mW);
-  W_Gen.SetWidth(wW);
+  // set top mass and width
+  T_Gen.SetMass(mtop);                 T_Gen.SetWidth(wtop);
+  // set W mass and width
+  W_Gen.SetMass(mW);                   W_Gen.SetWidth(wW);
+
+  // set b-jet/lepton pT and eta cuts
+  L_Gen.SetPtCut(20.);                 L_Gen.SetEtaCut(2.5);
+  B_Gen.SetPtCut(20.);                 B_Gen.SetEtaCut(2.5);  
 
   if(LAB_Gen.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analysis" << std::endl << LogEnd;
@@ -136,13 +141,14 @@ void example_top_to_bWlnu(const std::string& output_name =
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
   treePlot->SetTree(LAB_Gen);
-  treePlot->Draw("GenTree", "Generator Tree");
+  treePlot->Draw("GenTree", "Generator Tree", true);
 
   treePlot->SetTree(LAB_Mt);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
-  
+
+  // Declare observables for histogram booking
   HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow t #rightarrow W(#it{l} #nu) b");
 
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen", "Generator");
@@ -151,7 +157,7 @@ void example_top_to_bWlnu(const std::string& output_name =
 
   const HistPlotVar& Mt     = histPlot->GetNewVar("Mt", "M_{t}", 0., 280., "[GeV]");
   const HistPlotVar& MW     = histPlot->GetNewVar("MW", "M_{W}", 0., 150., "[GeV]");
-  const HistPlotVar& pTt    = histPlot->GetNewVar("pTt","p_{T}^{t} / m_{t}", 0., 1.);
+  const HistPlotVar& pTtoMt = histPlot->GetNewVar("pTtoMt","p_{T}^{top} / m_{top}", 0., 1.);
   const HistPlotVar& cosT   = histPlot->GetNewVar("cosT","cos #theta_{t}", -1., 1.);
   const HistPlotVar& cosW   = histPlot->GetNewVar("cosW","cos #theta_{W}", -1., 1.);
   const HistPlotVar& dphiT  = histPlot->GetNewVar("dphiT", "#Delta #phi_{t}", 0., 2.*acos(-1.));
@@ -161,22 +167,21 @@ void example_top_to_bWlnu(const std::string& output_name =
   const HistPlotVar& DdphiT = histPlot->GetNewVar("DdphiT","#Delta #phi_{t} - #Delta #phi_{t}^{gen}", -1., 1.);
   const HistPlotVar& DdphiW = histPlot->GetNewVar("DdphiW","#Delta #phi_{W} - #Delta #phi_{W}^{gen}", -1., 1.);
 
-  histPlot->AddPlot(cosW,   cat_minMt+cat_minMW);
-  histPlot->AddPlot(cosT,   cat_minMt+cat_minMW, true);
-  histPlot->AddPlot(dphiT,  cat_minMt+cat_minMW, true);
-  histPlot->AddPlot(dphiW,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DcosT,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DcosW,  cat_minMt+cat_minMW);
   histPlot->AddPlot(DdphiT, cat_minMt+cat_minMW);
   histPlot->AddPlot(DdphiW, cat_minMt+cat_minMW);
-  histPlot->AddPlot(Mt,   MW, cat_minMt+cat_minMW+cat_Gen);
-  histPlot->AddPlot(MW, cosW, cat_minMt+cat_minMW);
-  histPlot->AddPlot(Mt, cosT, cat_minMt+cat_minMW);
-  histPlot->AddPlot(MW, DcosW, cat_minMt+cat_minMW);
-  histPlot->AddPlot(Mt, DcosT,    cat_minMt+cat_minMW);
-  histPlot->AddPlot(DcosT, DcosW, cat_minMt+cat_minMW);
   histPlot->AddPlot(MW,     cat_minMt+cat_minMW+cat_Gen);
   histPlot->AddPlot(Mt,     cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(Mt, MW, cat_minMt+cat_minMW+cat_Gen);
+  histPlot->AddPlot(Mt, pTtoMt, cat_minMt+cat_minMW);
+  histPlot->AddPlot(MW, pTtoMt, cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosW,  MW, cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosT,  Mt, cat_minMt+cat_minMW);
+  histPlot->AddPlot(Mt, pTtoMt, cat_minMt+cat_minMW);
+  histPlot->AddPlot(MW, pTtoMt, cat_minMt+cat_minMW);
+  histPlot->AddPlot(DcosT, DcosW, cat_minMt+cat_minMW);
+ 
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -186,28 +191,33 @@ void example_top_to_bWlnu(const std::string& output_name =
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
 
     // generate event
-    LAB_Gen.ClearEvent();                           // clear the gen tree
-    double PTt = mtop*gRandom->Rndm();
-    LAB_Gen.SetTransverseMomentum(PTt);              // give the Top some Pt
-    double PZt = 100.*mtop*(2.*gRandom->Rndm()-1.);
-    LAB_Gen.SetLongitudinalMomentum(PZt);            // give the Top some Pz
-    LAB_Gen.AnalyzeEvent();                         // generate a new event
+    LAB_Gen.ClearEvent();                            // clear the gen tree
 
-    // analyze event
-    LAB_Mt.ClearEvent();                             // clear the reco tree
+    pTtoMt = gRandom->Rndm();                        // give the Top some Pt
+    LAB_Gen.SetPToverM(pTtoMt); 
+  
+    LAB_Gen.AnalyzeEvent();                          // generate a new event
+
+    TVector3 MET = LAB_Gen.GetInvisibleMomentum();   // Get the MET from gen tree
+    MET.SetZ(0.);
+    
+    // analyze event one way
+    LAB_Mt.ClearEvent();                               // clear the reco tree
+    
     L_Mt.SetLabFrameFourVector(L_Gen.GetFourVector()); // Set lepton 4-vec
     B_Mt.SetLabFrameFourVector(B_Gen.GetFourVector()); // Set b-jet 4-vec
-    TVector3 MET = LAB_Gen.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
     INV_Mt.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
-    LAB_Mt.AnalyzeEvent();                          //analyze the event
+    
+    LAB_Mt.AnalyzeEvent();                             //analyze the event
 
-    // analyze event
-    LAB_MW.ClearEvent();                             // clear the reco tree
+    // analyze event another way
+    LAB_MW.ClearEvent();                               // clear the reco tree
+    
     L_MW.SetLabFrameFourVector(L_Gen.GetFourVector()); // Set lepton 4-vec
     B_MW.SetLabFrameFourVector(B_Gen.GetFourVector()); // Set b-jet 4-vec
     INV_MW.SetLabFrameThreeVector(MET);                // Set the MET in reco tree
-    LAB_MW.AnalyzeEvent();                          //analyze the event
+    
+    LAB_MW.AnalyzeEvent();                             //analyze the event
 
     // Generator-level observables
     double MTgen = T_Gen.GetMass();
@@ -216,8 +226,6 @@ void example_top_to_bWlnu(const std::string& output_name =
     double MWgen = W_Gen.GetMass();
     double cosWgen  = W_Gen.GetCosDecayAngle();
     double dphiWgen = T_Gen.GetDeltaPhiDecayPlanes(W_Gen);
-
-    pTt = PTt / MTgen;
 
     Mt = MTgen;
     MW = MWgen;
@@ -253,6 +261,14 @@ void example_top_to_bWlnu(const std::string& output_name =
   }
 
   histPlot->Draw();
+
+  LAB_Gen.PrintGeneratorEfficiency();
+  
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
+  histPlot->WriteOutput(output_name);
+  histPlot->WriteHist(output_name);
+  treePlot->WriteOutput(output_name);
 
   g_Log << LogInfo << "Finished" << LogEnd;
 
