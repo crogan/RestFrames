@@ -4,6 +4,7 @@ title: "Downloads"
 modified: 2016-05-21
 excerpt: "get a copy of RestFrames, install it, run it"
 tags: []
+buttons: false
 image:
   feature: blue_jigsaw.jpg
 
