@@ -53,3 +53,9 @@ sitemap: false
    ========================================================================== */
 
 @import "layout";
+
+ div.image img{ 
+    width:350px; 
+  }
+
+img[alt=default] { width: 350px; }	
