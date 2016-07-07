@@ -223,7 +223,7 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
     "#tilde{t} #tilde{t} #rightarrow 2x [ b #tilde{#chi}^{ #pm}(#it{l} #tilde{#nu}) ]";
   char smasses[200];
   sprintf(smasses, "m_{#tilde{t}}= %.0f, m_{#tilde{#nu}}= %.0f", mT, mN);
-  HistPlot* histPlot = new HistPlot("HistPlot", plot_title+" , "+string(smasses));
+  HistPlot* histPlot = new HistPlot("HistPlot", plot_title+" , "+std::string(smasses));
 
   std::string R_MXN = "#frac{m_{#tilde{#chi}^{ #pm}} - m_{#tilde{#nu}}}";
   std::string R_MXD = "{m_{#tilde{t}} - m_{#tilde{#nu}}}";
@@ -233,12 +233,12 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
     sprintf(scat, "MX%d_%d", m+1, NMX+1);
     sprintf(smass, " = #frac{%d}{%d}", m+1, NMX+1);
     
-    cat_list += histPlot->GetNewCategory(scat, "#scale[0.7]{"+R_MXN+R_MXD+string(smass)+"}");
+    cat_list += histPlot->GetNewCategory(scat, "#scale[0.7]{"+R_MXN+R_MXD+std::string(smass)+"}");
   }
 
   //const HistPlotCategory& cat_Reco = histPlot->GetNewCategory("Reco",  smasses);
   const HistPlotCategory& cat_Reco = histPlot->GetNewCategory("Reco",
-							      plot_title+" , "+string(smasses));
+							      plot_title+" , "+std::string(smasses));
   
   const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0., 2.);
   const HistPlotVar& Eb_Ta  = histPlot->GetNewVar("Eb_Ta",

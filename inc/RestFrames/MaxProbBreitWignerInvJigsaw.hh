@@ -30,7 +30,7 @@
 #ifndef MaxProbBreitWignerInvJigsaw_HH
 #define MaxProbBreitWignerInvJigsaw_HH
 
-#include "Minuit2/Minuit2Minimizer.h"
+#include "Math/Minimizer.h"
 #include "Math/Functor.h"
 
 #include "RestFrames/InvisibleJigsaw.hh"
@@ -70,7 +70,7 @@ namespace RestFrames {
     double GetPScale(double Minv);
     void ApplyOptimalRotation();
 
-    ROOT::Minuit2::Minuit2Minimizer* m_minimizer;
+    ROOT::Math::Minimizer* m_minimizer;
     ROOT::Math::Functor* m_functor;
 
     double EvaluateMetric(const double* param);

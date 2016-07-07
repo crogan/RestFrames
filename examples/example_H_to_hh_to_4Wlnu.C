@@ -249,7 +249,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  std::plot_title = "H #rightarrow hh #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
+  std::string plot_title = "H #rightarrow hh #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
   HistPlot* histPlot = new HistPlot("HistPlot", plot_title);
   
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");

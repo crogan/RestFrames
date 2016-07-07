@@ -27,8 +27,9 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#include "Math/Factory.h"
+
 #include "RestFrames/MinMassDiffInvJigsaw.hh"
-//#include "RestFrames/InvisibleState.hh"
 
 namespace RestFrames {
 
@@ -38,7 +39,7 @@ namespace RestFrames {
     InvisibleJigsaw(sname, stitle, N_vis_inv_pair, N_vis_inv_pair), 
     m_Npair(N_vis_inv_pair)
   {
-    m_minimizer = new ROOT::Minuit2::Minuit2Minimizer(ROOT::Minuit2::kCombined);
+    m_minimizer = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Combined");
     m_minimizer->SetMaxFunctionCalls(10000000);
     m_minimizer->SetMaxIterations(100000);
     m_minimizer->SetTolerance(0.001);
