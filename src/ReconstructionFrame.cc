@@ -126,12 +126,13 @@ namespace RestFrames {
     
     SetMind(false);
 
-    if(m_GroupPtr)
+    if(m_GroupPtr){
       if(*m_GroupPtr != group){
 	Group* groupPtr = m_GroupPtr;
 	m_GroupPtr = nullptr;
 	groupPtr->RemoveFrame(*this);
       }
+    }
     if(!group)
       m_GroupPtr = nullptr;
     else

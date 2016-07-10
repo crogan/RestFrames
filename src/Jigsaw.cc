@@ -110,6 +110,8 @@ namespace RestFrames {
     if(IsEmpty()) return;
     
     SetBody(false);
+    SetParentState();
+    
     if(m_GroupPtr){
       if(*m_GroupPtr == group){
 	return;
@@ -156,9 +158,7 @@ namespace RestFrames {
       if(*m_ParentStatePtr == state)
 	return;
       else {
-	State* statePtr = m_ParentStatePtr;
 	m_ParentStatePtr = nullptr;
-	statePtr->SetChildJigsaw();
       } 
     }
     if(!state)

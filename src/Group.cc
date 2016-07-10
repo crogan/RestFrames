@@ -137,7 +137,7 @@ namespace RestFrames {
       return;
       
     SetBody(false);
-    
+
     jigsaw.SetGroup();
     m_Jigsaws.Remove(jigsaw);
     m_JigsawsToUse.Remove(jigsaw);
