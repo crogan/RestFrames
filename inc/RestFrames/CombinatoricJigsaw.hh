@@ -30,6 +30,7 @@
 #ifndef CombinatoricJigsaw_HH
 #define CombinatoricJigsaw_HH
 
+#include "RestFrames/RestFrame.hh"
 #include "RestFrames/Jigsaw.hh"
 #include "RestFrames/CombinatoricGroup.hh"
 #include "RestFrames/CombinatoricState.hh"
@@ -67,6 +68,9 @@ namespace RestFrames {
     void SetObjectCharge(int charge, int i);
     void SetObjectCharge(int charge_num, int charge_den, int i);
     void UnsetObjectCharge(int i);
+    
+    void SetTransverse(bool tran = true,
+		       const TVector3& axis = RestFrame::GetAxis());
 
   protected:
     virtual bool IsSoundBody() const;
@@ -114,8 +118,6 @@ namespace RestFrames {
     std::vector<int> m_NExclusive;
     mutable std::map<int, RFCharge> m_ChargeForChild;
     mutable std::map<int, RFCharge> m_ChargeForObject;
-    
-    
   };
 
 }

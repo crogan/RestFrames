@@ -29,13 +29,8 @@
 
 #include "RestFrames/CombinatoricJigsaw.hh"
 #include "RestFrames/MinMassesCombJigsaw.hh"
-#include "RestFrames/RestFrame.hh"
 
 namespace RestFrames {
-
-  ///////////////////////////////////////////////
-  // CombinatoricJigsaw class
-  ///////////////////////////////////////////////
 
   CombinatoricJigsaw::CombinatoricJigsaw(const std::string& sname,
 					 const std::string& stitle,
@@ -48,7 +43,7 @@ namespace RestFrames {
       m_ChildStates += GetNewChildState();
     }
   }
-
+  
   CombinatoricJigsaw::CombinatoricJigsaw()
     : Jigsaw(), m_Ncomb(0), m_Nobj(0) {}
 

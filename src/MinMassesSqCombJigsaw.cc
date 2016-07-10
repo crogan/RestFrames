@@ -42,6 +42,7 @@ namespace RestFrames {
 
   bool MinMassesSqCombJigsaw::EvaluateMetric(double& metric) const {
     double sum = 0.;
+
     for(int i = 0; i < m_Nmass; i++)
       sum += GetDependancyStates(i).GetFourVector().M2();
     

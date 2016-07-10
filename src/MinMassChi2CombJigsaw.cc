@@ -65,6 +65,7 @@ namespace RestFrames {
   bool MinMassChi2CombJigsaw::EvaluateMetric(double& metric) const {
     double mass;
     double chi2 = 0.;
+    
     for(int i = 0; i < m_Nmass; i++){
       mass = GetDependancyStates(i).GetFourVector().M();
       chi2 += (mass-m_Mass[i])*(mass-m_Mass[i])/m_Sigma[i]/m_Sigma[i];

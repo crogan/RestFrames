@@ -103,7 +103,7 @@ void TestSelfAssembling(){
 
   treePlot->SetTree(S1);
   //TreePlot->AddJigsaw(RapidityJigsaw);
-  treePlot->Draw(true);
+  treePlot->Draw();
   
 }
 

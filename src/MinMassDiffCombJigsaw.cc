@@ -43,6 +43,7 @@ namespace RestFrames {
   bool MinMassDiffCombJigsaw::EvaluateMetric(double& metric) const {
     double diff = 0.;
     double m1, m2;
+    
     for(int i = 0; i < m_Nmass-1; i++){
       m1 = GetDependancyStates(i).GetFourVector().M();
       for(int j = i+1; i < m_Nmass; j++){

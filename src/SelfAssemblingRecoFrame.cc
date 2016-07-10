@@ -44,8 +44,6 @@ namespace RestFrames {
   {
     m_RType = RDSelfAssembling;
     m_IsAssembled = false;
-    // m_Body_UnAssembled = false;
-    // m_Mind_UnAssembled = false;
     m_Nvisible = 0;
     m_Ndecay = 0;
     m_NewEvent = true;
@@ -65,7 +63,7 @@ namespace RestFrames {
       UnSoundMind(RF_FUNCTION);
       return SetSpirit(false);
     }
-    Disassemble();
+    if(m_IsAssembled) Disassemble();
     m_NewEvent = true;
     return SetMind(true);
   }
@@ -76,18 +74,18 @@ namespace RestFrames {
   }
 
   void SelfAssemblingRecoFrame::Disassemble(){
-    if(!m_IsAssembled) return;
-
     m_Nvisible = 0;
     m_Ndecay = 0;
   
     // replace frames with unassembled ones
     const LabRecoFrame& lab_frame = static_cast<const LabRecoFrame&>(GetLabFrame());
     lab_frame.RemoveTreeStates(m_VisibleStates);
+    RestFrameList ChildFrames = m_ChildFrames_UnAssembled;
     RemoveChildFrames();
+    m_ChildFrames_UnAssembled = ChildFrames;
     ClearNewFrames();
     AddChildFrames(m_ChildFrames_UnAssembled);
-
+    
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;
       m_Log << "Problem with recursive tree after disassembly";
@@ -127,6 +125,7 @@ namespace RestFrames {
     // clear unassembled lists
     m_ChildFrames_UnAssembled.Clear();
     m_ChildFrames_UnAssembled += GetChildFrames();
+    
     int N = GetNChildren();
     for(int i = 0; i < N; i++){
       ReconstructionFrame& frame = GetChildFrame(i);
@@ -160,8 +159,10 @@ namespace RestFrames {
 	frames.push_back(&frame);
       }
     }
-    
+
+    RestFrameList ChildFrames = m_ChildFrames_UnAssembled;
     RemoveChildFrames();
+    m_ChildFrames_UnAssembled = ChildFrames;
     AssembleRecursive(*this, frames, Ps); 
     if(!InitializeTreeRecursive()){
       m_Log << LogWarning;

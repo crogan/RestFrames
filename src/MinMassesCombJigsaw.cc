@@ -182,6 +182,7 @@ namespace RestFrames {
   bool MinMassesCombJigsaw::EvaluateMetric(double& metric) const {
     TLorentzVector P1 = GetDependancyStates(0).GetFourVector();
     TLorentzVector P2 = GetDependancyStates(1).GetFourVector();
+    
     double P = GetP((P1+P2).M(), P1.M(), P2.M());
     if(P <= 0){
       metric = 0;
