@@ -158,8 +158,6 @@ namespace RestFrames {
     TLorentzVector P = V;
     if(P.M() < 0.) P.SetVectM(V.Vect(),0.);
     
-    m_Log << LogWarning << P.P() << " " << P.M() << LogEnd;
-    
     VisibleState& state = GetNewElement();
     state.SetFourVector(P);
     state.SetCharge(charge);

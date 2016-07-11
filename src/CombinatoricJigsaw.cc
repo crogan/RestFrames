@@ -432,6 +432,11 @@ namespace RestFrames {
 	metric_min = metric;
 	c_min = c;
       }
+
+      if((metric < metric_min && metric >= 0.) || c_min < 0){
+	metric_min = metric;
+	c_min = c;
+      }
     }
    
     if(c_min < 0){

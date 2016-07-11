@@ -272,7 +272,10 @@ namespace RestFrames {
       ReconstructionFrame& child = GetChildFrame(i);
       
       TLorentzVector P = m_ChildStates[&child].GetFourVector();
-      SetChildBoostVector(child, P.BoostVector());
+      if(P.M() > 0.)
+	SetChildBoostVector(child, P.BoostVector());
+      else
+	SetChildBoostVector(child, m_Empty3Vector);
       Ptot += P;
       
       child.SetFourVector(P,*this);
@@ -305,7 +308,7 @@ namespace RestFrames {
       TVector3 boost = GetChildBoostVector(child);
 
       bool terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();
-      if(!terminal){ 
+      if(!terminal){
 	boost *= -1.;
 	m_ChildStates[&child].Boost(boost);
       }

@@ -146,7 +146,6 @@ namespace RestFrames {
 	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
-	    m_Log << LogInfo << V.P() << " " << V.M() << LogEnd;
 	    m_VisibleStates += element;
 	  }
 	  if(Nelement < 1){
@@ -202,9 +201,9 @@ namespace RestFrames {
     if(boost.Mag() > 1.)
       boost.SetMagThetaPhi(0.,boost.Theta(),boost.Phi());
     for(int i = 0; i < Ninput; i++){
-      Ps[i].Boost(-boost);
       if(Ps[i].M() < 0.)
-	Ps[i].SetPtEtaPhiM(Ps[i].Pt(),Ps[i].Eta(),Ps[i].Phi(),0.);
+	Ps[i].SetVectM(Ps[i].Vect(),Ps[i].M());
+      Ps[i].Boost(-boost);
     }
 
     int ip_max[2];
@@ -254,7 +253,7 @@ namespace RestFrames {
     for(int i = 0; i < 2; i++){
       hem[i].SetPxPyPzE(0.,0.,0.,0.);
     }
-    m_Log << LogInfo << ip_max[0] << " " << ip_max[1] << " " << frames.size() << " " << Ps.size() << LogEnd;
+   
     for(int i = 0; i < 2; i++){
       child_frames[jp_max[i]].push_back(frames[ip_max[i]]);
       child_Ps[jp_max[i]].push_back(Ps[ip_max[i]]);

@@ -114,7 +114,8 @@ namespace RestFrames {
     TLorentzVector TOT(0.,0.,0.,0.);
     for(int i = 0; i < Ninput; i++) TOT += inputs[i];
     TVector3 boost = TOT.BoostVector();
-    if(boost.Mag() >= 1.) boost = (1.-1.e-8)/boost.Mag()*boost;
+    if(boost.Mag() >= 1.)
+      boost = (1.-1.e-8)/boost.Mag()*boost;
     for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
     
     int ip_max[2];
@@ -163,7 +164,9 @@ namespace RestFrames {
     
     // initialize output states
     for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
-    for(int i = 0; i < 2; i++) GetChildState(jp_max[i]).AddElement(GetInputState(ip_max[i]));
+    for(int i = 0; i < 2; i++){
+      GetChildState(jp_max[i]).AddElement(GetInputState(ip_max[i]));
+    }
     TVector3 nRef = inputs[ip_max[0]].Vect().Cross(inputs[ip_max[1]].Vect());
     for(int i = 0; i < Ninput; i++){
       if((i == ip_max[0]) || (i == ip_max[1])) continue;
@@ -174,7 +177,7 @@ namespace RestFrames {
       std::vector<VisibleStateList> flip;
       for(int i = 0; i < 2; i++) flip.push_back(GetChildState(i).GetElements());
       for(int i = 0; i < 2; i++) GetChildState(i).ClearElements();
-      for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[!i]);
+      for(int i = 0; i < 2; i++) GetChildState(i).AddElements(flip[(i+1)%2]);
     }
   
     ExecuteDependancyJigsaws();
@@ -188,11 +191,9 @@ namespace RestFrames {
     
     double P = GetP((P1+P2).M(), P1.M(), P2.M());
     if(P <= 0)
-      metric = (P1.M()+P2.M() > 0 ? 1./(P1.M()+P2.M()) : 0.);
+      metric = -1.;
     else
       metric = 1./P;
-
-    m_Log << LogInfo << "P " << P << " " << metric << LogEnd;
 
     return true;
   }
