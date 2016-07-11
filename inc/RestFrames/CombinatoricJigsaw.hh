@@ -68,9 +68,6 @@ namespace RestFrames {
     void SetObjectCharge(int charge, int i);
     void SetObjectCharge(int charge_num, int charge_den, int i);
     void UnsetObjectCharge(int i);
-    
-    void SetTransverse(bool tran = true,
-		       const TVector3& axis = RestFrame::GetAxis());
 
   protected:
     virtual bool IsSoundBody() const;
