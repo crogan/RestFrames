@@ -146,6 +146,7 @@ namespace RestFrames {
 	    TLorentzVector V = element.GetFourVector();
 	    if(V.M() < 0.) V.SetVectM(V.Vect(),0.);
 	    Ps.push_back(V);
+	    m_Log << LogInfo << V.P() << " " << V.M() << LogEnd;
 	    m_VisibleStates += element;
 	  }
 	  if(Nelement < 1){
@@ -199,12 +200,13 @@ namespace RestFrames {
     for(int i = 0; i < Ninput; i++) TOT += Ps[i];
     TVector3 boost = TOT.BoostVector();
     if(boost.Mag() > 1.)
-      boost.SetMagThetaPhi(1.-1e-12,boost.Theta(),boost.Phi());
+      boost.SetMagThetaPhi(0.,boost.Theta(),boost.Phi());
     for(int i = 0; i < Ninput; i++){
       Ps[i].Boost(-boost);
       if(Ps[i].M() < 0.)
 	Ps[i].SetPtEtaPhiM(Ps[i].Pt(),Ps[i].Eta(),Ps[i].Phi(),0.);
     }
+
     int ip_max[2];
     int jp_max[2];
     for(int i = 0; i < 2; i++) ip_max[i] = -1;
@@ -223,7 +225,7 @@ namespace RestFrames {
 	}
 	// Loop over all jets
 	for(int i = 0; i < Ninput; i++){
-	  if((i == ip[0]) || (i ==ip[1])) continue;
+	  if((i == ip[0]) || (i == ip[1])) continue;
 	  int ihem = int(Ps[i].Vect().Dot(nRef) > 0.);
 	  Nhem[ihem]++;
 	  hem[ihem] += Ps[i];
@@ -245,17 +247,20 @@ namespace RestFrames {
 	}
       }
     }
+
     std::vector<RestFrame*> child_frames[2];
     std::vector<TLorentzVector> child_Ps[2];
     TLorentzVector hem[2];
     for(int i = 0; i < 2; i++){
       hem[i].SetPxPyPzE(0.,0.,0.,0.);
     }
+    m_Log << LogInfo << ip_max[0] << " " << ip_max[1] << " " << frames.size() << " " << Ps.size() << LogEnd;
     for(int i = 0; i < 2; i++){
       child_frames[jp_max[i]].push_back(frames[ip_max[i]]);
       child_Ps[jp_max[i]].push_back(Ps[ip_max[i]]);
       hem[jp_max[i]] += Ps[ip_max[i]];
     }
+
     TVector3 nRef = Ps[ip_max[0]].Vect().Cross(Ps[ip_max[1]].Vect());
     for(int i = 0; i < Ninput; i++){
       if((i == ip_max[0]) || (i == ip_max[1])) continue;
@@ -264,7 +269,7 @@ namespace RestFrames {
       child_Ps[ihem].push_back(Ps[i]);
       hem[ihem] += Ps[i];
     }
-
+   
     int flip = int(hem[1].M() > hem[0].M());
     for(int i = 0; i < 2; i++){
       int j = (i+flip)%2;

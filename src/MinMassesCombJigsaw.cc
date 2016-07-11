@@ -105,13 +105,16 @@ namespace RestFrames {
 
     // DO N^3 calculation
     std::vector<TLorentzVector> inputs;
-    for(int i = 0; i < Ninput; i++)
+    for(int i = 0; i < Ninput; i++){
       inputs.push_back(GetInputState(i).GetFourVector());
+      if(inputs[i].M() < 0.) inputs[i].SetVectM(inputs[i].Vect(),0.);
+    }
     
     // boost input vectors to CM frame
     TLorentzVector TOT(0.,0.,0.,0.);
     for(int i = 0; i < Ninput; i++) TOT += inputs[i];
     TVector3 boost = TOT.BoostVector();
+    if(boost.Mag() >= 1.) boost = (1.-1.e-8)/boost.Mag()*boost;
     for(int i = 0; i < Ninput; i++) inputs[i].Boost(-boost);
     
     int ip_max[2];
@@ -184,11 +187,13 @@ namespace RestFrames {
     TLorentzVector P2 = GetDependancyStates(1).GetFourVector();
     
     double P = GetP((P1+P2).M(), P1.M(), P2.M());
-    if(P <= 0){
-      metric = 0;
-      return false;
-    }
-    metric = 1./P;
+    if(P <= 0)
+      metric = (P1.M()+P2.M() > 0 ? 1./(P1.M()+P2.M()) : 0.);
+    else
+      metric = 1./P;
+
+    m_Log << LogInfo << "P " << P << " " << metric << LogEnd;
+
     return true;
   }
 
