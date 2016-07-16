@@ -27,7 +27,6 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include <TF1.h>
 #include "RestFrames/RestFrames.hh"
 
 using namespace RestFrames;
@@ -36,13 +35,17 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 			      "output_X2X2_to_ZllXHggX.root"){
 
   // set particle masses and widths [GeV]
-  double mX1 = 400.;
   double mX2 = 500.;
-  double mZ   = 91.;
-  double wZ   = 2.5;
+  double mZ   = 91.19;  // PDG 2016
+  double wZ   = 2.50;
   double mH   = 125.;
   double wH   = 0.04;
 
+  // number of different neutralino masses to evaluate
+  int NmX1 = 1;
+  vector<double> mX1;
+  mX1.push_back(450.); // lightest X1 mass to evaluate
+  
   // Number of events to generate
   int Ngen = 100000;
 
@@ -83,21 +86,23 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
+  if(NmX1 < 1 || mX1.size() < 1)
+    return;
+  if(mX1[0] >= mX2)
+    return;
+  
   X2X2_Gen.SetVariableMass();
-  X2a_Gen.SetMass(mX2);    X2b_Gen.SetMass(mX2);
-  X1a_Gen.SetMass(mX1);    X1b_Gen.SetMass(mX1);
+  X2a_Gen.SetMass(mX2);       X2b_Gen.SetMass(mX2);
+  X1a_Gen.SetMass(mX1[0]);    X1b_Gen.SetMass(mX1[0]);
   Za_Gen.SetMass(mZ);
   Za_Gen.SetWidth(wZ);
   Hb_Gen.SetMass(mH);
   Hb_Gen.SetWidth(wH);
-  L1_Gen.SetPtCut(10.);
-  L2_Gen.SetPtCut(10.);
-  G1_Gen.SetPtCut(25.);
-  G2_Gen.SetPtCut(25.);
-  L1_Gen.SetEtaCut(2.5);
-  L2_Gen.SetEtaCut(2.5);
-  G1_Gen.SetEtaCut(3.0);
-  G2_Gen.SetEtaCut(3.0);
+
+  L1_Gen.SetPtCut(8.);        L1_Gen.SetEtaCut(2.5);
+  L2_Gen.SetPtCut(8.);        L2_Gen.SetEtaCut(2.5);
+  G1_Gen.SetPtCut(20.);       G1_Gen.SetEtaCut(3.0);
+  G2_Gen.SetPtCut(20.);       G2_Gen.SetEtaCut(3.0);
   
   if(LAB_Gen.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analysis" << LogEnd;
@@ -175,19 +180,36 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   TreePlot* treePlot = new TreePlot("TreePlot","TreePlot");
  
   treePlot->SetTree(LAB_Gen);
-  treePlot->Draw("GenTree", "Generator Tree");
+  treePlot->Draw("GenTree", "Generator Tree", true);
 
   treePlot->SetTree(LAB);
   treePlot->Draw("RecoTree", "Reconstruction Tree");
 
+  treePlot->SetTree(INV);
+  treePlot->Draw("InvTree", "Inivisible Jigsaws", true);
+  
+  //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+  
   // Declare observables for histogram booking
   HistPlot* histPlot = new HistPlot("Plots", 
 				    std::string("#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}") +
 				    "#rightarrow Z(#it{l}#it{l}) #tilde{#chi}_{1}^{ 0}"+
 				    "H(#gamma #gamma) #tilde{#chi}_{1}^{ 0}"); 
 
-  const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
-  const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");
+  RFList<const HistPlotCategory> cat_list;
+  char smassX2[200];
+  sprintf(smassX2, "m_{#tilde{#chi}^{0}_{2}}= %.0f", mX2);
+  for(int m = 0; m < NmX1; m++){
+    if(m > 0)
+      mX1.push_back(mX1[0] + m*(mX2-mX1[0])/double(NmX1));
+
+    char smassX1[200], scat[50];
+    sprintf(scat, "MX1_%.0f", mX1[m]);
+    sprintf(smassX1, "m_{#tilde{#chi}^{0}_{1}}= %.0f", mX1[m]);
+    
+    cat_list += histPlot->GetNewCategory(scat, string(smassX2)+
+					 " , "+string(smassX1));
+  }
   
   const HistPlotVar& MCM  = histPlot->GetNewVar("MCM", 
 						"M_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 
@@ -202,91 +224,111 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{gen}", -1., 1.);
   const HistPlotVar& DcosX2a  = histPlot->GetNewVar("DcosX2a","#theta_{X2a} - #theta_{X2a}^{gen}", -1., 1.);
   const HistPlotVar& DcosX2b  = histPlot->GetNewVar("DcosX2b","#theta_{X2b} - #theta_{X2b}^{gen}", -1., 1.);
-
   const HistPlotVar& RISR   = histPlot->GetNewVar("RISR","R_{ISR}", 0., 1.5);
+  const HistPlotVar& PTISR  = histPlot->GetNewVar("PTISR","p_{T}^{ ISR}", 0., 1000., "[GeV]");
 
-  histPlot->AddPlot(MCM, cat_Reco);      
-  histPlot->AddPlot(EZX2a, cat_Reco);
-  histPlot->AddPlot(EHX2b, cat_Reco);   
-  histPlot->AddPlot(cosZ, cat_Reco);  
-  histPlot->AddPlot(cosH, cat_Reco);  
-  histPlot->AddPlot(DcosZ, cat_Reco); 
-  histPlot->AddPlot(DcosH, cat_Reco);
-  histPlot->AddPlot(DcosX2a, cat_Reco);
-  histPlot->AddPlot(DcosX2b, cat_Reco); 
-  histPlot->AddPlot(MCM, EZX2a, cat_Reco);
-  histPlot->AddPlot(MCM, EHX2b, cat_Reco);
-  histPlot->AddPlot(EZX2a, EHX2b, cat_Reco);
-  histPlot->AddPlot(EZX2a, DcosX2a, cat_Reco);
-  histPlot->AddPlot(EHX2b, DcosX2b, cat_Reco);
-  histPlot->AddPlot(cosZ, DcosZ, cat_Reco);
-  histPlot->AddPlot(cosH, DcosH, cat_Reco);
+  histPlot->AddPlot(MCM,     cat_list);      
+  histPlot->AddPlot(EZX2a,   cat_list);
+  histPlot->AddPlot(EHX2b,   cat_list);   
+  histPlot->AddPlot(cosZ,    cat_list);  
+  histPlot->AddPlot(cosH,    cat_list);  
+  histPlot->AddPlot(DcosZ,   cat_list); 
+  histPlot->AddPlot(DcosH,   cat_list);
+  histPlot->AddPlot(DcosX2a, cat_list);
+  histPlot->AddPlot(DcosX2b, cat_list); 
+  histPlot->AddPlot(MCM, EZX2a,     cat_list[NmX1/2]);
+  histPlot->AddPlot(MCM, EHX2b,     cat_list[NmX1/2]);
+  histPlot->AddPlot(EZX2a, EHX2b,   cat_list[NmX1/2]);
+  histPlot->AddPlot(EZX2a, DcosX2a, cat_list[NmX1/2]);
+  histPlot->AddPlot(EHX2b, DcosX2b, cat_list[NmX1/2]);
+  histPlot->AddPlot(cosZ, DcosZ,    cat_list[NmX1/2]);
+  histPlot->AddPlot(cosH, DcosH,    cat_list[NmX1/2]);
 
-  histPlot->AddPlot(RISR, cat_Reco);
-  histPlot->AddPlot(RISR, EZX2a, cat_Reco);
+  histPlot->AddPlot(RISR, cat_list);
+  histPlot->AddPlot(RISR, PTISR, cat_list[NmX1/2]);
+  histPlot->AddPlot(RISR, EZX2a, cat_list[NmX1/2]);
 
-  for(int igen = 0; igen < Ngen; igen++){
-    if(igen%((std::max(Ngen,10))/10) == 0)
-      g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
+  for(int m = 0; m < NmX1; m++){
+    g_Log << LogInfo << "Generating events for ";
+    g_Log << "mX2 = " << mX2 << " , ";
+    g_Log << "mX1 = " << mX1[m] << LogEnd;
 
-    // generate event
-    LAB_Gen.ClearEvent();                           // clear the gen tree
+    X1a_Gen.SetMass(mX1[m]);
+    X1b_Gen.SetMass(mX1[m]);
     
-    //LAB_Gen.SetTransverseMomentum(800.);             // give X2X2 some Pt
+    LAB_Gen.InitializeAnalysis();
+  
+    for(int igen = 0; igen < Ngen; igen++){
+      if(igen%((std::max(Ngen,10))/10) == 0)
+	g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
+
+      // generate event
+      LAB_Gen.ClearEvent();                           // clear the gen tree
     
-    LAB_Gen.AnalyzeEvent();                         // generate a new event
-
-    // analyze event
-    LAB.ClearEvent();                                 // clear the reco tree
-    L1.SetLabFrameFourVector(L1_Gen.GetFourVector()); // Set lepton 4-vectors
-    L2.SetLabFrameFourVector(L2_Gen.GetFourVector()); 
-    G1.SetLabFrameFourVector(G1_Gen.GetFourVector()); // Set photon 4-vectors
-    G2.SetLabFrameFourVector(G2_Gen.GetFourVector()); 
-    TVector3 MET = LAB_Gen.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
-    INV.SetLabFrameThreeVector(MET);                  // Set the MET in reco tree
-    LAB.AnalyzeEvent();                               //analyze the event
-
-    // calculate observables
-    MCM = X2X2.GetMass() / X2X2_Gen.GetMass();
-
-    EZX2a = Za.GetEnergy(X2a) / Za_Gen.GetEnergy(X2a_Gen);
-    EHX2b = Hb.GetEnergy(X2b) / Hb_Gen.GetEnergy(X2b_Gen);
-
-    cosX2a  = X2a.GetCosDecayAngle();
-    double cosX2agen  = X2a_Gen.GetCosDecayAngle();
-    cosX2b  = X2b.GetCosDecayAngle();
-    double cosX2bgen  = X2b_Gen.GetCosDecayAngle();
-    cosZ  = Za.GetCosDecayAngle();
-    double cosZgen  = Za_Gen.GetCosDecayAngle();
-    cosH  = Hb.GetCosDecayAngle();
-    double cosHgen  = Hb_Gen.GetCosDecayAngle();
-
-    DcosX2a = asin(sqrt(1.-cosX2a*cosX2a)*cosX2agen-sqrt(1.-cosX2agen*cosX2agen)*cosX2a);
-    DcosX2b = asin(sqrt(1.-cosX2b*cosX2b)*cosX2bgen-sqrt(1.-cosX2bgen*cosX2bgen)*cosX2b);
-    DcosZ   = asin(sqrt(1.-cosZ*cosZ)*cosZgen-sqrt(1.-cosZgen*cosZgen)*cosZ);
-    DcosH   = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
-
-    TVector3 vP_ISR = X2X2.GetFourVector(LAB).Vect();
-    TVector3 vP_I   = X2X2.GetListInvisibleFrames().GetFourVector(LAB).Vect();
-    vP_ISR.SetZ(0.);
-    vP_I.SetZ(0.);
+      //LAB_Gen.SetTransverseMomentum(800.);            // give X2X2 some Pt
+      LAB_Gen.SetTransverseMomentum(1000.*gRandom->Rndm());            // give X2X2 some Pt
     
-    RISR = fabs(vP_I.Dot(vP_ISR.Unit())) / vP_ISR.Mag();
+      LAB_Gen.AnalyzeEvent();                         // generate a new event
+
+      // analyze event
+      LAB.ClearEvent();                                 // clear the reco tree
+      L1.SetLabFrameFourVector(L1_Gen.GetFourVector()); // Set lepton 4-vectors
+      L2.SetLabFrameFourVector(L2_Gen.GetFourVector()); 
+      G1.SetLabFrameFourVector(G1_Gen.GetFourVector()); // Set photon 4-vectors
+      G2.SetLabFrameFourVector(G2_Gen.GetFourVector()); 
+      TVector3 MET = LAB_Gen.GetInvisibleMomentum();    // Get the MET from gen tree
+      MET.SetZ(0.);
+      INV.SetLabFrameThreeVector(MET);                  // Set the MET in reco tree
+      LAB.AnalyzeEvent();                               //analyze the event
+
+      // calculate observables
+      MCM = X2X2.GetMass() / X2X2_Gen.GetMass();
+
+      EZX2a = Za.GetEnergy(X2a) / Za_Gen.GetEnergy(X2a_Gen);
+      EHX2b = Hb.GetEnergy(X2b) / Hb_Gen.GetEnergy(X2b_Gen);
+
+      cosX2a  = X2a.GetCosDecayAngle();
+      double cosX2agen  = X2a_Gen.GetCosDecayAngle();
+      cosX2b  = X2b.GetCosDecayAngle();
+      double cosX2bgen  = X2b_Gen.GetCosDecayAngle();
+      cosZ  = Za.GetCosDecayAngle();
+      double cosZgen  = Za_Gen.GetCosDecayAngle();
+      cosH  = Hb.GetCosDecayAngle();
+      double cosHgen  = Hb_Gen.GetCosDecayAngle();
+
+      DcosX2a = asin(sqrt(1.-cosX2a*cosX2a)*cosX2agen-sqrt(1.-cosX2agen*cosX2agen)*cosX2a);
+      DcosX2b = asin(sqrt(1.-cosX2b*cosX2b)*cosX2bgen-sqrt(1.-cosX2bgen*cosX2bgen)*cosX2b);
+      DcosZ   = asin(sqrt(1.-cosZ*cosZ)*cosZgen-sqrt(1.-cosZgen*cosZgen)*cosZ);
+      DcosH   = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
+
+      TVector3 vP_ISR = X2X2.GetFourVector(LAB).Vect();
+      TVector3 vP_I   = X2X2.GetListInvisibleFrames().GetFourVector(LAB).Vect();
+      vP_ISR.SetZ(0.);
+      vP_I.SetZ(0.);
     
-    histPlot->Fill(cat_Reco);
+      RISR = fabs(vP_I.Dot(vP_ISR.Unit())) / vP_ISR.Mag();
+      PTISR = vP_ISR.Mag();
+    
+      histPlot->Fill(cat_list[m]);
+    }
+
+    LAB_Gen.PrintGeneratorEfficiency();
   }
   
   histPlot->Draw();
 
-  LAB_Gen.PrintGeneratorEfficiency();
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
+  histPlot->WriteOutput(output_name);
+  histPlot->WriteHist(output_name);
+  treePlot->WriteOutput(output_name);
   
   g_Log << LogInfo << "Finished" << LogEnd;
 }
 
 # ifndef __CINT__ // main function for stand-alone compilation
-int main(){
-  example_X2X2_to_ZllXHggX();
-  return 0;
-}
+  int main(){
+    example_X2X2_to_ZllXHggX();
+    return 0;
+  }
 #endif
