@@ -207,8 +207,8 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
     sprintf(scat, "MX1_%.0f", mX1[m]);
     sprintf(smassX1, "m_{#tilde{#chi}^{0}_{1}}= %.0f", mX1[m]);
     
-    cat_list += histPlot->GetNewCategory(scat, string(smassX2)+
-					 " , "+string(smassX1));
+    cat_list += histPlot->GetNewCategory(scat, std::string(smassX2)+
+					 " , "+std::string(smassX1));
   }
   
   const HistPlotVar& MCM  = histPlot->GetNewVar("MCM", 
