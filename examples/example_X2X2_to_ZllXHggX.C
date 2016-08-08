@@ -43,7 +43,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 
   // number of different neutralino masses to evaluate
   int NmX1 = 1;
-  vector<double> mX1;
+  std::vector<double> mX1;
   mX1.push_back(450.); // lightest X1 mass to evaluate
   
   // Number of events to generate
