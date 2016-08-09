@@ -115,10 +115,10 @@ namespace RestFrames {
     ///@} // end identity/comparison methods
 
     /// \brief Print information associated with object
-    void Print(LogType type) const;
+    void Print(enum LogType type) const;
 
     /// \brief String of information associated with object
-    virtual std::string PrintString(LogType type) const;
+    virtual std::string PrintString(enum LogType type) const;
 
     static RFBase& Empty();
     

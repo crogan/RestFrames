@@ -43,7 +43,6 @@ using namespace RestFrames;
 #pragma link C++ typedef RestFrames::StateListList;
 
 #pragma link C++ enum LogType;
-#pragma link C++ typedef RestFrames::LogType;
 #pragma link C++ class RFLog;
 
 #pragma link C++ class RestFrame;
@@ -145,7 +144,6 @@ using namespace RestFrames;
 #pragma link C++ typedef RestFrames::HistPlotCatList;
 
 #pragma link C++ enum LogType;
-#pragma link C++ typedef RestFrames::LogType;
 #pragma link C++ class RFLog+;
 
 #pragma link C++ class RestFrame+;
