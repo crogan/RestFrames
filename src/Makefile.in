@@ -130,7 +130,7 @@ am__installdirs = "$(DESTDIR)$(RestFrameslibdir)" \
 	"$(DESTDIR)$(RestFrameslibdir)"
 LTLIBRARIES = $(RestFrameslib_LTLIBRARIES)
 libRestFrames_la_LIBADD =
-am_libRestFrames_la_OBJECTS = libRestFrames_la-RestFrames_Dict.lo \
+am_libRestFrames_la_OBJECTS = libRestFrames_la-libRestFrames_rdict.lo \
 	libRestFrames_la-RFBase.lo libRestFrames_la-RFKey.lo \
 	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
 	libRestFrames_la-RFPlot.lo libRestFrames_la-RFCharge.lo \
@@ -418,7 +418,7 @@ RestFrameslibdir = $(libdir)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h\
+libRestFrames_la_SOURCES = libRestFrames_rdict.cxx libRestFrames_rdict.h\
 	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\
@@ -437,11 +437,11 @@ libRestFrames_la_SOURCES = RestFrames_Dict.cxx RestFrames_Dict.h\
 	MinMassesCombJigsaw.cc MinMassChi2CombJigsaw.cc MaxProbBreitWignerCombJigsaw.cc\
 	MinMassDiffCombJigsaw.cc MinMassesSqCombJigsaw.cc
 
-CLEANFILES = *Dict.cxx *Dict.h *~
+CLEANFILES = *rdict.cxx *rdict.h *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
-@EXISTROOTCLING_TRUE@RestFrameslib_DATA = RestFrames_Dict_rdict.pcm
+@EXISTROOTCLING_TRUE@RestFrameslib_DATA = libRestFrames_rdict.pcm
 all: all-am
 
 .SUFFIXES:
@@ -561,7 +561,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ReconstructionFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ResonanceGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrame.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-RestFrames_Dict.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-SelfAssemblingRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-SetMassInvJigsaw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-SetRapidityInvJigsaw.Plo@am__quote@
@@ -573,6 +572,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleGenFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleRecoFrame.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-VisibleState.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libRestFrames_la-ppLabGenFrame.Plo@am__quote@
 
 .cc.o:
@@ -596,12 +596,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-libRestFrames_la-RestFrames_Dict.lo: RestFrames_Dict.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RestFrames_Dict.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RestFrames_Dict.Tpo -c -o libRestFrames_la-RestFrames_Dict.lo `test -f 'RestFrames_Dict.cxx' || echo '$(srcdir)/'`RestFrames_Dict.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-RestFrames_Dict.Tpo $(DEPDIR)/libRestFrames_la-RestFrames_Dict.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='RestFrames_Dict.cxx' object='libRestFrames_la-RestFrames_Dict.lo' libtool=yes @AMDEPBACKSLASH@
+libRestFrames_la-libRestFrames_rdict.lo: libRestFrames_rdict.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-libRestFrames_rdict.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='libRestFrames_rdict.cxx' object='libRestFrames_la-libRestFrames_rdict.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-RestFrames_Dict.lo `test -f 'RestFrames_Dict.cxx' || echo '$(srcdir)/'`RestFrames_Dict.cxx
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
 
 libRestFrames_la-RFBase.lo: RFBase.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFBase.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFBase.Tpo -c -o libRestFrames_la-RFBase.lo `test -f 'RFBase.cc' || echo '$(srcdir)/'`RFBase.cc
@@ -1234,11 +1234,11 @@ uninstall-am: uninstall-RestFrameslibDATA \
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm -f $(DESTDIR)$(libdir)/RestFrames_Dict_rdict.pcm
-@EXISTROOTCLING_TRUE@RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
+	rm -f $(DESTDIR)$(libdir)/libRestFrames_rdict.pcm
+@EXISTROOTCLING_TRUE@libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 @EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 
-@EXISTROOTCLING_TRUE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+@EXISTROOTCLING_TRUE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 # $(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
@@ -1246,7 +1246,7 @@ uninstall-hook:
 @EXISTROOTCLING_TRUE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 @EXISTROOTCLING_TRUE@	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
-@EXISTROOTCLING_FALSE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+@EXISTROOTCLING_FALSE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
 
 @EXISTROOTCLING_FALSE@install-data-hook:

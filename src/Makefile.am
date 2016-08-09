@@ -7,7 +7,7 @@ RestFrameslibdir          = $(libdir)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h\
+libRestFrames_la_SOURCES  = libRestFrames_rdict.cxx libRestFrames_rdict.h\
 	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\
@@ -28,18 +28,18 @@ libRestFrames_la_SOURCES  = RestFrames_Dict.cxx RestFrames_Dict.h\
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	rm -f $(DESTDIR)$(libdir)/RestFrames_Dict_rdict.pcm
+	rm -f $(DESTDIR)$(libdir)/libRestFrames_rdict.pcm
 
-CLEANFILES = *Dict.cxx *Dict.h *~
+CLEANFILES = *rdict.cxx *rdict.h *~
 
 include $(top_srcdir)/config/rootconfig.mk
 
 if EXISTROOTCLING
-RestFrameslib_DATA = RestFrames_Dict_rdict.pcm
-RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
+RestFrameslib_DATA = libRestFrames_rdict.pcm
+libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 	echo "Invoking rootcling"
 
-RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 # $(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
@@ -48,7 +48,7 @@ install-data-hook:
 	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 else
-RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
 
 install-data-hook:
