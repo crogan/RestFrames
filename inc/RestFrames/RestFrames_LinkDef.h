@@ -3,6 +3,8 @@
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
 
+#pragma link C++ enum LogType;
+#pragma link C++ class RFLog;
 #pragma link C++ class RFBase;
 #pragma link C++ class RFKey;
 #pragma link C++ class RFCharge;
@@ -41,9 +43,6 @@ using namespace RestFrames;
 
 #pragma link C++ typedef RestFrames::RestFrameListList;
 #pragma link C++ typedef RestFrames::StateListList;
-
-#pragma link C++ enum LogType;
-#pragma link C++ class RFLog;
 
 #pragma link C++ class RestFrame;
 
@@ -107,6 +106,8 @@ using namespace RestFrames;
 #pragma link C++ namespace RestFrames;
 using namespace RestFrames;
 
+#pragma link C++ enum LogType;
+#pragma link C++ class RFLog+;
 #pragma link C++ class RFBase+;
 #pragma link C++ class RFKey+;
 #pragma link C++ class RFCharge+;
@@ -142,9 +143,6 @@ using namespace RestFrames;
 #pragma link C++ typedef RestFrames::VisibleStateList;
 #pragma link C++ typedef RestFrames::HistPlotVarList;
 #pragma link C++ typedef RestFrames::HistPlotCatList;
-
-#pragma link C++ enum LogType;
-#pragma link C++ class RFLog+;
 
 #pragma link C++ class RestFrame+;
 
