@@ -44,6 +44,7 @@ namespace RestFrames {
   /// Type of Log Message
   enum LogType { LogError, LogWarning, LogInfo, 
 		 LogDebug, LogVerbose };
+  typedef enum LogType LogType;
 
   ///////////////////////////////////////////////
   // RFLog class
