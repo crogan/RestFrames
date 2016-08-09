@@ -1244,7 +1244,7 @@ uninstall-hook:
 
 @EXISTROOTCLING_TRUE@install-data-hook: 
 @EXISTROOTCLING_TRUE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-@EXISTROOTCLING_TRUE@	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_TRUE@	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 @EXISTROOTCLING_FALSE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^

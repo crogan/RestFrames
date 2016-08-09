@@ -45,7 +45,7 @@ libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFra
 
 install-data-hook: 
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 else
 libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
