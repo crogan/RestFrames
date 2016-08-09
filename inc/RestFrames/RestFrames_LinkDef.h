@@ -27,23 +27,23 @@ using namespace RestFrames;
 #pragma link C++ class RFList<HistPlotCategory>;
 #pragma link C++ class RFList<const HistPlotCategory>;
 
-#pragma link C++ typedef RFBaseList;
-#pragma link C++ typedef RestFrameList;
-#pragma link C++ typedef ConstRestFrameList;
-#pragma link C++ typedef GroupList;
-#pragma link C++ typedef ConstGroupList;
-#pragma link C++ typedef JigsawList;
-#pragma link C++ typedef ConstJigsawList;
-#pragma link C++ typedef StateList;
-#pragma link C++ typedef VisibleStateList;
-#pragma link C++ typedef HistPlotVarList;
-#pragma link C++ typedef HistPlotCatList;
+#pragma link C++ typedef RestFrames::RFBaseList;
+#pragma link C++ typedef RestFrames::RestFrameList;
+#pragma link C++ typedef RestFrames::ConstRestFrameList;
+#pragma link C++ typedef RestFrames::GroupList;
+#pragma link C++ typedef RestFrames::ConstGroupList;
+#pragma link C++ typedef RestFrames::JigsawList;
+#pragma link C++ typedef RestFrames::ConstJigsawList;
+#pragma link C++ typedef RestFrames::StateList;
+#pragma link C++ typedef RestFrames::VisibleStateList;
+#pragma link C++ typedef RestFrames::HistPlotVarList;
+#pragma link C++ typedef RestFrames::HistPlotCatList;
 
-#pragma link C++ typedef RestFrameListList;
-#pragma link C++ typedef StateListList;
+#pragma link C++ typedef RestFrames::RestFrameListList;
+#pragma link C++ typedef RestFrames::StateListList;
 
 #pragma link C++ enum LogType;
-#pragma link C++ typedef LogType;
+#pragma link C++ typedef RestFrames::LogType;
 #pragma link C++ class RFLog;
 
 #pragma link C++ class RestFrame;
@@ -132,20 +132,20 @@ using namespace RestFrames;
 #pragma link C++ class RFList<HistPlotCategory>+;
 #pragma link C++ class RFList<const HistPlotCategory>+;
 
-#pragma link C++ typedef RFBaseList;
-#pragma link C++ typedef RestFrameList;
-#pragma link C++ typedef ConstRestFrameList;
-#pragma link C++ typedef GroupList;
-#pragma link C++ typedef ConstGroupList;
-#pragma link C++ typedef JigsawList;
-#pragma link C++ typedef ConstJigsawList;
-#pragma link C++ typedef StateList;
-#pragma link C++ typedef VisibleStateList;
-#pragma link C++ typedef HistPlotVarList;
-#pragma link C++ typedef HistPlotCatList;
+#pragma link C++ typedef RestFrames::RFBaseList;
+#pragma link C++ typedef RestFrames::RestFrameList;
+#pragma link C++ typedef RestFrames::ConstRestFrameList;
+#pragma link C++ typedef RestFrames::GroupList;
+#pragma link C++ typedef RestFrames::ConstGroupList;
+#pragma link C++ typedef RestFrames::JigsawList;
+#pragma link C++ typedef RestFrames::ConstJigsawList;
+#pragma link C++ typedef RestFrames::StateList;
+#pragma link C++ typedef RestFrames::VisibleStateList;
+#pragma link C++ typedef RestFrames::HistPlotVarList;
+#pragma link C++ typedef RestFrames::HistPlotCatList;
 
 #pragma link C++ enum LogType;
-#pragma link C++ typedef LogType;
+#pragma link C++ typedef RestFrames::LogType;
 #pragma link C++ class RFLog+;
 
 #pragma link C++ class RestFrame+;
