@@ -1239,11 +1239,12 @@ uninstall-hook:
 @EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 
 @EXISTROOTCLING_TRUE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+# $(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
 @EXISTROOTCLING_TRUE@install-data-hook: 
 @EXISTROOTCLING_TRUE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-@EXISTROOTCLING_TRUE@	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_TRUE@	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 @EXISTROOTCLING_FALSE@RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^

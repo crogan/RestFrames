@@ -27,7 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
-#include "RestFrames/RestFrames.hh"
+//#include "RestFrames/RestFrames.hh"
 
 using namespace RestFrames;
 
@@ -40,7 +40,7 @@ void example_Wlnu(const std::string& output_name = "output_Wlnu.root"){
   int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
-  g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
+  //g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
   LabGenFrame       LAB_Gen("LAB_Gen","LAB");
   ResonanceGenFrame W_Gen("W_Gen","W");

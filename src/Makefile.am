@@ -40,11 +40,12 @@ RestFrames_Dict_rdict.pcm: RestFrames_Dict.cxx
 	echo "Invoking rootcling"
 
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+# $(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
 install-data-hook: 
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-	cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
+	mv temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 else
 RestFrames_Dict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
