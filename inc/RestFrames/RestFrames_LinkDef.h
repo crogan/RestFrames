@@ -6,6 +6,8 @@
 #pragma link off all functions;
 
 #pragma link C++ namespace RestFrames;
+#pragma link C++ nestedclass;
+#pragma link C++ nestedtypedef;
 
 #pragma link C++ enum RestFrames::LogType;
 #pragma link C++ class RestFrames::RFLog;
