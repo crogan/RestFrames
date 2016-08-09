@@ -67,7 +67,7 @@
 #pragma link C++ class RestFrames::VisibleRecoFrame;
 #pragma link C++ class RestFrames::SelfAssemblingRecoFrame;
 
-#pragma link C++ class RestFrames::Group;
+#pragma link C++ class+protected RestFrames::Group;
 #pragma link C++ class RestFrames::InvisibleGroup;
 #pragma link C++ class RestFrames::CombinatoricGroup;
 
