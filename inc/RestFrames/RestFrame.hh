@@ -100,7 +100,7 @@ namespace RestFrames {
     bool IsGenFrame() const;
 
     /// \brief String of information about RestFrame
-    virtual std::string PrintString(LogType type = LogVerbose) const;
+    virtual std::string PrintString(LogType type) const;
     
     ///@}
 

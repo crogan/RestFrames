@@ -58,7 +58,7 @@ namespace RestFrames {
     virtual std::string GetLabel() const { return "Jigsaw"; }
   
     /// \brief String of information associated with Jigsaw
-    virtual std::string PrintString(LogType type = LogVerbose) const;
+    virtual std::string PrintString(LogType type) const;
 
     bool IsInvisibleJigsaw() const;
     bool IsCombinatoricJigsaw() const;
