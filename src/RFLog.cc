@@ -169,7 +169,7 @@ namespace RestFrames {
   }
 
   void RFLog::PrintObject(const RFBase* objPtr){
-    m_Message << objPtr->PrintString();
+    m_Message << objPtr->PrintString(LogVerbose);
   }
 
   template <class T>
