@@ -57,12 +57,12 @@ namespace RestFrames {
     
     void AddPlot(const HistPlotVar& var, 
 		 RestFrames::RFList<const HistPlotCategory> cats = 
-		 RFList<const HistPlotCategory>(),
+		 RestFrames::RFList<const RestFrames::HistPlotCategory>(),
 		 bool invert_colors = false);
     void AddPlot(const HistPlotVar& varX,
 		 const HistPlotVar& varY,
 		 RestFrames::RFList<const HistPlotCategory> cats =
-		 RFList<const HistPlotCategory>(),
+		 RestFrames::RFList<const RestFrames::HistPlotCategory>(),
 		 bool invert_colors = false);
     
     void Fill(double weight = 1.);

@@ -58,10 +58,10 @@ namespace RestFrames {
     ///
     /// Returns a list of RestFrame s containing __cats__ and this
     RestFrames::RFList<const HistPlotCategory> 
-    operator + (const RFList<const HistPlotCategory>& cats) const; 
+    operator + (const RestFrames::RFList<const HistPlotCategory>& cats) const; 
 
     /// \brief Casts HistPlotCategory into list
-    operator RestFrames::RFList<const HistPlotCategory>() const;
+    operator RestFrames::RFList<const RestFrames::HistPlotCategory>() const;
 
     static HistPlotCategory& Empty();
 
