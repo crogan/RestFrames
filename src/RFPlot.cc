@@ -93,7 +93,11 @@ namespace RestFrames {
     return uniq_name;
   }
 
-  void RFPlot::SetStyle(bool invert_colors){
+  void SetStyle(){
+    SetStyle(false);
+  }
+
+  void SetStyle(bool invert_colors){
     // For the canvas:
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetCanvasColor(kWhite);
@@ -152,41 +156,60 @@ namespace RestFrames {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
 
-    rf_iZPalette = TColor::CreateGradientColorTable(5, rf_zcolor_is, rf_zcolor_ir,
-						    rf_zcolor_ig, rf_zcolor_ib,
-						    rf_NZPalette);
-    rf_ZPalette = TColor::CreateGradientColorTable(5, rf_zcolor_s, rf_zcolor_r,
-						   rf_zcolor_g, rf_zcolor_b,
-						   rf_NZPalette);
+    double zcolor_s[5] = { 0.00, 0.50, 0.70, 0.82, 1.00 };
+    double zcolor_r[5] = { 0.00, 0.00, 0.74, 1.00, 1.00 };
+    double zcolor_g[5] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
+    double zcolor_b[5] = { 0.31, 0.73, 0.08, 0.00, 1.00 };
+    double zcolor_is[5] = { 0.00, 0.15, 0.35, 0.60, 1.00 };
+    double zcolor_ir[5] = { 1.00, 1.00, 0.74, 0.00, 0.00 };
+    double zcolor_ig[5] = { 0.90, 0.70, 0.82, 0.61, 0.00 };
+    double zcolor_ib[5] = { 0.70, 0.00, 0.08, 0.73, 0.31 };
+    for(int i = 0; i < 5; i++){
+      zcolor_s[i]  = RFPlot::rf_zcolor_s[i];
+      zcolor_r[i]  = RFPlot::rf_zcolor_r[i];
+      zcolor_g[i]  = RFPlot::rf_zcolor_g[i];
+      zcolor_b[i]  = RFPlot::rf_zcolor_b[i];
+      zcolor_is[i] = RFPlot::rf_zcolor_is[i];
+      zcolor_ir[i] = RFPlot::rf_zcolor_ir[i];
+      zcolor_ig[i] = RFPlot::rf_zcolor_ig[i];
+      zcolor_ib[i] = RFPlot::rf_zcolor_ib[i];
+    }
+
+    RFPlot::rf_iZPalette = TColor::CreateGradientColorTable(5, zcolor_is, zcolor_ir,
+							    zcolor_ig, zcolor_ib,
+							    RFPlot::rf_NZPalette);
+    RFPlot::rf_ZPalette = TColor::CreateGradientColorTable(5, zcolor_s, zcolor_r,
+							   zcolor_g, zcolor_b,
+							   RFPlot::rf_NZPalette);
     gStyle->cd();
   }
 
-  void RFPlot::SetZPalette(bool invert_colors){
-    if(rf_ZPalette <= 0)
+  void SetZPalette(bool invert_colors){
+    if(RFPlot::rf_ZPalette <= 0)
       SetStyle();
     
-    int palette[rf_NZPalette];
+    int palette[RFPlot::rf_NZPalette];
     if(invert_colors){
-      for(int i = 0; i < rf_NZPalette; i++)
-	palette[i] = rf_iZPalette + i;
+      for(int i = 0; i < RFPlot::rf_NZPalette; i++)
+	palette[i] = RFPlot::rf_iZPalette + i;
     } else {
-      for(int i = 0; i < rf_NZPalette; i++)
-	palette[i] = rf_ZPalette + i;
+      for(int i = 0; i < RFPlot::rf_NZPalette; i++)
+	palette[i] = RFPlot::rf_ZPalette + i;
     }
-    gStyle->SetPalette(rf_NZPalette, palette);
+    gStyle->SetPalette(RFPlot::rf_NZPalette, palette);
   }
   
   const int RFPlot::rf_NZPalette = 28;
   int RFPlot::rf_ZPalette  = 0;
   int RFPlot::rf_iZPalette = 0;
-  double RFPlot::rf_zcolor_s[5] = { 0.00, 0.50, 0.70, 0.82, 1.00 };
-  double RFPlot::rf_zcolor_r[5] = { 0.00, 0.00, 0.74, 1.00, 1.00 };
-  double RFPlot::rf_zcolor_g[5] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
-  double RFPlot::rf_zcolor_b[5] = { 0.31, 0.73, 0.08, 0.00, 1.00 };
-  double RFPlot::rf_zcolor_is[5] = { 0.00, 0.15, 0.35, 0.60, 1.00 };
-  double RFPlot::rf_zcolor_ir[5] = { 1.00, 1.00, 0.74, 0.00, 0.00 };
-  double RFPlot::rf_zcolor_ig[5] = { 0.90, 0.70, 0.82, 0.61, 0.00 };
-  double RFPlot::rf_zcolor_ib[5] = { 0.70, 0.00, 0.08, 0.73, 0.31 };
+  const double RFPlot::rf_zcolor_s[5] = { 0.00, 0.50, 0.70, 0.82, 1.00 };
+  const double RFPlot::rf_zcolor_r[5] = { 0.00, 0.00, 0.74, 1.00, 1.00 };
+  const double RFPlot::rf_zcolor_g[5] = { 0.00, 0.61, 0.82, 0.70, 1.00 };
+  const double RFPlot::rf_zcolor_b[5] = { 0.31, 0.73, 0.08, 0.00, 1.00 };
+  const double RFPlot::rf_zcolor_is[5] = { 0.00, 0.15, 0.35, 0.60, 1.00 };
+  const double RFPlot::rf_zcolor_ir[5] = { 1.00, 1.00, 0.74, 0.00, 0.00 };
+  const double RFPlot::rf_zcolor_ig[5] = { 0.90, 0.70, 0.82, 0.61, 0.00 };
+  const double RFPlot::rf_zcolor_ib[5] = { 0.70, 0.00, 0.08, 0.73, 0.31 };
   
   const TColor RFPlot::rf_blue0(7000,0.749,0.78,0.933);
   const TColor RFPlot::rf_blue1(7001,0.424,0.467,0.651);

@@ -46,9 +46,6 @@ namespace RestFrames {
     virtual void Clear();
 
     void WriteOutput(const std::string& filename);
-
-    static void SetStyle(bool invert_colors = false);
-    static void SetZPalette(bool invert_colors = false);
     
     static const TColor rf_blue0;
     static const TColor rf_blue1;
@@ -90,7 +87,10 @@ namespace RestFrames {
     static const TColor rf_orange2;
     static const TColor rf_orange3;
     static const TColor rf_orange4;
-    
+
+    friend void SetStyle(bool invert_colors);
+    friend void SetZPalette(bool invert_colors);
+
   protected:
     TCanvas* m_CanvasPtr;
     void AddCanvas(TCanvas* can);
@@ -101,20 +101,24 @@ namespace RestFrames {
   private:
     std::vector<TObject*> m_TObjects;
     std::vector<TCanvas*> m_Canvases;
-
+    
     static const int rf_NZPalette;
     static int rf_ZPalette;
     static int rf_iZPalette;
-    static double rf_zcolor_s[5];
-    static double rf_zcolor_r[5];
-    static double rf_zcolor_g[5];
-    static double rf_zcolor_b[5];
-    static double rf_zcolor_is[5];
-    static double rf_zcolor_ir[5];
-    static double rf_zcolor_ig[5];
-    static double rf_zcolor_ib[5];
+    static const double rf_zcolor_s[5];
+    static const double rf_zcolor_r[5];
+    static const double rf_zcolor_g[5];
+    static const double rf_zcolor_b[5];
+    static const double rf_zcolor_is[5];
+    static const double rf_zcolor_ir[5];
+    static const double rf_zcolor_ig[5];
+    static const double rf_zcolor_ib[5];
 
   };
+
+  void SetStyle();
+  void SetStyle(bool invert_colors);
+  void SetZPalette(bool invert_colors = false);
 
 }
 

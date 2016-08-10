@@ -47,7 +47,7 @@ namespace RestFrames {
     m_SetScale = false;
     m_Rebin = 4;
     m_Log.SetSource("HistPlot "+GetName());
-    RFPlot::SetStyle();
+    SetStyle();
   }
 
   HistPlot::~HistPlot(){
@@ -506,7 +506,7 @@ namespace RestFrames {
     if(varY.GetUnit() != "")
       YLabel += " "+varY.GetUnit();
    
-    RFPlot::SetZPalette(invert_colors);
+    SetZPalette(invert_colors);
     
     hist->Draw("COLZ");
     hist->GetXaxis()->SetTitle(XLabel.c_str());

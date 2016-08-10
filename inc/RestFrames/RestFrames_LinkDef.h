@@ -75,10 +75,16 @@ using namespace RestFrames;
 #pragma link C++ class RestFrames::HistPlotCategory+;
 #pragma link C++ class RestFrames::HistPlotVar+;
 
-#pragma link C++ function RestFrames::RFPlot::SetStyle(bool);
-#pragma link C++ function RestFrames::RFPlot::SetZPalette(bool);
+#pragma link C++ function RestFrames::SetStyle();
+#pragma link C++ function RestFrames::SetStyle(bool);
+#pragma link C++ function RestFrames::SetZPalette(bool);
+#pragma link C++ function RestFrames::SetLogPrint(bool);
+#pragma link C++ function RestFrames::SetLogPrint(RestFrames::LogType, bool);
+#pragma link C++ function RestFrames::SetLogStream(std::ostream*);
+#pragma link C++ function RestFrames::SetLogColor(bool);
+#pragma link C++ function RestFrames::SetLogMaxWidth(int);
 
-#pragma link C++ global RestFrames::g_Log;
+#pragma link C++ global RestFrames::RFLog::g_Log;
 
 #endif /* __ROOTCLING__ and __CINT__ */
 
