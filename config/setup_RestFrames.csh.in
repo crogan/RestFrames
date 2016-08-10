@@ -61,6 +61,13 @@ if ($?restframessys) then
                                  -e "s;$restframessys/include:;;g"   \
                                  -e "s;$restframessys/include;;g"`
    endif
+   if ($?CPATH) then
+      setenv CPATH `echo CPATH | \
+                             sed -e "s;:$restframessys/include:;:;g" \
+                                 -e "s;:$restframessys/include;;g"   \
+                                 -e "s;$restframessys/include:;;g"   \
+                                 -e "s;$restframessys/include;;g"`
+   endif
 endif
 
 set path = (@bindir@ $path)
@@ -99,6 +106,12 @@ if ($?CPLUS_INCLUDE_PATH) then
    setenv CPLUS_INCLUDE_PATH @includedir@:$CPLUS_INCLUDE_PATH
 else
    setenv CPLUS_INCLUDE_PATH @includedir@
+endif
+
+if ($?CPATH) then
+   setenv CPATH @includedir@:$CPATH
+else
+   setenv CPATH @includedir@
 endif
 
 endif # if ("$setup_RestFrames" != "")

@@ -201,5 +201,7 @@ using namespace RestFrames;
 #pragma link C++ class HistPlotCategory+;
 #pragma link C++ class HistPlotVar+;
 
+#pragma link C++ global g_Log;
+
 #endif /* __ROOTCLING__ and __CINT__ */
 
