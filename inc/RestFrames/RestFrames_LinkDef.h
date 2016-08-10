@@ -5,7 +5,6 @@
 #pragma link off all functions;
 
 #pragma link C++ namespace RestFrames;
-using namespace RestFrames;
 #pragma link C++ nestedclass;
 #pragma link C++ nestedtypedef;
 
