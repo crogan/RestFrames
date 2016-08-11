@@ -44,7 +44,7 @@ if EXISTROOTCLING
 RestFrameslib_DATA += libRestFrames_rdict.pcm
 libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 
-include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFBase.hh $(incrf)RFLog.hh $(incrf)RFPlot.hh\
+include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFPlot.hh $(incrf)RFBase.hh $(incrf)RFLog.hh\
 	$(incrf)RestFrame.hh $(incrf)ReconstructionFrame.hh $(incrf)GeneratorFrame.hh\
 	$(incrf)LabFrame.hh $(incrf)DecayFrame.hh $(incrf)VisibleFrame.hh $(incrf)InvisibleFrame.hh\
 	$(incrf)LabRecoFrame.hh $(incrf)DecayRecoFrame.hh $(incrf)VisibleRecoFrame.hh $(incrf)InvisibleRecoFrame.hh\
