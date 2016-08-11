@@ -199,7 +199,7 @@ namespace RestFrames {
     printf("                     ");
     printf("http://RestFrames.com\n");
     printf("\x1b[0m" "\n");
-    RFKey key(0);
+    RestFrames::RFKey key(0);
   }
 
   int RFBase::m_BodyCount = 0;
