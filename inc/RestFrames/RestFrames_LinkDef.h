@@ -4,15 +4,15 @@
 #pragma link off all classes;
 #pragma link off all functions;
 
-#pragma link C++ class RestFrames::RFKey+;
-#pragma link C++ class RestFrames::RFCharge+;
-#pragma link C++ enum RestFrames::LogType;
-#pragma link C++ class RestFrames::RFLog+;
-
 #pragma link C++ namespace RestFrames;
 #ifndef __ROOTCLING__
 using namespace RestFrames;
 #endif
+
+#pragma link C++ class RestFrames::RFKey+;
+#pragma link C++ class RestFrames::RFCharge+;
+#pragma link C++ enum RestFrames::LogType;
+#pragma link C++ class RestFrames::RFLog+;
 
 #pragma link C++ class RestFrames::RFList<RestFrames::RestFrame>+; 
 #pragma link C++ class RestFrames::RFList<const RestFrames::RestFrame>+; 
@@ -54,8 +54,13 @@ using namespace RestFrames;
 #pragma link C++ class RestFrames::VisibleRecoFrame+;
 #pragma link C++ class RestFrames::SelfAssemblingRecoFrame+;
 
+#pragma link C++ class RestFrames::Group+;
 #pragma link C++ class RestFrames::InvisibleGroup+;
 #pragma link C++ class RestFrames::CombinatoricGroup+;
+
+#pragma link C++ class RestFrames::Jigsaw+;
+#pragma link C++ class RestFrames::InvisibleJigsaw+;
+#pragma link C++ class RestFrames::CombinatoricJigsaw+;
 
 #pragma link C++ class RestFrames::SetMassInvJigsaw+;
 #pragma link C++ class RestFrames::SetRapidityInvJigsaw+;
@@ -75,9 +80,9 @@ using namespace RestFrames;
 #pragma link C++ class RestFrames::TreePlotNode+;
 #pragma link C++ class RestFrames::TreePlotLink+;
 #pragma link C++ class RestFrames::TreePlot+;
-#pragma link C++ class RestFrames::HistPlot+;
 #pragma link C++ class RestFrames::HistPlotCategory+;
 #pragma link C++ class RestFrames::HistPlotVar+;
+#pragma link C++ class RestFrames::HistPlot+;
 
 #pragma link C++ function RestFrames::SetStyle();
 #pragma link C++ function RestFrames::SetStyle(bool);

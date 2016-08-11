@@ -44,7 +44,7 @@ if EXISTROOTCLING
 RestFrameslib_DATA += libRestFrames_rdict.pcm
 libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 
-include_headers  = $(incrf)RFKey.hh $(incrf)RFList.hh $(incrf)RFLog.hh $(incrf)RFPlot.hh $(incrf)RFCharge.hh $(incrf)RFBase.hh\
+include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFList.hh $(incrf)RFBase.hh $(incrf)RFLog.hh $(incrf)RFPlot.hh\
 	$(incrf)RestFrame.hh $(incrf)ReconstructionFrame.hh $(incrf)GeneratorFrame.hh\
 	$(incrf)LabFrame.hh $(incrf)DecayFrame.hh $(incrf)VisibleFrame.hh $(incrf)InvisibleFrame.hh\
 	$(incrf)LabRecoFrame.hh $(incrf)DecayRecoFrame.hh $(incrf)VisibleRecoFrame.hh $(incrf)InvisibleRecoFrame.hh\
@@ -58,9 +58,9 @@ include_headers  = $(incrf)RFKey.hh $(incrf)RFList.hh $(incrf)RFLog.hh $(incrf)R
 	$(incrf)CombinedCBInvJigsaw.hh $(incrf)MinMassDiffInvJigsaw.hh $(incrf)MinMassesSqInvJigsaw.hh\
 	$(incrf)MaxProbBreitWignerInvJigsaw.hh\
 	$(incrf)MinMassesCombJigsaw.hh $(incrf)MinMassChi2CombJigsaw.hh $(incrf)MaxProbBreitWignerCombJigsaw.hh\
-	$(incrf)MinMassDiffCombJigsaw.hh $(incrf)MinMassesSqCombJigsaw.hh
+	$(incrf)MinMassDiffCombJigsaw.hh $(incrf)MinMassesSqCombJigsaw.hh\
 	$(incrf)TreePlot.hh $(incrf)TreePlotNode.hh $(incrf)TreePlotLink.hh\
-	$(incrf)HistPlot.hh $(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh\
+	$(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh $(incrf)HistPlot.hh
 
 libRestFrames_rdict.cxx: $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
