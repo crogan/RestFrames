@@ -4,10 +4,10 @@
 #pragma link off all classes;
 #pragma link off all functions;
 
-#pragma link C++ enum RestFrames::LogType;
-#pragma link C++ class RestFrames::RFLog+;
 #pragma link C++ class RestFrames::RFKey+;
 #pragma link C++ class RestFrames::RFCharge+;
+#pragma link C++ enum RestFrames::LogType;
+#pragma link C++ class RestFrames::RFLog+;
 
 #pragma link C++ namespace RestFrames;
 #ifndef __ROOTCLING__
@@ -71,6 +71,9 @@ using namespace RestFrames;
 #pragma link C++ class RestFrames::MinMassDiffCombJigsaw+;
 #pragma link C++ class RestFrames::MinMassesSqCombJigsaw+;
 
+#pragma link C++ class RestFrames::RFPlot+;
+#pragma link C++ class RestFrames::TreePlotNode+;
+#pragma link C++ class RestFrames::TreePlotLink+;
 #pragma link C++ class RestFrames::TreePlot+;
 #pragma link C++ class RestFrames::HistPlot+;
 #pragma link C++ class RestFrames::HistPlotCategory+;
