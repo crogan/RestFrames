@@ -89,6 +89,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@EXISTROOTCLING_TRUE@am__append_1 = libRestFrames_rdict.pcm
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -130,11 +131,11 @@ am__installdirs = "$(DESTDIR)$(RestFrameslibdir)" \
 	"$(DESTDIR)$(RestFrameslibdir)"
 LTLIBRARIES = $(RestFrameslib_LTLIBRARIES)
 libRestFrames_la_LIBADD =
-am_libRestFrames_la_OBJECTS = libRestFrames_la-libRestFrames_rdict.lo \
-	libRestFrames_la-RFBase.lo libRestFrames_la-RFKey.lo \
-	libRestFrames_la-RFList.lo libRestFrames_la-RFLog.lo \
-	libRestFrames_la-RFPlot.lo libRestFrames_la-RFCharge.lo \
-	libRestFrames_la-TreePlot.lo libRestFrames_la-TreePlotNode.lo \
+am_libRestFrames_la_OBJECTS = libRestFrames_la-RFBase.lo \
+	libRestFrames_la-RFKey.lo libRestFrames_la-RFList.lo \
+	libRestFrames_la-RFLog.lo libRestFrames_la-RFPlot.lo \
+	libRestFrames_la-RFCharge.lo libRestFrames_la-TreePlot.lo \
+	libRestFrames_la-TreePlotNode.lo \
 	libRestFrames_la-TreePlotLink.lo libRestFrames_la-HistPlot.lo \
 	libRestFrames_la-HistPlotVar.lo \
 	libRestFrames_la-HistPlotCategory.lo \
@@ -174,7 +175,10 @@ am_libRestFrames_la_OBJECTS = libRestFrames_la-libRestFrames_rdict.lo \
 	libRestFrames_la-MaxProbBreitWignerCombJigsaw.lo \
 	libRestFrames_la-MinMassDiffCombJigsaw.lo \
 	libRestFrames_la-MinMassesSqCombJigsaw.lo
-libRestFrames_la_OBJECTS = $(am_libRestFrames_la_OBJECTS)
+nodist_libRestFrames_la_OBJECTS =  \
+	libRestFrames_la-libRestFrames_rdict.lo
+libRestFrames_la_OBJECTS = $(am_libRestFrames_la_OBJECTS) \
+	$(nodist_libRestFrames_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -217,25 +221,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
-SOURCES = $(libRestFrames_la_SOURCES)
+SOURCES = $(libRestFrames_la_SOURCES) \
+	$(nodist_libRestFrames_la_SOURCES)
 DIST_SOURCES = $(libRestFrames_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -418,8 +405,7 @@ RestFrameslibdir = $(libdir)
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
 libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
-libRestFrames_la_SOURCES = libRestFrames_rdict.cxx libRestFrames_rdict.h\
-	RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
+libRestFrames_la_SOURCES = RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\
 	RestFrame.cc ReconstructionFrame.cc GeneratorFrame.cc\
@@ -437,12 +423,15 @@ libRestFrames_la_SOURCES = libRestFrames_rdict.cxx libRestFrames_rdict.h\
 	MinMassesCombJigsaw.cc MinMassChi2CombJigsaw.cc MaxProbBreitWignerCombJigsaw.cc\
 	MinMassDiffCombJigsaw.cc MinMassesSqCombJigsaw.cc
 
-CLEANFILES = *rdict.cxx *rdict.h *~
+nodist_libRestFrames_la_SOURCES = libRestFrames_rdict.cxx
+BUILT_SOURCES = libRestFrames_rdict.cxx
+CLEANFILES = *_rdict.* *_rdict_* *.rootmap *~
 ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
-@EXISTROOTCLING_TRUE@RestFrameslib_DATA = libRestFrames_rdict.pcm
-all: all-am
+RestFrameslib_DATA = libRestFrames.rootmap $(am__append_1)
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
 .SUFFIXES: .cc .cxx .lo .o .obj
@@ -595,13 +584,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-libRestFrames_la-libRestFrames_rdict.lo: libRestFrames_rdict.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-libRestFrames_rdict.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='libRestFrames_rdict.cxx' object='libRestFrames_la-libRestFrames_rdict.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
 
 libRestFrames_la-RFBase.lo: RFBase.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-RFBase.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-RFBase.Tpo -c -o libRestFrames_la-RFBase.lo `test -f 'RFBase.cc' || echo '$(srcdir)/'`RFBase.cc
@@ -967,6 +949,13 @@ libRestFrames_la-MinMassesSqCombJigsaw.lo: MinMassesSqCombJigsaw.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-MinMassesSqCombJigsaw.lo `test -f 'MinMassesSqCombJigsaw.cc' || echo '$(srcdir)/'`MinMassesSqCombJigsaw.cc
 
+libRestFrames_la-libRestFrames_rdict.lo: libRestFrames_rdict.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -MT libRestFrames_la-libRestFrames_rdict.lo -MD -MP -MF $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Tpo $(DEPDIR)/libRestFrames_la-libRestFrames_rdict.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='libRestFrames_rdict.cxx' object='libRestFrames_la-libRestFrames_rdict.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libRestFrames_la_CXXFLAGS) $(CXXFLAGS) -c -o libRestFrames_la-libRestFrames_rdict.lo `test -f 'libRestFrames_rdict.cxx' || echo '$(srcdir)/'`libRestFrames_rdict.cxx
+
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
@@ -1098,13 +1087,15 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-am
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
 	for dir in "$(DESTDIR)$(RestFrameslibdir)" "$(DESTDIR)$(RestFrameslibdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
-install: install-am
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -1135,6 +1126,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
 clean-am: clean-RestFrameslibLTLIBRARIES clean-generic clean-libtool \
@@ -1160,8 +1152,7 @@ info-am:
 
 install-data-am: install-RestFrameslibDATA \
 	install-RestFrameslibLTLIBRARIES
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+
 install-dvi: install-dvi-am
 
 install-dvi-am:
@@ -1210,7 +1201,7 @@ uninstall-am: uninstall-RestFrameslibDATA \
 	uninstall-RestFrameslibLTLIBRARIES
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
-.MAKE: install-am install-data-am install-strip uninstall-am
+.MAKE: all check install install-am install-strip uninstall-am
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
 	clean-RestFrameslibLTLIBRARIES clean-generic clean-libtool \
@@ -1218,14 +1209,14 @@ uninstall-am: uninstall-RestFrameslibDATA \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install \
 	install-RestFrameslibDATA install-RestFrameslibLTLIBRARIES \
-	install-am install-data install-data-am install-data-hook \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-RestFrameslibDATA uninstall-RestFrameslibLTLIBRARIES \
 	uninstall-am uninstall-hook
 
@@ -1236,26 +1227,39 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
 	rm -f $(DESTDIR)$(libdir)/libRestFrames_rdict.pcm
 @EXISTROOTCLING_TRUE@libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
-@EXISTROOTCLING_TRUE@	echo "Invoking rootcling"
 
 @EXISTROOTCLING_TRUE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -p -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
+@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@.tmp -s libRestFrames@SHLIBEXT@ -rml libRestFrames@SHLIBEXT@ -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
+@EXISTROOTCLING_TRUE@	@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
+@EXISTROOTCLING_TRUE@	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'$(PACKAGE)/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'$(PACKAGE)/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
+@EXISTROOTCLING_TRUE@	$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'$(PACKAGE)'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include <'$(PACKAGE)'/\2>|' -i $@
+#$(SED) 's|\(header \+\)\([^ ].*/\)\?\([^ ].*[.]h\)|\1'$(PACKAGE)/'\3|' -i libBAT.rootmap
+
+@EXISTROOTCLING_TRUE@libRestFrames.rootmap: libRestFrames_rdict.cxx
+
+#libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+#	$(ROOTCINT) -f $@ -s libRestFrames.so -rmf temp.rootmap -rml libRestFrames.so -c -p -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 # $(ROOTCINT) -f $@ -rmf temp.rootmap -rml libRestFrames -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $^
 
-@EXISTROOTCLING_TRUE@install-data-hook: 
-@EXISTROOTCLING_TRUE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-@EXISTROOTCLING_TRUE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames_ROOT6.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+#install-data-hook: 
+#	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+#	cat temp.rootmap $(top_srcdir)/config/libRestFrames_ROOT6.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
 #cp temp.rootmap $(DESTDIR)$(libdir)/libRestFrames.rootmap
 
 @EXISTROOTCLING_FALSE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
 
-@EXISTROOTCLING_FALSE@install-data-hook:
-@EXISTROOTCLING_FALSE@	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
-@EXISTROOTCLING_FALSE@	rm -f temp.rootmap
+@EXISTROOTCLING_FALSE@libRestFrames.rootmap: libRestFrames_rdict.cxx
 @EXISTROOTCLING_FALSE@	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
-@EXISTROOTCLING_FALSE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+@EXISTROOTCLING_FALSE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > libRestFrames.rootmap
 @EXISTROOTCLING_FALSE@	rm -f temp.rootmap
+
+#install-data-hook:
+#	rm -f $(DESTDIR)$(libdir)/libRestFrames.rootmap
+#	rm -f temp.rootmap
+#	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
+#	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > $(DESTDIR)$(libdir)/libRestFrames.rootmap
+#	rm -f temp.rootmap
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
