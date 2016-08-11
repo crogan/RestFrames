@@ -62,8 +62,9 @@ include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFPlot.hh $(incr
 	$(incrf)TreePlot.hh $(incrf)TreePlotNode.hh $(incrf)TreePlotLink.hh\
 	$(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh $(incrf)HistPlot.hh $(incrf)RFList.hh
 
-libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh | $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $+
+libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	$(ROOTCINT) -f $@ -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
+#$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
 #@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
 #$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
 #$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'RestFrames'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include \"'RestFrames'/\2\"|' -i $@
