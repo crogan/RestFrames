@@ -2,6 +2,7 @@
 AUTOMAKE_OPTIONS            = gnu
 
 includestuff              = $(top_srcdir)/inc
+incrf                     = $(top_srcdir)/inc/RestFrames/
 RestFrameslibdir          = $(libdir)
 # RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
@@ -43,11 +44,25 @@ if EXISTROOTCLING
 RestFrameslib_DATA += libRestFrames_rdict.pcm
 libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 
-#bad
-RFHEADERS = \
-	$(patsubst %.cc, $(includestuff)/RestFrames/%.hh, $(libRestFrames_la_SOURCES))
+include_headers  = $(incrf)RFBase.hh $(incrf)RFKey.hh $(incrf)RFList.hh $(incrf)RFLog.hh $(incrf)RFPlot.hh $(incrf)RFCharge.hh\
+	$(incrf)TreePlot.hh $(incrf)TreePlotNode.hh $(incrf)TreePlotLink.hh\
+	$(incrf)HistPlot.hh $(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh\
+	$(incrf)RestFrame.hh $(incrf)ReconstructionFrame.hh $(incrf)GeneratorFrame.hh\
+	$(incrf)LabFrame.hh $(incrf)DecayFrame.hh $(incrf)VisibleFrame.hh $(incrf)InvisibleFrame.hh\
+	$(incrf)LabRecoFrame.hh $(incrf)DecayRecoFrame.hh $(incrf)VisibleRecoFrame.hh $(incrf)InvisibleRecoFrame.hh\
+	$(incrf)SelfAssemblingRecoFrame.hh\
+	$(incrf)LabGenFrame.hh $(incrf)DecayGenFrame.hh $(incrf)VisibleGenFrame.hh $(incrf)InvisibleGenFrame.hh\
+	$(incrf)ResonanceGenFrame.hh $(incrf)ppLabGenFrame.hh\
+	$(incrf)State.hh $(incrf)VisibleState.hh $(incrf)InvisibleState.hh $(incrf)CombinatoricState.hh\
+	$(incrf)Group.hh $(incrf)InvisibleGroup.hh $(incrf)CombinatoricGroup.hh\
+	$(incrf)Jigsaw.hh $(incrf)InvisibleJigsaw.hh $(incrf)CombinatoricJigsaw.hh\
+	$(incrf)SetMassInvJigsaw.hh $(incrf)SetRapidityInvJigsaw.hh $(incrf)ContraBoostInvJigsaw.hh\
+	$(incrf)CombinedCBInvJigsaw.hh $(incrf)MinMassDiffInvJigsaw.hh $(incrf)MinMassesSqInvJigsaw.hh\
+	$(incrf)MaxProbBreitWignerInvJigsaw.hh\
+	$(incrf)MinMassesCombJigsaw.hh $(incrf)MinMassChi2CombJigsaw.hh $(incrf)MaxProbBreitWignerCombJigsaw.hh\
+	$(incrf)MinMassDiffCombJigsaw.hh $(incrf)MinMassesSqCombJigsaw.hh
 
-libRestFrames_rdict.cxx: $(RestFramesinclude_HEADERS) $(includestuff)/RestFrames/RestFrames_LinkDef.h
+libRestFrames_rdict.cxx: $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
 	@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
 	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
