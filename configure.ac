@@ -129,7 +129,7 @@ cat 1>&2 << 'EOF'
  installation. Sourcing this script (from any directory) will
  set the environmental variables to the values matching the
  RestFrames build that created the script. Users can source 
- this script automatically at their terminal login by adding                       "
+ this script automatically at their terminal login by adding
  to their .bashrc/.profile/.zlogin(.cshrc) file the line:               
     . $(restframes-config --prefix)/libexec/setup_RestFrames.sh 
  for bash-type shells, or                                      
