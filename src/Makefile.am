@@ -2,7 +2,7 @@
 AUTOMAKE_OPTIONS            = gnu
 
 includestuff              = $(top_srcdir)/inc
-incrf                     = $(top_srcdir)/inc/RestFrames/
+incrf                     = RestFrames/
 RestFrameslibdir          = $(libdir)
 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
@@ -62,11 +62,11 @@ include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFPlot.hh $(incr
 	$(incrf)TreePlot.hh $(incrf)TreePlotNode.hh $(incrf)TreePlotLink.hh\
 	$(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh $(incrf)HistPlot.hh $(incrf)RFList.hh
 
-libRestFrames_rdict.cxx: $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
-	@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
-	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
-	$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'RestFrames'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include \"'RestFrames'/\2\"|' -i $@
+libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh | $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $+
+#@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
+#$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
+#$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'RestFrames'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include \"'RestFrames'/\2\"|' -i $@
 #$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'$(PACKAGE)/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'$(PACKAGE)/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
 #$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'$(PACKAGE)'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include <'$(PACKAGE)'/\2>|' -i $@
 #$(SED) 's|\(header \+\)\([^ ].*/\)\?\([^ ].*[.]h\)|\1'$(PACKAGE)/'\3|' -i libBAT.rootmap
