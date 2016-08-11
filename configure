@@ -19208,13 +19208,15 @@ fi
 printf "$CONFIG_SUMMARY"
 printf "$CONFIGURE_INVOCATION"
 cat 1>&2 << 'EOF'
+
 ---------------------------------------------------------------
               INFORMATION FOR RestFrames USERS
 
  ---
 
  When using the RestFrames library, you can retrieve
- compilation and link flags using restframes-config.
+ compilation and link flags using restframes-config
+ (located in the 'bin' directory).
  Type 'restframes-config --help' for more information
 
  ---
@@ -19224,13 +19226,13 @@ cat 1>&2 << 'EOF'
  LD_LIBRARY_PATH, etc. in order to find this RestFrames
  installation. Sourcing this script (from any directory) will
  set the environmental variables to the values matching the
- RestFrames build that created the script. Users can source this
- script automatically at their terminal login by adding to their                       "
- .bashrc/.profile/.zlogin(.cshrc) file the line:
+ RestFrames build that created the script. Users can source
+ this script automatically at their terminal login by adding                       "
+ to their .bashrc/.profile/.zlogin(.cshrc) file the line:
     . $(restframes-config --prefix)/libexec/setup_RestFrames.sh
  for bash-type shells, or
     . $(restframes-config --prefix)/libexec/setup_RestFrames.csh
- for csh-type (and assuming the restframes-config executable is in
- their default PATH)
+ for csh-type (and assuming the restframes-config executable
+ is in their default PATH)
 ---------------------------------------------------------------
 EOF

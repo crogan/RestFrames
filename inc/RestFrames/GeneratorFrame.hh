@@ -100,6 +100,9 @@ namespace RestFrames {
 				  double max = -1.) const;
     virtual double GetProbMCMC(double mass = -1.) const;
 
+    double GetRandom() const;
+    double GetGaus(double mu, double sig) const;
+
     static GeneratorFrame& Empty();
 
   protected:
@@ -114,9 +117,6 @@ namespace RestFrames {
 
     void SetChildren(const std::vector<TLorentzVector>& P_children);
     virtual bool InitializeGenAnalysis();
-
-    double GetRandom() const;
-    double GetGaus(double mu, double sig) const;
 
     virtual bool IterateMCMC();
     bool IterateRecursiveMCMC();

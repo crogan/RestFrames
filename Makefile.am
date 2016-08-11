@@ -48,3 +48,37 @@ setup_RestFrames.csh: $(top_srcdir)/config/setup_RestFrames.csh.in Makefile
 
 distclean-local: 
 	rm -f inc/RestFrames/RestFrames_config.h
+
+install-data-hook:
+	@echo
+	@echo "   ============================================================"
+	@echo "                RestFrames INSTALLATION SUCCESSFUL!            "
+	@echo "   ============================================================"
+	@echo
+	@echo "                 INFORMATION FOR RestFrames USERS              "
+	@echo "   ---   "
+	@echo
+	@echo "    When using the RestFrames library, you can retrieve"
+	@echo "    compilation and link flags using restframes-config"
+	@echo "    (located in the 'bin' directory). "
+	@echo "    Type 'restframes-config --help' for more information"
+	@echo
+	@echo "   ---   "
+	@echo
+	@echo "    The script setup_RestFrames.sh(csh) is provided to"
+	@echo "    automatically set environemtal variables like PATH,"
+	@echo "    LD_LIBRARY_PATH, etc. in order to find this RestFrames"
+	@echo "    installation. Sourcing this script (from any directory) will"
+	@echo "    set the environmental variables to the values matching the"
+	@echo "    RestFrames build that created the script. Users can source"
+	@echo "    thiss cript automatically at their terminal login by adding"
+	@echo "    to their .bashrc/.profile/.zlogin(.cshrc) file the line:"
+	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.sh"
+	@echo "    for bash-type shells, or"
+	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.csh"
+	@echo "    for csh-type (and assuming the restframes-config executable"
+	@echo "    is in their default PATH)"
+	@echo
+	@echo "   ============================================================"
+	@echo
+

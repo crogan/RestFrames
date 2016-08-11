@@ -885,7 +885,8 @@ info: info-recursive
 info-am:
 
 install-data-am:
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-recursive
 
 install-dvi-am:
@@ -932,7 +933,8 @@ ps-am:
 
 uninstall-am: uninstall-binSCRIPTS uninstall-libexecSCRIPTS
 
-.MAKE: $(am__recursive_targets) install-am install-strip
+.MAKE: $(am__recursive_targets) install-am install-data-am \
+	install-strip
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
 	am--refresh check check-am clean clean-cscope clean-generic \
@@ -942,12 +944,12 @@ uninstall-am: uninstall-binSCRIPTS uninstall-libexecSCRIPTS
 	distclean-libtool distclean-local distclean-tags \
 	distcleancheck distdir distuninstallcheck dvi dvi-am html \
 	html-am info info-am install install-am install-binSCRIPTS \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-libexecSCRIPTS \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
+	install-data install-data-am install-data-hook install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am \
+	install-libexecSCRIPTS install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-am uninstall-binSCRIPTS uninstall-libexecSCRIPTS
@@ -969,6 +971,39 @@ setup_RestFrames.csh: $(top_srcdir)/config/setup_RestFrames.csh.in Makefile
 
 distclean-local: 
 	rm -f inc/RestFrames/RestFrames_config.h
+
+install-data-hook:
+	@echo
+	@echo "   ============================================================"
+	@echo "                RestFrames INSTALLATION SUCCESSFUL!            "
+	@echo "   ============================================================"
+	@echo
+	@echo "                 INFORMATION FOR RestFrames USERS              "
+	@echo "   ---   "
+	@echo
+	@echo "    When using the RestFrames library, you can retrieve"
+	@echo "    compilation and link flags using restframes-config"
+	@echo "    (located in the 'bin' directory). "
+	@echo "    Type 'restframes-config --help' for more information"
+	@echo
+	@echo "   ---   "
+	@echo
+	@echo "    The script setup_RestFrames.sh(csh) is provided to"
+	@echo "    automatically set environemtal variables like PATH,"
+	@echo "    LD_LIBRARY_PATH, etc. in order to find this RestFrames"
+	@echo "    installation. Sourcing this script (from any directory) will"
+	@echo "    set the environmental variables to the values matching the"
+	@echo "    RestFrames build that created the script. Users can source"
+	@echo "    thiss cript automatically at their terminal login by adding"
+	@echo "    to their .bashrc/.profile/.zlogin(.cshrc) file the line:"
+	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.sh"
+	@echo "    for bash-type shells, or"
+	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.csh"
+	@echo "    for csh-type (and assuming the restframes-config executable"
+	@echo "    is in their default PATH)"
+	@echo
+	@echo "   ============================================================"
+	@echo
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -30,7 +30,23 @@
 #define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
-#include "RestFrames/RestFrames.hh"
+#include "RestFrames/LabGenFrame.hh"
+#include "RestFrames/ResonanceGenFrame.hh"
+#include "RestFrames/VisibleGenFrame.hh"
+#include "RestFrames/InvisibleGenFrame.hh"
+#include "RestFrames/LabRecoFrame.hh"
+#include "RestFrames/DecayRecoFrame.hh"
+#include "RestFrames/VisibleRecoFrame.hh"
+#include "RestFrames/InvisibleRecoFrame.hh"
+#include "RestFrames/InvisibleGroup.hh"
+#include "RestFrames/SetMassInvJigsaw.hh"
+#include "RestFrames/SetRapidityInvJigsaw.hh"
+#include "RestFrames/TreePlot.hh"
+#include "RestFrames/HistPlot.hh"
+#include "RestFrames/HistPlotCategory.hh"
+#include "RestFrames/HistPlotVar.hh"
+#elif
+RestFrames::LogType load;
 #endif
 
 using namespace RestFrames;
@@ -44,7 +60,7 @@ void example_Wlnu(const std::string& output_name = "output_Wlnu.root"){
   int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
-  //g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
+  g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
   LabGenFrame       LAB_Gen("LAB_Gen","LAB");
   ResonanceGenFrame W_Gen("W_Gen","W");
@@ -164,9 +180,9 @@ void example_Wlnu(const std::string& output_name = "output_Wlnu.root"){
     // generate event
     LAB_Gen.ClearEvent();                                // clear the gen tree
 
-    pTWoMW = gRandom->Rndm();
+    pTWoMW = LAB_Gen.GetRandom();
     LAB_Gen.SetPToverM(pTWoMW);                          // give the W some Pt
-    double PzW = mW*(2.*gRandom->Rndm()-1.);
+    double PzW = mW*(2.*LAB_Gen.GetRandom()-1.);
     LAB_Gen.SetLongitudinalMomentum(PzW);                // give the W some Pz
      
     LAB_Gen.AnalyzeEvent();                              // generate a new event
