@@ -1229,10 +1229,12 @@ uninstall-hook:
 @EXISTROOTCLING_TRUE@libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 
 @EXISTROOTCLING_TRUE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@.tmp -s libRestFrames@SHLIBEXT@ -rml libRestFrames@SHLIBEXT@ -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
+@EXISTROOTCLING_TRUE@	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
 @EXISTROOTCLING_TRUE@	@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
-@EXISTROOTCLING_TRUE@	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'$(PACKAGE)/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'$(PACKAGE)/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
-@EXISTROOTCLING_TRUE@	$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'$(PACKAGE)'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include <'$(PACKAGE)'/\2>|' -i $@
+@EXISTROOTCLING_TRUE@	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
+@EXISTROOTCLING_TRUE@	$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'RestFrames'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include <'RestFrames'/\2>|' -i $@
+#$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'$(PACKAGE)/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'$(PACKAGE)/'\2\\"\\n"|' > $@ && $(RM) $@.tmp
+#$(SED) 's|\$$clingAutoload\$$\([^/""]\+/\)*|$$clingAutoload$$'$(PACKAGE)'/|; /.*DICTPAYLOAD(.*/,/.*)DICTPAYLOAD.*/ s|#include "\([^/"]\+/\)*\(.*\)"|#include <'$(PACKAGE)'/\2>|' -i $@
 #$(SED) 's|\(header \+\)\([^ ].*/\)\?\([^ ].*[.]h\)|\1'$(PACKAGE)/'\3|' -i libBAT.rootmap
 
 @EXISTROOTCLING_TRUE@libRestFrames.rootmap: libRestFrames_rdict.cxx
@@ -1249,7 +1251,7 @@ uninstall-hook:
 @EXISTROOTCLING_FALSE@libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	$(ROOTCINT) -f $@ -c -I$(includestuff) $(ROOTCXXFLAGS) $^
 
-@EXISTROOTCLING_FALSE@libRestFrames.rootmap: libRestFrames_rdict.cxx
+@EXISTROOTCLING_FALSE@libRestFrames.rootmap: libRestFrames_rdict.cxx $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	rlibmap -f -o temp.rootmap -d libRestFrames -c $(includestuff)/RestFrames/RestFrames_LinkDef.h
 @EXISTROOTCLING_FALSE@	cat temp.rootmap $(top_srcdir)/config/libRestFrames.rootmap > libRestFrames.rootmap
 @EXISTROOTCLING_FALSE@	rm -f temp.rootmap
