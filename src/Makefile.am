@@ -43,7 +43,11 @@ if EXISTROOTCLING
 RestFrameslib_DATA += libRestFrames_rdict.pcm
 libRestFrames_rdict.pcm: libRestFrames_rdict.cxx
 
-libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
+#bad
+RFHEADERS = \
+	$(patsubst %.cc, $(includestuff)/RestFrames/%.hh, $(libRestFrames_la_SOURCES))
+
+libRestFrames_rdict.cxx: $(RestFramesinclude_HEADERS) $(includestuff)/RestFrames/RestFrames_LinkDef.h
 	$(ROOTCINT) -f $@.tmp -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $+
 	@# Some magic to prefix header names with "$(PACKAGE)/", and only that, in dictionary and rootmap:
 	$(GREP) -F -v '"'"`pwd`"'/",' $@.tmp | $(SED) 's|"\([^"]*/\)\?\([^/"]*[.]h\)",|"'RestFrames/'\2",| ; s|\\"\([^"]*/\)\?\([^/"]*[.]h\)\\"\\n"|\\"'RestFrames/'\2\\"\\n"|' > $@ && $(RM) $@.tmp

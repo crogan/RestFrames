@@ -993,14 +993,8 @@ install-data-hook:
 	@echo "    LD_LIBRARY_PATH, etc. in order to find this RestFrames"
 	@echo "    installation. Sourcing this script (from any directory) will"
 	@echo "    set the environmental variables to the values matching the"
-	@echo "    RestFrames build that created the script. Users can source"
-	@echo "    thiss cript automatically at their terminal login by adding"
-	@echo "    to their .bashrc/.profile/.zlogin(.cshrc) file the line:"
-	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.sh"
-	@echo "    for bash-type shells, or"
-	@echo "       . $(restframes-config --prefix)/libexec/setup_RestFrames.csh"
-	@echo "    for csh-type (and assuming the restframes-config executable"
-	@echo "    is in their default PATH)"
+	@echo "    RestFrames build that created the script (located in the"
+	@echo "    libexec directory)."
 	@echo
 	@echo "   ============================================================"
 	@echo
