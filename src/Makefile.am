@@ -6,7 +6,8 @@ RestFrameslibdir          = $(libdir)
 # RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
-libRestFrames_la_LDFLAGS  = $(ROOTLDFLAGS) -version-info $(SOVERSION)
+libRestFrames_la_LDFLAGS  = -version-info $(SOVERSION) $(ROOTLDFLAGS)
+libRestFrames_la_LIBADD   = $(ROOTLIBS)
 libRestFrames_la_SOURCES  = RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\

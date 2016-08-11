@@ -130,7 +130,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(RestFrameslibdir)" \
 	"$(DESTDIR)$(RestFrameslibdir)"
 LTLIBRARIES = $(RestFrameslib_LTLIBRARIES)
-libRestFrames_la_LIBADD =
+am__DEPENDENCIES_1 =
+libRestFrames_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am_libRestFrames_la_OBJECTS = libRestFrames_la-RFBase.lo \
 	libRestFrames_la-RFKey.lo libRestFrames_la-RFList.lo \
 	libRestFrames_la-RFLog.lo libRestFrames_la-RFPlot.lo \
@@ -332,7 +333,7 @@ ROOTEXEC = @ROOTEXEC@
 ROOTGLIBS = @ROOTGLIBS@
 ROOTINCDIR = @ROOTINCDIR@
 ROOTLIBDIR = @ROOTLIBDIR@
-ROOTLIBS = @ROOTLIBS@
+ROOTLIBS = @ROOTLIBS@ @ROOTAUXLIBS@
 ROOTRPATH = @ROOTRPATH@
 ROOTSOVERSION = @ROOTSOVERSION@
 ROOTVERSION = @ROOTVERSION@
@@ -404,7 +405,8 @@ RestFrameslibdir = $(libdir)
 # RestFrameslib_DATA        = $(top_srcdir)/config/libRestFrames.rootmap 
 RestFrameslib_LTLIBRARIES = libRestFrames.la
 libRestFrames_la_CXXFLAGS = -I../inc -I$(includestuff) $(AM_CXXFLAGS) $(ROOTCXXFLAGS) $(ROOTAUXCXXFLAGS)
-libRestFrames_la_LDFLAGS = $(ROOTLDFLAGS) -version-info $(SOVERSION)
+libRestFrames_la_LDFLAGS = -version-info $(SOVERSION) $(ROOTLDFLAGS)
+libRestFrames_la_LIBADD = $(ROOTLIBS)
 libRestFrames_la_SOURCES = RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCharge.cc\
 	TreePlot.cc TreePlotNode.cc TreePlotLink.cc\
 	HistPlot.cc HistPlotVar.cc HistPlotCategory.cc\
@@ -426,7 +428,7 @@ libRestFrames_la_SOURCES = RFBase.cc RFKey.cc RFList.cc RFLog.cc RFPlot.cc RFCha
 nodist_libRestFrames_la_SOURCES = libRestFrames_rdict.cxx
 BUILT_SOURCES = libRestFrames_rdict.cxx
 CLEANFILES = *_rdict.* *_rdict_* *.rootmap *~
-ROOTLDFLAGS = -L@ROOTLIBDIR@ @ROOTLIBS@ @ROOTAUXLIBS@
+ROOTLDFLAGS = -L@ROOTLIBDIR@
 ROOTCXXFLAGS = @ROOTCFLAGS@ 
 ROOTAUXCXXFLAGS = @ROOTAUXCFLAGS@
 RestFrameslib_DATA = libRestFrames.rootmap $(am__append_1)
