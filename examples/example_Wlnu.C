@@ -45,7 +45,7 @@
 #include "RestFrames/HistPlot.hh"
 #include "RestFrames/HistPlotCategory.hh"
 #include "RestFrames/HistPlotVar.hh"
-#elif
+#else
 RestFrames::LogType load;
 #endif
 

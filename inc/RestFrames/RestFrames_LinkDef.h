@@ -38,6 +38,7 @@ using namespace RestFrames;
 #pragma link C++ typedef RestFrames::RestFrameListList;
 #pragma link C++ typedef RestFrames::StateListList;
 
+#pragma link C++ class RestFrames::RFBase+;
 #pragma link C++ class RestFrames::RestFrame+;
 
 #pragma link C++ class RestFrames::LabGenFrame+;
