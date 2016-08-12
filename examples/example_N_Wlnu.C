@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else
@@ -44,7 +45,7 @@ void example_N_Wlnu(const std::string& output_name =
   double mN   = 0.;
 
   // number of events to generate (for each W multiplicity)
-  int Ngen = 100000;
+  int Ngen = 10000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;

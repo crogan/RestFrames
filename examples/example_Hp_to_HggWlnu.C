@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else
@@ -165,8 +166,6 @@ void example_Hp_to_HggWlnu(const std::string& output_name =
   std::string plot_title = "pp #rightarrow H^{ +} #rightarrow h^{ 0}(#gamma #gamma ) W(#it{l} #nu)";
   HistPlot* histPlot   = new HistPlot("HistPlot", plot_title);
 
-  histPlot->SetRebin(1);
-  
   RFList<const HistPlotCategory> cat_list;
   int Nmass = mHp.size();
   for(int m = 0; m < Nmass; m++){

@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else
@@ -46,12 +47,12 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   double wH   = 0.04;
 
   // number of different neutralino masses to evaluate
-  int NmX1 = 1;
+  int NmX1 = 4;
   std::vector<double> mX1;
-  mX1.push_back(450.); // lightest X1 mass to evaluate
+  mX1.push_back(400.); // lightest X1 mass to evaluate
   
   // Number of events to generate
-  int Ngen = 100000;
+  int Ngen = 10000;
 
   ////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;

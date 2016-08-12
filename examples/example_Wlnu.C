@@ -28,7 +28,6 @@
 /////////////////////////////////////////////////////////////////////////
 
 #define COMPILER (!defined(__CINT__) && !defined(__CLING__))
-
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else

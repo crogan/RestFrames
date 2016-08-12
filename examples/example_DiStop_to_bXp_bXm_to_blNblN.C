@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else
@@ -43,9 +44,9 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   double mB = 4.18;
   double mL = 0.106;
 
-  int NMX = 16;            // number of different chargino masses to evaluate
+  int NMX = 8;           // number of different chargino masses to evaluate
 
-  bool fix_MXb = true;     // fix the "b" chargino mass while varying "a"?
+  bool fix_MXb = false;  // fix the "b" chargino mass while varying "a"?
   double mXb   = 600.;
   
   // number of events to generate (per chargino mass)
@@ -181,8 +182,8 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   NuNuR.AddVisibleFrames(CM.GetListVisibleFrames());
 
   jigsaw_name = "min ( M_{#tilde{t} a}- M_{#tilde{t} b} )^{2}";
-  MinMassDiffInvJigsaw MinDeltaMt("MinDeltaMt", jigsaw_name, 2);
-  //ContraBoostInvJigsaw MinDeltaMt("MinDeltaMt", jigsaw_name);
+  //MinMassDiffInvJigsaw MinDeltaMt("MinDeltaMt", jigsaw_name, 2);
+  ContraBoostInvJigsaw MinDeltaMt("MinDeltaMt", jigsaw_name);
   INV.AddJigsaw(MinDeltaMt);
   MinDeltaMt.AddInvisibleFrame(Na, 0);
   MinDeltaMt.AddInvisibleFrame(Nb, 1);

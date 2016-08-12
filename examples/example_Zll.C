@@ -27,6 +27,7 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
 #else
@@ -35,13 +36,13 @@ RestFrames::RFKey ensure_autoload(1);
 
 using namespace RestFrames;
 
-void example_Zll(const string& output_name = "output_Zll.root"){
+void example_Zll(const std::string& output_name = "output_Zll.root"){
 
   double mZ = 91.188; // GeV, PDG 2016
   double wZ = 2.495;
 
   // Number of events to generate
-  int Ngen = 1000000;
+  int Ngen = 100000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
