@@ -30,23 +30,9 @@
 #define COMPILER (!defined(__CINT__) && !defined(__CLING__))
 
 #if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
-#include "RestFrames/LabGenFrame.hh"
-#include "RestFrames/ResonanceGenFrame.hh"
-#include "RestFrames/VisibleGenFrame.hh"
-#include "RestFrames/InvisibleGenFrame.hh"
-#include "RestFrames/LabRecoFrame.hh"
-#include "RestFrames/DecayRecoFrame.hh"
-#include "RestFrames/VisibleRecoFrame.hh"
-#include "RestFrames/InvisibleRecoFrame.hh"
-#include "RestFrames/InvisibleGroup.hh"
-#include "RestFrames/SetMassInvJigsaw.hh"
-#include "RestFrames/SetRapidityInvJigsaw.hh"
-#include "RestFrames/TreePlot.hh"
-#include "RestFrames/HistPlot.hh"
-#include "RestFrames/HistPlotCategory.hh"
-#include "RestFrames/HistPlotVar.hh"
+#include "RestFrames/RestFrames.hh"
 #else
-RestFrames::LogType load;
+RestFrames::RFKey ensure_autoload(1);
 #endif
 
 using namespace RestFrames;

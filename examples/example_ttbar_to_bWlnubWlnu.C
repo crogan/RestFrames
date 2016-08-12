@@ -27,11 +27,15 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
+#else
+RestFrames::RFKey ensure_autoload(1);
+#endif
 
 using namespace RestFrames;
 
-void example_ttbar_to_bWlnubWlnu(std::string output_name =
+void example_ttbar_to_bWlnubWlnu(const std::string output_name =
 				 "output_ttbar_to_bWlnubWlnu.root"){
 
   double mT = 173.21; // GeV, PDG 2016

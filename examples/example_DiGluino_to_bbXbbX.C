@@ -27,12 +27,15 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
+#else
+RestFrames::RFKey ensure_autoload(1);
+#endif
 
-using namespace std;
 using namespace RestFrames;
 
-void example_DiGluino_to_bbXbbX(string output_name =
+void example_DiGluino_to_bbXbbX(std::string output_name =
 				"output_DiGluino_to_bbXbbX.root"){
   SetLogPrint(LogVerbose,true);
   SetLogPrint(LogDebug,true);
@@ -252,23 +255,16 @@ void example_DiGluino_to_bbXbbX(string output_name =
     // analyze event
     TVector3 MET = LAB_G.GetInvisibleMomentum();    // Get the MET from gen tree
     MET.SetZ(0.);
-    vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
+    std::vector<TLorentzVector> JETS;                    // Get the Jets from gen tree
     JETS.push_back(V1a_G.GetFourVector());
     JETS.push_back(V2a_G.GetFourVector());
     JETS.push_back(V1b_G.GetFourVector());
     JETS.push_back(V2b_G.GetFourVector());
 
-    // vector<TLorentzVector> JETS;
-    // TLorentzVector j1, j2;
-    // j1.SetPtEtaPhiM(4.20836e6,-0.240686,2.52994,0.);
-    // j2.SetPtEtaPhiM(4.20552e6,0.02966,-0.607627,134116.);
-    // JETS.push_back(j1);
-    // JETS.push_back(j2);
-
     // give the signal-like tree the event info and analyze
     LAB_R.ClearEvent();                              // clear the signal-like tree
     INV_R.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    vector<RFKey> jetID;                    // ID for tracking jets in tree
+    std::vector<RFKey> jetID;                    // ID for tracking jets in tree
     for(int i = 0; i < int(JETS.size()); i++) 
       jetID.push_back(VIS_R.AddLabFrameFourVector(JETS[i]));
     LAB_R.AnalyzeEvent();                            // analyze the event

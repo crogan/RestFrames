@@ -27,7 +27,11 @@
 //   along with RestFrames. If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////
 
+#if defined(__MAKECINT__) || defined(__ROOTCLING__) || COMPILER
 #include "RestFrames/RestFrames.hh"
+#else
+RestFrames::RFKey ensure_autoload(1);
+#endif
 
 using namespace RestFrames;
 
