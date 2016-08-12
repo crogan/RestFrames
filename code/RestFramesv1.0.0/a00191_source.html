@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/VisibleFrame.cc Source File</title>
+<title>RestFrames: src/TreePlotNode.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -122,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">VisibleFrame.cc</div>  </div>
+<div class="title">TreePlotNode.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00191.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -143,103 +143,107 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00139.html">RestFrames/VisibleFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00122.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00098.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="comment">// VisibleFrame class methods</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  VisibleFrame&lt;T&gt;::VisibleFrame(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                <span class="keyword">const</span> std::string&amp; stitle) </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    : T(sname, stitle)</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    T::m_Type = kVisibleFrame;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    m_Charge = 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00139.html">RestFrames/TreePlotNode.hh</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00125.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00110.html">RestFrames/Jigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00136.html">RestFrames/State.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00196.html">RestFrames</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  TreePlotNode::TreePlotNode(){ </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    m_X = 0;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    m_Y = 0;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    m_Label = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    m_DoLabel = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    m_DoSquare = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    m_FramePtr = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    m_StatePtr = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  VisibleFrame&lt;T&gt;::VisibleFrame() : T() {}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  VisibleFrame&lt;T&gt;::~VisibleFrame() {}</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">bool</span> VisibleFrame&lt;T&gt;::IsSoundBody()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span>(RFBase::IsSoundBody()) </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span>(!RestFrame::IsSoundBody())</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">return</span> T::SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">int</span> Nchild = T::GetNChildren();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span>(Nchild &gt; 0 || !T::GetParentFrame()){</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      T::m_Log &lt;&lt; LogWarning &lt;&lt; <span class="stringliteral">&quot;Problem with parent or child frames&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordflow">return</span> T::SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span> T::SetBody(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetCharge(<span class="keyword">const</span> RFCharge&amp; charge){</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    m_Charge = charge;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetCharge(<span class="keywordtype">int</span> charge){</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    m_Charge = charge;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  TreePlotNode::~TreePlotNode() {}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetX(<span class="keywordtype">double</span> x){ </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    m_X = x; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetY(<span class="keywordtype">double</span> y){ </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    m_Y = y; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetLabel(<span class="keyword">const</span> std::string&amp; label){ </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    m_Label = label; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    m_DoLabel = <span class="keyword">true</span>; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetSquare(<span class="keywordtype">bool</span> square){ </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    m_DoSquare = square; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetFrame(<span class="keyword">const</span> RestFrame&amp; frame){ </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    m_FramePtr = &amp;frame; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::SetState(<span class="keyword">const</span> State&amp; state){ </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    m_StatePtr = &amp;state; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">void</span> TreePlotNode::AddJigsaw(<span class="keyword">const</span> Jigsaw&amp; jigsaw){ </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    m_Jigsaws.Add(jigsaw);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetCharge(<span class="keywordtype">int</span> charge_num, <span class="keywordtype">int</span> charge_den){</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    RFCharge charge(charge_num, charge_den);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    m_Charge = charge;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  RFCharge VisibleFrame&lt;T&gt;::GetCharge()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> m_Charge;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetLabFrameFourVector(<span class="keyword">const</span> TLorentzVector&amp; V,</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                          <span class="keyword">const</span> RFCharge&amp; charge){</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    m_Lab_P.SetVectM(V.Vect(),V.M());</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    SetCharge(charge);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetLabFrameFourVector(<span class="keyword">const</span> TLorentzVector&amp; V,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                          <span class="keywordtype">int</span> charge){</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    SetLabFrameFourVector(V, RFCharge(charge));</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordtype">void</span> VisibleFrame&lt;T&gt;::SetLabFrameFourVector(<span class="keyword">const</span> TLorentzVector&amp; V,</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                          <span class="keywordtype">int</span> charge_num, </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                          <span class="keywordtype">int</span> charge_den){</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    SetLabFrameFourVector(V, RFCharge(charge_num,charge_den));</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  TLorentzVector VisibleFrame&lt;T&gt;::GetLabFrameFourVector()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    TLorentzVector V;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    V.SetVectM(m_Lab_P.Vect(),m_Lab_P.M());</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">return</span> V;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">double</span> TreePlotNode::GetX()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> m_X; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">double</span> TreePlotNode::GetY()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> m_Y; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  std::string TreePlotNode::GetLabel()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> m_Label; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">const</span> RestFrame&amp; TreePlotNode::GetFrame()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">if</span>(m_FramePtr)</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">return</span> *m_FramePtr;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">else</span> </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">return</span> RestFrame::Empty();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">const</span> State&amp; TreePlotNode::GetState()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">if</span>(m_StatePtr)</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">return</span> *m_StatePtr;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">return</span> State::Empty();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">bool</span> TreePlotNode::DoLabel()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">return</span> m_DoLabel; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">bool</span> TreePlotNode::DoSquare()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> m_DoSquare; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordtype">int</span> TreePlotNode::GetNJigsaws()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">return</span> m_Jigsaws.GetN(); </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keyword">template</span> <span class="keyword">class </span>VisibleFrame&lt;ReconstructionFrame&gt;;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keyword">template</span> <span class="keyword">class </span>VisibleFrame&lt;GeneratorFrame&gt;;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">ReconstructionFrame.hh</a></div></div>
-<div class="ttc" id="a00139_html"><div class="ttname"><a href="a00139.html">VisibleFrame.hh</a></div></div>
-<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
-<div class="ttc" id="a00098_html"><div class="ttname"><a href="a00098.html">GeneratorFrame.hh</a></div></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  ConstJigsawList TreePlotNode::GetJigsawList()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> m_Jigsaws;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="ttc" id="a00110_html"><div class="ttname"><a href="a00110.html">Jigsaw.hh</a></div></div>
+<div class="ttc" id="a00139_html"><div class="ttname"><a href="a00139.html">TreePlotNode.hh</a></div></div>
+<div class="ttc" id="a00196_html"><div class="ttname"><a href="a00196.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00091_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">RestFrame.hh</a></div></div>
+<div class="ttc" id="a00136_html"><div class="ttname"><a href="a00136.html">State.hh</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 12 2016 14:55:13 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

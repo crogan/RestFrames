@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>RestFrames: src/MinMassDiffCombJigsaw.cc Source File</title>
+<title>RestFrames: src/MinMassChi2CombJigsaw.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -122,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">MinMassDiffCombJigsaw.cc</div>  </div>
+<div class="title">MinMassChi2CombJigsaw.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00169.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -143,44 +143,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00124.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00116.html">RestFrames/MinMassDiffCombJigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00125.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00116.html">RestFrames/MinMassChi2CombJigsaw.hh</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00195.html">RestFrames</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="a00196.html">RestFrames</a> {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  MinMassDiffCombJigsaw::MinMassDiffCombJigsaw(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  MinMassChi2CombJigsaw::MinMassChi2CombJigsaw(<span class="keyword">const</span> std::string&amp; sname, </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                           <span class="keyword">const</span> std::string&amp; stitle,</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                           <span class="keywordtype">int</span> N_comb, <span class="keywordtype">int</span> N_mass) </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    : CombinatoricJigsaw(sname, stitle, N_comb, N_mass),</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      m_Ncomb(N_comb), m_Nmass(N_mass) {}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  MinMassDiffCombJigsaw::~MinMassDiffCombJigsaw() {}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">bool</span> MinMassDiffCombJigsaw::EvaluateMetric(<span class="keywordtype">double</span>&amp; metric)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">double</span> diff = 0.;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">double</span> m1, m2;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Nmass-1; i++){</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      m1 = GetDependancyStates(i).GetFourVector().M();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = i+1; i &lt; m_Nmass; j++){</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    m2 = GetDependancyStates(j).GetFourVector().M();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    diff += (m1-m2)*(m1-m2);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    metric = diff;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="ttc" id="a00124_html"><div class="ttname"><a href="a00124.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="a00195_html"><div class="ttname"><a href="a00195.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
-<div class="ttc" id="a00116_html"><div class="ttname"><a href="a00116.html">MinMassDiffCombJigsaw.hh</a></div></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      m_Ncomb(N_comb), m_Nmass(N_mass)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Nmass; i++){</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      m_Mass.push_back(0.);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      m_Sigma.push_back(1.);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  MinMassChi2CombJigsaw::~MinMassChi2CombJigsaw() {}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> MinMassChi2CombJigsaw::SetMass(<span class="keywordtype">double</span> mass, <span class="keywordtype">int</span> i){</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span>(i &lt; 0 || i &gt;= m_Nmass)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    m_Mass[i] = std::max(mass, 0.);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">void</span> MinMassChi2CombJigsaw::SetSigma(<span class="keywordtype">double</span> sigma, <span class="keywordtype">int</span> i){</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span>(i &lt; 0 || i &gt;= m_Nmass)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">if</span>(sigma &lt;= 0.)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    m_Sigma[i] = sigma;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordtype">bool</span> MinMassChi2CombJigsaw::EvaluateMetric(<span class="keywordtype">double</span>&amp; metric)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">double</span> mass;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">double</span> chi2 = 0.;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Nmass; i++){</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      mass = GetDependancyStates(i).GetFourVector().M();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      chi2 += (mass-m_Mass[i])*(mass-m_Mass[i])/m_Sigma[i]/m_Sigma[i];</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    metric = chi2;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="ttc" id="a00196_html"><div class="ttname"><a href="a00196.html">RestFrames</a></div><div class="ttdef"><b>Definition:</b> <a href="a00091_source.html#l00037">CombinatoricGroup.hh:37</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">RestFrame.hh</a></div></div>
+<div class="ttc" id="a00116_html"><div class="ttname"><a href="a00116.html">MinMassChi2CombJigsaw.hh</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 07:52:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 12 2016 14:55:13 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

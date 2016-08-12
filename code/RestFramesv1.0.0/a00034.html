@@ -134,13 +134,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="a00121_source.html#l00040">40</a> of file <a class="el" href="a00121_source.html">ppLabGenFrame.hh</a>.</p>
+<p>Definition at line <a class="el" href="a00122_source.html#l00040">40</a> of file <a class="el" href="a00122_source.html">ppLabGenFrame.hh</a>.</p>
 </div><div class="dynheader">
 Inheritance diagram for RestFrames::ppLabGenFrame:</div>
 <div class="dyncontent">
 <div class="center"><img src="a00291.png" border="0" usemap="#_rest_frames_1_1pp_lab_gen_frame_inherit__map" alt="Inheritance graph"/></div>
 <map name="_rest_frames_1_1pp_lab_gen_frame_inherit__map" id="_rest_frames_1_1pp_lab_gen_frame_inherit__map">
-<area shape="rect" id="node2" href="a00024.html" title="RestFrames::LabGenFrame" alt="" coords="13,239,200,264"/><area shape="rect" id="node3" href="a00023.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="25,152,187,191"/><area shape="rect" id="node4" href="a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="6,79,206,104"/><area shape="rect" id="node5" href="a00037.html" title="abstract base class for all Frame objects " alt="" coords="23,5,190,31"/></map>
+<area shape="rect" id="node2" href="a00024.html" title="RestFrames::LabGenFrame" alt="" coords="13,239,200,264"/>
+<area shape="rect" id="node3" href="a00023.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="25,152,187,191"/>
+<area shape="rect" id="node4" href="a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="6,79,206,104"/>
+<area shape="rect" id="node5" href="a00037.html" title="abstract base class for all Frame objects " alt="" coords="23,5,190,31"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -288,6 +292,12 @@ virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>GetMinimumM
 <tr class="memitem:a205206a64a49ee684182ec6e1887fa8c inherit pub_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a205206a64a49ee684182ec6e1887fa8c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateMassMCMC</b> (double &amp;mass, double &amp;prob, double max=-1.) const </td></tr>
 <tr class="separator:a205206a64a49ee684182ec6e1887fa8c inherit pub_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3eb51e027f2fc3936eb0f2398f7af9 inherit pub_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3eb51e027f2fc3936eb0f2398f7af9"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>GetRandom</b> () const </td></tr>
+<tr class="separator:abc3eb51e027f2fc3936eb0f2398f7af9 inherit pub_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedeb7407722e7e4fadc22733490ac681 inherit pub_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedeb7407722e7e4fadc22733490ac681"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>GetGaus</b> (double mu, double sig) const </td></tr>
+<tr class="separator:aedeb7407722e7e4fadc22733490ac681 inherit pub_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -321,12 +331,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>ClearEventRecursive</
 <tr class="memitem:abe05666544f29cd5084601a5ac8504f4 inherit pro_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe05666544f29cd5084601a5ac8504f4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetChildren</b> (const std::vector&lt; TLorentzVector &gt; &amp;P_children)</td></tr>
 <tr class="separator:abe05666544f29cd5084601a5ac8504f4 inherit pro_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc3eb51e027f2fc3936eb0f2398f7af9 inherit pro_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3eb51e027f2fc3936eb0f2398f7af9"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>GetRandom</b> () const </td></tr>
-<tr class="separator:abc3eb51e027f2fc3936eb0f2398f7af9 inherit pro_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedeb7407722e7e4fadc22733490ac681 inherit pro_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedeb7407722e7e4fadc22733490ac681"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>GetGaus</b> (double mu, double sig) const </td></tr>
-<tr class="separator:aedeb7407722e7e4fadc22733490ac681 inherit pro_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe73dda838337fb30421c070131f5598 inherit pro_methods_a00011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe73dda838337fb30421c070131f5598"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>IterateRecursiveMCMC</b> ()</td></tr>
 <tr class="separator:afe73dda838337fb30421c070131f5598 inherit pro_methods_a00011"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -397,17 +401,21 @@ Collaboration diagram for RestFrames::ppLabGenFrame:</div>
 <div class="dyncontent">
 <div class="center"><img src="a00292.png" border="0" usemap="#_rest_frames_1_1pp_lab_gen_frame_coll__map" alt="Collaboration graph"/></div>
 <map name="_rest_frames_1_1pp_lab_gen_frame_coll__map" id="_rest_frames_1_1pp_lab_gen_frame_coll__map">
-<area shape="rect" id="node2" href="a00024.html" title="RestFrames::LabGenFrame" alt="" coords="13,239,200,264"/><area shape="rect" id="node3" href="a00023.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="25,152,187,191"/><area shape="rect" id="node4" href="a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="6,79,206,104"/><area shape="rect" id="node5" href="a00037.html" title="abstract base class for all Frame objects " alt="" coords="23,5,190,31"/></map>
+<area shape="rect" id="node2" href="a00024.html" title="RestFrames::LabGenFrame" alt="" coords="13,239,200,264"/>
+<area shape="rect" id="node3" href="a00023.html" title="RestFrames::LabFrame\l\&lt; GeneratorFrame \&gt;" alt="" coords="25,152,187,191"/>
+<area shape="rect" id="node4" href="a00011.html" title="RestFrames::GeneratorFrame" alt="" coords="6,79,206,104"/>
+<area shape="rect" id="node5" href="a00037.html" title="abstract base class for all Frame objects " alt="" coords="23,5,190,31"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>inc/RestFrames/<a class="el" href="a00121_source.html">ppLabGenFrame.hh</a></li>
-<li>src/<a class="el" href="a00174_source.html">ppLabGenFrame.cc</a></li>
+<li>inc/RestFrames/<a class="el" href="a00122_source.html">ppLabGenFrame.hh</a></li>
+<li>src/<a class="el" href="a00175_source.html">ppLabGenFrame.cc</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 07:52:29 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 12 2016 14:55:14 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

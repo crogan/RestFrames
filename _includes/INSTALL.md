@@ -27,15 +27,40 @@ Examples
 ---
 
 The RestFrames distribution includes a collection of examples
-that can be run from the ROOT command line as macros. In order
-to run these example, you must first set the RestFrames environmental
-variables and library path:
+that can be run from the ROOT command line as macros, or as compiled
+executables. To run the compiled examples one can type:
+
+    >$ ./examples_example_macro.x
+
+In order to run these examples as ROOT macros, you must first set the RestFrames environmental
+variables and library paths for auto-loading of the RestFrames shared library:
 
     >$ source setup_RestFrames.sh(csh)
 
 Example macros can then be run from the ROOT command line by typing:
 
-    root [0] .x examples/example_macro.C++
+    root [0] .x examples/example_macro.C+
 
-A description of each of the example macros can be found in
+NOTE: Running example macros without the `+` option (without ROOT
+ACLiC compilation) is currently not supported in ROOT5. In ROOT6,
+users can run the example macros uncompiled with the CLING
+interpreter:
+
+    root [0] .x examples/example_macro.C
+
+or with ACLiC compilation. In this latter case, due to an unresolved
+issue with automatic loading of shared libraries, users must first
+declare an instance of a **RestFrames** class in the ROOT command line
+environment before running the macro:
+
+	root [0] RestFrames::RFKey load_libRestFrames(1);
+    root [1] .x examples/example_macro.C+
+
+With respect to this last limitation, if users open ROOT from the
+`RestFrames` or `RestFrames/examples` directory the existing
+`rootlogon.C` files contained therein with automatically ensure a
+class instance is declared (assuming the user is not using an
+alternatice `rootlogon.C` file).
+
+A description of each of the available examples can be found in
 the [examples](/examples/) page.
