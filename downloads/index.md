@@ -16,7 +16,7 @@ Download the most recent **RestFrames** source code
 ---
 
 Grab the **RestFrames** source code
-[here](https://github.com/crogan/RestFrames/archive/v1.0.0.tar.gz)
+[here](https://github.com/crogan/RestFrames/archive/v1.0.1.tar.gz)
 
 OR
 
