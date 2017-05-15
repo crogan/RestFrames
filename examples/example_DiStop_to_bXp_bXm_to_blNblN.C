@@ -39,18 +39,18 @@ using namespace RestFrames;
 void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
 					 "output_DiStop_to_bXp_bXm_to_blNblN.root"){
 
-  double mT = 750.;      // stop mass
+  double mT = 800.;      // stop mass
   double mN = 100.;      // sneutrino mass
   double mB = 4.18;
   double mL = 0.106;
 
-  int NMX = 8;           // number of different chargino masses to evaluate
+  int NMX = 64;           // number of different chargino masses to evaluate
 
-  bool fix_MXb = false;  // fix the "b" chargino mass while varying "a"?
-  double mXb   = 600.;
+  bool fix_MXb = true;  // fix the "b" chargino mass while varying "a"?
+  double mXb   = 200;
   
   // number of events to generate (per chargino mass)
-  int Ngen = 10000;
+  int Ngen = 1000000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
@@ -99,7 +99,7 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   Xa_Gen.SetMass(0.5*(mT+mN));   Xb_Gen.SetMass(0.5*(mT+mN));
   // set B masses
   Ba_Gen.SetMass(mB);            Bb_Gen.SetMass(mB);
-  // set : masses
+  // set lepton masses
   La_Gen.SetMass(mL);            Lb_Gen.SetMass(mL);
   // set sneutrino masses
   Na_Gen.SetMass(mN);            Nb_Gen.SetMass(mN);
@@ -230,6 +230,8 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   sprintf(smasses, "m_{#tilde{t}}= %.0f, m_{#tilde{#nu}}= %.0f", mT, mN);
   HistPlot* histPlot = new HistPlot("HistPlot", plot_title+" , "+std::string(smasses));
 
+  histPlot->SetRebin(1);
+
   std::string R_MXN = "#frac{m_{#tilde{#chi}^{ #pm}} - m_{#tilde{#nu}}}";
   std::string R_MXD = "{m_{#tilde{t}} - m_{#tilde{#nu}}}";
   RFList<const HistPlotCategory> cat_list;
@@ -247,9 +249,9 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   
   const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0., 2.);
   const HistPlotVar& Eb_Ta  = histPlot->GetNewVar("Eb_Ta",
-      "E_{b a}^{#tilde{t} a} / E_{b a}^{#tilde{t} a gen}", 0., 2.);
+      "E_{b a}^{#tilde{t} a} / E_{b a}^{#tilde{t} a true}", 0., 2.);
   const HistPlotVar& Eb_Tb  = histPlot->GetNewVar("Eb_Tb",
-      "E_{b b}^{#tilde{t} b} / E_{b b}^{#tilde{t} b gen}", 0., 2.);
+      "E_{b b}^{#tilde{t} b} / E_{b b}^{#tilde{t} b true}", 0., 2.);
   const HistPlotVar& El_Xa  = histPlot->GetNewVar("El_Xa",
       "E_{#it{l} a}^{#tilde{#chi}^{ #pm} a} / E_{#it{l} a}^{#tilde{#chi}^{ #pm} a true}", 0., 2.);
   const HistPlotVar& El_Xb  = histPlot->GetNewVar("El_Xb",
@@ -291,9 +293,14 @@ void example_DiStop_to_bXp_bXm_to_blNblN(std::string output_name =
   histPlot->AddPlot(DcosXa, DcosXb, cat_list[NMX/2]);
 
   if(NMX > 1){
-    histPlot->AddPlot(MCM,   RMX, cat_Reco);
-    histPlot->AddPlot(Eb_Ta, RMX, cat_Reco);
-    histPlot->AddPlot(El_Xa, RMX, cat_Reco);
+    histPlot->AddPlot(MCM,    RMX, cat_Reco);
+    histPlot->AddPlot(Eb_Ta,  RMX, cat_Reco);
+    histPlot->AddPlot(El_Xa,  RMX, cat_Reco);
+    histPlot->AddPlot(DcosTa, RMX, cat_Reco);
+    histPlot->AddPlot(DcosXa, RMX, cat_Reco);
+    histPlot->AddPlot(Eb_Tb,  RMX, cat_Reco);
+    histPlot->AddPlot(El_Xb,  RMX, cat_Reco);
+    histPlot->AddPlot(DcosTb, RMX, cat_Reco);
   }
   
   /////////////////////////////////////////////////////////////////////////////////////////

@@ -4,12 +4,12 @@
 //   Copyright (c) 2014-2016, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
-///  \file   example_H_to_WlnuWlnu.C
+///  \file   example_DiStop_to_hadtopXhadtopX.C
 ///
 ///  \author Christopher Rogan
 ///          (crogan@cern.ch)
 ///
-///  \date   2015 June
+///  \date   2016 Aug
 //
 //   This file is part of RestFrames.
 //
@@ -36,21 +36,15 @@ RestFrames::RFKey ensure_autoload(1);
 
 using namespace RestFrames;
 
-void example_H_to_WlnuWlnu(const std::string& output_name =
-			   "output_H_to_WlnuWlnu.root"){
+void example_DiStop_to_hadtopXhadtopX(const std::string& output_name =
+			   "output_DiStop_to_hadtopXhadtopX.root"){
 
   // set particle masses and widths
-  double mW   = 80.385;  // GeV, PDG 2016
-  double wW   = 2.085;
-  double mL   = 0.106;   // muons
-  double mN   = 0.;
+  double mT   = 700;    // stop mass
+  double mX   = 0;      // min neutralino mass
+  double mtop = 173.21; // GeV, PDG 2016
 
-  std::vector<double> mH; // vary neutral Higgs mass
-  mH.push_back(500.);
-  mH.push_back(750.);
-  mH.push_back(1000.);
-  mH.push_back(1500.);
-  mH.push_back(2000.);
+  int NMX = 5;          // number of different neutralino masses to evaluate
 
   // Number of events to generate (per H mass)
   int Ngen = 10000;
@@ -59,23 +53,23 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
   ppLabGenFrame     LAB_Gen("LAB_Gen","LAB");
-  DecayGenFrame     H_Gen("H_Gen","H^{0}");
-  ResonanceGenFrame Wa_Gen("Wa_Gen","W_{a}");
-  ResonanceGenFrame Wb_Gen("Wb_Gen","W_{b}");
-  VisibleGenFrame   La_Gen("La_Gen","#it{l}_{a}");
-  InvisibleGenFrame Na_Gen("Na_Gen","#nu_{a}");
-  VisibleGenFrame   Lb_Gen("Lb_Gen","#it{l}_{b}");
-  InvisibleGenFrame Nb_Gen("Nb_Gen","#nu_{b}");
+  DecayGenFrame     TT_Gen("TT_Gen","#tilde{t} #tilde{t}");
+  DecayGenFrame     Ta_Gen("Ta_Gen","#tilde{t}_{a}");
+  DecayGenFrame     Tb_Gen("Tb_Gen","#tilde{t}_{b}");
+  VisibleGenFrame   Thada_Gen("Thada_Gen","t_{had}^{ a}");
+  InvisibleGenFrame Xa_Gen("Xa_Gen","#tilde{#chi}^{0}_{a}");
+  VisibleGenFrame   Thadb_Gen("Thadb_Gen","t_{had}^{ b}");
+  InvisibleGenFrame Xb_Gen("Xb_Gen","#tilde{#chi}^{0}_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB_Gen.SetChildFrame(H_Gen);
-  H_Gen.AddChildFrame(Wa_Gen);
-  H_Gen.AddChildFrame(Wb_Gen);
-  Wa_Gen.AddChildFrame(La_Gen);
-  Wa_Gen.AddChildFrame(Na_Gen);
-  Wb_Gen.AddChildFrame(Lb_Gen);
-  Wb_Gen.AddChildFrame(Nb_Gen);
+  LAB_Gen.SetChildFrame(TT_Gen);
+  TT_Gen.AddChildFrame(Ta_Gen);
+  TT_Gen.AddChildFrame(Tb_Gen);
+  Ta_Gen.AddChildFrame(Thada_Gen);
+  Ta_Gen.AddChildFrame(Xa_Gen);
+  Tb_Gen.AddChildFrame(Thadb_Gen);
+  Tb_Gen.AddChildFrame(Xb_Gen);
 
   if(LAB_Gen.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized generator tree" << LogEnd;
@@ -83,19 +77,20 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
     g_Log << LogError << "...Failed initializing generator tree" << LogEnd;								    
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  if(mH.size() < 1) return;
+  if(mX >= mT) return;
   
-  // set Higgs masses
-  H_Gen.SetMass(mH[0]);
-  // set W masses and widths
-  Wa_Gen.SetMass(mW);                    Wa_Gen.SetWidth(wW);
-  Wb_Gen.SetMass(mW);                    Wb_Gen.SetWidth(wW);
-  // set lepton and neutrino masses
-  La_Gen.SetMass(mL);                    Lb_Gen.SetMass(mL);
+  // non-resonant stop production
+  TT_Gen.SetVariableMass();
+  // set stop masses
+  Ta_Gen.SetMass(mT);            Tb_Gen.SetMass(mT);
+  // set neutralino masses
+  Xa_Gen.SetMass(mX);            Xb_Gen.SetMass(mX);
+  // set hadronic top masses
+  Thada_Gen.SetMass(mtop);       Thadb_Gen.SetMass(mtop);
 
-  // set lepton pT and eta cuts
-  La_Gen.SetPtCut(15.);                  Lb_Gen.SetPtCut(15.);
-  La_Gen.SetEtaCut(2.5);                 Lb_Gen.SetEtaCut(2.5);
+  // set hadronic top pT and eta cuts
+  Thada_Gen.SetPtCut(50.);       Thadb_Gen.SetPtCut(50.);
+  Thada_Gen.SetEtaCut(2.5);      Thadb_Gen.SetEtaCut(2.5);
 
   if(LAB_Gen.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analysis" << LogEnd;
@@ -108,23 +103,23 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
   g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
   LabRecoFrame         LAB("LAB","LAB");
-  DecayRecoFrame       H("H","H^{ 0}");
-  DecayRecoFrame       Wa("Wa","W_{a}");
-  DecayRecoFrame       Wb("Wb","W_{b}");
-  VisibleRecoFrame     La("La","#it{l}_{a}");
-  InvisibleRecoFrame   Na("Na","#nu_{a}");
-  VisibleRecoFrame     Lb("Lb","#it{l}_{b}");
-  InvisibleRecoFrame   Nb("Nb","#nu_{b}");
+  DecayRecoFrame       TT("TT","#tilde{t} #tilde{t}");
+  DecayRecoFrame       Ta("Ta","#tilde{t}_{a}");
+  DecayRecoFrame       Tb("Tb","#tilde{t}_{b}");
+  VisibleRecoFrame     Thada("Thada","t_{had}^{ a}");
+  InvisibleRecoFrame   Xa("Xa","#tilde{#chi}^{0}_{a}");
+  VisibleRecoFrame     Thadb("Thadb","t_{had}^{ b}");
+  InvisibleRecoFrame   Xb("Xb","#tilde{#chi}^{0}_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  LAB.SetChildFrame(H);
-  H.AddChildFrame(Wa);
-  H.AddChildFrame(Wb);
-  Wa.AddChildFrame(La);
-  Wa.AddChildFrame(Na);
-  Wb.AddChildFrame(Lb);
-  Wb.AddChildFrame(Nb);
+  LAB.SetChildFrame(TT);
+  TT.AddChildFrame(Ta);
+  TT.AddChildFrame(Tb);
+  Ta.AddChildFrame(Thada);
+  Ta.AddChildFrame(Xa);
+  Tb.AddChildFrame(Thadb);
+  Tb.AddChildFrame(Xb);
 
   if(LAB.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized reconstruction tree" << LogEnd;
@@ -135,23 +130,23 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
 
   // Invisible Group
   InvisibleGroup INV("INV","#nu #nu Jigsaws");
-  INV.AddFrame(Na);
-  INV.AddFrame(Nb);
+  INV.AddFrame(Xa);
+  INV.AddFrame(Xb);
 
-  // Set nu nu mass equal to l l mass
-  SetMassInvJigsaw NuNuM("NuNuM", "M_{#nu#nu} = m_{#it{l}#it{l}}");
+  // Set nu nu mass using visible hadronic tops
+  SetMassInvJigsaw NuNuM("NuNuM", "M_{#nu#nu} ~ m_{t_{had} t_{had}}");
   INV.AddJigsaw(NuNuM);
 
-  SetRapidityInvJigsaw NuNuR("NuNuR", "#eta_{#nu#nu} = #eta_{#it{l}#it{l}}");
+  SetRapidityInvJigsaw NuNuR("NuNuR", "#eta_{#nu#nu} = #eta_{t_{had} t_{had}}");
   INV.AddJigsaw(NuNuR);
   NuNuR.AddVisibleFrames(LAB.GetListVisibleFrames());
 
-  ContraBoostInvJigsaw MinMW("MinMW","min M_{W}, M_{Wa}= M_{Wb}");
+  ContraBoostInvJigsaw MinMW("MinMW","min M_{top}, M_{top}^{ a}= M_{top}^{ b}");
   INV.AddJigsaw(MinMW);
-  MinMW.AddVisibleFrame(La, 0);
-  MinMW.AddVisibleFrame(Lb, 1);
-  MinMW.AddInvisibleFrame(Na, 0);
-  MinMW.AddInvisibleFrame(Nb, 1);
+  MinMW.AddVisibleFrame(Thada, 0);
+  MinMW.AddVisibleFrame(Thadb, 1);
+  MinMW.AddInvisibleFrame(Xa, 0);
+  MinMW.AddInvisibleFrame(Xb, 1);
 
   if(LAB.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
@@ -174,47 +169,54 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  std::string plot_title = "H^{ 0} #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
+  std::vector<double> vmX; // varying neutralino mass
+
+  std::string plot_title = "#tilde{t} #tilde{t}#rightarrow t_{had} #tilde{#chi}^{0} t_{had} #tilde{#chi}^{0}";
   HistPlot* histPlot = new HistPlot("HistPlot", plot_title);
 
   RFList<const HistPlotCategory> cat_list;
-  int Nmass = mH.size();
-  for(int m = 0; m < Nmass; m++){
+  for(int m = 0; m < NMX; m++){
+    vmX.push_back(mX + m*(mT-mX-200.)/double(NMX));
     char smass[50], scat[50];
-    sprintf(scat, "MH%.0f", mH[m]);
-    sprintf(smass, "m_{H^{ 0}} = %.0f GeV", mH[m]);
+    sprintf(scat, "MX%.0f", vmX[m]);
+    sprintf(smass, "m_{#tilde{#chi}^{0}} = %.0f GeV", vmX[m]);
     cat_list += histPlot->GetNewCategory(scat, smass);
   }
   
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
 
-  const HistPlotVar& MH     = histPlot->GetNewVar("MH", "M_{H^{ 0}}", 0., 2.*mH[Nmass-1], "[GeV]");
-  const HistPlotVar& MHN    = histPlot->GetNewVar("MHN", "M_{H^{ 0}} / m_{H^{ 0}}^{ true}", 0., 2.);
-  const HistPlotVar& MWaN   = histPlot->GetNewVar("MWaN", "M_{Wa} / m_{Wa}^{ true}", 0., 3.);
-  const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H^{ 0}}", -1., 1.);
-  const HistPlotVar& cosWa  = histPlot->GetNewVar("cosWa","cos #theta_{W_{a}}", -1., 1.);
-  const HistPlotVar& dphiH  = histPlot->GetNewVar("dphiH", "#Delta #phi_{H^{ 0}}", 0., 2.*acos(-1.));
-  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H^{ 0}} - #theta_{H^{ 0}}^{true}", 
-						  -0.6, 0.6);
-  const HistPlotVar& DcosWa = histPlot->GetNewVar("DcosWa","#theta_{W_{a}} - #theta_{W_{a}}^{true}", 
+  const HistPlotVar& MTT = histPlot->GetNewVar("MTT", 
+					       "M_{#tilde{t} #tilde{t}} / m_{#tilde{t} #tilde{t}}^{true}", 
+					       0., 1.75);
+  const HistPlotVar& EtTa   = histPlot->GetNewVar("EtTa", "E_{top}^{#tilde{t} a} / E_{top}^{#tilde{t} true}", 0., 1.1);
+  const HistPlotVar& PtTa   = histPlot->GetNewVar("PtTa", "p_{top}^{#tilde{t} a} / p_{top}^{#tilde{t} true}", 0., 1.6);
+  const HistPlotVar& cosTT  = histPlot->GetNewVar("cosTT","cos #theta_{#tilde{t} #tilde{t}}", -1., 1.);
+  const HistPlotVar& cosTa  = histPlot->GetNewVar("cosTa","cos #theta_{#tilde{t}_{a}}", -1., 1.);
+  const HistPlotVar& DcosTT = histPlot->GetNewVar("DcosTT",
+						  "#theta_{#tilde{t} #tilde{t}} - #theta_{#tilde{t} #tilde{t}}", 
+						  -acos(-1.)/2., acos(-1.)/2.);
+  const HistPlotVar& DcosTa = histPlot->GetNewVar("DcosTa","#theta_{#tilde{t}_{a}} - #theta_{#tilde{t}_{a}}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
  
-  histPlot->AddPlot(MH,     cat_list);
-  histPlot->AddPlot(MHN,    cat_list);
-  histPlot->AddPlot(MWaN,   cat_list);
-  histPlot->AddPlot(DcosH,  cat_list);
-  histPlot->AddPlot(DcosWa, cat_list);
-  histPlot->AddPlot(MHN, MWaN,    cat_list[0]);
-  histPlot->AddPlot(MHN, DcosH,   cat_list[0]);
-  histPlot->AddPlot(MWaN, DcosWa, cat_list[0]);
+  histPlot->AddPlot(MTT,    cat_list);
+  histPlot->AddPlot(EtTa,   cat_list);
+  histPlot->AddPlot(PtTa,   cat_list);
+  histPlot->AddPlot(DcosTT, cat_list);
+  histPlot->AddPlot(DcosTa, cat_list);
+  histPlot->AddPlot(MTT, EtTa,    cat_list[0]);
+  histPlot->AddPlot(MTT, PtTa,    cat_list[0]);
+  histPlot->AddPlot(EtTa, DcosTT, cat_list[0]);
+  histPlot->AddPlot(EtTa, DcosTa, cat_list[1]);
+  histPlot->AddPlot(DcosTT, DcosTa, cat_list[1]);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  for(int m = 0; m < Nmass; m++){
-    g_Log << LogInfo << "Generating events for H^{0} mass = " << mH[m] << LogEnd;
+  for(int m = 0; m < NMX; m++){
+    g_Log << LogInfo << "Generating events for X^{0} mass = " << vmX[m] << LogEnd;
 
-    H_Gen.SetMass(mH[m]);
+    Xa_Gen.SetMass(vmX[m]);
+    Xb_Gen.SetMass(vmX[m]);
     LAB_Gen.InitializeAnalysis();
   
     for(int igen = 0; igen < Ngen; igen++){
@@ -227,34 +229,29 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
       LAB_Gen.AnalyzeEvent();                          // generate a new event
 
       // analyze event
-      LAB.ClearEvent();                                  // clear the reco tree
+      LAB.ClearEvent();                                       // clear the reco tree
 
-      TVector3 MET = LAB_Gen.GetInvisibleMomentum();     // Get the MET from gen tree
+      TVector3 MET = LAB_Gen.GetInvisibleMomentum();          // Get the MET from gen tree
       MET.SetZ(0.);
-      INV.SetLabFrameThreeVector(MET);                   // Set the MET in reco tree
+      INV.SetLabFrameThreeVector(MET);                        // Set the MET in reco tree
 
-      La.SetLabFrameFourVector(La_Gen.GetFourVector());  // set lepton 4-vectors
-      Lb.SetLabFrameFourVector(Lb_Gen.GetFourVector());
+      Thada.SetLabFrameFourVector(Thada_Gen.GetFourVector()); // set had top 4-vectors
+      Thadb.SetLabFrameFourVector(Thadb_Gen.GetFourVector());
 
-      LAB.AnalyzeEvent();                                // analyze the event
+      LAB.AnalyzeEvent();                                     // analyze the event
 
       // Generator-level observables
-      double cosHgen  = H_Gen.GetCosDecayAngle();
-      cosH = cosHgen;
-      double cosWagen  = Wa_Gen.GetCosDecayAngle();
-      cosWa = cosWagen;
-
-      if(m == 0)
-	histPlot->Fill(cat_Gen);
+      double cosTTgen  = TT_Gen.GetCosDecayAngle();
+      double cosTagen  = Ta_Gen.GetCosDecayAngle();
 
       // Reconstruction-level observables
-      MH   = H.GetMass();
-      MHN  = H.GetMass()/H_Gen.GetMass();
-      MWaN = Wa.GetMass()/std::max(Wa_Gen.GetMass(),Wb_Gen.GetMass());
-      cosH  = H.GetCosDecayAngle();
-      cosWa = Wa.GetCosDecayAngle();
-      DcosH  = asin(sqrt(1.-cosH*cosH)*cosHgen-sqrt(1.-cosHgen*cosHgen)*cosH);
-      DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);
+      MTT    = TT.GetMass()/TT_Gen.GetMass();
+      EtTa   = Thada.GetEnergy(Ta) / Thada_Gen.GetEnergy(Ta_Gen);
+      PtTa   = Thada.GetMomentum(Ta) / Thada_Gen.GetMomentum(Ta_Gen);
+      cosTT  = TT.GetCosDecayAngle();
+      cosTa  = Ta.GetCosDecayAngle();
+      DcosTT = asin(sqrt(1.-cosTT*cosTT)*cosTTgen-sqrt(1.-cosTTgen*cosTTgen)*cosTT);
+      DcosTa = asin(sqrt(1.-cosTa*cosTa)*cosTagen-sqrt(1.-cosTagen*cosTagen)*cosTa);
 
       histPlot->Fill(cat_list[m]);
     }
@@ -275,7 +272,7 @@ void example_H_to_WlnuWlnu(const std::string& output_name =
 
 # ifndef __CINT__ // main function for stand-alone compilation
 int main(){
-  example_H_to_WlnuWlnu();
+  example_DiStop_to_hadtopXhadtopX();
   return 0;
 }
 #endif

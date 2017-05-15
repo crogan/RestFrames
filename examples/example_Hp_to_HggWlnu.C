@@ -175,8 +175,8 @@ void example_Hp_to_HggWlnu(const std::string& output_name =
     cat_list += histPlot->GetNewCategory(scat, smass);
   }
 
-  const HistPlotCategory& cat_Hp  = histPlot->GetNewCategory("HprodHp", "h^{ 0} prod. frame = H^{ +}");
-  const HistPlotCategory& cat_LAB = histPlot->GetNewCategory("HprodLAB", "h^{ 0} prod. frame = LAB");
+  const HistPlotCategory& cat_Hp  = histPlot->GetNewCategory("HprodHp", "h^{ 0} prod. frame H^{ +}");
+  const HistPlotCategory& cat_LAB = histPlot->GetNewCategory("HprodLAB", "h^{ 0} prod. frame LAB");
   
   const HistPlotVar& MHp    = histPlot->GetNewVar("MHp", "M_{H^{ +}}", 0., 2400., "[GeV]");
   const HistPlotVar& MHpN   = histPlot->GetNewVar("MHpN", "M_{H^{ +}} / m_{H^{ +}}^{true}", 0.7, 1.05);
@@ -194,11 +194,11 @@ void example_Hp_to_HggWlnu(const std::string& output_name =
   histPlot->AddPlot(MWN,  cat_list);
   histPlot->AddPlot(MHpN, cat_list);
   histPlot->AddPlot(MHp,  cat_list);
-  histPlot->AddPlot(MWN,    MHpN,   cat_list[2]);
-  histPlot->AddPlot(DcosW, MWN,  cat_list[2]);
-  histPlot->AddPlot(DcosHp, MHpN, cat_list[2]);
-  histPlot->AddPlot(DcosHp, DcosW,  cat_list[2]);
-  histPlot->AddPlot(DcosH,  MHpN,   cat_list[2]);
+  histPlot->AddPlot(MWN,    MHpN,   cat_list[Nmass/2]);
+  histPlot->AddPlot(DcosW, MWN,  cat_list[Nmass/2]);
+  histPlot->AddPlot(DcosHp, MHpN, cat_list[Nmass/2]);
+  histPlot->AddPlot(DcosHp, DcosW,  cat_list[Nmass/2]);
+  histPlot->AddPlot(DcosH,  MHpN,   cat_list[Nmass/2]);
   
   histPlot->AddPlot(DcosH,  cat_Hp+cat_LAB);
 

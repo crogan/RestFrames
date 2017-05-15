@@ -531,22 +531,24 @@ namespace RestFrames {
       hist->GetZaxis()->SetAxisColor(kWhite);
     }
     hist->Draw("COLZ");
-    
-    std::string title = m_PlotTitle;
-    if(!cat.IsEmpty())
-      title = cat.GetTitle();
 
-    TLatex l(0.6,0.943,title.c_str());
+    TLatex l(0.6,0.943,m_PlotTitle.c_str());
     l.SetNDC();
     if(invert_colors)
       l.SetTextColor(kWhite);
     l.SetTextSize(0.045);
     l.SetTextFont(132);
-    l.DrawLatex(0.48+std::max(0.,0.32-l.GetXsize()),0.947,title.c_str());
+    l.DrawLatex(0.48+std::max(0.,0.32-l.GetXsize()),0.947,m_PlotTitle.c_str());
     l.SetTextSize(0.04);
     l.SetTextFont(42);
     l.DrawLatex(0.02,0.95,m_PlotLabel.c_str());
     
+    if(!cat.IsEmpty()){
+      l.SetTextSize(0.05);
+      l.SetTextFont(132);
+      l.DrawLatex(0.18,0.85,cat.GetTitle().c_str());
+    }
+
     AddCanvas(can);
   }
 

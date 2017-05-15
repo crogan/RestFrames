@@ -46,7 +46,7 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
   double mN = 0.;
 
   // number of events to generate
-  int Ngen = 100000;
+  int Ngen = 10000;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and tree..." << LogEnd;
@@ -363,25 +363,25 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
   const HistPlotCategory& cat_R3  = histPlot->GetNewCategory("Reco3", "min #Sigma M_{top}^{ 2} Reco");
   const HistPlotCategory& cat_R4  = histPlot->GetNewCategory("Reco4", "min #Delta M_{top} Reco");
 
-  const HistPlotVar& Mtt    = histPlot->GetNewVar("Mtt", "M_{t #bar{t}} / m_{t #bar{t}}", 0., 2.);
-  const HistPlotVar& Eb_ta  = histPlot->GetNewVar("Eb_ta", "E_{b a}^{top a} / E_{b a}^{top a gen}", 0., 2.);
-  const HistPlotVar& Eb_tb  = histPlot->GetNewVar("Eb_tb", "E_{b b}^{top b} / E_{b b}^{top b gen}", 0., 2.);
-  const HistPlotVar& El_Wa  = histPlot->GetNewVar("El_Wa", "E_{#it{l} a}^{W a} / E_{#it{l} a}^{W a gen}", 0., 2.);
-  const HistPlotVar& El_Wb  = histPlot->GetNewVar("El_Wb", "E_{#it{l} b}^{W b} / E_{#it{l} b}^{W b gen}", 0., 2.);
+  const HistPlotVar& Mtt    = histPlot->GetNewVar("Mtt", "M_{t #bar{t}} / m_{t #bar{t}}^{true}", 0., 2.);
+  const HistPlotVar& Eb_ta  = histPlot->GetNewVar("Eb_ta", "E_{b a}^{top a} / E_{b a}^{top a true}", 0., 2.);
+  const HistPlotVar& Eb_tb  = histPlot->GetNewVar("Eb_tb", "E_{b b}^{top b} / E_{b b}^{top b true}", 0., 2.);
+  const HistPlotVar& El_Wa  = histPlot->GetNewVar("El_Wa", "E_{#it{l} a}^{W a} / E_{#it{l} a}^{W a true}", 0., 2.);
+  const HistPlotVar& El_Wb  = histPlot->GetNewVar("El_Wb", "E_{#it{l} b}^{W b} / E_{#it{l} b}^{W b true}", 0., 2.);
   const HistPlotVar& costt  = histPlot->GetNewVar("costt","cos #theta_{t #bar{t}}", -1., 1.);
   const HistPlotVar& costa  = histPlot->GetNewVar("costa","cos #theta_{top a}", -1., 1.);
   const HistPlotVar& costb  = histPlot->GetNewVar("costb","cos #theta_{top b}", -1., 1.);
   const HistPlotVar& cosWa  = histPlot->GetNewVar("cosWa","cos #theta_{W a}", -1., 1.);
   const HistPlotVar& cosWb  = histPlot->GetNewVar("cosWb","cos #theta_{W b}", -1., 1.);
-  const HistPlotVar& Dcostt = histPlot->GetNewVar("Dcostt","#theta_{t #bar{t}} - #theta_{t #bar{t}}^{gen}", 
+  const HistPlotVar& Dcostt = histPlot->GetNewVar("Dcostt","#theta_{t #bar{t}} - #theta_{t #bar{t}}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& Dcosta = histPlot->GetNewVar("Dcosta","#theta_{top a} - #theta_{top a}^{gen}", 
+  const HistPlotVar& Dcosta = histPlot->GetNewVar("Dcosta","#theta_{top a} - #theta_{top a}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& Dcostb = histPlot->GetNewVar("Dcostb","#theta_{top b} - #theta_{top b}^{gen}", 
+  const HistPlotVar& Dcostb = histPlot->GetNewVar("Dcostb","#theta_{top b} - #theta_{top b}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& DcosWa = histPlot->GetNewVar("DcosWa","#theta_{W a} - #theta_{W a}^{gen}", 
+  const HistPlotVar& DcosWa = histPlot->GetNewVar("DcosWa","#theta_{W a} - #theta_{W a}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
-  const HistPlotVar& DcosWb = histPlot->GetNewVar("DcosWb","#theta_{W b} - #theta_{W b}^{gen}", 
+  const HistPlotVar& DcosWb = histPlot->GetNewVar("DcosWb","#theta_{W b} - #theta_{W b}^{true}", 
 						  -acos(-1.)/2., acos(-1.)/2.);
 
   histPlot->AddPlot(Mtt,   cat_R1+cat_R2+cat_R3+cat_R4);
@@ -471,10 +471,6 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
     double cosWbgen = Wb_Gen.GetCosDecayAngle();
 
     Mtt = TT_R1.GetMass()/Mttgen;
-    // Mta = Ta_R1.GetMass();
-    // Mtb = Tb_R1.GetMass();
-    // MWa = Wa_R1.GetMass();
-    // MWb = Wb_R1.GetMass();
     Eb_ta = Ba_R1.GetFourVector(Ta_R1).E()/Eb_tagen;
     Eb_tb = Bb_R1.GetFourVector(Tb_R1).E()/Eb_tbgen;
     El_Wa = La_R1.GetFourVector(Wa_R1).E()/El_Wagen;
@@ -493,10 +489,6 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
     histPlot->Fill(cat_R1);
 
     Mtt = TT_R2.GetMass()/Mttgen;
-    // Mta = Ta_R2.GetMass();
-    // Mtb = Tb_R2.GetMass();
-    // MWa = Wa_R2.GetMass();
-    // MWb = Wb_R2.GetMass();
     Eb_ta = Ba_R2.GetFourVector(Ta_R2).E()/Eb_tagen;
     Eb_tb = Bb_R2.GetFourVector(Tb_R2).E()/Eb_tbgen;
     El_Wa = La_R2.GetFourVector(Wa_R2).E()/El_Wagen;
@@ -515,10 +507,6 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
     histPlot->Fill(cat_R2);
 
     Mtt = TT_R3.GetMass()/Mttgen;
-    // Mta = Ta_R3.GetMass();
-    // Mtb = Tb_R3.GetMass();
-    // MWa = Wa_R3.GetMass();
-    // MWb = Wb_R3.GetMass();
     Eb_ta = Ba_R3.GetFourVector(Ta_R3).E()/Eb_tagen;
     Eb_tb = Bb_R3.GetFourVector(Tb_R3).E()/Eb_tbgen;
     El_Wa = La_R3.GetFourVector(Wa_R3).E()/El_Wagen;
@@ -537,10 +525,6 @@ void example_ttbar_to_bWlnubWlnu(const std::string output_name =
     histPlot->Fill(cat_R3);
 
     Mtt = TT_R4.GetMass()/Mttgen;
-    // Mta = Ta_R4.GetMass();
-    // Mtb = Tb_R4.GetMass();
-    // MWa = Wa_R4.GetMass();
-    // MWb = Wb_R4.GetMass();
     Eb_ta = Ba_R4.GetFourVector(Ta_R4).E()/Eb_tagen;
     Eb_tb = Bb_R4.GetFourVector(Tb_R4).E()/Eb_tbgen;
     El_Wa = La_R4.GetFourVector(Wa_R4).E()/El_Wagen;

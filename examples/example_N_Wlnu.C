@@ -294,7 +294,7 @@ void example_N_Wlnu(const std::string& output_name =
   const HistPlotCategory& cat_3W = histPlot->GetNewCategory("Reco_3W", "3 W(#it{l} #nu)");
   const HistPlotCategory& cat_4W = histPlot->GetNewCategory("Reco_4W", "4 W(#it{l} #nu)");
 
-  const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0., 2.);
+  const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0.2, 1.8);
   const HistPlotVar& sumMW2 = histPlot->GetNewVar("MWTOT",
 		   "#sqrt{#Sigma M_{W}^{ 2} / #Sigma m_{W, true}^{ 2}}", 0., 1.5);
   double sumMW2gen;

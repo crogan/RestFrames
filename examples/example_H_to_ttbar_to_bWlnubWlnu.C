@@ -46,10 +46,11 @@ void example_H_to_ttbar_to_bWlnubWlnu(std::string output_name =
   double mN = 0.;
 
   std::vector<double> mH; // vary neutral Higgs mass
-  mH.push_back(400.);
+  mH.push_back(500.);
   mH.push_back(750.);
   mH.push_back(1000.);
   mH.push_back(1500.);
+  mH.push_back(2000.);
   
   // number of events to generate (per Higgs mass)
   int Ngen = 10000;
@@ -233,13 +234,14 @@ void example_H_to_ttbar_to_bWlnubWlnu(std::string output_name =
   for(int m = 0; m < Nmass; m++){
     char smass[50], scat[50];
     sprintf(scat, "MH%.0f", mH[m]);
-    sprintf(smass, "m_{H^{ 0}} = %.0f", mH[m]);
+    sprintf(smass, "m_{H^{ 0}} = %.0f GeV", mH[m]);
     cat_list += histPlot->GetNewCategory(scat, smass);
   }
 
-  const HistPlotVar& MH     = histPlot->GetNewVar("MH", "M_{H^{ 0}} / m_{H^{ 0}}^{ true}", 0., 2.);
-  const HistPlotVar& Eb_ta  = histPlot->GetNewVar("Eb_ta", "E_{b a}^{top a} / E_{b a}^{top a gen}", 0., 2.);
-  const HistPlotVar& Eb_tb  = histPlot->GetNewVar("Eb_tb", "E_{b b}^{top b} / E_{b b}^{top b gen}", 0., 2.);
+  const HistPlotVar& MH     = histPlot->GetNewVar("MH", "M_{H^{ 0}}", 0., 2.*mH[Nmass-1], "[GeV]");
+  const HistPlotVar& MHN    = histPlot->GetNewVar("MHN", "M_{H^{ 0}} / m_{H^{ 0}}^{ true}", 0., 2.);
+  const HistPlotVar& Eb_ta  = histPlot->GetNewVar("Eb_ta", "E_{b a}^{top a} / E_{b a}^{top a true}", 0., 2.);
+  const HistPlotVar& Eb_tb  = histPlot->GetNewVar("Eb_tb", "E_{b b}^{top b} / E_{b b}^{top b true}", 0., 2.);
   const HistPlotVar& El_Wa  = histPlot->GetNewVar("El_Wa", "E_{#it{l} a}^{W a} / E_{#it{l} a}^{W a true}", 0., 2.);
   const HistPlotVar& El_Wb  = histPlot->GetNewVar("El_Wb", "E_{#it{l} b}^{W b} / E_{#it{l} b}^{W b true}", 0., 2.);
   const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H^{ 0}}", -1., 1.);
@@ -259,24 +261,26 @@ void example_H_to_ttbar_to_bWlnubWlnu(std::string output_name =
 						  -acos(-1.)/2., acos(-1.)/2.);
 
   histPlot->AddPlot(MH,    cat_list);
+  histPlot->AddPlot(MHN,    cat_list);
   histPlot->AddPlot(Eb_ta, cat_list);
   histPlot->AddPlot(El_Wa, cat_list);
   histPlot->AddPlot(DcosH,  cat_list);
   histPlot->AddPlot(Dcosta, cat_list);
   histPlot->AddPlot(DcosWa, cat_list);
 
-  histPlot->AddPlot(MH, Eb_ta, cat_list[1]);
-  histPlot->AddPlot(MH, El_Wa, cat_list[1]);
-  histPlot->AddPlot(Eb_ta, Eb_tb, cat_list[1]);
-  histPlot->AddPlot(El_Wa, El_Wb, cat_list[1]);
-  histPlot->AddPlot(Eb_ta, El_Wa, cat_list[1]);
-  histPlot->AddPlot(DcosH, MH,  cat_list[1]);
-  histPlot->AddPlot(Dcosta, Eb_ta, cat_list[1]);
-  histPlot->AddPlot(DcosWa, El_Wa, cat_list[1]);
-  histPlot->AddPlot(DcosH, Dcosta, cat_list[1]);
-  histPlot->AddPlot(Dcosta, Dcostb, cat_list[1]);
-  histPlot->AddPlot(DcosWa, DcosWb, cat_list[1]);
-  histPlot->AddPlot(Dcosta, DcosWa, cat_list[1]);
+  histPlot->AddPlot(MHN, Eb_ta, cat_list[2]);
+  histPlot->AddPlot(MHN, El_Wa, cat_list[2]);
+  histPlot->AddPlot(Eb_ta, Eb_tb, cat_list[2]);
+  histPlot->AddPlot(El_Wa, El_Wb, cat_list[2]);
+  histPlot->AddPlot(Eb_ta, El_Wa, cat_list[2]);
+  histPlot->AddPlot(DcosH, MHN,  cat_list[2]);
+  histPlot->AddPlot(Dcosta, Eb_ta, cat_list[2]);
+  histPlot->AddPlot(DcosWa, El_Wa, cat_list[2]);
+  histPlot->AddPlot(DcosH, Dcosta, cat_list[2]);
+  histPlot->AddPlot(DcosH, DcosWa, cat_list[2]);
+  histPlot->AddPlot(Dcosta, Dcostb, cat_list[2]);
+  histPlot->AddPlot(DcosWa, DcosWb, cat_list[2]);
+  histPlot->AddPlot(Dcosta, DcosWa, cat_list[2]);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -327,7 +331,8 @@ void example_H_to_ttbar_to_bWlnubWlnu(std::string output_name =
       double cosWagen = Wa_Gen.GetCosDecayAngle();
       double cosWbgen = Wb_Gen.GetCosDecayAngle();
 
-      MH    = H.GetMass()/MHgen;
+      MH    = H.GetMass();
+      MHN   = H.GetMass()/MHgen;
       Eb_ta = Ba.GetFourVector(Ta).E()/Eb_tagen;
       Eb_tb = Bb.GetFourVector(Tb).E()/Eb_tbgen;
       El_Wa = La.GetFourVector(Wa).E()/El_Wagen;

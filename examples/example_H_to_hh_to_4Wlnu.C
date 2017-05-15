@@ -36,7 +36,8 @@ RestFrames::RFKey ensure_autoload(1);
 
 using namespace RestFrames;
 
-void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_04.root"){
+void example_H_to_hh_to_4Wlnu(const std::string& output_name = 
+			      "output_H_to_hh_to_4Wlnu.root"){
 
   double mH = 750.;
   double mh = 125.;
@@ -194,10 +195,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMh_R.AddVisibleFrames(ha_R.GetListVisibleFrames(), 0);
   MinMh_R.AddVisibleFrames(hb_R.GetListVisibleFrames(), 1);
 
-  //ContraBoostInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}");
-  MinMassesSqInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
-  //MinMassDiffInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
-  //MaxProbBreitWignerInvJigsaw MinMWa_R("MinMWa_R","min M_{W}, M_{W}^{a,a}= M_{W}^{a,b}", 2);
+  MinMassesSqInvJigsaw MinMWa_R("MinMWa_R","min #Sigma M_{W}^{2}", 2);
   INV_R.AddJigsaw(MinMWa_R);
   MinMWa_R.AddInvisibleFrames(Waa_R.GetListInvisibleFrames(), 0);
   MinMWa_R.AddInvisibleFrames(Wab_R.GetListInvisibleFrames(), 1);
@@ -206,10 +204,7 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
   MinMWa_R.AddMassFrame(Lba_R, 0);
   MinMWa_R.AddMassFrame(Lbb_R, 1);
 
-  //ContraBoostInvJigsaw MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}");
-  MinMassesSqInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
-  //MinMassDiffInvJigsaw MinMWb_R("MinMWb_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
-  //MaxProbBreitWignerInvJigsaw  MinMWb_R("MinMWa_R","min M_{W}, M_{W}^{b,a}= M_{W}^{b,b}", 2);
+  MinMassesSqInvJigsaw  MinMWb_R("MinMWb_R","min #Sigma M_{W}^{2}", 2);
   INV_R.AddJigsaw(MinMWb_R);
   MinMWb_R.AddInvisibleFrames(Wba_R.GetListInvisibleFrames(), 0);
   MinMWb_R.AddInvisibleFrames(Wbb_R.GetListInvisibleFrames(), 1);
@@ -254,9 +249,9 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  std::string plot_title = "H #rightarrow hh #rightarrow W(#it{l} #nu) W(#it{l} #nu)";
+  std::string plot_title = "H #rightarrow hh #rightarrow 4 W(#it{l} #nu)";
   HistPlot* histPlot = new HistPlot("HistPlot", plot_title);
-  
+
   const HistPlotCategory& cat_Gen   = histPlot->GetNewCategory("Gen",  "Generator");
   const HistPlotCategory& cat_Reco  = histPlot->GetNewCategory("Reco", "Reconstruction");
 
@@ -360,7 +355,6 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
 
     // Reconstruction-level observables
     MH = H_R.GetMass()/MHgen;
-    //MH = 2.*H_R.GetListVisibleFrames().GetEnergy(H_R)/MHgen;
     //Mha = ha_R.GetMass()/Mhagen;
     //Mhb = hb_R.GetMass()/Mhbgen;
     Mha = 2.*ha_R.GetListVisibleFrames().GetEnergy(ha_R)/Mhagen;
@@ -379,25 +373,20 @@ void example_H_to_hh_to_4Wlnu(const std::string& output_name = "output_example_0
     Dcoshb = asin(sqrt(1.-coshb*coshb)*coshbgen-sqrt(1.-coshbgen*coshbgen)*coshb);
     DcosWaa = asin(sqrt(1.-cosWaa*cosWaa)*cosWaagen-sqrt(1.-cosWaagen*cosWaagen)*cosWaa);
     DcosWab = asin(sqrt(1.-cosWab*cosWab)*cosWabgen-sqrt(1.-cosWabgen*cosWabgen)*cosWab);
-    
-   
+       
     histPlot->Fill(cat_Reco);
-
-  //   g_Log << LogInfo;
-//     g_Log << "Correct assignments " << std::endl;
-//     g_Log << (VIS_R.GetFrame(L_ID[0]).GetParentFrame().GetParentFrame() == VIS_R.GetFrame(L_ID[1]).GetParentFrame().GetParentFrame()) << " ";
-//     g_Log << (VIS_R.GetFrame(L_ID[2]).GetParentFrame().GetParentFrame() == VIS_R.GetFrame(L_ID[3]).GetParentFrame().GetParentFrame()) << " " << std::endl;
-//   g_Log << (VIS_R.GetFrame(L_ID[0]).GetParentFrame().GetParentFrame() == VIS_R.GetFrame(L_ID[3]).GetParentFrame().GetParentFrame()) << " ";
-// g_Log << (VIS_R.GetFrame(L_ID[2]).GetParentFrame().GetParentFrame() == VIS_R.GetFrame(L_ID[1]).GetParentFrame().GetParentFrame()) << " " << std::endl;
-//     g_Log << (Laa_R+Lab_R).GetMass() << " " << (Lba_R+Lbb_R).GetMass() << std::endl;
-//     g_Log << (Laa_R+Lbb_R).GetMass() << " " << (Lba_R+Lab_R).GetMass() << std::endl;
-//     g_Log << LogEnd;
   }
-
-  histPlot->Draw();
   
   LAB_G.PrintGeneratorEfficiency();
   
+  histPlot->Draw();
+
+  TFile fout(output_name.c_str(),"RECREATE");
+  fout.Close();
+  histPlot->WriteOutput(output_name);
+  histPlot->WriteHist(output_name);
+  treePlot->WriteOutput(output_name);
+
   g_Log << LogInfo << "Finished" << LogEnd;
 }
 

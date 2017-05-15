@@ -40,7 +40,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 			      "output_X2X2_to_ZllXHggX.root"){
 
   // set particle masses and widths [GeV]
-  double mX2 = 500.;
+  double mX2 = 800.;
   double mZ   = 91.19;  // PDG 2016
   double wZ   = 2.50;
   double mH   = 125.;
@@ -49,7 +49,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   // number of different neutralino masses to evaluate
   int NmX1 = 4;
   std::vector<double> mX1;
-  mX1.push_back(400.); // lightest X1 mass to evaluate
+  mX1.push_back(0.); // lightest X1 mass to evaluate
   
   // Number of events to generate
   int Ngen = 10000;
@@ -62,7 +62,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   DecayGenFrame     X2a_Gen("X2a_Gen","#tilde{#chi}^{ 0}_{2 a}");
   DecayGenFrame     X2b_Gen("X2b_Gen","#tilde{#chi}^{ 0}_{2 b}");
   ResonanceGenFrame Za_Gen("Za_Gen","Z_{a}");
-  ResonanceGenFrame Hb_Gen("Hb_Gen","H_{b}");
+  ResonanceGenFrame Hb_Gen("Hb_Gen","h_{b}");
   VisibleGenFrame   L1_Gen("L1_Gen","#it{l}_{1}");
   VisibleGenFrame   L2_Gen("L2_Gen","#it{l}_{2}");
   VisibleGenFrame   G1_Gen("G1_Gen","#gamma_{1}");
@@ -123,8 +123,8 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   DecayRecoFrame     X2X2("X2X2","#tilde{#chi}^{ 0}_{2} #tilde{#chi}^{ 0}_{2}");
   DecayRecoFrame     X2a("X2a","#tilde{#chi}^{ 0}_{2 a}");
   DecayRecoFrame     X2b("X2b","#tilde{#chi}^{ 0}_{2 b}");
-  DecayRecoFrame     Za("Za","Z_{a}");
-  DecayRecoFrame     Hb("Hb","H_{b}");
+  DecayRecoFrame     Za("Za","Z");
+  DecayRecoFrame     Hb("Hb","h");
   VisibleRecoFrame   L1("L1","#it{l}_{1}");
   VisibleRecoFrame   L2("L2","#it{l}_{2}");
   VisibleRecoFrame   G1("G1","#gamma_{1}");
@@ -197,9 +197,9 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
   
   // Declare observables for histogram booking
   HistPlot* histPlot = new HistPlot("Plots", 
-				    std::string("#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}") +
-				    "#rightarrow Z(#it{l}#it{l}) #tilde{#chi}_{1}^{ 0}"+
-				    "H(#gamma #gamma) #tilde{#chi}_{1}^{ 0}"); 
+				    std::string("#tilde{#chi}_{2}^{0} #tilde{#chi}_{2}^{0}") +
+				    "#rightarrow Z(#it{l} #it{l}) #tilde{#chi}_{1}^{0} "+
+				    "h(#gamma #gamma ) #tilde{#chi}_{1}^{0}"); 
 
   RFList<const HistPlotCategory> cat_list;
   char smassX2[200];
@@ -216,38 +216,52 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 					 " , "+std::string(smassX1));
   }
   
-  const HistPlotVar& MCM  = histPlot->GetNewVar("MCM", 
-						"M_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}", 
-						0., 2.);
-  const HistPlotVar& EZX2a  = histPlot->GetNewVar("EZX2a", "E_{Z}^{ #tilde{#chi}_{2 a}^{ 0}}", 0., 2.);
-  const HistPlotVar& EHX2b  = histPlot->GetNewVar("EHX2b", "E_{H}^{ #tilde{#chi}_{2 b}^{ 0}}", 0., 2.);
+  const HistPlotVar& MCM = histPlot->GetNewVar("MCM", 
+					       "M_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}} / m_{#tilde{#chi}_{2}^{ 0} #tilde{#chi}_{2}^{ 0}}^{true}", 
+					       0., 1.75);
+  const HistPlotVar& EZX2a  = histPlot->GetNewVar("EZX2a", 
+						  "E_{Z}^{ #tilde{#chi}_{2 a}^{0}} / E_{Z}^{ #tilde{#chi}_{2 a}^{0} true}",
+						  0., 1.25);
+  const HistPlotVar& PZX2a  = histPlot->GetNewVar("PZX2a", 
+						  "P_{Z}^{ #tilde{#chi}_{2 a}^{0}} / P_{Z}^{ #tilde{#chi}_{2 a}^{0} true}",
+						  0., 1.25);
+  const HistPlotVar& EHX2b  = histPlot->GetNewVar("EHX2b", 
+						  "E_{h}^{ #tilde{#chi}_{2 b}^{0}} / E_{h}^{ #tilde{#chi}_{2 b}^{0} true}", 
+						  0., 1.25);
+  const HistPlotVar& PHX2b  = histPlot->GetNewVar("PHX2b", 
+						  "P_{h}^{ #tilde{#chi}_{2 b}^{0}} / P_{h}^{ #tilde{#chi}_{2 b}^{0} true}", 
+						  0., 1.25);
   const HistPlotVar& cosX2a = histPlot->GetNewVar("cosX2a","cos #theta_{#tilde{#chi}_{2 a}^{ 0}}", -1., 1.);
   const HistPlotVar& cosX2b = histPlot->GetNewVar("cosX2b","cos #theta_{#tilde{#chi}_{2 b}^{ 0}}", -1., 1.);
   const HistPlotVar& cosZ   = histPlot->GetNewVar("cosZ","cos #theta_{Z}", -1., 1.);
-  const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{H}", -1., 1.);
-  const HistPlotVar& DcosZ  = histPlot->GetNewVar("DcosZ","#theta_{Z} - #theta_{Z}^{gen}", -1., 1.);
-  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{H} - #theta_{H}^{gen}", -1., 1.);
-  const HistPlotVar& DcosX2a  = histPlot->GetNewVar("DcosX2a","#theta_{X2a} - #theta_{X2a}^{gen}", -1., 1.);
-  const HistPlotVar& DcosX2b  = histPlot->GetNewVar("DcosX2b","#theta_{X2b} - #theta_{X2b}^{gen}", -1., 1.);
+  const HistPlotVar& cosH   = histPlot->GetNewVar("cosH","cos #theta_{h}", -1., 1.);
+  const HistPlotVar& DcosZ  = histPlot->GetNewVar("DcosZ","#theta_{Z} - #theta_{Z}^{true}", -1., 1.);
+  const HistPlotVar& DcosH  = histPlot->GetNewVar("DcosH","#theta_{h} - #theta_{h}^{true}", -1., 1.);
+  const HistPlotVar& DcosX2a  = histPlot->GetNewVar("DcosX2a","#theta_{X2a} - #theta_{X2a}^{true}", -1., 1.);
+  const HistPlotVar& DcosX2b  = histPlot->GetNewVar("DcosX2b","#theta_{X2b} - #theta_{X2b}^{true}", -1., 1.);
   const HistPlotVar& RISR   = histPlot->GetNewVar("RISR","R_{ISR}", 0., 1.5);
   const HistPlotVar& PTISR  = histPlot->GetNewVar("PTISR","p_{T}^{ ISR}", 0., 1000., "[GeV]");
 
   histPlot->AddPlot(MCM,     cat_list);      
   histPlot->AddPlot(EZX2a,   cat_list);
   histPlot->AddPlot(EHX2b,   cat_list);   
+  histPlot->AddPlot(PZX2a,   cat_list);
+  histPlot->AddPlot(PHX2b,   cat_list);  
   histPlot->AddPlot(cosZ,    cat_list);  
   histPlot->AddPlot(cosH,    cat_list);  
   histPlot->AddPlot(DcosZ,   cat_list); 
   histPlot->AddPlot(DcosH,   cat_list);
   histPlot->AddPlot(DcosX2a, cat_list);
   histPlot->AddPlot(DcosX2b, cat_list); 
-  histPlot->AddPlot(MCM, EZX2a,     cat_list[NmX1/2]);
-  histPlot->AddPlot(MCM, EHX2b,     cat_list[NmX1/2]);
+  histPlot->AddPlot(MCM, PZX2a,     cat_list[0]);
+  histPlot->AddPlot(MCM, EZX2a,     cat_list[0]);
+  histPlot->AddPlot(MCM, EHX2b,     cat_list[0]);
   histPlot->AddPlot(EZX2a, EHX2b,   cat_list[NmX1/2]);
   histPlot->AddPlot(EZX2a, DcosX2a, cat_list[NmX1/2]);
   histPlot->AddPlot(EHX2b, DcosX2b, cat_list[NmX1/2]);
   histPlot->AddPlot(cosZ, DcosZ,    cat_list[NmX1/2]);
   histPlot->AddPlot(cosH, DcosH,    cat_list[NmX1/2]);
+  histPlot->AddPlot(DcosH, DcosZ,   cat_list[NmX1/2]);
 
   histPlot->AddPlot(RISR, cat_list);
   histPlot->AddPlot(RISR, PTISR, cat_list[NmX1/2]);
@@ -270,8 +284,7 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
       // generate event
       LAB_Gen.ClearEvent();                           // clear the gen tree
     
-      //LAB_Gen.SetTransverseMomentum(800.);            // give X2X2 some Pt
-      LAB_Gen.SetTransverseMomentum(1000.*gRandom->Rndm());            // give X2X2 some Pt
+      LAB_Gen.SetTransverseMomentum(800.);            // give X2X2 some Pt
     
       LAB_Gen.AnalyzeEvent();                         // generate a new event
 
@@ -291,6 +304,8 @@ void example_X2X2_to_ZllXHggX(std::string output_name =
 
       EZX2a = Za.GetEnergy(X2a) / Za_Gen.GetEnergy(X2a_Gen);
       EHX2b = Hb.GetEnergy(X2b) / Hb_Gen.GetEnergy(X2b_Gen);
+      PZX2a = Za.GetMomentum(X2a) / Za_Gen.GetMomentum(X2a_Gen);
+      PHX2b = Hb.GetMomentum(X2b) / Hb_Gen.GetMomentum(X2b_Gen);
 
       cosX2a  = X2a.GetCosDecayAngle();
       double cosX2agen  = X2a_Gen.GetCosDecayAngle();
