@@ -48,38 +48,54 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing generator frames and trees..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  ppLabGenFrame LAB_Gen1("LAB_Gen1","LAB");
-  DecayGenFrame PP_Gen1("PP_Gen1","#tilde{b} #tilde{b}");
-  DecayGenFrame Pa_Gen1("Pa_Gen1","#tilde{b}_{a}");
-  DecayGenFrame Pb_Gen1("Pb_Gen1","#tilde{b}_{b}");
-  VisibleGenFrame B1a_Gen1("B1a_Gen1","b_{1a}");
+  // di-sbottom pair production
+  ppLabGenFrame     LAB_Gen1("LAB_Gen1","LAB");
+  DecayGenFrame     PP_Gen1("PP_Gen1","#tilde{b} #tilde{b}");
+  DecayGenFrame     Pa_Gen1("Pa_Gen1","#tilde{b}_{a}");
+  DecayGenFrame     Pb_Gen1("Pb_Gen1","#tilde{b}_{b}");
+  VisibleGenFrame   B1a_Gen1("B1a_Gen1","b_{1a}");
   InvisibleGenFrame Xa_Gen1("Xa_Gen1","#tilde{#chi}_{a}");
-  VisibleGenFrame B1b_Gen1("B1b_Gen1","b_{1b}");
+  VisibleGenFrame   B1b_Gen1("B1b_Gen1","b_{1b}");
   InvisibleGenFrame Xb_Gen1("Xb_Gen1","#tilde{#chi}_{b}");
 
-  ppLabGenFrame LAB_Gen2("LAB_Gen2","LAB");
-  DecayGenFrame PP_Gen2("PP_Gen2","#tilde{g} #tilde{g}");
-  DecayGenFrame Pa_Gen2("Pa_Gen2","#tilde{g}_{a}");
-  DecayGenFrame Pb_Gen2("Pb_Gen2","#tilde{g}_{b}");
-  DecayGenFrame Ca_Gen2("Ca_Gen2","#tilde{b}_{a}");
-  DecayGenFrame Cb_Gen2("Cb_Gen2","#tilde{b}_{b}");
-  VisibleGenFrame B1a_Gen2("B1a_Gen2","b_{1a}");
-  VisibleGenFrame B2a_Gen2("B2a_Gen2","b_{2a}");
+  // di-gluino pair production with decays through on-shell sbottoms
+  ppLabGenFrame     LAB_Gen2("LAB_Gen2","LAB");
+  DecayGenFrame     PP_Gen2("PP_Gen2","#tilde{g} #tilde{g}");
+  DecayGenFrame     Pa_Gen2("Pa_Gen2","#tilde{g}_{a}");
+  DecayGenFrame     Pb_Gen2("Pb_Gen2","#tilde{g}_{b}");
+  DecayGenFrame     Ca_Gen2("Ca_Gen2","#tilde{b}_{a}");
+  DecayGenFrame     Cb_Gen2("Cb_Gen2","#tilde{b}_{b}");
+  VisibleGenFrame   B1a_Gen2("B1a_Gen2","b_{1a}");
+  VisibleGenFrame   B2a_Gen2("B2a_Gen2","b_{2a}");
   InvisibleGenFrame Xa_Gen2("Xa_Gen2","#tilde{#chi}_{a}");
-  VisibleGenFrame B1b_Gen2("B1b_Gen2","b_{1b}");
-  VisibleGenFrame B2b_Gen2("B2b_Gen2","b_{2b}");
+  VisibleGenFrame   B1b_Gen2("B1b_Gen2","b_{1b}");
+  VisibleGenFrame   B2b_Gen2("B2b_Gen2","b_{2b}");
   InvisibleGenFrame Xb_Gen2("Xb_Gen2","#tilde{#chi}_{b}");
 
-  ppLabGenFrame LAB_Gen3("LAB_Gen3","LAB");
-  DecayGenFrame PP_Gen3("PP_Gen3","#tilde{g} #tilde{g}");
-  DecayGenFrame Pa_Gen3("Pa_Gen3","#tilde{g}_{a}");
-  DecayGenFrame Pb_Gen3("Pb_Gen3","#tilde{g}_{b}");
-  VisibleGenFrame B1a_Gen3("B1a_Gen3","b_{1a}");
-  VisibleGenFrame B2a_Gen3("B2a_Gen3","b_{2a}");
+  // di-gluino pair production with decays three-body decays through virtual sbottoms
+  ppLabGenFrame     LAB_Gen3("LAB_Gen3","LAB");
+  DecayGenFrame     PP_Gen3("PP_Gen3","#tilde{g} #tilde{g}");
+  DecayGenFrame     Pa_Gen3("Pa_Gen3","#tilde{g}_{a}");
+  DecayGenFrame     Pb_Gen3("Pb_Gen3","#tilde{g}_{b}");
+  VisibleGenFrame   B1a_Gen3("B1a_Gen3","b_{1a}");
+  VisibleGenFrame   B2a_Gen3("B2a_Gen3","b_{2a}");
   InvisibleGenFrame Xa_Gen3("Xa_Gen3","#tilde{#chi}_{a}");
-  VisibleGenFrame B1b_Gen3("B1b_Gen3","b_{1b}");
-  VisibleGenFrame B2b_Gen3("B2b_Gen3","b_{2b}");
+  VisibleGenFrame   B1b_Gen3("B1b_Gen3","b_{1b}");
+  VisibleGenFrame   B2b_Gen3("B2b_Gen3","b_{2b}");
   InvisibleGenFrame Xb_Gen3("Xb_Gen3","#tilde{#chi}_{b}");
+
+  // di-gluino pair production with mixed decays, one through sbottom, one not
+  ppLabGenFrame     LAB_Gen4("LAB_Gen4","LAB");
+  DecayGenFrame     PP_Gen4("PP_Gen4","#tilde{g} #tilde{g}");
+  DecayGenFrame     Pa_Gen4("Pa_Gen4","#tilde{g}_{a}");
+  DecayGenFrame     Pb_Gen4("Pb_Gen4","#tilde{g}_{b}");
+  DecayGenFrame     Ca_Gen4("Ca_Gen4","#tilde{b}_{a}");
+  VisibleGenFrame   B1a_Gen4("B1a_Gen4","b_{1a}");
+  VisibleGenFrame   B2a_Gen4("B2a_Gen4","b_{2a}");
+  InvisibleGenFrame Xa_Gen4("Xa_Gen4","#tilde{#chi}_{a}");
+  VisibleGenFrame   B1b_Gen4("B1b_Gen4","b_{1b}");
+  VisibleGenFrame   B2b_Gen4("B2b_Gen4","b_{2b}");
+  InvisibleGenFrame Xb_Gen3("Xb_Gen4","#tilde{#chi}_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -113,7 +129,19 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Pb_Gen3.AddChildFrame(B2b_Gen3);
   Pb_Gen3.AddChildFrame(Xb_Gen3);
 
-  if(LAB_Gen1.InitializeTree() && LAB_Gen2.InitializeTree() && LAB_Gen3.InitializeTree())
+  LAB_Gen4.SetChildFrame(PP_Gen4);
+  PP_Gen4.AddChildFrame(Pa_Gen4);
+  PP_Gen4.AddChildFrame(Pb_Gen4);
+  Pa_Gen4.AddChildFrame(B1a_Gen4);
+  Pa_Gen4.AddChildFrame(Ca_Gen4);
+  Ca_Gen4.AddChildFrame(B2a_Gen4);
+  Ca_Gen4.AddChildFrame(Xa_Gen4);
+  Pb_Gen4.AddChildFrame(B1b_Gen4);
+  Pb_Gen4.AddChildFrame(Cb_Gen4);
+  Pb_Gen4.AddChildFrame(B2b_Gen4);
+  Pb_Gen4.AddChildFrame(Xb_Gen4);
+
+  if(LAB_Gen1.InitializeTree() && LAB_Gen2.InitializeTree() && LAB_Gen3.InitializeTree() && LAB_Gen4.InitializeTree())
     g_Log << LogInfo << "...Successfully initialized generator trees" << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator trees" << LogEnd;
@@ -160,7 +188,22 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   B2a_Gen3.SetPtCut(30.);                 B2a_Gen3.SetEtaCut(2.5);  
   B2b_Gen3.SetPtCut(30.);                 B2b_Gen3.SetEtaCut(2.5);  
 
-  if(LAB_Gen1.InitializeAnalysis() && LAB_Gen2.InitializeAnalysis() && LAB_Gen3.InitializeAnalysis())
+  PP_Gen4.SetVariableMass();
+  // set gluino masses
+  Pa_Gen4.SetMass(mP);
+  Pb_Gen4.SetMass(mP);
+  // set intermediate sbottom mass
+  Ca_Gen4.SetMass(mC);
+  // set X masses
+  Xa_Gen4.SetMass(mX);
+  Xb_Gen4.SetMass(mX);
+  // set b-jet pT and eta cuts
+  B1a_Gen4.SetPtCut(30.);                 B1a_Gen2.SetEtaCut(2.5);  
+  B1b_Gen4.SetPtCut(30.);                 B1b_Gen2.SetEtaCut(2.5);  
+  B2a_Gen4.SetPtCut(30.);                 B2a_Gen2.SetEtaCut(2.5);  
+  B2b_Gen4.SetPtCut(30.);                 B2b_Gen2.SetEtaCut(2.5);  
+
+  if(LAB_Gen1.InitializeAnalysis() && LAB_Gen2.InitializeAnalysis() && LAB_Gen3.InitializeAnalysis() && LAB_Gen4.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analyses" << std::endl << LogEnd;
   else
     g_Log << LogError << "...Failed initializing generator analyses" << LogEnd;
@@ -170,7 +213,7 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   /////////////////////////////////////////////////////////////////////////////////////////
   g_Log << LogInfo << "Initializing reconstruction frames and trees..." << LogEnd;
   /////////////////////////////////////////////////////////////////////////////////////////
-  LabRecoFrame LAB("LAB","LAB");
+  LabRecoFrame       LAB("LAB","LAB");
   DecayRecoFrame     PP("PP","#tilde{P} #tilde{P}");
   DecayRecoFrame     Pa("Pa","#tilde{P}_{a}");
   DecayRecoFrame     Pb("Pb","#tilde{P}_{b}");
@@ -274,6 +317,9 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   treePlot->SetTree(LAB_Gen3);
   treePlot->Draw("GenTree3", "Di-gluino generator tree");
 
+  treePlot->SetTree(LAB_Gen4);
+  treePlot->Draw("GenTree4", "Di-gluino mixed decay generator tree");
+
   treePlot->SetTree(LAB);
   treePlot->Draw("RecoTree", "Reconstruction tree");
 
@@ -285,11 +331,18 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow N W(#it{l} #nu)");
+  HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow #tilde{g}#tilde{g} \rightarrow (bb#chi)(bb#chi)");
 
-  const HistPlotCategory& cat_2W = histPlot->GetNewCategory("Reco_2W", "2 W(#it{l} #nu)");
-  const HistPlotCategory& cat_3W = histPlot->GetNewCategory("Reco_3W", "3 W(#it{l} #nu)");
-  const HistPlotCategory& cat_4W = histPlot->GetNewCategory("Reco_4W", "4 W(#it{l} #nu)");
+  const HistPlotCategory& cat_bb   = histPlot->GetNewCategory("Reco_bb",   "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
+  const HistPlotCategory& cat_ggbb = histPlot->GetNewCategory("Reco_ggbb", "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
+  const HistPlotCategory& cat_gg   = histPlot->GetNewCategory("Reco_gg",   "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
+  const HistPlotCategory& cat_ggb  = histPlot->GetNewCategory("Reco_ggb",  "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
+
+  RFList<const HistPlotCategory> cats_all;
+  cats_all += cat_bb; cats_all += cat_ggbb; cats_all += cat_gg; cats_all += cat_ggb;
+  RFList<const HistPlotCategory> cats_4b;
+  cats_4b += cat_ggbb; cats_4b += cat_gg; cats_4b += cat_ggb;
+
 
   const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0.2, 1.8);
   const HistPlotVar& sumMW2 = histPlot->GetNewVar("MWTOT",
@@ -316,7 +369,11 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
     LAB_Gen3.ClearEvent();                            // clear the gen tree
     LAB_Gen3.AnalyzeEvent();                          // generate a new event
 
-    // analyzethree different events with same tree
+    // generate event type 4 event
+    LAB_Gen4.ClearEvent();                            // clear the gen tree
+    LAB_Gen4.AnalyzeEvent();                          // generate a new event
+
+    // analyze four different events with same tree
     std::vector<TLorentzVector> JETS; 
     TVector3 MET;
 
