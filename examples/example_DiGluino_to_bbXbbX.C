@@ -39,8 +39,9 @@ using namespace RestFrames;
 void example_DiGluino_to_bbXbbX(std::string output_name =
 				"output_DiGluino_to_bbXbbX.root"){
   double mP = 1000.;
-  double mC = 500.;
+  double mC = 900.;
   double mX = 100.;
+  double mB = 4.2;
 
   // Number of events to generate
   int Ngen = 10000;
@@ -95,7 +96,7 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   InvisibleGenFrame Xa_Gen4("Xa_Gen4","#tilde{#chi}_{a}");
   VisibleGenFrame   B1b_Gen4("B1b_Gen4","b_{1b}");
   VisibleGenFrame   B2b_Gen4("B2b_Gen4","b_{2b}");
-  InvisibleGenFrame Xb_Gen3("Xb_Gen4","#tilde{#chi}_{b}");
+  InvisibleGenFrame Xb_Gen4("Xb_Gen4","#tilde{#chi}_{b}");
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
@@ -137,7 +138,6 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Ca_Gen4.AddChildFrame(B2a_Gen4);
   Ca_Gen4.AddChildFrame(Xa_Gen4);
   Pb_Gen4.AddChildFrame(B1b_Gen4);
-  Pb_Gen4.AddChildFrame(Cb_Gen4);
   Pb_Gen4.AddChildFrame(B2b_Gen4);
   Pb_Gen4.AddChildFrame(Xb_Gen4);
 
@@ -156,6 +156,7 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Xa_Gen1.SetMass(mX);
   Xb_Gen1.SetMass(mX);
   // set b-jet pT and eta cuts
+  B1a_Gen1.SetMass(mB);                   B1b_Gen1.SetMass(mB);
   B1a_Gen1.SetPtCut(30.);                 B1a_Gen1.SetEtaCut(2.5);  
   B1b_Gen1.SetPtCut(30.);                 B1b_Gen1.SetEtaCut(2.5);  
 
@@ -170,6 +171,8 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Xa_Gen2.SetMass(mX);
   Xb_Gen2.SetMass(mX);
   // set b-jet pT and eta cuts
+  B1a_Gen2.SetMass(mB);                   B1b_Gen2.SetMass(mB);
+  B2a_Gen2.SetMass(mB);                   B2b_Gen2.SetMass(mB);
   B1a_Gen2.SetPtCut(30.);                 B1a_Gen2.SetEtaCut(2.5);  
   B1b_Gen2.SetPtCut(30.);                 B1b_Gen2.SetEtaCut(2.5);  
   B2a_Gen2.SetPtCut(30.);                 B2a_Gen2.SetEtaCut(2.5);  
@@ -183,6 +186,8 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Xa_Gen3.SetMass(mX);
   Xb_Gen3.SetMass(mX);
   // set b-jet pT and eta cuts
+  B1a_Gen3.SetMass(mB);                   B1b_Gen3.SetMass(mB);
+  B2a_Gen3.SetMass(mB);                   B2b_Gen3.SetMass(mB);
   B1a_Gen3.SetPtCut(30.);                 B1a_Gen3.SetEtaCut(2.5);  
   B1b_Gen3.SetPtCut(30.);                 B1b_Gen3.SetEtaCut(2.5);  
   B2a_Gen3.SetPtCut(30.);                 B2a_Gen3.SetEtaCut(2.5);  
@@ -198,10 +203,12 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   Xa_Gen4.SetMass(mX);
   Xb_Gen4.SetMass(mX);
   // set b-jet pT and eta cuts
-  B1a_Gen4.SetPtCut(30.);                 B1a_Gen2.SetEtaCut(2.5);  
-  B1b_Gen4.SetPtCut(30.);                 B1b_Gen2.SetEtaCut(2.5);  
-  B2a_Gen4.SetPtCut(30.);                 B2a_Gen2.SetEtaCut(2.5);  
-  B2b_Gen4.SetPtCut(30.);                 B2b_Gen2.SetEtaCut(2.5);  
+  B1a_Gen4.SetMass(mB);                   B1b_Gen4.SetMass(mB);
+  B2a_Gen4.SetMass(mB);                   B2b_Gen4.SetMass(mB);
+  B1a_Gen4.SetPtCut(30.);                 B1a_Gen4.SetEtaCut(2.5);  
+  B1b_Gen4.SetPtCut(30.);                 B1b_Gen4.SetEtaCut(2.5);  
+  B2a_Gen4.SetPtCut(30.);                 B2a_Gen4.SetEtaCut(2.5);  
+  B2b_Gen4.SetPtCut(30.);                 B2b_Gen4.SetEtaCut(2.5);  
 
   if(LAB_Gen1.InitializeAnalysis() && LAB_Gen2.InitializeAnalysis() && LAB_Gen3.InitializeAnalysis() && LAB_Gen4.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized generator analyses" << std::endl << LogEnd;
@@ -252,12 +259,12 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   INV.AddFrame(Xb);
   
   CombinatoricGroup VIS("VIS","Visible Object Jigsaws");
-  // visible frames in first decay step must always have at least one element
+  // visible frames in first decay step can have zero elements
   VIS.AddFrame(B1a);
   VIS.AddFrame(B1b);
   VIS.SetNElementsForFrame(B1a, 1);
   VIS.SetNElementsForFrame(B1b, 1);
-  // visible frames in second decay step can have zero elements
+  // visible frames in second decay step must have at least one element
   VIS.AddFrame(B2a);
   VIS.AddFrame(B2b);
   VIS.SetNElementsForFrame(B2a, 0);
@@ -286,17 +293,21 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
   B_split_ab.AddFrame(B1b,1);
   B_split_ab.AddFrame(B2b,1);
 
-  MinMassesCombJigsaw B_split_12a("B_split_12a","Minimize M _{C_{a}}");
+  MinMassesSqCombJigsaw B_split_12a("B_split_12a","Minimize M _{C_{a}}",2,2);
   VIS.AddJigsaw(B_split_12a);
-  B_split_12a.AddFrame(B1a,0);
-  B_split_12a.AddFrame(B2a,1);
-  B_split_12a.AddFrame(Xa,1);
+  B_split_12a.AddCombFrame(B1a,0);
+  B_split_12a.AddCombFrame(B2a,1);
+  B_split_12a.AddObjectFrame(B1a,0);
+  B_split_12a.AddObjectFrame(B2a,1);
+  B_split_12a.AddObjectFrame(Xa,0);
 
-  MinMassesCombJigsaw B_split_12b("B_split_12b","Minimize M _{C_{b}}");
+  MinMassesSqCombJigsaw B_split_12b("B_split_12b","Minimize M _{C_{b}}",2,2);
   VIS.AddJigsaw(B_split_12b);
-  B_split_12b.AddFrame(B1b,0);
-  B_split_12b.AddFrame(B2b,1);
-  B_split_12b.AddFrame(Xb,1);
+  B_split_12b.AddCombFrame(B1b,0);
+  B_split_12b.AddCombFrame(B2b,1);
+  B_split_12b.AddObjectFrame(B1b,0);
+  B_split_12b.AddObjectFrame(B2b,1);
+  B_split_12b.AddObjectFrame(Xb,0);
 
   if(LAB.InitializeAnalysis())
     g_Log << LogInfo << "...Successfully initialized analysis" << LogEnd;
@@ -331,28 +342,54 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
 
   //-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
 
-  HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow #tilde{g}#tilde{g} \rightarrow (bb#chi)(bb#chi)");
+  HistPlot* histPlot   = new HistPlot("HistPlot","pp #rightarrow #tilde{g}#tilde{g} #rightarrow bbbb#chi#chi");
+  histPlot->SetRebin(1);
 
-  const HistPlotCategory& cat_bb   = histPlot->GetNewCategory("Reco_bb",   "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
-  const HistPlotCategory& cat_ggbb = histPlot->GetNewCategory("Reco_ggbb", "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
-  const HistPlotCategory& cat_gg   = histPlot->GetNewCategory("Reco_gg",   "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
-  const HistPlotCategory& cat_ggb  = histPlot->GetNewCategory("Reco_ggb",  "$2 x \tilde{b} \rightarrow b #tilde{#chi}$");
+  const HistPlotCategory& cat_bb   = histPlot->GetNewCategory("Reco_bb",   "2 x #tilde{b} #rightarrow b #tilde{#chi}");
+  const HistPlotCategory& cat_ggbb = histPlot->GetNewCategory("Reco_ggbb", "2 x #tilde{g} #rightarrow b #tilde{b}(b#tilde{#chi})");
+  const HistPlotCategory& cat_gg   = histPlot->GetNewCategory("Reco_gg",   "2 x #tilde{g} #rightarrow bb #tilde{#chi}");
+  const HistPlotCategory& cat_ggb  = histPlot->GetNewCategory("Reco_ggb",  "2 x #tilde{g} mixed decays");
 
   RFList<const HistPlotCategory> cats_all;
   cats_all += cat_bb; cats_all += cat_ggbb; cats_all += cat_gg; cats_all += cat_ggb;
   RFList<const HistPlotCategory> cats_4b;
   cats_4b += cat_ggbb; cats_4b += cat_gg; cats_4b += cat_ggb;
 
-
-  const HistPlotVar& MCM    = histPlot->GetNewVar("MCM", "M_{CM} / m_{CM}^{ true}", 0.2, 1.8);
-  const HistPlotVar& sumMW2 = histPlot->GetNewVar("MWTOT",
-		   "#sqrt{#Sigma M_{W}^{ 2} / #Sigma m_{W, true}^{ 2}}", 0., 1.5);
-  double sumMW2gen;
+  double Mdelta = (mP*mP-mX*mX)/mP; 
   
-  histPlot->AddPlot(MCM,    cat_2W+cat_3W+cat_4W);
-  histPlot->AddPlot(sumMW2, cat_2W+cat_3W+cat_4W);
-  histPlot->AddPlot(MCM, sumMW2, cat_2W+cat_3W+cat_4W);
+  const HistPlotVar& H11PP = histPlot->GetNewVar("H11PP",
+	"H_{1,1}^{ #scale[0.8]{#tilde{P}#tilde{P}}} / 2(#gamma M_{#Delta})^{true}", 0., 1.);
+  const HistPlotVar& H42PP = histPlot->GetNewVar("H42PP", "H_{4,2}^{ #scale[0.8]{#tilde{P}#tilde{P}}} / m_{#tilde{P}#tilde{P}}^{true}", 0., 1.8);
+  const HistPlotVar& HT42PP = histPlot->GetNewVar("HT42PP", "H_{T,4,2}^{ #scale[0.8]{#tilde{P}#tilde{P}}} / m_{#tilde{P}#tilde{P}}^{true}", 0., 1.5);
+  const HistPlotVar& H11Pa = histPlot->GetNewVar("H11Pa", "H_{1,1}^{ #scale[0.8]{#tilde{P}_{a}}}", 0., 2000., "[GeV]");
+  const HistPlotVar& H11Pb = histPlot->GetNewVar("H11Pb", "H_{1,1}^{ #scale[0.8]{#tilde{P}_{b}}}", 0., 2000., "[GeV]");
+  const HistPlotVar& H21Pa = histPlot->GetNewVar("H21Pa", "H_{2,1}^{ #scale[0.8]{#tilde{P}_{a}}}", 0., 2000., "[GeV]");
+  const HistPlotVar& H21Pb = histPlot->GetNewVar("H21Pb", "H_{2,1}^{ #scale[0.8]{#tilde{P}_{b}}}", 0., 2000., "[GeV]");
 
+  const HistPlotVar& H11o42PP   = histPlot->GetNewVar("H11o42PP",
+	"H_{1,1}^{ #scale[0.8]{#tilde{P}#tilde{P}}} / H_{4,2}^{ #scale[0.8]{#tilde{P}#tilde{P}}}", 0., 1.);
+  const HistPlotVar& H21Pao42PP = histPlot->GetNewVar("H21Pao42PP",
+	"H_{2,1}^{ #scale[0.8]{#tilde{P}_{a}}} / H_{4,2}^{ #scale[0.8]{#tilde{P}#tilde{P}}}", 0., 1.);
+  const HistPlotVar& H21Pbo42PP = histPlot->GetNewVar("H21Pbo42PP",
+	"H_{2,1}^{ #scale[0.8]{#tilde{P}_{b}}} / H_{4,2}^{ #scale[0.8]{#tilde{P}#tilde{P}}}", 0., 1.);
+  const HistPlotVar& H11o21Pa   = histPlot->GetNewVar("H11o21Pa",
+	"H_{1,1}^{ #scale[0.8]{#tilde{P}_{a}}} / H_{2,1}^{ #scale[0.8]{#tilde{P}_{a}}}", 0., 1.);
+  const HistPlotVar& H11o21Pb   = histPlot->GetNewVar("H11o21Pb",
+	"H_{1,1}^{ #scale[0.8]{#tilde{P}_{b}}} / H_{2,1}^{ #scale[0.8]{#tilde{P}_{b}}}", 0., 1.);
+  
+  histPlot->AddPlot(H11PP, cats_all);
+  histPlot->AddPlot(H42PP, cats_all);
+
+  histPlot->AddPlot(H11o42PP,   cats_all);  
+  histPlot->AddPlot(H21Pao42PP, cats_all); 
+  histPlot->AddPlot(H21Pbo42PP, cats_all);
+  histPlot->AddPlot(H11o21Pa,   cats_4b); 
+  histPlot->AddPlot(H11o21Pb,   cats_4b);
+
+  histPlot->AddPlot(H42PP, H11PP, cats_4b);
+  histPlot->AddPlot(H11o21Pa, H11o21Pb, cats_4b);
+ 
+  
   for(int igen = 0; igen < Ngen; igen++){
     if(igen%((std::max(Ngen,10))/10) == 0)
       g_Log << LogInfo << "Generating event " << igen << " of " << Ngen << LogEnd;
@@ -377,173 +414,137 @@ void example_DiGluino_to_bbXbbX(std::string output_name =
     std::vector<TLorentzVector> JETS; 
     TVector3 MET;
 
-    // type 1 event
-    MET = LAB_Gen1.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
-    JETS.clear();                             // Get the Jets from gen tree
-    JETS.push_back(B1a_Gen1.GetFourVector());
-    JETS.push_back(B1b_Gen1.GetFourVector());
-
-    LAB.ClearEvent();                              // clear reconstruction tree
-    INV.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    std::vector<RFKey> jetID1;                     // ID for tracking jets in tree
-    for(int i = 0; i < int(JETS.size()); i++) 
-      jetID1.push_back(VIS.AddLabFrameFourVector(JETS[i]));
-    LAB.AnalyzeEvent();                            // analyze the event
-
-    // type 2 event
-    MET = LAB_Gen2.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
-    JETS.clear();                             // Get the Jets from gen tree
-    JETS.push_back(B1a_Gen2.GetFourVector());
-    JETS.push_back(B1b_Gen2.GetFourVector());
-    JETS.push_back(B2a_Gen2.GetFourVector());
-    JETS.push_back(B2b_Gen2.GetFourVector());
-
-    LAB.ClearEvent();                              // clear reconstruction tree
-    INV.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    std::vector<RFKey> jetID2;                     // ID for tracking jets in tree
-    for(int i = 0; i < int(JETS.size()); i++) 
-      jetID2.push_back(VIS.AddLabFrameFourVector(JETS[i]));
-    LAB.AnalyzeEvent();                            // analyze the event
-
-    // type 3 event
-    MET = LAB_Gen3.GetInvisibleMomentum();    // Get the MET from gen tree
-    MET.SetZ(0.);
-    JETS.clear();                             // Get the Jets from gen tree
-    JETS.push_back(B1a_Gen3.GetFourVector());
-    JETS.push_back(B1b_Gen3.GetFourVector());
-    JETS.push_back(B2a_Gen3.GetFourVector());
-    JETS.push_back(B2b_Gen3.GetFourVector());
-
-    LAB.ClearEvent();                              // clear reconstruction tree
-    INV.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
-    std::vector<RFKey> jetID3;                     // ID for tracking jets in tree
-    for(int i = 0; i < int(JETS.size()); i++) 
-      jetID3.push_back(VIS.AddLabFrameFourVector(JETS[i]));
-    LAB.AnalyzeEvent();                            // analyze the event
-
-    //////////////////////////////////////
-    // Observable Calculations
-    //////////////////////////////////////
-    /*
-    //
-    // signal tree observables
-    //
-
-    //*** total CM mass
-    double shat = GG.GetMass();
-    //*** 'mass-less' gluino gamma in CM frame
-    double gaminv = GG.GetVisibleShape();
+    double mPP;
+    double mP;
     
-    TVector3 vPGG = GG.GetFourVector(LAB).Vect();
-    
-    //*** ratio of CM pT to CM mass
-    double RPT = vPGG.Pt() / (vPGG.Pt() + shat/4.);
-    //*** ratio of CM pz to CM mass
-    double RPZ = vPGG.Pz() / (vPGG.Pz() + shat/4.);
-    //*** cos decay angle of GG system
-    double cosGG = GG.GetCosDecayAngle();
-    //*** delta phi between lab and GG decay planes
-    double dphiLGG = LAB.GetDeltaPhiDecayPlanes(GG);
-    
-    TLorentzVector vV1 = G[0]->GetVisibleFourVector(*G[0]);
-    TLorentzVector vV2 = G[1]->GetVisibleFourVector(*G[1]);
-
-    //*** gluino mass
-    double MG = (vV1.M2()-vV2.M2())/(2.*(vV1.E()-vV2.E()));
-    
-    double PG = G[0]->GetMomentum(GG);
-    double MGG = 2.*sqrt(PG*PG + MG*MG);
-    double gaminvGG = 2.*MG/MGG;
-    double beta = sqrt(1.- gaminv*gaminv);
-    double betaGG = sqrt(1.- gaminvGG*gaminvGG);
-    
-    //*** velocity difference between 'massive' and 'mass-less'
-    double DeltaBetaGG = -(betaGG-beta)/(1.-betaGG*beta);
-    //*** delta phi between GG visible decay products and GG decay axis
-    double dphiVG = GG.GetDeltaPhiDecayVisible();
-    //*** delta phi between GG visible decay products and GG momentum
-    double dphiVGG = GG.GetDeltaPhiBoostVisible();
-    
-    // 'hemisphere' (one for each 'gluino') observables
-
-    //*** number of visible objects (jets) in hemisphere
-    double NV[2];
-    //*** cosine gluino decay angle
-    double cosG[2];
-    //*** cosine intermediate child decay angle
-    double cosC[2];
-    //*** delta phi between gluino and child decay planes
-    double dphiGC[2];
-    //*** ratio of child and gluino masses (w/ WIMP masses subtracted)
-    double RCG[2];
-    //*** 1st leading jet pT _associated with this hemisphere_
-    double jet1PT[2];
-    //*** 2nd leading jet pT _associated with this hemisphere_
-    double jet2PT[2];
-    //*** Pinv / HG
-    double Pinv[2];
-      
-    for(int i = 0; i < 2; i++){
-      NV[i] =  VIS.GetNElementsInFrame(*VS[i]);
-      NV[i] += VIS.GetNElementsInFrame(*VC[i]);
-
-      TVector3 vP1 = VS[i]->GetFourVector(*G[i]).Vect();
-      TVector3 vP2 = VC[i]->GetFourVector(*G[i]).Vect();
-      Pinv[i] = 2.*(vP1+vP2).Mag()/(vP1.Mag()+vP2.Mag()+(vP1+vP2).Mag());
-
-      cosG[i] = G[i]->GetCosDecayAngle();
-
-      int N = jetID.size();
-      double pTmax[2]; pTmax[0] = -1.; pTmax[1] = -1.;
-      for(int j = 0; j < N; j++){
-	const RestFrame& frame = VIS.GetFrame(jetID[j]);
-	if(VS[i]->IsSame(frame) || VC[i]->IsSame(frame)){
-	  double pT = VIS.GetLabFrameFourVector(jetID[j]).Pt();
-	  if(pT > pTmax[0]){
-	    pTmax[1] = pTmax[0];
-	    pTmax[0] = pT;
-	  } else {
-	    if(pT > pTmax[1]) pTmax[1] = pT;
-	  }
+    for(int isig = 1; isig <= 4; isig++){
+      if(isig == 1){
+	MET = LAB_Gen1.GetInvisibleMomentum();    // Get the MET from gen tree
+	MET.SetZ(0.);
+	JETS.clear();                             // Get the Jets from gen tree
+	JETS.push_back(B1a_Gen1.GetFourVector());
+	JETS.push_back(B1b_Gen1.GetFourVector());
+	mPP = PP_Gen1.GetMass();
+	mP  = Pa_Gen1.GetMass();
+      }
+      if(isig == 2){
+	MET = LAB_Gen2.GetInvisibleMomentum();    // Get the MET from gen tree
+	MET.SetZ(0.);
+	JETS.clear();                             // Get the Jets from gen tree
+	TLorentzVector p1 = B1a_Gen2.GetFourVector();
+	TLorentzVector p2 = B2a_Gen2.GetFourVector();
+	if(p1.Pt() > p2.Pt()){
+	  JETS.push_back(p1);
+	  JETS.push_back(p2);
+	} else {
+	  JETS.push_back(p2);
+	  JETS.push_back(p1);
 	}
+	JETS.push_back(B1b_Gen2.GetFourVector());
+	JETS.push_back(B2b_Gen2.GetFourVector());
+	mPP = PP_Gen2.GetMass();
+	mP  = Pa_Gen2.GetMass();
       }
-      
-      jet1PT[i] = pTmax[0];
-      jet2PT[i] = pTmax[1];
+      if(isig == 3){
+	MET = LAB_Gen3.GetInvisibleMomentum();    // Get the MET from gen tree
+	MET.SetZ(0.);
+	JETS.clear();                             // Get the Jets from gen tree
+	TLorentzVector p1 = B1a_Gen3.GetFourVector();
+	TLorentzVector p2 = B2a_Gen3.GetFourVector();
+	if(p1.Pt() > p2.Pt()){
+	  JETS.push_back(p1);
+	  JETS.push_back(p2);
+	} else {
+	  JETS.push_back(p2);
+	  JETS.push_back(p1);
+	}
+	JETS.push_back(B1b_Gen3.GetFourVector());
+	JETS.push_back(B2b_Gen3.GetFourVector());
+	mPP = PP_Gen3.GetMass();
+	mP  = Pa_Gen3.GetMass();
+      }
+      if(isig == 4){
+	MET = LAB_Gen3.GetInvisibleMomentum();    // Get the MET from gen tree
+	MET.SetZ(0.);
+	JETS.clear();                             // Get the Jets from gen tree
+	TLorentzVector p1 = B1a_Gen4.GetFourVector();
+	TLorentzVector p2 = B2a_Gen4.GetFourVector();
+	if(p1.Pt() > p2.Pt()){
+	  JETS.push_back(p1);
+	  JETS.push_back(p2);
+	} else {
+	  JETS.push_back(p2);
+	  JETS.push_back(p1);
+	}
+	JETS.push_back(B1b_Gen4.GetFourVector());
+	JETS.push_back(B2b_Gen4.GetFourVector());
+	mPP = PP_Gen4.GetMass();
+	mP  = Pa_Gen4.GetMass();
+      }
 
-      if(NV[i] > 1){
-	cosC[i] = C[i]->GetCosDecayAngle();
-	dphiGC[i] = G[i]->GetDeltaPhiDecayPlanes(*C[i]);
-	RCG[i] = (C[i]->GetMass()-X[i]->GetMass())/(G[i]->GetMass()-X[i]->GetMass());
-      } else {
-	cosC[i] = -2.;
-	dphiGC[i] = -1.;
-	RCG[i] = -1.;
-	jet2PT[i] = -1.;
+      LAB.ClearEvent();                              // clear reconstruction tree
+      INV.SetLabFrameThreeVector(MET);               // Set the MET in reco tree
+      std::vector<RFKey> jetID;                      // ID for tracking jets in tree
+      for(int i = 0; i < int(JETS.size()); i++) 
+	jetID.push_back(VIS.AddLabFrameFourVector(JETS[i]));
+      LAB.AnalyzeEvent();                            // analyze the event
+
+      if(VIS.GetNElementsInFrame(B1a)+VIS.GetNElementsInFrame(B2a) !=
+	 VIS.GetNElementsInFrame(B1b)+VIS.GetNElementsInFrame(B2b))
+	continue;
+      
+      //////////////////////////////////////
+      // Observable Calculations
+      //////////////////////////////////////
+      
+      TLorentzVector vP_B1aPP = B1a.GetFourVector(PP);
+      TLorentzVector vP_B2aPP = B2a.GetFourVector(PP);
+      TLorentzVector vP_B1bPP = B1b.GetFourVector(PP);
+      TLorentzVector vP_B2bPP = B2b.GetFourVector(PP);
+      TLorentzVector vP_IaPP  = Xa.GetFourVector(PP);
+      TLorentzVector vP_IbPP  = Xb.GetFourVector(PP);
+      
+      H11PP  = (vP_B1aPP     + vP_B2aPP     + vP_B1bPP     + vP_B2bPP).P() + (vP_IaPP     + vP_IbPP).P();
+      H42PP  =  vP_B1aPP.P() + vP_B2aPP.P() + vP_B1bPP.P() + vP_B2bPP.P() +   vP_IaPP.P() + vP_IbPP.P();
+      HT42PP = PP.GetTransverseMomentum(B1a.GetFourVector())+PP.GetTransverseMomentum(B1b.GetFourVector())+
+	       PP.GetTransverseMomentum(B2a.GetFourVector())+PP.GetTransverseMomentum(B2b.GetFourVector())+
+               PP.GetTransverseMomentum(Xa.GetFourVector())+PP.GetTransverseMomentum(Xb.GetFourVector());
+      
+      TLorentzVector vP_B1aPa = B1a.GetFourVector(Pa);
+      TLorentzVector vP_B2aPa = B2a.GetFourVector(Pa);
+      TLorentzVector vP_IaPa  = Xa.GetFourVector(Pa);
+      
+      H11Pa = (vP_B1aPa     + vP_B2aPa).P() + vP_IaPP.P();
+      H21Pa =  vP_B1aPa.P() + vP_B2aPa.P()  + vP_IaPP.P();
+
+      TLorentzVector vP_B1bPb = B1b.GetFourVector(Pb);
+      TLorentzVector vP_B2bPb = B2b.GetFourVector(Pb);
+      TLorentzVector vP_IbPb  = Xb.GetFourVector(Pb);
+     
+      H11Pb = (vP_B1bPb     + vP_B2bPb).P() + vP_IbPP.P();
+      H21Pb =  vP_B1bPb.P() + vP_B2bPb.P()  + vP_IbPP.P();
+      
+      RestFrame const& frameA = VIS.GetFrame(jetID[0]);
+      if(B1b.IsSame(frameA) || B2b.IsSame(frameA)){
+      	double flip = H11Pa;
+      	H11Pa = H11Pb;
+      	H11Pb = flip;
+      	flip = H21Pa;
+      	H21Pa = H21Pb;
+      	H21Pb = flip;
       }
+
+      H11o42PP = H11PP/H42PP;
+      H21Pao42PP  = H21Pa/H42PP;
+      H11o21Pa    = H11Pa/H21Pa;
+      H21Pbo42PP  = H21Pb/H42PP;
+      H11o21Pb    = H11Pb/H21Pb;
+
+      H11PP /= Mdelta*mPP/mP;
+      H42PP /= mPP;
+      
+      histPlot->Fill(cats_all[isig-1]);
     }
-
-    //
-    // background tree observables
-    //
-    TLorentzVector Psib = I_B.GetSiblingFrame().GetFourVector(LAB_B);
-    TLorentzVector Pmet = I_B.GetFourVector(LAB_B);
-      
-    //*** 
-    double Rpsib = std::max(0.,Psib.Vect().Dot(Pmet.Vect().Unit()));
-    Rpsib = Rpsib / (Pmet.Pt() + Rpsib);
-    
-    TVector3 boostQCD = (Pmet+Psib).BoostVector();
-    Psib.Boost(-boostQCD);
-    double cosQCD = -1.*Psib.Vect().Unit().Dot(boostQCD.Unit());
-    cosQCD = (1.-cosQCD)/2.;
-
-    //*** 
-    double DeltaQCD = (cosQCD-Rpsib)/(cosQCD+Rpsib);
-    */
-
   }
   
   histPlot->Draw();

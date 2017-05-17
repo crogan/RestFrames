@@ -194,7 +194,7 @@ namespace RestFrames {
       metric = -1.;
     else
       metric = 1./P;
-
+    
     return true;
   }
 
