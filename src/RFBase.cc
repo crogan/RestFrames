@@ -195,7 +195,7 @@ namespace RestFrames {
     printf(PACKAGE_VERSION);
     printf(" -- Developed by Christopher Rogan (crogan@cern.ch)\n");
     printf("                     ");
-    printf("Copyright (c) 2014-2016, Christopher Rogan\n");
+    printf("Copyright (c) 2014-2018, Christopher Rogan\n");
     printf("                     ");
     printf("http://RestFrames.com\n");
     printf("\x1b[0m" "\n");

@@ -63,7 +63,7 @@ include_headers  = $(incrf)RFKey.hh $(incrf)RFCharge.hh $(incrf)RFPlot.hh $(incr
 	$(incrf)HistPlotVar.hh $(incrf)HistPlotCategory.hh $(incrf)HistPlot.hh $(incrf)RFList.hh
 
 libRestFrames_rdict.cxx: $(includestuff)/RestFrames/*.hh $(includestuff)/RestFrames/RestFrames_LinkDef.h
-	$(ROOTCINT) -f $@ -s libRestFrames.so -rml libRestFrames.so -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
+	$(ROOTCINT) -f $@ -s libRestFrames -rml libRestFrames -rmf libRestFrames.rootmap -c -I$(includestuff) $(ROOTAUXCXXFLAGS) $(ROOTCXXFLAGS) $(include_headers) $(includestuff)/RestFrames/RestFrames_LinkDef.h
 
 libRestFrames.rootmap: libRestFrames_rdict.cxx
 
