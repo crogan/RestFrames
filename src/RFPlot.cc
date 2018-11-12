@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2015, Christopher Rogan
+//   Copyright (c) 2014-2018, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   RFPlot.cc
@@ -99,6 +99,7 @@ namespace RestFrames {
 
   void SetStyle(bool invert_colors){
     // For the canvas:
+
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetCanvasDefX(0);
@@ -155,6 +156,7 @@ namespace RestFrames {
     // put tick marks on top and RHS of plots
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
+    
 
     double zcolor_s[5] = { 0.00, 0.50, 0.70, 0.82, 1.00 };
     double zcolor_r[5] = { 0.00, 0.00, 0.74, 1.00, 1.00 };

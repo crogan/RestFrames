@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
 //   RestFrames: particle physics event analysis library
 //   --------------------------------------------------------------------
-//   Copyright (c) 2014-2016, Christopher Rogan
+//   Copyright (c) 2014-2018, Christopher Rogan
 /////////////////////////////////////////////////////////////////////////
 ///
 ///  \file   HistPlot.cc
@@ -365,7 +365,7 @@ namespace RestFrames {
       }
     }
 
-    hists[imax]->Draw();
+    hists[imax]->Draw("HIST");
     hists[imax]->GetXaxis()->SetTitle(XLabel.c_str());
     hists[imax]->GetXaxis()->SetTitleOffset(1.27);
     hists[imax]->GetXaxis()->CenterTitle();
@@ -399,7 +399,7 @@ namespace RestFrames {
       hists[i]->SetLineWidth(3);
       hists[i]->SetMarkerColor(icolor0);
       hists[i]->SetMarkerSize(0);
-      hists[i]->Draw("same");
+      hists[i]->Draw("HIST same");
     }
 
     TLatex l(0.6,0.943,m_PlotTitle.c_str());
