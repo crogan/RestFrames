@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['getchildframe',['GetChildFrame',['../a00011.html#a9fdbc2c3ad37231e42e8b075a047917e',1,'RestFrames::GeneratorFrame::GetChildFrame()'],['../a00035.html#ae5da0bf9c70a5585d06a28e25e5a1f35',1,'RestFrames::ReconstructionFrame::GetChildFrame()']]],
-  ['getkey',['GetKey',['../a00039.html#a96de00293ba4541aa17886b91f0d7f44',1,'RestFrames::RFBase']]],
-  ['getmass',['GetMass',['../a00011.html#acb05a741a0038a7da8a99e7640d31080',1,'RestFrames::GeneratorFrame']]],
-  ['getname',['GetName',['../a00039.html#ae45e8c9f0b3fb539b23336856a6306b4',1,'RestFrames::RFBase']]],
-  ['getparentframe',['GetParentFrame',['../a00011.html#a619fe303e041c662783c0541d855ccd9',1,'RestFrames::GeneratorFrame::GetParentFrame()'],['../a00035.html#af4d21c374bc3ba558ff710658d76a199',1,'RestFrames::ReconstructionFrame::GetParentFrame()']]],
-  ['gettitle',['GetTitle',['../a00039.html#a7683a7f7f55b13c1931623aee0c7d022',1,'RestFrames::RFBase']]],
-  ['gettype',['GetType',['../a00051.html#afda99e4019a1d74c081545a8ab5feeb9',1,'RestFrames::State']]]
+  ['decayframe_715',['DecayFrame',['../a00783.html#a918237b77a92d97bc25000520b97ffad',1,'RestFrames::DecayFrame::DecayFrame(const std::string &amp;sname, const std::string &amp;stitle)'],['../a00783.html#a55b86f46cbd185cd1b6bf979146f4101',1,'RestFrames::DecayFrame::DecayFrame()']]],
+  ['decaygenframe_716',['DecayGenFrame',['../a00787.html#a8ffa069bafd653ca1dc65416b88d4c45',1,'RestFrames::DecayGenFrame::DecayGenFrame(const std::string &amp;sname, const std::string &amp;stitle)'],['../a00787.html#a0475402d3b0ee8d2c7e88ab6e0c9b2c0',1,'RestFrames::DecayGenFrame::DecayGenFrame()']]],
+  ['decayrecoframe_717',['DecayRecoFrame',['../a00791.html#a4b0aeb63bd455ef3a21de0fa18b90c6b',1,'RestFrames::DecayRecoFrame::DecayRecoFrame(const std::string &amp;sname, const std::string &amp;stitle)'],['../a00791.html#a249b703b205a8e975a6e71e555dc227f',1,'RestFrames::DecayRecoFrame::DecayRecoFrame()']]],
+  ['draw_718',['Draw',['../a00811.html#a6479be5452787412bbd5e207f59f131a',1,'RestFrames::HistPlot::Draw()'],['../a00999.html#a24f23483eaaf52d59b6114c13f9a1ef6',1,'RestFrames::TreePlot::Draw()']]]
 ];

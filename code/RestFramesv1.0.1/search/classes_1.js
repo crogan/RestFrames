@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['decayframe',['DecayFrame',['../a00008.html',1,'RestFrames']]],
-  ['decayframe_3c_20generatorframe_20_3e',['DecayFrame&lt; GeneratorFrame &gt;',['../a00008.html',1,'RestFrames']]],
-  ['decayframe_3c_20reconstructionframe_20_3e',['DecayFrame&lt; ReconstructionFrame &gt;',['../a00008.html',1,'RestFrames']]],
-  ['decaygenframe',['DecayGenFrame',['../a00009.html',1,'RestFrames']]],
-  ['decayrecoframe',['DecayRecoFrame',['../a00010.html',1,'RestFrames']]]
+  ['combinatoricgroup_451',['CombinatoricGroup',['../a00763.html',1,'RestFrames']]],
+  ['combinatoricjigsaw_452',['CombinatoricJigsaw',['../a00767.html',1,'RestFrames']]],
+  ['combinatoricstate_453',['CombinatoricState',['../a00771.html',1,'RestFrames']]],
+  ['combinedcbinvjigsaw_454',['CombinedCBInvJigsaw',['../a00775.html',1,'RestFrames']]],
+  ['combinedcvinvjigsaw_455',['CombinedCVInvJigsaw',['../a01027.html',1,'']]],
+  ['contraboostinvjigsaw_456',['ContraBoostInvJigsaw',['../a00779.html',1,'RestFrames']]]
 ];

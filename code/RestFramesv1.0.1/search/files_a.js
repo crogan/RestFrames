@@ -1,22 +1,7 @@
 var searchData=
 [
-  ['reconstructionframe_2ecc',['ReconstructionFrame.cc',['../a00176.html',1,'']]],
-  ['reconstructionframe_2ehh',['ReconstructionFrame.hh',['../a00123.html',1,'']]],
-  ['resonancegenframe_2ecc',['ResonanceGenFrame.cc',['../a00177.html',1,'']]],
-  ['resonancegenframe_2ehh',['ResonanceGenFrame.hh',['../a00124.html',1,'']]],
-  ['restframe_2ecc',['RestFrame.cc',['../a00178.html',1,'']]],
-  ['restframe_2ehh',['RestFrame.hh',['../a00125.html',1,'']]],
-  ['restframes_2ehh',['RestFrames.hh',['../a00126.html',1,'']]],
-  ['rfbase_2ecc',['RFBase.cc',['../a00179.html',1,'']]],
-  ['rfbase_2ehh',['RFBase.hh',['../a00127.html',1,'']]],
-  ['rfcharge_2ecc',['RFCharge.cc',['../a00180.html',1,'']]],
-  ['rfcharge_2ehh',['RFCharge.hh',['../a00128.html',1,'']]],
-  ['rfkey_2ecc',['RFKey.cc',['../a00181.html',1,'']]],
-  ['rfkey_2ehh',['RFKey.hh',['../a00129.html',1,'']]],
-  ['rflist_2ecc',['RFList.cc',['../a00182.html',1,'']]],
-  ['rflist_2ehh',['RFList.hh',['../a00130.html',1,'']]],
-  ['rflog_2ecc',['RFLog.cc',['../a00183.html',1,'']]],
-  ['rflog_2ehh',['RFLog.hh',['../a00131.html',1,'']]],
-  ['rfplot_2ecc',['RFPlot.cc',['../a00184.html',1,'']]],
-  ['rfplot_2ehh',['RFPlot.hh',['../a00132.html',1,'']]]
+  ['pplabgenframe_2ecc_624',['ppLabGenFrame.cc',['../a00626.html',1,'']]],
+  ['pplabgenframe_2ehh_625',['ppLabGenFrame.hh',['../a00434.html',1,'']]],
+  ['productpdf_2ecc_626',['ProductPDF.cc',['../a00629.html',1,'']]],
+  ['productpdf_2ehh_627',['ProductPDF.hh',['../a00437.html',1,'']]]
 ];

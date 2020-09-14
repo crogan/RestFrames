@@ -1,11 +1,6 @@
 var searchData=
 [
-  ['invisibleframe',['InvisibleFrame',['../a00016.html',1,'RestFrames']]],
-  ['invisibleframe_3c_20generatorframe_20_3e',['InvisibleFrame&lt; GeneratorFrame &gt;',['../a00016.html',1,'RestFrames']]],
-  ['invisibleframe_3c_20reconstructionframe_20_3e',['InvisibleFrame&lt; ReconstructionFrame &gt;',['../a00016.html',1,'RestFrames']]],
-  ['invisiblegenframe',['InvisibleGenFrame',['../a00017.html',1,'RestFrames']]],
-  ['invisiblegroup',['InvisibleGroup',['../a00018.html',1,'RestFrames']]],
-  ['invisiblejigsaw',['InvisibleJigsaw',['../a00019.html',1,'RestFrames']]],
-  ['invisiblerecoframe',['InvisibleRecoFrame',['../a00020.html',1,'RestFrames']]],
-  ['invisiblestate',['InvisibleState',['../a00021.html',1,'RestFrames']]]
+  ['histplot_466',['HistPlot',['../a00811.html',1,'RestFrames']]],
+  ['histplotcategory_467',['HistPlotCategory',['../a00815.html',1,'RestFrames']]],
+  ['histplotvar_468',['HistPlotVar',['../a00819.html',1,'RestFrames']]]
 ];

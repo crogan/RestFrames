@@ -1,16 +1,18 @@
 var searchData=
 [
-  ['generatorframe',['GeneratorFrame',['../a00011.html',1,'RestFrames']]],
-  ['generatorframe_2ecc',['GeneratorFrame.cc',['../a00152.html',1,'']]],
-  ['generatorframe_2ehh',['GeneratorFrame.hh',['../a00099.html',1,'']]],
-  ['getchildframe',['GetChildFrame',['../a00011.html#a9fdbc2c3ad37231e42e8b075a047917e',1,'RestFrames::GeneratorFrame::GetChildFrame()'],['../a00035.html#ae5da0bf9c70a5585d06a28e25e5a1f35',1,'RestFrames::ReconstructionFrame::GetChildFrame()']]],
-  ['getkey',['GetKey',['../a00039.html#a96de00293ba4541aa17886b91f0d7f44',1,'RestFrames::RFBase']]],
-  ['getmass',['GetMass',['../a00011.html#acb05a741a0038a7da8a99e7640d31080',1,'RestFrames::GeneratorFrame']]],
-  ['getname',['GetName',['../a00039.html#ae45e8c9f0b3fb539b23336856a6306b4',1,'RestFrames::RFBase']]],
-  ['getparentframe',['GetParentFrame',['../a00011.html#a619fe303e041c662783c0541d855ccd9',1,'RestFrames::GeneratorFrame::GetParentFrame()'],['../a00035.html#af4d21c374bc3ba558ff710658d76a199',1,'RestFrames::ReconstructionFrame::GetParentFrame()']]],
-  ['gettitle',['GetTitle',['../a00039.html#a7683a7f7f55b13c1931623aee0c7d022',1,'RestFrames::RFBase']]],
-  ['gettype',['GetType',['../a00051.html#afda99e4019a1d74c081545a8ab5feeb9',1,'RestFrames::State']]],
-  ['group',['Group',['../a00012.html',1,'RestFrames']]],
-  ['group_2ecc',['Group.cc',['../a00153.html',1,'']]],
-  ['group_2ehh',['Group.hh',['../a00100.html',1,'']]]
+  ['empty_66',['Empty',['../a00763.html#aa7a0d1ab3b2c2357733149fee90a09d1',1,'RestFrames::CombinatoricGroup::Empty()'],['../a00767.html#a76e6260c912ed31a9e3adc213b37c585',1,'RestFrames::CombinatoricJigsaw::Empty()'],['../a00771.html#a8e91f39209651b8088d8d027a32dd53a',1,'RestFrames::CombinatoricState::Empty()'],['../a00779.html#aa69e68d32e2953a53d7cc038a9521400',1,'RestFrames::ContraBoostInvJigsaw::Empty()'],['../a00791.html#a640047608dc83c5d169ab0d30be11ea5',1,'RestFrames::DecayRecoFrame::Empty()'],['../a00803.html#a81fa1388135e613f0035040a46d4f025',1,'RestFrames::GeneratorFrame::Empty()'],['../a00807.html#a4bbbb2288575ac334df54191490e3d35',1,'RestFrames::Group::Empty()'],['../a00815.html#a0502d746cf08ae36edb45dbe96a41e43',1,'RestFrames::HistPlotCategory::Empty()'],['../a00819.html#a9e962530c98bb0417fd72a03bf1d441a',1,'RestFrames::HistPlotVar::Empty()'],['../a00831.html#abc822d8b2c1b4a80693291c169870101',1,'RestFrames::InvisibleGroup::Empty()'],['../a00835.html#a0000c4ada9f1153db9cc99d546ae4551',1,'RestFrames::InvisibleJigsaw::Empty()'],['../a00847.html#adc8bbad31c67f3c0ed97bb6c2d2600c1',1,'RestFrames::Jigsaw::Empty()'],['../a00891.html#a41862e665e3c90e9885ad5791997edf4',1,'RestFrames::MinMassesCombJigsaw::Empty()'],['../a00899.html#a3b2af3850a0d87dbd27c18777c0068b7',1,'RestFrames::MinMassesSqInvJigsaw::Empty()'],['../a00911.html#a6a0be829f62622edb64cc24bc5d172ef',1,'RestFrames::ReconstructionFrame::Empty()'],['../a00915.html#af564f9bb70fcea9d352854805cb450ba',1,'RestFrames::ResonanceGenFrame::Empty()'],['../a00919.html#aa35b6aa2c1d010000a9e4a47ac042f8e',1,'RestFrames::RestFrame::Empty()'],['../a00923.html#a7441e53b3fd55696a946dccf447e9c1f',1,'RestFrames::RFBase::Empty()'],['../a00971.html#a84e2d775c790059be3556b184c38d8c8',1,'RestFrames::RFPDF::Empty()'],['../a00987.html#aeb850431d5d7ae1075c20ff3fd4731bf',1,'RestFrames::SetMassInvJigsaw::Empty()'],['../a00995.html#affd7c20e84e3c51125dffafb89a92781',1,'RestFrames::State::Empty()'],['../a01015.html#a4b6b1e20ddc0a112fbbad17de012156c',1,'RestFrames::VisibleGenFrame::Empty()'],['../a01019.html#a3f3e609e45a93f337415b92406502cab',1,'RestFrames::VisibleRecoFrame::Empty()'],['../a01023.html#a2661ac84a5d144e9e377210218ec3434',1,'RestFrames::VisibleState::Empty()']]],
+  ['emptylist_67',['EmptyList',['../a00919.html#a6cca565739ec438320bffee34ec80d10',1,'RestFrames::RestFrame::EmptyList()'],['../a00995.html#a9741aaf07965a2ee2eec745c6b02cf7f',1,'RestFrames::State::EmptyList()']]],
+  ['endmessage_68',['EndMessage',['../a00963.html#a8b3475bf39281c6e70ecba7b5e6b96e3',1,'RestFrames::RFLog']]],
+  ['example_5fdigluino_5fto_5fbbxbbx_2ec_69',['example_DiGluino_to_bbXbbX.C',['../a00707.html',1,'']]],
+  ['example_5fdistop_5fto_5fbxp_5fbxm_5fto_5fblnbln_2ec_70',['example_DiStop_to_bXp_bXm_to_blNblN.C',['../a00710.html',1,'']]],
+  ['example_5fh_5fto_5fhh_5fto_5f4wlnu_2ec_71',['example_H_to_hh_to_4Wlnu.C',['../a00713.html',1,'']]],
+  ['example_5fh_5fto_5fttbar_5fto_5fbwlnubwlnu_2ec_72',['example_H_to_ttbar_to_bWlnubWlnu.C',['../a00716.html',1,'']]],
+  ['example_5fh_5fto_5fwlnuwlnu_2ec_73',['example_H_to_WlnuWlnu.C',['../a00719.html',1,'']]],
+  ['example_5fhp_5fto_5fhggwlnu_2ec_74',['example_Hp_to_HggWlnu.C',['../a00722.html',1,'']]],
+  ['example_5fn_5fwlnu_2ec_75',['example_N_Wlnu.C',['../a00725.html',1,'']]],
+  ['example_5ftop_5fto_5fbwlnu_2ec_76',['example_top_to_bWlnu.C',['../a00728.html',1,'']]],
+  ['example_5fttbar_5fto_5fbwlnubwlnu_2ec_77',['example_ttbar_to_bWlnubWlnu.C',['../a00731.html',1,'']]],
+  ['example_5fwlnu_2ec_78',['example_Wlnu.C',['../a00734.html',1,'']]],
+  ['example_5fx2x2_5fto_5fzllxhggx_2ec_79',['example_X2X2_to_ZllXHggX.C',['../a00737.html',1,'']]],
+  ['example_5fzll_2ec_80',['example_Zll.C',['../a00740.html',1,'']]]
 ];

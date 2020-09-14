@@ -1,25 +1,6 @@
 var searchData=
 [
-  ['maxprobbreitwignercombjigsaw',['MaxProbBreitWignerCombJigsaw',['../a00026.html',1,'RestFrames']]],
-  ['maxprobbreitwignercombjigsaw_2ecc',['MaxProbBreitWignerCombJigsaw.cc',['../a00167.html',1,'']]],
-  ['maxprobbreitwignercombjigsaw_2ehh',['MaxProbBreitWignerCombJigsaw.hh',['../a00114.html',1,'']]],
-  ['maxprobbreitwignerinvjigsaw',['MaxProbBreitWignerInvJigsaw',['../a00027.html',1,'RestFrames']]],
-  ['maxprobbreitwignerinvjigsaw_2ecc',['MaxProbBreitWignerInvJigsaw.cc',['../a00168.html',1,'']]],
-  ['maxprobbreitwignerinvjigsaw_2ehh',['MaxProbBreitWignerInvJigsaw.hh',['../a00115.html',1,'']]],
-  ['minmasschi2combjigsaw',['MinMassChi2CombJigsaw',['../a00028.html',1,'RestFrames']]],
-  ['minmasschi2combjigsaw_2ecc',['MinMassChi2CombJigsaw.cc',['../a00169.html',1,'']]],
-  ['minmasschi2combjigsaw_2ehh',['MinMassChi2CombJigsaw.hh',['../a00116.html',1,'']]],
-  ['minmassdiffcombjigsaw',['MinMassDiffCombJigsaw',['../a00029.html',1,'RestFrames']]],
-  ['minmassdiffcombjigsaw_2ecc',['MinMassDiffCombJigsaw.cc',['../a00170.html',1,'']]],
-  ['minmassdiffcombjigsaw_2ehh',['MinMassDiffCombJigsaw.hh',['../a00117.html',1,'']]],
-  ['minmassdiffinvjigsaw',['MinMassDiffInvJigsaw',['../a00030.html',1,'RestFrames']]],
-  ['minmassdiffinvjigsaw_2ecc',['MinMassDiffInvJigsaw.cc',['../a00171.html',1,'']]],
-  ['minmassdiffinvjigsaw_2ehh',['MinMassDiffInvJigsaw.hh',['../a00118.html',1,'']]],
-  ['minmassescombjigsaw',['MinMassesCombJigsaw',['../a00031.html',1,'RestFrames']]],
-  ['minmassescombjigsaw_2ecc',['MinMassesCombJigsaw.cc',['../a00172.html',1,'']]],
-  ['minmassescombjigsaw_2ehh',['MinMassesCombJigsaw.hh',['../a00119.html',1,'']]],
-  ['minmassessqcombjigsaw',['MinMassesSqCombJigsaw',['../a00032.html',1,'RestFrames']]],
-  ['minmassessqcombjigsaw_2ecc',['MinMassesSqCombJigsaw.cc',['../a00173.html',1,'']]],
-  ['minmassessqinvjigsaw',['MinMassesSqInvJigsaw',['../a00033.html',1,'RestFrames']]],
-  ['minmassessqinvjigsaw_2ecc',['MinMassesSqInvJigsaw.cc',['../a00174.html',1,'']]]
+  ['jigsaw_217',['Jigsaw',['../a00847.html',1,'RestFrames::Jigsaw'],['../a00847.html#a4fd8c44505ae97356d1e93ed2d99b984',1,'RestFrames::Jigsaw::Jigsaw(const std::string &amp;sname, const std::string &amp;stitle, int Nchild, int Ndependancy)'],['../a00847.html#a28f1e89dd78e8a877f5ba07f0241182c',1,'RestFrames::Jigsaw::Jigsaw()']]],
+  ['jigsaw_2ecc_218',['Jigsaw.cc',['../a00584.html',1,'']]],
+  ['jigsaw_2ehh_219',['Jigsaw.hh',['../a00392.html',1,'']]]
 ];

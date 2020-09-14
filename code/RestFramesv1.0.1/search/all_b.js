@@ -1,9 +1,25 @@
 var searchData=
 [
-  ['pplabgenframe',['ppLabGenFrame',['../a00034.html',1,'RestFrames']]],
-  ['pplabgenframe_2ecc',['ppLabGenFrame.cc',['../a00175.html',1,'']]],
-  ['pplabgenframe_2ehh',['ppLabGenFrame.hh',['../a00122.html',1,'']]],
-  ['print',['Print',['../a00039.html#aa73bf0855b8ff6ade4b8dea06198ef9d',1,'RestFrames::RFBase']]],
-  ['printgeneratorefficiency',['PrintGeneratorEfficiency',['../a00011.html#a32d0048ada8c74f39770c8324d429c8a',1,'RestFrames::GeneratorFrame']]],
-  ['printstring',['PrintString',['../a00022.html#ad72759a66d69e4dee52961f9bd47842e',1,'RestFrames::Jigsaw::PrintString()'],['../a00039.html#a99870e38f41352623c1bb8fbc15662f9',1,'RestFrames::RFBase::PrintString()']]]
+  ['maxprobbreitwignercombjigsaw_238',['MaxProbBreitWignerCombJigsaw',['../a00871.html',1,'RestFrames::MaxProbBreitWignerCombJigsaw'],['../a00871.html#af1d62f045e8dc660f4dc2dca07012b9b',1,'RestFrames::MaxProbBreitWignerCombJigsaw::MaxProbBreitWignerCombJigsaw()']]],
+  ['maxprobbreitwignercombjigsaw_2ecc_239',['MaxProbBreitWignerCombJigsaw.cc',['../a00602.html',1,'']]],
+  ['maxprobbreitwignercombjigsaw_2ehh_240',['MaxProbBreitWignerCombJigsaw.hh',['../a00410.html',1,'']]],
+  ['maxprobbreitwignerinvjigsaw_241',['MaxProbBreitWignerInvJigsaw',['../a00875.html',1,'RestFrames::MaxProbBreitWignerInvJigsaw'],['../a00875.html#a51e323eca6b2ae009e8b78618f1c3ac2',1,'RestFrames::MaxProbBreitWignerInvJigsaw::MaxProbBreitWignerInvJigsaw()']]],
+  ['maxprobbreitwignerinvjigsaw_2ecc_242',['MaxProbBreitWignerInvJigsaw.cc',['../a00605.html',1,'']]],
+  ['maxprobbreitwignerinvjigsaw_2ehh_243',['MaxProbBreitWignerInvJigsaw.hh',['../a00413.html',1,'']]],
+  ['minmasschi2combjigsaw_244',['MinMassChi2CombJigsaw',['../a00879.html',1,'RestFrames::MinMassChi2CombJigsaw'],['../a00879.html#a729a64c26005d63120ad7d0eaa62cf01',1,'RestFrames::MinMassChi2CombJigsaw::MinMassChi2CombJigsaw()']]],
+  ['minmasschi2combjigsaw_2ecc_245',['MinMassChi2CombJigsaw.cc',['../a00608.html',1,'']]],
+  ['minmasschi2combjigsaw_2ehh_246',['MinMassChi2CombJigsaw.hh',['../a00416.html',1,'']]],
+  ['minmassdiffcombjigsaw_247',['MinMassDiffCombJigsaw',['../a00883.html',1,'RestFrames::MinMassDiffCombJigsaw'],['../a00883.html#ac3466d88e82608a411c77024b927053e',1,'RestFrames::MinMassDiffCombJigsaw::MinMassDiffCombJigsaw()']]],
+  ['minmassdiffcombjigsaw_2ecc_248',['MinMassDiffCombJigsaw.cc',['../a00611.html',1,'']]],
+  ['minmassdiffcombjigsaw_2ehh_249',['MinMassDiffCombJigsaw.hh',['../a00419.html',1,'']]],
+  ['minmassdiffinvjigsaw_250',['MinMassDiffInvJigsaw',['../a00887.html',1,'RestFrames::MinMassDiffInvJigsaw'],['../a00887.html#a049594f1ab97f1eabb810c4cd85dc83d',1,'RestFrames::MinMassDiffInvJigsaw::MinMassDiffInvJigsaw()']]],
+  ['minmassdiffinvjigsaw_2ecc_251',['MinMassDiffInvJigsaw.cc',['../a00614.html',1,'']]],
+  ['minmassdiffinvjigsaw_2ehh_252',['MinMassDiffInvJigsaw.hh',['../a00422.html',1,'']]],
+  ['minmassescombjigsaw_253',['MinMassesCombJigsaw',['../a00891.html',1,'RestFrames::MinMassesCombJigsaw'],['../a00891.html#aa1b4733105affe8592f5951a121f802a',1,'RestFrames::MinMassesCombJigsaw::MinMassesCombJigsaw(const std::string &amp;sname, const std::string &amp;stitle)'],['../a00891.html#adfad339ac12798c61e4c96d142fb334b',1,'RestFrames::MinMassesCombJigsaw::MinMassesCombJigsaw()']]],
+  ['minmassescombjigsaw_2ecc_254',['MinMassesCombJigsaw.cc',['../a00617.html',1,'']]],
+  ['minmassescombjigsaw_2ehh_255',['MinMassesCombJigsaw.hh',['../a00425.html',1,'']]],
+  ['minmassessqcombjigsaw_256',['MinMassesSqCombJigsaw',['../a00895.html',1,'RestFrames::MinMassesSqCombJigsaw'],['../a00895.html#a5896949358dc0ff32263f9db93a02ccb',1,'RestFrames::MinMassesSqCombJigsaw::MinMassesSqCombJigsaw()']]],
+  ['minmassessqcombjigsaw_2ecc_257',['MinMassesSqCombJigsaw.cc',['../a00620.html',1,'']]],
+  ['minmassessqinvjigsaw_258',['MinMassesSqInvJigsaw',['../a00899.html',1,'RestFrames::MinMassesSqInvJigsaw'],['../a00899.html#af3149ec364c4c6f1f01d7110a78c6f8c',1,'RestFrames::MinMassesSqInvJigsaw::MinMassesSqInvJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_vis_inv_pair)'],['../a00899.html#afe899b50b05e763b37e4d0bb2f45a8d2',1,'RestFrames::MinMassesSqInvJigsaw::MinMassesSqInvJigsaw()']]],
+  ['minmassessqinvjigsaw_2ecc_259',['MinMassesSqInvJigsaw.cc',['../a00623.html',1,'']]]
 ];

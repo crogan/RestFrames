@@ -1,12 +1,5 @@
 var searchData=
 [
-  ['histplot',['HistPlot',['../a00013.html',1,'RestFrames']]],
-  ['histplot_2ecc',['HistPlot.cc',['../a00154.html',1,'']]],
-  ['histplot_2ehh',['HistPlot.hh',['../a00101.html',1,'']]],
-  ['histplotcategory',['HistPlotCategory',['../a00014.html',1,'RestFrames']]],
-  ['histplotcategory_2ecc',['HistPlotCategory.cc',['../a00155.html',1,'']]],
-  ['histplotcategory_2ehh',['HistPlotCategory.hh',['../a00102.html',1,'']]],
-  ['histplotvar',['HistPlotVar',['../a00015.html',1,'RestFrames']]],
-  ['histplotvar_2ecc',['HistPlotVar.cc',['../a00156.html',1,'']]],
-  ['histplotvar_2ehh',['HistPlotVar.hh',['../a00103.html',1,'']]]
+  ['fill_81',['Fill',['../a00811.html#a26e1c00c202368d8a80611ebf052a94c',1,'RestFrames::HistPlot::Fill(double weight=1.)'],['../a00811.html#a26b470be526d95fec0d2f0399c19978e',1,'RestFrames::HistPlot::Fill(const HistPlotCategory &amp;cat, double weight=1.)']]],
+  ['frametype_82',['FrameType',['../a00446.html#a72de122bffb186f51adf772ad5dd0ac4',1,'RestFrames']]]
 ];
