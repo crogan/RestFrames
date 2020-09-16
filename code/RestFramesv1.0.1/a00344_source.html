@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/DecayFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/DecayGenFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">DecayFrame.hh</div>  </div>
+<div class="title">DecayGenFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00344.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,39 +124,88 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef DecayFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define DecayFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef DecayGenFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define DecayGenFrame_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00446.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00783.html">   38</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00783.html">DecayFrame</a> : <span class="keyword">public</span> T {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00783.html#a55b86f46cbd185cd1b6bf979146f4101">DecayFrame</a>(<span class="keyword">const</span> std::string&amp; sname,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;           <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00783.html#a55b86f46cbd185cd1b6bf979146f4101">DecayFrame</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00783.html">DecayFrame</a>();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00341.html">RestFrames/DecayFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00350.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">class </span>ResonanceGenFrame;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">// DecayGenFrame class</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00717.html">   43</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00717.html">DecayGenFrame</a> : <span class="keyword">public</span> <a class="code" href="a00713.html">DecayFrame</a>&lt;GeneratorFrame&gt; {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00717.html#a0475402d3b0ee8d2c7e88ab6e0c9b2c0">DecayGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsSoundBody() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  };</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00717.html#a0475402d3b0ee8d2c7e88ab6e0c9b2c0">DecayGenFrame</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00717.html">DecayGenFrame</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00717.html#a1730c446bca67ff12c1e7602e1f53527">SetMass</a>(<span class="keywordtype">double</span> val);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00717.html#ad2bbfbe1185786d35cc16bd5d2c234e6">SetVariableMass</a>(<span class="keywordtype">bool</span> varymass = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">// For two-body decays</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00717.html#a6ed2d982a7d403f9a634de7366a01df1">SetCosDecayAngle</a>(<span class="keywordtype">double</span> val);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00717.html#a7f310147b0ba1ce505511558cf819ba9">SetDeltaPhiDecayPlane</a>(<span class="keywordtype">double</span> val);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00717.html#a9e26dd1027852df6115e0c49b5bc447c">GetProbMCMC</a>(<span class="keywordtype">double</span> mass = -1.) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00717.html#a43d144adbd32827b7c758557a89ebe2f">GenerateMassMCMC</a>(<span class="keywordtype">double</span>&amp; mass, <span class="keywordtype">double</span>&amp; prob, </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                  <span class="keywordtype">double</span> max = -1.) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">double</span> m_CosDecayAngle;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">double</span> m_DeltaPhiDecayPlane;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    std::vector&lt;int&gt;    m_ChildIndexMCMC;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    std::vector&lt;double&gt; m_ChildMassMCMC;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std::vector&lt;double&gt; m_ChildProbMCMC;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    std::vector&lt;double&gt; m_InterMassFracMCMC;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsSoundBody() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResetGenFrame();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> GenerateFrame();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> GenerateTwoBodyRecursive(<span class="keyword">const</span> std::vector&lt;double&gt;&amp; M_parent, </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                  <span class="keyword">const</span> std::vector&lt;double&gt;&amp; M_child,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                  <span class="keyword">const</span> TVector3&amp; axis_par, </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                  <span class="keyword">const</span> TVector3&amp; axis_perp,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                  std::vector&lt;TLorentzVector&gt;&amp; P_child);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeGenAnalysis();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IterateMCMC();</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  };</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordtype">int</span> DoubleMax(<span class="keyword">const</span> <span class="keywordtype">void</span> *a, <span class="keyword">const</span> <span class="keywordtype">void</span> *b);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00783_html"><div class="ttname"><a href="a00783.html">RestFrames::DecayFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00038">DecayFrame.hh:38</a></div></div>
-<div class="ttc" id="aa00446_html"><div class="ttname"><a href="a00446.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="aa00783_html_a55b86f46cbd185cd1b6bf979146f4101"><div class="ttname"><a href="a00783.html#a55b86f46cbd185cd1b6bf979146f4101">RestFrames::DecayFrame::DecayFrame</a></div><div class="ttdeci">DecayFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00536_source.html#l00047">DecayFrame.cc:47</a></div></div>
+<div class="ttc" id="aa00717_html"><div class="ttname"><a href="a00717.html">RestFrames::DecayGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00043">DecayGenFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00717_html_a7f310147b0ba1ce505511558cf819ba9"><div class="ttname"><a href="a00717.html#a7f310147b0ba1ce505511558cf819ba9">RestFrames::DecayGenFrame::SetDeltaPhiDecayPlane</a></div><div class="ttdeci">virtual void SetDeltaPhiDecayPlane(double val)</div><div class="ttdoc">Sets azimuthal angle of decay plane.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00086">DecayGenFrame.cc:86</a></div></div>
+<div class="ttc" id="aa00717_html_a6ed2d982a7d403f9a634de7366a01df1"><div class="ttname"><a href="a00717.html#a6ed2d982a7d403f9a634de7366a01df1">RestFrames::DecayGenFrame::SetCosDecayAngle</a></div><div class="ttdeci">virtual void SetCosDecayAngle(double val)</div><div class="ttdoc">Sets cosine of decay angle.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00075">DecayGenFrame.cc:75</a></div></div>
+<div class="ttc" id="aa00713_html"><div class="ttname"><a href="a00713.html">RestFrames::DecayFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00341_source.html#l00038">DecayFrame.hh:38</a></div></div>
+<div class="ttc" id="aa00717_html_a0475402d3b0ee8d2c7e88ab6e0c9b2c0"><div class="ttname"><a href="a00717.html#a0475402d3b0ee8d2c7e88ab6e0c9b2c0">RestFrames::DecayGenFrame::DecayGenFrame</a></div><div class="ttdeci">DecayGenFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00047">DecayGenFrame.cc:47</a></div></div>
+<div class="ttc" id="aa00717_html_a43d144adbd32827b7c758557a89ebe2f"><div class="ttname"><a href="a00717.html#a43d144adbd32827b7c758557a89ebe2f">RestFrames::DecayGenFrame::GenerateMassMCMC</a></div><div class="ttdeci">virtual void GenerateMassMCMC(double &amp;mass, double &amp;prob, double max=-1.) const</div><div class="ttdoc">Generates mass for Markov Chain MonteCarlo event generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00233">DecayGenFrame.cc:233</a></div></div>
+<div class="ttc" id="aa00717_html_ad2bbfbe1185786d35cc16bd5d2c234e6"><div class="ttname"><a href="a00717.html#ad2bbfbe1185786d35cc16bd5d2c234e6">RestFrames::DecayGenFrame::SetVariableMass</a></div><div class="ttdeci">virtual void SetVariableMass(bool varymass=true)</div><div class="ttdoc">Determines who sets mass of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00098">DecayGenFrame.cc:98</a></div></div>
+<div class="ttc" id="aa00717_html_a1730c446bca67ff12c1e7602e1f53527"><div class="ttname"><a href="a00717.html#a1730c446bca67ff12c1e7602e1f53527">RestFrames::DecayGenFrame::SetMass</a></div><div class="ttdeci">virtual void SetMass(double val)</div><div class="ttdoc">Sets mass of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00062">DecayGenFrame.cc:62</a></div></div>
+<div class="ttc" id="aa00717_html_a9e26dd1027852df6115e0c49b5bc447c"><div class="ttname"><a href="a00717.html#a9e26dd1027852df6115e0c49b5bc447c">RestFrames::DecayGenFrame::GetProbMCMC</a></div><div class="ttdeci">virtual double GetProbMCMC(double mass=-1.) const</div><div class="ttdoc">Evaluates probability of the state is in right now or the probablility of a state it could go in.</div><div class="ttdef"><b>Definition:</b> <a href="a00503_source.html#l00205">DecayGenFrame.cc:205</a></div></div>
+<div class="ttc" id="aa00350_html"><div class="ttname"><a href="a00350.html">GeneratorFrame.hh</a></div></div>
+<div class="ttc" id="aa00341_html"><div class="ttname"><a href="a00341.html">DecayFrame.hh</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:21 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

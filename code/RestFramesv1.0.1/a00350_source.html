@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/DecayRecoFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/GeneratorFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">DecayRecoFrame.hh</div>  </div>
+<div class="title">GeneratorFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00350.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,52 +124,154 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef DecayRecoFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define DecayRecoFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef GeneratorFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define GeneratorFrame_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00344.html">RestFrames/DecayFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00440.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   <span class="keyword">enum</span> RDecayType { RDVanilla, RDSelfAssembling };</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">// DecayRecoFrame class</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00791.html">   43</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00791.html">DecayRecoFrame</a> : <span class="keyword">public</span> <a class="code" href="a00783.html">DecayFrame</a>&lt;ReconstructionFrame&gt; {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00791.html#a249b703b205a8e975a6e71e555dc227f">DecayRecoFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00791.html#a249b703b205a8e975a6e71e555dc227f">DecayRecoFrame</a>();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00791.html">DecayRecoFrame</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00791.html#a87823dc5b5fe17fd2440175bbe259f92">IsSelfAssemblingFrame</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00791.html">DecayRecoFrame</a>&amp; <a class="code" href="a00791.html#a640047608dc83c5d169ab0d30be11ea5">Empty</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    RDecayType m_RType;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00791.html">DecayRecoFrame</a> m_Empty;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;TRandom.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00428.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// GeneratorFrame class</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a00725.html">   42</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00725.html">GeneratorFrame</a> : <span class="keyword">public</span> <a class="code" href="a00829.html">RestFrame</a> {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00725.html">GeneratorFrame</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">Clear</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">AddChildFrame</a>(<a class="code" href="a00829.html">RestFrame</a>&amp; frame);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  };</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">SetParentFrame</a>(<a class="code" href="a00829.html">RestFrame</a>&amp; frame = </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                <a class="code" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>());</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00725.html">GeneratorFrame</a> <span class="keyword">const</span>&amp; <a class="code" href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">GetParentFrame</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00725.html">GeneratorFrame</a>&amp; <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(<span class="keywordtype">int</span> i = 0) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a03e97d91a22af11432f5399b84b72720">SetPCut</a>(<span class="keywordtype">double</span> cut);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a16691437cd581a96cc861b38ef6145e9">SetPtCut</a>(<span class="keywordtype">double</span> cut);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a875b020d82d5a153842e45f7c80fc891">SetEtaCut</a>(<span class="keywordtype">double</span> cut);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">SetMassWindowCut</a>(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">RemovePCut</a>();</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#aade06f6aa309048c2eb765cce1896416">RemovePtCut</a>();</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">RemoveEtaCut</a>();</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">RemoveMassWindowCut</a>();</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">PrintGeneratorEfficiency</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00725.html#ae0101090e69f3671d552312c8ac094ca">GetMass</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">IsVariableMassMCMC</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">GetMinimumMassMCMC</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">GenerateMassMCMC</a>(<span class="keywordtype">double</span>&amp; mass, <span class="keywordtype">double</span>&amp; prob, </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                  <span class="keywordtype">double</span> max = -1.) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">GetProbMCMC</a>(<span class="keywordtype">double</span> mass = -1.) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">GetRandom</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">GetGaus</a>(<span class="keywordtype">double</span> mu, <span class="keywordtype">double</span> sig) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00725.html">GeneratorFrame</a>&amp; <a class="code" href="a00725.html#a81fa1388135e613f0035040a46d4f025">Empty</a>();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">double</span> m_Mass;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">InitializeAnalysisRecursive</a>();</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">AnalyzeEventRecursive</a>();</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">ClearEventRecursive</a>();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResetGenFrame() = 0;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> GenerateFrame() = 0;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordtype">void</span> SetChildren(<span class="keyword">const</span> std::vector&lt;TLorentzVector&gt;&amp; P_children);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeGenAnalysis();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IterateMCMC();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">bool</span> IterateRecursiveMCMC();</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordtype">void</span> SetVariableMassMCMC(<span class="keywordtype">bool</span> var = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetMassMCMC(<span class="keywordtype">double</span> mass);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordtype">void</span> SetMassMCMC(<span class="keywordtype">double</span> mass, <a class="code" href="a00725.html">GeneratorFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordtype">bool</span> EventInAcceptance() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    TRandom *m_Random;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordtype">bool</span> m_VarMassMCMC;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keyword">mutable</span> <span class="keywordtype">long</span> m_Ngen;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keyword">mutable</span> <span class="keywordtype">long</span> m_Npass;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordtype">double</span> m_PCut;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordtype">double</span> m_PtCut;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordtype">double</span> m_EtaCut;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">double</span> m_minMassCut;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">double</span> m_maxMassCut;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">bool</span> m_doCuts;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">bool</span> m_doPCut;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">bool</span> m_doPtCut;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">bool</span> m_doEtaCut;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordtype">bool</span> m_dominMassCut;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">bool</span> m_domaxMassCut;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   </div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  };</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;}</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00344_html"><div class="ttname"><a href="a00344.html">DecayFrame.hh</a></div></div>
-<div class="ttc" id="aa00791_html_a87823dc5b5fe17fd2440175bbe259f92"><div class="ttname"><a href="a00791.html#a87823dc5b5fe17fd2440175bbe259f92">RestFrames::DecayRecoFrame::IsSelfAssemblingFrame</a></div><div class="ttdeci">bool IsSelfAssemblingFrame() const</div><div class="ttdoc">Is current frame (RestFrame) a self assembling frame type? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00542_source.html#l00050">DecayRecoFrame.cc:50</a></div></div>
-<div class="ttc" id="aa00783_html"><div class="ttname"><a href="a00783.html">RestFrames::DecayFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00038">DecayFrame.hh:38</a></div></div>
-<div class="ttc" id="aa00791_html_a640047608dc83c5d169ab0d30be11ea5"><div class="ttname"><a href="a00791.html#a640047608dc83c5d169ab0d30be11ea5">RestFrames::DecayRecoFrame::Empty</a></div><div class="ttdeci">static DecayRecoFrame &amp; Empty()</div><div class="ttdoc">Returns empty DecayRecoFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00542_source.html#l00054">DecayRecoFrame.cc:54</a></div></div>
-<div class="ttc" id="aa00440_html"><div class="ttname"><a href="a00440.html">ReconstructionFrame.hh</a></div></div>
-<div class="ttc" id="aa00791_html"><div class="ttname"><a href="a00791.html">RestFrames::DecayRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00350_source.html#l00043">DecayRecoFrame.hh:43</a></div></div>
-<div class="ttc" id="aa00791_html_a249b703b205a8e975a6e71e555dc227f"><div class="ttname"><a href="a00791.html#a249b703b205a8e975a6e71e555dc227f">RestFrames::DecayRecoFrame::DecayRecoFrame</a></div><div class="ttdeci">DecayRecoFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00542_source.html#l00046">DecayRecoFrame.cc:46</a></div></div>
+<div class="ttc" id="aa00725_html_a2addd2b8ffffe067bf914ec880e9885c"><div class="ttname"><a href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">RestFrames::GeneratorFrame::AddChildFrame</a></div><div class="ttdeci">virtual void AddChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a child RestFrame to this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00092">GeneratorFrame.cc:92</a></div></div>
+<div class="ttc" id="aa00725_html_ac4949ebf7cfd7577cca6e6b844005204"><div class="ttname"><a href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">RestFrames::GeneratorFrame::GetParentFrame</a></div><div class="ttdeci">virtual GeneratorFrame const  &amp; GetParentFrame() const</div><div class="ttdoc">Returns the parent of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00104">GeneratorFrame.cc:104</a></div></div>
+<div class="ttc" id="aa00725_html_a57c904c7cde60d97c73aa06459d4334f"><div class="ttname"><a href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">RestFrames::GeneratorFrame::PrintGeneratorEfficiency</a></div><div class="ttdeci">void PrintGeneratorEfficiency() const</div><div class="ttdoc">Print generator efficiency information.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00273">GeneratorFrame.cc:273</a></div></div>
+<div class="ttc" id="aa00829_html"><div class="ttname"><a href="a00829.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00428_source.html#l00045">RestFrame.hh:45</a></div></div>
+<div class="ttc" id="aa00725_html_aa4c8b58d6cee7fa11fdf1f01482b0c8a"><div class="ttname"><a href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">RestFrames::GeneratorFrame::GenerateMassMCMC</a></div><div class="ttdeci">virtual void GenerateMassMCMC(double &amp;mass, double &amp;prob, double max=-1.) const</div><div class="ttdoc">Generates mass for Markov Chain MonteCarlo event generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00247">GeneratorFrame.cc:247</a></div></div>
+<div class="ttc" id="aa00725_html_aa7352d90f85cc199c9a2a9260083282c"><div class="ttname"><a href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">RestFrames::GeneratorFrame::GetGaus</a></div><div class="ttdeci">double GetGaus(double mu, double sig) const</div><div class="ttdoc">Returns gaussian random number.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00197">GeneratorFrame.cc:197</a></div></div>
+<div class="ttc" id="aa00725_html"><div class="ttname"><a href="a00725.html">RestFrames::GeneratorFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00350_source.html#l00042">GeneratorFrame.hh:42</a></div></div>
+<div class="ttc" id="aa00725_html_a875b020d82d5a153842e45f7c80fc891"><div class="ttname"><a href="a00725.html#a875b020d82d5a153842e45f7c80fc891">RestFrames::GeneratorFrame::SetEtaCut</a></div><div class="ttdeci">void SetEtaCut(double cut)</div><div class="ttdoc">Sets pseudorapidity cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00372">GeneratorFrame.cc:372</a></div></div>
+<div class="ttc" id="aa00725_html_ad1c49a628a41f01277305de3c65b3ea0"><div class="ttname"><a href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">RestFrames::GeneratorFrame::GetRandom</a></div><div class="ttdeci">double GetRandom() const</div><div class="ttdoc">Returns random value.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00193">GeneratorFrame.cc:193</a></div></div>
+<div class="ttc" id="aa00725_html_aade06f6aa309048c2eb765cce1896416"><div class="ttname"><a href="a00725.html#aade06f6aa309048c2eb765cce1896416">RestFrames::GeneratorFrame::RemovePtCut</a></div><div class="ttdeci">void RemovePtCut()</div><div class="ttdoc">Removes transverse momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00401">GeneratorFrame.cc:401</a></div></div>
+<div class="ttc" id="aa00725_html_a81fa1388135e613f0035040a46d4f025"><div class="ttname"><a href="a00725.html#a81fa1388135e613f0035040a46d4f025">RestFrames::GeneratorFrame::Empty</a></div><div class="ttdeci">static GeneratorFrame &amp; Empty()</div><div class="ttdoc">Returns empty GeneratorFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00084">GeneratorFrame.cc:84</a></div></div>
+<div class="ttc" id="aa00725_html_a02839308aaabc911e3ceea2b72d69ef3"><div class="ttname"><a href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">RestFrames::GeneratorFrame::GetMinimumMassMCMC</a></div><div class="ttdeci">virtual double GetMinimumMassMCMC() const</div><div class="ttdoc">Returns minimun mass of Markov Chain MonteCarlo event generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00230">GeneratorFrame.cc:230</a></div></div>
+<div class="ttc" id="aa00725_html_ab9b84fe93b4836c250cf2499a55ee788"><div class="ttname"><a href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">RestFrames::GeneratorFrame::RemoveEtaCut</a></div><div class="ttdeci">void RemoveEtaCut()</div><div class="ttdoc">Removes pseudorapidity cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00407">GeneratorFrame.cc:407</a></div></div>
+<div class="ttc" id="aa00725_html_ab3cd6305429cd88f02b066c6e9e972b0"><div class="ttname"><a href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">RestFrames::GeneratorFrame::AnalyzeEventRecursive</a></div><div class="ttdeci">bool AnalyzeEventRecursive()</div><div class="ttdoc">Recursively analyze event in this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00133">GeneratorFrame.cc:133</a></div></div>
+<div class="ttc" id="aa00725_html_ab64ac080d2e1331760d48a09d1a2d7fd"><div class="ttname"><a href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">RestFrames::GeneratorFrame::IsVariableMassMCMC</a></div><div class="ttdeci">bool IsVariableMassMCMC() const</div><div class="ttdoc">Is this frame capable having a variable mass? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00226">GeneratorFrame.cc:226</a></div></div>
+<div class="ttc" id="aa00725_html_a63d31c434fa6622a59f6ad304b1aaf82"><div class="ttname"><a href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">RestFrames::GeneratorFrame::RemovePCut</a></div><div class="ttdeci">void RemovePCut()</div><div class="ttdoc">Removes momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00395">GeneratorFrame.cc:395</a></div></div>
+<div class="ttc" id="aa00725_html_a1194c0f8218ac545a801e3f4ad7376f8"><div class="ttname"><a href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">RestFrames::GeneratorFrame::GetChildFrame</a></div><div class="ttdeci">virtual GeneratorFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Returns the frame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00112">GeneratorFrame.cc:112</a></div></div>
+<div class="ttc" id="aa00725_html_a5b9cf775ddcbea3c77a322e5a7f3777e"><div class="ttname"><a href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">RestFrames::GeneratorFrame::SetMassWindowCut</a></div><div class="ttdeci">void SetMassWindowCut(double min, double max)</div><div class="ttdoc">Sets mass frame cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00378">GeneratorFrame.cc:378</a></div></div>
+<div class="ttc" id="aa00725_html_a60259ae1010151b4dfb7cd768ff1b0a3"><div class="ttname"><a href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">RestFrames::GeneratorFrame::GetProbMCMC</a></div><div class="ttdeci">virtual double GetProbMCMC(double mass=-1.) const</div><div class="ttdoc">Evaluates probability of the state is in right now or the probablility of a state it could go in.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00269">GeneratorFrame.cc:269</a></div></div>
+<div class="ttc" id="aa00725_html_ab48589dcf6bb3e83e61846b4cf6ed960"><div class="ttname"><a href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">RestFrames::GeneratorFrame::GeneratorFrame</a></div><div class="ttdeci">GeneratorFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00072">GeneratorFrame.cc:72</a></div></div>
+<div class="ttc" id="aa00725_html_a03e97d91a22af11432f5399b84b72720"><div class="ttname"><a href="a00725.html#a03e97d91a22af11432f5399b84b72720">RestFrames::GeneratorFrame::SetPCut</a></div><div class="ttdeci">void SetPCut(double cut)</div><div class="ttdoc">Sets momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00358">GeneratorFrame.cc:358</a></div></div>
+<div class="ttc" id="aa00829_html_aa35b6aa2c1d010000a9e4a47ac042f8e"><div class="ttname"><a href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrames::RestFrame::Empty</a></div><div class="ttdeci">static RestFrame &amp; Empty()</div><div class="ttdoc">Returns empty RestFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00062">RestFrame.cc:62</a></div></div>
+<div class="ttc" id="aa00725_html_a16691437cd581a96cc861b38ef6145e9"><div class="ttname"><a href="a00725.html#a16691437cd581a96cc861b38ef6145e9">RestFrames::GeneratorFrame::SetPtCut</a></div><div class="ttdeci">void SetPtCut(double cut)</div><div class="ttdoc">Sets transverse momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00365">GeneratorFrame.cc:365</a></div></div>
+<div class="ttc" id="aa00725_html_a41cb97d5eb7d19e141de83cb80306a62"><div class="ttname"><a href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">RestFrames::GeneratorFrame::InitializeAnalysisRecursive</a></div><div class="ttdeci">bool InitializeAnalysisRecursive()</div><div class="ttdoc">Recursively initialize this frame and its children for analysis.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00169">GeneratorFrame.cc:169</a></div></div>
+<div class="ttc" id="aa00725_html_a3af1de7ebb4713def785f4c542cca2b3"><div class="ttname"><a href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">RestFrames::GeneratorFrame::ClearEventRecursive</a></div><div class="ttdeci">bool ClearEventRecursive()</div><div class="ttdoc">Recursively clear event information from this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00120">GeneratorFrame.cc:120</a></div></div>
+<div class="ttc" id="aa00725_html_ae0101090e69f3671d552312c8ac094ca"><div class="ttname"><a href="a00725.html#ae0101090e69f3671d552312c8ac094ca">RestFrames::GeneratorFrame::GetMass</a></div><div class="ttdeci">virtual double GetMass() const</div><div class="ttdoc">Get the mass of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00088">GeneratorFrame.cc:88</a></div></div>
+<div class="ttc" id="aa00725_html_afc1257416c942d4d02e27ef7ba262d67"><div class="ttname"><a href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">RestFrames::GeneratorFrame::SetParentFrame</a></div><div class="ttdeci">virtual void SetParentFrame(RestFrame &amp;frame=RestFrame::Empty())</div><div class="ttdoc">Set the parent frame for this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00098">GeneratorFrame.cc:98</a></div></div>
+<div class="ttc" id="aa00725_html_a4a7025ee9f01537efd07d13a2fa43462"><div class="ttname"><a href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">RestFrames::GeneratorFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears GeneratorFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00079">GeneratorFrame.cc:79</a></div></div>
+<div class="ttc" id="aa00725_html_a14069d1c9fd444ad0c553a5e7c1e3eba"><div class="ttname"><a href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">RestFrames::GeneratorFrame::RemoveMassWindowCut</a></div><div class="ttdeci">void RemoveMassWindowCut()</div><div class="ttdoc">Removes mass frame cuts.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00413">GeneratorFrame.cc:413</a></div></div>
+<div class="ttc" id="aa00428_html"><div class="ttname"><a href="a00428.html">RestFrame.hh</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

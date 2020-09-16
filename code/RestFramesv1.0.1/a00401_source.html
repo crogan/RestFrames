@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/LabRecoFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/MinMassChi2CombJigsaw.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">LabRecoFrame.hh</div>  </div>
+<div class="title">MinMassChi2CombJigsaw.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00401.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,85 +124,54 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef LabRecoFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define LabRecoFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef MinMassChi2CombJigsaw_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define MinMassChi2CombJigsaw_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00440.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00395.html">RestFrames/LabFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">class </span>Jigsaw;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">class </span>VisibleState;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">// LabRecoFrame class</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a00859.html">   44</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00859.html">LabRecoFrame</a> : <span class="keyword">public</span> <a class="code" href="a00851.html">LabFrame</a>&lt;ReconstructionFrame&gt; {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00859.html#ab2a1b1b9771486c000860067b87c4dee">LabRecoFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="a00859.html#ab2a1b1b9771486c000860067b87c4dee">LabRecoFrame</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00859.html">LabRecoFrame</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00859.html#aafb4430451f07fbd3c50f7aa8445a6ab">Clear</a>();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00859.html#a41fd2136aa8bbb5c89b6c37b23f8797a">InitializeAnalysis</a>();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00329.html">RestFrames/CombinatoricJigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00793.html">   37</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00793.html">MinMassChi2CombJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00697.html">CombinatoricJigsaw</a> {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00793.html#a729a64c26005d63120ad7d0eaa62cf01">MinMassChi2CombJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;              <span class="keyword">const</span> std::string&amp; stitle,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;              <span class="keywordtype">int</span> N_comb, <span class="keywordtype">int</span> N_mass);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00793.html">MinMassChi2CombJigsaw</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00793.html#add012d23ccd565a324e20026848b2fdf">   54</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00793.html#add012d23ccd565a324e20026848b2fdf">GetLabel</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Min Mass #Chi^{2}&quot;</span>; }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00793.html#aabc97870d88ce65531be97ca30b05ded">SetMass</a>(<span class="keywordtype">double</span> mass, <span class="keywordtype">int</span> i = 0);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00859.html#ab355109aede03b573b9be5aa396b7f80">ClearEvent</a>();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00859.html#a2c15d128cbefcf5561194e1a8b03b79c">AnalyzeEvent</a>();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00859.html#a12ea50affa6e15f3617e50e5095ef1ed">AddTreeState</a>(<a class="code" href="a01023.html">VisibleState</a>&amp; state) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00859.html#acb08242f5d53c838220959237d3efac2">AddTreeStates</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">VisibleStateList</a>&amp; states) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00793.html#ac69e84c7d8c3b7ef97dfa88fda8919f9">SetSigma</a>(<span class="keywordtype">double</span> sigma, <span class="keywordtype">int</span> i = 0);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> EvaluateMetric(<span class="keywordtype">double</span>&amp; metric) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Ncomb;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Nmass;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::vector&lt;double&gt; m_Mass;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    std::vector&lt;double&gt; m_Sigma;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  };</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00859.html#a95518cf205159f2dc050a90c6d61cb54">RemoveTreeState</a>(<span class="keyword">const</span> <a class="code" href="a01023.html">VisibleState</a>&amp; state) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00859.html#a235bad18b829d4d612b4cc1486582905">RemoveTreeStates</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">VisibleStateList</a>&amp; states) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="a00947.html">VisibleStateList</a> <span class="keyword">const</span>&amp; <a class="code" href="a00859.html#a08cc519ceb405597e4f7d808f7b49e0e">GetTreeStates</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="a00947.html">GroupList</a>  m_TreeGroups;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="a00947.html">JigsawList</a> m_TreeJigsaws;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">mutable</span> <a class="code" href="a00947.html">VisibleStateList</a> m_TreeStates;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">bool</span> InitializeTreeStates();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">bool</span> InitializeTreeGroups();</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">bool</span> InitializeTreeJigsaws();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">bool</span> ExecuteJigsaws();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="a01023.html">VisibleState</a>&amp; GetNewVisibleState();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="a00947.html">VisibleStateList</a> m_InitStates;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  };</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa01023_html"><div class="ttname"><a href="a01023.html">RestFrames::VisibleState</a></div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00039">VisibleState.hh:39</a></div></div>
-<div class="ttc" id="aa00859_html_ab355109aede03b573b9be5aa396b7f80"><div class="ttname"><a href="a00859.html#ab355109aede03b573b9be5aa396b7f80">RestFrames::LabRecoFrame::ClearEvent</a></div><div class="ttdeci">virtual bool ClearEvent()</div><div class="ttdoc">Clears event.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00233">LabRecoFrame.cc:233</a></div></div>
-<div class="ttc" id="aa00859_html_a235bad18b829d4d612b4cc1486582905"><div class="ttname"><a href="a00859.html#a235bad18b829d4d612b4cc1486582905">RestFrames::LabRecoFrame::RemoveTreeStates</a></div><div class="ttdeci">void RemoveTreeStates(const VisibleStateList &amp;states) const</div><div class="ttdoc">Removes states from &quot;VisibleStateList&quot; of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00070">LabRecoFrame.cc:70</a></div></div>
-<div class="ttc" id="aa00395_html"><div class="ttname"><a href="a00395.html">LabFrame.hh</a></div></div>
-<div class="ttc" id="aa00859_html_ab2a1b1b9771486c000860067b87c4dee"><div class="ttname"><a href="a00859.html#ab2a1b1b9771486c000860067b87c4dee">RestFrames::LabRecoFrame::LabRecoFrame</a></div><div class="ttdeci">LabRecoFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00045">LabRecoFrame.cc:45</a></div></div>
-<div class="ttc" id="aa00859_html"><div class="ttname"><a href="a00859.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00401_source.html#l00044">LabRecoFrame.hh:44</a></div></div>
-<div class="ttc" id="aa00859_html_acb08242f5d53c838220959237d3efac2"><div class="ttname"><a href="a00859.html#acb08242f5d53c838220959237d3efac2">RestFrames::LabRecoFrame::AddTreeStates</a></div><div class="ttdeci">void AddTreeStates(const VisibleStateList &amp;states) const</div><div class="ttdoc">Adds states to &quot;VisibleStateList&quot; of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00062">LabRecoFrame.cc:62</a></div></div>
-<div class="ttc" id="aa00859_html_a12ea50affa6e15f3617e50e5095ef1ed"><div class="ttname"><a href="a00859.html#a12ea50affa6e15f3617e50e5095ef1ed">RestFrames::LabRecoFrame::AddTreeState</a></div><div class="ttdeci">void AddTreeState(VisibleState &amp;state) const</div><div class="ttdoc">Adds a state to &quot;VisibleStateList&quot; of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00058">LabRecoFrame.cc:58</a></div></div>
-<div class="ttc" id="aa00859_html_a95518cf205159f2dc050a90c6d61cb54"><div class="ttname"><a href="a00859.html#a95518cf205159f2dc050a90c6d61cb54">RestFrames::LabRecoFrame::RemoveTreeState</a></div><div class="ttdeci">void RemoveTreeState(const VisibleState &amp;state) const</div><div class="ttdoc">Removes a state from &quot;VisibleStateList&quot; of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00066">LabRecoFrame.cc:66</a></div></div>
-<div class="ttc" id="aa00859_html_a41fd2136aa8bbb5c89b6c37b23f8797a"><div class="ttname"><a href="a00859.html#a41fd2136aa8bbb5c89b6c37b23f8797a">RestFrames::LabRecoFrame::InitializeAnalysis</a></div><div class="ttdeci">virtual bool InitializeAnalysis()</div><div class="ttdoc">Initialize analysis capability of a tree to reconstruct events.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00078">LabRecoFrame.cc:78</a></div></div>
-<div class="ttc" id="aa00859_html_a08cc519ceb405597e4f7d808f7b49e0e"><div class="ttname"><a href="a00859.html#a08cc519ceb405597e4f7d808f7b49e0e">RestFrames::LabRecoFrame::GetTreeStates</a></div><div class="ttdeci">VisibleStateList const  &amp; GetTreeStates() const</div><div class="ttdoc">Returns list of visible states of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00074">LabRecoFrame.cc:74</a></div></div>
-<div class="ttc" id="aa00440_html"><div class="ttname"><a href="a00440.html">ReconstructionFrame.hh</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList&lt; VisibleState &gt;</a></div></div>
-<div class="ttc" id="aa00859_html_aafb4430451f07fbd3c50f7aa8445a6ab"><div class="ttname"><a href="a00859.html#aafb4430451f07fbd3c50f7aa8445a6ab">RestFrames::LabRecoFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears LabRecoFrame from all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00051">LabRecoFrame.cc:51</a></div></div>
-<div class="ttc" id="aa00859_html_a2c15d128cbefcf5561194e1a8b03b79c"><div class="ttname"><a href="a00859.html#a2c15d128cbefcf5561194e1a8b03b79c">RestFrames::LabRecoFrame::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00251">LabRecoFrame.cc:251</a></div></div>
-<div class="ttc" id="aa00851_html"><div class="ttname"><a href="a00851.html">RestFrames::LabFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00395_source.html#l00041">LabFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00329_html"><div class="ttname"><a href="a00329.html">CombinatoricJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00793_html_aabc97870d88ce65531be97ca30b05ded"><div class="ttname"><a href="a00793.html#aabc97870d88ce65531be97ca30b05ded">RestFrames::MinMassChi2CombJigsaw::SetMass</a></div><div class="ttdeci">virtual void SetMass(double mass, int i=0)</div><div class="ttdoc">Sets mass of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00560_source.html#l00049">MinMassChi2CombJigsaw.cc:49</a></div></div>
+<div class="ttc" id="aa00793_html_ac69e84c7d8c3b7ef97dfa88fda8919f9"><div class="ttname"><a href="a00793.html#ac69e84c7d8c3b7ef97dfa88fda8919f9">RestFrames::MinMassChi2CombJigsaw::SetSigma</a></div><div class="ttdeci">virtual void SetSigma(double sigma, int i=0)</div><div class="ttdoc">Sets sigma of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00560_source.html#l00056">MinMassChi2CombJigsaw.cc:56</a></div></div>
+<div class="ttc" id="aa00793_html_add012d23ccd565a324e20026848b2fdf"><div class="ttname"><a href="a00793.html#add012d23ccd565a324e20026848b2fdf">RestFrames::MinMassChi2CombJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00401_source.html#l00054">MinMassChi2CombJigsaw.hh:54</a></div></div>
+<div class="ttc" id="aa00697_html"><div class="ttname"><a href="a00697.html">RestFrames::CombinatoricJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00329_source.html#l00040">CombinatoricJigsaw.hh:40</a></div></div>
+<div class="ttc" id="aa00793_html"><div class="ttname"><a href="a00793.html">RestFrames::MinMassChi2CombJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00401_source.html#l00037">MinMassChi2CombJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00793_html_a729a64c26005d63120ad7d0eaa62cf01"><div class="ttname"><a href="a00793.html#a729a64c26005d63120ad7d0eaa62cf01">RestFrames::MinMassChi2CombJigsaw::MinMassChi2CombJigsaw</a></div><div class="ttdeci">MinMassChi2CombJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_comb, int N_mass)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00560_source.html#l00035">MinMassChi2CombJigsaw.cc:35</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:12 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:23 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

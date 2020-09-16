@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/CombinedCBInvJigsaw.hh Source File</title>
+<title>RestFrames: inc/RestFrames/ContraBoostInvJigsaw.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">CombinedCBInvJigsaw.hh</div>  </div>
+<div class="title">ContraBoostInvJigsaw.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00338.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,56 +124,51 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef CombinedCBInvJigsaw_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define CombinedCBInvJigsaw_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef ContraBoostInvJigsaw_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define ContraBoostInvJigsaw_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00383.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00374.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>ContraBoostInvJigsaw;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00775.html">   39</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00775.html">CombinedCBInvJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00835.html">InvisibleJigsaw</a> {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00775.html#a137bfeb97f774b6c46da8bd4a948098c">CombinedCBInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">const</span> std::string&amp; stitle,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordtype">int</span> N_CBjigsaw);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ~<a class="code" href="a00775.html">CombinedCBInvJigsaw</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a00775.html#a1448e5a3672805ae6dfd2aa64aa2d9f4">   55</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00775.html#a1448e5a3672805ae6dfd2aa64aa2d9f4">GetLabel</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Combined Contra-boost Inv.&quot;</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00775.html#aa1382ef3385c1e82a810fd3de6739413">AddJigsaw</a>(<span class="keyword">const</span> <a class="code" href="a00779.html">ContraBoostInvJigsaw</a>&amp; jigsaw, <span class="keywordtype">int</span> ijigsaw);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00775.html#a0505b981e4ba122ed5f70ec00ad462bc">GetMinimumMass</a>() <span class="keyword">const</span>;    </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00775.html#a82d2efee3cb2899b06b53938340fa736">AnalyzeEvent</a>();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_NCB;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">double</span> GetCBMinimumMass(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00709.html">   37</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00709.html">ContraBoostInvJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00757.html">InvisibleJigsaw</a> {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="a00709.html#a8b8e29423513a9f859f81604888bdf88">ContraBoostInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;             <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00709.html#a8b8e29423513a9f859f81604888bdf88">ContraBoostInvJigsaw</a>();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ~<a class="code" href="a00709.html">ContraBoostInvJigsaw</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00709.html#a569fb941883b4eb37a7b29bc12485976">   54</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00709.html#a569fb941883b4eb37a7b29bc12485976">GetLabel</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Contra-boost Invariant&quot;</span>; }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00709.html#a02085275c58a5986da0652a61b4e03d7">GetMinimumMass</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00709.html#ac22ef3b49630870f4aa00cab7a093241">AnalyzeEvent</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00709.html">ContraBoostInvJigsaw</a>&amp; <a class="code" href="a00709.html#aa69e68d32e2953a53d7cc038a9521400">Empty</a>();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00709.html">ContraBoostInvJigsaw</a> m_Empty;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  };</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00779_html"><div class="ttname"><a href="a00779.html">RestFrames::ContraBoostInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00341_source.html#l00037">ContraBoostInvJigsaw.hh:37</a></div></div>
-<div class="ttc" id="aa00775_html"><div class="ttname"><a href="a00775.html">RestFrames::CombinedCBInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00338_source.html#l00039">CombinedCBInvJigsaw.hh:39</a></div></div>
-<div class="ttc" id="aa00383_html"><div class="ttname"><a href="a00383.html">InvisibleJigsaw.hh</a></div></div>
-<div class="ttc" id="aa00775_html_a137bfeb97f774b6c46da8bd4a948098c"><div class="ttname"><a href="a00775.html#a137bfeb97f774b6c46da8bd4a948098c">RestFrames::CombinedCBInvJigsaw::CombinedCBInvJigsaw</a></div><div class="ttdeci">CombinedCBInvJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_CBjigsaw)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00530_source.html#l00035">CombinedCBInvJigsaw.cc:35</a></div></div>
-<div class="ttc" id="aa00775_html_aa1382ef3385c1e82a810fd3de6739413"><div class="ttname"><a href="a00775.html#aa1382ef3385c1e82a810fd3de6739413">RestFrames::CombinedCBInvJigsaw::AddJigsaw</a></div><div class="ttdeci">void AddJigsaw(const ContraBoostInvJigsaw &amp;jigsaw, int ijigsaw)</div><div class="ttdoc">Adds ContraBoostInvJigsaw to this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00530_source.html#l00046">CombinedCBInvJigsaw.cc:46</a></div></div>
-<div class="ttc" id="aa00835_html"><div class="ttname"><a href="a00835.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
-<div class="ttc" id="aa00775_html_a82d2efee3cb2899b06b53938340fa736"><div class="ttname"><a href="a00775.html#a82d2efee3cb2899b06b53938340fa736">RestFrames::CombinedCBInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00530_source.html#l00130">CombinedCBInvJigsaw.cc:130</a></div></div>
-<div class="ttc" id="aa00775_html_a1448e5a3672805ae6dfd2aa64aa2d9f4"><div class="ttname"><a href="a00775.html#a1448e5a3672805ae6dfd2aa64aa2d9f4">RestFrames::CombinedCBInvJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00338_source.html#l00055">CombinedCBInvJigsaw.hh:55</a></div></div>
-<div class="ttc" id="aa00775_html_a0505b981e4ba122ed5f70ec00ad462bc"><div class="ttname"><a href="a00775.html#a0505b981e4ba122ed5f70ec00ad462bc">RestFrames::CombinedCBInvJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00530_source.html#l00056">CombinedCBInvJigsaw.cc:56</a></div></div>
+<div class="ttc" id="aa00709_html_aa69e68d32e2953a53d7cc038a9521400"><div class="ttname"><a href="a00709.html#aa69e68d32e2953a53d7cc038a9521400">RestFrames::ContraBoostInvJigsaw::Empty</a></div><div class="ttdeci">static ContraBoostInvJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty ContraBoostInvJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00497_source.html#l00045">ContraBoostInvJigsaw.cc:45</a></div></div>
+<div class="ttc" id="aa00709_html_a02085275c58a5986da0652a61b4e03d7"><div class="ttname"><a href="a00709.html#a02085275c58a5986da0652a61b4e03d7">RestFrames::ContraBoostInvJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00497_source.html#l00049">ContraBoostInvJigsaw.cc:49</a></div></div>
+<div class="ttc" id="aa00374_html"><div class="ttname"><a href="a00374.html">InvisibleJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00709_html"><div class="ttname"><a href="a00709.html">RestFrames::ContraBoostInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00338_source.html#l00037">ContraBoostInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00709_html_a569fb941883b4eb37a7b29bc12485976"><div class="ttname"><a href="a00709.html#a569fb941883b4eb37a7b29bc12485976">RestFrames::ContraBoostInvJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00338_source.html#l00054">ContraBoostInvJigsaw.hh:54</a></div></div>
+<div class="ttc" id="aa00709_html_ac22ef3b49630870f4aa00cab7a093241"><div class="ttname"><a href="a00709.html#ac22ef3b49630870f4aa00cab7a093241">RestFrames::ContraBoostInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00497_source.html#l00085">ContraBoostInvJigsaw.cc:85</a></div></div>
+<div class="ttc" id="aa00757_html"><div class="ttname"><a href="a00757.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
+<div class="ttc" id="aa00709_html_a8b8e29423513a9f859f81604888bdf88"><div class="ttname"><a href="a00709.html#a8b8e29423513a9f859f81604888bdf88">RestFrames::ContraBoostInvJigsaw::ContraBoostInvJigsaw</a></div><div class="ttdeci">ContraBoostInvJigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00497_source.html#l00041">ContraBoostInvJigsaw.cc:41</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:21 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

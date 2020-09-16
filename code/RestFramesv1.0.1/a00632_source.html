@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: src/ReconstructionFrame.cc Source File</title>
+<title>RestFrames: src/VisibleGenFrame.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,12 +103,12 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">ReconstructionFrame.cc</div>  </div>
+<div class="title">VisibleGenFrame.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00632.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2015, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -124,361 +124,55 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00440.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00512.html">RestFrames/VisibleRecoFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00401.html">RestFrames/LabRecoFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00362.html">RestFrames/Group.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00515.html">RestFrames/VisibleState.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// ReconstructionFrame class methods</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00911.html#aea754dd3eeb40c0d27f5d927c512eef2">   41</a></span>&#160;<span class="comment"></span>  <a class="code" href="a00911.html#a00048da1d679b714e645b38d9376a142">ReconstructionFrame::ReconstructionFrame</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                       <span class="keyword">const</span> std::string&amp; stitle)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    : <a class="code" href="a00919.html">RestFrame</a>(sname, stitle)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    m_Ana = kRecoFrame;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_GroupPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="a00911.html#a00048da1d679b714e645b38d9376a142">   49</a></span>&#160;  <a class="code" href="a00911.html#a00048da1d679b714e645b38d9376a142">ReconstructionFrame::ReconstructionFrame</a>()</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    : <a class="code" href="a00919.html">RestFrame</a>() {}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  ReconstructionFrame::~ReconstructionFrame(){ </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00911.html#a5710f1be5e58c44a2e4baec3a4062032">Clear</a>(); </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00911.html#a5710f1be5e58c44a2e4baec3a4062032">   56</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#a5710f1be5e58c44a2e4baec3a4062032">ReconstructionFrame::Clear</a>(){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00911.html#a236b554edb9df6c69c190dfe74931d76">SetGroup</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    m_ChildStates.clear();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="a00919.html#ad1d0382ea2a7f46ebf00ea361948e659">RestFrame::Clear</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a00911.html#a6a0be829f62622edb64cc24bc5d172ef">   62</a></span>&#160;  <a class="code" href="a00911.html">ReconstructionFrame</a>&amp; <a class="code" href="a00911.html#a6a0be829f62622edb64cc24bc5d172ef">ReconstructionFrame::Empty</a>(){</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="a01019.html#a3f3e609e45a93f337415b92406502cab">VisibleRecoFrame::Empty</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a00911.html#acd496545c372abf6152fdd9137fe0061">   66</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#acd496545c372abf6152fdd9137fe0061">ReconstructionFrame::AddChildFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame){</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00919.html#ae8207068ea824b333b68ef6f5e02b86b">IsRecoFrame</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00919.html#adf48c7a6b51ffa542aeb000903c8e57e">RestFrame::AddChildFrame</a>(frame);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00911.html#aad183ee94a07e759ed6d85bdd453b6e1">   72</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#aad183ee94a07e759ed6d85bdd453b6e1">ReconstructionFrame::RemoveChildFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame){</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">bool</span> contains = m_ChildFrames.Contains(frame);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    m_ChildBoosts.erase(&amp;frame);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    m_ChildStates.erase(&amp;frame);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    m_ChildFrames.Remove(frame);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">if</span>(contains)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      frame.<a class="code" href="a00919.html#adab05aad875837545b0330d6c6c4dc4d">SetParentFrame</a>();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="a00911.html#a91458464a5694f335ab0d24965bd7c03">   82</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#a91458464a5694f335ab0d24965bd7c03">ReconstructionFrame::RemoveChildFrames</a>(){</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">while</span>(<a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>() &gt; 0)</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <a class="code" href="a00911.html#aad183ee94a07e759ed6d85bdd453b6e1">RemoveChildFrame</a>(m_ChildFrames[0]);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    m_ChildFrames.Clear();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    m_ChildBoosts.clear();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    m_ChildStates.clear();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="a00911.html#a34ccef04c29d5086b61adcfc42b36e6d">   91</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#a34ccef04c29d5086b61adcfc42b36e6d">ReconstructionFrame::SetParentFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame){</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00919.html#ae8207068ea824b333b68ef6f5e02b86b">IsRecoFrame</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="a00919.html#adab05aad875837545b0330d6c6c4dc4d">RestFrame::SetParentFrame</a>(frame);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="a00911.html#a37bb3026dec843f917c55c19c2adf2f1">   97</a></span>&#160;  <a class="code" href="a00911.html">ReconstructionFrame</a> <span class="keyword">const</span>&amp; <a class="code" href="a00911.html#a37bb3026dec843f917c55c19c2adf2f1">ReconstructionFrame::GetParentFrame</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame = <a class="code" href="a00919.html#aaca062f84f7700d214fc6427118b6e0b">RestFrame::GetParentFrame</a>();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00923.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a>())</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><a class="code" href="a00911.html">ReconstructionFrame</a>&amp;<span class="keyword">&gt;</span>(frame);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">else</span> </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00911.html#a6a0be829f62622edb64cc24bc5d172ef">ReconstructionFrame::Empty</a>();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">  105</a></span>&#160;  <a class="code" href="a00911.html">ReconstructionFrame</a>&amp; <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">ReconstructionFrame::GetChildFrame</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="a00919.html">RestFrame</a>&amp; frame = <a class="code" href="a00919.html#a5ff0d688c21b0e36cdc23e161f464cbb">RestFrame::GetChildFrame</a>(i);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00923.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a>())</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code" href="a00911.html">ReconstructionFrame</a>&amp;<span class="keyword">&gt;</span>(frame);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">else</span> </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00911.html#a6a0be829f62622edb64cc24bc5d172ef">ReconstructionFrame::Empty</a>();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <a class="code" href="a00947.html">StateList</a> <span class="keyword">const</span>&amp; ReconstructionFrame::GetChildStates(<span class="keywordtype">int</span> i)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">return</span> GetChildStates(<a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i));</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  StateList <span class="keyword">const</span>&amp; ReconstructionFrame::GetChildStates(<span class="keyword">const</span> RestFrame&amp; child)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span>(m_ChildStates.count(&amp;child) &lt;= 0)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00995.html#a9741aaf07965a2ee2eec745c6b02cf7f">State::EmptyList</a>();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> m_ChildStates[&amp;child];</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="a00911.html#a236b554edb9df6c69c190dfe74931d76">  124</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00911.html#a236b554edb9df6c69c190dfe74931d76">ReconstructionFrame::SetGroup</a>(<a class="code" href="a00807.html">Group</a>&amp; group){</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="a00923.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordflow">if</span>(m_GroupPtr){</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <span class="keywordflow">if</span>(*m_GroupPtr != group){</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="a00807.html">Group</a>* groupPtr = m_GroupPtr;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    m_GroupPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    groupPtr-&gt;<a class="code" href="a00807.html#ae788a289b69600f6601bff47e38c5008">RemoveFrame</a>(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">if</span>(!group)</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      m_GroupPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      m_GroupPtr = &amp;group;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="a00911.html#a04c2f14c43f33156739933ba47826b86">  142</a></span>&#160;  <a class="code" href="a00807.html">Group</a>&amp; <a class="code" href="a00911.html#a04c2f14c43f33156739933ba47826b86">ReconstructionFrame::GetGroup</a>()<span class="keyword"> const </span>{ </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">if</span>(m_GroupPtr)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      <span class="keywordflow">return</span> *m_GroupPtr;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">else</span> </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00807.html#a4bbbb2288575ac334df54191490e3d35">Group::Empty</a>();</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  }</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="a00911.html#ae80118d1ca284f34d40b954a27d72485">  149</a></span>&#160;  <a class="code" href="a00947.html">GroupList</a> <a class="code" href="a00911.html#ae80118d1ca284f34d40b954a27d72485">ReconstructionFrame::GetListGroups</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="a00947.html">GroupList</a> groups;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    FillListGroupsRecursive(groups);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">return</span> groups;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordtype">void</span> ReconstructionFrame::FillListGroupsRecursive(<a class="code" href="a00947.html">GroupList</a>&amp; groups)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordflow">if</span>(m_GroupPtr) groups.Add(*m_GroupPtr);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++)</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i).FillListGroupsRecursive(groups);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  }</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <span class="keywordtype">bool</span> ReconstructionFrame::InitializeVisibleStates(){</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    m_ChildStates.clear();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="a00919.html#a40e8138464a4d0db98c2fe006e2ea3a9">GetLabFrame</a>())</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keyword">const</span> VisibleStateList&amp; states = </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>LabRecoFrame&amp;<span class="keyword">&gt;</span>(<a class="code" href="a00919.html#a40e8138464a4d0db98c2fe006e2ea3a9">GetLabFrame</a>()).GetTreeStates();</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++){</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <a class="code" href="a00919.html#a5def11158098bafa716ed5c4e1e3491a">RestFrame</a>&amp; child = <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      m_ChildStates[&amp;child] = StateList();</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      RFList&lt;ReconstructionFrame&gt; frames = child.GetListVisibleFrames();</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordtype">int</span> Nf = frames.GetN();</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; Nf; f++)</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">if</span>(!frames[f].<a class="code" href="a00911.html#a04c2f14c43f33156739933ba47826b86">GetGroup</a>())</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      <span class="keywordflow">if</span>(!m_ChildStates[&amp;child].Add(StateList(states).GetFrame(frames[f]))){</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to associate State with Group-less Frame:&quot;</span>;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        m_Log &lt;&lt; Log(frames[f]) &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      }</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="keywordtype">bool</span> ReconstructionFrame::InitializeGroupStates(){</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    GroupList groups = <a class="code" href="a00911.html#ae80118d1ca284f34d40b954a27d72485">GetListGroups</a>();</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">int</span> Ngroup = groups.GetN();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> c = 0; c &lt; Nchild; c++){</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      RestFrameList frames = </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(c).<a class="code" href="a00919.html#a06678871d2e63872f514482d7ace0bda">GetListVisibleFrames</a>() +</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(c).<a class="code" href="a00919.html#a32c98dac7d2e6b7ad4e5581f41cc6666">GetListInvisibleFrames</a>();</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      <span class="keywordtype">int</span> Nframe = frames.GetN();</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; Nframe; f++){</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> g = 0; g &lt; Ngroup; g++){</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keywordflow">if</span>(groups[g].ContainsFrame(frames[f])){</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        State&amp; state = groups[g].GetChildState(frames[f]);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="keywordflow">if</span>(!state){</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;          m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;          m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to get State associated with Group Frame: &quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;          m_Log &lt;&lt; <span class="stringliteral">&quot; Frame:&quot;</span> &lt;&lt; Log(frames[f]);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;          m_Log &lt;&lt; <span class="stringliteral">&quot; Group:&quot;</span> &lt;&lt; Log(groups[g]) &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;          <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        }</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        m_ChildStates[&amp;<a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(c)].Add(state);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      }</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    }  </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  }</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="a00911.html#ae8380e232fe89a70cc53c161bf12af61">  218</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00911.html#ae8380e232fe89a70cc53c161bf12af61">ReconstructionFrame::InitializeAnalysisRecursive</a>(){</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()){</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      UnSoundBody(RF_FUNCTION);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordflow">if</span>(!InitializeVisibleStates())</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordflow">if</span>(!InitializeGroupStates())</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;   </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++)</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i).<a class="code" href="a00911.html#ae8380e232fe89a70cc53c161bf12af61">InitializeAnalysisRecursive</a>()){</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to recursively initialize analysis for frame:&quot;</span>;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    m_Log &lt;&lt; Log(<a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i)) &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      }</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  }</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="keywordtype">bool</span> ReconstructionFrame::ResetRecoFrame(){</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  }</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
-<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="a00911.html#a0f3af232e39ddc6bfb608afc29672de9">  245</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00911.html#a0f3af232e39ddc6bfb608afc29672de9">ReconstructionFrame::ClearEventRecursive</a>(){ </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()){</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      UnSoundMind(RF_FUNCTION);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   </div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keywordflow">if</span>(!ResetRecoFrame())</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordtype">int</span> Nf =  <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nf; i++)</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i).<a class="code" href="a00911.html#a0f3af232e39ddc6bfb608afc29672de9">ClearEventRecursive</a>())</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keywordtype">bool</span> ReconstructionFrame::ReconstructFrame(){</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()){</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      UnSoundMind(RF_FUNCTION);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    }</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    TLorentzVector Ptot(0,0,0,0);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++){</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      <a class="code" href="a00911.html#a00048da1d679b714e645b38d9376a142">ReconstructionFrame</a>&amp; child = <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      </div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      TLorentzVector P = m_ChildStates[&amp;child].GetFourVector();</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      <span class="comment">// P.SetVectM(P.Vect(), std::max(0.,P.M()));</span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordtype">bool</span> terminal = child.IsVisibleFrame() || child.IsInvisibleFrame();</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordflow">if</span>(terminal || P.M() &lt;= 1e-5){</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    SetChildBoostVector(child, m_Empty3Vector);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    P.SetVectM(P.Vect(), std::max(0.,P.M()));</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    child.SetFourVector(P, *<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    SetChildBoostVector(child, P.BoostVector());</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    P.SetVectM(P.Vect(), std::max(0.,P.M()));</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    child.SetFourVector(P, *<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      </div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      Ptot += P;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      <span class="keywordflow">if</span>(child.IsVisibleFrame())</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keyword">static_cast&lt;</span>VisibleRecoFrame&amp;<span class="keyword">&gt;</span>(child).</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      SetCharge(m_ChildStates[&amp;child].<a class="code" href="a00919.html#a8dc0d40d01628cefed2743cb6a3ba25f">GetCharge</a>());</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    }</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="a00919.html#a6832c71dd583dff4ae29d0c5853e607b">IsLabFrame</a>()) SetFourVector(Ptot,*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  }</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="a00911.html#a4509846d92a05a7327003668373846d5">  300</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00911.html#a4509846d92a05a7327003668373846d5">ReconstructionFrame::AnalyzeEventRecursive</a>(){</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()){</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      UnSoundMind(RF_FUNCTION);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    }</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">if</span>(!ReconstructFrame()){</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to reconstruct event for this frame.&quot;</span>;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      m_Log &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    }</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00919.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++){</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      <a class="code" href="a00911.html">ReconstructionFrame</a>&amp; child = <a class="code" href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">GetChildFrame</a>(i);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      TVector3 boost = GetChildBoostVector(child);</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      <span class="keywordtype">bool</span> terminal = child.<a class="code" href="a00919.html#a4008bd5fc1fe42ae45fd8f120003a361">IsVisibleFrame</a>() || child.<a class="code" href="a00919.html#aa4dc4c0209acbc2a46ac97ddf4159762">IsInvisibleFrame</a>();</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      <span class="keywordflow">if</span>(!terminal){</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    boost *= -1.;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordflow">if</span>(boost.Mag() &lt; 1.)</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      m_ChildStates[&amp;child].Boost(boost);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      <span class="keywordflow">if</span>(!child.<a class="code" href="a00911.html#a4509846d92a05a7327003668373846d5">AnalyzeEventRecursive</a>())</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;     </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;      <span class="keywordflow">if</span>(!terminal){ </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    boost *= -1.;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordflow">if</span>(boost.Mag() &lt; 1.)</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      m_ChildStates[&amp;child].Boost(boost);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      }</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    }</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00476.html">RestFrames/VisibleGenFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">// VisibleGenFrame class</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00905.html#aa1d9b092bf688e9037ef4e32a07b1b90">   37</a></span>&#160;<span class="comment"></span>  <a class="code" href="a00905.html#a8516124ca0a15b5596451f2959d343c7">VisibleGenFrame::VisibleGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                   <span class="keyword">const</span> std::string&amp; stitle) : </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="a00901.html">VisibleFrame</a>&lt;<a class="code" href="a00725.html">GeneratorFrame</a>&gt;(sname, stitle) {}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00905.html#a8516124ca0a15b5596451f2959d343c7">   41</a></span>&#160;  <a class="code" href="a00905.html#a8516124ca0a15b5596451f2959d343c7">VisibleGenFrame::VisibleGenFrame</a>() : <a class="code" href="a00901.html">VisibleFrame</a>&lt;<a class="code" href="a00725.html">GeneratorFrame</a>&gt;() {}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  VisibleGenFrame::~VisibleGenFrame() {}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a00905.html#a4b6b1e20ddc0a112fbbad17de012156c">   46</a></span>&#160;  <a class="code" href="a00905.html">VisibleGenFrame</a>&amp; <a class="code" href="a00905.html#a4b6b1e20ddc0a112fbbad17de012156c">VisibleGenFrame::Empty</a>(){</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">return</span> VisibleGenFrame::m_Empty;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a00905.html#a7d1a5aeaa30171f5e5a993600a31e532">   50</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00905.html#a7d1a5aeaa30171f5e5a993600a31e532">VisibleGenFrame::SetMass</a>(<span class="keywordtype">double</span> val){</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">if</span>(val &lt; 0.){</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to set mass to negative value &quot;</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      m_Log &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;. Setting to zero.&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      m_Mass = 0.;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      m_Mass = val;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">void</span> VisibleGenFrame::ResetGenFrame() {}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">bool</span> VisibleGenFrame::GenerateFrame(){ </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  VisibleGenFrame VisibleGenFrame::m_Empty;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00401_html"><div class="ttname"><a href="a00401.html">LabRecoFrame.hh</a></div></div>
-<div class="ttc" id="aa00911_html_a91458464a5694f335ab0d24965bd7c03"><div class="ttname"><a href="a00911.html#a91458464a5694f335ab0d24965bd7c03">RestFrames::ReconstructionFrame::RemoveChildFrames</a></div><div class="ttdeci">void RemoveChildFrames()</div><div class="ttdoc">Remove all the children of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00082">ReconstructionFrame.cc:82</a></div></div>
-<div class="ttc" id="aa00919_html_a06678871d2e63872f514482d7ace0bda"><div class="ttname"><a href="a00919.html#a06678871d2e63872f514482d7ace0bda">RestFrames::RestFrame::GetListVisibleFrames</a></div><div class="ttdeci">virtual RestFrameList GetListVisibleFrames() const</div><div class="ttdoc">Returns a list of VisibleFrame s inheriting from this.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00342">RestFrame.cc:342</a></div></div>
-<div class="ttc" id="aa00995_html_a9741aaf07965a2ee2eec745c6b02cf7f"><div class="ttname"><a href="a00995.html#a9741aaf07965a2ee2eec745c6b02cf7f">RestFrames::State::EmptyList</a></div><div class="ttdeci">static StateList const  &amp; EmptyList()</div><div class="ttdoc">Returns empty StateList.</div><div class="ttdef"><b>Definition:</b> <a href="a00683_source.html#l00072">State.cc:72</a></div></div>
-<div class="ttc" id="aa00807_html_a4bbbb2288575ac334df54191490e3d35"><div class="ttname"><a href="a00807.html#a4bbbb2288575ac334df54191490e3d35">RestFrames::Group::Empty</a></div><div class="ttdeci">static Group &amp; Empty()</div><div class="ttdoc">Returns empty Group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00058">Group.cc:58</a></div></div>
-<div class="ttc" id="aa00911_html_aad183ee94a07e759ed6d85bdd453b6e1"><div class="ttname"><a href="a00911.html#aad183ee94a07e759ed6d85bdd453b6e1">RestFrames::ReconstructionFrame::RemoveChildFrame</a></div><div class="ttdeci">virtual void RemoveChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Remove a child of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00072">ReconstructionFrame.cc:72</a></div></div>
-<div class="ttc" id="aa00919_html_ae8207068ea824b333b68ef6f5e02b86b"><div class="ttname"><a href="a00919.html#ae8207068ea824b333b68ef6f5e02b86b">RestFrames::RestFrame::IsRecoFrame</a></div><div class="ttdeci">bool IsRecoFrame() const</div><div class="ttdoc">Is this an ReconstructionFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00111">RestFrame.cc:111</a></div></div>
-<div class="ttc" id="aa00911_html_a0f3af232e39ddc6bfb608afc29672de9"><div class="ttname"><a href="a00911.html#a0f3af232e39ddc6bfb608afc29672de9">RestFrames::ReconstructionFrame::ClearEventRecursive</a></div><div class="ttdeci">bool ClearEventRecursive()</div><div class="ttdoc">Recursively clear event information from this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00245">ReconstructionFrame.cc:245</a></div></div>
-<div class="ttc" id="aa00919_html_ad1d0382ea2a7f46ebf00ea361948e659"><div class="ttname"><a href="a00919.html#ad1d0382ea2a7f46ebf00ea361948e659">RestFrames::RestFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RestFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00055">RestFrame.cc:55</a></div></div>
-<div class="ttc" id="aa00919_html_adab05aad875837545b0330d6c6c4dc4d"><div class="ttname"><a href="a00919.html#adab05aad875837545b0330d6c6c4dc4d">RestFrames::RestFrame::SetParentFrame</a></div><div class="ttdeci">virtual void SetParentFrame(RestFrame &amp;frame=RestFrame::Empty())</div><div class="ttdoc">Sets the parent frame for this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00179">RestFrame.cc:179</a></div></div>
-<div class="ttc" id="aa00911_html_a9c09f91a8a0c2b935bc21d8f909d1727"><div class="ttname"><a href="a00911.html#a9c09f91a8a0c2b935bc21d8f909d1727">RestFrames::ReconstructionFrame::GetChildFrame</a></div><div class="ttdeci">virtual ReconstructionFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Get the frame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00105">ReconstructionFrame.cc:105</a></div></div>
-<div class="ttc" id="aa00911_html_ae80118d1ca284f34d40b954a27d72485"><div class="ttname"><a href="a00911.html#ae80118d1ca284f34d40b954a27d72485">RestFrames::ReconstructionFrame::GetListGroups</a></div><div class="ttdeci">GroupList GetListGroups() const</div><div class="ttdoc">Returns a list of groups (GroupList) of this class.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00149">ReconstructionFrame.cc:149</a></div></div>
-<div class="ttc" id="aa00911_html_a34ccef04c29d5086b61adcfc42b36e6d"><div class="ttname"><a href="a00911.html#a34ccef04c29d5086b61adcfc42b36e6d">RestFrames::ReconstructionFrame::SetParentFrame</a></div><div class="ttdeci">virtual void SetParentFrame(RestFrame &amp;frame=RestFrame::Empty())</div><div class="ttdoc">Set the parent frame for this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00091">ReconstructionFrame.cc:91</a></div></div>
-<div class="ttc" id="aa00911_html_a00048da1d679b714e645b38d9376a142"><div class="ttname"><a href="a00911.html#a00048da1d679b714e645b38d9376a142">RestFrames::ReconstructionFrame::ReconstructionFrame</a></div><div class="ttdeci">ReconstructionFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00049">ReconstructionFrame.cc:49</a></div></div>
-<div class="ttc" id="aa00911_html"><div class="ttname"><a href="a00911.html">RestFrames::ReconstructionFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00440_source.html#l00041">ReconstructionFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00911_html_acd496545c372abf6152fdd9137fe0061"><div class="ttname"><a href="a00911.html#acd496545c372abf6152fdd9137fe0061">RestFrames::ReconstructionFrame::AddChildFrame</a></div><div class="ttdeci">virtual void AddChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Add a child RestFrame to this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00066">ReconstructionFrame.cc:66</a></div></div>
-<div class="ttc" id="aa00919_html_a5ff0d688c21b0e36cdc23e161f464cbb"><div class="ttname"><a href="a00919.html#a5ff0d688c21b0e36cdc23e161f464cbb">RestFrames::RestFrame::GetChildFrame</a></div><div class="ttdeci">virtual RestFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Get the RestFrame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00233">RestFrame.cc:233</a></div></div>
-<div class="ttc" id="aa00919_html_a8dc0d40d01628cefed2743cb6a3ba25f"><div class="ttname"><a href="a00919.html#a8dc0d40d01628cefed2743cb6a3ba25f">RestFrames::RestFrame::GetCharge</a></div><div class="ttdeci">virtual RFCharge GetCharge() const</div><div class="ttdoc">Returns the charge of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00425">RestFrame.cc:425</a></div></div>
-<div class="ttc" id="aa00807_html_ae788a289b69600f6601bff47e38c5008"><div class="ttname"><a href="a00807.html#ae788a289b69600f6601bff47e38c5008">RestFrames::Group::RemoveFrame</a></div><div class="ttdeci">virtual void RemoveFrame(RestFrame &amp;frame)</div><div class="ttdoc">Removes a frame (RestFrame) from this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00117">Group.cc:117</a></div></div>
-<div class="ttc" id="aa00919_html_a6832c71dd583dff4ae29d0c5853e607b"><div class="ttname"><a href="a00919.html#a6832c71dd583dff4ae29d0c5853e607b">RestFrames::RestFrame::IsLabFrame</a></div><div class="ttdeci">bool IsLabFrame() const</div><div class="ttdoc">Is this a LabFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00107">RestFrame.cc:107</a></div></div>
-<div class="ttc" id="aa00911_html_a37bb3026dec843f917c55c19c2adf2f1"><div class="ttname"><a href="a00911.html#a37bb3026dec843f917c55c19c2adf2f1">RestFrames::ReconstructionFrame::GetParentFrame</a></div><div class="ttdeci">virtual ReconstructionFrame const  &amp; GetParentFrame() const</div><div class="ttdoc">Returns the parent of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00097">ReconstructionFrame.cc:97</a></div></div>
-<div class="ttc" id="aa00919_html_a5def11158098bafa716ed5c4e1e3491a"><div class="ttname"><a href="a00919.html#a5def11158098bafa716ed5c4e1e3491a">RestFrames::RestFrame::RestFrame</a></div><div class="ttdeci">RestFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00037">RestFrame.cc:37</a></div></div>
-<div class="ttc" id="aa00919_html_a98d149d4215b47ba1d83c5985835627a"><div class="ttname"><a href="a00919.html#a98d149d4215b47ba1d83c5985835627a">RestFrames::RestFrame::GetNChildren</a></div><div class="ttdeci">int GetNChildren() const</div><div class="ttdoc">Returns the number of child frames inheriting from this one.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00229">RestFrame.cc:229</a></div></div>
-<div class="ttc" id="aa00911_html_a04c2f14c43f33156739933ba47826b86"><div class="ttname"><a href="a00911.html#a04c2f14c43f33156739933ba47826b86">RestFrames::ReconstructionFrame::GetGroup</a></div><div class="ttdeci">Group &amp; GetGroup() const</div><div class="ttdoc">Returns group of this class.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00142">ReconstructionFrame.cc:142</a></div></div>
-<div class="ttc" id="aa00911_html_a6a0be829f62622edb64cc24bc5d172ef"><div class="ttname"><a href="a00911.html#a6a0be829f62622edb64cc24bc5d172ef">RestFrames::ReconstructionFrame::Empty</a></div><div class="ttdeci">static ReconstructionFrame &amp; Empty()</div><div class="ttdoc">Returns empty ReconstructionFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00062">ReconstructionFrame.cc:62</a></div></div>
-<div class="ttc" id="aa00911_html_a5710f1be5e58c44a2e4baec3a4062032"><div class="ttname"><a href="a00911.html#a5710f1be5e58c44a2e4baec3a4062032">RestFrames::ReconstructionFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears ReconstructionFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00056">ReconstructionFrame.cc:56</a></div></div>
-<div class="ttc" id="aa00911_html_a4509846d92a05a7327003668373846d5"><div class="ttname"><a href="a00911.html#a4509846d92a05a7327003668373846d5">RestFrames::ReconstructionFrame::AnalyzeEventRecursive</a></div><div class="ttdeci">bool AnalyzeEventRecursive()</div><div class="ttdoc">Recursively analyze event in this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00300">ReconstructionFrame.cc:300</a></div></div>
-<div class="ttc" id="aa00512_html"><div class="ttname"><a href="a00512.html">VisibleRecoFrame.hh</a></div></div>
-<div class="ttc" id="aa00440_html"><div class="ttname"><a href="a00440.html">ReconstructionFrame.hh</a></div></div>
-<div class="ttc" id="aa00919_html_aa4dc4c0209acbc2a46ac97ddf4159762"><div class="ttname"><a href="a00919.html#aa4dc4c0209acbc2a46ac97ddf4159762">RestFrames::RestFrame::IsInvisibleFrame</a></div><div class="ttdeci">bool IsInvisibleFrame() const</div><div class="ttdoc">Is this an InvisibleFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00099">RestFrame.cc:99</a></div></div>
-<div class="ttc" id="aa00919_html"><div class="ttname"><a href="a00919.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00446_source.html#l00045">RestFrame.hh:45</a></div></div>
-<div class="ttc" id="aa01019_html_a3f3e609e45a93f337415b92406502cab"><div class="ttname"><a href="a01019.html#a3f3e609e45a93f337415b92406502cab">RestFrames::VisibleRecoFrame::Empty</a></div><div class="ttdeci">static VisibleRecoFrame &amp; Empty()</div><div class="ttdoc">Returns empty VisibleRecoFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00701_source.html#l00048">VisibleRecoFrame.cc:48</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList&lt; State &gt;</a></div></div>
-<div class="ttc" id="aa00362_html"><div class="ttname"><a href="a00362.html">Group.hh</a></div></div>
-<div class="ttc" id="aa00919_html_aaca062f84f7700d214fc6427118b6e0b"><div class="ttname"><a href="a00919.html#aaca062f84f7700d214fc6427118b6e0b">RestFrames::RestFrame::GetParentFrame</a></div><div class="ttdeci">virtual RestFrame const  &amp; GetParentFrame() const</div><div class="ttdoc">Returns the parent of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00243">RestFrame.cc:243</a></div></div>
-<div class="ttc" id="aa00919_html_a32c98dac7d2e6b7ad4e5581f41cc6666"><div class="ttname"><a href="a00919.html#a32c98dac7d2e6b7ad4e5581f41cc6666">RestFrames::RestFrame::GetListInvisibleFrames</a></div><div class="ttdeci">virtual RestFrameList GetListInvisibleFrames() const</div><div class="ttdoc">Returns a list of InvisibleFrame s inheriting from this.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00346">RestFrame.cc:346</a></div></div>
-<div class="ttc" id="aa00515_html"><div class="ttname"><a href="a00515.html">VisibleState.hh</a></div></div>
-<div class="ttc" id="aa00911_html_ae8380e232fe89a70cc53c161bf12af61"><div class="ttname"><a href="a00911.html#ae8380e232fe89a70cc53c161bf12af61">RestFrames::ReconstructionFrame::InitializeAnalysisRecursive</a></div><div class="ttdeci">bool InitializeAnalysisRecursive()</div><div class="ttdoc">Recursively initialize this frame and its children for analysis.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00218">ReconstructionFrame.cc:218</a></div></div>
-<div class="ttc" id="aa00923_html_a2ed7cbbcc860fa79abb4eea10d1f900f"><div class="ttname"><a href="a00923.html#a2ed7cbbcc860fa79abb4eea10d1f900f">RestFrames::RFBase::IsEmpty</a></div><div class="ttdeci">bool IsEmpty() const</div><div class="ttdoc">Checks whether this is default (empty) instance of class.</div><div class="ttdef"><b>Definition:</b> <a href="a00641_source.html#l00084">RFBase.cc:84</a></div></div>
-<div class="ttc" id="aa00919_html_a4008bd5fc1fe42ae45fd8f120003a361"><div class="ttname"><a href="a00919.html#a4008bd5fc1fe42ae45fd8f120003a361">RestFrames::RestFrame::IsVisibleFrame</a></div><div class="ttdeci">bool IsVisibleFrame() const</div><div class="ttdoc">Is this a VisibleFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00095">RestFrame.cc:95</a></div></div>
-<div class="ttc" id="aa00807_html"><div class="ttname"><a href="a00807.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects</div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00046">Group.hh:46</a></div></div>
-<div class="ttc" id="aa00919_html_adf48c7a6b51ffa542aeb000903c8e57e"><div class="ttname"><a href="a00919.html#adf48c7a6b51ffa542aeb000903c8e57e">RestFrames::RestFrame::AddChildFrame</a></div><div class="ttdeci">virtual void AddChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a child RestFrame to this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00196">RestFrame.cc:196</a></div></div>
-<div class="ttc" id="aa00911_html_a236b554edb9df6c69c190dfe74931d76"><div class="ttname"><a href="a00911.html#a236b554edb9df6c69c190dfe74931d76">RestFrames::ReconstructionFrame::SetGroup</a></div><div class="ttdeci">virtual void SetGroup(Group &amp;group=Group::Empty())</div><div class="ttdoc">Sets group of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00124">ReconstructionFrame.cc:124</a></div></div>
-<div class="ttc" id="aa00919_html_a40e8138464a4d0db98c2fe006e2ea3a9"><div class="ttname"><a href="a00919.html#a40e8138464a4d0db98c2fe006e2ea3a9">RestFrames::RestFrame::GetLabFrame</a></div><div class="ttdeci">virtual RestFrame const  &amp; GetLabFrame() const</div><div class="ttdoc">Returns the LabFrame that this frame inherits from.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00254">RestFrame.cc:254</a></div></div>
+<div class="ttc" id="aa00901_html"><div class="ttname"><a href="a00901.html">RestFrames::VisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00043">VisibleFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00905_html_a8516124ca0a15b5596451f2959d343c7"><div class="ttname"><a href="a00905.html#a8516124ca0a15b5596451f2959d343c7">RestFrames::VisibleGenFrame::VisibleGenFrame</a></div><div class="ttdeci">VisibleGenFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00041">VisibleGenFrame.cc:41</a></div></div>
+<div class="ttc" id="aa00725_html"><div class="ttname"><a href="a00725.html">RestFrames::GeneratorFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00350_source.html#l00042">GeneratorFrame.hh:42</a></div></div>
+<div class="ttc" id="aa00905_html"><div class="ttname"><a href="a00905.html">RestFrames::VisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00476_source.html#l00041">VisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00476_html"><div class="ttname"><a href="a00476.html">VisibleGenFrame.hh</a></div></div>
+<div class="ttc" id="aa00905_html_a7d1a5aeaa30171f5e5a993600a31e532"><div class="ttname"><a href="a00905.html#a7d1a5aeaa30171f5e5a993600a31e532">RestFrames::VisibleGenFrame::SetMass</a></div><div class="ttdeci">virtual void SetMass(double val)</div><div class="ttdoc">Sets mass of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00050">VisibleGenFrame.cc:50</a></div></div>
+<div class="ttc" id="aa00905_html_a4b6b1e20ddc0a112fbbad17de012156c"><div class="ttname"><a href="a00905.html#a4b6b1e20ddc0a112fbbad17de012156c">RestFrames::VisibleGenFrame::Empty</a></div><div class="ttdeci">static VisibleGenFrame &amp; Empty()</div><div class="ttdoc">Returns empty VisibleGenFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00046">VisibleGenFrame.cc:46</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:17 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:28 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

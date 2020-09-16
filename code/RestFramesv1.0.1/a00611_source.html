@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: src/MinMassDiffCombJigsaw.cc Source File</title>
+<title>RestFrames: src/SetMassInvJigsaw.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">MinMassDiffCombJigsaw.cc</div>  </div>
+<div class="title">SetMassInvJigsaw.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00611.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,71 +124,65 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00446.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00419.html">RestFrames/MinMassDiffCombJigsaw.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a00883.html#ac3466d88e82608a411c77024b927053e">   35</a></span>&#160;  <a class="code" href="a00883.html#ac3466d88e82608a411c77024b927053e">MinMassDiffCombJigsaw::MinMassDiffCombJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                           <span class="keyword">const</span> std::string&amp; stitle,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                           <span class="keywordtype">int</span> N_comb, <span class="keywordtype">int</span> N_mass) </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    : <a class="code" href="a00767.html">CombinatoricJigsaw</a>(sname, stitle, N_comb, N_mass),</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      m_Ncomb(N_comb), m_Nmass(N_mass) {}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  MinMassDiffCombJigsaw::~MinMassDiffCombJigsaw() {}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00455.html">RestFrames/SetMassInvJigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">//SetMassInvJigsaw class methods</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00877.html#ab144d3391f8f4239b17fe9ba575b537f">   37</a></span>&#160;<span class="comment"></span>  <a class="code" href="a00877.html#a2ece5231e5baf14ab2472d4345da776b">SetMassInvJigsaw::SetMassInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                     <span class="keyword">const</span> std::string&amp; stitle) : </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="a00757.html">InvisibleJigsaw</a>(sname, stitle, 1, 0) {}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00877.html#a2ece5231e5baf14ab2472d4345da776b">   41</a></span>&#160;  <a class="code" href="a00877.html#a2ece5231e5baf14ab2472d4345da776b">SetMassInvJigsaw::SetMassInvJigsaw</a>() : <a class="code" href="a00757.html">InvisibleJigsaw</a>() {}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">bool</span> MinMassDiffCombJigsaw::EvaluateMetric(<span class="keywordtype">double</span>&amp; metric)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">double</span> diff = 0.;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">double</span> m1, m2;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    TLorentzVector P1, P2;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Nmass-1; i++){</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keywordflow">if</span>(!IsTransverse()){</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> N = GetDependancyStates(i).GetN();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    P1.SetPxPyPzE(0.,0.,0.,0.);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = 0; j &lt; N; j++){</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      TLorentzVector v = GetDependancyStates(i)[j].GetFourVector();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      TVector3 p = v.Vect() - v.Vect().Dot(GetTransverseAxis())*GetTransverseAxis();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      v.SetVectM(p, v.M());</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      P1 += v;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    P1 = GetDependancyStates(i).GetFourVector();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      m1 = P1.M();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = i+1; i &lt; m_Nmass; j++){</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span>(!IsTransverse()){</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <span class="keywordtype">int</span> N = GetDependancyStates(j).GetN();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      P2.SetPxPyPzE(0.,0.,0.,0.);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> k = 0; k &lt; N; k++){</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        TLorentzVector v = GetDependancyStates(j)[k].GetFourVector();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        TVector3 p = v.Vect() - v.Vect().Dot(GetTransverseAxis())*GetTransverseAxis();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        v.SetVectM(p, v.M());</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        P2 += v;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      P2 = GetDependancyStates(j).GetFourVector();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    m2 = P2.M();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    diff += (m1-m2)*(m1-m2);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    metric = diff;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  SetMassInvJigsaw::~SetMassInvJigsaw() {}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a00877.html#a54b3ec9ec095fdaccd52ffb07388d7d8">   45</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00877.html#a54b3ec9ec095fdaccd52ffb07388d7d8">SetMassInvJigsaw::Clear</a>(){</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00757.html#afd557bb9a0a2abedfe4a042d6f5b49c7">InvisibleJigsaw::Clear</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="a00877.html#aeb850431d5d7ae1075c20ff3fd4731bf">   49</a></span>&#160;  <a class="code" href="a00877.html">SetMassInvJigsaw</a>&amp; <a class="code" href="a00877.html#aeb850431d5d7ae1075c20ff3fd4731bf">SetMassInvJigsaw::Empty</a>(){</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> SetMassInvJigsaw::m_Empty;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a00877.html#ad13104f5305373c3c22700ccd746819a">   53</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00877.html#ad13104f5305373c3c22700ccd746819a">SetMassInvJigsaw::AnalyzeEvent</a>(){</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind())</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    TLorentzVector inv_P = GetParentState().<a class="code" href="a00885.html#a538d28484b82b7bb2560f482879907f3">GetFourVector</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">double</span> M = std::max(0.,GetChildState(0).<a class="code" href="a00757.html#a24eb9d313bc93a1950301132ce18e0ea">GetMinimumMass</a>());</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    inv_P.SetVectM(inv_P.Vect(),M);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    GetChildState(0).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(inv_P);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordtype">void</span> SetMassInvJigsaw::FillJigsawDependancies(<a class="code" href="a00845.html">JigsawList</a>&amp; jigsaws)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    Jigsaw::FillJigsawDependancies(jigsaws);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    FillInvisibleMassJigsawDependancies(jigsaws);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  SetMassInvJigsaw SetMassInvJigsaw::m_Empty;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00883_html_ac3466d88e82608a411c77024b927053e"><div class="ttname"><a href="a00883.html#ac3466d88e82608a411c77024b927053e">RestFrames::MinMassDiffCombJigsaw::MinMassDiffCombJigsaw</a></div><div class="ttdeci">MinMassDiffCombJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_comb, int N_mass)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00035">MinMassDiffCombJigsaw.cc:35</a></div></div>
-<div class="ttc" id="aa00767_html"><div class="ttname"><a href="a00767.html">RestFrames::CombinatoricJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00040">CombinatoricJigsaw.hh:40</a></div></div>
-<div class="ttc" id="aa00446_html"><div class="ttname"><a href="a00446.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="aa00419_html"><div class="ttname"><a href="a00419.html">MinMassDiffCombJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00885_html_ad94f9ab87499da559a6bf96b5f2d9d2d"><div class="ttname"><a href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">RestFrames::State::SetFourVector</a></div><div class="ttdeci">virtual void SetFourVector(const TLorentzVector &amp;V)</div><div class="ttdoc">Sets four-vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00617_source.html#l00161">State.cc:161</a></div></div>
+<div class="ttc" id="aa00845_html"><div class="ttname"><a href="a00845.html">RestFrames::RFList&lt; Jigsaw &gt;</a></div></div>
+<div class="ttc" id="aa00885_html_a538d28484b82b7bb2560f482879907f3"><div class="ttname"><a href="a00885.html#a538d28484b82b7bb2560f482879907f3">RestFrames::State::GetFourVector</a></div><div class="ttdeci">virtual TLorentzVector GetFourVector() const</div><div class="ttdoc">Returns four vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00617_source.html#l00165">State.cc:165</a></div></div>
+<div class="ttc" id="aa00877_html_a2ece5231e5baf14ab2472d4345da776b"><div class="ttname"><a href="a00877.html#a2ece5231e5baf14ab2472d4345da776b">RestFrames::SetMassInvJigsaw::SetMassInvJigsaw</a></div><div class="ttdeci">SetMassInvJigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00041">SetMassInvJigsaw.cc:41</a></div></div>
+<div class="ttc" id="aa00877_html_a54b3ec9ec095fdaccd52ffb07388d7d8"><div class="ttname"><a href="a00877.html#a54b3ec9ec095fdaccd52ffb07388d7d8">RestFrames::SetMassInvJigsaw::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears SetMassInvJigsaw from all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00045">SetMassInvJigsaw.cc:45</a></div></div>
+<div class="ttc" id="aa00455_html"><div class="ttname"><a href="a00455.html">SetMassInvJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00877_html_ad13104f5305373c3c22700ccd746819a"><div class="ttname"><a href="a00877.html#ad13104f5305373c3c22700ccd746819a">RestFrames::SetMassInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00053">SetMassInvJigsaw.cc:53</a></div></div>
+<div class="ttc" id="aa00757_html_afd557bb9a0a2abedfe4a042d6f5b49c7"><div class="ttname"><a href="a00757.html#afd557bb9a0a2abedfe4a042d6f5b49c7">RestFrames::InvisibleJigsaw::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears InvisibleJigsaw of all connections to other objects</div><div class="ttdef"><b>Definition:</b> <a href="a00533_source.html#l00058">InvisibleJigsaw.cc:58</a></div></div>
+<div class="ttc" id="aa00877_html"><div class="ttname"><a href="a00877.html">RestFrames::SetMassInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00455_source.html#l00037">SetMassInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00757_html_a24eb9d313bc93a1950301132ce18e0ea"><div class="ttname"><a href="a00757.html#a24eb9d313bc93a1950301132ce18e0ea">RestFrames::InvisibleJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00533_source.html#l00156">InvisibleJigsaw.cc:156</a></div></div>
+<div class="ttc" id="aa00757_html"><div class="ttname"><a href="a00757.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
+<div class="ttc" id="aa00877_html_aeb850431d5d7ae1075c20ff3fd4731bf"><div class="ttname"><a href="a00877.html#aeb850431d5d7ae1075c20ff3fd4731bf">RestFrames::SetMassInvJigsaw::Empty</a></div><div class="ttdeci">static SetMassInvJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty SetMassInvJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00049">SetMassInvJigsaw.cc:49</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:16 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:27 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

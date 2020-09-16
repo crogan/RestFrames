@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: src/InvisibleJigsaw.cc Source File</title>
+<title>RestFrames: src/MinMassesSqInvJigsaw.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">InvisibleJigsaw.cc</div>  </div>
+<div class="title">MinMassesSqInvJigsaw.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00575.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,288 +124,301 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00383.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00488.html">RestFrames/SetMassInvJigsaw.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00446.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;TMatrixD.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;TDecompSVD.h&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;RestFrames/MinMassesSqInvJigsaw.hh&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00380.html">RestFrames/InvisibleState.hh</a>&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="comment">// InvisibleJigsaw class</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00835.html#ac34606aaa0d5a74218add2e93c7c5576">   40</a></span>&#160;  <a class="code" href="a00835.html#acf16bd4a99e9cdf757563ab874f3fa78">InvisibleJigsaw::InvisibleJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                   <span class="keyword">const</span> std::string&amp; stitle, </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                   <span class="keywordtype">int</span> Ninvisible, <span class="keywordtype">int</span> Nvisible) : </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00847.html">Jigsaw</a>(sname, stitle, Ninvisible, 2*Nvisible),</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    m_Ninv(Ninvisible), m_Nvis(Nvisible)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_Type = kInvisibleJigsaw;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    m_InvMassDependancy = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Ninv; i++){</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      m_ChildStates += GetNewChildState();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a00835.html#acf16bd4a99e9cdf757563ab874f3fa78">   53</a></span>&#160;  <a class="code" href="a00835.html#acf16bd4a99e9cdf757563ab874f3fa78">InvisibleJigsaw::InvisibleJigsaw</a>() </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    : <a class="code" href="a00847.html">Jigsaw</a>(), m_Ninv(0), m_Nvis(0) {}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00813.html#af3149ec364c4c6f1f01d7110a78c6f8c">   38</a></span>&#160;  <a class="code" href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">MinMassesSqInvJigsaw::MinMassesSqInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                         <span class="keyword">const</span> std::string&amp; stitle,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                         <span class="keywordtype">int</span> N_vis_inv_pair) : </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="a00757.html">InvisibleJigsaw</a>(sname, stitle, N_vis_inv_pair, N_vis_inv_pair), </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    m_Npair(N_vis_inv_pair)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;     m_InvMassDependancy = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">   47</a></span>&#160;  <a class="code" href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">MinMassesSqInvJigsaw::MinMassesSqInvJigsaw</a>() </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    : <a class="code" href="a00757.html">InvisibleJigsaw</a>(), m_Npair(0) {}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  MinMassesSqInvJigsaw::~MinMassesSqInvJigsaw() {}</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a00813.html#a3b2af3850a0d87dbd27c18777c0068b7">   52</a></span>&#160;  <a class="code" href="a00813.html">MinMassesSqInvJigsaw</a>&amp; <a class="code" href="a00813.html#a3b2af3850a0d87dbd27c18777c0068b7">MinMassesSqInvJigsaw::Empty</a>(){</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> MinMassesSqInvJigsaw::m_Empty;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  InvisibleJigsaw::~InvisibleJigsaw() {}</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a00835.html#afd557bb9a0a2abedfe4a042d6f5b49c7">   58</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#afd557bb9a0a2abedfe4a042d6f5b49c7">InvisibleJigsaw::Clear</a>(){</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="a00847.html#aaf96ebe502954e246a94b0318d4e9a65">Jigsaw::Clear</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a00835.html#a0000c4ada9f1153db9cc99d546ae4551">   62</a></span>&#160;  <a class="code" href="a00835.html">InvisibleJigsaw</a>&amp; <a class="code" href="a00835.html#a0000c4ada9f1153db9cc99d546ae4551">InvisibleJigsaw::Empty</a>(){</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="a00987.html#aeb850431d5d7ae1075c20ff3fd4731bf">SetMassInvJigsaw::Empty</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a00835.html#ac0155a5be17ff81fd4f92b45802b6cf9">   66</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#ac0155a5be17ff81fd4f92b45802b6cf9">InvisibleJigsaw::SetGroup</a>(<a class="code" href="a00807.html">Group</a>&amp; group){</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(!group) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">if</span>(!group.<a class="code" href="a00807.html#aab1add614fddfd206c04b83ea67ee410">IsInvisibleGroup</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00847.html#aa3a386b5eace1c4ca7ed4f6af06b8de7">Jigsaw::SetGroup</a>(group);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00835.html#ac36840d14ed30e9fb1d69e19aa1f557d">   72</a></span>&#160;  <a class="code" href="a00831.html">InvisibleGroup</a>&amp; <a class="code" href="a00835.html#ac36840d14ed30e9fb1d69e19aa1f557d">InvisibleJigsaw::GetGroup</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="a00847.html#ab589506051ca6eb74bc00efdabb5bc79">Jigsaw::GetGroup</a>())</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00831.html#abc822d8b2c1b4a80693291c169870101">InvisibleGroup::Empty</a>();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code" href="a00831.html">InvisibleGroup</a>&amp;<span class="keyword">&gt;</span>(<a class="code" href="a00847.html#ab589506051ca6eb74bc00efdabb5bc79">Jigsaw::GetGroup</a>());</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">void</span> InvisibleJigsaw::SetParentState(<a class="code" href="a00995.html">State</a>&amp; state){</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">if</span>(!state) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">if</span>(!state.<a class="code" href="a00995.html#a67f8817206b8f0d7e4c891e40aabd926">IsInvisibleState</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    Jigsaw::SetParentState(state);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  InvisibleState <span class="keyword">const</span>&amp; InvisibleJigsaw::GetParentState()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span>(!Jigsaw::GetParentState())</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <span class="keywordflow">return</span> InvisibleState::Empty();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>InvisibleState&amp;<span class="keyword">&gt;</span>(Jigsaw::GetParentState());</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  InvisibleState&amp; InvisibleJigsaw::GetChildState(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>{</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(!Jigsaw::GetChildState(i)) </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">return</span> InvisibleState::Empty();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>InvisibleState&amp;<span class="keyword">&gt;</span>(Jigsaw::GetChildState(i));</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="a00835.html#a829292c60706c211a25733266f86d3b7">   99</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#a829292c60706c211a25733266f86d3b7">InvisibleJigsaw::AddVisibleFrame</a>(<span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">if</span>(i &lt; 0 || i &gt;= m_Nvis) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="a00947.html">ConstRestFrameList</a> frames = frame.<a class="code" href="a00919.html#a06678871d2e63872f514482d7ace0bda">GetListVisibleFrames</a>();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      AddDependancyFrame(frames[f], i);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="a00835.html#a4edd190299b7bbf42972de29ab829a00">  109</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#a4edd190299b7bbf42972de29ab829a00">InvisibleJigsaw::AddVisibleFrames</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">ConstRestFrameList</a>&amp; frames, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <a class="code" href="a00835.html#a829292c60706c211a25733266f86d3b7">AddVisibleFrame</a>(frames[f], i);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="a00835.html#aef5a9d4948d91e5e26fb85659d5eee32">  115</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#aef5a9d4948d91e5e26fb85659d5eee32">InvisibleJigsaw::AddMassFrame</a>(<span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span>(i &lt; 0 || i &gt;= m_Nvis) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="a00947.html">ConstRestFrameList</a> frames = frame.<a class="code" href="a00919.html#a06678871d2e63872f514482d7ace0bda">GetListVisibleFrames</a>();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      AddDependancyFrame(frames[f], m_Nvis + i);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  }</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="a00835.html#aa09a1a07070b2824918d587a2599af54">  125</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#aa09a1a07070b2824918d587a2599af54">InvisibleJigsaw::AddMassFrames</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">ConstRestFrameList</a>&amp; frames, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <a class="code" href="a00835.html#aef5a9d4948d91e5e26fb85659d5eee32">AddMassFrame</a>(frames[f], i);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="a00835.html#a790f1c5b2335c94ff43f5d479aeab1d5">  131</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#a790f1c5b2335c94ff43f5d479aeab1d5">InvisibleJigsaw::AddInvisibleFrame</a>(<span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">if</span>(i &lt; 0 || i &gt;= m_Ninv) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;   </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="a00947.html">ConstRestFrameList</a> frames = frame.<a class="code" href="a00919.html#a32c98dac7d2e6b7ad4e5581f41cc6666">GetListInvisibleFrames</a>();</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      AddChildFrame(frames[f], i);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="a00835.html#a1e5e0e5bab71b8074dccd93a0fafd0ce">  141</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00835.html#a1e5e0e5bab71b8074dccd93a0fafd0ce">InvisibleJigsaw::AddInvisibleFrames</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">ConstRestFrameList</a>&amp; frames, <span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">int</span> N = frames.GetN();</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> f = 0; f &lt; N; f++)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      <a class="code" href="a00835.html#a790f1c5b2335c94ff43f5d479aeab1d5">AddInvisibleFrame</a>(frames[f], i);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  }</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <a class="code" href="a00843.html">InvisibleState</a>&amp; InvisibleJigsaw::GetNewChildState(){</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordtype">char</span> strn[10];</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    sprintf(strn,<span class="stringliteral">&quot;%d&quot;</span>,GetNChildren());</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    std::string name = <a class="code" href="a00923.html#a393add2ce5a03e97238ac2c90f545f0e">GetName</a>()+<span class="stringliteral">&quot;_&quot;</span>+std::string(strn);</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="a00843.html">InvisibleState</a>* statePtr = <span class="keyword">new</span> <a class="code" href="a00843.html">InvisibleState</a>(name, name);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="a00923.html#ab3a3c5a2066cb8dcc438c60911f31817">AddDependent</a>(statePtr);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">return</span> *statePtr;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="a00835.html#a24eb9d313bc93a1950301132ce18e0ea">  156</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00835.html#a24eb9d313bc93a1950301132ce18e0ea">InvisibleJigsaw::GetMinimumMass</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()) <span class="keywordflow">return</span> 0.;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordtype">int</span> N = GetNChildren();</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">double</span> M = 0.;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      M += std::max(0., GetChildState(i).<a class="code" href="a00835.html#a24eb9d313bc93a1950301132ce18e0ea">GetMinimumMass</a>());</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">return</span> M;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  }</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00813.html#adbabeec334975f87a46457d40cef7a30">   56</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">MinMassesSqInvJigsaw::GetMinimumMass</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind())</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">return</span> 0.;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(m_Npair &lt;= 0) </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <span class="keywordflow">return</span> 0.;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(m_Npair == 1) </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordflow">return</span> std::max(0.,GetChildState(0).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>());</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    TLorentzVector PvisTOT(0.,0.,0.,0.);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    m_Pvis.clear();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      m_Pvis.push_back(GetDependancyStates(i+m_Npair).GetFourVector());</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      PvisTOT += m_Pvis[i];</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> ECM = 0.;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">double</span> Minv;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">double</span> Pvis;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    TVector3 Boost = PvisTOT.BoostVector();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">if</span>(Boost.Mag() &gt;= 1){</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    ECM += std::max(0.,GetChildState(i).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>());</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">return</span> ECM;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      m_Pvis[i].Boost(-Boost);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      Pvis = m_Pvis[i].P(); </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      Minv = std::max(0.,GetChildState(i).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>());</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      ECM += sqrt(Pvis*Pvis + Minv*Minv);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> ECM;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="a00813.html#a69268af1119e372d097a54782e97cd08">   96</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00813.html#a69268af1119e372d097a54782e97cd08">MinMassesSqInvJigsaw::AnalyzeEvent</a>(){</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind())</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(m_Npair &lt;= 1) </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    TLorentzVector INV = GetParentState().<a class="code" href="a00885.html#a538d28484b82b7bb2560f482879907f3">GetFourVector</a>();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">double</span> Minv = INV.M();</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    TLorentzVector VIS(0.,0.,0.,0.);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    m_Pvis.clear();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">int</span> Nnonzero = 0;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      m_Pvis.push_back(GetDependancyStates(i).GetFourVector());</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      VIS += m_Pvis[i];</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordflow">if</span>(m_Pvis[i].E() &gt; 1e-6)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    Nnonzero++;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    TLorentzVector VISTOT = VIS;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">// go to INV+VIS CM frame</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    TVector3 BoostCM = (VIS+INV).BoostVector();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">if</span>(BoostCM.Mag() &gt;= 1 || Nnonzero &lt; m_Npair){</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      TLorentzVector Pinv;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      Pinv.SetVectM(INV.Vect(), std::max(0.,GetChildState(0).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>()));</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      GetChildState(0).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(Pinv);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 1; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        Pinv.SetVectM(TVector3(), std::max(0.,GetChildState(i).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>()));</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        GetChildState(i).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(Pinv);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    INV.Boost(-BoostCM);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    VIS.Boost(-BoostCM);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      m_Pvis[i].Boost(-BoostCM);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    TVector3 BoostINV = INV.BoostVector();</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    TVector3 BoostVIS = VIS.BoostVector();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">if</span>(BoostINV.Mag() &gt;= 1 || BoostVIS.Mag() &gt;= 1){</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      TLorentzVector Pinv;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      Pinv.SetVectM(INV.Vect(), std::max(0.,GetChildState(0).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>()));</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      Pinv.Boost(BoostCM);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      GetChildState(0).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(Pinv);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 1; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        Pinv.SetVectM(TVector3(), std::max(0.,GetChildState(i).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>()));</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        GetChildState(i).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(Pinv);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">// INV states defined in the VIS frame</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    m_Pinv.clear();</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    m_Minv.clear();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      m_Minv.push_back(std::max(0.,GetChildState(i).<a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>()));</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      m_Pinv.push_back(m_Pvis[i]);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      m_Pinv[i].Boost(-BoostVIS);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      m_Pinv[i].SetVectM(m_Pinv[i].Vect(), m_Minv[i]);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="comment">// VIS states in INV frame</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      m_Pvis[i].Boost(-BoostINV);</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;   <span class="keywordtype">bool</span> InvisibleJigsaw::InitializeAnalysis(){</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind())</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> v = 0; v &lt; m_Nvis; v++)</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      <span class="keywordflow">if</span>(<a class="code" href="a00847.html#a6aacb0c34d34d1036918b3c6a85a87fb">GetDependancyFrames</a>(m_Nvis + v).GetN() == 0)</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="a00835.html#aa09a1a07070b2824918d587a2599af54">AddMassFrames</a>(<a class="code" href="a00847.html#a6aacb0c34d34d1036918b3c6a85a87fb">GetDependancyFrames</a>(v), v);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    SetMind(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> Jigsaw::InitializeAnalysis();</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordtype">void</span> InvisibleJigsaw::FillInvisibleMassJigsawDependancies(JigsawList&amp; jigsaws)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span>(m_InvMassDependancy){</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = m_Nvis; i &lt; 2*m_Nvis; i++){</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">int</span> M = GetDependancyStates(i).GetN();</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = 0; j &lt; M; j++){</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      GetDependancyStates(i)[j].GetParentJigsaw().</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        FillJigsawDependancies(jigsaws);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      }</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Ninv; i++)</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><a class="code" href="a00835.html#acf16bd4a99e9cdf757563ab874f3fa78">InvisibleJigsaw</a>&amp;<span class="keyword">&gt;</span>(GetChildState(i).GetChildJigsaw()).</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    FillInvisibleMassJigsawDependancies(jigsaws);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  }</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordtype">bool</span> InvisibleJigsaw::InitializeDependancyJigsaws(){</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    m_DependancyJigsaws.Clear();</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    JigsawList jigsaws; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    FillJigsawDependancies(jigsaws);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    jigsaws -= *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    m_DependancyJigsaws += jigsaws;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    jigsaws.Clear();</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    FillInvisibleMassJigsawDependancies(jigsaws);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    jigsaws -= *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    m_DependancyJigsaws += jigsaws;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="comment">// Remove dependancies from dependants</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    JigsawList group_jigsaws;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    FillGroupJigsawDependants(group_jigsaws);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    group_jigsaws -= *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    m_DependancyJigsaws -= group_jigsaws;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    </div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  }</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keywordtype">bool</span> InvisibleJigsaw::InitializeJigsawExecutionList(JigsawList&amp; exec_jigsaws, JigsawList&amp; todo_jigsaws){</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">if</span>(exec_jigsaws.Contains(*<span class="keyword">this</span>)) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    JigsawList group_jigsaws;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    group_jigsaws.Clear();</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    FillGroupJigsawDependancies(group_jigsaws);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    group_jigsaws -= *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">int</span> Ngroup = group_jigsaws.GetN();</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = Ngroup-1; i &gt;= 0; i--){</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      <a class="code" href="a00847.html#a28f1e89dd78e8a877f5ba07f0241182c">Jigsaw</a>&amp; jigsaw = group_jigsaws[i];</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      <span class="keywordflow">if</span>(!exec_jigsaws.Contains(jigsaw))</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">if</span>(!jigsaw.InitializeJigsawExecutionList(exec_jigsaws, todo_jigsaws))</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      m_DependancyJigsaws -= jigsaw;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="comment">// Satisfy dependancy jigsaws</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">while</span>(m_DependancyJigsaws.GetN() &gt; 0){</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      <a class="code" href="a00847.html#a28f1e89dd78e8a877f5ba07f0241182c">Jigsaw</a>&amp; jigsaw = m_DependancyJigsaws[m_DependancyJigsaws.GetN()-1];</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      <span class="keywordflow">if</span>(exec_jigsaws.Contains(jigsaw)){</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    m_DependancyJigsaws -= jigsaw;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">if</span>(m_Npair == 2){</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;      TVector3 Vdiff = (m_Pvis[0].Vect()-m_Pvis[1].Vect()).Unit();</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordtype">double</span> pinv = GetP(Minv, m_Minv[0], m_Minv[1]);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      m_Pinv[0].SetVectM( pinv*Vdiff, m_Minv[0]);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      m_Pinv[1].SetVectM(-pinv*Vdiff, m_Minv[1]);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      ApplyOptimalRotation();</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      <span class="keywordtype">double</span> k = GetPScale(Minv);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    m_Pinv[i].SetVectM(k*m_Pinv[i].Vect(), m_Minv[i]);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="comment">// return to original frame</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      m_Pinv[i].Boost(BoostINV);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      m_Pinv[i].Boost(BoostCM);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      GetChildState(i).<a class="code" href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">SetFourVector</a>(m_Pinv[i]);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="comment">// Based on Newton-Raphson root finding</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">double</span> MinMassesSqInvJigsaw::GetPScale(<span class="keywordtype">double</span> Minv){</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    std::vector&lt;double&gt; Pinv2;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">double</span> Ek  = 0.;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">double</span> fk  = 0.;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">double</span> dfk = 0.;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      Pinv2.push_back(m_Pinv[i].P()*m_Pinv[i].P());</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      Ek += sqrt(m_Minv[i]*m_Minv[i]+Pinv2[i]);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      fk += m_Minv[i];</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">if</span>(fk &gt; Minv || Ek &lt;= 0.) <span class="keywordflow">return</span> 0.;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordtype">double</span> k2 = Minv/Ek;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    k2 *= k2;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordtype">double</span> dk2 = k2;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">while</span>(fabs(dk2) &gt;= 1e-10 &amp;&amp; count &lt; 100){</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      fk = -Minv;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      dfk = 0.;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    Ek = sqrt(m_Minv[i]*m_Minv[i]+k2*Pinv2[i]);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    fk  += Ek;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    dfk += Ek &gt; 0 ? Pinv2[i]/Ek : 0.;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      }</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      dk2 = 2.*fk/dfk;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      k2 -= dk2;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      count++;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    }</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">return</span> sqrt(std::max(0.,k2));</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="comment">// Optimal rotation found using Singular Value Decomposition</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keywordtype">void</span> MinMassesSqInvJigsaw::ApplyOptimalRotation(){</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// first, check dimensionality of points</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    TVector3 Z(0.,0.,0.);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">int</span> index = 0;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">while</span>(Z.Mag() &lt;= 0. &amp;&amp; index &lt; m_Npair){</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      Z = m_Pinv[index].Vect().Cross(m_Pvis[index].Vect());</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      index++;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">if</span>(Z.Mag() &lt;= 0.) <span class="keywordflow">return</span>; <span class="comment">// already aligned</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    Z = Z.Unit();</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordtype">bool</span> b_2D = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      <span class="keywordflow">if</span>(Z.Dot(m_Pvis[i].Vect().Unit()) &gt; 1e-8){</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    b_2D = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      }</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <span class="keywordflow">if</span>(!jigsaw.InitializeJigsawExecutionList(exec_jigsaws, todo_jigsaws))</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      m_DependancyJigsaws -= jigsaw;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span>(!exec_jigsaws.Contains(*<span class="keyword">this</span>)){</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      exec_jigsaws += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      todo_jigsaws += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  }</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordtype">bool</span> InvisibleJigsaw::IsSoundBody()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">if</span>(RFBase::IsSoundBody())</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <span class="keywordflow">if</span>(Z.Dot(m_Pinv[i].Vect().Unit()) &gt; 1e-8){</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    b_2D = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    }</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="comment">// two dimensional problem, one rotation</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="keywordflow">if</span>(b_2D){</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      TVector3 X(0.,0.,0.);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    X += m_Pvis[i].Vect() - m_Pinv[i].Vect();</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      <span class="keywordflow">if</span>(X.Mag() &lt;= 0) <span class="keywordflow">return</span>; <span class="comment">// can&#39;t improve</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      X = X.Unit();</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      TVector3 Y = Z.Cross(X).Unit();</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">if</span>(!Jigsaw::IsSoundBody())</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <span class="keywordflow">return</span> SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Nvis; i++){</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      <span class="keywordflow">if</span>(<a class="code" href="a00847.html#a6aacb0c34d34d1036918b3c6a85a87fb">GetDependancyFrames</a>(i).GetN() &lt;= 0){</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Empty collection of visible frames: &quot;</span> &lt;&lt; i;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    m_Log &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">return</span> SetBody(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      }</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      <span class="keywordtype">double</span> num = 0.;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <span class="keywordtype">double</span> den = 0.;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++){</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    num += m_Pvis[i].Vect().Dot(Y)*</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      (m_Pvis[i].Vect().Dot(X)-m_Pinv[i].Vect().Dot(X));</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    den += m_Pvis[i].Vect().Dot(m_Pinv[i].Vect());</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;     </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keywordtype">double</span> theta = atan2(num,den);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npair; i++)</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      m_Pinv[i].Rotate(theta, -Z);</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="keywordflow">return</span> SetBody(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  }</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    </div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">// three dimensional problem - R from SVD</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    TMatrixD H(3,3);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordtype">double</span> val;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; 3; i++)</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = 0; j &lt; 3; j++)</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    H(i,j) = 0.;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    </div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> p = 0; p &lt; m_Npair; p++){</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      H(0,0) += m_Pinv[p].Px()*m_Pvis[p].Px();</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      H(1,0) += m_Pinv[p].Px()*m_Pvis[p].Py();</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      H(2,0) += m_Pinv[p].Px()*m_Pvis[p].Pz();</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      H(0,1) += m_Pinv[p].Py()*m_Pvis[p].Px();</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      H(1,1) += m_Pinv[p].Py()*m_Pvis[p].Py();</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      H(2,1) += m_Pinv[p].Py()*m_Pvis[p].Pz();</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      H(0,2) += m_Pinv[p].Pz()*m_Pvis[p].Px();</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      H(1,2) += m_Pinv[p].Pz()*m_Pvis[p].Py();</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      H(2,2) += m_Pinv[p].Pz()*m_Pvis[p].Pz();</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    }</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    TDecompSVD SVD(H);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    SVD.Decompose();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    TMatrixD UT(TMatrixD::kTransposed,SVD.GetU());</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    TMatrixD R(SVD.GetV(),TMatrixD::kMult,UT);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    TVector3 V;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> p = 0; p &lt; m_Npair; p++){</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      V = m_Pinv[p].Vect();</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      V.SetXYZ(R(0,0)*V.Px()+R(1,0)*V.Py()+R(2,0)*V.Pz(),</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;               R(0,1)*V.Px()+R(1,1)*V.Py()+R(2,1)*V.Pz(),</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;               R(0,2)*V.Px()+R(1,2)*V.Py()+R(2,2)*V.Pz());</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      m_Pinv[p].SetVectM(V, m_Pinv[p].M());</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    }</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  MinMassesSqInvJigsaw MinMassesSqInvJigsaw::m_Empty;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00835_html_aef5a9d4948d91e5e26fb85659d5eee32"><div class="ttname"><a href="a00835.html#aef5a9d4948d91e5e26fb85659d5eee32">RestFrames::InvisibleJigsaw::AddMassFrame</a></div><div class="ttdeci">void AddMassFrame(const RestFrame &amp;frame, int i=0)</div><div class="ttdoc">Adds a visible frame to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00115">InvisibleJigsaw.cc:115</a></div></div>
-<div class="ttc" id="aa00835_html_acf16bd4a99e9cdf757563ab874f3fa78"><div class="ttname"><a href="a00835.html#acf16bd4a99e9cdf757563ab874f3fa78">RestFrames::InvisibleJigsaw::InvisibleJigsaw</a></div><div class="ttdeci">InvisibleJigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00053">InvisibleJigsaw.cc:53</a></div></div>
-<div class="ttc" id="aa00807_html_aab1add614fddfd206c04b83ea67ee410"><div class="ttname"><a href="a00807.html#aab1add614fddfd206c04b83ea67ee410">RestFrames::Group::IsInvisibleGroup</a></div><div class="ttdeci">bool IsInvisibleGroup() const</div><div class="ttdoc">Is this an InvisibleGroup? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00075">Group.cc:75</a></div></div>
-<div class="ttc" id="aa00919_html_a06678871d2e63872f514482d7ace0bda"><div class="ttname"><a href="a00919.html#a06678871d2e63872f514482d7ace0bda">RestFrames::RestFrame::GetListVisibleFrames</a></div><div class="ttdeci">virtual RestFrameList GetListVisibleFrames() const</div><div class="ttdoc">Returns a list of VisibleFrame s inheriting from this.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00342">RestFrame.cc:342</a></div></div>
-<div class="ttc" id="aa00835_html_a4edd190299b7bbf42972de29ab829a00"><div class="ttname"><a href="a00835.html#a4edd190299b7bbf42972de29ab829a00">RestFrames::InvisibleJigsaw::AddVisibleFrames</a></div><div class="ttdeci">void AddVisibleFrames(const ConstRestFrameList &amp;frames, int i=0)</div><div class="ttdoc">Adds a list of visible frames to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00109">InvisibleJigsaw.cc:109</a></div></div>
-<div class="ttc" id="aa00995_html"><div class="ttname"><a href="a00995.html">RestFrames::State</a></div><div class="ttdoc">Abstract base class for all State objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00494_source.html#l00047">State.hh:47</a></div></div>
-<div class="ttc" id="aa00987_html_aeb850431d5d7ae1075c20ff3fd4731bf"><div class="ttname"><a href="a00987.html#aeb850431d5d7ae1075c20ff3fd4731bf">RestFrames::SetMassInvJigsaw::Empty</a></div><div class="ttdeci">static SetMassInvJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty SetMassInvJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00677_source.html#l00049">SetMassInvJigsaw.cc:49</a></div></div>
-<div class="ttc" id="aa00923_html_a393add2ce5a03e97238ac2c90f545f0e"><div class="ttname"><a href="a00923.html#a393add2ce5a03e97238ac2c90f545f0e">RestFrames::RFBase::GetName</a></div><div class="ttdeci">std::string GetName() const</div><div class="ttdoc">Returns object name.</div><div class="ttdef"><b>Definition:</b> <a href="a00641_source.html#l00104">RFBase.cc:104</a></div></div>
-<div class="ttc" id="aa00831_html"><div class="ttname"><a href="a00831.html">RestFrames::InvisibleGroup</a></div><div class="ttdef"><b>Definition:</b> <a href="a00380_source.html#l00040">InvisibleGroup.hh:40</a></div></div>
-<div class="ttc" id="aa00835_html_afd557bb9a0a2abedfe4a042d6f5b49c7"><div class="ttname"><a href="a00835.html#afd557bb9a0a2abedfe4a042d6f5b49c7">RestFrames::InvisibleJigsaw::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears InvisibleJigsaw of all connections to other objects</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00058">InvisibleJigsaw.cc:58</a></div></div>
-<div class="ttc" id="aa00383_html"><div class="ttname"><a href="a00383.html">InvisibleJigsaw.hh</a></div></div>
-<div class="ttc" id="aa00923_html_ab3a3c5a2066cb8dcc438c60911f31817"><div class="ttname"><a href="a00923.html#ab3a3c5a2066cb8dcc438c60911f31817">RestFrames::RFBase::AddDependent</a></div><div class="ttdeci">void AddDependent(RFBase *dep)</div><div class="ttdoc">pointer to RFBase object owned by this one</div><div class="ttdef"><b>Definition:</b> <a href="a00641_source.html#l00088">RFBase.cc:88</a></div></div>
-<div class="ttc" id="aa00847_html_aa3a386b5eace1c4ca7ed4f6af06b8de7"><div class="ttname"><a href="a00847.html#aa3a386b5eace1c4ca7ed4f6af06b8de7">RestFrames::Jigsaw::SetGroup</a></div><div class="ttdeci">virtual void SetGroup(Group &amp;group=Group::Empty())</div><div class="ttdoc">Sets group (Group) to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00584_source.html#l00109">Jigsaw.cc:109</a></div></div>
-<div class="ttc" id="aa00835_html_a24eb9d313bc93a1950301132ce18e0ea"><div class="ttname"><a href="a00835.html#a24eb9d313bc93a1950301132ce18e0ea">RestFrames::InvisibleJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00156">InvisibleJigsaw.cc:156</a></div></div>
-<div class="ttc" id="aa00446_html"><div class="ttname"><a href="a00446.html">RestFrame.hh</a></div></div>
-<div class="ttc" id="aa00488_html"><div class="ttname"><a href="a00488.html">SetMassInvJigsaw.hh</a></div></div>
-<div class="ttc" id="aa00835_html_aa09a1a07070b2824918d587a2599af54"><div class="ttname"><a href="a00835.html#aa09a1a07070b2824918d587a2599af54">RestFrames::InvisibleJigsaw::AddMassFrames</a></div><div class="ttdeci">void AddMassFrames(const ConstRestFrameList &amp;frames, int i=0)</div><div class="ttdoc">Adds a list visible frames to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00125">InvisibleJigsaw.cc:125</a></div></div>
-<div class="ttc" id="aa00835_html_ac36840d14ed30e9fb1d69e19aa1f557d"><div class="ttname"><a href="a00835.html#ac36840d14ed30e9fb1d69e19aa1f557d">RestFrames::InvisibleJigsaw::GetGroup</a></div><div class="ttdeci">InvisibleGroup &amp; GetGroup() const</div><div class="ttdoc">Returns group (Group) associated with this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00072">InvisibleJigsaw.cc:72</a></div></div>
-<div class="ttc" id="aa00847_html_ab589506051ca6eb74bc00efdabb5bc79"><div class="ttname"><a href="a00847.html#ab589506051ca6eb74bc00efdabb5bc79">RestFrames::Jigsaw::GetGroup</a></div><div class="ttdeci">virtual Group &amp; GetGroup() const</div><div class="ttdoc">Returns group (Group) associated with this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00584_source.html#l00130">Jigsaw.cc:130</a></div></div>
-<div class="ttc" id="aa00835_html_a790f1c5b2335c94ff43f5d479aeab1d5"><div class="ttname"><a href="a00835.html#a790f1c5b2335c94ff43f5d479aeab1d5">RestFrames::InvisibleJigsaw::AddInvisibleFrame</a></div><div class="ttdeci">void AddInvisibleFrame(const RestFrame &amp;frame, int i=0)</div><div class="ttdoc">Adds an InvisibleFrame to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00131">InvisibleJigsaw.cc:131</a></div></div>
-<div class="ttc" id="aa00847_html_a6aacb0c34d34d1036918b3c6a85a87fb"><div class="ttname"><a href="a00847.html#a6aacb0c34d34d1036918b3c6a85a87fb">RestFrames::Jigsaw::GetDependancyFrames</a></div><div class="ttdeci">virtual ConstRestFrameList const  &amp; GetDependancyFrames(int i) const</div><div class="ttdoc">Returns list of frames in which this jigsaw depends on.</div><div class="ttdef"><b>Definition:</b> <a href="a00584_source.html#l00214">Jigsaw.cc:214</a></div></div>
-<div class="ttc" id="aa00919_html"><div class="ttname"><a href="a00919.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00446_source.html#l00045">RestFrame.hh:45</a></div></div>
-<div class="ttc" id="aa00847_html"><div class="ttname"><a href="a00847.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects</div><div class="ttdef"><b>Definition:</b> <a href="a00392_source.html#l00044">Jigsaw.hh:44</a></div></div>
-<div class="ttc" id="aa00835_html_a829292c60706c211a25733266f86d3b7"><div class="ttname"><a href="a00835.html#a829292c60706c211a25733266f86d3b7">RestFrames::InvisibleJigsaw::AddVisibleFrame</a></div><div class="ttdeci">void AddVisibleFrame(const RestFrame &amp;frame, int i=0)</div><div class="ttdoc">Adds a VisibleFrame to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00099">InvisibleJigsaw.cc:99</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList&lt; const RestFrame &gt;</a></div></div>
-<div class="ttc" id="aa00835_html"><div class="ttname"><a href="a00835.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
-<div class="ttc" id="aa00995_html_a67f8817206b8f0d7e4c891e40aabd926"><div class="ttname"><a href="a00995.html#a67f8817206b8f0d7e4c891e40aabd926">RestFrames::State::IsInvisibleState</a></div><div class="ttdeci">bool IsInvisibleState() const</div><div class="ttdoc">Is this an InvisibleState? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00683_source.html#l00087">State.cc:87</a></div></div>
-<div class="ttc" id="aa00835_html_a0000c4ada9f1153db9cc99d546ae4551"><div class="ttname"><a href="a00835.html#a0000c4ada9f1153db9cc99d546ae4551">RestFrames::InvisibleJigsaw::Empty</a></div><div class="ttdeci">static InvisibleJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty InvisibleJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00062">InvisibleJigsaw.cc:62</a></div></div>
-<div class="ttc" id="aa00919_html_a32c98dac7d2e6b7ad4e5581f41cc6666"><div class="ttname"><a href="a00919.html#a32c98dac7d2e6b7ad4e5581f41cc6666">RestFrames::RestFrame::GetListInvisibleFrames</a></div><div class="ttdeci">virtual RestFrameList GetListInvisibleFrames() const</div><div class="ttdoc">Returns a list of InvisibleFrame s inheriting from this.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00346">RestFrame.cc:346</a></div></div>
-<div class="ttc" id="aa00843_html"><div class="ttname"><a href="a00843.html">RestFrames::InvisibleState</a></div><div class="ttdef"><b>Definition:</b> <a href="a00389_source.html#l00040">InvisibleState.hh:40</a></div></div>
-<div class="ttc" id="aa00847_html_aaf96ebe502954e246a94b0318d4e9a65"><div class="ttname"><a href="a00847.html#aaf96ebe502954e246a94b0318d4e9a65">RestFrames::Jigsaw::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears Jigsaw of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00584_source.html#l00074">Jigsaw.cc:74</a></div></div>
-<div class="ttc" id="aa00807_html"><div class="ttname"><a href="a00807.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects</div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00046">Group.hh:46</a></div></div>
-<div class="ttc" id="aa00835_html_a1e5e0e5bab71b8074dccd93a0fafd0ce"><div class="ttname"><a href="a00835.html#a1e5e0e5bab71b8074dccd93a0fafd0ce">RestFrames::InvisibleJigsaw::AddInvisibleFrames</a></div><div class="ttdeci">void AddInvisibleFrames(const ConstRestFrameList &amp;frames, int i=0)</div><div class="ttdoc">Adds a list of invisible frames to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00141">InvisibleJigsaw.cc:141</a></div></div>
-<div class="ttc" id="aa00835_html_ac0155a5be17ff81fd4f92b45802b6cf9"><div class="ttname"><a href="a00835.html#ac0155a5be17ff81fd4f92b45802b6cf9">RestFrames::InvisibleJigsaw::SetGroup</a></div><div class="ttdeci">void SetGroup(Group &amp;group=Group::Empty())</div><div class="ttdoc">Sets group (Group) to current jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00066">InvisibleJigsaw.cc:66</a></div></div>
-<div class="ttc" id="aa00831_html_abc822d8b2c1b4a80693291c169870101"><div class="ttname"><a href="a00831.html#abc822d8b2c1b4a80693291c169870101">RestFrames::InvisibleGroup::Empty</a></div><div class="ttdeci">static InvisibleGroup &amp; Empty()</div><div class="ttdoc">Returns empty InvisibleGroup.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00053">InvisibleGroup.cc:53</a></div></div>
-<div class="ttc" id="aa00847_html_a28f1e89dd78e8a877f5ba07f0241182c"><div class="ttname"><a href="a00847.html#a28f1e89dd78e8a877f5ba07f0241182c">RestFrames::Jigsaw::Jigsaw</a></div><div class="ttdeci">Jigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00584_source.html#l00061">Jigsaw.cc:61</a></div></div>
+<div class="ttc" id="aa00813_html_a3b2af3850a0d87dbd27c18777c0068b7"><div class="ttname"><a href="a00813.html#a3b2af3850a0d87dbd27c18777c0068b7">RestFrames::MinMassesSqInvJigsaw::Empty</a></div><div class="ttdeci">static MinMassesSqInvJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty MinMassesSqInvJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00052">MinMassesSqInvJigsaw.cc:52</a></div></div>
+<div class="ttc" id="aa00380_html"><div class="ttname"><a href="a00380.html">InvisibleState.hh</a></div></div>
+<div class="ttc" id="aa00885_html_ad94f9ab87499da559a6bf96b5f2d9d2d"><div class="ttname"><a href="a00885.html#ad94f9ab87499da559a6bf96b5f2d9d2d">RestFrames::State::SetFourVector</a></div><div class="ttdeci">virtual void SetFourVector(const TLorentzVector &amp;V)</div><div class="ttdoc">Sets four-vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00617_source.html#l00161">State.cc:161</a></div></div>
+<div class="ttc" id="aa00885_html_a538d28484b82b7bb2560f482879907f3"><div class="ttname"><a href="a00885.html#a538d28484b82b7bb2560f482879907f3">RestFrames::State::GetFourVector</a></div><div class="ttdeci">virtual TLorentzVector GetFourVector() const</div><div class="ttdoc">Returns four vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00617_source.html#l00165">State.cc:165</a></div></div>
+<div class="ttc" id="aa00813_html"><div class="ttname"><a href="a00813.html">RestFrames::MinMassesSqInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00037">MinMassesSqInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00813_html_adbabeec334975f87a46457d40cef7a30"><div class="ttname"><a href="a00813.html#adbabeec334975f87a46457d40cef7a30">RestFrames::MinMassesSqInvJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00056">MinMassesSqInvJigsaw.cc:56</a></div></div>
+<div class="ttc" id="aa00813_html_afe899b50b05e763b37e4d0bb2f45a8d2"><div class="ttname"><a href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">RestFrames::MinMassesSqInvJigsaw::MinMassesSqInvJigsaw</a></div><div class="ttdeci">MinMassesSqInvJigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00047">MinMassesSqInvJigsaw.cc:47</a></div></div>
+<div class="ttc" id="aa00757_html"><div class="ttname"><a href="a00757.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
+<div class="ttc" id="aa00813_html_a69268af1119e372d097a54782e97cd08"><div class="ttname"><a href="a00813.html#a69268af1119e372d097a54782e97cd08">RestFrames::MinMassesSqInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00096">MinMassesSqInvJigsaw.cc:96</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:15 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:26 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

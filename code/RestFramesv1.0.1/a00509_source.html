@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/VisibleGenFrame.hh Source File</title>
+<title>RestFrames: src/GeneratorFrame.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,12 +98,12 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_102c6b54c5ba6d0be037f4c993493f78.html">RestFrames</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">VisibleGenFrame.hh</div>  </div>
+<div class="title">GeneratorFrame.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00509.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,52 +124,442 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef VisibleGenFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define VisibleGenFrame_HH</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00506.html">RestFrames/VisibleFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00359.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;TRandom3.h&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;TDatime.h&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00350.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00476.html">RestFrames/VisibleGenFrame.hh</a>&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// VisibleGenFrame class</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a01015.html">   41</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a01015.html">VisibleGenFrame</a> : <span class="keyword">public</span> <a class="code" href="a01011.html">VisibleFrame</a>&lt;GeneratorFrame&gt; {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a01015.html#a8516124ca0a15b5596451f2959d343c7">VisibleGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a01015.html#a8516124ca0a15b5596451f2959d343c7">VisibleGenFrame</a>();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a01015.html">VisibleGenFrame</a>();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">static</span> <a class="code" href="a01015.html">VisibleGenFrame</a>&amp; <a class="code" href="a01015.html#a4b6b1e20ddc0a112fbbad17de012156c">Empty</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a01015.html#a7d1a5aeaa30171f5e5a993600a31e532">SetMass</a>(<span class="keywordtype">double</span> val);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResetGenFrame();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> GenerateFrame();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">static</span> <a class="code" href="a01015.html">VisibleGenFrame</a> m_Empty;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  };</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// GeneratorFrame class methods</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00725.html#aed84f2e0a9a94ae7a8f2cd88c3a75f39">   41</a></span>&#160;<span class="comment"></span>  <a class="code" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame::GeneratorFrame</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                 <span class="keyword">const</span> std::string&amp; stitle) </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    : <a class="code" href="a00829.html">RestFrame</a>(sname, stitle)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    m_Ana = kGenFrame;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_VarMassMCMC = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    m_Mass = 0.;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    m_Ngen = 0;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    m_Npass = 0;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    m_PCut = -1.;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    m_PtCut = -1.;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    m_EtaCut = -1.;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    m_minMassCut = -1.;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    m_maxMassCut = -1.;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    m_doCuts = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    m_doPCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    m_doPtCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    m_doEtaCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    m_dominMassCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    m_domaxMassCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    TDatime now;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">int</span> today = now.GetDate();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">int</span> clock = now.GetTime();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> key   = <a class="code" href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">GetKey</a>().<a class="code" href="a00841.html#ac51999288eb5664077680dcdde8e7b39">GetKey</a>();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> seed = today+clock+key;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    m_Random = <span class="keyword">new</span> TRandom3(seed);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">   72</a></span>&#160;  <a class="code" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame::GeneratorFrame</a>() </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    : <a class="code" href="a00829.html">RestFrame</a>() { }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  GeneratorFrame::~GeneratorFrame(){</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">if</span>(m_Random) <span class="keyword">delete</span> m_Random;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">   79</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">GeneratorFrame::Clear</a>(){</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="a00829.html#ad1d0382ea2a7f46ebf00ea361948e659">RestFrame::Clear</a>();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="a00725.html#a81fa1388135e613f0035040a46d4f025">   84</a></span>&#160;  <a class="code" href="a00725.html">GeneratorFrame</a>&amp; <a class="code" href="a00725.html#a81fa1388135e613f0035040a46d4f025">GeneratorFrame::Empty</a>(){</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="a00905.html#a4b6b1e20ddc0a112fbbad17de012156c">VisibleGenFrame::Empty</a>();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="a00725.html#ae0101090e69f3671d552312c8ac094ca">   88</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00725.html#ae0101090e69f3671d552312c8ac094ca">GeneratorFrame::GetMass</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">return</span> std::max(m_Mass, 0.);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">   92</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">GeneratorFrame::AddChildFrame</a>(<a class="code" href="a00829.html">RestFrame</a>&amp; frame){</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00829.html#af0b1a3c79a95d12ba9adb68d33b838e5">IsGenFrame</a>()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="a00829.html#adf48c7a6b51ffa542aeb000903c8e57e">RestFrame::AddChildFrame</a>(frame);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">   98</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">GeneratorFrame::SetParentFrame</a>(<a class="code" href="a00829.html">RestFrame</a>&amp; frame){</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span>(!frame) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00829.html#af0b1a3c79a95d12ba9adb68d33b838e5">IsGenFrame</a>()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="a00829.html#adab05aad875837545b0330d6c6c4dc4d">RestFrame::SetParentFrame</a>(frame);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">  104</a></span>&#160;  <a class="code" href="a00725.html">GeneratorFrame</a> <span class="keyword">const</span>&amp; <a class="code" href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">GeneratorFrame::GetParentFrame</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00829.html">RestFrame</a>&amp; frame = <a class="code" href="a00829.html#aaca062f84f7700d214fc6427118b6e0b">RestFrame::GetParentFrame</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a>())</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><a class="code" href="a00725.html">GeneratorFrame</a>&amp;<span class="keyword">&gt;</span>(frame);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">else</span> </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00725.html#a81fa1388135e613f0035040a46d4f025">GeneratorFrame::Empty</a>();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">  112</a></span>&#160;  <a class="code" href="a00725.html">GeneratorFrame</a>&amp; <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GeneratorFrame::GetChildFrame</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <a class="code" href="a00829.html">RestFrame</a>&amp; frame = <a class="code" href="a00829.html#a5ff0d688c21b0e36cdc23e161f464cbb">RestFrame::GetChildFrame</a>(i);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">if</span>(!frame.<a class="code" href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a>())</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code" href="a00725.html">GeneratorFrame</a>&amp;<span class="keyword">&gt;</span>(frame);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">else</span> </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="a00725.html#a81fa1388135e613f0035040a46d4f025">GeneratorFrame::Empty</a>();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">  120</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">GeneratorFrame::ClearEventRecursive</a>(){ </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    ResetGenFrame();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind())</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">int</span> Nf =  <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nf; i++)</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).<a class="code" href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">ClearEventRecursive</a>())</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">  133</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">GeneratorFrame::AnalyzeEventRecursive</a>(){</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">if</span>(!IsSoundMind()){</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      UnSoundMind(RF_FUNCTION);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">if</span>(!GenerateFrame()){</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to generate event for this frame.&quot;</span>;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      m_Log &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++)</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).<a class="code" href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">AnalyzeEventRecursive</a>()){</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  }</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="keywordtype">void</span> GeneratorFrame::SetChildren(<span class="keyword">const</span> std::vector&lt;TLorentzVector&gt;&amp; P_children){</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">int</span> N = P_children.size();</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++){</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      TLorentzVector P = P_children[i];</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      TVector3 B_child = P.BoostVector();</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      SetChildBoostVector(<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i), B_child);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).SetFourVector(P,*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    }</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordtype">bool</span> GeneratorFrame::InitializeGenAnalysis(){</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">  169</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">GeneratorFrame::InitializeAnalysisRecursive</a>(){</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()){</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      UnSoundBody(RF_FUNCTION);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">if</span>(!InitializeGenAnalysis())</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    m_Ngen = 0;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    m_Npass = 0;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">int</span> Nchild = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nchild; i++)</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).<a class="code" href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">InitializeAnalysisRecursive</a>()){</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to recursively initialize analysis for frame:&quot;</span>;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    m_Log &lt;&lt; Log(<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i)) &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;      }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">  193</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">GeneratorFrame::GetRandom</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordflow">return</span> m_Random-&gt;Rndm();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  }</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">  197</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">GeneratorFrame::GetGaus</a>(<span class="keywordtype">double</span> mu, <span class="keywordtype">double</span> sig)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span> m_Random-&gt;Gaus(mu,sig);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keywordtype">bool</span> GeneratorFrame::IterateMCMC(){</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">bool</span> GeneratorFrame::IterateRecursiveMCMC(){</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;     <span class="keywordflow">if</span>(!IsSoundMind()){</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;       UnSoundMind(RF_FUNCTION);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;       <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;     }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;     <span class="keywordflow">if</span>(!IterateMCMC())</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;       <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;     <span class="keywordtype">int</span> N = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;     <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;       <span class="keywordflow">if</span>(!<a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).IterateRecursiveMCMC())</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;     <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;     <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordtype">void</span> GeneratorFrame::SetVariableMassMCMC(<span class="keywordtype">bool</span> var){ </div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    m_VarMassMCMC = var; </div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  }</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">  226</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">GeneratorFrame::IsVariableMassMCMC</a>()<span class="keyword"> const </span>{ </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keywordflow">return</span> m_VarMassMCMC; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  }</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">  230</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">GeneratorFrame::GetMinimumMassMCMC</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()){</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      UnSoundBody(RF_FUNCTION);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      <span class="keywordflow">return</span> SetBody(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    }</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordtype">double</span> mass = 0.;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordtype">int</span> N = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++)</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      mass += <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).<a class="code" href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">GetMinimumMassMCMC</a>();</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">IsVariableMassMCMC</a>())</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      mass = std::max(<a class="code" href="a00725.html#ae0101090e69f3671d552312c8ac094ca">GetMass</a>(),mass);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordflow">return</span> mass;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  }</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">  247</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">GeneratorFrame::GenerateMassMCMC</a>(<span class="keywordtype">double</span>&amp; mass, <span class="keywordtype">double</span>&amp; prob, </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                    <span class="keywordtype">double</span> max)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    mass = 0.;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    prob = 1.;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordtype">void</span> GeneratorFrame::SetMassMCMC(<span class="keywordtype">double</span> val){</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">if</span>(val &lt; 0.){</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to set mass to negative value &quot;</span>;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      m_Log &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;. Setting to zero.&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      m_Mass = 0.;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      m_Mass = val;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  <span class="keywordtype">void</span> GeneratorFrame::SetMassMCMC(<span class="keywordtype">double</span> mass, </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                   GeneratorFrame&amp; frame)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    frame.SetMassMCMC(mass);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">  269</a></span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">GeneratorFrame::GetProbMCMC</a>(<span class="keywordtype">double</span> mass)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">return</span> 1.;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno"><a class="line" href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">  273</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">GeneratorFrame::PrintGeneratorEfficiency</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="a00829.html#a6832c71dd583dff4ae29d0c5853e607b">IsLabFrame</a>()){</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      m_Log &lt;&lt; LogInfo &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Total events generated: &quot;</span> &lt;&lt; m_Ngen &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Events in acceptance:   &quot;</span> &lt;&lt; m_Npass &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Generator efficiency:   &quot;</span>;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      m_Log &lt;&lt; 100.*double(m_Npass)/double(m_Ngen) &lt;&lt; <span class="stringliteral">&quot; %&quot;</span>;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      m_Log &lt;&lt; std::endl &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    } </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">if</span>(m_doCuts){</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      m_Log &lt;&lt; LogInfo;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Acceptance cuts for frame:&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      <span class="keywordflow">if</span>(m_dominMassCut || m_domaxMassCut){</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;   &quot;</span>;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordflow">if</span>(m_dominMassCut)</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      m_Log &lt;&lt; m_minMassCut &lt;&lt; <span class="stringliteral">&quot; &lt; &quot;</span>;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;mass&quot;</span>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordflow">if</span>(m_domaxMassCut)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot; &lt; &quot;</span> &lt;&lt; m_maxMassCut;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    m_Log &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      <span class="keywordflow">if</span>(m_doPCut){</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;   P &gt; &quot;</span> &lt;&lt; m_PCut &lt;&lt; std::endl; </div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <span class="keywordflow">if</span>(m_doPtCut){</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;   Pt &gt; &quot;</span> &lt;&lt; m_PtCut &lt;&lt; std::endl; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <span class="keywordflow">if</span>(m_doEtaCut){</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;   |Eta| &lt; &quot;</span> &lt;&lt; m_EtaCut &lt;&lt; std::endl; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      }</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Acceptance efficiency = &quot;</span>;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      m_Log &lt;&lt; 100.*double(m_Npass)/double(m_Ngen) &lt;&lt; <span class="stringliteral">&quot; %&quot;</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      m_Log &lt;&lt; std::endl &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    }</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordtype">int</span> N = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++)</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).<a class="code" href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">PrintGeneratorEfficiency</a>();</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  }</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <span class="keywordtype">bool</span> GeneratorFrame::EventInAcceptance()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">if</span>(!IsSoundSpirit()){</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      UnSoundSpirit(RF_FUNCTION);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">bool</span> pass = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keywordflow">if</span>(m_doCuts){</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      TLorentzVector P = <a class="code" href="a00829.html#a1a2550348b00b23c5d0dd123325757ae">GetFourVector</a>();</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      <span class="keywordflow">if</span>(m_doPCut)</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordflow">if</span>(P.P() &lt; (1.-1e-10)*m_PCut)</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      pass = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      <span class="keywordflow">if</span>(m_doPtCut)</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">if</span>(P.Pt() &lt; (1.-1e-10)*m_PtCut)</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      pass = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <span class="keywordflow">if</span>(m_doEtaCut)</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordflow">if</span>(fabs(P.Eta()) &gt; (1.+1e-10)*m_EtaCut)</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      pass = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordflow">if</span>(m_dominMassCut)</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keywordflow">if</span>(m_Mass &lt; (1.-1e-10)*m_minMassCut)</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      pass = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keywordflow">if</span>(m_domaxMassCut)</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">if</span>(m_Mass &gt; (1.+1e-10)*m_maxMassCut)</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      pass = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordtype">bool</span> evt_pass = pass;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordtype">bool</span> pass_c;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keywordtype">int</span> N = <a class="code" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a>();</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++){</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      pass_c = <a class="code" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>(i).EventInAcceptance();</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      evt_pass = evt_pass &amp;&amp; pass_c;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    }</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="a00829.html#a6832c71dd583dff4ae29d0c5853e607b">IsLabFrame</a>())</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      pass = evt_pass;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    m_Ngen++;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">if</span>(pass)</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      m_Npass++;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">return</span> evt_pass;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  }</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  </div>
+<div class="line"><a name="l00358"></a><span class="lineno"><a class="line" href="a00725.html#a03e97d91a22af11432f5399b84b72720">  358</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a03e97d91a22af11432f5399b84b72720">GeneratorFrame::SetPCut</a>(<span class="keywordtype">double</span> cut){</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordflow">if</span>(cut &lt;= 0.) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    m_PCut = cut;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    m_doPCut = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    m_doCuts = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  }</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  </div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="a00725.html#a16691437cd581a96cc861b38ef6145e9">  365</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a16691437cd581a96cc861b38ef6145e9">GeneratorFrame::SetPtCut</a>(<span class="keywordtype">double</span> cut){</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">if</span>(cut &lt;= 0.) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    m_PtCut = cut;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    m_doPtCut = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    m_doCuts = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  }</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  </div>
+<div class="line"><a name="l00372"></a><span class="lineno"><a class="line" href="a00725.html#a875b020d82d5a153842e45f7c80fc891">  372</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a875b020d82d5a153842e45f7c80fc891">GeneratorFrame::SetEtaCut</a>(<span class="keywordtype">double</span> cut){</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    m_EtaCut = fabs(cut);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    m_doEtaCut = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    m_doCuts = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  }</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  </div>
+<div class="line"><a name="l00378"></a><span class="lineno"><a class="line" href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">  378</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">GeneratorFrame::SetMassWindowCut</a>(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max){</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="keywordflow">if</span>(min &gt; 0 || max &gt; 0)</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      m_doCuts = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keywordflow">if</span>(min &gt; 0){</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;      m_dominMassCut = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      m_minMassCut = min;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    }</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordflow">if</span>(max &gt; 0){</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      m_domaxMassCut = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;      m_maxMassCut = max;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    }  </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  }</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno"><a class="line" href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">  395</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">GeneratorFrame::RemovePCut</a>(){</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    m_doPCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      m_dominMassCut || m_domaxMassCut;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;  }</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  </div>
+<div class="line"><a name="l00401"></a><span class="lineno"><a class="line" href="a00725.html#aade06f6aa309048c2eb765cce1896416">  401</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#aade06f6aa309048c2eb765cce1896416">GeneratorFrame::RemovePtCut</a>(){</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    m_doPtCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      m_dominMassCut || m_domaxMassCut;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;  }</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  </div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="line" href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">  407</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">GeneratorFrame::RemoveEtaCut</a>(){</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    m_doEtaCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;      m_dominMassCut || m_domaxMassCut;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  }</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno"><a class="line" href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">  413</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">GeneratorFrame::RemoveMassWindowCut</a>(){</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    m_dominMassCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    m_domaxMassCut = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    m_doCuts = m_doPCut || m_doPtCut || m_doEtaCut ||</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;      m_dominMassCut || m_domaxMassCut;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;  }</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00359_html"><div class="ttname"><a href="a00359.html">GeneratorFrame.hh</a></div></div>
-<div class="ttc" id="aa01015_html_a8516124ca0a15b5596451f2959d343c7"><div class="ttname"><a href="a01015.html#a8516124ca0a15b5596451f2959d343c7">RestFrames::VisibleGenFrame::VisibleGenFrame</a></div><div class="ttdeci">VisibleGenFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00698_source.html#l00041">VisibleGenFrame.cc:41</a></div></div>
-<div class="ttc" id="aa01011_html"><div class="ttname"><a href="a01011.html">RestFrames::VisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00506_source.html#l00043">VisibleFrame.hh:43</a></div></div>
-<div class="ttc" id="aa01015_html_a7d1a5aeaa30171f5e5a993600a31e532"><div class="ttname"><a href="a01015.html#a7d1a5aeaa30171f5e5a993600a31e532">RestFrames::VisibleGenFrame::SetMass</a></div><div class="ttdeci">virtual void SetMass(double val)</div><div class="ttdoc">Sets mass of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00698_source.html#l00050">VisibleGenFrame.cc:50</a></div></div>
-<div class="ttc" id="aa00506_html"><div class="ttname"><a href="a00506.html">VisibleFrame.hh</a></div></div>
-<div class="ttc" id="aa01015_html_a4b6b1e20ddc0a112fbbad17de012156c"><div class="ttname"><a href="a01015.html#a4b6b1e20ddc0a112fbbad17de012156c">RestFrames::VisibleGenFrame::Empty</a></div><div class="ttdeci">static VisibleGenFrame &amp; Empty()</div><div class="ttdoc">Returns empty VisibleGenFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00698_source.html#l00046">VisibleGenFrame.cc:46</a></div></div>
-<div class="ttc" id="aa01015_html"><div class="ttname"><a href="a01015.html">RestFrames::VisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00041">VisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00829_html_adab05aad875837545b0330d6c6c4dc4d"><div class="ttname"><a href="a00829.html#adab05aad875837545b0330d6c6c4dc4d">RestFrames::RestFrame::SetParentFrame</a></div><div class="ttdeci">virtual void SetParentFrame(RestFrame &amp;frame=RestFrame::Empty())</div><div class="ttdoc">Sets the parent frame for this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00181">RestFrame.cc:181</a></div></div>
+<div class="ttc" id="aa00829_html_a5ff0d688c21b0e36cdc23e161f464cbb"><div class="ttname"><a href="a00829.html#a5ff0d688c21b0e36cdc23e161f464cbb">RestFrames::RestFrame::GetChildFrame</a></div><div class="ttdeci">virtual RestFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Get the RestFrame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00235">RestFrame.cc:235</a></div></div>
+<div class="ttc" id="aa00725_html_a2addd2b8ffffe067bf914ec880e9885c"><div class="ttname"><a href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">RestFrames::GeneratorFrame::AddChildFrame</a></div><div class="ttdeci">virtual void AddChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a child RestFrame to this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00092">GeneratorFrame.cc:92</a></div></div>
+<div class="ttc" id="aa00841_html_ac51999288eb5664077680dcdde8e7b39"><div class="ttname"><a href="a00841.html#ac51999288eb5664077680dcdde8e7b39">RestFrames::RFKey::GetKey</a></div><div class="ttdeci">int GetKey() const</div><div class="ttdoc">Returns key of this object.</div><div class="ttdef"><b>Definition:</b> <a href="a00596_source.html#l00044">RFKey.cc:44</a></div></div>
+<div class="ttc" id="aa00725_html_ac4949ebf7cfd7577cca6e6b844005204"><div class="ttname"><a href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">RestFrames::GeneratorFrame::GetParentFrame</a></div><div class="ttdeci">virtual GeneratorFrame const  &amp; GetParentFrame() const</div><div class="ttdoc">Returns the parent of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00104">GeneratorFrame.cc:104</a></div></div>
+<div class="ttc" id="aa00725_html_a57c904c7cde60d97c73aa06459d4334f"><div class="ttname"><a href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">RestFrames::GeneratorFrame::PrintGeneratorEfficiency</a></div><div class="ttdeci">void PrintGeneratorEfficiency() const</div><div class="ttdoc">Print generator efficiency information.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00273">GeneratorFrame.cc:273</a></div></div>
+<div class="ttc" id="aa00829_html"><div class="ttname"><a href="a00829.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00428_source.html#l00045">RestFrame.hh:45</a></div></div>
+<div class="ttc" id="aa00829_html_adf48c7a6b51ffa542aeb000903c8e57e"><div class="ttname"><a href="a00829.html#adf48c7a6b51ffa542aeb000903c8e57e">RestFrames::RestFrame::AddChildFrame</a></div><div class="ttdeci">virtual void AddChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a child RestFrame to this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00198">RestFrame.cc:198</a></div></div>
+<div class="ttc" id="aa00833_html_a2ed7cbbcc860fa79abb4eea10d1f900f"><div class="ttname"><a href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">RestFrames::RFBase::IsEmpty</a></div><div class="ttdeci">bool IsEmpty() const</div><div class="ttdoc">Checks whether this is default (empty) instance of class.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00084">RFBase.cc:84</a></div></div>
+<div class="ttc" id="aa00829_html_a1a2550348b00b23c5d0dd123325757ae"><div class="ttname"><a href="a00829.html#a1a2550348b00b23c5d0dd123325757ae">RestFrames::RestFrame::GetFourVector</a></div><div class="ttdeci">TLorentzVector GetFourVector(const RestFrame &amp;frame=RestFrame::Empty()) const</div><div class="ttdoc">Returns this frame's four-vector in a specified frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00451">RestFrame.cc:451</a></div></div>
+<div class="ttc" id="aa00725_html_aa4c8b58d6cee7fa11fdf1f01482b0c8a"><div class="ttname"><a href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">RestFrames::GeneratorFrame::GenerateMassMCMC</a></div><div class="ttdeci">virtual void GenerateMassMCMC(double &amp;mass, double &amp;prob, double max=-1.) const</div><div class="ttdoc">Generates mass for Markov Chain MonteCarlo event generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00247">GeneratorFrame.cc:247</a></div></div>
+<div class="ttc" id="aa00829_html_af0b1a3c79a95d12ba9adb68d33b838e5"><div class="ttname"><a href="a00829.html#af0b1a3c79a95d12ba9adb68d33b838e5">RestFrames::RestFrame::IsGenFrame</a></div><div class="ttdeci">bool IsGenFrame() const</div><div class="ttdoc">Is this a GeneratorFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00117">RestFrame.cc:117</a></div></div>
+<div class="ttc" id="aa00725_html_aa7352d90f85cc199c9a2a9260083282c"><div class="ttname"><a href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">RestFrames::GeneratorFrame::GetGaus</a></div><div class="ttdeci">double GetGaus(double mu, double sig) const</div><div class="ttdoc">Returns gaussian random number.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00197">GeneratorFrame.cc:197</a></div></div>
+<div class="ttc" id="aa00833_html_aea6973bed7d99edbd39c67d00e6fd33f"><div class="ttname"><a href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">RestFrames::RFBase::GetKey</a></div><div class="ttdeci">RFKey GetKey() const</div><div class="ttdoc">gets object identification key</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00100">RFBase.cc:100</a></div></div>
+<div class="ttc" id="aa00725_html"><div class="ttname"><a href="a00725.html">RestFrames::GeneratorFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00350_source.html#l00042">GeneratorFrame.hh:42</a></div></div>
+<div class="ttc" id="aa00829_html_a98d149d4215b47ba1d83c5985835627a"><div class="ttname"><a href="a00829.html#a98d149d4215b47ba1d83c5985835627a">RestFrames::RestFrame::GetNChildren</a></div><div class="ttdeci">int GetNChildren() const</div><div class="ttdoc">Returns the number of child frames inheriting from this one.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00231">RestFrame.cc:231</a></div></div>
+<div class="ttc" id="aa00725_html_a875b020d82d5a153842e45f7c80fc891"><div class="ttname"><a href="a00725.html#a875b020d82d5a153842e45f7c80fc891">RestFrames::GeneratorFrame::SetEtaCut</a></div><div class="ttdeci">void SetEtaCut(double cut)</div><div class="ttdoc">Sets pseudorapidity cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00372">GeneratorFrame.cc:372</a></div></div>
+<div class="ttc" id="aa00725_html_ad1c49a628a41f01277305de3c65b3ea0"><div class="ttname"><a href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">RestFrames::GeneratorFrame::GetRandom</a></div><div class="ttdeci">double GetRandom() const</div><div class="ttdoc">Returns random value.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00193">GeneratorFrame.cc:193</a></div></div>
+<div class="ttc" id="aa00725_html_aade06f6aa309048c2eb765cce1896416"><div class="ttname"><a href="a00725.html#aade06f6aa309048c2eb765cce1896416">RestFrames::GeneratorFrame::RemovePtCut</a></div><div class="ttdeci">void RemovePtCut()</div><div class="ttdoc">Removes transverse momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00401">GeneratorFrame.cc:401</a></div></div>
+<div class="ttc" id="aa00725_html_a81fa1388135e613f0035040a46d4f025"><div class="ttname"><a href="a00725.html#a81fa1388135e613f0035040a46d4f025">RestFrames::GeneratorFrame::Empty</a></div><div class="ttdeci">static GeneratorFrame &amp; Empty()</div><div class="ttdoc">Returns empty GeneratorFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00084">GeneratorFrame.cc:84</a></div></div>
+<div class="ttc" id="aa00725_html_a02839308aaabc911e3ceea2b72d69ef3"><div class="ttname"><a href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">RestFrames::GeneratorFrame::GetMinimumMassMCMC</a></div><div class="ttdeci">virtual double GetMinimumMassMCMC() const</div><div class="ttdoc">Returns minimun mass of Markov Chain MonteCarlo event generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00230">GeneratorFrame.cc:230</a></div></div>
+<div class="ttc" id="aa00829_html_aaca062f84f7700d214fc6427118b6e0b"><div class="ttname"><a href="a00829.html#aaca062f84f7700d214fc6427118b6e0b">RestFrames::RestFrame::GetParentFrame</a></div><div class="ttdeci">virtual RestFrame const  &amp; GetParentFrame() const</div><div class="ttdoc">Returns the parent of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00245">RestFrame.cc:245</a></div></div>
+<div class="ttc" id="aa00476_html"><div class="ttname"><a href="a00476.html">VisibleGenFrame.hh</a></div></div>
+<div class="ttc" id="aa00725_html_ab9b84fe93b4836c250cf2499a55ee788"><div class="ttname"><a href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">RestFrames::GeneratorFrame::RemoveEtaCut</a></div><div class="ttdeci">void RemoveEtaCut()</div><div class="ttdoc">Removes pseudorapidity cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00407">GeneratorFrame.cc:407</a></div></div>
+<div class="ttc" id="aa00725_html_ab3cd6305429cd88f02b066c6e9e972b0"><div class="ttname"><a href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">RestFrames::GeneratorFrame::AnalyzeEventRecursive</a></div><div class="ttdeci">bool AnalyzeEventRecursive()</div><div class="ttdoc">Recursively analyze event in this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00133">GeneratorFrame.cc:133</a></div></div>
+<div class="ttc" id="aa00829_html_ad1d0382ea2a7f46ebf00ea361948e659"><div class="ttname"><a href="a00829.html#ad1d0382ea2a7f46ebf00ea361948e659">RestFrames::RestFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RestFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00057">RestFrame.cc:57</a></div></div>
+<div class="ttc" id="aa00725_html_ab64ac080d2e1331760d48a09d1a2d7fd"><div class="ttname"><a href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">RestFrames::GeneratorFrame::IsVariableMassMCMC</a></div><div class="ttdeci">bool IsVariableMassMCMC() const</div><div class="ttdoc">Is this frame capable having a variable mass? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00226">GeneratorFrame.cc:226</a></div></div>
+<div class="ttc" id="aa00725_html_a63d31c434fa6622a59f6ad304b1aaf82"><div class="ttname"><a href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">RestFrames::GeneratorFrame::RemovePCut</a></div><div class="ttdeci">void RemovePCut()</div><div class="ttdoc">Removes momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00395">GeneratorFrame.cc:395</a></div></div>
+<div class="ttc" id="aa00725_html_a1194c0f8218ac545a801e3f4ad7376f8"><div class="ttname"><a href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">RestFrames::GeneratorFrame::GetChildFrame</a></div><div class="ttdeci">virtual GeneratorFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Returns the frame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00112">GeneratorFrame.cc:112</a></div></div>
+<div class="ttc" id="aa00350_html"><div class="ttname"><a href="a00350.html">GeneratorFrame.hh</a></div></div>
+<div class="ttc" id="aa00725_html_a5b9cf775ddcbea3c77a322e5a7f3777e"><div class="ttname"><a href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">RestFrames::GeneratorFrame::SetMassWindowCut</a></div><div class="ttdeci">void SetMassWindowCut(double min, double max)</div><div class="ttdoc">Sets mass frame cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00378">GeneratorFrame.cc:378</a></div></div>
+<div class="ttc" id="aa00725_html_a60259ae1010151b4dfb7cd768ff1b0a3"><div class="ttname"><a href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">RestFrames::GeneratorFrame::GetProbMCMC</a></div><div class="ttdeci">virtual double GetProbMCMC(double mass=-1.) const</div><div class="ttdoc">Evaluates probability of the state is in right now or the probablility of a state it could go in.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00269">GeneratorFrame.cc:269</a></div></div>
+<div class="ttc" id="aa00725_html_ab48589dcf6bb3e83e61846b4cf6ed960"><div class="ttname"><a href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">RestFrames::GeneratorFrame::GeneratorFrame</a></div><div class="ttdeci">GeneratorFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00072">GeneratorFrame.cc:72</a></div></div>
+<div class="ttc" id="aa00725_html_a03e97d91a22af11432f5399b84b72720"><div class="ttname"><a href="a00725.html#a03e97d91a22af11432f5399b84b72720">RestFrames::GeneratorFrame::SetPCut</a></div><div class="ttdeci">void SetPCut(double cut)</div><div class="ttdoc">Sets momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00358">GeneratorFrame.cc:358</a></div></div>
+<div class="ttc" id="aa00829_html_a6832c71dd583dff4ae29d0c5853e607b"><div class="ttname"><a href="a00829.html#a6832c71dd583dff4ae29d0c5853e607b">RestFrames::RestFrame::IsLabFrame</a></div><div class="ttdeci">bool IsLabFrame() const</div><div class="ttdoc">Is this a LabFrame ? (yes/no)</div><div class="ttdef"><b>Definition:</b> <a href="a00587_source.html#l00109">RestFrame.cc:109</a></div></div>
+<div class="ttc" id="aa00725_html_a16691437cd581a96cc861b38ef6145e9"><div class="ttname"><a href="a00725.html#a16691437cd581a96cc861b38ef6145e9">RestFrames::GeneratorFrame::SetPtCut</a></div><div class="ttdeci">void SetPtCut(double cut)</div><div class="ttdoc">Sets transverse momentum cut.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00365">GeneratorFrame.cc:365</a></div></div>
+<div class="ttc" id="aa00725_html_a41cb97d5eb7d19e141de83cb80306a62"><div class="ttname"><a href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">RestFrames::GeneratorFrame::InitializeAnalysisRecursive</a></div><div class="ttdeci">bool InitializeAnalysisRecursive()</div><div class="ttdoc">Recursively initialize this frame and its children for analysis.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00169">GeneratorFrame.cc:169</a></div></div>
+<div class="ttc" id="aa00725_html_a3af1de7ebb4713def785f4c542cca2b3"><div class="ttname"><a href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">RestFrames::GeneratorFrame::ClearEventRecursive</a></div><div class="ttdeci">bool ClearEventRecursive()</div><div class="ttdoc">Recursively clear event information from this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00120">GeneratorFrame.cc:120</a></div></div>
+<div class="ttc" id="aa00725_html_ae0101090e69f3671d552312c8ac094ca"><div class="ttname"><a href="a00725.html#ae0101090e69f3671d552312c8ac094ca">RestFrames::GeneratorFrame::GetMass</a></div><div class="ttdeci">virtual double GetMass() const</div><div class="ttdoc">Get the mass of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00088">GeneratorFrame.cc:88</a></div></div>
+<div class="ttc" id="aa00725_html_afc1257416c942d4d02e27ef7ba262d67"><div class="ttname"><a href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">RestFrames::GeneratorFrame::SetParentFrame</a></div><div class="ttdeci">virtual void SetParentFrame(RestFrame &amp;frame=RestFrame::Empty())</div><div class="ttdoc">Set the parent frame for this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00098">GeneratorFrame.cc:98</a></div></div>
+<div class="ttc" id="aa00725_html_a4a7025ee9f01537efd07d13a2fa43462"><div class="ttname"><a href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">RestFrames::GeneratorFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears GeneratorFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00079">GeneratorFrame.cc:79</a></div></div>
+<div class="ttc" id="aa00725_html_a14069d1c9fd444ad0c553a5e7c1e3eba"><div class="ttname"><a href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">RestFrames::GeneratorFrame::RemoveMassWindowCut</a></div><div class="ttdeci">void RemoveMassWindowCut()</div><div class="ttdoc">Removes mass frame cuts.</div><div class="ttdef"><b>Definition:</b> <a href="a00509_source.html#l00413">GeneratorFrame.cc:413</a></div></div>
+<div class="ttc" id="aa00905_html_a4b6b1e20ddc0a112fbbad17de012156c"><div class="ttname"><a href="a00905.html#a4b6b1e20ddc0a112fbbad17de012156c">RestFrames::VisibleGenFrame::Empty</a></div><div class="ttdeci">static VisibleGenFrame &amp; Empty()</div><div class="ttdoc">Returns empty VisibleGenFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00632_source.html#l00046">VisibleGenFrame.cc:46</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:14 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:25 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

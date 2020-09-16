@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/Group.hh Source File</title>
+<title>RestFrames: inc/RestFrames/HistPlotVar.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,12 +103,12 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">Group.hh</div>  </div>
+<div class="title">HistPlotVar.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00362.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2019, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -124,138 +124,83 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef Group_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define Group_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HistPlotVar_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HistPlotVar_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00452.html">RestFrames/RFBase.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00434.html">RestFrames/RFBase.hh</a>&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>Jigsaw;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">class </span>RestFrame;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">enum</span> GroupType { kVanillaGroup, kInvisibleGroup, </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;           kCombinatoricGroup };</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">// Group class</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a00807.html">   46</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00807.html">Group</a> : <span class="keyword">public</span> <a class="code" href="a00923.html">RFBase</a> {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="a00807.html#ac3cabb4238d968828112a51579a25619">Group</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// HistPlotVar class</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00741.html">   40</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00741.html">HistPlotVar</a> : <span class="keyword">public</span> <a class="code" href="a00833.html">RFBase</a> {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00741.html#a3cacf7b5f0557aa2ae58fb38589e96aa">HistPlotVar</a>(<span class="keyword">const</span> std::string&amp; name, </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> std::string&amp; title, </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">double</span> minval, <span class="keywordtype">double</span> maxval,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">const</span> std::string&amp; unit);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00807.html#ac3cabb4238d968828112a51579a25619">Group</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00807.html">Group</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00807.html#ae93b9b3cedd0e0abf205f3a421d6a69d">Clear</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00807.html#aab1add614fddfd206c04b83ea67ee410">IsInvisibleGroup</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00807.html#a44d6fac98b34a76326f706b47c11208b">IsCombinatoricGroup</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="a00807.html#af5d8d096c1e0da6545e49815c5713545">   73</a></span>&#160;    GroupType <a class="code" href="a00807.html#af5d8d096c1e0da6545e49815c5713545">GetType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Type; }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00807.html#acf4f5c18825514999f9bcea046c402ba">AddFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00741.html#a3cacf7b5f0557aa2ae58fb38589e96aa">HistPlotVar</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    ~<a class="code" href="a00741.html">HistPlotVar</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00741.html#aabc7b18e2213b2cbcc2d93b5704482a1">operator = </a>(<span class="keywordtype">double</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00741.html#a7762152bae11783910044e2852f81e0d">operator += </a>(<span class="keywordtype">double</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00741.html#abdbcf5f727d1108cc36128df66e6f1b2">operator -= </a>(<span class="keywordtype">double</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00741.html#a4dc7e44e19fd80c1bb79c7e8a3065995">operator *= </a>(<span class="keywordtype">double</span> val) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00807.html#ac346f23ecf6e7c740b3420f2e6d3b77d">AddFrames</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">RestFrameList</a>&amp; frames);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00807.html#a5ca5af7ef5d6a79e85f21f1b5d150ed7">AddJigsaw</a>(<a class="code" href="a00847.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00741.html#aab04252e9bd0f01858ec4f6ac9235c86">operator /= </a>(<span class="keywordtype">double</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">operator</span> double() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00741.html#ab2ad814c5992a22170a3d87242c47e50">GetVal</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00741.html#ab5b4ce8977819855abd1cb48b7b40c1b">GetMin</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00807.html#ae788a289b69600f6601bff47e38c5008">RemoveFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00807.html#a2089c8921a4e80329ca8fd354da80bf5">RemoveFrames</a>();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00741.html#a30043cc62249b8606a06c65d70003d13">GetMax</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    std::string <a class="code" href="a00741.html#ae17ae831c522e396f103a7d6d7b2a1f3">GetUnit</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; <a class="code" href="a00741.html#a9e962530c98bb0417fd72a03bf1d441a">Empty</a>();</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00807.html#af27ba90e0ca8b2609e6abc86e8f6d8a0">RemoveJigsaw</a>(<a class="code" href="a00847.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> m_class_key;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    std::string m_Unit;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordtype">double</span> m_Min;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">double</span> m_Max;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">mutable</span> <span class="keywordtype">double</span> m_Val;</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00807.html#ab86aac1c3c9251a091e284192081bf5c">RemoveJigsaws</a>();</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00741.html">HistPlotVar</a> m_Empty;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  };</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00807.html#a293da769380cd5ad889131f1f6ff6590">ContainsFrame</a>(<span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a00807.html#a71d593194528606fea7fc2c55e239a21">GetNFrames</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00947.html">RestFrameList</a>&amp; <a class="code" href="a00807.html#a936ef58f224320e629c37cd257b84038">GetListFrames</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00947.html">JigsawList</a>&amp; <a class="code" href="a00807.html#aaa103190025da0f610f162b8bfcab59c">GetListJigsaws</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00807.html">Group</a>&amp; <a class="code" href="a00807.html#a4bbbb2288575ac334df54191490e3d35">Empty</a>();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    GroupType m_Type;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="a00995.html">State</a>* m_GroupStatePtr;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeAnalysis();</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> ClearEvent() = 0;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEvent() = 0;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00995.html">State</a>&amp; InitializeParentState() = 0;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00995.html">State</a>&amp; GetParentState() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">int</span> GetNChildStates() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00995.html">State</a>&amp; GetChildState(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="a00995.html">State</a>&amp; GetChildState(<span class="keyword">const</span> <a class="code" href="a00919.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="a00947.html">StateList</a> GetChildStates(<span class="keyword">const</span> <a class="code" href="a00947.html">RestFrameList</a>&amp; frames) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="a00919.html">RestFrame</a> <span class="keyword">const</span>&amp; GetLabFrame() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="a00947.html">RestFrameList</a> m_Frames;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="a00947.html">JigsawList</a>    m_Jigsaws;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <a class="code" href="a00947.html">StateList</a>     m_States;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <a class="code" href="a00947.html">StateList</a>  m_StatesToResolve;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <a class="code" href="a00947.html">JigsawList</a> m_JigsawsToUse;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">bool</span> ResolveUnknowns();</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">bool</span> ResolveState(<span class="keyword">const</span> <a class="code" href="a00995.html">State</a>&amp; state);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">bool</span> InitializeJigsaw(<a class="code" href="a00847.html">Jigsaw</a>&amp; jigsaw);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> m_class_key;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00999.html">TreePlot</a>;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00911.html">ReconstructionFrame</a>;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00859.html">LabRecoFrame</a>;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="a00847.html">Jigsaw</a>;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  };</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00807_html_a44d6fac98b34a76326f706b47c11208b"><div class="ttname"><a href="a00807.html#a44d6fac98b34a76326f706b47c11208b">RestFrames::Group::IsCombinatoricGroup</a></div><div class="ttdeci">bool IsCombinatoricGroup() const</div><div class="ttdoc">Is this a CombinatoricGroup? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00079">Group.cc:79</a></div></div>
-<div class="ttc" id="aa00999_html"><div class="ttname"><a href="a00999.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00497_source.html#l00050">TreePlot.hh:50</a></div></div>
-<div class="ttc" id="aa00807_html_aab1add614fddfd206c04b83ea67ee410"><div class="ttname"><a href="a00807.html#aab1add614fddfd206c04b83ea67ee410">RestFrames::Group::IsInvisibleGroup</a></div><div class="ttdeci">bool IsInvisibleGroup() const</div><div class="ttdoc">Is this an InvisibleGroup? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00075">Group.cc:75</a></div></div>
-<div class="ttc" id="aa00807_html_aaa103190025da0f610f162b8bfcab59c"><div class="ttname"><a href="a00807.html#aaa103190025da0f610f162b8bfcab59c">RestFrames::Group::GetListJigsaws</a></div><div class="ttdeci">const JigsawList &amp; GetListJigsaws() const</div><div class="ttdoc">Returns a list of jigsaws (Jigsaw) contained in this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00169">Group.cc:169</a></div></div>
-<div class="ttc" id="aa00452_html"><div class="ttname"><a href="a00452.html">RFBase.hh</a></div></div>
-<div class="ttc" id="aa00995_html"><div class="ttname"><a href="a00995.html">RestFrames::State</a></div><div class="ttdoc">Abstract base class for all State objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00494_source.html#l00047">State.hh:47</a></div></div>
-<div class="ttc" id="aa00807_html_a4bbbb2288575ac334df54191490e3d35"><div class="ttname"><a href="a00807.html#a4bbbb2288575ac334df54191490e3d35">RestFrames::Group::Empty</a></div><div class="ttdeci">static Group &amp; Empty()</div><div class="ttdoc">Returns empty Group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00058">Group.cc:58</a></div></div>
-<div class="ttc" id="aa00807_html_a5ca5af7ef5d6a79e85f21f1b5d150ed7"><div class="ttname"><a href="a00807.html#a5ca5af7ef5d6a79e85f21f1b5d150ed7">RestFrames::Group::AddJigsaw</a></div><div class="ttdeci">virtual void AddJigsaw(Jigsaw &amp;jigsaw)</div><div class="ttdoc">Adds a jigsaw (Jigsaw) to current group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00099">Group.cc:99</a></div></div>
-<div class="ttc" id="aa00859_html"><div class="ttname"><a href="a00859.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00401_source.html#l00044">LabRecoFrame.hh:44</a></div></div>
-<div class="ttc" id="aa00807_html_a936ef58f224320e629c37cd257b84038"><div class="ttname"><a href="a00807.html#a936ef58f224320e629c37cd257b84038">RestFrames::Group::GetListFrames</a></div><div class="ttdeci">const RestFrameList &amp; GetListFrames() const</div><div class="ttdoc">Returns a list of frames (RestFrame) contained in this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00165">Group.cc:165</a></div></div>
-<div class="ttc" id="aa00807_html_af5d8d096c1e0da6545e49815c5713545"><div class="ttname"><a href="a00807.html#af5d8d096c1e0da6545e49815c5713545">RestFrames::Group::GetType</a></div><div class="ttdeci">GroupType GetType() const</div><div class="ttdoc">Returns group (GroupType) type.</div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00073">Group.hh:73</a></div></div>
-<div class="ttc" id="aa00807_html_ab86aac1c3c9251a091e284192081bf5c"><div class="ttname"><a href="a00807.html#ab86aac1c3c9251a091e284192081bf5c">RestFrames::Group::RemoveJigsaws</a></div><div class="ttdeci">void RemoveJigsaws()</div><div class="ttdoc">Removes all jigsaws (Jigsaw) from current group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00146">Group.cc:146</a></div></div>
-<div class="ttc" id="aa00911_html"><div class="ttname"><a href="a00911.html">RestFrames::ReconstructionFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00440_source.html#l00041">ReconstructionFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00807_html_ac346f23ecf6e7c740b3420f2e6d3b77d"><div class="ttname"><a href="a00807.html#ac346f23ecf6e7c740b3420f2e6d3b77d">RestFrames::Group::AddFrames</a></div><div class="ttdeci">virtual void AddFrames(const RestFrameList &amp;frames)</div><div class="ttdoc">Adds a list of RestFrames to this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00093">Group.cc:93</a></div></div>
-<div class="ttc" id="aa00807_html_af27ba90e0ca8b2609e6abc86e8f6d8a0"><div class="ttname"><a href="a00807.html#af27ba90e0ca8b2609e6abc86e8f6d8a0">RestFrames::Group::RemoveJigsaw</a></div><div class="ttdeci">void RemoveJigsaw(Jigsaw &amp;jigsaw)</div><div class="ttdoc">Removes a jigsaw (Jigsaw) from this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00134">Group.cc:134</a></div></div>
-<div class="ttc" id="aa00807_html_ae788a289b69600f6601bff47e38c5008"><div class="ttname"><a href="a00807.html#ae788a289b69600f6601bff47e38c5008">RestFrames::Group::RemoveFrame</a></div><div class="ttdeci">virtual void RemoveFrame(RestFrame &amp;frame)</div><div class="ttdoc">Removes a frame (RestFrame) from this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00117">Group.cc:117</a></div></div>
-<div class="ttc" id="aa00807_html_ac3cabb4238d968828112a51579a25619"><div class="ttname"><a href="a00807.html#ac3cabb4238d968828112a51579a25619">RestFrames::Group::Group</a></div><div class="ttdeci">Group()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00049">Group.cc:49</a></div></div>
-<div class="ttc" id="aa00807_html_a71d593194528606fea7fc2c55e239a21"><div class="ttname"><a href="a00807.html#a71d593194528606fea7fc2c55e239a21">RestFrames::Group::GetNFrames</a></div><div class="ttdeci">int GetNFrames() const</div><div class="ttdoc">Returns the number of frames (RestFrame) contained in this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00161">Group.cc:161</a></div></div>
-<div class="ttc" id="aa00807_html_acf4f5c18825514999f9bcea046c402ba"><div class="ttname"><a href="a00807.html#acf4f5c18825514999f9bcea046c402ba">RestFrames::Group::AddFrame</a></div><div class="ttdeci">virtual void AddFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a frame (RestFrame) to this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00083">Group.cc:83</a></div></div>
-<div class="ttc" id="aa00919_html"><div class="ttname"><a href="a00919.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00446_source.html#l00045">RestFrame.hh:45</a></div></div>
-<div class="ttc" id="aa00847_html"><div class="ttname"><a href="a00847.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects</div><div class="ttdef"><b>Definition:</b> <a href="a00392_source.html#l00044">Jigsaw.hh:44</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList</a></div><div class="ttdef"><b>Definition:</b> <a href="a00470_source.html#l00205">RFList.hh:205</a></div></div>
-<div class="ttc" id="aa00807_html_a293da769380cd5ad889131f1f6ff6590"><div class="ttname"><a href="a00807.html#a293da769380cd5ad889131f1f6ff6590">RestFrames::Group::ContainsFrame</a></div><div class="ttdeci">bool ContainsFrame(const RestFrame &amp;frame) const</div><div class="ttdoc">Is frame (RestFrame) contained in this group? (true/false)</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00157">Group.cc:157</a></div></div>
-<div class="ttc" id="aa00807_html_ae93b9b3cedd0e0abf205f3a421d6a69d"><div class="ttname"><a href="a00807.html#ae93b9b3cedd0e0abf205f3a421d6a69d">RestFrames::Group::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears Group of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00062">Group.cc:62</a></div></div>
-<div class="ttc" id="aa00807_html"><div class="ttname"><a href="a00807.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects</div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00046">Group.hh:46</a></div></div>
-<div class="ttc" id="aa00923_html"><div class="ttname"><a href="a00923.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00452_source.html#l00053">RFBase.hh:53</a></div></div>
-<div class="ttc" id="aa00807_html_a2089c8921a4e80329ca8fd354da80bf5"><div class="ttname"><a href="a00807.html#a2089c8921a4e80329ca8fd354da80bf5">RestFrames::Group::RemoveFrames</a></div><div class="ttdeci">void RemoveFrames()</div><div class="ttdoc">Removes all frames (RestFrame) from this group.</div><div class="ttdef"><b>Definition:</b> <a href="a00554_source.html#l00127">Group.cc:127</a></div></div>
+<div class="ttc" id="aa00741_html_a4dc7e44e19fd80c1bb79c7e8a3065995"><div class="ttname"><a href="a00741.html#a4dc7e44e19fd80c1bb79c7e8a3065995">RestFrames::HistPlotVar::operator*=</a></div><div class="ttdeci">void operator*=(double val) const</div><div class="ttdoc">Operator to multiply val to this object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00069">HistPlotVar.cc:69</a></div></div>
+<div class="ttc" id="aa00741_html_ab2ad814c5992a22170a3d87242c47e50"><div class="ttname"><a href="a00741.html#ab2ad814c5992a22170a3d87242c47e50">RestFrames::HistPlotVar::GetVal</a></div><div class="ttdeci">double GetVal() const</div><div class="ttdoc">Returns this object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00081">HistPlotVar.cc:81</a></div></div>
+<div class="ttc" id="aa00741_html_ab5b4ce8977819855abd1cb48b7b40c1b"><div class="ttname"><a href="a00741.html#ab5b4ce8977819855abd1cb48b7b40c1b">RestFrames::HistPlotVar::GetMin</a></div><div class="ttdeci">double GetMin() const</div><div class="ttdoc">Returns minimum value of histogram.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00089">HistPlotVar.cc:89</a></div></div>
+<div class="ttc" id="aa00833_html"><div class="ttname"><a href="a00833.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00434_source.html#l00053">RFBase.hh:53</a></div></div>
+<div class="ttc" id="aa00741_html_abdbcf5f727d1108cc36128df66e6f1b2"><div class="ttname"><a href="a00741.html#abdbcf5f727d1108cc36128df66e6f1b2">RestFrames::HistPlotVar::operator-=</a></div><div class="ttdeci">void operator-=(double val) const</div><div class="ttdoc">Operator to substract val from this object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00065">HistPlotVar.cc:65</a></div></div>
+<div class="ttc" id="aa00741_html_a9e962530c98bb0417fd72a03bf1d441a"><div class="ttname"><a href="a00741.html#a9e962530c98bb0417fd72a03bf1d441a">RestFrames::HistPlotVar::Empty</a></div><div class="ttdeci">static HistPlotVar &amp; Empty()</div><div class="ttdoc">Returns empty HistPlotVar.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00053">HistPlotVar.cc:53</a></div></div>
+<div class="ttc" id="aa00741_html_a3cacf7b5f0557aa2ae58fb38589e96aa"><div class="ttname"><a href="a00741.html#a3cacf7b5f0557aa2ae58fb38589e96aa">RestFrames::HistPlotVar::HistPlotVar</a></div><div class="ttdeci">HistPlotVar()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00036">HistPlotVar.cc:36</a></div></div>
+<div class="ttc" id="aa00434_html"><div class="ttname"><a href="a00434.html">RFBase.hh</a></div></div>
+<div class="ttc" id="aa00741_html_ae17ae831c522e396f103a7d6d7b2a1f3"><div class="ttname"><a href="a00741.html#ae17ae831c522e396f103a7d6d7b2a1f3">RestFrames::HistPlotVar::GetUnit</a></div><div class="ttdeci">std::string GetUnit() const</div><div class="ttdoc">Returns unit of x-axis.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00085">HistPlotVar.cc:85</a></div></div>
+<div class="ttc" id="aa00741_html_aab04252e9bd0f01858ec4f6ac9235c86"><div class="ttname"><a href="a00741.html#aab04252e9bd0f01858ec4f6ac9235c86">RestFrames::HistPlotVar::operator/=</a></div><div class="ttdeci">void operator/=(double val) const</div><div class="ttdoc">Operator to divide val from object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00073">HistPlotVar.cc:73</a></div></div>
+<div class="ttc" id="aa00741_html_a7762152bae11783910044e2852f81e0d"><div class="ttname"><a href="a00741.html#a7762152bae11783910044e2852f81e0d">RestFrames::HistPlotVar::operator+=</a></div><div class="ttdeci">void operator+=(double val) const</div><div class="ttdoc">Operator to add val to this object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00061">HistPlotVar.cc:61</a></div></div>
+<div class="ttc" id="aa00741_html_a30043cc62249b8606a06c65d70003d13"><div class="ttname"><a href="a00741.html#a30043cc62249b8606a06c65d70003d13">RestFrames::HistPlotVar::GetMax</a></div><div class="ttdeci">double GetMax() const</div><div class="ttdoc">Returns maximum value of histogram.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00093">HistPlotVar.cc:93</a></div></div>
+<div class="ttc" id="aa00741_html"><div class="ttname"><a href="a00741.html">RestFrames::HistPlotVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00040">HistPlotVar.hh:40</a></div></div>
+<div class="ttc" id="aa00741_html_aabc7b18e2213b2cbcc2d93b5704482a1"><div class="ttname"><a href="a00741.html#aabc7b18e2213b2cbcc2d93b5704482a1">RestFrames::HistPlotVar::operator=</a></div><div class="ttdeci">void operator=(double val) const</div><div class="ttdoc">Tests whether val is the same as this object's value.</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00057">HistPlotVar.cc:57</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

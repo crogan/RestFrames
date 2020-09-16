@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: src/RFPDF.cc Source File</title>
+<title>RestFrames: examples/example_ttbar_to_bWlnubWlnu.C Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,18 +98,19 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RFPDF.cc</div>  </div>
+<div class="title">example_ttbar_to_bWlnubWlnu.C</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00665.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2019, Christopher Rogan</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//   it under the terms of the GNU General Public License as published by</span></div>
@@ -124,241 +125,582 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00476.html">RestFrames/RFPDF.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00482.html">RestFrames/RFsplinePDF.hh</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">int</span> RFPDF::m_class_key = 0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  RFPDF::RFPDF() : RFBase() { </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    m_Log.SetSource(<span class="stringliteral">&quot;RFPDF &quot;</span>+GetName());</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    m_DataPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    m_Ndata = 0;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    m_Nvar = 0;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    m_Npdf = 0;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  RFPDF::RFPDF(<span class="keyword">const</span> std::string&amp; name, </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;           <span class="keyword">const</span> std::string&amp; title,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;           <span class="keyword">const</span> ConstRFDataVarList&amp; vars)</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    : RFBase(name, title, RFPDF::m_class_key++) </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    m_Log.SetSource(<span class="stringliteral">&quot;RFPDF &quot;</span>+GetName());</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#if (!defined(__CINT__) &amp;&amp; !defined(__CLING__))</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define COMPILER</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#if defined(__MAKECINT__) || defined(__ROOTCLING__) || defined(COMPILER)</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00431.html">RestFrames/RestFrames.hh</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="a00841.html">RestFrames::RFKey</a> ensure_autoload(1);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">using namespace </span>RestFrames;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> example_ttbar_to_bWlnubWlnu(<span class="keyword">const</span> std::string output_name =</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                 <span class="stringliteral">&quot;output_ttbar_to_bWlnubWlnu.root&quot;</span>){</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">double</span> mT = 173.21; <span class="comment">// GeV, PDG 2016</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">double</span> mW = 80.385;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">double</span> mB = 4.18;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">double</span> mL = 0.106;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">double</span> mN = 0.;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="comment">// number of events to generate</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">int</span> Ngen = 100000;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    m_DataPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    m_Ndata = 0;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    m_Nvar = 0;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    m_Npdf = 0;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> Nvar = vars.GetN();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Nvar; i++){</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <span class="keywordflow">if</span>(!vars[i].GetData())</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">if</span>(m_DataPtr == <span class="keyword">nullptr</span>){</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    m_DataPtr = &amp;vars[i].GetData();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    m_Vars += vars[i];</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(*m_DataPtr == vars[i].GetData())</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      m_Vars += vars[i];</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Initializing generator frames and tree...&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="a00817.html">ppLabGenFrame</a>     LAB_Gen(<span class="stringliteral">&quot;LAB_Gen&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="a00717.html">DecayGenFrame</a>     TT_Gen(<span class="stringliteral">&quot;TT_Gen&quot;</span>,<span class="stringliteral">&quot;t #bar{t}&quot;</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="a00717.html">DecayGenFrame</a>     Ta_Gen(<span class="stringliteral">&quot;Ta_Gen&quot;</span>,<span class="stringliteral">&quot;t_{a}&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="a00717.html">DecayGenFrame</a>     Tb_Gen(<span class="stringliteral">&quot;Tb_Gen&quot;</span>,<span class="stringliteral">&quot;t_{b}&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="a00717.html">DecayGenFrame</a>     Wa_Gen(<span class="stringliteral">&quot;Wa_Gen&quot;</span>,<span class="stringliteral">&quot;W_{a}&quot;</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="a00717.html">DecayGenFrame</a>     Wb_Gen(<span class="stringliteral">&quot;Wb_Gen&quot;</span>,<span class="stringliteral">&quot;W_{b}&quot;</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <a class="code" href="a00905.html">VisibleGenFrame</a>   Ba_Gen(<span class="stringliteral">&quot;Ba_Gen&quot;</span>,<span class="stringliteral">&quot;b_{a}&quot;</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="a00905.html">VisibleGenFrame</a>   La_Gen(<span class="stringliteral">&quot;La_Gen&quot;</span>,<span class="stringliteral">&quot;#it{l}_{a}&quot;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="a00749.html">InvisibleGenFrame</a> Na_Gen(<span class="stringliteral">&quot;Na_Gen&quot;</span>,<span class="stringliteral">&quot;#nu_{a}&quot;</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="a00905.html">VisibleGenFrame</a>   Bb_Gen(<span class="stringliteral">&quot;Bb_Gen&quot;</span>,<span class="stringliteral">&quot;b_{b}&quot;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <a class="code" href="a00905.html">VisibleGenFrame</a>   Lb_Gen(<span class="stringliteral">&quot;Lb_Gen&quot;</span>,<span class="stringliteral">&quot;#it{l}_{b}&quot;</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="a00749.html">InvisibleGenFrame</a> Nb_Gen(<span class="stringliteral">&quot;Nb_Gen&quot;</span>,<span class="stringliteral">&quot;#nu_{b}&quot;</span>);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    m_Nvar = m_Vars.GetN();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">if</span>(m_DataPtr != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      m_Ndata = m_DataPtr-&gt;GetN();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  RFPDF::RFPDF(<span class="keyword">const</span> std::string&amp; name, </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;           <span class="keyword">const</span> std::string&amp; title,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;           <span class="keyword">const</span> RFPDFList&amp; pdfs)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    : RFBase(name, title, RFPDF::m_class_key++) </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    m_Log.SetSource(<span class="stringliteral">&quot;RFPDF &quot;</span>+GetName());</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  LAB_Gen.SetChildFrame(TT_Gen);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  TT_Gen.AddChildFrame(Ta_Gen);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  TT_Gen.AddChildFrame(Tb_Gen);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  Ta_Gen.AddChildFrame(Ba_Gen);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  Ta_Gen.AddChildFrame(Wa_Gen);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  Tb_Gen.AddChildFrame(Bb_Gen);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  Tb_Gen.AddChildFrame(Wb_Gen);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  Wa_Gen.AddChildFrame(La_Gen);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  Wa_Gen.AddChildFrame(Na_Gen);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  Wb_Gen.AddChildFrame(Lb_Gen);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  Wb_Gen.AddChildFrame(Nb_Gen);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    m_DataPtr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    m_Ndata = 0;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    m_Nvar = 0;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    m_Npdf = 0;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">int</span> Npdf = pdfs.GetN();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; Npdf; i++){</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keywordflow">if</span>(!pdfs[i].GetData())</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">if</span>(m_DataPtr == <span class="keyword">nullptr</span>){</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    m_DataPtr = &amp;pdfs[i].GetData();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    m_PDFs += pdfs[i];</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span>(*m_DataPtr == pdfs[i].GetData())</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      m_PDFs += pdfs[i];</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    m_Npdf = m_PDFs.GetN();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span>(m_DataPtr != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      m_Ndata = m_DataPtr-&gt;GetN();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  RFPDF::~RFPDF(){ }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">double</span> RFPDF::LogL()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> m_LogL;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keyword">const</span> RFData&amp; RFPDF::GetData()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">if</span>(m_DataPtr == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">return</span> RFData::Empty();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">return</span> *m_DataPtr;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordtype">int</span> RFPDF::GetNVar()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">return</span> m_Nvar;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  RFDataVar <span class="keyword">const</span>&amp; RFPDF::GetVar(<span class="keywordtype">int</span> i)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">return</span> m_Vars[i];</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  ConstRFDataVarList RFPDF::GetVars()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    ConstRFDataVarList vars;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_Npdf; i++)</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      vars += m_PDFs[i].GetVars();</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    vars += m_Vars;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">return</span> vars;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordtype">int</span> RFPDF::GetNData()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span> m_Ndata;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordtype">int</span> RFPDF::GetNPDF()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> m_Npdf;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  }</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  RFPDF&amp; RFPDF::GetPDF(<span class="keywordtype">int</span> i){</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordflow">return</span> m_PDFs[i];</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  }</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  RFPDF <span class="keyword">const</span>&amp; RFPDF::GetPDF(<span class="keywordtype">int</span> i)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">return</span> m_PDFs[i];</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  RFPDFList RFPDF::GetPDFs()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">return</span> m_PDFs;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordtype">void</span> RFPDF::SetLogL(<span class="keywordtype">double</span> logl){</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    m_LogL = logl;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  RFPDF::operator RFPDFList(){</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    RFPDFList list;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  RFPDFList RFPDF::operator + (RFPDF&amp; pdf){</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    RFPDFList list;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    list += pdf;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  RFPDFList RFPDF::operator + (<span class="keyword">const</span> RFPDFList&amp; pdfs){</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    RFPDFList list = pdfs;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    list += *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> list;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">if</span>(LAB_Gen.InitializeTree())</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized generator tree&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing generator tree&quot;</span> &lt;&lt; LogEnd;                                 </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="comment">// non-resonant ttbar production</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  TT_Gen.SetVariableMass();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="comment">// set top masses</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  Ta_Gen.SetMass(mT);            Tb_Gen.SetMass(mT);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="comment">// set W masses</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  Wa_Gen.SetMass(mW);            Wb_Gen.SetMass(mW);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="comment">// set B masses</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  Ba_Gen.SetMass(mB);            Bb_Gen.SetMass(mB);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="comment">// set : masses</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  La_Gen.SetMass(mL);            Lb_Gen.SetMass(mL);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="comment">// set neutrino masses</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  Na_Gen.SetMass(mN);            Nb_Gen.SetMass(mN);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="comment">// set b-jet/lepton pT/eta cuts</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  Ba_Gen.SetPtCut(20.);          Bb_Gen.SetPtCut(20.);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  Ba_Gen.SetEtaCut(2.5);         Bb_Gen.SetEtaCut(2.5);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  La_Gen.SetPtCut(15.);          Lb_Gen.SetPtCut(15.);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  La_Gen.SetEtaCut(2.5);         Lb_Gen.SetEtaCut(2.5);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">if</span>(LAB_Gen.InitializeAnalysis())</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized generator analysis&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing generator analysis&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Initializing reconstruction frames and trees...&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="a00781.html">LabRecoFrame</a>       LAB_R1(<span class="stringliteral">&quot;LAB_R1&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);      <a class="code" href="a00781.html">LabRecoFrame</a>       LAB_R2(<span class="stringliteral">&quot;LAB_R2&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     TT_R1(<span class="stringliteral">&quot;TT_R1&quot;</span>,<span class="stringliteral">&quot;t #bar{t}&quot;</span>);  <a class="code" href="a00721.html">DecayRecoFrame</a>     TT_R2(<span class="stringliteral">&quot;TT_R2&quot;</span>,<span class="stringliteral">&quot;t #bar{t}&quot;</span>);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Ta_R1(<span class="stringliteral">&quot;Ta_R1&quot;</span>,<span class="stringliteral">&quot;t_{a}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Ta_R2(<span class="stringliteral">&quot;Ta_R2&quot;</span>,<span class="stringliteral">&quot;t_{a}&quot;</span>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Tb_R1(<span class="stringliteral">&quot;Tb_R1&quot;</span>,<span class="stringliteral">&quot;t_{b}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Tb_R2(<span class="stringliteral">&quot;Tb_R2&quot;</span>,<span class="stringliteral">&quot;t_{b}&quot;</span>);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Wa_R1(<span class="stringliteral">&quot;Wa_R1&quot;</span>,<span class="stringliteral">&quot;W_{a}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Wa_R2(<span class="stringliteral">&quot;Wa_R2&quot;</span>,<span class="stringliteral">&quot;W_{a}&quot;</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Wb_R1(<span class="stringliteral">&quot;Wb_R1&quot;</span>,<span class="stringliteral">&quot;W_{b}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Wb_R2(<span class="stringliteral">&quot;Wb_R2&quot;</span>,<span class="stringliteral">&quot;W_{b}&quot;</span>);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Ba_R1(<span class="stringliteral">&quot;Ba_R1&quot;</span>,<span class="stringliteral">&quot;b_{a}&quot;</span>);      <a class="code" href="a00909.html">VisibleRecoFrame</a>   Ba_R2(<span class="stringliteral">&quot;Ba_R2&quot;</span>,<span class="stringliteral">&quot;b_{a}&quot;</span>);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   La_R1(<span class="stringliteral">&quot;La_R1&quot;</span>,<span class="stringliteral">&quot;#it{l}_{a}&quot;</span>); <a class="code" href="a00909.html">VisibleRecoFrame</a>   La_R2(<span class="stringliteral">&quot;La_R2&quot;</span>,<span class="stringliteral">&quot;#it{l}_{a}&quot;</span>);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <a class="code" href="a00761.html">InvisibleRecoFrame</a> Na_R1(<span class="stringliteral">&quot;Na_R1&quot;</span>,<span class="stringliteral">&quot;#nu_{a}&quot;</span>);    <a class="code" href="a00761.html">InvisibleRecoFrame</a> Na_R2(<span class="stringliteral">&quot;Na_R2&quot;</span>,<span class="stringliteral">&quot;#nu_{a}&quot;</span>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Bb_R1(<span class="stringliteral">&quot;Bb_R1&quot;</span>,<span class="stringliteral">&quot;b_{b}&quot;</span>);      <a class="code" href="a00909.html">VisibleRecoFrame</a>   Bb_R2(<span class="stringliteral">&quot;Bb_R2&quot;</span>,<span class="stringliteral">&quot;b_{b}&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Lb_R1(<span class="stringliteral">&quot;Lb_R1&quot;</span>,<span class="stringliteral">&quot;#it{l}_{b}&quot;</span>); <a class="code" href="a00909.html">VisibleRecoFrame</a>   Lb_R2(<span class="stringliteral">&quot;Lb_R2&quot;</span>,<span class="stringliteral">&quot;#it{l}_{b}&quot;</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <a class="code" href="a00761.html">InvisibleRecoFrame</a> Nb_R1(<span class="stringliteral">&quot;Nb_R1&quot;</span>,<span class="stringliteral">&quot;#nu_{b}&quot;</span>);    <a class="code" href="a00761.html">InvisibleRecoFrame</a> Nb_R2(<span class="stringliteral">&quot;Nb_R2&quot;</span>,<span class="stringliteral">&quot;#nu_{b}&quot;</span>);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <a class="code" href="a00781.html">LabRecoFrame</a>       LAB_R3(<span class="stringliteral">&quot;LAB_R3&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);      <a class="code" href="a00781.html">LabRecoFrame</a>       LAB_R4(<span class="stringliteral">&quot;LAB_R4&quot;</span>,<span class="stringliteral">&quot;LAB&quot;</span>);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     TT_R3(<span class="stringliteral">&quot;TT_R3&quot;</span>,<span class="stringliteral">&quot;t #bar{t}&quot;</span>);  <a class="code" href="a00721.html">DecayRecoFrame</a>     TT_R4(<span class="stringliteral">&quot;TT_R4&quot;</span>,<span class="stringliteral">&quot;t #bar{t}&quot;</span>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Ta_R3(<span class="stringliteral">&quot;Ta_R3&quot;</span>,<span class="stringliteral">&quot;t_{a}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Ta_R4(<span class="stringliteral">&quot;Ta_R4&quot;</span>,<span class="stringliteral">&quot;t_{a}&quot;</span>);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Tb_R3(<span class="stringliteral">&quot;Tb_R3&quot;</span>,<span class="stringliteral">&quot;t_{b}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Tb_R4(<span class="stringliteral">&quot;Tb_R4&quot;</span>,<span class="stringliteral">&quot;t_{b}&quot;</span>);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Wa_R3(<span class="stringliteral">&quot;Wa_R3&quot;</span>,<span class="stringliteral">&quot;W_{a}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Wa_R4(<span class="stringliteral">&quot;Wa_R4&quot;</span>,<span class="stringliteral">&quot;W_{a}&quot;</span>);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <a class="code" href="a00721.html">DecayRecoFrame</a>     Wb_R3(<span class="stringliteral">&quot;Wb_R3&quot;</span>,<span class="stringliteral">&quot;W_{b}&quot;</span>);      <a class="code" href="a00721.html">DecayRecoFrame</a>     Wb_R4(<span class="stringliteral">&quot;Wb_R4&quot;</span>,<span class="stringliteral">&quot;W_{b}&quot;</span>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Ba_R3(<span class="stringliteral">&quot;Ba_R3&quot;</span>,<span class="stringliteral">&quot;b_{a}&quot;</span>);      <a class="code" href="a00909.html">VisibleRecoFrame</a>   Ba_R4(<span class="stringliteral">&quot;Ba_R4&quot;</span>,<span class="stringliteral">&quot;b_{a}&quot;</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   La_R3(<span class="stringliteral">&quot;La_R3&quot;</span>,<span class="stringliteral">&quot;#it{l}_{a}&quot;</span>); <a class="code" href="a00909.html">VisibleRecoFrame</a>   La_R4(<span class="stringliteral">&quot;La_R4&quot;</span>,<span class="stringliteral">&quot;#it{l}_{a}&quot;</span>);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <a class="code" href="a00761.html">InvisibleRecoFrame</a> Na_R3(<span class="stringliteral">&quot;Na_R3&quot;</span>,<span class="stringliteral">&quot;#nu_{a}&quot;</span>);    <a class="code" href="a00761.html">InvisibleRecoFrame</a> Na_R4(<span class="stringliteral">&quot;Na_R4&quot;</span>,<span class="stringliteral">&quot;#nu_{a}&quot;</span>);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Bb_R3(<span class="stringliteral">&quot;Bb_R3&quot;</span>,<span class="stringliteral">&quot;b_{b}&quot;</span>);      <a class="code" href="a00909.html">VisibleRecoFrame</a>   Bb_R4(<span class="stringliteral">&quot;Bb_R4&quot;</span>,<span class="stringliteral">&quot;b_{b}&quot;</span>);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <a class="code" href="a00909.html">VisibleRecoFrame</a>   Lb_R3(<span class="stringliteral">&quot;Lb_R3&quot;</span>,<span class="stringliteral">&quot;#it{l}_{b}&quot;</span>); <a class="code" href="a00909.html">VisibleRecoFrame</a>   Lb_R4(<span class="stringliteral">&quot;Lb_R4&quot;</span>,<span class="stringliteral">&quot;#it{l}_{b}&quot;</span>);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <a class="code" href="a00761.html">InvisibleRecoFrame</a> Nb_R3(<span class="stringliteral">&quot;Nb_R3&quot;</span>,<span class="stringliteral">&quot;#nu_{b}&quot;</span>);    <a class="code" href="a00761.html">InvisibleRecoFrame</a> Nb_R4(<span class="stringliteral">&quot;Nb_R4&quot;</span>,<span class="stringliteral">&quot;#nu_{b}&quot;</span>);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  LAB_R1.SetChildFrame(TT_R1);                    LAB_R2.SetChildFrame(TT_R2);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  TT_R1.AddChildFrame(Ta_R1);                     TT_R2.AddChildFrame(Ta_R2);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  TT_R1.AddChildFrame(Tb_R1);                     TT_R2.AddChildFrame(Tb_R2);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  Ta_R1.AddChildFrame(Ba_R1);                     Ta_R2.AddChildFrame(Ba_R2);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  Ta_R1.AddChildFrame(Wa_R1);                     Ta_R2.AddChildFrame(Wa_R2);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  Tb_R1.AddChildFrame(Bb_R1);                     Tb_R2.AddChildFrame(Bb_R2);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  Tb_R1.AddChildFrame(Wb_R1);                     Tb_R2.AddChildFrame(Wb_R2);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  Wa_R1.AddChildFrame(La_R1);                     Wa_R2.AddChildFrame(La_R2);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  Wa_R1.AddChildFrame(Na_R1);                     Wa_R2.AddChildFrame(Na_R2);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  Wb_R1.AddChildFrame(Lb_R1);                     Wb_R2.AddChildFrame(Lb_R2);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  Wb_R1.AddChildFrame(Nb_R1);                     Wb_R2.AddChildFrame(Nb_R2);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  LAB_R3.SetChildFrame(TT_R3);                    LAB_R4.SetChildFrame(TT_R4);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  TT_R3.AddChildFrame(Ta_R3);                     TT_R4.AddChildFrame(Ta_R4);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  TT_R3.AddChildFrame(Tb_R3);                     TT_R4.AddChildFrame(Tb_R4);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  Ta_R3.AddChildFrame(Ba_R3);                     Ta_R4.AddChildFrame(Ba_R4);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  Ta_R3.AddChildFrame(Wa_R3);                     Ta_R4.AddChildFrame(Wa_R4);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  Tb_R3.AddChildFrame(Bb_R3);                     Tb_R4.AddChildFrame(Bb_R4);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  Tb_R3.AddChildFrame(Wb_R3);                     Tb_R4.AddChildFrame(Wb_R4);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  Wa_R3.AddChildFrame(La_R3);                     Wa_R4.AddChildFrame(La_R4);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  Wa_R3.AddChildFrame(Na_R3);                     Wa_R4.AddChildFrame(Na_R4);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  Wb_R3.AddChildFrame(Lb_R3);                     Wb_R4.AddChildFrame(Lb_R4);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  Wb_R3.AddChildFrame(Nb_R3);                     Wb_R4.AddChildFrame(Nb_R4);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordflow">if</span>(LAB_R1.InitializeTree() &amp;&amp; LAB_R2.InitializeTree() &amp;&amp; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;     LAB_R3.InitializeTree() &amp;&amp; LAB_R4.InitializeTree())</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized reconstruction trees&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing reconstruction trees&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="a00971.html#a84e2d775c790059be3556b184c38d8c8">  178</a></span>&#160;  <a class="code" href="a00971.html">RFPDF</a>&amp; RFPDF::Empty(){</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">return</span> RFsplinePDF::Empty();</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">double</span> myexp(<span class="keywordtype">double</span> x){</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordflow">if</span>(x &gt; 600.)</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      <span class="keywordflow">return</span> exp(<span class="keywordtype">double</span>(600.));</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keywordflow">return</span> exp(x);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordtype">double</span> mylog(<span class="keywordtype">double</span> x){</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">if</span>(x &lt; 10.e-250)</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      <span class="keywordflow">return</span> -575.64627;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      <span class="keywordflow">return</span> log(x);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  }</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordtype">double</span> fctf2(<span class="keywordtype">double</span> b0, <span class="keywordtype">double</span> b1,</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;           <span class="keywordtype">double</span> t1, <span class="keywordtype">double</span> t2,</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;           <span class="keywordtype">double</span> f1, <span class="keywordtype">double</span> f2){</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">int</span> i1 = 1, i2 = 1;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">if</span>(f1 &lt; 0) i1 = -1;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    f1 = mylog(fabs(f1)) + b1*t1 + b0;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">if</span>(f1 &gt; 600.) f1 = 600.;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordflow">if</span>(f2 &lt; 0) i2 = -1;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    f2 = mylog(fabs(f2)) + b1*t2 + b0;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordflow">if</span>(f2 &gt; 600.) f2 = 600.;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">return</span> (<span class="keywordtype">double</span>)(i2*myexp(f2)-i1*myexp(f1));</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  }</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keywordtype">double</span> Pol3(<span class="keywordtype">double</span> x, <span class="keyword">const</span> std::vector&lt;double&gt;&amp; coef){</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordflow">return</span> coef[0]+x*(coef[1]+x*(coef[2]+x*coef[3]));</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  }</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keywordtype">double</span> inp3(<span class="keyword">const</span> std::vector&lt;double&gt;&amp; c1,</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;          <span class="keyword">const</span> std::vector&lt;double&gt;&amp; c2){</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordflow">return</span> c1[0]*c2[0]+c1[1]*c2[1]+c1[2]*c2[2]+c1[3]*c2[3];</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  }</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordtype">double</span> mat3(<span class="keyword">const</span> std::vector&lt;double&gt;&amp; c1,</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;          <span class="keyword">const</span> std::vector&lt;double&gt;&amp; c2,</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;          <span class="keyword">const</span> std::vector&lt;double&gt;&amp; c3){</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">double</span> sum = 0.;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; 4; i++)</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = 0; j &lt; 4; j++)</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    sum += c1[i+j]*c2[i]*c3[j];</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">return</span> sum;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  }</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keywordtype">double</span> Digamma(<span class="keywordtype">double</span> x){</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">double</span> ret = 0.;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">while</span>(x &lt; 6.){</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      ret -= 1./x;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      x += 1.;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    </div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    ret += log(x);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordtype">double</span> xpow = 1./x;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    ret -= xpow/2.;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    xpow /= x;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    ret -= xpow/12.;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    ret += xpow/120.;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    ret -= xpow/252.;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    ret += xpow/240.;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    ret -= xpow/132.;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    ret += xpow*691./32760.;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    xpow /= x*x;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    ret -= xpow/12.;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  }</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  std::string group_name;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="comment">// Invisible Group</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  group_name = <span class="stringliteral">&quot;#splitline{#nu #nu Jigsaws for}{min M_{top} , M_{top}^{ a} = M_{top}^{ b}}&quot;</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <a class="code" href="a00753.html">InvisibleGroup</a> INV_R1(<span class="stringliteral">&quot;INV_R1&quot;</span>, group_name);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  INV_R1.AddFrame(Na_R1);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  INV_R1.AddFrame(Nb_R1);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="comment">// Combinatoric Group for b&#39;s</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <a class="code" href="a00693.html">CombinatoricGroup</a> B_R1(<span class="stringliteral">&quot;VIS_R1&quot;</span>,<span class="stringliteral">&quot;b-jet Jigsaws&quot;</span>);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  B_R1.AddFrame(Ba_R1);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  B_R1.AddFrame(Bb_R1);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="comment">// b-jet frames must have at least one element</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  B_R1.SetNElementsForFrame(Ba_R1, 1);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  B_R1.SetNElementsForFrame(Bb_R1, 1);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  group_name = <span class="stringliteral">&quot;#splitline{#nu #nu Jigsaws for}{min M_{W}, M_{W}^{ a} = M_{W}^{ b}}&quot;</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <a class="code" href="a00753.html">InvisibleGroup</a> INV_R2(<span class="stringliteral">&quot;INV_R2&quot;</span>, group_name);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  INV_R2.AddFrame(Na_R2);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  INV_R2.AddFrame(Nb_R2);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <a class="code" href="a00693.html">CombinatoricGroup</a> B_R2(<span class="stringliteral">&quot;VIS_R2&quot;</span>,<span class="stringliteral">&quot;b-jet Jigsaws&quot;</span>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  B_R2.AddFrame(Ba_R2);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  B_R2.AddFrame(Bb_R2);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  B_R2.SetNElementsForFrame(Ba_R2, 1);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  B_R2.SetNElementsForFrame(Bb_R2, 1);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  group_name = <span class="stringliteral">&quot;#splitline{#nu #nu Jigsaws for}{min M_{top a}^{2}+ M_{top b}^{2}}&quot;</span>;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <a class="code" href="a00753.html">InvisibleGroup</a> INV_R3(<span class="stringliteral">&quot;INV_R3&quot;</span>, group_name);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  INV_R3.AddFrame(Na_R3);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  INV_R3.AddFrame(Nb_R3);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <a class="code" href="a00693.html">CombinatoricGroup</a> B_R3(<span class="stringliteral">&quot;VIS_R3&quot;</span>,<span class="stringliteral">&quot;b-jet Jigsaws&quot;</span>);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  B_R3.AddFrame(Ba_R3);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  B_R3.AddFrame(Bb_R3);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  B_R3.SetNElementsForFrame(Ba_R3, 1);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  B_R3.SetNElementsForFrame(Bb_R3, 1);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  group_name = <span class="stringliteral">&quot;#splitline{#nu #nu Jigsaws for}{min (M_{top a}- M_{top b})^{2}}&quot;</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <a class="code" href="a00753.html">InvisibleGroup</a> INV_R4(<span class="stringliteral">&quot;INV_R4&quot;</span>, group_name);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  INV_R4.AddFrame(Na_R4);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  INV_R4.AddFrame(Nb_R4);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <a class="code" href="a00693.html">CombinatoricGroup</a> B_R4(<span class="stringliteral">&quot;VIS_R4&quot;</span>,<span class="stringliteral">&quot;b-jet Jigsaws&quot;</span>);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  B_R4.AddFrame(Ba_R4);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  B_R4.AddFrame(Bb_R4);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  B_R4.SetNElementsForFrame(Ba_R4, 1);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  B_R4.SetNElementsForFrame(Bb_R4, 1);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  std::string jigsaw_name;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="comment">// Minimize equal top masses neutrino jigsaws</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;M_{#nu#nu} = f(m_{b#it{l}b#it{l}} , m_{b#it{l}}^{ a} , m_{b#it{l}}^{ b})&quot;</span>;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <a class="code" href="a00877.html">SetMassInvJigsaw</a> NuNuM_R1(<span class="stringliteral">&quot;NuNuM_R1&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  INV_R1.AddJigsaw(NuNuM_R1);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}&quot;</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  <a class="code" href="a00881.html">SetRapidityInvJigsaw</a> NuNuR_R1(<span class="stringliteral">&quot;NuNuR_R1&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  INV_R1.AddJigsaw(NuNuR_R1);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  NuNuR_R1.AddVisibleFrames(La_R1+Ba_R1+Lb_R1+Bb_R1);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;min M_{top}, M_{top}^{ a} = M_{top}^{ b}&quot;</span>;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <a class="code" href="a00709.html">ContraBoostInvJigsaw</a> MinMt_R1(<span class="stringliteral">&quot;MinMt_R1&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  INV_R1.AddJigsaw(MinMt_R1);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  MinMt_R1.AddVisibleFrames(La_R1+Ba_R1, 0);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  MinMt_R1.AddVisibleFrames(Lb_R1+Bb_R1, 1);</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  MinMt_R1.AddInvisibleFrame(Na_R1, 0);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  MinMt_R1.AddInvisibleFrame(Nb_R1, 1);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  <span class="comment">// Minimize equal W masses neutrino jigsaws</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})&quot;</span>;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <a class="code" href="a00877.html">SetMassInvJigsaw</a> NuNuM_R2(<span class="stringliteral">&quot;NuNuM_R2&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  INV_R2.AddJigsaw(NuNuM_R2);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}&quot;</span>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <a class="code" href="a00881.html">SetRapidityInvJigsaw</a> NuNuR_R2(<span class="stringliteral">&quot;NuNuR_R2&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  INV_R2.AddJigsaw(NuNuR_R2);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  NuNuR_R2.AddVisibleFrames(La_R2+Ba_R2+Lb_R2+Bb_R2);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;min M_{W}, M_{W}^{ a} = M_{W}^{ b}&quot;</span>;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <a class="code" href="a00709.html">ContraBoostInvJigsaw</a> MinMW_R2(<span class="stringliteral">&quot;MinMW_R2&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  INV_R2.AddJigsaw(MinMW_R2);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  MinMW_R2.AddVisibleFrame(La_R2, 0);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  MinMW_R2.AddVisibleFrame(Lb_R2, 1);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  MinMW_R2.AddInvisibleFrame(Na_R2, 0);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  MinMW_R2.AddInvisibleFrame(Nb_R2, 1);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="comment">// Minimize sum Mt^2 jigsaws</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})&quot;</span>;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <a class="code" href="a00877.html">SetMassInvJigsaw</a> NuNuM_R3(<span class="stringliteral">&quot;NuNuM_R3&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  INV_R3.AddJigsaw(NuNuM_R3);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}&quot;</span>;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <a class="code" href="a00881.html">SetRapidityInvJigsaw</a> NuNuR_R3(<span class="stringliteral">&quot;NuNuR_R3&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  INV_R3.AddJigsaw(NuNuR_R3);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  NuNuR_R3.AddVisibleFrames(LAB_R3.GetListVisibleFrames());</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;min #Sigma M_{top}^{2}&quot;</span>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <a class="code" href="a00813.html">MinMassesSqInvJigsaw</a> MinMt_R3(<span class="stringliteral">&quot;MinMt_R3&quot;</span>, jigsaw_name, 2);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  INV_R3.AddJigsaw(MinMt_R3);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  MinMt_R3.AddInvisibleFrame(Na_R3, 0);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  MinMt_R3.AddInvisibleFrame(Nb_R3, 1);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  MinMt_R3.AddVisibleFrames(La_R3+Ba_R3, 0);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  MinMt_R3.AddVisibleFrames(Lb_R3+Bb_R3, 1);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  MinMt_R3.AddMassFrame(La_R3, 0);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  MinMt_R3.AddMassFrame(Lb_R3, 1);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="comment">// Minimize difference Mt jigsaws</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;M_{#nu#nu} = f(m_{#it{l}#it{l}} , m_{#it{l}}^{ a} , m_{#it{l}}^{ b})&quot;</span>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <a class="code" href="a00877.html">SetMassInvJigsaw</a> NuNuM_R4(<span class="stringliteral">&quot;NuNuM_R4&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  INV_R4.AddJigsaw(NuNuM_R4);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;#eta_{#nu#nu} = #eta_{b #it{l} b #it{l}}&quot;</span>;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <a class="code" href="a00881.html">SetRapidityInvJigsaw</a> NuNuR_R4(<span class="stringliteral">&quot;NuNuR_R4&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  INV_R4.AddJigsaw(NuNuR_R4);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  NuNuR_R4.AddVisibleFrames(LAB_R4.GetListVisibleFrames());</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;min ( M_{top a}- M_{top b} )^{2}&quot;</span>;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <a class="code" href="a00801.html">MinMassDiffInvJigsaw</a> MinDeltaMt_R4(<span class="stringliteral">&quot;MinDeltaMt_R4&quot;</span>, jigsaw_name, 2);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  INV_R4.AddJigsaw(MinDeltaMt_R4);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  MinDeltaMt_R4.AddInvisibleFrame(Na_R4, 0);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  MinDeltaMt_R4.AddInvisibleFrame(Nb_R4, 1);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  MinDeltaMt_R4.AddVisibleFrames(La_R4+Ba_R4, 0);</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  MinDeltaMt_R4.AddVisibleFrames(Lb_R4+Bb_R4, 1);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  MinDeltaMt_R4.AddMassFrame(La_R4, 0);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  MinDeltaMt_R4.AddMassFrame(Lb_R4, 1);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="comment">// b-jet combinatoric jigsaws for all trees</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  jigsaw_name = <span class="stringliteral">&quot;Minimize M(b #it{l} )_{a} , M(b #it{l} )_{b}&quot;</span>;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <a class="code" href="a00805.html">MinMassesCombJigsaw</a> MinBL_R1(<span class="stringliteral">&quot;MinBL_R1&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  B_R1.AddJigsaw(MinBL_R1);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  MinBL_R1.AddFrames(La_R1+Ba_R1,0);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  MinBL_R1.AddFrames(Lb_R1+Bb_R1,1);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <a class="code" href="a00805.html">MinMassesCombJigsaw</a> MinBL_R2(<span class="stringliteral">&quot;MinBL_R2&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  B_R2.AddJigsaw(MinBL_R2);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  MinBL_R2.AddFrames(La_R2+Ba_R2,0);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  MinBL_R2.AddFrames(Lb_R2+Bb_R2,1);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  <a class="code" href="a00805.html">MinMassesCombJigsaw</a> MinBL_R3(<span class="stringliteral">&quot;MinBL_R3&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  B_R3.AddJigsaw(MinBL_R3);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  MinBL_R3.AddFrames(La_R3+Ba_R3,0);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  MinBL_R3.AddFrames(Lb_R3+Bb_R3,1);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  <a class="code" href="a00805.html">MinMassesCombJigsaw</a> MinBL_R4(<span class="stringliteral">&quot;MinBL_R4&quot;</span>, jigsaw_name);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  B_R4.AddJigsaw(MinBL_R4);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  MinBL_R4.AddFrames(La_R4+Ba_R4,0);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  MinBL_R4.AddFrames(Lb_R4+Bb_R4,1);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="keywordflow">if</span>(LAB_R1.InitializeAnalysis() &amp;&amp; LAB_R2.InitializeAnalysis() &amp;&amp; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;     LAB_R3.InitializeAnalysis() &amp;&amp; LAB_R4.InitializeAnalysis())</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;...Successfully initialized analysis&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    g_Log &lt;&lt; LogError &lt;&lt; <span class="stringliteral">&quot;...Failed initializing analysis&quot;</span> &lt;&lt; LogEnd;   </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <a class="code" href="a00889.html">TreePlot</a>* treePlot = <span class="keyword">new</span> <a class="code" href="a00889.html">TreePlot</a>(<span class="stringliteral">&quot;TreePlot&quot;</span>,<span class="stringliteral">&quot;TreePlot&quot;</span>);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(LAB_Gen);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;GenTree&quot;</span>, <span class="stringliteral">&quot;Generator Tree&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(LAB_R1);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;RecoTree&quot;</span>, <span class="stringliteral">&quot;Reconstruction Tree&quot;</span>);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(B_R1);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;VisTree&quot;</span>, <span class="stringliteral">&quot;b-jet Jigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(INV_R1);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;InvTree_R1&quot;</span>, <span class="stringliteral">&quot;Inivisibl Jigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(INV_R2);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;InvTree_R2&quot;</span>, <span class="stringliteral">&quot;Inivisibl Jigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(INV_R3);</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;InvTree_R3&quot;</span>, <span class="stringliteral">&quot;Inivisibl Jigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">SetTree</a>(INV_R4);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  treePlot-&gt;<a class="code" href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">Draw</a>(<span class="stringliteral">&quot;InvTree_R4&quot;</span>, <span class="stringliteral">&quot;Inivisibl Jigsaws&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="comment">//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <a class="code" href="a00733.html">HistPlot</a>* histPlot = <span class="keyword">new</span> <a class="code" href="a00733.html">HistPlot</a>(<span class="stringliteral">&quot;HistPlot&quot;</span>, <span class="stringliteral">&quot;t #bar{t} #rightarrow b W(#it{l} #nu) b W(#it{l} #nu)&quot;</span>);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00737.html">HistPlotCategory</a>&amp; cat_Gen = histPlot-&gt;<a class="code" href="a00733.html#af759affc8a1543b4991132171dd2ca1f">GetNewCategory</a>(<span class="stringliteral">&quot;Gen&quot;</span>,  <span class="stringliteral">&quot;Generator&quot;</span>);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00737.html">HistPlotCategory</a>&amp; cat_R1  = histPlot-&gt;<a class="code" href="a00733.html#af759affc8a1543b4991132171dd2ca1f">GetNewCategory</a>(<span class="stringliteral">&quot;Reco1&quot;</span>, <span class="stringliteral">&quot;M_{top}^{ a} = M_{top}^{ b} Reco&quot;</span>);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00737.html">HistPlotCategory</a>&amp; cat_R2  = histPlot-&gt;<a class="code" href="a00733.html#af759affc8a1543b4991132171dd2ca1f">GetNewCategory</a>(<span class="stringliteral">&quot;Reco2&quot;</span>, <span class="stringliteral">&quot;M_{W}^{ a} = M_{W}^{ b} Reco&quot;</span>);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00737.html">HistPlotCategory</a>&amp; cat_R3  = histPlot-&gt;<a class="code" href="a00733.html#af759affc8a1543b4991132171dd2ca1f">GetNewCategory</a>(<span class="stringliteral">&quot;Reco3&quot;</span>, <span class="stringliteral">&quot;min #Sigma M_{top}^{ 2} Reco&quot;</span>);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00737.html">HistPlotCategory</a>&amp; cat_R4  = histPlot-&gt;<a class="code" href="a00733.html#af759affc8a1543b4991132171dd2ca1f">GetNewCategory</a>(<span class="stringliteral">&quot;Reco4&quot;</span>, <span class="stringliteral">&quot;min #Delta M_{top} Reco&quot;</span>);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Mtt    = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Mtt&quot;</span>, <span class="stringliteral">&quot;M_{t #bar{t}} / m_{t #bar{t}}&quot;</span>, 0., 2.);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Eb_ta  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Eb_ta&quot;</span>, <span class="stringliteral">&quot;E_{b a}^{top a} / E_{b a}^{top a gen}&quot;</span>, 0., 2.);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Eb_tb  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Eb_tb&quot;</span>, <span class="stringliteral">&quot;E_{b b}^{top b} / E_{b b}^{top b gen}&quot;</span>, 0., 2.);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; El_Wa  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;El_Wa&quot;</span>, <span class="stringliteral">&quot;E_{#it{l} a}^{W a} / E_{#it{l} a}^{W a gen}&quot;</span>, 0., 2.);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; El_Wb  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;El_Wb&quot;</span>, <span class="stringliteral">&quot;E_{#it{l} b}^{W b} / E_{#it{l} b}^{W b gen}&quot;</span>, 0., 2.);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; costt  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;costt&quot;</span>,<span class="stringliteral">&quot;cos #theta_{t #bar{t}}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; costa  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;costa&quot;</span>,<span class="stringliteral">&quot;cos #theta_{top a}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; costb  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;costb&quot;</span>,<span class="stringliteral">&quot;cos #theta_{top b}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; cosWa  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;cosWa&quot;</span>,<span class="stringliteral">&quot;cos #theta_{W a}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; cosWb  = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;cosWb&quot;</span>,<span class="stringliteral">&quot;cos #theta_{W b}&quot;</span>, -1., 1.);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Dcostt = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Dcostt&quot;</span>,<span class="stringliteral">&quot;#theta_{t #bar{t}} - #theta_{t #bar{t}}^{gen}&quot;</span>, </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;                          -acos(-1.)/2., acos(-1.)/2.);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Dcosta = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Dcosta&quot;</span>,<span class="stringliteral">&quot;#theta_{top a} - #theta_{top a}^{gen}&quot;</span>, </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;                          -acos(-1.)/2., acos(-1.)/2.);</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; Dcostb = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;Dcostb&quot;</span>,<span class="stringliteral">&quot;#theta_{top b} - #theta_{top b}^{gen}&quot;</span>, </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                          -acos(-1.)/2., acos(-1.)/2.);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; DcosWa = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;DcosWa&quot;</span>,<span class="stringliteral">&quot;#theta_{W a} - #theta_{W a}^{gen}&quot;</span>, </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                          -acos(-1.)/2., acos(-1.)/2.);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00741.html">HistPlotVar</a>&amp; DcosWb = histPlot-&gt;<a class="code" href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">GetNewVar</a>(<span class="stringliteral">&quot;DcosWb&quot;</span>,<span class="stringliteral">&quot;#theta_{W b} - #theta_{W b}^{gen}&quot;</span>, </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                          -acos(-1.)/2., acos(-1.)/2.);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Mtt,   cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Eb_ta, cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(El_Wa, cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcostt, cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcosta, cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(DcosWa, cat_R1+cat_R2+cat_R3+cat_R4);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Mtt, Eb_ta, cat_R4);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Mtt, El_Wa, cat_R4);</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Eb_ta, Eb_tb, cat_R4);</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(El_Wa, El_Wb, cat_R4);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Eb_ta, El_Wa, cat_R4);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Eb_ta, El_Wb, cat_R4);</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcostt, Mtt,  cat_R4);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcosta, Eb_ta, cat_R4);</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(DcosWa, El_Wa, cat_R4);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcostt, Dcosta, cat_R4);</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcosta, Dcostb, cat_R4);</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(DcosWa, DcosWb, cat_R4);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">AddPlot</a>(Dcosta, DcosWa, cat_R4);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> igen = 0; igen &lt; Ngen; igen++){</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keywordflow">if</span>(igen%((std::max(Ngen,10))/10) == 0)</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Generating event &quot;</span> &lt;&lt; igen &lt;&lt; <span class="stringliteral">&quot; of &quot;</span> &lt;&lt; Ngen &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <span class="comment">// generate event</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    LAB_Gen.ClearEvent();                             <span class="comment">// clear the gen tree</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  </div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    LAB_Gen.AnalyzeEvent();                           <span class="comment">// generate a new event</span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">// analyze event three different ways</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    TVector3 MET = LAB_Gen.GetInvisibleMomentum();    <span class="comment">// Get the MET from gen tree</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    MET.SetZ(0.);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    LAB_R1.ClearEvent();   </div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    LAB_R2.ClearEvent(); </div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    LAB_R3.ClearEvent(); </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    LAB_R4.ClearEvent(); </div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;             </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    INV_R1.SetLabFrameThreeVector(MET); </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    INV_R2.SetLabFrameThreeVector(MET); </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    INV_R3.SetLabFrameThreeVector(MET);</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    INV_R4.SetLabFrameThreeVector(MET);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    La_R1.SetLabFrameFourVector(La_Gen.GetFourVector());</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    Lb_R1.SetLabFrameFourVector(Lb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    La_R2.SetLabFrameFourVector(La_Gen.GetFourVector());</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    Lb_R2.SetLabFrameFourVector(Lb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    La_R3.SetLabFrameFourVector(La_Gen.GetFourVector());</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    Lb_R3.SetLabFrameFourVector(Lb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    La_R4.SetLabFrameFourVector(La_Gen.GetFourVector());</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    Lb_R4.SetLabFrameFourVector(Lb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160; </div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    std::vector&lt;RFKey&gt; B_R1_ID; <span class="comment">// ID for tracking jets in tree</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    B_R1_ID.push_back(B_R1.AddLabFrameFourVector(Ba_Gen.GetFourVector()));</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    B_R1_ID.push_back(B_R1.AddLabFrameFourVector(Bb_Gen.GetFourVector()));</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    B_R2.AddLabFrameFourVector(Ba_Gen.GetFourVector());</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    B_R2.AddLabFrameFourVector(Bb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    B_R3.AddLabFrameFourVector(Ba_Gen.GetFourVector());</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    B_R3.AddLabFrameFourVector(Bb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    B_R4.AddLabFrameFourVector(Ba_Gen.GetFourVector());</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    B_R4.AddLabFrameFourVector(Bb_Gen.GetFourVector());</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   </div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    LAB_R1.AnalyzeEvent(); <span class="comment">// analyze the event</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    LAB_R2.AnalyzeEvent();     </div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    LAB_R3.AnalyzeEvent(); </div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    LAB_R4.AnalyzeEvent(); </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="comment">// Observable Calculations</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    <span class="keywordtype">double</span> Mttgen   = TT_Gen.GetMass();</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keywordtype">double</span> Eb_tagen = Ba_Gen.GetFourVector(Ta_Gen).E();</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="keywordtype">double</span> Eb_tbgen = Bb_Gen.GetFourVector(Tb_Gen).E();</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <span class="keywordtype">double</span> El_Wagen = La_Gen.GetFourVector(Wa_Gen).E();</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keywordtype">double</span> El_Wbgen = Lb_Gen.GetFourVector(Wb_Gen).E();</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    <span class="keywordtype">double</span> costtgen = TT_Gen.GetCosDecayAngle();</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    <span class="keywordtype">double</span> costagen = Ta_Gen.GetCosDecayAngle();</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    <span class="keywordtype">double</span> costbgen = Tb_Gen.GetCosDecayAngle();</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="keywordtype">double</span> cosWagen = Wa_Gen.GetCosDecayAngle();</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;    <span class="keywordtype">double</span> cosWbgen = Wb_Gen.GetCosDecayAngle();</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    Mtt = TT_R1.GetMass()/Mttgen;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    <span class="comment">// Mta = Ta_R1.GetMass();</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    <span class="comment">// Mtb = Tb_R1.GetMass();</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="comment">// MWa = Wa_R1.GetMass();</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;    <span class="comment">// MWb = Wb_R1.GetMass();</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    Eb_ta = Ba_R1.GetFourVector(Ta_R1).E()/Eb_tagen;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    Eb_tb = Bb_R1.GetFourVector(Tb_R1).E()/Eb_tbgen;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    El_Wa = La_R1.GetFourVector(Wa_R1).E()/El_Wagen;</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;    El_Wb = Lb_R1.GetFourVector(Wb_R1).E()/El_Wbgen;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    costt = TT_R1.GetCosDecayAngle();</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    costa = Ta_R1.GetCosDecayAngle();</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    costb = Tb_R1.GetCosDecayAngle();</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    cosWa = Wa_R1.GetCosDecayAngle();</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    cosWb = Wb_R1.GetCosDecayAngle();</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    histPlot-&gt;<a class="code" href="a00733.html#a26e1c00c202368d8a80611ebf052a94c">Fill</a>(cat_R1);</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    Mtt = TT_R2.GetMass()/Mttgen;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;    <span class="comment">// Mta = Ta_R2.GetMass();</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    <span class="comment">// Mtb = Tb_R2.GetMass();</span></div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;    <span class="comment">// MWa = Wa_R2.GetMass();</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="comment">// MWb = Wb_R2.GetMass();</span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    Eb_ta = Ba_R2.GetFourVector(Ta_R2).E()/Eb_tagen;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    Eb_tb = Bb_R2.GetFourVector(Tb_R2).E()/Eb_tbgen;</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    El_Wa = La_R2.GetFourVector(Wa_R2).E()/El_Wagen;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    El_Wb = Lb_R2.GetFourVector(Wb_R2).E()/El_Wbgen;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    costt = TT_R2.GetCosDecayAngle();</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    costa = Ta_R2.GetCosDecayAngle();</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    costb = Tb_R2.GetCosDecayAngle();</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    cosWa = Wa_R2.GetCosDecayAngle();</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;    cosWb = Wb_R2.GetCosDecayAngle();</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;    DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    histPlot-&gt;<a class="code" href="a00733.html#a26e1c00c202368d8a80611ebf052a94c">Fill</a>(cat_R2);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    Mtt = TT_R3.GetMass()/Mttgen;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;    <span class="comment">// Mta = Ta_R3.GetMass();</span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    <span class="comment">// Mtb = Tb_R3.GetMass();</span></div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    <span class="comment">// MWa = Wa_R3.GetMass();</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="comment">// MWb = Wb_R3.GetMass();</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    Eb_ta = Ba_R3.GetFourVector(Ta_R3).E()/Eb_tagen;</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    Eb_tb = Bb_R3.GetFourVector(Tb_R3).E()/Eb_tbgen;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    El_Wa = La_R3.GetFourVector(Wa_R3).E()/El_Wagen;</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    El_Wb = Lb_R3.GetFourVector(Wb_R3).E()/El_Wbgen;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    costt = TT_R3.GetCosDecayAngle();</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    costa = Ta_R3.GetCosDecayAngle();</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    costb = Tb_R3.GetCosDecayAngle();</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    cosWa = Wa_R3.GetCosDecayAngle();</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;    cosWb = Wb_R3.GetCosDecayAngle();</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;    DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    histPlot-&gt;<a class="code" href="a00733.html#a26e1c00c202368d8a80611ebf052a94c">Fill</a>(cat_R3);</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160; </div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    Mtt = TT_R4.GetMass()/Mttgen;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="comment">// Mta = Ta_R4.GetMass();</span></div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <span class="comment">// Mtb = Tb_R4.GetMass();</span></div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    <span class="comment">// MWa = Wa_R4.GetMass();</span></div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    <span class="comment">// MWb = Wb_R4.GetMass();</span></div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    Eb_ta = Ba_R4.GetFourVector(Ta_R4).E()/Eb_tagen;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    Eb_tb = Bb_R4.GetFourVector(Tb_R4).E()/Eb_tbgen;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;    El_Wa = La_R4.GetFourVector(Wa_R4).E()/El_Wagen;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    El_Wb = Lb_R4.GetFourVector(Wb_R4).E()/El_Wbgen;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;    costt = TT_R4.GetCosDecayAngle();</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    costa = Ta_R4.GetCosDecayAngle();</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    costb = Tb_R4.GetCosDecayAngle();</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;    cosWa = Wa_R4.GetCosDecayAngle();</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;    cosWb = Wb_R4.GetCosDecayAngle();</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;    Dcostt = asin(sqrt(1.-costt*costt)*costtgen-sqrt(1.-costtgen*costtgen)*costt);</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;    Dcosta = asin(sqrt(1.-costa*costa)*costagen-sqrt(1.-costagen*costagen)*costa);</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    Dcostb = asin(sqrt(1.-costb*costb)*costbgen-sqrt(1.-costbgen*costbgen)*costb);</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    DcosWa = asin(sqrt(1.-cosWa*cosWa)*cosWagen-sqrt(1.-cosWagen*cosWagen)*cosWa);</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    DcosWb = asin(sqrt(1.-cosWb*cosWb)*cosWbgen-sqrt(1.-cosWbgen*cosWbgen)*cosWb);</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    histPlot-&gt;<a class="code" href="a00733.html#a26e1c00c202368d8a80611ebf052a94c">Fill</a>(cat_R4);</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;  }</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160; </div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#a6479be5452787412bbd5e207f59f131a">Draw</a>();</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;  LAB_Gen.PrintGeneratorEfficiency();</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;  TFile fout(output_name.c_str(),<span class="stringliteral">&quot;RECREATE&quot;</span>);</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;  fout.Close();</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;  histPlot-&gt;<a class="code" href="a00869.html#a38396c11e848bfd7ddd62d3026436fc9">WriteOutput</a>(output_name);</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;  histPlot-&gt;<a class="code" href="a00733.html#a6ad2038c5906222041a715577cfd69eb">WriteHist</a>(output_name);</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;  treePlot-&gt;<a class="code" href="a00869.html#a38396c11e848bfd7ddd62d3026436fc9">WriteOutput</a>(output_name);</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160; </div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  g_Log &lt;&lt; LogInfo &lt;&lt; <span class="stringliteral">&quot;Finished&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;}</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160; </div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;<span class="preprocessor"># ifndef __CINT__ // main function for stand-alone compilation</span></div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;<span class="keywordtype">int</span> main(){</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;  example_ttbar_to_bWlnubWlnu();</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;}</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00476_html"><div class="ttname"><a href="a00476.html">RFPDF.hh</a></div></div>
-<div class="ttc" id="aa00482_html"><div class="ttname"><a href="a00482.html">RFsplinePDF.hh</a></div></div>
-<div class="ttc" id="aa00971_html"><div class="ttname"><a href="a00971.html">RestFrames::RFPDF</a></div><div class="ttdef"><b>Definition:</b> <a href="a00476_source.html#l00040">RFPDF.hh:40</a></div></div>
+<div class="ttc" id="aa00889_html_a24f23483eaaf52d59b6114c13f9a1ef6"><div class="ttname"><a href="a00889.html#a24f23483eaaf52d59b6114c13f9a1ef6">RestFrames::TreePlot::Draw</a></div><div class="ttdeci">void Draw(const std::string &amp;name=&quot;&quot;, const std::string &amp;title=&quot;&quot;, bool invert_colors=false, bool invert_node_colors=false)</div><div class="ttdoc">Draws tree.</div><div class="ttdef"><b>Definition:</b> <a href="a00620_source.html#l00127">TreePlot.cc:127</a></div></div>
+<div class="ttc" id="aa00801_html"><div class="ttname"><a href="a00801.html">RestFrames::MinMassDiffInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00407_source.html#l00040">MinMassDiffInvJigsaw.hh:40</a></div></div>
+<div class="ttc" id="aa00733_html_a6ad2038c5906222041a715577cfd69eb"><div class="ttname"><a href="a00733.html#a6ad2038c5906222041a715577cfd69eb">RestFrames::HistPlot::WriteHist</a></div><div class="ttdeci">void WriteHist(const std::string &amp;filename)</div><div class="ttdoc">Stores all histograms in root file.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00581">HistPlot.cc:581</a></div></div>
+<div class="ttc" id="aa00749_html"><div class="ttname"><a href="a00749.html">RestFrames::InvisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00368_source.html#l00041">InvisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00737_html"><div class="ttname"><a href="a00737.html">RestFrames::HistPlotCategory</a></div><div class="ttdef"><b>Definition:</b> <a href="a00359_source.html#l00040">HistPlotCategory.hh:40</a></div></div>
+<div class="ttc" id="aa00817_html"><div class="ttname"><a href="a00817.html">RestFrames::ppLabGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00419_source.html#l00040">ppLabGenFrame.hh:40</a></div></div>
+<div class="ttc" id="aa00717_html"><div class="ttname"><a href="a00717.html">RestFrames::DecayGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00043">DecayGenFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00733_html"><div class="ttname"><a href="a00733.html">RestFrames::HistPlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00356_source.html#l00044">HistPlot.hh:44</a></div></div>
+<div class="ttc" id="aa00869_html_a38396c11e848bfd7ddd62d3026436fc9"><div class="ttname"><a href="a00869.html#a38396c11e848bfd7ddd62d3026436fc9">RestFrames::RFPlot::WriteOutput</a></div><div class="ttdeci">void WriteOutput(const std::string &amp;filename)</div><div class="ttdoc">Stores all plots in root file.</div><div class="ttdef"><b>Definition:</b> <a href="a00605_source.html#l00059">RFPlot.cc:59</a></div></div>
+<div class="ttc" id="aa00431_html"><div class="ttname"><a href="a00431.html">RestFrames.hh</a></div></div>
+<div class="ttc" id="aa00709_html"><div class="ttname"><a href="a00709.html">RestFrames::ContraBoostInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00338_source.html#l00037">ContraBoostInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00909_html"><div class="ttname"><a href="a00909.html">RestFrames::VisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00479_source.html#l00041">VisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00813_html"><div class="ttname"><a href="a00813.html">RestFrames::MinMassesSqInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00037">MinMassesSqInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00881_html"><div class="ttname"><a href="a00881.html">RestFrames::SetRapidityInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00458_source.html#l00037">SetRapidityInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00781_html"><div class="ttname"><a href="a00781.html">RestFrames::LabRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00392_source.html#l00044">LabRecoFrame.hh:44</a></div></div>
+<div class="ttc" id="aa00805_html"><div class="ttname"><a href="a00805.html">RestFrames::MinMassesCombJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00410_source.html#l00040">MinMassesCombJigsaw.hh:40</a></div></div>
+<div class="ttc" id="aa00733_html_a8739b5b8dd627a5cb4c15c34f01e2dac"><div class="ttname"><a href="a00733.html#a8739b5b8dd627a5cb4c15c34f01e2dac">RestFrames::HistPlot::GetNewVar</a></div><div class="ttdeci">HistPlotVar const  &amp; GetNewVar(const std::string &amp;name, const std::string &amp;title, double minval, double maxval, const std::string &amp;unit=&quot;&quot;)</div><div class="ttdoc">Defines new variable for plotting.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00086">HistPlot.cc:86</a></div></div>
+<div class="ttc" id="aa00905_html"><div class="ttname"><a href="a00905.html">RestFrames::VisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00476_source.html#l00041">VisibleGenFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00733_html_a26e1c00c202368d8a80611ebf052a94c"><div class="ttname"><a href="a00733.html#a26e1c00c202368d8a80611ebf052a94c">RestFrames::HistPlot::Fill</a></div><div class="ttdeci">void Fill(double weight=1.)</div><div class="ttdoc">Fills an entry for every variable according to each's current value.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00242">HistPlot.cc:242</a></div></div>
+<div class="ttc" id="aa00761_html"><div class="ttname"><a href="a00761.html">RestFrames::InvisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00377_source.html#l00041">InvisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00889_html_a79bd00d06ba46ed1c6914bbf4eee624c"><div class="ttname"><a href="a00889.html#a79bd00d06ba46ed1c6914bbf4eee624c">RestFrames::TreePlot::SetTree</a></div><div class="ttdeci">void SetTree(const RestFrame &amp;frame)</div><div class="ttdoc">Sets a tree that shows how a frame is connected to its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00620_source.html#l00160">TreePlot.cc:160</a></div></div>
+<div class="ttc" id="aa00889_html"><div class="ttname"><a href="a00889.html">RestFrames::TreePlot</a></div><div class="ttdef"><b>Definition:</b> <a href="a00464_source.html#l00050">TreePlot.hh:50</a></div></div>
+<div class="ttc" id="aa00733_html_af759affc8a1543b4991132171dd2ca1f"><div class="ttname"><a href="a00733.html#af759affc8a1543b4991132171dd2ca1f">RestFrames::HistPlot::GetNewCategory</a></div><div class="ttdeci">HistPlotCategory const  &amp; GetNewCategory(const std::string &amp;name, const std::string &amp;title)</div><div class="ttdoc">Defines new category for plotting.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00095">HistPlot.cc:95</a></div></div>
+<div class="ttc" id="aa00877_html"><div class="ttname"><a href="a00877.html">RestFrames::SetMassInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00455_source.html#l00037">SetMassInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00693_html"><div class="ttname"><a href="a00693.html">RestFrames::CombinatoricGroup</a></div><div class="ttdef"><b>Definition:</b> <a href="a00326_source.html#l00039">CombinatoricGroup.hh:39</a></div></div>
+<div class="ttc" id="aa00841_html"><div class="ttname"><a href="a00841.html">RestFrames::RFKey</a></div><div class="ttdef"><b>Definition:</b> <a href="a00440_source.html#l00038">RFKey.hh:38</a></div></div>
+<div class="ttc" id="aa00741_html"><div class="ttname"><a href="a00741.html">RestFrames::HistPlotVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00040">HistPlotVar.hh:40</a></div></div>
+<div class="ttc" id="aa00733_html_abdb76c0e2a8ad45d5a98e4a9fb324753"><div class="ttname"><a href="a00733.html#abdb76c0e2a8ad45d5a98e4a9fb324753">RestFrames::HistPlot::AddPlot</a></div><div class="ttdeci">void AddPlot(const HistPlotVar &amp;var, RestFrames::RFList&lt; const HistPlotCategory &gt; cats=RestFrames::RFList&lt; const RestFrames::HistPlotCategory &gt;(), bool invert_colors=false)</div><div class="ttdoc">Defines new 1D plot.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00102">HistPlot.cc:102</a></div></div>
+<div class="ttc" id="aa00721_html"><div class="ttname"><a href="a00721.html">RestFrames::DecayRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00347_source.html#l00043">DecayRecoFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00753_html"><div class="ttname"><a href="a00753.html">RestFrames::InvisibleGroup</a></div><div class="ttdef"><b>Definition:</b> <a href="a00371_source.html#l00040">InvisibleGroup.hh:40</a></div></div>
+<div class="ttc" id="aa00733_html_a6479be5452787412bbd5e207f59f131a"><div class="ttname"><a href="a00733.html#a6479be5452787412bbd5e207f59f131a">RestFrames::HistPlot::Draw</a></div><div class="ttdeci">void Draw(bool invert_colors=false)</div><div class="ttdoc">Draws every histogram.</div><div class="ttdef"><b>Definition:</b> <a href="a00515_source.html#l00272">HistPlot.cc:272</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:17 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:21 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

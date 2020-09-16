@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/InvisibleGroup.hh Source File</title>
+<title>RestFrames: inc/RestFrames/InvisibleState.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">InvisibleGroup.hh</div>  </div>
+<div class="title">InvisibleState.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00380.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,82 +124,58 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef InvisibleGroup_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define InvisibleGroup_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef InvisibleState_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define InvisibleState_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00362.html">RestFrames/Group.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00389.html">RestFrames/InvisibleState.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">class </span>InvisibleState;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00831.html">   40</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00831.html">InvisibleGroup</a> : <span class="keyword">public</span> <a class="code" href="a00807.html">Group</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00461.html">RestFrames/State.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// InvisibleState class</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00765.html">   40</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00765.html">InvisibleState</a> : <span class="keyword">public</span> <a class="code" href="a00885.html">State</a> {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00831.html#ad5710fe8db574e8a80121e7bdf6ea2df">InvisibleGroup</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00831.html#ad5710fe8db574e8a80121e7bdf6ea2df">InvisibleGroup</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00831.html">InvisibleGroup</a>();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#aff4b3f5886b684f4b3ca0e6eff87f1d1">Clear</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#ad3e312c4e05ab41b55419c7ce87775fc">AddFrame</a>(<a class="code" href="a00919.html">RestFrame</a>&amp; frame);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#aabbf706fa25bb884c7fa3273578e2884">AddJigsaw</a>(<a class="code" href="a00847.html">Jigsaw</a>&amp; jigsaw);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">// Event analysis functions</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#a9df1773abfd232300b388df52f95e5da">SetMass</a>(<span class="keywordtype">double</span> M);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#ab3fb968126856c09b33c26eb7220e2ec">SetLabFrameFourVector</a>(<span class="keyword">const</span> TLorentzVector&amp; V);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00831.html#a439f309a1649d92ae5efbcafb06fe66d">SetLabFrameThreeVector</a>(<span class="keyword">const</span> TVector3&amp; V);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> TLorentzVector <a class="code" href="a00831.html#a3db8edc9f19a165288314eb4b13210a8">GetLabFrameFourVector</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00765.html#abb80bde9014004a74097fe1ce1624053">InvisibleState</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00765.html#abb80bde9014004a74097fe1ce1624053">InvisibleState</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00765.html">InvisibleState</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00765.html">InvisibleState</a>&amp; Empty();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00765.html#a08db09f5bbb90a7d417b5d974f620063">Clear</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00765.html#a5165d94ce6899fc9f48af1fb8a0bd74c">AddFrame</a>(<span class="keyword">const</span> <a class="code" href="a00829.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00765.html#adcaf2bd2f05b95959ccc4d33e150004d">SetParentJigsaw</a>(<a class="code" href="a00769.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00765.html#a0729e4de5f208cf916bcc504b9b04b4e">SetChildJigsaw</a>(<a class="code" href="a00769.html">Jigsaw</a>&amp; jigsaw);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00765.html#ab42943dfa9195c6f2b4cbc8ebdd3e449">GetMinimumMass</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00831.html">InvisibleGroup</a>&amp; <a class="code" href="a00831.html#abc822d8b2c1b4a80693291c169870101">Empty</a>();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00765.html">InvisibleState</a> m_Empty;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  };</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> ClearEvent();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> AnalyzeEvent();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00843.html">InvisibleState</a>&amp; InitializeParentState();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00843.html">InvisibleState</a>&amp; GetParentState() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00843.html">InvisibleState</a>&amp; GetChildState(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    TLorentzVector m_Lab_P;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00831.html">InvisibleGroup</a> m_Empty;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  };</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00831_html_aabbf706fa25bb884c7fa3273578e2884"><div class="ttname"><a href="a00831.html#aabbf706fa25bb884c7fa3273578e2884">RestFrames::InvisibleGroup::AddJigsaw</a></div><div class="ttdeci">virtual void AddJigsaw(Jigsaw &amp;jigsaw)</div><div class="ttdoc">Adds a jigsaw (Jigsaw) to this invisible group.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00068">InvisibleGroup.cc:68</a></div></div>
-<div class="ttc" id="aa00831_html_ab3fb968126856c09b33c26eb7220e2ec"><div class="ttname"><a href="a00831.html#ab3fb968126856c09b33c26eb7220e2ec">RestFrames::InvisibleGroup::SetLabFrameFourVector</a></div><div class="ttdeci">virtual void SetLabFrameFourVector(const TLorentzVector &amp;V)</div><div class="ttdoc">Sets lab frame's four-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00107">InvisibleGroup.cc:107</a></div></div>
-<div class="ttc" id="aa00831_html"><div class="ttname"><a href="a00831.html">RestFrames::InvisibleGroup</a></div><div class="ttdef"><b>Definition:</b> <a href="a00380_source.html#l00040">InvisibleGroup.hh:40</a></div></div>
-<div class="ttc" id="aa00831_html_aff4b3f5886b684f4b3ca0e6eff87f1d1"><div class="ttname"><a href="a00831.html#aff4b3f5886b684f4b3ca0e6eff87f1d1">RestFrames::InvisibleGroup::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears InvisibleGroup from all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00057">InvisibleGroup.cc:57</a></div></div>
-<div class="ttc" id="aa00831_html_a9df1773abfd232300b388df52f95e5da"><div class="ttname"><a href="a00831.html#a9df1773abfd232300b388df52f95e5da">RestFrames::InvisibleGroup::SetMass</a></div><div class="ttdeci">virtual void SetMass(double M)</div><div class="ttdoc">Sets mass of four-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00103">InvisibleGroup.cc:103</a></div></div>
-<div class="ttc" id="aa00831_html_ad5710fe8db574e8a80121e7bdf6ea2df"><div class="ttname"><a href="a00831.html#ad5710fe8db574e8a80121e7bdf6ea2df">RestFrames::InvisibleGroup::InvisibleGroup</a></div><div class="ttdeci">InvisibleGroup()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00048">InvisibleGroup.cc:48</a></div></div>
-<div class="ttc" id="aa00831_html_a439f309a1649d92ae5efbcafb06fe66d"><div class="ttname"><a href="a00831.html#a439f309a1649d92ae5efbcafb06fe66d">RestFrames::InvisibleGroup::SetLabFrameThreeVector</a></div><div class="ttdeci">virtual void SetLabFrameThreeVector(const TVector3 &amp;V)</div><div class="ttdoc">Sets lab frame's three-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00111">InvisibleGroup.cc:111</a></div></div>
-<div class="ttc" id="aa00919_html"><div class="ttname"><a href="a00919.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00446_source.html#l00045">RestFrame.hh:45</a></div></div>
-<div class="ttc" id="aa00847_html"><div class="ttname"><a href="a00847.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects</div><div class="ttdef"><b>Definition:</b> <a href="a00392_source.html#l00044">Jigsaw.hh:44</a></div></div>
-<div class="ttc" id="aa00389_html"><div class="ttname"><a href="a00389.html">InvisibleState.hh</a></div></div>
-<div class="ttc" id="aa00831_html_a3db8edc9f19a165288314eb4b13210a8"><div class="ttname"><a href="a00831.html#a3db8edc9f19a165288314eb4b13210a8">RestFrames::InvisibleGroup::GetLabFrameFourVector</a></div><div class="ttdeci">virtual TLorentzVector GetLabFrameFourVector() const</div><div class="ttdoc">Returns lab frame's four-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00115">InvisibleGroup.cc:115</a></div></div>
-<div class="ttc" id="aa00362_html"><div class="ttname"><a href="a00362.html">Group.hh</a></div></div>
-<div class="ttc" id="aa00831_html_ad3e312c4e05ab41b55419c7ce87775fc"><div class="ttname"><a href="a00831.html#ad3e312c4e05ab41b55419c7ce87775fc">RestFrames::InvisibleGroup::AddFrame</a></div><div class="ttdeci">virtual void AddFrame(RestFrame &amp;frame)</div><div class="ttdoc">Adds a frame (RestFrame) to this invisible group.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00061">InvisibleGroup.cc:61</a></div></div>
-<div class="ttc" id="aa00843_html"><div class="ttname"><a href="a00843.html">RestFrames::InvisibleState</a></div><div class="ttdef"><b>Definition:</b> <a href="a00389_source.html#l00040">InvisibleState.hh:40</a></div></div>
-<div class="ttc" id="aa00807_html"><div class="ttname"><a href="a00807.html">RestFrames::Group</a></div><div class="ttdoc">abstract base class for all Group objects</div><div class="ttdef"><b>Definition:</b> <a href="a00362_source.html#l00046">Group.hh:46</a></div></div>
-<div class="ttc" id="aa00831_html_abc822d8b2c1b4a80693291c169870101"><div class="ttname"><a href="a00831.html#abc822d8b2c1b4a80693291c169870101">RestFrames::InvisibleGroup::Empty</a></div><div class="ttdeci">static InvisibleGroup &amp; Empty()</div><div class="ttdoc">Returns empty InvisibleGroup.</div><div class="ttdef"><b>Definition:</b> <a href="a00572_source.html#l00053">InvisibleGroup.cc:53</a></div></div>
+<div class="ttc" id="aa00765_html_ab42943dfa9195c6f2b4cbc8ebdd3e449"><div class="ttname"><a href="a00765.html#ab42943dfa9195c6f2b4cbc8ebdd3e449">RestFrames::InvisibleState::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00081">InvisibleState.cc:81</a></div></div>
+<div class="ttc" id="aa00829_html"><div class="ttname"><a href="a00829.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00428_source.html#l00045">RestFrame.hh:45</a></div></div>
+<div class="ttc" id="aa00765_html_abb80bde9014004a74097fe1ce1624053"><div class="ttname"><a href="a00765.html#abb80bde9014004a74097fe1ce1624053">RestFrames::InvisibleState::InvisibleState</a></div><div class="ttdeci">InvisibleState()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00047">InvisibleState.cc:47</a></div></div>
+<div class="ttc" id="aa00765_html_adcaf2bd2f05b95959ccc4d33e150004d"><div class="ttname"><a href="a00765.html#adcaf2bd2f05b95959ccc4d33e150004d">RestFrames::InvisibleState::SetParentJigsaw</a></div><div class="ttdeci">virtual void SetParentJigsaw(Jigsaw &amp;jigsaw)</div><div class="ttdoc">Sets the parent jigsaw (Jigsaw) to jigsaw</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00069">InvisibleState.cc:69</a></div></div>
+<div class="ttc" id="aa00765_html_a0729e4de5f208cf916bcc504b9b04b4e"><div class="ttname"><a href="a00765.html#a0729e4de5f208cf916bcc504b9b04b4e">RestFrames::InvisibleState::SetChildJigsaw</a></div><div class="ttdeci">virtual void SetChildJigsaw(Jigsaw &amp;jigsaw)</div><div class="ttdoc">Sets the child jigsaw (Jigsaw) to jigsaw</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00075">InvisibleState.cc:75</a></div></div>
+<div class="ttc" id="aa00765_html_a5165d94ce6899fc9f48af1fb8a0bd74c"><div class="ttname"><a href="a00765.html#a5165d94ce6899fc9f48af1fb8a0bd74c">RestFrames::InvisibleState::AddFrame</a></div><div class="ttdeci">virtual void AddFrame(const RestFrame &amp;frame)</div><div class="ttdoc">Adds a frame (RestFrame) to this state.</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00059">InvisibleState.cc:59</a></div></div>
+<div class="ttc" id="aa00461_html"><div class="ttname"><a href="a00461.html">State.hh</a></div></div>
+<div class="ttc" id="aa00765_html_a08db09f5bbb90a7d417b5d974f620063"><div class="ttname"><a href="a00765.html#a08db09f5bbb90a7d417b5d974f620063">RestFrames::InvisibleState::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears InvisibleState to all connections from other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00539_source.html#l00055">InvisibleState.cc:55</a></div></div>
+<div class="ttc" id="aa00769_html"><div class="ttname"><a href="a00769.html">RestFrames::Jigsaw</a></div><div class="ttdoc">abstract base class for all Jigsaw objects</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00044">Jigsaw.hh:44</a></div></div>
+<div class="ttc" id="aa00885_html"><div class="ttname"><a href="a00885.html">RestFrames::State</a></div><div class="ttdoc">Abstract base class for all State objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00461_source.html#l00047">State.hh:47</a></div></div>
+<div class="ttc" id="aa00765_html"><div class="ttname"><a href="a00765.html">RestFrames::InvisibleState</a></div><div class="ttdef"><b>Definition:</b> <a href="a00380_source.html#l00040">InvisibleState.hh:40</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

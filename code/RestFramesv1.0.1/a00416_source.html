@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/MinMassChi2CombJigsaw.hh Source File</title>
+<title>RestFrames: inc/RestFrames/MinMassesSqInvJigsaw.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,10 +103,10 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">MinMassChi2CombJigsaw.hh</div>  </div>
+<div class="title">MinMassesSqInvJigsaw.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00416.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
@@ -124,54 +124,60 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef MinMassChi2CombJigsaw_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define MinMassChi2CombJigsaw_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef MinMassesSqInvJigsaw_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define MinMassesSqInvJigsaw_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00332.html">RestFrames/CombinatoricJigsaw.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00374.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00879.html">   37</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00879.html">MinMassChi2CombJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00767.html">CombinatoricJigsaw</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00813.html">   37</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00813.html">MinMassesSqInvJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00757.html">InvisibleJigsaw</a> {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00879.html#a729a64c26005d63120ad7d0eaa62cf01">MinMassChi2CombJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;              <span class="keyword">const</span> std::string&amp; stitle,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;              <span class="keywordtype">int</span> N_comb, <span class="keywordtype">int</span> N_mass);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00879.html">MinMassChi2CombJigsaw</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00879.html#add012d23ccd565a324e20026848b2fdf">   54</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00879.html#add012d23ccd565a324e20026848b2fdf">GetLabel</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Min Mass #Chi^{2}&quot;</span>; }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00879.html#aabc97870d88ce65531be97ca30b05ded">SetMass</a>(<span class="keywordtype">double</span> mass, <span class="keywordtype">int</span> i = 0);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00879.html#ac69e84c7d8c3b7ef97dfa88fda8919f9">SetSigma</a>(<span class="keywordtype">double</span> sigma, <span class="keywordtype">int</span> i = 0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">MinMassesSqInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;               <span class="keyword">const</span> std::string&amp; stitle,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;               <span class="keywordtype">int</span> N_vis_inv_pair);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">MinMassesSqInvJigsaw</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    ~<a class="code" href="a00813.html">MinMassesSqInvJigsaw</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00813.html#a3b527cd7edf9ade8471aaaf8fcd5bb34">   56</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00813.html#a3b527cd7edf9ade8471aaaf8fcd5bb34">GetLabel</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Min Masses Sq.&quot;</span>; }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00813.html#adbabeec334975f87a46457d40cef7a30">GetMinimumMass</a>() <span class="keyword">const</span>;    </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00813.html#a69268af1119e372d097a54782e97cd08">AnalyzeEvent</a>();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00813.html">MinMassesSqInvJigsaw</a>&amp; <a class="code" href="a00813.html#a3b2af3850a0d87dbd27c18777c0068b7">Empty</a>();</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> EvaluateMetric(<span class="keywordtype">double</span>&amp; metric) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Ncomb;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Nmass;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Npair;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pvis;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pinv;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    std::vector&lt;double&gt;        m_Minv;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::vector&lt;double&gt; m_Mass;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    std::vector&lt;double&gt; m_Sigma;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">double</span> GetPScale(<span class="keywordtype">double</span> Minv);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> ApplyOptimalRotation();</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  };</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00813.html">MinMassesSqInvJigsaw</a> m_Empty;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  };</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00879_html_add012d23ccd565a324e20026848b2fdf"><div class="ttname"><a href="a00879.html#add012d23ccd565a324e20026848b2fdf">RestFrames::MinMassChi2CombJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00054">MinMassChi2CombJigsaw.hh:54</a></div></div>
-<div class="ttc" id="aa00879_html"><div class="ttname"><a href="a00879.html">RestFrames::MinMassChi2CombJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00037">MinMassChi2CombJigsaw.hh:37</a></div></div>
-<div class="ttc" id="aa00879_html_ac69e84c7d8c3b7ef97dfa88fda8919f9"><div class="ttname"><a href="a00879.html#ac69e84c7d8c3b7ef97dfa88fda8919f9">RestFrames::MinMassChi2CombJigsaw::SetSigma</a></div><div class="ttdeci">virtual void SetSigma(double sigma, int i=0)</div><div class="ttdoc">Sets sigma of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00608_source.html#l00056">MinMassChi2CombJigsaw.cc:56</a></div></div>
-<div class="ttc" id="aa00767_html"><div class="ttname"><a href="a00767.html">RestFrames::CombinatoricJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00040">CombinatoricJigsaw.hh:40</a></div></div>
-<div class="ttc" id="aa00879_html_aabc97870d88ce65531be97ca30b05ded"><div class="ttname"><a href="a00879.html#aabc97870d88ce65531be97ca30b05ded">RestFrames::MinMassChi2CombJigsaw::SetMass</a></div><div class="ttdeci">virtual void SetMass(double mass, int i=0)</div><div class="ttdoc">Sets mass of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00608_source.html#l00049">MinMassChi2CombJigsaw.cc:49</a></div></div>
-<div class="ttc" id="aa00879_html_a729a64c26005d63120ad7d0eaa62cf01"><div class="ttname"><a href="a00879.html#a729a64c26005d63120ad7d0eaa62cf01">RestFrames::MinMassChi2CombJigsaw::MinMassChi2CombJigsaw</a></div><div class="ttdeci">MinMassChi2CombJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_comb, int N_mass)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00608_source.html#l00035">MinMassChi2CombJigsaw.cc:35</a></div></div>
-<div class="ttc" id="aa00332_html"><div class="ttname"><a href="a00332.html">CombinatoricJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00374_html"><div class="ttname"><a href="a00374.html">InvisibleJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00813_html_a3b2af3850a0d87dbd27c18777c0068b7"><div class="ttname"><a href="a00813.html#a3b2af3850a0d87dbd27c18777c0068b7">RestFrames::MinMassesSqInvJigsaw::Empty</a></div><div class="ttdeci">static MinMassesSqInvJigsaw &amp; Empty()</div><div class="ttdoc">Returns empty MinMassesSqInvJigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00052">MinMassesSqInvJigsaw.cc:52</a></div></div>
+<div class="ttc" id="aa00813_html"><div class="ttname"><a href="a00813.html">RestFrames::MinMassesSqInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00037">MinMassesSqInvJigsaw.hh:37</a></div></div>
+<div class="ttc" id="aa00813_html_adbabeec334975f87a46457d40cef7a30"><div class="ttname"><a href="a00813.html#adbabeec334975f87a46457d40cef7a30">RestFrames::MinMassesSqInvJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00056">MinMassesSqInvJigsaw.cc:56</a></div></div>
+<div class="ttc" id="aa00813_html_afe899b50b05e763b37e4d0bb2f45a8d2"><div class="ttname"><a href="a00813.html#afe899b50b05e763b37e4d0bb2f45a8d2">RestFrames::MinMassesSqInvJigsaw::MinMassesSqInvJigsaw</a></div><div class="ttdeci">MinMassesSqInvJigsaw()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00047">MinMassesSqInvJigsaw.cc:47</a></div></div>
+<div class="ttc" id="aa00757_html"><div class="ttname"><a href="a00757.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
+<div class="ttc" id="aa00813_html_a3b527cd7edf9ade8471aaaf8fcd5bb34"><div class="ttname"><a href="a00813.html#a3b527cd7edf9ade8471aaaf8fcd5bb34">RestFrames::MinMassesSqInvJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00416_source.html#l00056">MinMassesSqInvJigsaw.hh:56</a></div></div>
+<div class="ttc" id="aa00813_html_a69268af1119e372d097a54782e97cd08"><div class="ttname"><a href="a00813.html#a69268af1119e372d097a54782e97cd08">RestFrames::MinMassesSqInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00575_source.html#l00096">MinMassesSqInvJigsaw.cc:96</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:12 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:23 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: examples/example_N_Wlnu.C File Reference</title>
+<title>RestFrames: RestFrames::GeneratorFrame Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,36 +98,935 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li>  </ul>
+<li class="navelem"><b>RestFrames</b></li><li class="navelem"><a class="el" href="a00725.html">GeneratorFrame</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="a00722.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">example_N_Wlnu.C File Reference</div>  </div>
+<div class="title">RestFrames::GeneratorFrame Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Non-resonant production of N W bosons, each decaying W(l nu). </p>
-<dl class="section author"><dt>Author</dt><dd>Christopher Rogan (<a href="#" onclick="location.href='mai'+'lto:'+'cro'+'ga'+'n@c'+'er'+'n.c'+'h'; return false;">croga<span style="display: none;">.nosp@m.</span>n@ce<span style="display: none;">.nosp@m.</span>rn.ch</a>)</dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2016 May</dd></dl>
-<h1><a class="anchor" id="example_Zll"></a>
-Z to ll example</h1>
-<p>The example can be found in the <b>RestFrames</b> package at </p><pre class="fragment">examples/example_N_Wlnu.C
-</pre><p>You can run the compiled example executable: </p><pre class="fragment">./examples/example_N_Wlnu.x
-</pre><p>or run the example from the ROOT interactive command line:</p>
-<p>root [0] .x <a class="el" href="a00725.html" title="Non-resonant production of N W bosons, each decaying W(l nu).">examples/example_N_Wlnu.C</a>++</p>
-<p>For the latter, if <b>RestFrames</b> is not installed in an area in the default <code>PATH</code> then you must first load the <b>RestFrames</b> environmental variables with <code>source setup_RestFrames.(c)sh</code>.</p>
-<table width="800px">
-<tr>
-<td><img src="N_Wlnu_2W_tree.gif" alt="" class="inline" title="2 W(l nu)"/>     </td><td><img src="N_Wlnu_3W_tree.gif" alt="" class="inline" title="3 W(l nu)"/>     </td><td><img src="N_Wlnu_4W_tree.gif" alt="" class="inline" title="4 W(l nu)"/>      </td></tr>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="a00350_source.html#l00042">42</a> of file <a class="el" href="a00350_source.html">GeneratorFrame.hh</a>.</p>
+</div><div class="dynheader">
+Inheritance diagram for RestFrames::GeneratorFrame:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00724.png" border="0" usemap="#a_rest_frames_1_1_generator_frame_inherit__map" alt="Inheritance graph"/></div>
+<map name="_rest_frames_1_1_generator_frame_inherit__map" id="a_rest_frames_1_1_generator_frame_inherit__map">
+<area shape="rect" title=" " alt="" coords="419,111,615,138"/>
+<area shape="rect" href="a00713.html" title=" " alt="" coords="667,5,845,47"/>
+<area shape="rect" href="a00745.html" title=" " alt="" coords="663,71,849,112"/>
+<area shape="rect" href="a00773.html" title=" " alt="" coords="676,136,836,177"/>
+<area shape="rect" href="a00901.html" title=" " alt="" coords="667,201,845,243"/>
+<area shape="rect" href="a00829.html" title="abstract base class for all Frame objects" alt="" coords="204,111,371,138"/>
+<area shape="rect" href="a00833.html" title="Base class for all RestFrame package objects." alt="" coords="5,111,156,138"/>
+<area shape="rect" href="a00717.html" title=" " alt="" coords="898,13,1099,39"/>
+<area shape="rect" href="a00825.html" title=" " alt="" coords="1151,5,1343,47"/>
+<area shape="rect" href="a00749.html" title=" " alt="" coords="911,71,1086,112"/>
+<area shape="rect" href="a00777.html" title=" " alt="" coords="907,143,1091,170"/>
+<area shape="rect" href="a00817.html" title=" " alt="" coords="1148,143,1347,170"/>
+<area shape="rect" href="a00905.html" title=" " alt="" coords="897,209,1100,235"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aed84f2e0a9a94ae7a8f2cd88c3a75f39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#aed84f2e0a9a94ae7a8f2cd88c3a75f39">GeneratorFrame</a> (const std::string &amp;sname, const std::string &amp;stitle)</td></tr>
+<tr class="memdesc:aed84f2e0a9a94ae7a8f2cd88c3a75f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard constructor.  <a href="a00725.html#aed84f2e0a9a94ae7a8f2cd88c3a75f39">More...</a><br /></td></tr>
+<tr class="separator:aed84f2e0a9a94ae7a8f2cd88c3a75f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab48589dcf6bb3e83e61846b4cf6ed960"><td class="memItemLeft" align="right" valign="top"><a id="ab48589dcf6bb3e83e61846b4cf6ed960"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame</a> ()</td></tr>
+<tr class="memdesc:ab48589dcf6bb3e83e61846b4cf6ed960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
+<tr class="separator:ab48589dcf6bb3e83e61846b4cf6ed960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a7025ee9f01537efd07d13a2fa43462"><td class="memItemLeft" align="right" valign="top"><a id="a4a7025ee9f01537efd07d13a2fa43462"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a4a7025ee9f01537efd07d13a2fa43462">Clear</a> ()</td></tr>
+<tr class="memdesc:a4a7025ee9f01537efd07d13a2fa43462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears <a class="el" href="a00725.html">GeneratorFrame</a> of all connections to other objects. <br /></td></tr>
+<tr class="separator:a4a7025ee9f01537efd07d13a2fa43462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2addd2b8ffffe067bf914ec880e9885c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">AddChildFrame</a> (<a class="el" href="a00829.html">RestFrame</a> &amp;frame)</td></tr>
+<tr class="memdesc:a2addd2b8ffffe067bf914ec880e9885c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a child <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> to this frame.  <a href="a00725.html#a2addd2b8ffffe067bf914ec880e9885c">More...</a><br /></td></tr>
+<tr class="separator:a2addd2b8ffffe067bf914ec880e9885c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc1257416c942d4d02e27ef7ba262d67"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">SetParentFrame</a> (<a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>())</td></tr>
+<tr class="memdesc:afc1257416c942d4d02e27ef7ba262d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parent frame for this frame.  <a href="a00725.html#afc1257416c942d4d02e27ef7ba262d67">More...</a><br /></td></tr>
+<tr class="separator:afc1257416c942d4d02e27ef7ba262d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4949ebf7cfd7577cca6e6b844005204"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00725.html">GeneratorFrame</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">GetParentFrame</a> () const</td></tr>
+<tr class="memdesc:ac4949ebf7cfd7577cca6e6b844005204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent of this frame.  <a href="a00725.html#ac4949ebf7cfd7577cca6e6b844005204">More...</a><br /></td></tr>
+<tr class="separator:ac4949ebf7cfd7577cca6e6b844005204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1194c0f8218ac545a801e3f4ad7376f8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00725.html">GeneratorFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a> (int i=0) const</td></tr>
+<tr class="memdesc:a1194c0f8218ac545a801e3f4ad7376f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the frame of the <em>i</em> th child.  <a href="a00725.html#a1194c0f8218ac545a801e3f4ad7376f8">More...</a><br /></td></tr>
+<tr class="separator:a1194c0f8218ac545a801e3f4ad7376f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e97d91a22af11432f5399b84b72720"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a03e97d91a22af11432f5399b84b72720">SetPCut</a> (double cut)</td></tr>
+<tr class="memdesc:a03e97d91a22af11432f5399b84b72720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets momentum cut.  <a href="a00725.html#a03e97d91a22af11432f5399b84b72720">More...</a><br /></td></tr>
+<tr class="separator:a03e97d91a22af11432f5399b84b72720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16691437cd581a96cc861b38ef6145e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a16691437cd581a96cc861b38ef6145e9">SetPtCut</a> (double cut)</td></tr>
+<tr class="memdesc:a16691437cd581a96cc861b38ef6145e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets transverse momentum cut.  <a href="a00725.html#a16691437cd581a96cc861b38ef6145e9">More...</a><br /></td></tr>
+<tr class="separator:a16691437cd581a96cc861b38ef6145e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875b020d82d5a153842e45f7c80fc891"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a875b020d82d5a153842e45f7c80fc891">SetEtaCut</a> (double cut)</td></tr>
+<tr class="memdesc:a875b020d82d5a153842e45f7c80fc891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets pseudorapidity cut.  <a href="a00725.html#a875b020d82d5a153842e45f7c80fc891">More...</a><br /></td></tr>
+<tr class="separator:a875b020d82d5a153842e45f7c80fc891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b9cf775ddcbea3c77a322e5a7f3777e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">SetMassWindowCut</a> (double min, double max)</td></tr>
+<tr class="memdesc:a5b9cf775ddcbea3c77a322e5a7f3777e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets mass frame cut.  <a href="a00725.html#a5b9cf775ddcbea3c77a322e5a7f3777e">More...</a><br /></td></tr>
+<tr class="separator:a5b9cf775ddcbea3c77a322e5a7f3777e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63d31c434fa6622a59f6ad304b1aaf82"><td class="memItemLeft" align="right" valign="top"><a id="a63d31c434fa6622a59f6ad304b1aaf82"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a63d31c434fa6622a59f6ad304b1aaf82">RemovePCut</a> ()</td></tr>
+<tr class="memdesc:a63d31c434fa6622a59f6ad304b1aaf82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes momentum cut. <br /></td></tr>
+<tr class="separator:a63d31c434fa6622a59f6ad304b1aaf82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade06f6aa309048c2eb765cce1896416"><td class="memItemLeft" align="right" valign="top"><a id="aade06f6aa309048c2eb765cce1896416"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#aade06f6aa309048c2eb765cce1896416">RemovePtCut</a> ()</td></tr>
+<tr class="memdesc:aade06f6aa309048c2eb765cce1896416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes transverse momentum cut. <br /></td></tr>
+<tr class="separator:aade06f6aa309048c2eb765cce1896416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9b84fe93b4836c250cf2499a55ee788"><td class="memItemLeft" align="right" valign="top"><a id="ab9b84fe93b4836c250cf2499a55ee788"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ab9b84fe93b4836c250cf2499a55ee788">RemoveEtaCut</a> ()</td></tr>
+<tr class="memdesc:ab9b84fe93b4836c250cf2499a55ee788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes pseudorapidity cut. <br /></td></tr>
+<tr class="separator:ab9b84fe93b4836c250cf2499a55ee788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14069d1c9fd444ad0c553a5e7c1e3eba"><td class="memItemLeft" align="right" valign="top"><a id="a14069d1c9fd444ad0c553a5e7c1e3eba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a14069d1c9fd444ad0c553a5e7c1e3eba">RemoveMassWindowCut</a> ()</td></tr>
+<tr class="memdesc:a14069d1c9fd444ad0c553a5e7c1e3eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes mass frame cuts. <br /></td></tr>
+<tr class="separator:a14069d1c9fd444ad0c553a5e7c1e3eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57c904c7cde60d97c73aa06459d4334f"><td class="memItemLeft" align="right" valign="top"><a id="a57c904c7cde60d97c73aa06459d4334f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a57c904c7cde60d97c73aa06459d4334f">PrintGeneratorEfficiency</a> () const</td></tr>
+<tr class="memdesc:a57c904c7cde60d97c73aa06459d4334f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print generator efficiency information. <br /></td></tr>
+<tr class="separator:a57c904c7cde60d97c73aa06459d4334f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0101090e69f3671d552312c8ac094ca"><td class="memItemLeft" align="right" valign="top"><a id="ae0101090e69f3671d552312c8ac094ca"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ae0101090e69f3671d552312c8ac094ca">GetMass</a> () const</td></tr>
+<tr class="memdesc:ae0101090e69f3671d552312c8ac094ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the mass of this frame. <br /></td></tr>
+<tr class="separator:ae0101090e69f3671d552312c8ac094ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Markov Chain MonteCarlo methods</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Member functions which are used under the hood to generate events. The user should not need to call this methods </p>
+</div></td></tr>
+<tr class="memitem:ab64ac080d2e1331760d48a09d1a2d7fd"><td class="memItemLeft" align="right" valign="top"><a id="ab64ac080d2e1331760d48a09d1a2d7fd"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ab64ac080d2e1331760d48a09d1a2d7fd">IsVariableMassMCMC</a> () const</td></tr>
+<tr class="memdesc:ab64ac080d2e1331760d48a09d1a2d7fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this frame capable having a variable mass? (true/false) <br /></td></tr>
+<tr class="separator:ab64ac080d2e1331760d48a09d1a2d7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02839308aaabc911e3ceea2b72d69ef3"><td class="memItemLeft" align="right" valign="top"><a id="a02839308aaabc911e3ceea2b72d69ef3"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a02839308aaabc911e3ceea2b72d69ef3">GetMinimumMassMCMC</a> () const</td></tr>
+<tr class="memdesc:a02839308aaabc911e3ceea2b72d69ef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns minimun mass of Markov Chain MonteCarlo event generation. <br /></td></tr>
+<tr class="separator:a02839308aaabc911e3ceea2b72d69ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c8b58d6cee7fa11fdf1f01482b0c8a"><td class="memItemLeft" align="right" valign="top"><a id="aa4c8b58d6cee7fa11fdf1f01482b0c8a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#aa4c8b58d6cee7fa11fdf1f01482b0c8a">GenerateMassMCMC</a> (double &amp;mass, double &amp;prob, double max=-1.) const</td></tr>
+<tr class="memdesc:aa4c8b58d6cee7fa11fdf1f01482b0c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates mass for Markov Chain MonteCarlo event generation. <br /></td></tr>
+<tr class="separator:aa4c8b58d6cee7fa11fdf1f01482b0c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60259ae1010151b4dfb7cd768ff1b0a3"><td class="memItemLeft" align="right" valign="top"><a id="a60259ae1010151b4dfb7cd768ff1b0a3"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a60259ae1010151b4dfb7cd768ff1b0a3">GetProbMCMC</a> (double mass=-1.) const</td></tr>
+<tr class="memdesc:a60259ae1010151b4dfb7cd768ff1b0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates probability of the state is in right now or the probablility of a state it could go in. <br /></td></tr>
+<tr class="separator:a60259ae1010151b4dfb7cd768ff1b0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1c49a628a41f01277305de3c65b3ea0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">GetRandom</a> () const</td></tr>
+<tr class="memdesc:ad1c49a628a41f01277305de3c65b3ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns random value.  <a href="a00725.html#ad1c49a628a41f01277305de3c65b3ea0">More...</a><br /></td></tr>
+<tr class="separator:ad1c49a628a41f01277305de3c65b3ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7352d90f85cc199c9a2a9260083282c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">GetGaus</a> (double mu, double sig) const</td></tr>
+<tr class="memdesc:aa7352d90f85cc199c9a2a9260083282c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns gaussian random number.  <a href="a00725.html#aa7352d90f85cc199c9a2a9260083282c">More...</a><br /></td></tr>
+<tr class="separator:aa7352d90f85cc199c9a2a9260083282c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a00829"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00829')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00829.html">RestFrames::RestFrame</a></td></tr>
+<tr class="memitem:aa77853edcbcc7a7ff255f49ad8c80ab1 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aa77853edcbcc7a7ff255f49ad8c80ab1">RestFrame</a> (const std::string &amp;sname, const std::string &amp;stitle)</td></tr>
+<tr class="memdesc:aa77853edcbcc7a7ff255f49ad8c80ab1 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard constructor.  <a href="a00829.html#aa77853edcbcc7a7ff255f49ad8c80ab1">More...</a><br /></td></tr>
+<tr class="separator:aa77853edcbcc7a7ff255f49ad8c80ab1 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5def11158098bafa716ed5c4e1e3491a inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a5def11158098bafa716ed5c4e1e3491a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a5def11158098bafa716ed5c4e1e3491a">RestFrame</a> ()</td></tr>
+<tr class="memdesc:a5def11158098bafa716ed5c4e1e3491a inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
+<tr class="separator:a5def11158098bafa716ed5c4e1e3491a inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2a9e4f8c7e26b791579c4a857868ec7 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="ab2a9e4f8c7e26b791579c4a857868ec7"></a>
+<a class="el" href="a00428.html#a72de122bffb186f51adf772ad5dd0ac4">FrameType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ab2a9e4f8c7e26b791579c4a857868ec7">GetType</a> () const</td></tr>
+<tr class="memdesc:ab2a9e4f8c7e26b791579c4a857868ec7 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> (FrameType) type. <br /></td></tr>
+<tr class="separator:ab2a9e4f8c7e26b791579c4a857868ec7 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4008bd5fc1fe42ae45fd8f120003a361 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a4008bd5fc1fe42ae45fd8f120003a361"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a4008bd5fc1fe42ae45fd8f120003a361">IsVisibleFrame</a> () const</td></tr>
+<tr class="memdesc:a4008bd5fc1fe42ae45fd8f120003a361 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a <a class="el" href="a00901.html">VisibleFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:a4008bd5fc1fe42ae45fd8f120003a361 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4dc4c0209acbc2a46ac97ddf4159762 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="aa4dc4c0209acbc2a46ac97ddf4159762"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aa4dc4c0209acbc2a46ac97ddf4159762">IsInvisibleFrame</a> () const</td></tr>
+<tr class="memdesc:aa4dc4c0209acbc2a46ac97ddf4159762 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this an <a class="el" href="a00745.html">InvisibleFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:aa4dc4c0209acbc2a46ac97ddf4159762 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf37d30e4c260bf60b8ae62ce91c7ad5 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="acf37d30e4c260bf60b8ae62ce91c7ad5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#acf37d30e4c260bf60b8ae62ce91c7ad5">IsDecayFrame</a> () const</td></tr>
+<tr class="memdesc:acf37d30e4c260bf60b8ae62ce91c7ad5 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a <a class="el" href="a00713.html">DecayFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:acf37d30e4c260bf60b8ae62ce91c7ad5 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6832c71dd583dff4ae29d0c5853e607b inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a6832c71dd583dff4ae29d0c5853e607b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a6832c71dd583dff4ae29d0c5853e607b">IsLabFrame</a> () const</td></tr>
+<tr class="memdesc:a6832c71dd583dff4ae29d0c5853e607b inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a <a class="el" href="a00773.html">LabFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:a6832c71dd583dff4ae29d0c5853e607b inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8207068ea824b333b68ef6f5e02b86b inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="ae8207068ea824b333b68ef6f5e02b86b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ae8207068ea824b333b68ef6f5e02b86b">IsRecoFrame</a> () const</td></tr>
+<tr class="memdesc:ae8207068ea824b333b68ef6f5e02b86b inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this an <a class="el" href="a00821.html">ReconstructionFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:ae8207068ea824b333b68ef6f5e02b86b inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b1a3c79a95d12ba9adb68d33b838e5 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="af0b1a3c79a95d12ba9adb68d33b838e5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#af0b1a3c79a95d12ba9adb68d33b838e5">IsGenFrame</a> () const</td></tr>
+<tr class="memdesc:af0b1a3c79a95d12ba9adb68d33b838e5 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a <a class="el" href="a00725.html">GeneratorFrame</a> ? (yes/no) <br /></td></tr>
+<tr class="separator:af0b1a3c79a95d12ba9adb68d33b838e5 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7df27ea84fa0d83fdaf2328ef237caf inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="ab7df27ea84fa0d83fdaf2328ef237caf"></a>
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ab7df27ea84fa0d83fdaf2328ef237caf">PrintString</a> (<a class="el" href="a00446.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type) const</td></tr>
+<tr class="memdesc:ab7df27ea84fa0d83fdaf2328ef237caf inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">String of information about <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a>. <br /></td></tr>
+<tr class="separator:ab7df27ea84fa0d83fdaf2328ef237caf inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a5bd62b29b375aec027c3349f637040 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a8a5bd62b29b375aec027c3349f637040">AddChildFrames</a> (const <a class="el" href="a00845.html">RestFrameList</a> &amp;frames)</td></tr>
+<tr class="memdesc:a8a5bd62b29b375aec027c3349f637040 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a list of children to this frame.  <a href="a00829.html#a8a5bd62b29b375aec027c3349f637040">More...</a><br /></td></tr>
+<tr class="separator:a8a5bd62b29b375aec027c3349f637040 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94bfc4b62d99fc47a4a2b70048805e6c inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a94bfc4b62d99fc47a4a2b70048805e6c">RemoveChildFrame</a> (<a class="el" href="a00829.html">RestFrame</a> &amp;frame)</td></tr>
+<tr class="memdesc:a94bfc4b62d99fc47a4a2b70048805e6c inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a child of this frame.  <a href="a00829.html#a94bfc4b62d99fc47a4a2b70048805e6c">More...</a><br /></td></tr>
+<tr class="separator:a94bfc4b62d99fc47a4a2b70048805e6c inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2439850f5cda05d4baab519cfb1c1d21 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a2439850f5cda05d4baab519cfb1c1d21">RemoveChildFrames</a> ()</td></tr>
+<tr class="memdesc:a2439850f5cda05d4baab519cfb1c1d21 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the children of this frame.  <a href="a00829.html#a2439850f5cda05d4baab519cfb1c1d21">More...</a><br /></td></tr>
+<tr class="separator:a2439850f5cda05d4baab519cfb1c1d21 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d149d4215b47ba1d83c5985835627a inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a98d149d4215b47ba1d83c5985835627a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a98d149d4215b47ba1d83c5985835627a">GetNChildren</a> () const</td></tr>
+<tr class="memdesc:a98d149d4215b47ba1d83c5985835627a inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of child frames inheriting from this one. <br /></td></tr>
+<tr class="separator:a98d149d4215b47ba1d83c5985835627a inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7d202a11233b0a8ff2a7fee9f1ee75 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a8b7d202a11233b0a8ff2a7fee9f1ee75"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a8b7d202a11233b0a8ff2a7fee9f1ee75">GetNDescendants</a> () const</td></tr>
+<tr class="memdesc:a8b7d202a11233b0a8ff2a7fee9f1ee75 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of descendents of this frame. <br /></td></tr>
+<tr class="separator:a8b7d202a11233b0a8ff2a7fee9f1ee75 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c3cfc96174b4b82a893ca00764b6339 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00845.html">RestFrameList</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a2c3cfc96174b4b82a893ca00764b6339">GetChildFrames</a> () const</td></tr>
+<tr class="memdesc:a2c3cfc96174b4b82a893ca00764b6339 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of this frame's child RestFrames.  <a href="a00829.html#a2c3cfc96174b4b82a893ca00764b6339">More...</a><br /></td></tr>
+<tr class="separator:a2c3cfc96174b4b82a893ca00764b6339 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40e8138464a4d0db98c2fe006e2ea3a9 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00829.html">RestFrame</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a40e8138464a4d0db98c2fe006e2ea3a9">GetLabFrame</a> () const</td></tr>
+<tr class="memdesc:a40e8138464a4d0db98c2fe006e2ea3a9 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="a00773.html">LabFrame</a> that this frame inherits from.  <a href="a00829.html#a40e8138464a4d0db98c2fe006e2ea3a9">More...</a><br /></td></tr>
+<tr class="separator:a40e8138464a4d0db98c2fe006e2ea3a9 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802e7b8b1b04ff4f3dd0e3d603cd0bfa inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00829.html">RestFrame</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a802e7b8b1b04ff4f3dd0e3d603cd0bfa">GetProductionFrame</a> () const</td></tr>
+<tr class="memdesc:a802e7b8b1b04ff4f3dd0e3d603cd0bfa inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the production frame of this frame.  <a href="a00829.html#a802e7b8b1b04ff4f3dd0e3d603cd0bfa">More...</a><br /></td></tr>
+<tr class="separator:a802e7b8b1b04ff4f3dd0e3d603cd0bfa inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1c4ce4b8f09ef3962aa13b060e022c9 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00829.html">RestFrame</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ad1c4ce4b8f09ef3962aa13b060e022c9">GetSiblingFrame</a> () const</td></tr>
+<tr class="memdesc:ad1c4ce4b8f09ef3962aa13b060e022c9 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sibling frame of this frame.  <a href="a00829.html#ad1c4ce4b8f09ef3962aa13b060e022c9">More...</a><br /></td></tr>
+<tr class="separator:ad1c4ce4b8f09ef3962aa13b060e022c9 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e573054f45d0edfaf8ad984f51173c inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a61e573054f45d0edfaf8ad984f51173c">GetFrameDepth</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="memdesc:a61e573054f45d0edfaf8ad984f51173c inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the depth of <b>frame</b>  <a href="a00829.html#a61e573054f45d0edfaf8ad984f51173c">More...</a><br /></td></tr>
+<tr class="separator:a61e573054f45d0edfaf8ad984f51173c inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9b108ee62d2288ac5820787f1d11f3 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00829.html">RestFrame</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a3e9b108ee62d2288ac5820787f1d11f3">GetFrameAtDepth</a> (int depth, const <a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="memdesc:a3e9b108ee62d2288ac5820787f1d11f3 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the frame at depth.  <a href="a00829.html#a3e9b108ee62d2288ac5820787f1d11f3">More...</a><br /></td></tr>
+<tr class="separator:a3e9b108ee62d2288ac5820787f1d11f3 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a165a56d22c3bd28f0c6dc871bc62a76e inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00845.html">RestFrameList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a165a56d22c3bd28f0c6dc871bc62a76e">GetListFrames</a> (<a class="el" href="a00428.html#a72de122bffb186f51adf772ad5dd0ac4">FrameType</a> type=kLabFrame) const</td></tr>
+<tr class="memdesc:a165a56d22c3bd28f0c6dc871bc62a76e inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of frames inheriting from this one.  <a href="a00829.html#a165a56d22c3bd28f0c6dc871bc62a76e">More...</a><br /></td></tr>
+<tr class="separator:a165a56d22c3bd28f0c6dc871bc62a76e inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06678871d2e63872f514482d7ace0bda inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a06678871d2e63872f514482d7ace0bda"></a>
+virtual <a class="el" href="a00845.html">RestFrameList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a06678871d2e63872f514482d7ace0bda">GetListVisibleFrames</a> () const</td></tr>
+<tr class="memdesc:a06678871d2e63872f514482d7ace0bda inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of <b><a class="el" href="a00901.html">VisibleFrame</a></b> s inheriting from this. <br /></td></tr>
+<tr class="separator:a06678871d2e63872f514482d7ace0bda inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c98dac7d2e6b7ad4e5581f41cc6666 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a32c98dac7d2e6b7ad4e5581f41cc6666"></a>
+virtual <a class="el" href="a00845.html">RestFrameList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a32c98dac7d2e6b7ad4e5581f41cc6666">GetListInvisibleFrames</a> () const</td></tr>
+<tr class="memdesc:a32c98dac7d2e6b7ad4e5581f41cc6666 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of <b><a class="el" href="a00745.html">InvisibleFrame</a></b> s inheriting from this. <br /></td></tr>
+<tr class="separator:a32c98dac7d2e6b7ad4e5581f41cc6666 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e92d7325fc0594acc9c0ae0c01159e8 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00845.html">RestFrameList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a4e92d7325fc0594acc9c0ae0c01159e8">operator+</a> (<a class="el" href="a00829.html">RestFrame</a> &amp;frame)</td></tr>
+<tr class="memdesc:a4e92d7325fc0594acc9c0ae0c01159e8 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines RestFrames into RestFrameList.  <a href="a00829.html#a4e92d7325fc0594acc9c0ae0c01159e8">More...</a><br /></td></tr>
+<tr class="separator:a4e92d7325fc0594acc9c0ae0c01159e8 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eadc59e2452489747ced3393d0ef01f inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00845.html">RestFrameList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a4eadc59e2452489747ced3393d0ef01f">operator+</a> (const <a class="el" href="a00845.html">RestFrameList</a> &amp;frames)</td></tr>
+<tr class="memdesc:a4eadc59e2452489747ced3393d0ef01f inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines RestFrames into RestFrameList.  <a href="a00829.html#a4eadc59e2452489747ced3393d0ef01f">More...</a><br /></td></tr>
+<tr class="separator:a4eadc59e2452489747ced3393d0ef01f inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc0d40d01628cefed2743cb6a3ba25f inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00837.html">RFCharge</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a8dc0d40d01628cefed2743cb6a3ba25f">GetCharge</a> () const</td></tr>
+<tr class="memdesc:a8dc0d40d01628cefed2743cb6a3ba25f inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the charge of this frame.  <a href="a00829.html#a8dc0d40d01628cefed2743cb6a3ba25f">More...</a><br /></td></tr>
+<tr class="separator:a8dc0d40d01628cefed2743cb6a3ba25f inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a2550348b00b23c5d0dd123325757ae inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1a2550348b00b23c5d0dd123325757ae">GetFourVector</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a1a2550348b00b23c5d0dd123325757ae inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this frame's four-vector in a specified frame.  <a href="a00829.html#a1a2550348b00b23c5d0dd123325757ae">More...</a><br /></td></tr>
+<tr class="separator:a1a2550348b00b23c5d0dd123325757ae inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96657703158d5f40e1e8d7e5230b2cce inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a96657703158d5f40e1e8d7e5230b2cce">GetTransverseFourVector</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>(), const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;axis_frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a96657703158d5f40e1e8d7e5230b2cce inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this frame's four-vector in a specified frame.  <a href="a00829.html#a96657703158d5f40e1e8d7e5230b2cce">More...</a><br /></td></tr>
+<tr class="separator:a96657703158d5f40e1e8d7e5230b2cce inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f8401f5a1da28ff7f376371e6d4ca47 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1f8401f5a1da28ff7f376371e6d4ca47">GetVisibleFourVector</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a1f8401f5a1da28ff7f376371e6d4ca47 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns four-vector of visible descendants.  <a href="a00829.html#a1f8401f5a1da28ff7f376371e6d4ca47">More...</a><br /></td></tr>
+<tr class="separator:a1f8401f5a1da28ff7f376371e6d4ca47 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a702338d2c83b12cb46c0b9a247eccc0e inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a702338d2c83b12cb46c0b9a247eccc0e">GetInvisibleFourVector</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a702338d2c83b12cb46c0b9a247eccc0e inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns four-vector of invisible descendants.  <a href="a00829.html#a702338d2c83b12cb46c0b9a247eccc0e">More...</a><br /></td></tr>
+<tr class="separator:a702338d2c83b12cb46c0b9a247eccc0e inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3ccd594cb7488d4ff906b83c6d6adac inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ad3ccd594cb7488d4ff906b83c6d6adac">GetEnergy</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="memdesc:ad3ccd594cb7488d4ff906b83c6d6adac inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns energy of this frame in specified reference frame.  <a href="a00829.html#ad3ccd594cb7488d4ff906b83c6d6adac">More...</a><br /></td></tr>
+<tr class="separator:ad3ccd594cb7488d4ff906b83c6d6adac inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636ad7d2156ef93c6a7272b87bd0d004 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a636ad7d2156ef93c6a7272b87bd0d004">GetMomentum</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="memdesc:a636ad7d2156ef93c6a7272b87bd0d004 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnitude of momentum.  <a href="a00829.html#a636ad7d2156ef93c6a7272b87bd0d004">More...</a><br /></td></tr>
+<tr class="separator:a636ad7d2156ef93c6a7272b87bd0d004 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4d480ea06b33a9ac00742d97c54656 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a4c4d480ea06b33a9ac00742d97c54656">GetFourVector</a> (const TLorentzVector &amp;P, const <a class="el" href="a00829.html">RestFrame</a> &amp;def_frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a4c4d480ea06b33a9ac00742d97c54656 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns four vector boosted to different frame.  <a href="a00829.html#a4c4d480ea06b33a9ac00742d97c54656">More...</a><br /></td></tr>
+<tr class="separator:a4c4d480ea06b33a9ac00742d97c54656 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0832cff6fcc02da92826bc0edaa4a08 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="aa0832cff6fcc02da92826bc0edaa4a08"></a>
+TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aa0832cff6fcc02da92826bc0edaa4a08">GetTransverseFourVector</a> (const TLorentzVector &amp;P, const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;axis_frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:aa0832cff6fcc02da92826bc0edaa4a08 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns transverse four vector in this frame. <br /></td></tr>
+<tr class="separator:aa0832cff6fcc02da92826bc0edaa4a08 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3b9e1ce06fea8b7f23f294534591021 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#af3b9e1ce06fea8b7f23f294534591021">GetTransverseMomentum</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>(), const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;axis_frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:af3b9e1ce06fea8b7f23f294534591021 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnitude of transverse momentum.  <a href="a00829.html#af3b9e1ce06fea8b7f23f294534591021">More...</a><br /></td></tr>
+<tr class="separator:af3b9e1ce06fea8b7f23f294534591021 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf095979db02906514b78342a65f9e7 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aaaf095979db02906514b78342a65f9e7">GetTransverseMomentum</a> (const TLorentzVector &amp;P, const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;axis_frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:aaaf095979db02906514b78342a65f9e7 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnitude of transverse momentum of this frame.  <a href="a00829.html#aaaf095979db02906514b78342a65f9e7">More...</a><br /></td></tr>
+<tr class="separator:aaaf095979db02906514b78342a65f9e7 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac536ad6fa7f4b287361a35856c8ae330 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ac536ad6fa7f4b287361a35856c8ae330">GetVisibleShape</a> () const</td></tr>
+<tr class="memdesc:ac536ad6fa7f4b287361a35856c8ae330 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns visible shape of frame.  <a href="a00829.html#ac536ad6fa7f4b287361a35856c8ae330">More...</a><br /></td></tr>
+<tr class="separator:ac536ad6fa7f4b287361a35856c8ae330 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54df4ce64e754b5a4c8003e303d0b31d inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a54df4ce64e754b5a4c8003e303d0b31d">GetSumVisibleMomentum</a> () const</td></tr>
+<tr class="memdesc:a54df4ce64e754b5a4c8003e303d0b31d inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns scalar sum of visible child momenta.  <a href="a00829.html#a54df4ce64e754b5a4c8003e303d0b31d">More...</a><br /></td></tr>
+<tr class="separator:a54df4ce64e754b5a4c8003e303d0b31d inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1a2d605d524af8ae6715f5e6516d98 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a4b1a2d605d524af8ae6715f5e6516d98">GetSumInvisibleMomentum</a> () const</td></tr>
+<tr class="memdesc:a4b1a2d605d524af8ae6715f5e6516d98 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns scalar sum of invisible child momenta.  <a href="a00829.html#a4b1a2d605d524af8ae6715f5e6516d98">More...</a><br /></td></tr>
+<tr class="separator:a4b1a2d605d524af8ae6715f5e6516d98 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a312599bfdf6ec1352f245ca2107b4f52 inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TVector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a312599bfdf6ec1352f245ca2107b4f52">GetBoostInParentFrame</a> () const</td></tr>
+<tr class="memdesc:a312599bfdf6ec1352f245ca2107b4f52 inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the boost of this frame in it's parent's frame.  <a href="a00829.html#a312599bfdf6ec1352f245ca2107b4f52">More...</a><br /></td></tr>
+<tr class="separator:a312599bfdf6ec1352f245ca2107b4f52 inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a2db0b28f2d7db329370dfec520a69c inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1a2db0b28f2d7db329370dfec520a69c">GetGammaInParentFrame</a> () const</td></tr>
+<tr class="memdesc:a1a2db0b28f2d7db329370dfec520a69c inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the gamma of this frame in its parent's frame.  <a href="a00829.html#a1a2db0b28f2d7db329370dfec520a69c">More...</a><br /></td></tr>
+<tr class="separator:a1a2db0b28f2d7db329370dfec520a69c inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ca0060c5e1fd264ff84fdc2180c16a inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">TVector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a13ca0060c5e1fd264ff84fdc2180c16a">GetDecayPlaneNormalVector</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a13ca0060c5e1fd264ff84fdc2180c16a inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the vector normal to the decay plane of this frame.  <a href="a00829.html#a13ca0060c5e1fd264ff84fdc2180c16a">More...</a><br /></td></tr>
+<tr class="separator:a13ca0060c5e1fd264ff84fdc2180c16a inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2c84ce39ea8dbeb99fc4f4b5e5acdc inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1d2c84ce39ea8dbeb99fc4f4b5e5acdc">GetDeltaPhiDecayPlanes</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="memdesc:a1d2c84ce39ea8dbeb99fc4f4b5e5acdc inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns difference of azimuthal angle between decay planes.  <a href="a00829.html#a1d2c84ce39ea8dbeb99fc4f4b5e5acdc">More...</a><br /></td></tr>
+<tr class="separator:a1d2c84ce39ea8dbeb99fc4f4b5e5acdc inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad194dfba0aba173a629201ba574a56ba inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ad194dfba0aba173a629201ba574a56ba">GetCosDecayAngle</a> (const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:ad194dfba0aba173a629201ba574a56ba inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cosine of this frame's decay angle.  <a href="a00829.html#ad194dfba0aba173a629201ba574a56ba">More...</a><br /></td></tr>
+<tr class="separator:ad194dfba0aba173a629201ba574a56ba inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd9333890712e890ddeedab87f10b3b inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1fd9333890712e890ddeedab87f10b3b">GetDeltaPhiDecayAngle</a> (const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a1fd9333890712e890ddeedab87f10b3b inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns difference of azimuthal decay angles in an axis.  <a href="a00829.html#a1fd9333890712e890ddeedab87f10b3b">More...</a><br /></td></tr>
+<tr class="separator:a1fd9333890712e890ddeedab87f10b3b inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73810b82b2e5c6761f18e5e1e13cc6eb inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a73810b82b2e5c6761f18e5e1e13cc6eb">GetDeltaPhiBoostVisible</a> (const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a73810b82b2e5c6761f18e5e1e13cc6eb inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns difference of azimuthal angles between the decay angles of the visible particles decaying from this frame.  <a href="a00829.html#a73810b82b2e5c6761f18e5e1e13cc6eb">More...</a><br /></td></tr>
+<tr class="separator:a73810b82b2e5c6761f18e5e1e13cc6eb inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae57bc3867e056a8ebe3ac013698357ba inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#ae57bc3867e056a8ebe3ac013698357ba">GetDeltaPhiDecayVisible</a> (const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:ae57bc3867e056a8ebe3ac013698357ba inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns difference of azimuthal angles between the decay angles of the visible particles decaying from this frame.  <a href="a00829.html#ae57bc3867e056a8ebe3ac013698357ba">More...</a><br /></td></tr>
+<tr class="separator:ae57bc3867e056a8ebe3ac013698357ba inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce8e00dfd9ba3cd640dddca7c878f7d inherit pub_methods_a00829"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a2ce8e00dfd9ba3cd640dddca7c878f7d">GetDeltaPhiVisible</a> (const TVector3 &amp;axis=<a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">RestFrame::GetAxis</a>(), const <a class="el" href="a00829.html">RestFrame</a> &amp;frame=<a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()) const</td></tr>
+<tr class="memdesc:a2ce8e00dfd9ba3cd640dddca7c878f7d inherit pub_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns difference of azimuthal angles between the angles of its visible particles kids.  <a href="a00829.html#a2ce8e00dfd9ba3cd640dddca7c878f7d">More...</a><br /></td></tr>
+<tr class="separator:a2ce8e00dfd9ba3cd640dddca7c878f7d inherit pub_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a00833"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00833')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00833.html">RestFrames::RFBase</a></td></tr>
+<tr class="memitem:a7ce81fec7de4c33f2f455f62c35ea498 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a7ce81fec7de4c33f2f455f62c35ea498">RFBase</a> (const std::string &amp;sname, const std::string &amp;stitle, int key)</td></tr>
+<tr class="memdesc:a7ce81fec7de4c33f2f455f62c35ea498 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard constructor.  <a href="a00833.html#a7ce81fec7de4c33f2f455f62c35ea498">More...</a><br /></td></tr>
+<tr class="separator:a7ce81fec7de4c33f2f455f62c35ea498 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9978c7b1334c105e6d90697e66f12057 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a9978c7b1334c105e6d90697e66f12057"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a9978c7b1334c105e6d90697e66f12057">RFBase</a> ()</td></tr>
+<tr class="memdesc:a9978c7b1334c105e6d90697e66f12057 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
+<tr class="separator:a9978c7b1334c105e6d90697e66f12057 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed7cbbcc860fa79abb4eea10d1f900f inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a2ed7cbbcc860fa79abb4eea10d1f900f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">IsEmpty</a> () const</td></tr>
+<tr class="memdesc:a2ed7cbbcc860fa79abb4eea10d1f900f inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this is default (empty) instance of class. <br /></td></tr>
+<tr class="separator:a2ed7cbbcc860fa79abb4eea10d1f900f inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ff1dcb1d75a28477d047ea08701ff9c inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a5ff1dcb1d75a28477d047ea08701ff9c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a5ff1dcb1d75a28477d047ea08701ff9c">operator!</a> () const</td></tr>
+<tr class="memdesc:a5ff1dcb1d75a28477d047ea08701ff9c inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether key is the same as this. <br /></td></tr>
+<tr class="separator:a5ff1dcb1d75a28477d047ea08701ff9c inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a141fd7fc2c49089433b4da0a3d901ef0 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a141fd7fc2c49089433b4da0a3d901ef0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a141fd7fc2c49089433b4da0a3d901ef0">Print</a> (<a class="el" href="a00446.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type) const</td></tr>
+<tr class="memdesc:a141fd7fc2c49089433b4da0a3d901ef0 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print information associated with object. <br /></td></tr>
+<tr class="separator:a141fd7fc2c49089433b4da0a3d901ef0 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea6973bed7d99edbd39c67d00e6fd33f inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="aea6973bed7d99edbd39c67d00e6fd33f"></a>
+<a class="el" href="a00841.html">RFKey</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">GetKey</a> () const</td></tr>
+<tr class="memdesc:aea6973bed7d99edbd39c67d00e6fd33f inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets object identification key <br /></td></tr>
+<tr class="separator:aea6973bed7d99edbd39c67d00e6fd33f inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a393add2ce5a03e97238ac2c90f545f0e inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a393add2ce5a03e97238ac2c90f545f0e"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">GetName</a> () const</td></tr>
+<tr class="memdesc:a393add2ce5a03e97238ac2c90f545f0e inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns object name. <br /></td></tr>
+<tr class="separator:a393add2ce5a03e97238ac2c90f545f0e inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a259119e7402734e6f27ce840d4cd9abe inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a259119e7402734e6f27ce840d4cd9abe"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a259119e7402734e6f27ce840d4cd9abe">GetTitle</a> () const</td></tr>
+<tr class="memdesc:a259119e7402734e6f27ce840d4cd9abe inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns object title. <br /></td></tr>
+<tr class="separator:a259119e7402734e6f27ce840d4cd9abe inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9514eb2890480ba0a0d1cef676aeb8e inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="af9514eb2890480ba0a0d1cef676aeb8e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#af9514eb2890480ba0a0d1cef676aeb8e">IsSame</a> (const <a class="el" href="a00841.html">RFKey</a> &amp;key) const</td></tr>
+<tr class="memdesc:af9514eb2890480ba0a0d1cef676aeb8e inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether key is the same as this. <br /></td></tr>
+<tr class="separator:af9514eb2890480ba0a0d1cef676aeb8e inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4338db72f08ffdfc932484dbeb0ce44 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ad4338db72f08ffdfc932484dbeb0ce44"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#ad4338db72f08ffdfc932484dbeb0ce44">IsSame</a> (const <a class="el" href="a00833.html">RFBase</a> &amp;obj) const</td></tr>
+<tr class="memdesc:ad4338db72f08ffdfc932484dbeb0ce44 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether <em>obj</em> is the same as this. <br /></td></tr>
+<tr class="separator:ad4338db72f08ffdfc932484dbeb0ce44 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf220c36ba97595b08be410edd4b5f3 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a2bf220c36ba97595b08be410edd4b5f3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a2bf220c36ba97595b08be410edd4b5f3">operator==</a> (const <a class="el" href="a00841.html">RFKey</a> &amp;key) const</td></tr>
+<tr class="memdesc:a2bf220c36ba97595b08be410edd4b5f3 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether key is the same as this. <br /></td></tr>
+<tr class="separator:a2bf220c36ba97595b08be410edd4b5f3 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7a8c4303247615fb3bb54184270c67 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="aca7a8c4303247615fb3bb54184270c67"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#aca7a8c4303247615fb3bb54184270c67">operator==</a> (const <a class="el" href="a00833.html">RFBase</a> &amp;obj) const</td></tr>
+<tr class="memdesc:aca7a8c4303247615fb3bb54184270c67 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether <em>obj</em> is the same as this. <br /></td></tr>
+<tr class="separator:aca7a8c4303247615fb3bb54184270c67 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dd58253eaeb5f017aebfd44bdc2c522 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a6dd58253eaeb5f017aebfd44bdc2c522"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a6dd58253eaeb5f017aebfd44bdc2c522">operator!=</a> (const <a class="el" href="a00841.html">RFKey</a> &amp;key) const</td></tr>
+<tr class="memdesc:a6dd58253eaeb5f017aebfd44bdc2c522 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether key is the same as this. <br /></td></tr>
+<tr class="separator:a6dd58253eaeb5f017aebfd44bdc2c522 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0bc53862abc61ce18139cdca58f18a4 inherit pub_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ae0bc53862abc61ce18139cdca58f18a4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#ae0bc53862abc61ce18139cdca58f18a4">operator!=</a> (const <a class="el" href="a00833.html">RFBase</a> &amp;obj) const</td></tr>
+<tr class="memdesc:ae0bc53862abc61ce18139cdca58f18a4 inherit pub_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether <em>obj</em> is the same as this. <br /></td></tr>
+<tr class="separator:ae0bc53862abc61ce18139cdca58f18a4 inherit pub_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a81fa1388135e613f0035040a46d4f025"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00725.html">GeneratorFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a81fa1388135e613f0035040a46d4f025">Empty</a> ()</td></tr>
+<tr class="memdesc:a81fa1388135e613f0035040a46d4f025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns empty <a class="el" href="a00725.html">GeneratorFrame</a>.  <a href="a00725.html#a81fa1388135e613f0035040a46d4f025">More...</a><br /></td></tr>
+<tr class="separator:a81fa1388135e613f0035040a46d4f025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_a00829"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_a00829')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="a00829.html">RestFrames::RestFrame</a></td></tr>
+<tr class="memitem:a58d1c197ce297ad75c350b37e1e55317 inherit pub_static_methods_a00829"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a58d1c197ce297ad75c350b37e1e55317">SetAxis</a> (const TVector3 &amp;axis)</td></tr>
+<tr class="memdesc:a58d1c197ce297ad75c350b37e1e55317 inherit pub_static_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set axis perpendicular to transverse plane.  <a href="a00829.html#a58d1c197ce297ad75c350b37e1e55317">More...</a><br /></td></tr>
+<tr class="separator:a58d1c197ce297ad75c350b37e1e55317 inherit pub_static_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba93365f3c525ab1d6f7681c7ca8a7e6 inherit pub_static_methods_a00829"><td class="memItemLeft" align="right" valign="top">static TVector3 const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">GetAxis</a> ()</td></tr>
+<tr class="memdesc:aba93365f3c525ab1d6f7681c7ca8a7e6 inherit pub_static_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve axis which defines transverse plane.  <a href="a00829.html#aba93365f3c525ab1d6f7681c7ca8a7e6">More...</a><br /></td></tr>
+<tr class="separator:aba93365f3c525ab1d6f7681c7ca8a7e6 inherit pub_static_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa35b6aa2c1d010000a9e4a47ac042f8e inherit pub_static_methods_a00829"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00829.html">RestFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">Empty</a> ()</td></tr>
+<tr class="memdesc:aa35b6aa2c1d010000a9e4a47ac042f8e inherit pub_static_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns empty <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a>.  <a href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">More...</a><br /></td></tr>
+<tr class="separator:aa35b6aa2c1d010000a9e4a47ac042f8e inherit pub_static_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cca565739ec438320bffee34ec80d10 inherit pub_static_methods_a00829"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00845.html">ConstRestFrameList</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a6cca565739ec438320bffee34ec80d10">EmptyList</a> ()</td></tr>
+<tr class="memdesc:a6cca565739ec438320bffee34ec80d10 inherit pub_static_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns empty RestFrameList.  <a href="a00829.html#a6cca565739ec438320bffee34ec80d10">More...</a><br /></td></tr>
+<tr class="separator:a6cca565739ec438320bffee34ec80d10 inherit pub_static_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_a00833"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_a00833')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="a00833.html">RestFrames::RFBase</a></td></tr>
+<tr class="memitem:a7441e53b3fd55696a946dccf447e9c1f inherit pub_static_methods_a00833"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00833.html">RFBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#a7441e53b3fd55696a946dccf447e9c1f">Empty</a> ()</td></tr>
+<tr class="memdesc:a7441e53b3fd55696a946dccf447e9c1f inherit pub_static_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns empty <a class="el" href="a00833.html" title="Base class for all RestFrame package objects.">RFBase</a>.  <a href="a00833.html#a7441e53b3fd55696a946dccf447e9c1f">More...</a><br /></td></tr>
+<tr class="separator:a7441e53b3fd55696a946dccf447e9c1f inherit pub_static_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a41cb97d5eb7d19e141de83cb80306a62"><td class="memItemLeft" align="right" valign="top"><a id="a41cb97d5eb7d19e141de83cb80306a62"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a41cb97d5eb7d19e141de83cb80306a62">InitializeAnalysisRecursive</a> ()</td></tr>
+<tr class="memdesc:a41cb97d5eb7d19e141de83cb80306a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively initialize this frame and its children for analysis. <br /></td></tr>
+<tr class="separator:a41cb97d5eb7d19e141de83cb80306a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3cd6305429cd88f02b066c6e9e972b0"><td class="memItemLeft" align="right" valign="top"><a id="ab3cd6305429cd88f02b066c6e9e972b0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#ab3cd6305429cd88f02b066c6e9e972b0">AnalyzeEventRecursive</a> ()</td></tr>
+<tr class="memdesc:ab3cd6305429cd88f02b066c6e9e972b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively analyze event in this frame and its children. <br /></td></tr>
+<tr class="separator:ab3cd6305429cd88f02b066c6e9e972b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af1de7ebb4713def785f4c542cca2b3"><td class="memItemLeft" align="right" valign="top"><a id="a3af1de7ebb4713def785f4c542cca2b3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html#a3af1de7ebb4713def785f4c542cca2b3">ClearEventRecursive</a> ()</td></tr>
+<tr class="memdesc:a3af1de7ebb4713def785f4c542cca2b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively clear event information from this frame and its children. <br /></td></tr>
+<tr class="separator:a3af1de7ebb4713def785f4c542cca2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0844969e503d5be840539de5893d0e80"><td class="memItemLeft" align="right" valign="top"><a id="a0844969e503d5be840539de5893d0e80"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ResetGenFrame</b> ()=0</td></tr>
+<tr class="separator:a0844969e503d5be840539de5893d0e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0cac482fbb0b84ba197a586ce307eb3"><td class="memItemLeft" align="right" valign="top"><a id="ab0cac482fbb0b84ba197a586ce307eb3"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateFrame</b> ()=0</td></tr>
+<tr class="separator:ab0cac482fbb0b84ba197a586ce307eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe05666544f29cd5084601a5ac8504f4"><td class="memItemLeft" align="right" valign="top"><a id="abe05666544f29cd5084601a5ac8504f4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetChildren</b> (const std::vector&lt; TLorentzVector &gt; &amp;P_children)</td></tr>
+<tr class="separator:abe05666544f29cd5084601a5ac8504f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7eb6fe43ea1fcd34a05862d9e04b45f"><td class="memItemLeft" align="right" valign="top"><a id="aa7eb6fe43ea1fcd34a05862d9e04b45f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>InitializeGenAnalysis</b> ()</td></tr>
+<tr class="separator:aa7eb6fe43ea1fcd34a05862d9e04b45f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f4a620871206eaf6530df4b7bcaa801"><td class="memItemLeft" align="right" valign="top"><a id="a7f4a620871206eaf6530df4b7bcaa801"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>IterateMCMC</b> ()</td></tr>
+<tr class="separator:a7f4a620871206eaf6530df4b7bcaa801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe73dda838337fb30421c070131f5598"><td class="memItemLeft" align="right" valign="top"><a id="afe73dda838337fb30421c070131f5598"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IterateRecursiveMCMC</b> ()</td></tr>
+<tr class="separator:afe73dda838337fb30421c070131f5598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af110cd3ebe6cf88ffdfa09db22f2c55a"><td class="memItemLeft" align="right" valign="top"><a id="af110cd3ebe6cf88ffdfa09db22f2c55a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetVariableMassMCMC</b> (bool var=true)</td></tr>
+<tr class="separator:af110cd3ebe6cf88ffdfa09db22f2c55a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56907f4a7a6f38060f76915ba6e2f5ef"><td class="memItemLeft" align="right" valign="top"><a id="a56907f4a7a6f38060f76915ba6e2f5ef"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMassMCMC</b> (double mass)</td></tr>
+<tr class="separator:a56907f4a7a6f38060f76915ba6e2f5ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadb72b7e15b10b8f926191035d2940f1"><td class="memItemLeft" align="right" valign="top"><a id="aadb72b7e15b10b8f926191035d2940f1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMassMCMC</b> (double mass, <a class="el" href="a00725.html">GeneratorFrame</a> &amp;frame) const</td></tr>
+<tr class="separator:aadb72b7e15b10b8f926191035d2940f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39307506412b32b31f5a543200774d08"><td class="memItemLeft" align="right" valign="top"><a id="a39307506412b32b31f5a543200774d08"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>EventInAcceptance</b> () const</td></tr>
+<tr class="separator:a39307506412b32b31f5a543200774d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a00829"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a00829')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a00829.html">RestFrames::RestFrame</a></td></tr>
+<tr class="memitem:ad0588ce5823ff267395d4089e0298b7f inherit pro_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="ad0588ce5823ff267395d4089e0298b7f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsSoundBody</b> () const</td></tr>
+<tr class="separator:ad0588ce5823ff267395d4089e0298b7f inherit pro_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa699596fa11d2be8ddf3db4c9e21faae inherit pro_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="aa699596fa11d2be8ddf3db4c9e21faae"></a>
+TVector3 const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetChildBoostVector</b> (<a class="el" href="a00829.html">RestFrame</a> &amp;frame) const</td></tr>
+<tr class="separator:aa699596fa11d2be8ddf3db4c9e21faae inherit pro_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d95a3f413eb64ca1e2a77fad80a2938 inherit pro_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a3d95a3f413eb64ca1e2a77fad80a2938"></a>
+TVector3 const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetParentBoostVector</b> () const</td></tr>
+<tr class="separator:a3d95a3f413eb64ca1e2a77fad80a2938 inherit pro_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ca1b7178e5baf7c22e0525cc1d0978b inherit pro_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a1ca1b7178e5baf7c22e0525cc1d0978b"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#a1ca1b7178e5baf7c22e0525cc1d0978b">InitializeTreeRecursive</a> ()</td></tr>
+<tr class="memdesc:a1ca1b7178e5baf7c22e0525cc1d0978b inherit pro_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively initialize this frame's tree. <br /></td></tr>
+<tr class="separator:a1ca1b7178e5baf7c22e0525cc1d0978b inherit pro_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca483a856e6953203ccaad7da0504b4 inherit pro_methods_a00829"><td class="memItemLeft" align="right" valign="top"><a id="acca483a856e6953203ccaad7da0504b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00829.html#acca483a856e6953203ccaad7da0504b4">IsCircularTree</a> (std::vector&lt; <a class="el" href="a00841.html">RFKey</a> &gt; &amp;keys) const</td></tr>
+<tr class="memdesc:acca483a856e6953203ccaad7da0504b4 inherit pro_methods_a00829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check this <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> 's tree for circular connections. <br /></td></tr>
+<tr class="separator:acca483a856e6953203ccaad7da0504b4 inherit pro_methods_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a00833"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a00833')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a00833.html">RestFrames::RFBase</a></td></tr>
+<tr class="memitem:ab2823956e88562714b968e576b2cc944 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ab2823956e88562714b968e576b2cc944"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetBody</b> (bool body) const</td></tr>
+<tr class="separator:ab2823956e88562714b968e576b2cc944 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec05bf3a68f528f8a4875e52c448a7ae inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="aec05bf3a68f528f8a4875e52c448a7ae"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetMind</b> (bool mind) const</td></tr>
+<tr class="separator:aec05bf3a68f528f8a4875e52c448a7ae inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81ebdda7b18b110889b1f37162e79360 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a81ebdda7b18b110889b1f37162e79360"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetSpirit</b> (bool spirit) const</td></tr>
+<tr class="separator:a81ebdda7b18b110889b1f37162e79360 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd1eb2d4f5fc28f14c83c0ebac0ab759 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="acd1eb2d4f5fc28f14c83c0ebac0ab759"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsSoundMind</b> () const</td></tr>
+<tr class="separator:acd1eb2d4f5fc28f14c83c0ebac0ab759 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4107513fbef360c3fefd1c20d087c924 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a4107513fbef360c3fefd1c20d087c924"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsSoundSpirit</b> () const</td></tr>
+<tr class="separator:a4107513fbef360c3fefd1c20d087c924 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f5acb78096804b0831ed714d1de4ca9 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a0f5acb78096804b0831ed714d1de4ca9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnSoundBody</b> (const std::string &amp;function) const</td></tr>
+<tr class="separator:a0f5acb78096804b0831ed714d1de4ca9 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bbd8ffc6134c147fc4c2a1fac4d1d5b inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a0bbd8ffc6134c147fc4c2a1fac4d1d5b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnSoundMind</b> (const std::string &amp;function) const</td></tr>
+<tr class="separator:a0bbd8ffc6134c147fc4c2a1fac4d1d5b inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4523b713b81cebd336614d0eca19bdb inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ac4523b713b81cebd336614d0eca19bdb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnSoundSpirit</b> (const std::string &amp;function) const</td></tr>
+<tr class="separator:ac4523b713b81cebd336614d0eca19bdb inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3a3c5a2066cb8dcc438c60911f31817 inherit pro_methods_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ab3a3c5a2066cb8dcc438c60911f31817"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html#ab3a3c5a2066cb8dcc438c60911f31817">AddDependent</a> (<a class="el" href="a00833.html">RFBase</a> *dep)</td></tr>
+<tr class="memdesc:ab3a3c5a2066cb8dcc438c60911f31817 inherit pro_methods_a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to <a class="el" href="a00833.html" title="Base class for all RestFrame package objects.">RFBase</a> object owned by this one <br /></td></tr>
+<tr class="separator:ab3a3c5a2066cb8dcc438c60911f31817 inherit pro_methods_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:afbf7b537d385d547d460ee8f6cb77a68"><td class="memItemLeft" align="right" valign="top"><a id="afbf7b537d385d547d460ee8f6cb77a68"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_Mass</b></td></tr>
+<tr class="separator:afbf7b537d385d547d460ee8f6cb77a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a00829"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a00829')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a00829.html">RestFrames::RestFrame</a></td></tr>
+<tr class="memitem:a16db446cb4ad62f09bfea64145446277 inherit pro_attribs_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a16db446cb4ad62f09bfea64145446277"></a>
+<a class="el" href="a00428.html#a72de122bffb186f51adf772ad5dd0ac4">FrameType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_Type</b></td></tr>
+<tr class="separator:a16db446cb4ad62f09bfea64145446277 inherit pro_attribs_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a404629ad387afd8e81e59df64138e827 inherit pro_attribs_a00829"><td class="memItemLeft" align="right" valign="top"><a id="a404629ad387afd8e81e59df64138e827"></a>
+<a class="el" href="a00428.html#a04b855cd0360bdc7753b5580b8a9cfa8">AnaType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_Ana</b></td></tr>
+<tr class="separator:a404629ad387afd8e81e59df64138e827 inherit pro_attribs_a00829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a00833"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a00833')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a00833.html">RestFrames::RFBase</a></td></tr>
+<tr class="memitem:a9bafe84908185dc255ecea97b796eefa inherit pro_attribs_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a9bafe84908185dc255ecea97b796eefa"></a>
+<a class="el" href="a00861.html">RFLog</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_Log</b></td></tr>
+<tr class="separator:a9bafe84908185dc255ecea97b796eefa inherit pro_attribs_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe431593f0ac29b01d69f584c9e48fb7 inherit pro_attribs_a00833"><td class="memItemLeft" align="right" valign="top"><a id="afe431593f0ac29b01d69f584c9e48fb7"></a>
+<a class="el" href="a00833.html">RFBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_This</b></td></tr>
+<tr class="separator:afe431593f0ac29b01d69f584c9e48fb7 inherit pro_attribs_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_attribs_a00833"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_a00833')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="a00833.html">RestFrames::RFBase</a></td></tr>
+<tr class="memitem:a25df5f6e082d19eda4596362ad7d04f7 inherit pro_static_attribs_a00833"><td class="memItemLeft" align="right" valign="top"><a id="a25df5f6e082d19eda4596362ad7d04f7"></a>
+static const TVector3&#160;</td><td class="memItemRight" valign="bottom"><b>m_Empty3Vector</b></td></tr>
+<tr class="separator:a25df5f6e082d19eda4596362ad7d04f7 inherit pro_static_attribs_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8f40ba52124b43c36a7787cf8ddda6f inherit pro_static_attribs_a00833"><td class="memItemLeft" align="right" valign="top"><a id="ae8f40ba52124b43c36a7787cf8ddda6f"></a>
+static const TLorentzVector&#160;</td><td class="memItemRight" valign="bottom"><b>m_Empty4Vector</b></td></tr>
+<tr class="separator:ae8f40ba52124b43c36a7787cf8ddda6f inherit pro_static_attribs_a00833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aed84f2e0a9a94ae7a8f2cd88c3a75f39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed84f2e0a9a94ae7a8f2cd88c3a75f39">&#9670;&nbsp;</a></span>GeneratorFrame()</h2>
 
-<p class="definition">Definition in file <a class="el" href="a00725_source.html">example_N_Wlnu.C</a>.</p>
-</div></div><!-- contents -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RestFrames::GeneratorFrame::GeneratorFrame </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>sname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>stitle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Standard constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sname</td><td>Class instance name used for log statements </td></tr>
+    <tr><td class="paramname">stitle</td><td>Class instance title used in figures </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00041">41</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2addd2b8ffffe067bf914ec880e9885c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2addd2b8ffffe067bf914ec880e9885c">&#9670;&nbsp;</a></span>AddChildFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::AddChildFrame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00829.html">RestFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a child <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> to this frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td><a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> to be added as child <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method for adding a <a class="el" href="a00829.html" title="abstract base class for all Frame objects">RestFrame</a> <b>frame</b> as a child of this frame. Calls <a class="el" href="a00829.html#adf48c7a6b51ffa542aeb000903c8e57e" title="Adds a child RestFrame to this frame.">RestFrame::AddChildFrame()</a></p>
+<dl class="section warning"><dt>Warning</dt><dd><b>frame</b> will not be added as a child if it is not a <a class="el" href="a00725.html">GeneratorFrame</a> type frame <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="a00829.html#adf48c7a6b51ffa542aeb000903c8e57e">RestFrames::RestFrame</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00092">92</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a81fa1388135e613f0035040a46d4f025"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81fa1388135e613f0035040a46d4f025">&#9670;&nbsp;</a></span>Empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00725.html">GeneratorFrame</a> &amp; RestFrames::GeneratorFrame::Empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns empty <a class="el" href="a00725.html">GeneratorFrame</a>. </p>
+<p>Returns empty instance of class.</p>
+<dl class="section return"><dt>Returns</dt><dd>Empty <a class="el" href="a00725.html">GeneratorFrame</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00084">84</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a1194c0f8218ac545a801e3f4ad7376f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1194c0f8218ac545a801e3f4ad7376f8">&#9670;&nbsp;</a></span>GetChildFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00725.html">GeneratorFrame</a> &amp; RestFrames::GeneratorFrame::GetChildFrame </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em> = <code>0</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the frame of the <em>i</em> th child. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>ith child</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Frame of the <b>ith</b> child </dd></dl>
+
+<p>Reimplemented from <a class="el" href="a00829.html#a5ff0d688c21b0e36cdc23e161f464cbb">RestFrames::RestFrame</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00112">112</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="aa7352d90f85cc199c9a2a9260083282c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7352d90f85cc199c9a2a9260083282c">&#9670;&nbsp;</a></span>GetGaus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double RestFrames::GeneratorFrame::GetGaus </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>sig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns gaussian random number. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mu</td><td>Mean of gaussian </td></tr>
+    <tr><td class="paramname">sig</td><td>Sigma of gaussian <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00197">197</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="ac4949ebf7cfd7577cca6e6b844005204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4949ebf7cfd7577cca6e6b844005204">&#9670;&nbsp;</a></span>GetParentFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00725.html">GeneratorFrame</a> const  &amp; RestFrames::GeneratorFrame::GetParentFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the parent of this frame. </p>
+<dl class="section return"><dt>Returns</dt><dd>The parent frame of this frame</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If the parent frame is not set, an empty frame is returned </dd></dl>
+
+<p>Reimplemented from <a class="el" href="a00829.html#aaca062f84f7700d214fc6427118b6e0b">RestFrames::RestFrame</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00104">104</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="ad1c49a628a41f01277305de3c65b3ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c49a628a41f01277305de3c65b3ea0">&#9670;&nbsp;</a></span>GetRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double RestFrames::GeneratorFrame::GetRandom </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns random value. </p>
+<dl class="section return"><dt>Returns</dt><dd>Random value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00193">193</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a875b020d82d5a153842e45f7c80fc891"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875b020d82d5a153842e45f7c80fc891">&#9670;&nbsp;</a></span>SetEtaCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::SetEtaCut </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets pseudorapidity cut. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cut</td><td>Pseudorapidity cut</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method for setting the pseudorapidity cut of object in the lab frame to be used for the Monte Carlo event generation <br  />
+ </p>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00372">372</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a5b9cf775ddcbea3c77a322e5a7f3777e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b9cf775ddcbea3c77a322e5a7f3777e">&#9670;&nbsp;</a></span>SetMassWindowCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::SetMassWindowCut </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets mass frame cut. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>Minimum cut </td></tr>
+    <tr><td class="paramname">max</td><td>Maximum cut <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method to set mass frame cut. Mass must be between min and max if not mass won't be used. If either <b>min</b> or <b>max</b> is less than 0 only an upper cut will be set or only a lower cut will be set respectively</p>
+<dl class="section warning"><dt>Warning</dt><dd>If both <b>min</b> and <b>max</b> are less than 0. Method won't set cuts </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00378">378</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="afc1257416c942d4d02e27ef7ba262d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc1257416c942d4d02e27ef7ba262d67">&#9670;&nbsp;</a></span>SetParentFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::SetParentFrame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00829.html">RestFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em> = <code><a class="el" href="a00829.html#aa35b6aa2c1d010000a9e4a47ac042f8e">RestFrame::Empty</a>()</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the parent frame for this frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Parent frame</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method for connecting a child frame to its parent frame Empty default sets parent frame to none </p>
+
+<p>Reimplemented from <a class="el" href="a00829.html#adab05aad875837545b0330d6c6c4dc4d">RestFrames::RestFrame</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00098">98</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a03e97d91a22af11432f5399b84b72720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03e97d91a22af11432f5399b84b72720">&#9670;&nbsp;</a></span>SetPCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::SetPCut </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets momentum cut. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cut</td><td>Momentum cut</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method for setting the momentum cut of object in the lab frame to be used for the Monte Carlo event generation</p>
+<dl class="section warning"><dt>Warning</dt><dd><b>cut</b> must be bigger than 0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00358">358</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<a id="a16691437cd581a96cc861b38ef6145e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16691437cd581a96cc861b38ef6145e9">&#9670;&nbsp;</a></span>SetPtCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestFrames::GeneratorFrame::SetPtCut </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets transverse momentum cut. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cut</td><td>Transverse momentum cut</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Method for setting the transverse momentum cut of object in the lab frame to be used for the Monte Carlo event generation <br  />
+</p>
+<dl class="section warning"><dt>Warning</dt><dd><b>cut</b> won't be set if it isn't bigger than 0 <br  />
+ </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="a00509_source.html#l00365">365</a> of file <a class="el" href="a00509_source.html">GeneratorFrame.cc</a>.</p>
+
+</div>
+</div>
+<div class="dynheader">
+Collaboration diagram for RestFrames::GeneratorFrame:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00723.png" border="0" usemap="#a_rest_frames_1_1_generator_frame_coll__map" alt="Collaboration graph"/></div>
+<map name="_rest_frames_1_1_generator_frame_coll__map" id="a_rest_frames_1_1_generator_frame_coll__map">
+<area shape="rect" title=" " alt="" coords="5,247,201,273"/>
+<area shape="rect" href="a00829.html" title="abstract base class for all Frame objects" alt="" coords="20,171,187,197"/>
+<area shape="rect" href="a00833.html" title="Base class for all RestFrame package objects." alt="" coords="28,95,179,121"/>
+<area shape="rect" href="a00861.html" title=" " alt="" coords="33,5,174,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>inc/RestFrames/<a class="el" href="a00350_source.html">GeneratorFrame.hh</a></li>
+<li>src/<a class="el" href="a00509_source.html">GeneratorFrame.cc</a></li>
+</ul>
+</div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:19 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:38 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

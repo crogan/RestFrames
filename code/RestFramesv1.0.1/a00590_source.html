@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: src/LabGenFrame.cc Source File</title>
+<title>RestFrames: src/RFBase.cc Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">LabGenFrame.cc</div>  </div>
+<div class="title">RFBase.cc</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00590.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,253 +124,254 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00398.html">RestFrames/LabGenFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">// LabGenFrame class</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00855.html#a9623fb76c4eb6f65e5c9cccf0c108fb5">   37</a></span>&#160;<span class="comment"></span>  <a class="code" href="a00855.html#a9623fb76c4eb6f65e5c9cccf0c108fb5">LabGenFrame::LabGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;               <span class="keyword">const</span> std::string&amp; stitle) : </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="a00851.html">LabFrame</a>&lt;<a class="code" href="a00803.html">GeneratorFrame</a>&gt;(sname, stitle)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    m_PT = 0.;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    m_PToM = -1.;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    m_PL = 0.;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    m_Phi = -1.;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_MaxM = -1.;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    m_NBurnInMCMC = 1000;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    m_NDiscardMCMC = 5;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    m_FailTolerance = 1000;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;RestFrames/RestFrames_config.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00434.html">RestFrames/RFBase.hh</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">using</span> std::max;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// RFBase class methods</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00833.html#a9978c7b1334c105e6d90697e66f12057">   41</a></span>&#160;  <a class="code" href="a00833.html#a9978c7b1334c105e6d90697e66f12057">RFBase::RFBase</a>()</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    : m_Log(), m_Key(-1)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    m_Name  = <span class="stringliteral">&quot;Empty&quot;</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    m_Title = <span class="stringliteral">&quot;Empty&quot;</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_Body   = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    m_Mind   = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    m_Spirit = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    m_This = <span class="keyword">this</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    m_Owns.clear();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    m_Log.<a class="code" href="a00861.html#ab0c48bffdb0e7e1c645a104a0a89faaa">SetSource</a>(<span class="stringliteral">&quot;RFBase &quot;</span>+<a class="code" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">GetName</a>());</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  LabGenFrame::~LabGenFrame() {}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00855.html#ad97e17b803d9e601d4c10414824a55e4">   56</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#ad97e17b803d9e601d4c10414824a55e4">LabGenFrame::Clear</a>(){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00803.html#a4a7025ee9f01537efd07d13a2fa43462">GeneratorFrame::Clear</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="a00855.html#a9f9675352cd2da66ea9961387a099b85">   60</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a9f9675352cd2da66ea9961387a099b85">LabGenFrame::SetThreeVector</a>(<span class="keyword">const</span> TVector3&amp; P){</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    m_PT = P.Pt();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    m_PL = P.Z();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">SetPhi</a>(P.Phi());</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a00855.html#a7b96fda90f18512bf020b89a5a4450d5">   66</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a7b96fda90f18512bf020b89a5a4450d5">LabGenFrame::SetPToverM</a>(<span class="keywordtype">double</span> val){</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(val &lt; 0.){</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to set transverse momentum &quot;</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;to negative value: &quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;*mass&quot;</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      m_Log &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      m_PToM = val;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      m_PT = 0.;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="a00855.html#a19054f15842416bae99570bd06ba7057">   78</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a19054f15842416bae99570bd06ba7057">LabGenFrame::SetTransverseMomentum</a>(<span class="keywordtype">double</span> val){</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">if</span>(val &lt; 0.){</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to set transverse momentum &quot;</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;to negative value: &quot;</span> &lt;&lt; val;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      m_Log &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      m_PT = val;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      m_PToM = -1.;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="a00855.html#a4bb748c38f4b57ba16b592e7de15e062">   90</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a4bb748c38f4b57ba16b592e7de15e062">LabGenFrame::SetLongitudinalMomentum</a>(<span class="keywordtype">double</span> val){</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    m_PL = val;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">   94</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">LabGenFrame::SetPhi</a>(<span class="keywordtype">double</span> val){</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">while</span>(val &gt; acos(-1.)*2.) val -= acos(-1.)*2.;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">while</span>(val &lt; 0.) val += acos(-1.)*2.;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    m_Phi = val;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00833.html#a7ce81fec7de4c33f2f455f62c35ea498">   54</a></span>&#160;  <a class="code" href="a00833.html#a9978c7b1334c105e6d90697e66f12057">RFBase::RFBase</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;         <span class="keyword">const</span> std::string&amp; stitle, <span class="keywordtype">int</span> key)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    : m_Log(), m_Key(key) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    m_Name  = sname;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    m_Title = stitle;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    m_Body   = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    m_Mind   = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    m_Spirit = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    m_This = <span class="keyword">this</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    m_Owns.clear();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    m_Log.<a class="code" href="a00861.html#ab0c48bffdb0e7e1c645a104a0a89faaa">SetSource</a>(<span class="stringliteral">&quot;RFBase &quot;</span>+<a class="code" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">GetName</a>());</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  RFBase::~RFBase(){</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="a00833.html#ad1af9829d7941816b011bdafb635810f">RFBase::Clear</a>();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="a00833.html#ad1af9829d7941816b011bdafb635810f">   71</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00833.html#ad1af9829d7941816b011bdafb635810f">RFBase::Clear</a>(){</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    SetBody(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">int</span> N = m_Owns.size();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; N; i++){</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keyword">delete</span> m_Owns[i];</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    m_Owns.clear();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="a00833.html#a7441e53b3fd55696a946dccf447e9c1f">   80</a></span>&#160;  <a class="code" href="a00833.html">RFBase</a>&amp; <a class="code" href="a00833.html#a7441e53b3fd55696a946dccf447e9c1f">RFBase::Empty</a>(){</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> RFBase::m_Empty;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">   84</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">RFBase::IsEmpty</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> m_Key == -1;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="a00833.html#ab3a3c5a2066cb8dcc438c60911f31817">   88</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00833.html#ab3a3c5a2066cb8dcc438c60911f31817">RFBase::AddDependent</a>(<a class="code" href="a00833.html">RFBase</a>* dep){</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">if</span>(dep) m_Owns.push_back(dep);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="a00833.html#af9514eb2890480ba0a0d1cef676aeb8e">   92</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00833.html#af9514eb2890480ba0a0d1cef676aeb8e">RFBase::IsSame</a>(<span class="keyword">const</span> <a class="code" href="a00841.html">RFKey</a>&amp; key)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> (m_Key == key);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;     </div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="a00833.html#ad4338db72f08ffdfc932484dbeb0ce44">   96</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00833.html#af9514eb2890480ba0a0d1cef676aeb8e">RFBase::IsSame</a>(<span class="keyword">const</span> <a class="code" href="a00833.html">RFBase</a>&amp; obj)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">return</span> obj == m_Key;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">void</span> LabGenFrame::ResetGenFrame(){</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    m_Phi = -1.;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="a00855.html#a3e2b029febed17db909fb2af025510d5">  105</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a3e2b029febed17db909fb2af025510d5">LabGenFrame::InitializeAnalysis</a>(){</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    m_Log &lt;&lt; LogVerbose &lt;&lt; <span class="stringliteral">&quot;Initializing this tree for analysis...&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()){</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      UnSoundBody(RF_FUNCTION);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="a00803.html#a41cb97d5eb7d19e141de83cb80306a62">InitializeAnalysisRecursive</a>()){</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      m_Log &lt;&lt; LogWarning &lt;&lt; <span class="stringliteral">&quot;...Unable to recursively initialize analysis&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">  100</a></span>&#160;  <a class="code" href="a00841.html">RFKey</a> <a class="code" href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">RFBase::GetKey</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="a00841.html">RFKey</a>(m_Key);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">  104</a></span>&#160;  std::string <a class="code" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">RFBase::GetName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">return</span> m_Name;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="a00833.html#a259119e7402734e6f27ce840d4cd9abe">  108</a></span>&#160;  std::string <a class="code" href="a00833.html#a259119e7402734e6f27ce840d4cd9abe">RFBase::GetTitle</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> m_Title;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordtype">bool</span> RFBase::SetBody(<span class="keywordtype">bool</span> body)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    m_Body = body;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">if</span>(!body) SetMind(body);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordflow">return</span> m_Body;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_NBurnInMCMC; i++)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">if</span>(!IterateRecursiveMCMC()){</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    m_Log &lt;&lt; LogWarning &lt;&lt; <span class="stringliteral">&quot;...Unable to recursively initialize analysis&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">bool</span> RFBase::SetMind(<span class="keywordtype">bool</span> mind)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    m_Mind = mind;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">if</span>(!mind) SetSpirit(mind);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> m_Mind;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  }</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    m_Log &lt;&lt; LogVerbose &lt;&lt; <span class="stringliteral">&quot;...Done&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="a00855.html#a1d2589867b064d2874403e630776ce08">  128</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a1d2589867b064d2874403e630776ce08">LabGenFrame::SetN_MCMCBurnIn</a>(<span class="keywordtype">int</span> N){</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    m_NBurnInMCMC = std::max(0,N);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keywordtype">bool</span> RFBase::SetSpirit(<span class="keywordtype">bool</span> spirit)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    m_Spirit = spirit;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">return</span> m_Spirit;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">bool</span> RFBase::IsSoundBody()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">return</span> m_Body;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="a00855.html#a3275c93a32beb98588239b46a561ff09">  133</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#a3275c93a32beb98588239b46a561ff09">LabGenFrame::SetN_MCMCDiscard</a>(<span class="keywordtype">int</span> N){</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    m_NDiscardMCMC = std::max(1,N);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="a00855.html#ab46bfced44b3eb393340b33ff8dbfc7a">  138</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00855.html#ab46bfced44b3eb393340b33ff8dbfc7a">LabGenFrame::SetFailTolerance</a>(<span class="keywordtype">int</span> Nfail){</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    m_FailTolerance = Nfail;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="keywordtype">bool</span> LabGenFrame::InitializeGenAnalysis(){</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()){</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      UnSoundBody(RF_FUNCTION);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      <span class="keywordflow">return</span> SetMind(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    } </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <a class="code" href="a00803.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame</a>&amp; child = <a class="code" href="a00803.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>();</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span>(child.IsVariableMassMCMC()){</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <span class="keywordtype">double</span> ChildMass, ChildProb;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      m_ChildMassMCMC = ChildMass;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      m_ChildProbMCMC = ChildProb;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      SetMassMCMC(ChildMass, child);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      m_ChildMassMCMC = child.GetMass();</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      m_ChildProbMCMC = 1.;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordtype">bool</span> RFBase::IsSoundMind()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">return</span> m_Mind;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keywordtype">bool</span> RFBase::IsSoundSpirit()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">return</span> m_Spirit;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="a00833.html#a141fd7fc2c49089433b4da0a3d901ef0">  141</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00833.html#a141fd7fc2c49089433b4da0a3d901ef0">RFBase::Print</a>(<a class="code" href="a00446.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    std::string output = <a class="code" href="a00833.html#a06b762eaddf8d1feef2742548773028e">PrintString</a>(type);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    m_Log &lt;&lt; type &lt;&lt; output &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="a00833.html#a06b762eaddf8d1feef2742548773028e">  146</a></span>&#160;  std::string <a class="code" href="a00833.html#a06b762eaddf8d1feef2742548773028e">RFBase::PrintString</a>(<a class="code" href="a00446.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    std::string output = <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    output += <span class="stringliteral">&quot;   Name: &quot;</span>+<a class="code" href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">GetName</a>()+<span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    output += <span class="stringliteral">&quot;   Title: &quot;</span>+<a class="code" href="a00833.html#a259119e7402734e6f27ce840d4cd9abe">GetTitle</a>()+<span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  }</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keywordtype">void</span> RFBase::UnSoundBody(<span class="keyword">const</span> std::string&amp; <span class="keyword">function</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to evaluate function \&quot;&quot;</span> &lt;&lt; <span class="keyword">function</span> &lt;&lt; <span class="stringliteral">&quot;\&quot;. &quot;</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Requires a successful call to \&quot;InitializeTree()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with this tree.&quot;</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    m_Log &lt;&lt; LogEnd;</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  }</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keywordtype">bool</span> LabGenFrame::IterateMCMC(){</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="a00803.html#ab48589dcf6bb3e83e61846b4cf6ed960">GeneratorFrame</a>&amp; child = <a class="code" href="a00803.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>();</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">if</span>(child.IsVariableMassMCMC()){</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordtype">double</span> ChildMass, ChildProb = 0.;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;      child.GenerateMassMCMC(ChildMass, ChildProb, m_MaxM);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      <span class="keywordtype">double</span> probOld = <a class="code" href="a00803.html#a60259ae1010151b4dfb7cd768ff1b0a3">GetProbMCMC</a>(m_ChildMassMCMC)*</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    child.GetProbMCMC(m_ChildMassMCMC)/m_ChildProbMCMC;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    RFBase::m_BodyCount++;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">if</span>(RFBase::m_BodyCount &gt; m_WarningTolerance &amp;&amp; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;       m_WarningTolerance &gt; 0) TooManyBodies(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordtype">void</span> RFBase::UnSoundMind(<span class="keyword">const</span> std::string&amp; <span class="keyword">function</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to evaluate function \&quot;&quot;</span> &lt;&lt; <span class="keyword">function</span> &lt;&lt; <span class="stringliteral">&quot;\&quot;. &quot;</span>;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Requires a successful call to \&quot;InitializeAnalysis()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with this tree.&quot;</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    m_Log &lt;&lt; LogEnd;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordtype">double</span> probNew = <a class="code" href="a00803.html#a60259ae1010151b4dfb7cd768ff1b0a3">GetProbMCMC</a>(ChildMass)*</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    child.GetProbMCMC(ChildMass)/ChildProb;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">if</span>(probNew/probOld &gt; <a class="code" href="a00803.html#ad1c49a628a41f01277305de3c65b3ea0">GetRandom</a>()){</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    m_ChildMassMCMC = ChildMass;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    m_ChildProbMCMC = ChildProb;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    SetMassMCMC(ChildMass, child);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    SetMassMCMC(m_ChildMassMCMC, child);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      }</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    RFBase::m_MindCount++;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">if</span>(RFBase::m_MindCount &gt; m_WarningTolerance &amp;&amp; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;       m_WarningTolerance &gt; 0) TooManyMinds(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  }</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordtype">void</span> RFBase::UnSoundSpirit(<span class="keyword">const</span> std::string&amp; <span class="keyword">function</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    m_Log &lt;&lt; LogWarning;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Unable to evaluate function \&quot;&quot;</span> &lt;&lt; <span class="keyword">function</span> &lt;&lt; <span class="stringliteral">&quot;\&quot;. &quot;</span>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;Requires a successful call to \&quot;AnalyzeEvent()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    m_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with this tree.&quot;</span>;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    m_Log &lt;&lt; LogEnd;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">return</span> SetMind(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordtype">bool</span> LabGenFrame::GenerateFrame(){</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()) </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    TLorentzVector P;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">double</span> M = <a class="code" href="a00803.html#a1194c0f8218ac545a801e3f4ad7376f8">GetChildFrame</a>().<a class="code" href="a00803.html#ae0101090e69f3671d552312c8ac094ca">GetMass</a>();</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">if</span>(m_Phi &lt; 0.) m_Phi = 2.*acos(-1.)*<a class="code" href="a00803.html#ad1c49a628a41f01277305de3c65b3ea0">GetRandom</a>();</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">if</span>(m_PToM &gt; 0.)</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      P.SetPxPyPzE(m_PToM*M*cos(m_Phi), m_PToM*M*sin(m_Phi), m_PL, </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;           sqrt(m_PL*m_PL + M*M*(1. + m_PToM*m_PToM)));</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">else</span> </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      P.SetPxPyPzE(m_PT*cos(m_Phi), m_PT*sin(m_Phi), m_PL, </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;           sqrt(m_PT*m_PT + m_PL*m_PL + M*M));</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    m_Phi = -1.;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    std::vector&lt;TLorentzVector&gt; ChildVector;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    ChildVector.push_back(P);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    SetChildren(ChildVector);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  }</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno"><a class="line" href="a00855.html#a6f1cf2671a2fe130659b4142b92e5cd8">  210</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a6f1cf2671a2fe130659b4142b92e5cd8">LabGenFrame::ClearEvent</a>(){</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordflow">if</span>(!IsSoundBody()) </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="a00803.html#a3af1de7ebb4713def785f4c542cca2b3">ClearEventRecursive</a>();</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  }</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="a00855.html#a6f0993bafbe3828dc2fee4e51e1bb0c8">  217</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a6f0993bafbe3828dc2fee4e51e1bb0c8">LabGenFrame::AnalyzeEvent</a>(){</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordtype">bool</span> pass = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordtype">int</span> tries = 0;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">while</span>(!pass){</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; m_NDiscardMCMC; i++)</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">if</span>(!IterateRecursiveMCMC())</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <span class="keywordflow">if</span>(!<a class="code" href="a00803.html#ab3cd6305429cd88f02b066c6e9e972b0">AnalyzeEventRecursive</a>()){</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      }</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      pass = EventInAcceptance();</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordflow">if</span>(!pass){</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    tries++;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">if</span>(tries &gt; m_FailTolerance &amp;&amp;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;       m_FailTolerance &gt; 0){</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      m_Log &lt;&lt; LogWarning;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;Failed to generate event in &quot;</span>;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot;acceptance in &quot;</span> &lt;&lt; tries;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      m_Log &lt;&lt; <span class="stringliteral">&quot; tries. Giving up.&quot;</span> &lt;&lt; LogEnd;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      <span class="keywordflow">return</span> SetSpirit(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    }</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      }</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    }</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordflow">return</span> SetSpirit(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    RFBase::m_SpiritCount++;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">if</span>(RFBase::m_SpiritCount &gt; m_WarningTolerance &amp;&amp; </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;       m_WarningTolerance &gt; 0) TooManySpirits(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="comment">// Initializer.</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  __attribute__((constructor))</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">void</span> initializer(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    printf(<span class="stringliteral">&quot;\n&quot;</span> <span class="stringliteral">&quot;\x1b[36m&quot;</span>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    printf(PACKAGE_NAME);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    printf(<span class="stringliteral">&quot; v&quot;</span>);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    printf(PACKAGE_VERSION);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    printf(<span class="stringliteral">&quot; -- Developed by Christopher Rogan (crogan@cern.ch)\n&quot;</span>);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    printf(<span class="stringliteral">&quot;                     &quot;</span>);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    printf(<span class="stringliteral">&quot;Copyright (c) 2014-2019, Christopher Rogan\n&quot;</span>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    printf(<span class="stringliteral">&quot;                     &quot;</span>);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    printf(<span class="stringliteral">&quot;http://RestFrames.com\n&quot;</span>);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    printf(<span class="stringliteral">&quot;\x1b[0m&quot;</span> <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="a00841.html">RestFrames::RFKey</a> key(0);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">int</span> RFBase::m_BodyCount = 0;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">int</span> RFBase::m_MindCount = 0;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordtype">int</span> RFBase::m_SpiritCount = 0;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keywordtype">int</span> RFBase::m_WarningTolerance = 100;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  RFBase RFBase::m_Empty;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keyword">const</span> TVector3       RFBase::m_Empty3Vector;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">const</span> TLorentzVector RFBase::m_Empty4Vector;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordtype">double</span> GetP(<span class="keywordtype">double</span> Mp, <span class="keywordtype">double</span> Mc1, <span class="keywordtype">double</span> Mc2){</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">if</span>(Mp &lt;= 0.) <span class="keywordflow">return</span> 0.;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    Mc1 = std::max(Mc1, 0.);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    Mc2 = std::max(Mc2, 0.);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordflow">return</span> sqrt(std::max(0., (Mp*Mp-Mc1*Mc1-Mc2*Mc2)*(Mp*Mp-Mc1*Mc1-Mc2*Mc2)-4.*Mc1*Mc1*Mc2*Mc2) )/2./Mp;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="a00434.html#a305f1237f52334f3b020def2bb95d768">  223</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00434.html#a305f1237f52334f3b020def2bb95d768">SetWarningTolerance</a>(<span class="keywordtype">int</span> NMAX){</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    RFBase::m_WarningTolerance = NMAX;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  }</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordtype">void</span> TooManyBodies(<span class="keyword">const</span> RFBase&amp; obj){</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    g_Log &lt;&lt; LogError;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Too many warnings. &quot;</span>;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Need a successful call to \&quot;InitializeTree()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with the offending/&quot;</span>;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;unsuccessful function calls. The last call came from:&quot;</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    g_Log &lt;&lt; Log(obj);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Please edit your code and try again.&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="keywordtype">void</span> TooManyMinds(<span class="keyword">const</span> RFBase&amp; obj){</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    g_Log &lt;&lt; LogError;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Too many warnings. &quot;</span>;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Need a successful call to \&quot;InitializeAnalysis()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with the offending/&quot;</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;unsuccessful function calls. The last call came from:&quot;</span>;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    g_Log &lt;&lt; Log(obj);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Please edit your code and try again.&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  }</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordtype">void</span> TooManySpirits(<span class="keyword">const</span> RFBase&amp; obj){</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    g_Log &lt;&lt; LogError;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Too many warnings. &quot;</span>;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Need a successful call to \&quot;AnalyzeEvent()\&quot; &quot;</span>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;from the LabFrame associated with the offending/&quot;</span>;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;unsuccessful function calls. The last call came from:&quot;</span>;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    g_Log &lt;&lt; Log(obj);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    g_Log &lt;&lt; <span class="stringliteral">&quot;Please edit your code and try again.&quot;</span> &lt;&lt; LogEnd;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  }</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00803_html"><div class="ttname"><a href="a00803.html">RestFrames::GeneratorFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00359_source.html#l00042">GeneratorFrame.hh:42</a></div></div>
-<div class="ttc" id="aa00855_html_a9623fb76c4eb6f65e5c9cccf0c108fb5"><div class="ttname"><a href="a00855.html#a9623fb76c4eb6f65e5c9cccf0c108fb5">RestFrames::LabGenFrame::LabGenFrame</a></div><div class="ttdeci">LabGenFrame(const std::string &amp;sname, const std::string &amp;stitle)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00037">LabGenFrame.cc:37</a></div></div>
-<div class="ttc" id="aa00855_html_a3e2b029febed17db909fb2af025510d5"><div class="ttname"><a href="a00855.html#a3e2b029febed17db909fb2af025510d5">RestFrames::LabGenFrame::InitializeAnalysis</a></div><div class="ttdeci">virtual bool InitializeAnalysis()</div><div class="ttdoc">Initialize analysis capability of a tree to generate events.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00105">LabGenFrame.cc:105</a></div></div>
-<div class="ttc" id="aa00803_html_a41cb97d5eb7d19e141de83cb80306a62"><div class="ttname"><a href="a00803.html#a41cb97d5eb7d19e141de83cb80306a62">RestFrames::GeneratorFrame::InitializeAnalysisRecursive</a></div><div class="ttdeci">bool InitializeAnalysisRecursive()</div><div class="ttdoc">Recursively initialize this frame and its children for analysis.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00169">GeneratorFrame.cc:169</a></div></div>
-<div class="ttc" id="aa00855_html_a4bb748c38f4b57ba16b592e7de15e062"><div class="ttname"><a href="a00855.html#a4bb748c38f4b57ba16b592e7de15e062">RestFrames::LabGenFrame::SetLongitudinalMomentum</a></div><div class="ttdeci">virtual void SetLongitudinalMomentum(double val)</div><div class="ttdoc">Sets longitudinal momentum of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00090">LabGenFrame.cc:90</a></div></div>
-<div class="ttc" id="aa00855_html_a9f9675352cd2da66ea9961387a099b85"><div class="ttname"><a href="a00855.html#a9f9675352cd2da66ea9961387a099b85">RestFrames::LabGenFrame::SetThreeVector</a></div><div class="ttdeci">virtual void SetThreeVector(const TVector3 &amp;P)</div><div class="ttdoc">Sets momentum's three-vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00060">LabGenFrame.cc:60</a></div></div>
-<div class="ttc" id="aa00803_html_ab48589dcf6bb3e83e61846b4cf6ed960"><div class="ttname"><a href="a00803.html#ab48589dcf6bb3e83e61846b4cf6ed960">RestFrames::GeneratorFrame::GeneratorFrame</a></div><div class="ttdeci">GeneratorFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00072">GeneratorFrame.cc:72</a></div></div>
-<div class="ttc" id="aa00803_html_a1194c0f8218ac545a801e3f4ad7376f8"><div class="ttname"><a href="a00803.html#a1194c0f8218ac545a801e3f4ad7376f8">RestFrames::GeneratorFrame::GetChildFrame</a></div><div class="ttdeci">virtual GeneratorFrame &amp; GetChildFrame(int i=0) const</div><div class="ttdoc">Returns the frame of the i th child.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00112">GeneratorFrame.cc:112</a></div></div>
-<div class="ttc" id="aa00803_html_ab3cd6305429cd88f02b066c6e9e972b0"><div class="ttname"><a href="a00803.html#ab3cd6305429cd88f02b066c6e9e972b0">RestFrames::GeneratorFrame::AnalyzeEventRecursive</a></div><div class="ttdeci">bool AnalyzeEventRecursive()</div><div class="ttdoc">Recursively analyze event in this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00133">GeneratorFrame.cc:133</a></div></div>
-<div class="ttc" id="aa00855_html_a9ef6ff754e65f36028c21cb855944e5e"><div class="ttname"><a href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">RestFrames::LabGenFrame::SetPhi</a></div><div class="ttdeci">virtual void SetPhi(double val)</div><div class="ttdoc">Sets phi of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00094">LabGenFrame.cc:94</a></div></div>
-<div class="ttc" id="aa00803_html_ae0101090e69f3671d552312c8ac094ca"><div class="ttname"><a href="a00803.html#ae0101090e69f3671d552312c8ac094ca">RestFrames::GeneratorFrame::GetMass</a></div><div class="ttdeci">virtual double GetMass() const</div><div class="ttdoc">Get the mass of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00088">GeneratorFrame.cc:88</a></div></div>
-<div class="ttc" id="aa00855_html_a7b96fda90f18512bf020b89a5a4450d5"><div class="ttname"><a href="a00855.html#a7b96fda90f18512bf020b89a5a4450d5">RestFrames::LabGenFrame::SetPToverM</a></div><div class="ttdeci">virtual void SetPToverM(double val)</div><div class="ttdoc">Sets transverse momentum over mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00066">LabGenFrame.cc:66</a></div></div>
-<div class="ttc" id="aa00803_html_a60259ae1010151b4dfb7cd768ff1b0a3"><div class="ttname"><a href="a00803.html#a60259ae1010151b4dfb7cd768ff1b0a3">RestFrames::GeneratorFrame::GetProbMCMC</a></div><div class="ttdeci">virtual double GetProbMCMC(double mass=-1.) const</div><div class="ttdoc">Evaluates probability of the state is in right now or the probablility of a state it could go in.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00269">GeneratorFrame.cc:269</a></div></div>
-<div class="ttc" id="aa00855_html_a1d2589867b064d2874403e630776ce08"><div class="ttname"><a href="a00855.html#a1d2589867b064d2874403e630776ce08">RestFrames::LabGenFrame::SetN_MCMCBurnIn</a></div><div class="ttdeci">void SetN_MCMCBurnIn(int N)</div><div class="ttdoc">Sets number of events to be thrown away before keeping any.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00128">LabGenFrame.cc:128</a></div></div>
-<div class="ttc" id="aa00855_html_ad97e17b803d9e601d4c10414824a55e4"><div class="ttname"><a href="a00855.html#ad97e17b803d9e601d4c10414824a55e4">RestFrames::LabGenFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears LabGenFrame from all connections to other objects</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00056">LabGenFrame.cc:56</a></div></div>
-<div class="ttc" id="aa00855_html_a6f0993bafbe3828dc2fee4e51e1bb0c8"><div class="ttname"><a href="a00855.html#a6f0993bafbe3828dc2fee4e51e1bb0c8">RestFrames::LabGenFrame::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00217">LabGenFrame.cc:217</a></div></div>
-<div class="ttc" id="aa00855_html_ab46bfced44b3eb393340b33ff8dbfc7a"><div class="ttname"><a href="a00855.html#ab46bfced44b3eb393340b33ff8dbfc7a">RestFrames::LabGenFrame::SetFailTolerance</a></div><div class="ttdeci">void SetFailTolerance(int N)</div><div class="ttdoc">Sets tolerance number of fail events before stopping the generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00138">LabGenFrame.cc:138</a></div></div>
-<div class="ttc" id="aa00803_html_a3af1de7ebb4713def785f4c542cca2b3"><div class="ttname"><a href="a00803.html#a3af1de7ebb4713def785f4c542cca2b3">RestFrames::GeneratorFrame::ClearEventRecursive</a></div><div class="ttdeci">bool ClearEventRecursive()</div><div class="ttdoc">Recursively clear event information from this frame and its children.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00120">GeneratorFrame.cc:120</a></div></div>
-<div class="ttc" id="aa00803_html_ad1c49a628a41f01277305de3c65b3ea0"><div class="ttname"><a href="a00803.html#ad1c49a628a41f01277305de3c65b3ea0">RestFrames::GeneratorFrame::GetRandom</a></div><div class="ttdeci">double GetRandom() const</div><div class="ttdoc">Returns random value.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00193">GeneratorFrame.cc:193</a></div></div>
-<div class="ttc" id="aa00398_html"><div class="ttname"><a href="a00398.html">LabGenFrame.hh</a></div></div>
-<div class="ttc" id="aa00855_html_a3275c93a32beb98588239b46a561ff09"><div class="ttname"><a href="a00855.html#a3275c93a32beb98588239b46a561ff09">RestFrames::LabGenFrame::SetN_MCMCDiscard</a></div><div class="ttdeci">void SetN_MCMCDiscard(int N)</div><div class="ttdoc">Sets which Nth events to keep.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00133">LabGenFrame.cc:133</a></div></div>
-<div class="ttc" id="aa00855_html_a19054f15842416bae99570bd06ba7057"><div class="ttname"><a href="a00855.html#a19054f15842416bae99570bd06ba7057">RestFrames::LabGenFrame::SetTransverseMomentum</a></div><div class="ttdeci">virtual void SetTransverseMomentum(double val)</div><div class="ttdoc">Sets transverse momentum of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00078">LabGenFrame.cc:78</a></div></div>
-<div class="ttc" id="aa00855_html_a6f1cf2671a2fe130659b4142b92e5cd8"><div class="ttname"><a href="a00855.html#a6f1cf2671a2fe130659b4142b92e5cd8">RestFrames::LabGenFrame::ClearEvent</a></div><div class="ttdeci">virtual bool ClearEvent()</div><div class="ttdoc">Clears event.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00210">LabGenFrame.cc:210</a></div></div>
-<div class="ttc" id="aa00851_html"><div class="ttname"><a href="a00851.html">RestFrames::LabFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00395_source.html#l00041">LabFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00803_html_a4a7025ee9f01537efd07d13a2fa43462"><div class="ttname"><a href="a00803.html#a4a7025ee9f01537efd07d13a2fa43462">RestFrames::GeneratorFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears GeneratorFrame of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00551_source.html#l00079">GeneratorFrame.cc:79</a></div></div>
+<div class="ttc" id="aa00434_html_a305f1237f52334f3b020def2bb95d768"><div class="ttname"><a href="a00434.html#a305f1237f52334f3b020def2bb95d768">RestFrames::SetWarningTolerance</a></div><div class="ttdeci">void SetWarningTolerance(int NMAX=-1)</div><div class="ttdoc">Set the tolerance for number of RestFrames warnings.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00223">RFBase.cc:223</a></div></div>
+<div class="ttc" id="aa00833_html_a7441e53b3fd55696a946dccf447e9c1f"><div class="ttname"><a href="a00833.html#a7441e53b3fd55696a946dccf447e9c1f">RestFrames::RFBase::Empty</a></div><div class="ttdeci">static RFBase &amp; Empty()</div><div class="ttdoc">Returns empty RFBase.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00080">RFBase.cc:80</a></div></div>
+<div class="ttc" id="aa00833_html_a2ed7cbbcc860fa79abb4eea10d1f900f"><div class="ttname"><a href="a00833.html#a2ed7cbbcc860fa79abb4eea10d1f900f">RestFrames::RFBase::IsEmpty</a></div><div class="ttdeci">bool IsEmpty() const</div><div class="ttdoc">Checks whether this is default (empty) instance of class.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00084">RFBase.cc:84</a></div></div>
+<div class="ttc" id="aa00833_html_af9514eb2890480ba0a0d1cef676aeb8e"><div class="ttname"><a href="a00833.html#af9514eb2890480ba0a0d1cef676aeb8e">RestFrames::RFBase::IsSame</a></div><div class="ttdeci">bool IsSame(const RFKey &amp;key) const</div><div class="ttdoc">Tests whether key is the same as this.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00092">RFBase.cc:92</a></div></div>
+<div class="ttc" id="aa00833_html"><div class="ttname"><a href="a00833.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00434_source.html#l00053">RFBase.hh:53</a></div></div>
+<div class="ttc" id="aa00833_html_aea6973bed7d99edbd39c67d00e6fd33f"><div class="ttname"><a href="a00833.html#aea6973bed7d99edbd39c67d00e6fd33f">RestFrames::RFBase::GetKey</a></div><div class="ttdeci">RFKey GetKey() const</div><div class="ttdoc">gets object identification key</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00100">RFBase.cc:100</a></div></div>
+<div class="ttc" id="aa00833_html_a141fd7fc2c49089433b4da0a3d901ef0"><div class="ttname"><a href="a00833.html#a141fd7fc2c49089433b4da0a3d901ef0">RestFrames::RFBase::Print</a></div><div class="ttdeci">void Print(LogType type) const</div><div class="ttdoc">Print information associated with object.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00141">RFBase.cc:141</a></div></div>
+<div class="ttc" id="aa00446_html_a76730caee81a607b69d391935a4dc1f2"><div class="ttname"><a href="a00446.html#a76730caee81a607b69d391935a4dc1f2">RestFrames::LogType</a></div><div class="ttdeci">LogType</div><div class="ttdoc">Type of Log Message.</div><div class="ttdef"><b>Definition:</b> <a href="a00446_source.html#l00045">RFLog.hh:45</a></div></div>
+<div class="ttc" id="aa00833_html_a393add2ce5a03e97238ac2c90f545f0e"><div class="ttname"><a href="a00833.html#a393add2ce5a03e97238ac2c90f545f0e">RestFrames::RFBase::GetName</a></div><div class="ttdeci">std::string GetName() const</div><div class="ttdoc">Returns object name.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00104">RFBase.cc:104</a></div></div>
+<div class="ttc" id="aa00861_html_ab0c48bffdb0e7e1c645a104a0a89faaa"><div class="ttname"><a href="a00861.html#ab0c48bffdb0e7e1c645a104a0a89faaa">RestFrames::RFLog::SetSource</a></div><div class="ttdeci">void SetSource(const std::string &amp;source)</div><div class="ttdoc">Sets name of instance that is associated with.</div><div class="ttdef"><b>Definition:</b> <a href="a00602_source.html#l00182">RFLog.cc:182</a></div></div>
+<div class="ttc" id="aa00434_html"><div class="ttname"><a href="a00434.html">RFBase.hh</a></div></div>
+<div class="ttc" id="aa00833_html_a259119e7402734e6f27ce840d4cd9abe"><div class="ttname"><a href="a00833.html#a259119e7402734e6f27ce840d4cd9abe">RestFrames::RFBase::GetTitle</a></div><div class="ttdeci">std::string GetTitle() const</div><div class="ttdoc">Returns object title.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00108">RFBase.cc:108</a></div></div>
+<div class="ttc" id="aa00833_html_ad1af9829d7941816b011bdafb635810f"><div class="ttname"><a href="a00833.html#ad1af9829d7941816b011bdafb635810f">RestFrames::RFBase::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears RFBase of all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00071">RFBase.cc:71</a></div></div>
+<div class="ttc" id="aa00841_html"><div class="ttname"><a href="a00841.html">RestFrames::RFKey</a></div><div class="ttdef"><b>Definition:</b> <a href="a00440_source.html#l00038">RFKey.hh:38</a></div></div>
+<div class="ttc" id="aa00833_html_ab3a3c5a2066cb8dcc438c60911f31817"><div class="ttname"><a href="a00833.html#ab3a3c5a2066cb8dcc438c60911f31817">RestFrames::RFBase::AddDependent</a></div><div class="ttdeci">void AddDependent(RFBase *dep)</div><div class="ttdoc">pointer to RFBase object owned by this one</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00088">RFBase.cc:88</a></div></div>
+<div class="ttc" id="aa00833_html_a06b762eaddf8d1feef2742548773028e"><div class="ttname"><a href="a00833.html#a06b762eaddf8d1feef2742548773028e">RestFrames::RFBase::PrintString</a></div><div class="ttdeci">virtual std::string PrintString(LogType type) const</div><div class="ttdoc">String of information associated with object.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00146">RFBase.cc:146</a></div></div>
+<div class="ttc" id="aa00833_html_a9978c7b1334c105e6d90697e66f12057"><div class="ttname"><a href="a00833.html#a9978c7b1334c105e6d90697e66f12057">RestFrames::RFBase::RFBase</a></div><div class="ttdeci">RFBase()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00041">RFBase.cc:41</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:16 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:27 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

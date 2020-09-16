@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gaussianpdf_463',['GaussianPDF',['../a00799.html',1,'RestFrames']]],
-  ['generatorframe_464',['GeneratorFrame',['../a00803.html',1,'RestFrames']]],
-  ['group_465',['Group',['../a00807.html',1,'RestFrames']]]
+  ['histplot_430',['HistPlot',['../a00733.html',1,'RestFrames']]],
+  ['histplotcategory_431',['HistPlotCategory',['../a00737.html',1,'RestFrames']]],
+  ['histplotvar_432',['HistPlotVar',['../a00741.html',1,'RestFrames']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/RFsplinePDF.hh Source File</title>
+<title>RestFrames: inc/RestFrames/VisibleState.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,12 +103,12 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RFsplinePDF.hh</div>  </div>
+<div class="title">VisibleState.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00482.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2019, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -124,76 +124,77 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef RFsplinePDF_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define RFsplinePDF_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef VisibleState_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define VisibleState_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00476.html">RestFrames/RFPDF.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00461.html">RestFrames/State.hh</a>&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>LogsplinePDF;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00979.html">   39</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00979.html">RFsplinePDF</a> : <span class="keyword">public</span> <a class="code" href="a00971.html">RFPDF</a> {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>VisibleRecoFrame;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00913.html">   39</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00913.html">VisibleState</a> : <span class="keyword">public</span> <a class="code" href="a00885.html">State</a> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00979.html">RFsplinePDF</a>(<span class="keyword">const</span> <a class="code" href="a00939.html">RFDataVar</a>&amp; var);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00979.html">RFsplinePDF</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> Initialize();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> Optimize(<span class="keyword">const</span> <a class="code" href="a00939.html">RFDataVar</a>&amp; w, <span class="keywordtype">double</span> beta = 1.);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">double</span> Eval(<span class="keywordtype">double</span> x) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">double</span> Eval(<span class="keyword">const</span> <a class="code" href="a00935.html">RFDataPoint</a>&amp; x) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00913.html#a669abef6079bf3e7e4d5fece2038c3ef">VisibleState</a>(<span class="keyword">const</span> std::string&amp; sname,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;         <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00913.html#a669abef6079bf3e7e4d5fece2038c3ef">VisibleState</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00913.html">VisibleState</a>();</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">double</span> ElogP(<span class="keyword">const</span> <a class="code" href="a00935.html">RFDataPoint</a>&amp; x) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">double</span> LogL() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">double</span> LogL(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    std::vector&lt;int&gt; GetNdim()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_ndim; }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    std::vector&lt;double&gt; GetLogL()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_logl; }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::vector&lt;double&gt; GetProb()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_prob; }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00979.html">RFsplinePDF</a>&amp; Empty();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">double</span> m_alpha;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">double</span> m_r;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> m_NMAX;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">int</span> m_MMAX;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> m_Nspline;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    std::vector&lt;int&gt; m_ndim;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    std::vector&lt;double&gt; m_logl;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    std::vector&lt;double&gt; m_prob;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    std::vector&lt;LogsplinePDF*&gt; m_lspl;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::vector&lt;bool&gt; m_off;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> Clear();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="a00979.html">RFsplinePDF</a>();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00979.html">RFsplinePDF</a> m_Empty;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  };</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#a4f4342dc5aab2d0d2ff32f0ef7a59204">Clear</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00913.html">VisibleState</a>&amp; <a class="code" href="a00913.html#a2661ac84a5d144e9e377210218ec3434">Empty</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#afac83b15937ebe737ea867a64bfee7fb">AddFrame</a>(<span class="keyword">const</span> <a class="code" href="a00829.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00829.html">RestFrame</a> <span class="keyword">const</span>&amp; <a class="code" href="a00913.html#a798225ae8a4a13d56395ab1fc9a2235e">GetFrame</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00913.html#a839be76e974775a7b9051676a1b598dc">IsFrame</a>(<span class="keyword">const</span> <a class="code" href="a00829.html">RestFrame</a>&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00913.html#a9b356fd4d93b05e89a4000137df5ac78">IsFrames</a>(<span class="keyword">const</span> <a class="code" href="a00845.html">ConstRestFrameList</a>&amp; frames) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#a8a30ebbe74e5e1c4de7fa55b05bcbaae">SetLabFrameFourVector</a>();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#a02675a87140e7fe162fb573a543801be">SetCharge</a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; charge);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#a02675a87140e7fe162fb573a543801be">SetCharge</a>(<span class="keywordtype">int</span> charge = 0);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00913.html#a02675a87140e7fe162fb573a543801be">SetCharge</a>(<span class="keywordtype">int</span> charge_num, <span class="keywordtype">int</span> charge_den);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00909.html">VisibleRecoFrame</a>* m_FramePtr;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00913.html">VisibleState</a> m_Empty;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  };</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00979_html"><div class="ttname"><a href="a00979.html">RestFrames::RFsplinePDF</a></div><div class="ttdef"><b>Definition:</b> <a href="a00482_source.html#l00039">RFsplinePDF.hh:39</a></div></div>
-<div class="ttc" id="aa00476_html"><div class="ttname"><a href="a00476.html">RFPDF.hh</a></div></div>
-<div class="ttc" id="aa00939_html"><div class="ttname"><a href="a00939.html">RestFrames::RFDataVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00464_source.html#l00039">RFDataVar.hh:39</a></div></div>
-<div class="ttc" id="aa00935_html"><div class="ttname"><a href="a00935.html">RestFrames::RFDataPoint</a></div><div class="ttdef"><b>Definition:</b> <a href="a00461_source.html#l00040">RFDataPoint.hh:40</a></div></div>
-<div class="ttc" id="aa00971_html"><div class="ttname"><a href="a00971.html">RestFrames::RFPDF</a></div><div class="ttdef"><b>Definition:</b> <a href="a00476_source.html#l00040">RFPDF.hh:40</a></div></div>
+<div class="ttc" id="aa00913_html_afac83b15937ebe737ea867a64bfee7fb"><div class="ttname"><a href="a00913.html#afac83b15937ebe737ea867a64bfee7fb">RestFrames::VisibleState::AddFrame</a></div><div class="ttdeci">virtual void AddFrame(const RestFrame &amp;frame)</div><div class="ttdoc">Adds a frame (RestFrame) to this state.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00057">VisibleState.cc:57</a></div></div>
+<div class="ttc" id="aa00837_html"><div class="ttname"><a href="a00837.html">RestFrames::RFCharge</a></div><div class="ttdef"><b>Definition:</b> <a href="a00437_source.html#l00040">RFCharge.hh:40</a></div></div>
+<div class="ttc" id="aa00913_html_a669abef6079bf3e7e4d5fece2038c3ef"><div class="ttname"><a href="a00913.html#a669abef6079bf3e7e4d5fece2038c3ef">RestFrames::VisibleState::VisibleState</a></div><div class="ttdeci">VisibleState()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00044">VisibleState.cc:44</a></div></div>
+<div class="ttc" id="aa00913_html_a8a30ebbe74e5e1c4de7fa55b05bcbaae"><div class="ttname"><a href="a00913.html#a8a30ebbe74e5e1c4de7fa55b05bcbaae">RestFrames::VisibleState::SetLabFrameFourVector</a></div><div class="ttdeci">virtual void SetLabFrameFourVector()</div><div class="ttdoc">Sets four-vector of lab frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00084">VisibleState.cc:84</a></div></div>
+<div class="ttc" id="aa00829_html"><div class="ttname"><a href="a00829.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00428_source.html#l00045">RestFrame.hh:45</a></div></div>
+<div class="ttc" id="aa00845_html"><div class="ttname"><a href="a00845.html">RestFrames::RFList&lt; const RestFrame &gt;</a></div></div>
+<div class="ttc" id="aa00909_html"><div class="ttname"><a href="a00909.html">RestFrames::VisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00479_source.html#l00041">VisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00913_html_a839be76e974775a7b9051676a1b598dc"><div class="ttname"><a href="a00913.html#a839be76e974775a7b9051676a1b598dc">RestFrames::VisibleState::IsFrame</a></div><div class="ttdeci">virtual bool IsFrame(const RestFrame &amp;frame) const</div><div class="ttdoc">Checks if frame of state corresponds to frame</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00067">VisibleState.cc:67</a></div></div>
+<div class="ttc" id="aa00913_html_a2661ac84a5d144e9e377210218ec3434"><div class="ttname"><a href="a00913.html#a2661ac84a5d144e9e377210218ec3434">RestFrames::VisibleState::Empty</a></div><div class="ttdeci">static VisibleState &amp; Empty()</div><div class="ttdoc">Returns empty VisibleState.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00053">VisibleState.cc:53</a></div></div>
+<div class="ttc" id="aa00913_html"><div class="ttname"><a href="a00913.html">RestFrames::VisibleState</a></div><div class="ttdef"><b>Definition:</b> <a href="a00482_source.html#l00039">VisibleState.hh:39</a></div></div>
+<div class="ttc" id="aa00913_html_a4f4342dc5aab2d0d2ff32f0ef7a59204"><div class="ttname"><a href="a00913.html#a4f4342dc5aab2d0d2ff32f0ef7a59204">RestFrames::VisibleState::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears Visible State to all connections to other objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00048">VisibleState.cc:48</a></div></div>
+<div class="ttc" id="aa00461_html"><div class="ttname"><a href="a00461.html">State.hh</a></div></div>
+<div class="ttc" id="aa00913_html_a02675a87140e7fe162fb573a543801be"><div class="ttname"><a href="a00913.html#a02675a87140e7fe162fb573a543801be">RestFrames::VisibleState::SetCharge</a></div><div class="ttdeci">virtual void SetCharge(const RFCharge &amp;charge)</div><div class="ttdoc">Sets charge of this state.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00090">VisibleState.cc:90</a></div></div>
+<div class="ttc" id="aa00885_html"><div class="ttname"><a href="a00885.html">RestFrames::State</a></div><div class="ttdoc">Abstract base class for all State objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00461_source.html#l00047">State.hh:47</a></div></div>
+<div class="ttc" id="aa00913_html_a798225ae8a4a13d56395ab1fc9a2235e"><div class="ttname"><a href="a00913.html#a798225ae8a4a13d56395ab1fc9a2235e">RestFrames::VisibleState::GetFrame</a></div><div class="ttdeci">virtual RestFrame const  &amp; GetFrame() const</div><div class="ttdoc">Returns frame (RestFrame) of this state.</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00077">VisibleState.cc:77</a></div></div>
+<div class="ttc" id="aa00913_html_a9b356fd4d93b05e89a4000137df5ac78"><div class="ttname"><a href="a00913.html#a9b356fd4d93b05e89a4000137df5ac78">RestFrames::VisibleState::IsFrames</a></div><div class="ttdeci">virtual bool IsFrames(const ConstRestFrameList &amp;frames) const</div><div class="ttdoc">Checks if frames lists of state corresponds frames</div><div class="ttdef"><b>Definition:</b> <a href="a00638_source.html#l00073">VisibleState.cc:73</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:13 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:24 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

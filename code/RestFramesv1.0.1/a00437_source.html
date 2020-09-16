@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/ProductPDF.hh Source File</title>
+<title>RestFrames: inc/RestFrames/RFCharge.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,12 +103,12 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">ProductPDF.hh</div>  </div>
+<div class="title">RFCharge.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00437.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//   --------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2019, Christopher Rogan</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//   Copyright (c) 2014-2016, Christopher Rogan</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">//   This file is part of RestFrames.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//   RestFrames is free software; you can redistribute it and/or modify</span></div>
@@ -124,45 +124,98 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef ProductPDF_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define ProductPDF_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef RFCharge_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define RFCharge_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00476.html">RestFrames/RFPDF.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00907.html">   37</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00907.html">ProductPDF</a> : <span class="keyword">public</span> <a class="code" href="a00971.html">RFPDF</a> {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="a00907.html">ProductPDF</a>(<span class="keyword">const</span> <a class="code" href="a00947.html">RFPDFList</a>&amp; pdfs);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00907.html">ProductPDF</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> Initialize();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> Optimize(<span class="keyword">const</span> <a class="code" href="a00939.html">RFDataVar</a>&amp; w, <span class="keywordtype">double</span> beta = 1.);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">double</span> Eval(<span class="keyword">const</span> <a class="code" href="a00935.html">RFDataPoint</a>&amp; x) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">double</span> ElogP(<span class="keyword">const</span> <a class="code" href="a00935.html">RFDataPoint</a>&amp; x) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  };</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// RFCharge class</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00837.html">   40</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00837.html">RFCharge</a> {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="a00837.html#adf6d815d44a09b414c117db24aa14fe0">RFCharge</a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; charge);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="a00837.html#adf6d815d44a09b414c117db24aa14fe0">RFCharge</a>(<span class="keywordtype">int</span> charge = 0);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="a00837.html#adf6d815d44a09b414c117db24aa14fe0">RFCharge</a>(<span class="keywordtype">int</span> charge_num, <span class="keywordtype">int</span> charge_den);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    ~<a class="code" href="a00837.html">RFCharge</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a00837.html#a3a6c666a65dcc1dc9b79ceb6d5990dce">GetNumerator</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a00837.html#ad6df753964fb67b02e74c27aa2cf1f44">GetDenominator</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00837.html#aec8e3a6e8a3f2bf2e0cfbd31633daa1a">operator == </a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00837.html#aec8e3a6e8a3f2bf2e0cfbd31633daa1a">operator == </a>(<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00837.html#a05b5892be861857de49885b17a70da49">operator != </a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="a00837.html#a05b5892be861857de49885b17a70da49">operator != </a>(<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00837.html#a59ea21557093c34d0addd62a5fc0051c">operator = </a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00837.html#a59ea21557093c34d0addd62a5fc0051c">operator = </a>(<span class="keywordtype">int</span> val);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator + (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator + (<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator - (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator - (<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator * (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator * (<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator / (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator / (<span class="keywordtype">int</span> val) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator += (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator += (<span class="keywordtype">int</span> val);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator -= (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator -= (<span class="keywordtype">int</span> val);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator *= (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator *= (<span class="keywordtype">int</span> val);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator /= (<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <a class="code" href="a00837.html">RFCharge</a>&amp; operator /= (<span class="keywordtype">int</span> val);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> operator-();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">operator</span> double() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">bool</span> m_Sign;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">int</span> m_ChargeNum;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">int</span> m_ChargeDen;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keywordtype">void</span> Simplify();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  };</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <a class="code" href="a00837.html">RFCharge</a> operator * (<span class="keywordtype">int</span> val1, <span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val2);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <a class="code" href="a00837.html">RFCharge</a> operator / (<span class="keywordtype">int</span> val1, <span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; val2);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="keywordtype">int</span> gcd(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00476_html"><div class="ttname"><a href="a00476.html">RFPDF.hh</a></div></div>
-<div class="ttc" id="aa00939_html"><div class="ttname"><a href="a00939.html">RestFrames::RFDataVar</a></div><div class="ttdef"><b>Definition:</b> <a href="a00464_source.html#l00039">RFDataVar.hh:39</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList&lt; RFPDF &gt;</a></div></div>
-<div class="ttc" id="aa00935_html"><div class="ttname"><a href="a00935.html">RestFrames::RFDataPoint</a></div><div class="ttdef"><b>Definition:</b> <a href="a00461_source.html#l00040">RFDataPoint.hh:40</a></div></div>
-<div class="ttc" id="aa00971_html"><div class="ttname"><a href="a00971.html">RestFrames::RFPDF</a></div><div class="ttdef"><b>Definition:</b> <a href="a00476_source.html#l00040">RFPDF.hh:40</a></div></div>
-<div class="ttc" id="aa00907_html"><div class="ttname"><a href="a00907.html">RestFrames::ProductPDF</a></div><div class="ttdef"><b>Definition:</b> <a href="a00437_source.html#l00037">ProductPDF.hh:37</a></div></div>
+<div class="ttc" id="aa00837_html_ad6df753964fb67b02e74c27aa2cf1f44"><div class="ttname"><a href="a00837.html#ad6df753964fb67b02e74c27aa2cf1f44">RestFrames::RFCharge::GetDenominator</a></div><div class="ttdeci">int GetDenominator() const</div><div class="ttdoc">Returns denominator.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00096">RFCharge.cc:96</a></div></div>
+<div class="ttc" id="aa00837_html"><div class="ttname"><a href="a00837.html">RestFrames::RFCharge</a></div><div class="ttdef"><b>Definition:</b> <a href="a00437_source.html#l00040">RFCharge.hh:40</a></div></div>
+<div class="ttc" id="aa00837_html_a3a6c666a65dcc1dc9b79ceb6d5990dce"><div class="ttname"><a href="a00837.html#a3a6c666a65dcc1dc9b79ceb6d5990dce">RestFrames::RFCharge::GetNumerator</a></div><div class="ttdeci">int GetNumerator() const</div><div class="ttdoc">Returns numerator.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00089">RFCharge.cc:89</a></div></div>
+<div class="ttc" id="aa00837_html_a59ea21557093c34d0addd62a5fc0051c"><div class="ttname"><a href="a00837.html#a59ea21557093c34d0addd62a5fc0051c">RestFrames::RFCharge::operator=</a></div><div class="ttdeci">void operator=(const RFCharge &amp;val)</div><div class="ttdoc">Tests whether val is the same as this object's charge.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00146">RFCharge.cc:146</a></div></div>
+<div class="ttc" id="aa00837_html_a05b5892be861857de49885b17a70da49"><div class="ttname"><a href="a00837.html#a05b5892be861857de49885b17a70da49">RestFrames::RFCharge::operator!=</a></div><div class="ttdeci">bool operator!=(const RFCharge &amp;val) const</div><div class="ttdoc">Tests whether val is not the same as this object's charge.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00127">RFCharge.cc:127</a></div></div>
+<div class="ttc" id="aa00837_html_aec8e3a6e8a3f2bf2e0cfbd31633daa1a"><div class="ttname"><a href="a00837.html#aec8e3a6e8a3f2bf2e0cfbd31633daa1a">RestFrames::RFCharge::operator==</a></div><div class="ttdeci">bool operator==(const RFCharge &amp;val) const</div><div class="ttdoc">Tests whether val is the same as this object's charge.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00108">RFCharge.cc:108</a></div></div>
+<div class="ttc" id="aa00837_html_adf6d815d44a09b414c117db24aa14fe0"><div class="ttname"><a href="a00837.html#adf6d815d44a09b414c117db24aa14fe0">RestFrames::RFCharge::RFCharge</a></div><div class="ttdeci">RFCharge(const RFCharge &amp;charge)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00593_source.html#l00034">RFCharge.cc:34</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:13 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:23 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['labframe_478',['LabFrame',['../a00851.html',1,'RestFrames']]],
-  ['labframe_3c_20generatorframe_20_3e_479',['LabFrame&lt; GeneratorFrame &gt;',['../a00851.html',1,'RestFrames']]],
-  ['labframe_3c_20reconstructionframe_20_3e_480',['LabFrame&lt; ReconstructionFrame &gt;',['../a00851.html',1,'RestFrames']]],
-  ['labgenframe_481',['LabGenFrame',['../a00855.html',1,'RestFrames']]],
-  ['labrecoframe_482',['LabRecoFrame',['../a00859.html',1,'RestFrames']]],
-  ['lognormalpdf_483',['LognormalPDF',['../a00863.html',1,'RestFrames']]],
-  ['logsplinepdf_484',['LogsplinePDF',['../a00867.html',1,'RestFrames']]]
+  ['maxprobbreitwignercombjigsaw_447',['MaxProbBreitWignerCombJigsaw',['../a00785.html',1,'RestFrames']]],
+  ['maxprobbreitwignerinvjigsaw_448',['MaxProbBreitWignerInvJigsaw',['../a00789.html',1,'RestFrames']]],
+  ['minmasschi2combjigsaw_449',['MinMassChi2CombJigsaw',['../a00793.html',1,'RestFrames']]],
+  ['minmassdiffcombjigsaw_450',['MinMassDiffCombJigsaw',['../a00797.html',1,'RestFrames']]],
+  ['minmassdiffinvjigsaw_451',['MinMassDiffInvJigsaw',['../a00801.html',1,'RestFrames']]],
+  ['minmassescombjigsaw_452',['MinMassesCombJigsaw',['../a00805.html',1,'RestFrames']]],
+  ['minmassessqcombjigsaw_453',['MinMassesSqCombJigsaw',['../a00809.html',1,'RestFrames']]],
+  ['minmassessqinvjigsaw_454',['MinMassesSqInvJigsaw',['../a00813.html',1,'RestFrames']]]
 ];

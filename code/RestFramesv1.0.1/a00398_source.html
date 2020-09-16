@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/LabGenFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/MaxProbBreitWignerInvJigsaw.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">LabGenFrame.hh</div>  </div>
+<div class="title">MaxProbBreitWignerInvJigsaw.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00398.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,101 +124,75 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef LabGenFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define LabGenFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef MaxProbBreitWignerInvJigsaw_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define MaxProbBreitWignerInvJigsaw_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00395.html">RestFrames/LabFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00359.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;Math/Minimizer.h&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;Math/Functor.h&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00374.html">RestFrames/InvisibleJigsaw.hh</a>&quot;</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// LabGenFrame class</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00855.html">   41</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00855.html">LabGenFrame</a> : <span class="keyword">public</span> <a class="code" href="a00851.html">LabFrame</a>&lt;GeneratorFrame&gt; {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00855.html#a9623fb76c4eb6f65e5c9cccf0c108fb5">LabGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00855.html">LabGenFrame</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#ad97e17b803d9e601d4c10414824a55e4">Clear</a>();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a3e2b029febed17db909fb2af025510d5">InitializeAnalysis</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a6f1cf2671a2fe130659b4142b92e5cd8">ClearEvent</a>();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00855.html#a6f0993bafbe3828dc2fee4e51e1bb0c8">AnalyzeEvent</a>();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#a9f9675352cd2da66ea9961387a099b85">SetThreeVector</a>(<span class="keyword">const</span> TVector3&amp; P);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#a19054f15842416bae99570bd06ba7057">SetTransverseMomentum</a>(<span class="keywordtype">double</span> val);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#a4bb748c38f4b57ba16b592e7de15e062">SetLongitudinalMomentum</a>(<span class="keywordtype">double</span> val);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00789.html">   40</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00789.html">MaxProbBreitWignerInvJigsaw</a> : <span class="keyword">public</span> <a class="code" href="a00757.html">InvisibleJigsaw</a> {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00789.html#a51e323eca6b2ae009e8b78618f1c3ac2">MaxProbBreitWignerInvJigsaw</a>(<span class="keyword">const</span> std::string&amp; sname, </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keyword">const</span> std::string&amp; stitle,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                <span class="keywordtype">int</span> N_vis_inv_pair);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    ~<a class="code" href="a00789.html">MaxProbBreitWignerInvJigsaw</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00789.html#ab1b4c6de83c98bfa646d265498c1ed11">   56</a></span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="a00789.html#ab1b4c6de83c98bfa646d265498c1ed11">GetLabel</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Max Prob Breit-Wigner&quot;</span>; }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00789.html#a7461d3a13c1be0e335f4b3578742f467">SetPoleMass</a>(<span class="keywordtype">double</span> mass, <span class="keywordtype">int</span> i = 0);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00789.html#a09d7275c65cfde37a4b73ddbb51f4a2b">SetWidth</a>(<span class="keywordtype">double</span> width, <span class="keywordtype">int</span> i = 0);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="a00789.html#aac1e6251c7d6e89948b181bb5626c57c">GetMinimumMass</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00789.html#a26f28772b44f5a7eb400058bf6c45294">AnalyzeEvent</a>();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> m_Npair;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pvis;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;TLorentzVector&gt; m_Pinv;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    std::vector&lt;double&gt; m_Minv;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::vector&lt;double&gt; m_Mass;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    std::vector&lt;double&gt; m_Width;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">SetPhi</a>(<span class="keywordtype">double</span> val);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">bool</span> m_2D;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    TVector3 m_X;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    TVector3 m_Y;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    TVector3 m_Z;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00855.html#a7b96fda90f18512bf020b89a5a4450d5">SetPToverM</a>(<span class="keywordtype">double</span> val);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00855.html#a1d2589867b064d2874403e630776ce08">SetN_MCMCBurnIn</a>(<span class="keywordtype">int</span> N);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00855.html#a3275c93a32beb98588239b46a561ff09">SetN_MCMCDiscard</a>(<span class="keywordtype">int</span> N);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00855.html#ab46bfced44b3eb393340b33ff8dbfc7a">SetFailTolerance</a>(<span class="keywordtype">int</span> N);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">double</span> m_PT;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">double</span> m_PL;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordtype">double</span> m_Phi;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">double</span> m_PToM;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">double</span> m_MaxM;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> InitializeGenAnalysis();</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResetGenFrame();</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> GenerateFrame();</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">double</span> m_ChildMassMCMC;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordtype">double</span> m_ChildProbMCMC;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IterateMCMC();</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">int</span> m_NBurnInMCMC;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">int</span> m_NDiscardMCMC;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordtype">int</span> m_FailTolerance;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">long</span> m_Ngenerated;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordtype">long</span> m_Npassed;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  };</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;}</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">double</span> GetPScale(<span class="keywordtype">double</span> Minv);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> ApplyOptimalRotation();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    ROOT::Math::Minimizer* m_minimizer;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    ROOT::Math::Functor* m_functor;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">double</span> EvaluateMetric(<span class="keyword">const</span> <span class="keywordtype">double</span>* param);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  };</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00855_html_a9623fb76c4eb6f65e5c9cccf0c108fb5"><div class="ttname"><a href="a00855.html#a9623fb76c4eb6f65e5c9cccf0c108fb5">RestFrames::LabGenFrame::LabGenFrame</a></div><div class="ttdeci">LabGenFrame(const std::string &amp;sname, const std::string &amp;stitle)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00037">LabGenFrame.cc:37</a></div></div>
-<div class="ttc" id="aa00855_html_a3e2b029febed17db909fb2af025510d5"><div class="ttname"><a href="a00855.html#a3e2b029febed17db909fb2af025510d5">RestFrames::LabGenFrame::InitializeAnalysis</a></div><div class="ttdeci">virtual bool InitializeAnalysis()</div><div class="ttdoc">Initialize analysis capability of a tree to generate events.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00105">LabGenFrame.cc:105</a></div></div>
-<div class="ttc" id="aa00855_html_a4bb748c38f4b57ba16b592e7de15e062"><div class="ttname"><a href="a00855.html#a4bb748c38f4b57ba16b592e7de15e062">RestFrames::LabGenFrame::SetLongitudinalMomentum</a></div><div class="ttdeci">virtual void SetLongitudinalMomentum(double val)</div><div class="ttdoc">Sets longitudinal momentum of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00090">LabGenFrame.cc:90</a></div></div>
-<div class="ttc" id="aa00395_html"><div class="ttname"><a href="a00395.html">LabFrame.hh</a></div></div>
-<div class="ttc" id="aa00359_html"><div class="ttname"><a href="a00359.html">GeneratorFrame.hh</a></div></div>
-<div class="ttc" id="aa00855_html_a9f9675352cd2da66ea9961387a099b85"><div class="ttname"><a href="a00855.html#a9f9675352cd2da66ea9961387a099b85">RestFrames::LabGenFrame::SetThreeVector</a></div><div class="ttdeci">virtual void SetThreeVector(const TVector3 &amp;P)</div><div class="ttdoc">Sets momentum's three-vector of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00060">LabGenFrame.cc:60</a></div></div>
-<div class="ttc" id="aa00855_html"><div class="ttname"><a href="a00855.html">RestFrames::LabGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00398_source.html#l00041">LabGenFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00855_html_a9ef6ff754e65f36028c21cb855944e5e"><div class="ttname"><a href="a00855.html#a9ef6ff754e65f36028c21cb855944e5e">RestFrames::LabGenFrame::SetPhi</a></div><div class="ttdeci">virtual void SetPhi(double val)</div><div class="ttdoc">Sets phi of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00094">LabGenFrame.cc:94</a></div></div>
-<div class="ttc" id="aa00855_html_a7b96fda90f18512bf020b89a5a4450d5"><div class="ttname"><a href="a00855.html#a7b96fda90f18512bf020b89a5a4450d5">RestFrames::LabGenFrame::SetPToverM</a></div><div class="ttdeci">virtual void SetPToverM(double val)</div><div class="ttdoc">Sets transverse momentum over mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00066">LabGenFrame.cc:66</a></div></div>
-<div class="ttc" id="aa00855_html_a1d2589867b064d2874403e630776ce08"><div class="ttname"><a href="a00855.html#a1d2589867b064d2874403e630776ce08">RestFrames::LabGenFrame::SetN_MCMCBurnIn</a></div><div class="ttdeci">void SetN_MCMCBurnIn(int N)</div><div class="ttdoc">Sets number of events to be thrown away before keeping any.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00128">LabGenFrame.cc:128</a></div></div>
-<div class="ttc" id="aa00855_html_ad97e17b803d9e601d4c10414824a55e4"><div class="ttname"><a href="a00855.html#ad97e17b803d9e601d4c10414824a55e4">RestFrames::LabGenFrame::Clear</a></div><div class="ttdeci">virtual void Clear()</div><div class="ttdoc">Clears LabGenFrame from all connections to other objects</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00056">LabGenFrame.cc:56</a></div></div>
-<div class="ttc" id="aa00855_html_a6f0993bafbe3828dc2fee4e51e1bb0c8"><div class="ttname"><a href="a00855.html#a6f0993bafbe3828dc2fee4e51e1bb0c8">RestFrames::LabGenFrame::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00217">LabGenFrame.cc:217</a></div></div>
-<div class="ttc" id="aa00855_html_ab46bfced44b3eb393340b33ff8dbfc7a"><div class="ttname"><a href="a00855.html#ab46bfced44b3eb393340b33ff8dbfc7a">RestFrames::LabGenFrame::SetFailTolerance</a></div><div class="ttdeci">void SetFailTolerance(int N)</div><div class="ttdoc">Sets tolerance number of fail events before stopping the generation.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00138">LabGenFrame.cc:138</a></div></div>
-<div class="ttc" id="aa00855_html_a3275c93a32beb98588239b46a561ff09"><div class="ttname"><a href="a00855.html#a3275c93a32beb98588239b46a561ff09">RestFrames::LabGenFrame::SetN_MCMCDiscard</a></div><div class="ttdeci">void SetN_MCMCDiscard(int N)</div><div class="ttdoc">Sets which Nth events to keep.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00133">LabGenFrame.cc:133</a></div></div>
-<div class="ttc" id="aa00855_html_a19054f15842416bae99570bd06ba7057"><div class="ttname"><a href="a00855.html#a19054f15842416bae99570bd06ba7057">RestFrames::LabGenFrame::SetTransverseMomentum</a></div><div class="ttdeci">virtual void SetTransverseMomentum(double val)</div><div class="ttdoc">Sets transverse momentum of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00078">LabGenFrame.cc:78</a></div></div>
-<div class="ttc" id="aa00855_html_a6f1cf2671a2fe130659b4142b92e5cd8"><div class="ttname"><a href="a00855.html#a6f1cf2671a2fe130659b4142b92e5cd8">RestFrames::LabGenFrame::ClearEvent</a></div><div class="ttdeci">virtual bool ClearEvent()</div><div class="ttdoc">Clears event.</div><div class="ttdef"><b>Definition:</b> <a href="a00590_source.html#l00210">LabGenFrame.cc:210</a></div></div>
-<div class="ttc" id="aa00851_html"><div class="ttname"><a href="a00851.html">RestFrames::LabFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00395_source.html#l00041">LabFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00789_html_aac1e6251c7d6e89948b181bb5626c57c"><div class="ttname"><a href="a00789.html#aac1e6251c7d6e89948b181bb5626c57c">RestFrames::MaxProbBreitWignerInvJigsaw::GetMinimumMass</a></div><div class="ttdeci">virtual double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00557_source.html#l00066">MaxProbBreitWignerInvJigsaw.cc:66</a></div></div>
+<div class="ttc" id="aa00374_html"><div class="ttname"><a href="a00374.html">InvisibleJigsaw.hh</a></div></div>
+<div class="ttc" id="aa00789_html_ab1b4c6de83c98bfa646d265498c1ed11"><div class="ttname"><a href="a00789.html#ab1b4c6de83c98bfa646d265498c1ed11">RestFrames::MaxProbBreitWignerInvJigsaw::GetLabel</a></div><div class="ttdeci">virtual std::string GetLabel() const</div><div class="ttdoc">Returns name of this Jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00398_source.html#l00056">MaxProbBreitWignerInvJigsaw.hh:56</a></div></div>
+<div class="ttc" id="aa00789_html_a26f28772b44f5a7eb400058bf6c45294"><div class="ttname"><a href="a00789.html#a26f28772b44f5a7eb400058bf6c45294">RestFrames::MaxProbBreitWignerInvJigsaw::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()</div><div class="ttdoc">Analyzes event for this jigsaw.</div><div class="ttdef"><b>Definition:</b> <a href="a00557_source.html#l00094">MaxProbBreitWignerInvJigsaw.cc:94</a></div></div>
+<div class="ttc" id="aa00789_html_a09d7275c65cfde37a4b73ddbb51f4a2b"><div class="ttname"><a href="a00789.html#a09d7275c65cfde37a4b73ddbb51f4a2b">RestFrames::MaxProbBreitWignerInvJigsaw::SetWidth</a></div><div class="ttdeci">virtual void SetWidth(double width, int i=0)</div><div class="ttdoc">Sets width of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00557_source.html#l00308">MaxProbBreitWignerInvJigsaw.cc:308</a></div></div>
+<div class="ttc" id="aa00789_html_a51e323eca6b2ae009e8b78618f1c3ac2"><div class="ttname"><a href="a00789.html#a51e323eca6b2ae009e8b78618f1c3ac2">RestFrames::MaxProbBreitWignerInvJigsaw::MaxProbBreitWignerInvJigsaw</a></div><div class="ttdeci">MaxProbBreitWignerInvJigsaw(const std::string &amp;sname, const std::string &amp;stitle, int N_vis_inv_pair)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00557_source.html#l00036">MaxProbBreitWignerInvJigsaw.cc:36</a></div></div>
+<div class="ttc" id="aa00789_html"><div class="ttname"><a href="a00789.html">RestFrames::MaxProbBreitWignerInvJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00398_source.html#l00040">MaxProbBreitWignerInvJigsaw.hh:40</a></div></div>
+<div class="ttc" id="aa00789_html_a7461d3a13c1be0e335f4b3578742f467"><div class="ttname"><a href="a00789.html#a7461d3a13c1be0e335f4b3578742f467">RestFrames::MaxProbBreitWignerInvJigsaw::SetPoleMass</a></div><div class="ttdeci">virtual void SetPoleMass(double mass, int i=0)</div><div class="ttdoc">Sets pole mass of a frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00557_source.html#l00301">MaxProbBreitWignerInvJigsaw.cc:301</a></div></div>
+<div class="ttc" id="aa00757_html"><div class="ttname"><a href="a00757.html">RestFrames::InvisibleJigsaw</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00039">InvisibleJigsaw.hh:39</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:12 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

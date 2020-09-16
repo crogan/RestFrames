@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/RFLog.hh Source File</title>
+<title>RestFrames: inc/RestFrames/VisibleFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">RFLog.hh</div>  </div>
+<div class="title">VisibleFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00473.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,168 +124,69 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef RFLog_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define RFLog_HH</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00470.html">RestFrames/RFList.hh</a>&quot;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">class </span>RFBase;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">   45</a></span>&#160;  <span class="keyword">enum</span> <a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> { LogError, LogWarning, LogInfo, </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;         LogDebug, LogVerbose };</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="comment">// RFLog class</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a00963.html">   51</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00963.html">RFLog</a> {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="a00963.html#adada7b0acda0d6afe73a248ba4700296">RFLog</a>(<span class="keyword">const</span> std::string&amp; source, <a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> def_type = LogInfo);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="a00963.html#adada7b0acda0d6afe73a248ba4700296">RFLog</a>();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    ~<a class="code" href="a00963.html">RFLog</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00963.html#ab0c48bffdb0e7e1c645a104a0a89faaa">SetSource</a>(<span class="keyword">const</span> std::string&amp; source);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="a00963.html#a43453aa246bfb111d966560b7504fae7">SetLogPrint</a>(<span class="keywordtype">bool</span> print);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="a00963.html#a43453aa246bfb111d966560b7504fae7">SetLogPrint</a>(<a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type, <span class="keywordtype">bool</span> print);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="a00963.html#a99aecec5be3d5354afdfeaed67715407">SetLogStream</a>(std::ostream* ostr);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef VisibleFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define VisibleFrame_HH</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00428.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">class </span>RestFrame;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// VisibleFrame class</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00901.html">   43</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00901.html">VisibleFrame</a> : <span class="keyword">public</span> T {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00901.html#a1550ab4292ec4347b98a6fb192fc25fc">VisibleFrame</a>(<span class="keyword">const</span> std::string&amp; sname,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;         <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="a00901.html#a1550ab4292ec4347b98a6fb192fc25fc">VisibleFrame</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00901.html">VisibleFrame</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00901.html#a3ec4dfaa66bd873d087d8052a1459128">SetCharge</a>(<span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; charge);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00901.html#a3ec4dfaa66bd873d087d8052a1459128">SetCharge</a>(<span class="keywordtype">int</span> charge = 0);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00901.html#a3ec4dfaa66bd873d087d8052a1459128">SetCharge</a>(<span class="keywordtype">int</span> charge_num, <span class="keywordtype">int</span> charge_den);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="a00837.html">RFCharge</a> <a class="code" href="a00901.html#a2c12f872eef9cb688553dee21939b38d">GetCharge</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00901.html#af0c11ac8d11a8acb217c7b302002fbca">SetLabFrameFourVector</a>(<span class="keyword">const</span> TLorentzVector&amp; V,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                       <span class="keyword">const</span> <a class="code" href="a00837.html">RFCharge</a>&amp; charge = <a class="code" href="a00837.html">RFCharge</a>());</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="a00963.html#a78a0030f7da0137168f495652c935019">SetLogColor</a>(<span class="keywordtype">bool</span> color);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="a00963.html#a7098ca43fc308712dc560111a8a40691">SetLogMaxWidth</a>(<span class="keywordtype">int</span> NMAX);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">static</span> <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a8b3475bf39281c6e70ecba7b5e6b96e3">EndMessage</a>(<a class="code" href="a00963.html">RFLog</a>&amp; log);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">operator&lt;&lt; </a>(<a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">operator&lt;&lt; </a>(<a class="code" href="a00963.html">RFLog</a>&amp; (*_f)( <a class="code" href="a00963.html">RFLog</a>&amp;));</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00901.html#af0c11ac8d11a8acb217c7b302002fbca">SetLabFrameFourVector</a>(<span class="keyword">const</span> TLorentzVector&amp; V, <span class="keywordtype">int</span> charge);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00901.html#af0c11ac8d11a8acb217c7b302002fbca">SetLabFrameFourVector</a>(<span class="keyword">const</span> TLorentzVector&amp; V,</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                   <span class="keywordtype">int</span> charge_num, <span class="keywordtype">int</span> charge_den);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">virtual</span> TLorentzVector <a class="code" href="a00901.html#a542d3a738b44d4dd56b3c4c8f86cb654">GetLabFrameFourVector</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsSoundBody() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    TLorentzVector m_Lab_P;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="a00837.html">RFCharge</a> m_Charge;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  };</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">operator&lt;&lt; </a>(std::ostream&amp; (*_f)(std::ostream&amp;));</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">operator&lt;&lt; </a>(std::ios&amp; (*_f)(std::ios&amp;));</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="a00963.html#a1efff1ac85d9275be2b634a8233d3d88">  126</a></span>&#160;    <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">operator&lt;&lt; </a>(T arg){</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      m_Message &lt;&lt; arg;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">static</span> std::ostream* m_Ostr;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span>          m_Color;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span>           m_NMAX;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keyword">static</span> std::map&lt;LogType, bool&gt; m_PrintMap;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    std::map&lt;LogType, std::string&gt; m_TypeMap;      </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    std::map&lt;LogType, std::string&gt; m_ColorMap;  </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">void</span> Send();</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    std::string GetFormattedSource() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    std::string GetFormattedMessage(<span class="keyword">const</span> std::string&amp; message);</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">void</span> PrintObject(<span class="keyword">const</span> <a class="code" href="a00923.html">RFBase</a>* objPtr);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">void</span> PrintList(<span class="keyword">const</span> <a class="code" href="a00947.html">RFList&lt;T&gt;</a>* listPtr);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> m_DefType;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> m_CurType;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    std::string m_Source;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    std::ostringstream m_Message;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  };</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keyword">template</span> &lt;&gt; RFLog&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(<span class="keyword">const</span> RFBase* arg);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keyword">template</span> &lt;&gt; RFLog&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(<span class="keyword">const</span> RFBaseList* arg);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="a00963.html#a56946ffd10e1e40749e865e39aea16db">  158</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(<a class="code" href="a00963.html">RFLog</a>&amp; (*_f)(<a class="code" href="a00963.html">RFLog</a>&amp;)){</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">return</span> (_f)(*this);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  }</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="a00963.html#a3f5fc46a4aa028d1c89a00ed93a3b441">  162</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(std::ostream&amp; (*_f)(std::ostream&amp;)){</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   (_f)(m_Message);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="a00963.html#a262e810a18ca6111e3a712377ce7ac58">  167</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(std::ios&amp; (*_f)(std::ios&amp;)){</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    (_f)(m_Message);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">  172</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="a00963.html">RFLog</a>&amp; <a class="code" href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RFLog::operator&lt;&lt; </a>(<a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type){</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    m_CurType = type;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keyword">extern</span> <a class="code" href="a00963.html">RFLog</a> g_Log;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00923.html">RFBase</a>* Log(<span class="keyword">const</span> <a class="code" href="a00923.html">RFBase</a>&amp; obj);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00923.html">RFBase</a>* Log(<span class="keyword">const</span> <a class="code" href="a00923.html">RFBase</a>* ptr);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keyword">const</span> <a class="code" href="a00947.html">RFList&lt;RFBase&gt;</a>* Log(<span class="keyword">const</span> <a class="code" href="a00947.html">RFList&lt;T&gt;</a>&amp; list){ <span class="keywordflow">return</span> (<span class="keyword">const</span> <a class="code" href="a00947.html">RFBaseList</a>*)&amp;list; }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keyword">const</span> RFList&lt;RFBase&gt;* Log(<span class="keyword">const</span> RFList&lt;T&gt;* ptr){ <span class="keywordflow">return</span> (<span class="keyword">const</span> RFBaseList*)ptr; }</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#ifndef __MAKECINT__</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">  #define LogEnd RFLog::EndMessage</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
-<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="a00967.html">  190</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00967.html">RestFramesException</a> : <span class="keyword">public</span> std::exception {</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="a00967.html">RestFramesException</a>(<span class="keyword">const</span> std::string&amp; message) : m_Message(message) {} </div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00967.html">RestFramesException</a>() <span class="keywordflow">throw</span>() {}</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* what() <span class="keyword">const</span> <span class="keywordflow">throw</span>(){</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      <span class="keywordflow">return</span> m_Message.c_str();</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    std::string m_Message;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    </div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  };</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00473.html#a4ffa64e17226c61cb86eab2391f9b9d9">SetLogPrint</a>(<span class="keywordtype">bool</span> print = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00473.html#a4ffa64e17226c61cb86eab2391f9b9d9">SetLogPrint</a>(<a class="code" href="a00473.html#a76730caee81a607b69d391935a4dc1f2">LogType</a> type, <span class="keywordtype">bool</span> print = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00473.html#a48e0b79864306aabefb068832702a891">SetLogStream</a>(std::ostream* ostr);</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00473.html#ad3e3fd71594b2918e02212e46ddb3a2d">SetLogColor</a>(<span class="keywordtype">bool</span> color = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="a00473.html#a8efb46dba906a4b7520cd308794c7ed5">SetLogMaxWidth</a>(<span class="keywordtype">int</span> NMAX);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  std::map&lt;RestFrames::LogType,bool&gt; InitPrintMap();</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#endif </span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00473_html_ad3e3fd71594b2918e02212e46ddb3a2d"><div class="ttname"><a href="a00473.html#ad3e3fd71594b2918e02212e46ddb3a2d">RestFrames::SetLogColor</a></div><div class="ttdeci">void SetLogColor(bool color=true)</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00200">RFLog.cc:200</a></div></div>
-<div class="ttc" id="aa00963_html_a7098ca43fc308712dc560111a8a40691"><div class="ttname"><a href="a00963.html#a7098ca43fc308712dc560111a8a40691">RestFrames::RFLog::SetLogMaxWidth</a></div><div class="ttdeci">friend void SetLogMaxWidth(int NMAX)</div><div class="ttdoc">Sets maximum width of message.</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00204">RFLog.cc:204</a></div></div>
-<div class="ttc" id="aa00963_html_a43453aa246bfb111d966560b7504fae7"><div class="ttname"><a href="a00963.html#a43453aa246bfb111d966560b7504fae7">RestFrames::RFLog::SetLogPrint</a></div><div class="ttdeci">friend void SetLogPrint(bool print)</div><div class="ttdoc">Sets logging to print (print = true) or to not print (print = false)</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00190">RFLog.cc:190</a></div></div>
-<div class="ttc" id="aa00967_html"><div class="ttname"><a href="a00967.html">RestFrames::RestFramesException</a></div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00190">RFLog.hh:190</a></div></div>
-<div class="ttc" id="aa00963_html_ab0c48bffdb0e7e1c645a104a0a89faaa"><div class="ttname"><a href="a00963.html#ab0c48bffdb0e7e1c645a104a0a89faaa">RestFrames::RFLog::SetSource</a></div><div class="ttdeci">void SetSource(const std::string &amp;source)</div><div class="ttdoc">Sets name of instance that is associated with.</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00182">RFLog.cc:182</a></div></div>
-<div class="ttc" id="aa00473_html_a76730caee81a607b69d391935a4dc1f2"><div class="ttname"><a href="a00473.html#a76730caee81a607b69d391935a4dc1f2">RestFrames::LogType</a></div><div class="ttdeci">LogType</div><div class="ttdoc">Type of Log Message.</div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00045">RFLog.hh:45</a></div></div>
-<div class="ttc" id="aa00473_html_a48e0b79864306aabefb068832702a891"><div class="ttname"><a href="a00473.html#a48e0b79864306aabefb068832702a891">RestFrames::SetLogStream</a></div><div class="ttdeci">void SetLogStream(std::ostream *ostr)</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00196">RFLog.cc:196</a></div></div>
-<div class="ttc" id="aa00470_html"><div class="ttname"><a href="a00470.html">RFList.hh</a></div></div>
-<div class="ttc" id="aa00963_html_a78a0030f7da0137168f495652c935019"><div class="ttname"><a href="a00963.html#a78a0030f7da0137168f495652c935019">RestFrames::RFLog::SetLogColor</a></div><div class="ttdeci">friend void SetLogColor(bool color)</div><div class="ttdoc">Sets color of message.</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00200">RFLog.cc:200</a></div></div>
-<div class="ttc" id="aa00963_html_a03c1a61add8c934e00c79a20c91c0fe6"><div class="ttname"><a href="a00963.html#a03c1a61add8c934e00c79a20c91c0fe6">RestFrames::RFLog::operator&lt;&lt;</a></div><div class="ttdeci">RFLog &amp; operator&lt;&lt;(LogType type)</div><div class="ttdoc">Overloading operator.</div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00172">RFLog.hh:172</a></div></div>
-<div class="ttc" id="aa00963_html_a99aecec5be3d5354afdfeaed67715407"><div class="ttname"><a href="a00963.html#a99aecec5be3d5354afdfeaed67715407">RestFrames::RFLog::SetLogStream</a></div><div class="ttdeci">friend void SetLogStream(std::ostream *ostr)</div><div class="ttdoc">Sets output stream.</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00196">RFLog.cc:196</a></div></div>
-<div class="ttc" id="aa00947_html"><div class="ttname"><a href="a00947.html">RestFrames::RFList</a></div><div class="ttdef"><b>Definition:</b> <a href="a00470_source.html#l00205">RFList.hh:205</a></div></div>
-<div class="ttc" id="aa00963_html_a8b3475bf39281c6e70ecba7b5e6b96e3"><div class="ttname"><a href="a00963.html#a8b3475bf39281c6e70ecba7b5e6b96e3">RestFrames::RFLog::EndMessage</a></div><div class="ttdeci">static RFLog &amp; EndMessage(RFLog &amp;log)</div><div class="ttdoc">Sets end message for log</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00166">RFLog.cc:166</a></div></div>
-<div class="ttc" id="aa00963_html"><div class="ttname"><a href="a00963.html">RestFrames::RFLog</a></div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00051">RFLog.hh:51</a></div></div>
-<div class="ttc" id="aa00473_html_a8efb46dba906a4b7520cd308794c7ed5"><div class="ttname"><a href="a00473.html#a8efb46dba906a4b7520cd308794c7ed5">RestFrames::SetLogMaxWidth</a></div><div class="ttdeci">void SetLogMaxWidth(int NMAX)</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00204">RFLog.cc:204</a></div></div>
-<div class="ttc" id="aa00963_html_adada7b0acda0d6afe73a248ba4700296"><div class="ttname"><a href="a00963.html#adada7b0acda0d6afe73a248ba4700296">RestFrames::RFLog::RFLog</a></div><div class="ttdeci">RFLog()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00052">RFLog.cc:52</a></div></div>
-<div class="ttc" id="aa00473_html_a4ffa64e17226c61cb86eab2391f9b9d9"><div class="ttname"><a href="a00473.html#a4ffa64e17226c61cb86eab2391f9b9d9">RestFrames::SetLogPrint</a></div><div class="ttdeci">void SetLogPrint(bool print=true)</div><div class="ttdef"><b>Definition:</b> <a href="a00662_source.html#l00190">RFLog.cc:190</a></div></div>
-<div class="ttc" id="aa00923_html"><div class="ttname"><a href="a00923.html">RestFrames::RFBase</a></div><div class="ttdoc">Base class for all RestFrame package objects.</div><div class="ttdef"><b>Definition:</b> <a href="a00452_source.html#l00053">RFBase.hh:53</a></div></div>
+<div class="ttc" id="aa00901_html"><div class="ttname"><a href="a00901.html">RestFrames::VisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00043">VisibleFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00837_html"><div class="ttname"><a href="a00837.html">RestFrames::RFCharge</a></div><div class="ttdef"><b>Definition:</b> <a href="a00437_source.html#l00040">RFCharge.hh:40</a></div></div>
+<div class="ttc" id="aa00901_html_a2c12f872eef9cb688553dee21939b38d"><div class="ttname"><a href="a00901.html#a2c12f872eef9cb688553dee21939b38d">RestFrames::VisibleFrame::GetCharge</a></div><div class="ttdeci">virtual RFCharge GetCharge() const</div><div class="ttdoc">Returns charge of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00629_source.html#l00085">VisibleFrame.cc:85</a></div></div>
+<div class="ttc" id="aa00901_html_a3ec4dfaa66bd873d087d8052a1459128"><div class="ttname"><a href="a00901.html#a3ec4dfaa66bd873d087d8052a1459128">RestFrames::VisibleFrame::SetCharge</a></div><div class="ttdeci">virtual void SetCharge(const RFCharge &amp;charge)</div><div class="ttdoc">Sets charge of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00629_source.html#l00069">VisibleFrame.cc:69</a></div></div>
+<div class="ttc" id="aa00901_html_a542d3a738b44d4dd56b3c4c8f86cb654"><div class="ttname"><a href="a00901.html#a542d3a738b44d4dd56b3c4c8f86cb654">RestFrames::VisibleFrame::GetLabFrameFourVector</a></div><div class="ttdeci">virtual TLorentzVector GetLabFrameFourVector() const</div><div class="ttdoc">Returns lab frame's four-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00629_source.html#l00110">VisibleFrame.cc:110</a></div></div>
+<div class="ttc" id="aa00901_html_a1550ab4292ec4347b98a6fb192fc25fc"><div class="ttname"><a href="a00901.html#a1550ab4292ec4347b98a6fb192fc25fc">RestFrames::VisibleFrame::VisibleFrame</a></div><div class="ttdeci">VisibleFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00629_source.html#l00048">VisibleFrame.cc:48</a></div></div>
+<div class="ttc" id="aa00901_html_af0c11ac8d11a8acb217c7b302002fbca"><div class="ttname"><a href="a00901.html#af0c11ac8d11a8acb217c7b302002fbca">RestFrames::VisibleFrame::SetLabFrameFourVector</a></div><div class="ttdeci">virtual void SetLabFrameFourVector(const TLorentzVector &amp;V, const RFCharge &amp;charge=RFCharge())</div><div class="ttdoc">Sets lab frame's four-vector.</div><div class="ttdef"><b>Definition:</b> <a href="a00629_source.html#l00090">VisibleFrame.cc:90</a></div></div>
+<div class="ttc" id="aa00428_html"><div class="ttname"><a href="a00428.html">RestFrame.hh</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:13 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:24 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

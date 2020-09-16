@@ -1,7 +1,0 @@
-<map id="RestFrames::LabRecoFrame" name="RestFrames::LabRecoFrame">
-<area shape="rect" id="node1" title=" " alt="" coords="5,333,196,360"/>
-<area shape="rect" id="node2" href="$a00851.html" title=" " alt="" coords="15,244,186,285"/>
-<area shape="rect" id="node3" href="$a00911.html" title=" " alt="" coords="5,155,196,196"/>
-<area shape="rect" id="node4" href="$a00919.html" title="abstract base class for all Frame objects" alt="" coords="17,80,184,107"/>
-<area shape="rect" id="node5" href="$a00923.html" title="Base class for all RestFrame package objects." alt="" coords="25,5,176,32"/>
-</map>

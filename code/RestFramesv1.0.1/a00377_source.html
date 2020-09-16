@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/InvisibleGenFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/InvisibleRecoFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">InvisibleGenFrame.hh</div>  </div>
+<div class="title">InvisibleRecoFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00377.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,46 +124,45 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef InvisibleGenFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define InvisibleGenFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef InvisibleRecoFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define InvisibleRecoFrame_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00374.html">RestFrames/InvisibleFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00359.html">RestFrames/GeneratorFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00365.html">RestFrames/InvisibleFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00422.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// InvisibleGenFrame class</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00827.html">   41</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00827.html">InvisibleGenFrame</a> : <span class="keyword">public</span> <a class="code" href="a00823.html">InvisibleFrame</a>&lt;GeneratorFrame&gt; {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// InvisibleRecoFrame class</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00761.html">   41</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00761.html">InvisibleRecoFrame</a> : <span class="keyword">public</span> <a class="code" href="a00745.html">InvisibleFrame</a>&lt;ReconstructionFrame&gt; {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00827.html#ae705ad2e7c46a8256655f25c2bd26985">InvisibleGenFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00827.html">InvisibleGenFrame</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="a00827.html#a2fc39fea9a4445ea8fcd5be6b4c95a77">SetMass</a>(<span class="keywordtype">double</span> val);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResetGenFrame();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> GenerateFrame();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  };</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00761.html#a75467c08f360d77e8cdb6871d405fd7b">InvisibleRecoFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00761.html">InvisibleRecoFrame</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00761.html#a847d7165dba4c3459009e4cbb515cdfa">GetMinimumMass</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00761.html#a0f79d59f4b4f2f6e6abfd077d0b6269c">SetMinimumMass</a>(<span class="keywordtype">double</span> M);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">double</span> m_MassMin;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  };</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00374_html"><div class="ttname"><a href="a00374.html">InvisibleFrame.hh</a></div></div>
-<div class="ttc" id="aa00359_html"><div class="ttname"><a href="a00359.html">GeneratorFrame.hh</a></div></div>
-<div class="ttc" id="aa00827_html_a2fc39fea9a4445ea8fcd5be6b4c95a77"><div class="ttname"><a href="a00827.html#a2fc39fea9a4445ea8fcd5be6b4c95a77">RestFrames::InvisibleGenFrame::SetMass</a></div><div class="ttdeci">virtual void SetMass(double val)</div><div class="ttdoc">Sets mass of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00569_source.html#l00043">InvisibleGenFrame.cc:43</a></div></div>
-<div class="ttc" id="aa00827_html"><div class="ttname"><a href="a00827.html">RestFrames::InvisibleGenFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00377_source.html#l00041">InvisibleGenFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00827_html_ae705ad2e7c46a8256655f25c2bd26985"><div class="ttname"><a href="a00827.html#ae705ad2e7c46a8256655f25c2bd26985">RestFrames::InvisibleGenFrame::InvisibleGenFrame</a></div><div class="ttdeci">InvisibleGenFrame(const std::string &amp;sname, const std::string &amp;stitle)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00569_source.html#l00037">InvisibleGenFrame.cc:37</a></div></div>
-<div class="ttc" id="aa00823_html"><div class="ttname"><a href="a00823.html">RestFrames::InvisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00043">InvisibleFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00422_html"><div class="ttname"><a href="a00422.html">ReconstructionFrame.hh</a></div></div>
+<div class="ttc" id="aa00745_html"><div class="ttname"><a href="a00745.html">RestFrames::InvisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00365_source.html#l00043">InvisibleFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00761_html"><div class="ttname"><a href="a00761.html">RestFrames::InvisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00377_source.html#l00041">InvisibleRecoFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00761_html_a75467c08f360d77e8cdb6871d405fd7b"><div class="ttname"><a href="a00761.html#a75467c08f360d77e8cdb6871d405fd7b">RestFrames::InvisibleRecoFrame::InvisibleRecoFrame</a></div><div class="ttdeci">InvisibleRecoFrame(const std::string &amp;sname, const std::string &amp;stitle)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00536_source.html#l00037">InvisibleRecoFrame.cc:37</a></div></div>
+<div class="ttc" id="aa00761_html_a847d7165dba4c3459009e4cbb515cdfa"><div class="ttname"><a href="a00761.html#a847d7165dba4c3459009e4cbb515cdfa">RestFrames::InvisibleRecoFrame::GetMinimumMass</a></div><div class="ttdeci">double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00536_source.html#l00048">InvisibleRecoFrame.cc:48</a></div></div>
+<div class="ttc" id="aa00761_html_a0f79d59f4b4f2f6e6abfd077d0b6269c"><div class="ttname"><a href="a00761.html#a0f79d59f4b4f2f6e6abfd077d0b6269c">RestFrames::InvisibleRecoFrame::SetMinimumMass</a></div><div class="ttdeci">void SetMinimumMass(double M)</div><div class="ttdoc">Sets minimum mass of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00536_source.html#l00052">InvisibleRecoFrame.cc:52</a></div></div>
+<div class="ttc" id="aa00365_html"><div class="ttname"><a href="a00365.html">InvisibleFrame.hh</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:11 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>

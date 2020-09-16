@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.19"/>
-<title>RestFrames: inc/RestFrames/InvisibleRecoFrame.hh Source File</title>
+<title>RestFrames: inc/RestFrames/LabFrame.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">InvisibleRecoFrame.hh</div>  </div>
+<div class="title">LabFrame.hh</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00386.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//   RestFrames: particle physics event analysis library</span></div>
@@ -124,45 +124,58 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//   You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//   along with RestFrames. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef InvisibleRecoFrame_HH</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define InvisibleRecoFrame_HH</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef LabFrame_HH</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define LabFrame_HH</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00374.html">RestFrames/InvisibleFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00440.html">RestFrames/ReconstructionFrame.hh</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// InvisibleRecoFrame class</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00839.html">   41</a></span>&#160;<span class="comment"></span>  <span class="keyword">class </span><a class="code" href="a00839.html">InvisibleRecoFrame</a> : <span class="keyword">public</span> <a class="code" href="a00823.html">InvisibleFrame</a>&lt;ReconstructionFrame&gt; {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00428.html">RestFrames/RestFrame.hh</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>RestFrames {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// LabFrame class</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00773.html">   41</a></span>&#160;  <span class="keyword">class </span><a class="code" href="a00773.html">LabFrame</a> : <span class="keyword">public</span> T {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00839.html#a75467c08f360d77e8cdb6871d405fd7b">InvisibleRecoFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00839.html">InvisibleRecoFrame</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="a00839.html#a847d7165dba4c3459009e4cbb515cdfa">GetMinimumMass</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00839.html#a0f79d59f4b4f2f6e6abfd077d0b6269c">SetMinimumMass</a>(<span class="keywordtype">double</span> M);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">double</span> m_MassMin;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  };</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00773.html#a6c164149acd82253a30b9ad4772a9fc2">LabFrame</a>(<span class="keyword">const</span> std::string&amp; sname, <span class="keyword">const</span> std::string&amp; stitle);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00773.html#a6c164149acd82253a30b9ad4772a9fc2">LabFrame</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="a00773.html">LabFrame</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="a00773.html#a35966f9447014a091a33d052abc628d7">SetChildFrame</a>(<a class="code" href="a00829.html">RestFrame</a>&amp; frame);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00773.html#aaf976613c8962e1ef2c4f4a23c806838">InitializeTree</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="a00773.html#a6492a32cec4c7742dc576a8fa1ba659c">   70</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00773.html#a6492a32cec4c7742dc576a8fa1ba659c">InitializeAnalysis</a>() = 0;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="a00773.html#a92eb9e7bedfa340634b4830f9e4aead6">   77</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00773.html#a92eb9e7bedfa340634b4830f9e4aead6">ClearEvent</a>() = 0;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="a00773.html#abbaf378f4436b25da6831e0224ab7cd8">   84</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="a00773.html#abbaf378f4436b25da6831e0224ab7cd8">AnalyzeEvent</a>() = 0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    TVector3 <a class="code" href="a00773.html#aaccbcd60c55bd0c1b94b61cca16807de">GetInvisibleMomentum</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsSoundBody() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  };</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aa00374_html"><div class="ttname"><a href="a00374.html">InvisibleFrame.hh</a></div></div>
-<div class="ttc" id="aa00839_html_a75467c08f360d77e8cdb6871d405fd7b"><div class="ttname"><a href="a00839.html#a75467c08f360d77e8cdb6871d405fd7b">RestFrames::InvisibleRecoFrame::InvisibleRecoFrame</a></div><div class="ttdeci">InvisibleRecoFrame(const std::string &amp;sname, const std::string &amp;stitle)</div><div class="ttdoc">Standard constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00578_source.html#l00037">InvisibleRecoFrame.cc:37</a></div></div>
-<div class="ttc" id="aa00839_html_a0f79d59f4b4f2f6e6abfd077d0b6269c"><div class="ttname"><a href="a00839.html#a0f79d59f4b4f2f6e6abfd077d0b6269c">RestFrames::InvisibleRecoFrame::SetMinimumMass</a></div><div class="ttdeci">void SetMinimumMass(double M)</div><div class="ttdoc">Sets minimum mass of current frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00578_source.html#l00052">InvisibleRecoFrame.cc:52</a></div></div>
-<div class="ttc" id="aa00839_html_a847d7165dba4c3459009e4cbb515cdfa"><div class="ttname"><a href="a00839.html#a847d7165dba4c3459009e4cbb515cdfa">RestFrames::InvisibleRecoFrame::GetMinimumMass</a></div><div class="ttdeci">double GetMinimumMass() const</div><div class="ttdoc">Returns minimum Lorentz invariant mass.</div><div class="ttdef"><b>Definition:</b> <a href="a00578_source.html#l00048">InvisibleRecoFrame.cc:48</a></div></div>
-<div class="ttc" id="aa00839_html"><div class="ttname"><a href="a00839.html">RestFrames::InvisibleRecoFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00386_source.html#l00041">InvisibleRecoFrame.hh:41</a></div></div>
-<div class="ttc" id="aa00440_html"><div class="ttname"><a href="a00440.html">ReconstructionFrame.hh</a></div></div>
-<div class="ttc" id="aa00823_html"><div class="ttname"><a href="a00823.html">RestFrames::InvisibleFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00374_source.html#l00043">InvisibleFrame.hh:43</a></div></div>
+<div class="ttc" id="aa00773_html_a35966f9447014a091a33d052abc628d7"><div class="ttname"><a href="a00773.html#a35966f9447014a091a33d052abc628d7">RestFrames::LabFrame::SetChildFrame</a></div><div class="ttdeci">void SetChildFrame(RestFrame &amp;frame)</div><div class="ttdoc">Sets child of this frame.</div><div class="ttdef"><b>Definition:</b> <a href="a00545_source.html#l00076">LabFrame.cc:76</a></div></div>
+<div class="ttc" id="aa00773_html_aaccbcd60c55bd0c1b94b61cca16807de"><div class="ttname"><a href="a00773.html#aaccbcd60c55bd0c1b94b61cca16807de">RestFrames::LabFrame::GetInvisibleMomentum</a></div><div class="ttdeci">TVector3 GetInvisibleMomentum() const</div><div class="ttdoc">Returns invisible momentum vector of this RestFrame.</div><div class="ttdef"><b>Definition:</b> <a href="a00545_source.html#l00109">LabFrame.cc:109</a></div></div>
+<div class="ttc" id="aa00829_html"><div class="ttname"><a href="a00829.html">RestFrames::RestFrame</a></div><div class="ttdoc">abstract base class for all Frame objects</div><div class="ttdef"><b>Definition:</b> <a href="a00428_source.html#l00045">RestFrame.hh:45</a></div></div>
+<div class="ttc" id="aa00773_html_a6492a32cec4c7742dc576a8fa1ba659c"><div class="ttname"><a href="a00773.html#a6492a32cec4c7742dc576a8fa1ba659c">RestFrames::LabFrame::InitializeAnalysis</a></div><div class="ttdeci">virtual bool InitializeAnalysis()=0</div><div class="ttdoc">Virtual method for intialzing analysis capabilities of a tree corresponding to a LabFrame.</div></div>
+<div class="ttc" id="aa00773_html_abbaf378f4436b25da6831e0224ab7cd8"><div class="ttname"><a href="a00773.html#abbaf378f4436b25da6831e0224ab7cd8">RestFrames::LabFrame::AnalyzeEvent</a></div><div class="ttdeci">virtual bool AnalyzeEvent()=0</div><div class="ttdoc">Virtual method to analyze event.</div></div>
+<div class="ttc" id="aa00773_html_a6c164149acd82253a30b9ad4772a9fc2"><div class="ttname"><a href="a00773.html#a6c164149acd82253a30b9ad4772a9fc2">RestFrames::LabFrame::LabFrame</a></div><div class="ttdeci">LabFrame()</div><div class="ttdoc">Empty constructor.</div><div class="ttdef"><b>Definition:</b> <a href="a00545_source.html#l00048">LabFrame.cc:48</a></div></div>
+<div class="ttc" id="aa00773_html_a92eb9e7bedfa340634b4830f9e4aead6"><div class="ttname"><a href="a00773.html#a92eb9e7bedfa340634b4830f9e4aead6">RestFrames::LabFrame::ClearEvent</a></div><div class="ttdeci">virtual bool ClearEvent()=0</div><div class="ttdoc">Virtual method to clear event.</div></div>
+<div class="ttc" id="aa00773_html"><div class="ttname"><a href="a00773.html">RestFrames::LabFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="a00386_source.html#l00041">LabFrame.hh:41</a></div></div>
+<div class="ttc" id="aa00773_html_aaf976613c8962e1ef2c4f4a23c806838"><div class="ttname"><a href="a00773.html#aaf976613c8962e1ef2c4f4a23c806838">RestFrames::LabFrame::InitializeTree</a></div><div class="ttdeci">virtual bool InitializeTree()</div><div class="ttdoc">Method to initialize tree.</div><div class="ttdef"><b>Definition:</b> <a href="a00545_source.html#l00081">LabFrame.cc:81</a></div></div>
+<div class="ttc" id="aa00428_html"><div class="ttname"><a href="a00428.html">RestFrame.hh</a></div></div>
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 13 2020 16:23:12 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 15 2020 19:04:22 for RestFrames by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.19
 </small></address>
