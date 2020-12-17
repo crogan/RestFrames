@@ -1,0 +1,12 @@
+<map id="RestFrames::InvisibleJigsaw" name="RestFrames::InvisibleJigsaw">
+<area shape="rect" id="node1" title=" " alt="" coords="407,209,611,235"/>
+<area shape="rect" id="node4" href="$a00705.html" title=" " alt="" coords="665,5,876,47"/>
+<area shape="rect" id="node5" href="$a00709.html" title=" " alt="" coords="667,71,874,112"/>
+<area shape="rect" id="node6" href="$a00789.html" title=" " alt="" coords="673,136,868,177"/>
+<area shape="rect" id="node7" href="$a00801.html" title=" " alt="" coords="667,201,875,243"/>
+<area shape="rect" id="node8" href="$a00813.html" title=" " alt="" coords="663,267,879,308"/>
+<area shape="rect" id="node9" href="$a00877.html" title=" " alt="" coords="659,333,883,359"/>
+<area shape="rect" id="node10" href="$a00881.html" title=" " alt="" coords="669,384,872,425"/>
+<area shape="rect" id="node2" href="$a00769.html" title="abstract base class for all Jigsaw objects" alt="" coords="209,209,359,235"/>
+<area shape="rect" id="node3" href="$a00833.html" title="Base class for all RestFrame package objects." alt="" coords="5,209,161,235"/>
+</map>

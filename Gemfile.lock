@@ -59,6 +59,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   jekyll (~> 3.0)
@@ -67,4 +68,4 @@ DEPENDENCIES
   octopress (~> 3.0)
 
 BUNDLED WITH
-   1.11.2
+   2.2.1
